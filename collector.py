@@ -18,7 +18,7 @@ from urllib.parse import quote_plus, urlsplit, urlunsplit
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V4 — INTELLIGENT EVENT DEDUPLICATION
+# OSINT COLLECTOR V6 — MULTI-SOURCE CT COVERAGE
 #
 # Expanded coverage + stricter event relevance.
 #
@@ -258,24 +258,434 @@ CATEGORIES = {
 }
 
 
+# ============================================================
+# OFFICIAL / PRIMARY CT SOURCES
+#
+# These are deliberately queried through the SAME Google News
+# RSS mechanism as the rest of the collector.  No API keys or
+# credentials are required.
+#
+# The site: restriction gives us a second acquisition channel
+# focused on authoritative primary reporting:
+#   - U.S. Department of Justice
+#   - U.S. Treasury / OFAC
+#   - Europol
+#   - UK Government / Counter-Terrorism
+#   - INTERPOL English News
+#
+# Results still pass through the normal CT relevance filter and
+# the intelligent event deduplication layer, so the same incident
+# is not duplicated simply because an official source and media
+# outlets both reported it.
+# ============================================================
+
+OFFICIAL_SOURCE_QUERIES = {
+
+    "Terrorist Financing": [
+
+        'site:home.treasury.gov/news/press-releases '
+        '(terrorist OR terrorism OR ISIS OR ISIL OR Hamas OR Hizballah OR Hezbollah OR al-Qaeda) '
+        '(sanctions OR designation OR designated OR financing OR financial OR facilitator OR network)',
+
+        'site:justice.gov '
+        '(terrorist OR terrorism OR ISIS OR ISIL OR Hamas OR Hizballah OR Hezbollah OR al-Qaeda) '
+        '("material support" OR financing OR funding OR money laundering OR cryptocurrency)',
+
+        'site:interpol.int/en/News-and-Events/News '
+        '("terrorism financing" OR "terrorist financing")',
+
+    ],
+
+
+    "Weapons": [
+
+        'site:europol.europa.eu/media-press/newsroom '
+        '(terrorism OR terrorist OR extremist) '
+        '(weapons OR firearms OR explosives OR bomb OR drone)',
+
+        'site:justice.gov '
+        '(terrorist OR terrorism OR ISIS OR extremist) '
+        '(weapon OR weapons OR firearms OR explosives OR bomb OR drone)',
+
+        'site:interpol.int/en/News-and-Events/News '
+        '(terrorism OR terrorist) '
+        '(weapons OR firearms OR explosives)',
+
+    ],
+
+
+    "CBRN": [
+
+        'site:gov.uk/government/news '
+        '(terrorism OR terrorist OR extremism) '
+        '(chemical OR biological OR radiological OR nuclear OR CBRN)',
+
+        'site:counterterrorism.police.uk/news '
+        '(terrorism OR terrorist OR extremist) '
+        '(chemical OR biological OR radiological OR nuclear OR CBRN)',
+
+        'site:justice.gov '
+        '(terrorism OR terrorist OR extremist) '
+        '(chemical OR biological OR radiological OR nuclear OR CBRN)',
+
+    ],
+
+
+    "Online Radicalization / Cyberterrorism": [
+
+        'site:europol.europa.eu/media-press/newsroom '
+        '(terrorism OR terrorist OR extremist OR Terrorgram) '
+        '(online OR propaganda OR radicalisation OR radicalization OR platform OR cyber)',
+
+        'site:gov.uk/government/news '
+        '(terrorism OR terrorist OR extremism OR extremist) '
+        '(online OR radicalisation OR radicalization OR propaganda OR AI)',
+
+        'site:counterterrorism.police.uk/news '
+        '(terrorism OR terrorist OR extremist) '
+        '(online OR radicalised OR radicalized OR propaganda OR social-media)',
+
+        'site:interpol.int/en/News-and-Events/News '
+        '(terrorism OR terrorist) '
+        '(online OR social-media OR cyber OR technology)',
+
+    ],
+
+
+    "Attacks": [
+
+        'site:justice.gov '
+        '(terrorist OR terrorism OR ISIS OR ISIL OR al-Qaeda) '
+        '(attack OR attacks OR plot OR bombing OR shooting OR stabbing)',
+
+        'site:gov.uk/government/news '
+        '(terrorism OR terrorist) '
+        '(attack OR plot OR bombing OR shooting OR stabbing)',
+
+        'site:counterterrorism.police.uk/news '
+        '(terrorism OR terrorist) '
+        '(attack OR plot OR bombing OR shooting OR stabbing)',
+
+        'site:interpol.int/en/News-and-Events/News '
+        '(terrorism OR terrorist) '
+        '(attack OR attacks OR operation)',
+
+    ],
+
+
+    "Arrests": [
+
+        'site:justice.gov '
+        '(terrorist OR terrorism OR ISIS OR ISIL OR Hamas OR al-Qaeda) '
+        '(arrested OR arrests OR detained OR captured)',
+
+        'site:europol.europa.eu/media-press/newsroom '
+        '(terrorism OR terrorist OR extremist) '
+        '(arrested OR arrests OR detained OR operation)',
+
+        'site:gov.uk/government/news '
+        '(terrorism OR terrorist) '
+        '(arrested OR arrest OR detained OR charged)',
+
+        'site:counterterrorism.police.uk/news '
+        '(terrorism OR terrorist OR extremist) '
+        '(arrested OR arrest OR detained OR charged)',
+
+        'site:interpol.int/en/News-and-Events/News '
+        '(terrorism OR terrorist) '
+        '(arrest OR arrests OR apprehended)',
+
+    ],
+
+
+    "Legal / Judicial": [
+
+        'site:justice.gov '
+        '(terrorist OR terrorism OR ISIS OR ISIL OR Hamas OR al-Qaeda) '
+        '(charged OR convicted OR sentenced OR indicted OR indictment OR trial)',
+
+        'site:europol.europa.eu/media-press/newsroom '
+        '(terrorism OR terrorist OR extremist) '
+        '(convicted OR sentenced OR court OR prosecution OR trial)',
+
+        'site:gov.uk/government/news '
+        '(terrorism OR terrorist) '
+        '(charged OR convicted OR sentenced OR prosecution OR trial)',
+
+        'site:counterterrorism.police.uk/news '
+        '(terrorism OR terrorist OR extremist) '
+        '(charged OR convicted OR sentenced OR jailed OR trial)',
+
+    ],
+
+
+    "Disinformation / Emerging Technologies / AI": [
+
+        'site:europol.europa.eu/media-press/newsroom '
+        '(terrorism OR terrorist OR extremist) '
+        '("artificial intelligence" OR AI OR deepfake OR cyber OR technology)',
+
+        'site:gov.uk/government/news '
+        '(terrorism OR terrorist OR extremism OR extremist) '
+        '("artificial intelligence" OR AI OR online OR technology)',
+
+        'site:interpol.int/en/News-and-Events/News '
+        '(terrorism OR terrorist) '
+        '("artificial intelligence" OR AI OR technology OR emerging)',
+
+    ],
+
+}
+
+
+# ============================================================
+# TARGETED INTERNATIONAL / SPECIALIST SOURCES
+#
+# Each source is queried through Google News RSS using site:
+# restrictions, so the workflow needs no additional API keys.
+#
+# ACLED NOTE:
+# This collector targets ACLED's publicly indexed analysis/news
+# pages only.  The full ACLED event dataset/API requires a myACLED
+# account and authentication and is therefore not pulled directly
+# here.
+#
+# Source targeting improves recall.  Every returned article still
+# has to pass the same CT relevance filter and the same intelligent
+# event-level deduplication used for all other records.
+# ============================================================
+
+TARGETED_SOURCE_SITES = [
+
+    # Structured conflict / event-analysis source
+    {
+        "name": "ACLED",
+        "site": "acleddata.com",
+        "priority": 118,
+        "kind": "conflict_data_analysis",
+    },
+
+    # International wire / mainstream
+    {
+        "name": "Reuters",
+        "site": "reuters.com",
+        "priority": 105,
+        "kind": "international_media",
+    },
+    {
+        "name": "Associated Press",
+        "site": "apnews.com",
+        "priority": 100,
+        "kind": "international_media",
+    },
+    {
+        "name": "BBC News",
+        "site": "bbc.com",
+        "priority": 96,
+        "kind": "international_media",
+    },
+    {
+        "name": "CNN",
+        "site": "cnn.com",
+        "priority": 86,
+        "kind": "international_media",
+    },
+    {
+        "name": "France 24 English",
+        "site": "france24.com/en",
+        "priority": 90,
+        "kind": "international_media",
+    },
+    {
+        "name": "Deutsche Welle English",
+        "site": "dw.com",
+        "priority": 90,
+        "kind": "international_media",
+    },
+    {
+        "name": "Al Jazeera English",
+        "site": "aljazeera.com",
+        "priority": 90,
+        "kind": "international_media",
+    },
+    {
+        "name": "i24NEWS",
+        "site": "i24news.tv/en",
+        "priority": 80,
+        "kind": "regional_international_media",
+    },
+    {
+        "name": "RT",
+        "site": "rt.com/news",
+        "priority": 55,
+        "kind": "state_affiliated_media",
+    },
+
+    # Additional useful English-language coverage
+    {
+        "name": "RFI English",
+        "site": "rfi.fr/en",
+        "priority": 86,
+        "kind": "international_media",
+    },
+    {
+        "name": "Voice of America",
+        "site": "voanews.com",
+        "priority": 80,
+        "kind": "international_media",
+    },
+    {
+        "name": "Radio Free Europe / Radio Liberty",
+        "site": "rferl.org",
+        "priority": 82,
+        "kind": "regional_international_media",
+    },
+    {
+        "name": "Sky News",
+        "site": "news.sky.com",
+        "priority": 80,
+        "kind": "international_media",
+    },
+    {
+        "name": "Euronews English",
+        "site": "euronews.com",
+        "priority": 76,
+        "kind": "international_media",
+    },
+    {
+        "name": "The Guardian",
+        "site": "theguardian.com",
+        "priority": 78,
+        "kind": "international_media",
+    },
+
+]
+
+
+# Compact category-specific query components used with each site.
+# Keeping these narrower than the broad query bank limits noise and
+# makes the targeted-source pass operationally manageable.
+TARGETED_MEDIA_CATEGORY_TERMS = {
+
+    "Terrorist Financing":
+        '(terrorist OR terrorism OR ISIS OR ISIL OR Daesh OR "Islamic State" '
+        'OR "al-Qaeda" OR Hamas OR Hezbollah OR extremist) '
+        '(financing OR funding OR sanctions OR assets OR cryptocurrency '
+        'OR money-laundering OR fundraising OR donations)',
+
+    "Weapons":
+        '(terrorist OR terrorism OR ISIS OR ISIL OR Daesh OR "Islamic State" '
+        'OR "al-Qaeda" OR extremist) '
+        '(weapons OR firearms OR explosives OR bomb OR IED OR drone '
+        'OR arms-trafficking OR weapons-cache)',
+
+    "CBRN":
+        '(terrorist OR terrorism OR extremist OR ISIS OR ISIL) '
+        '(CBRN OR chemical OR biological OR radiological OR nuclear '
+        'OR radioactive OR ricin OR sarin OR chlorine OR "dirty bomb")',
+
+    "Online Radicalization / Cyberterrorism":
+        '(terrorist OR terrorism OR extremist OR extremism OR ISIS OR ISIL '
+        'OR "Islamic State" OR "al-Qaeda") '
+        '(online OR propaganda OR recruitment OR radicalization '
+        'OR radicalisation OR cyber OR hacking OR Telegram OR encrypted '
+        'OR social-media)',
+
+    "Attacks":
+        '(terrorist OR terrorism OR ISIS OR ISIL OR Daesh OR "Islamic State" '
+        'OR jihadist OR extremist OR "al-Qaeda" OR "al-Shabaab" '
+        'OR "Boko Haram") '
+        '(attack OR bombing OR blast OR shooting OR stabbing OR ambush '
+        'OR kidnapping OR hostage OR IED OR "suicide bomber" OR drone)',
+
+    "Arrests":
+        '(terrorist OR terrorism OR ISIS OR ISIL OR Daesh OR "Islamic State" '
+        'OR jihadist OR extremist OR "al-Qaeda") '
+        '(arrest OR arrested OR arrests OR detained OR captured OR raid '
+        'OR suspects OR cell)',
+
+    "Legal / Judicial":
+        '(terrorist OR terrorism OR ISIS OR ISIL OR Daesh OR "Islamic State" '
+        'OR jihadist OR extremist OR "al-Qaeda") '
+        '(charged OR convicted OR sentenced OR trial OR court OR indicted '
+        'OR indictment OR prosecution OR jailed)',
+
+    "Disinformation / Emerging Technologies / AI":
+        '(terrorist OR terrorism OR extremist OR extremism OR ISIS OR ISIL '
+        'OR "Islamic State" OR "al-Qaeda") '
+        '("artificial intelligence" OR AI OR deepfake OR disinformation '
+        'OR misinformation OR autonomous OR technology OR "synthetic media" '
+        'OR "voice cloning")',
+
+}
+
+
+def targeted_source_query(
+    source,
+    category
+):
+    terms = TARGETED_MEDIA_CATEGORY_TERMS[
+        category
+    ]
+
+    return (
+        "site:"
+        +
+        source[
+            "site"
+        ]
+        +
+        " "
+        +
+        terms
+    )
+
+
 SOURCE_PRIORITY = {
-    "Reuters": 100,
-    "Associated Press": 95,
-    "AP News": 95,
-    "BBC": 90,
-    "BBC News": 90,
-    "Al Jazeera": 85,
-    "CNN": 80,
-    "France 24": 78,
-    "France24": 78,
-    "DW": 75,
-    "Deutsche Welle": 75,
-    "The Guardian": 70,
-    "Sky News": 68,
+    "U.S. Department of Justice": 130,
+    "US Department of Justice": 130,
+    "Department of Justice": 130,
+    "Justice Department": 130,
+    "U.S. Department of the Treasury": 128,
+    "US Department of the Treasury": 128,
+    "Department of the Treasury": 128,
+    "U.S. Treasury": 128,
+    "Counter Terrorism Policing": 127,
+    "Europol": 126,
+    "GOV.UK": 124,
+    "UK Government": 124,
+    "Home Office": 124,
+    "INTERPOL": 122,
+    "ACLED": 118,
+    "Reuters": 105,
+    "Associated Press": 100,
+    "AP News": 100,
+    "BBC": 96,
+    "BBC News": 96,
+    "France 24": 90,
+    "France24": 90,
+    "Deutsche Welle": 90,
+    "DW": 90,
+    "Al Jazeera": 90,
+    "Al Jazeera English": 90,
+    "CNN": 86,
+    "RFI": 86,
+    "Radio France Internationale": 86,
+    "Radio Free Europe": 82,
+    "Radio Free Europe/Radio Liberty": 82,
+    "RFE/RL": 82,
+    "Voice of America": 80,
+    "VOA": 80,
+    "i24NEWS": 80,
+    "i24 News": 80,
+    "Sky News": 80,
+    "The Guardian": 78,
+    "Euronews": 76,
+    "RT": 55,
+    "Russia Today": 55,
     "ABC News": 66,
     "NBC News": 65,
     "CBS News": 65,
-    "Euronews": 60,
 }
 
 
@@ -817,7 +1227,7 @@ def collect_all(days):
     print()
     print("=" * 70)
     print("INTERPOL CT Intelligence Map")
-    print("OSINT Collector V4 — intelligent event deduplication")
+    print("OSINT Collector V6 — multi-source CT coverage")
     print("=" * 70)
     print(f"Window: {days} days")
     print("Language: English")
@@ -872,6 +1282,179 @@ def collect_all(days):
             f"   CATEGORY TOTAL: "
             f"{subtotal}"
         )
+
+
+    # ========================================================
+    # AUTHORITATIVE PRIMARY-SOURCE PASS
+    # ========================================================
+
+    print()
+    print("=" * 70)
+    print("OFFICIAL / PRIMARY CT SOURCES")
+    print("=" * 70)
+
+    official_total = 0
+
+    for category, terms in OFFICIAL_SOURCE_QUERIES.items():
+
+        print()
+        print(
+            f"[OFFICIAL] {category}"
+        )
+
+        category_total = 0
+
+        for query_number, term in enumerate(
+            terms,
+            start=1,
+        ):
+
+            print(
+                f"   Official query "
+                f"{query_number}/"
+                f"{len(terms)}"
+            )
+
+            results = collect_query(
+                category,
+                term,
+                days,
+            )
+
+            # Tag acquisition channel. The normal source field remains
+            # the publisher returned by Google News.
+            for event in results:
+                event["acquisition_channel"] = (
+                    "official_primary_source_query"
+                )
+
+            records.extend(
+                results
+            )
+
+            category_total += len(
+                results
+            )
+
+            official_total += len(
+                results
+            )
+
+            print(
+                f"      accepted → "
+                f"{len(results)}"
+            )
+
+            time.sleep(
+                0.35
+            )
+
+        print(
+            f"   OFFICIAL CATEGORY TOTAL: "
+            f"{category_total}"
+        )
+
+    print()
+    print(
+        f"Official-source accepted records: "
+        f"{official_total}"
+    )
+
+
+    # ========================================================
+    # TARGETED INTERNATIONAL / SPECIALIST SOURCE PASS
+    # ========================================================
+
+    print()
+    print("=" * 70)
+    print("TARGETED INTERNATIONAL / SPECIALIST SOURCES")
+    print("=" * 70)
+
+    targeted_total = 0
+
+    for source_number, source in enumerate(
+        TARGETED_SOURCE_SITES,
+        start=1,
+    ):
+
+        print()
+        print(
+            f"[SOURCE "
+            f"{source_number}/"
+            f"{len(TARGETED_SOURCE_SITES)}] "
+            f"{source['name']}"
+        )
+
+        source_total = 0
+
+        for category in CATEGORIES.keys():
+
+            query = targeted_source_query(
+                source,
+                category,
+            )
+
+            print(
+                f"   {category}"
+            )
+
+            results = collect_query(
+                category,
+                query,
+                days,
+            )
+
+            for event in results:
+
+                event["acquisition_channel"] = (
+                    "targeted_source_query"
+                )
+
+                event["targeted_source"] = (
+                    source[
+                        "name"
+                    ]
+                )
+
+                event["targeted_source_kind"] = (
+                    source[
+                        "kind"
+                    ]
+                )
+
+            records.extend(
+                results
+            )
+
+            source_total += len(
+                results
+            )
+
+            targeted_total += len(
+                results
+            )
+
+            print(
+                f"      accepted → "
+                f"{len(results)}"
+            )
+
+            # Slightly shorter than the broad query pass because
+            # site-restricted searches are narrower.
+            time.sleep(
+                0.25
+            )
+
+        print(
+            f"   SOURCE TOTAL: "
+            f"{source_total}"
+        )
+
+    print()
+    print(
+        f"Targeted-source accepted records: "
+        f"{targeted_total}"
+    )
 
     return records
 
@@ -2811,17 +3394,76 @@ def save_database(events):
         "language":
             "English",
         "collector":
-            "Google News RSS",
+            "Google News RSS + official-source and targeted-source passes",
         "relevance_filter":
             "CT event relevance filter V3",
         "deduplication":
             "Multi-signal event clustering V4",
         "search_query_count":
+            (
+                sum(
+                    len(terms)
+                    for terms
+                    in CATEGORIES.values()
+                )
+                +
+                sum(
+                    len(terms)
+                    for terms
+                    in OFFICIAL_SOURCE_QUERIES.values()
+                )
+                +
+                (
+                    len(
+                        TARGETED_SOURCE_SITES
+                    )
+                    *
+                    len(
+                        TARGETED_MEDIA_CATEGORY_TERMS
+                    )
+                )
+            ),
+        "general_search_query_count":
             sum(
                 len(terms)
                 for terms
                 in CATEGORIES.values()
             ),
+        "official_source_query_count":
+            sum(
+                len(terms)
+                for terms
+                in OFFICIAL_SOURCE_QUERIES.values()
+            ),
+        "targeted_source_query_count":
+            (
+                len(
+                    TARGETED_SOURCE_SITES
+                )
+                *
+                len(
+                    TARGETED_MEDIA_CATEGORY_TERMS
+                )
+            ),
+        "targeted_sources":
+            [
+                source[
+                    "name"
+                ]
+                for source
+                in TARGETED_SOURCE_SITES
+            ],
+        "acled_mode":
+            "Publicly indexed ACLED analysis/news via Google News; direct ACLED API not enabled",
+        "official_sources":
+            [
+                "U.S. Department of Justice",
+                "U.S. Department of the Treasury / OFAC",
+                "Counter Terrorism Policing UK",
+                "Europol",
+                "UK Government / Counter-Terrorism",
+                "INTERPOL English News",
+            ],
         "last_updated":
             datetime.now(
                 timezone.utc
@@ -2906,7 +3548,7 @@ def main():
     )
     print(
         f"Search queries: "
-        f"{sum(len(v) for v in CATEGORIES.values())}"
+        f"{sum(len(v) for v in CATEGORIES.values()) + sum(len(v) for v in OFFICIAL_SOURCE_QUERIES.values()) + (len(TARGETED_SOURCE_SITES) * len(TARGETED_MEDIA_CATEGORY_TERMS))}"
     )
     print(
         "CT event relevance filter: ON"
