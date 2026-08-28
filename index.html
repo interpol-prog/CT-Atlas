@@ -1,154 +1,3 @@
-
-
-Texte collé(1).txt
-Document
-
-
-Texte collé(2).txt
-Document
-
-
-Texte collé(3).txt
-Document
-
-
-Texte collé(4).txt
-Document
-
-Oui, l’erreur est très claire : du texte de ma réponse précédente a été collé dans collector.py.
-
-La ligne :
-
-Je ferais exactement ceci : lorsqu’une ville est identifiée...
-
-n’est évidemment pas du Python. GitHub essaie de l’exécuter, d’où le SyntaxError.
-
-Le fichier collector_v3.py que je t’ai généré ne contient pas ce paragraphe. Il faut donc remplacer tout le contenu de collector.py sur GitHub, pas coller le texte de mon message autour.
-
-Fais exactement ceci sur GitHub
-Ouvre collector.py.
-
-Clique sur Edit.
-
-Fais Ctrl+A.
-
-Supprime absolument tout.
-
-Ouvre/télécharge ce fichier : 
-
-Copie uniquement le contenu du fichier.
-
-Colle-le dans collector.py.
-
-Commit changes.
-
-Le tout début de ton collector.py doit être exactement de cette forme :
-
-import feedparser
-import hashlib
-import html
-import json
-import re
-import sys
-import time
-
-import requests
-
-from datetime import datetime, timezone, timedelta
-from difflib import SequenceMatcher
-from email.utils import parsedate_to_datetime
-from urllib.parse import quote_plus
-
-
-# ============================================================
-# INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V3
-#
-# Expanded coverage + stricter event relevance.
-# ============================================================
-Il ne doit y avoir aucune phrase en français avant, après ou au milieu du code.
-
-Et puisque nous avons décidé que GitHub est désormais notre seule version de référence, ne touche pas au collector.py de ton ordinateur. Fais uniquement le remplacement sur GitHub.
-
-Après le commit, regarde le nouveau run GitHub Actions. Si collector passe au vert mais qu’une autre étape échoue, envoie-moi simplement l'erreur de cette étape.
-
-
-
-tout passe au vert
-
-Parfait. Donc maintenant la chaîne complète fonctionne à nouveau :
-
-collector.py → geolocate.py → events.json → déploiement GitHub Pages.
-
-À ce stade, le plus utile est de tester la qualité, pas la technique. Vérifie surtout une dizaine de cas connus : Kashmir, Taliban/Afghanistan, IDF, Gaza, Balochistan, et quelques articles avec des noms de médias contenant une ville.
-
-Si ces cas sont bien placés, on pourra ensuite améliorer encore la couverture géographique avec davantage de régions et quelques organisations/acteurs spécifiques, sans toucher au reste du système.
-
-
-alors je veux que l'interfzce s'ouvre a 90 jours
-
-C’est fait. J’ai repris ton index.html complet et changé seulement le comportement par défaut : la carte s’ouvre maintenant directement sur 90 DAYS. Le bouton 90 jours est actif dès l’ouverture, selectedDays vaut 90, et le texte indique désormais Default operational view: 90 days.
-
-Le mot de passe panda et le reste de l’interface sont conservés.
-
-
-Sur GitHub, ouvre index.html, remplace tout son contenu par celui de ce fichier, puis commit. Le redéploiement se fera automatiquement. 
-
-
-
-
-Bibliothèque
-/
-index_90days.html
-
-
-
-
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
 <!DOCTYPE html>
 <html lang="en">
 
@@ -194,3 +43,3576 @@ INTERPOL CT Intelligence Map
 <style>
 
 * {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+
+    height: 100%;
+
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        #0d1620;
+}
+
+
+#header {
+
+    height: 78px;
+
+    background:
+        #111d28;
+
+    color:
+        white;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        0 22px;
+
+    border-bottom:
+        1px solid #314252;
+}
+
+
+#brand {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        16px;
+}
+
+
+#logo {
+
+    height:
+        52px;
+
+    width:
+        auto;
+}
+
+
+#title h1 {
+
+    margin:
+        0;
+
+    font-size:
+        21px;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        0.4px;
+}
+
+
+#title div {
+
+    margin-top:
+        5px;
+
+    color:
+        #94a6b5;
+
+    font-size:
+        11px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        1px;
+}
+
+
+#updated {
+
+    text-align:
+        right;
+
+    font-size:
+        11px;
+
+    color:
+        #9fb0be;
+}
+
+
+#counter {
+
+    margin-top:
+        5px;
+
+    font-size:
+        14px;
+
+    color:
+        white;
+
+    font-weight:
+        bold;
+}
+
+
+#main {
+
+    height:
+        calc(100vh - 78px);
+
+    display:
+        flex;
+}
+
+
+#sidebar {
+
+    width:
+        330px;
+
+    background:
+        #17232e;
+
+    color:
+        white;
+
+    overflow-y:
+        auto;
+
+    padding:
+        17px;
+
+    border-right:
+        1px solid #334554;
+}
+
+
+#map {
+
+    flex:
+        1;
+
+    height:
+        100%;
+}
+
+
+.section-title {
+
+    margin-top:
+        13px;
+
+    margin-bottom:
+        10px;
+
+    color:
+        #8fa4b5;
+
+    font-size:
+        11px;
+
+    font-weight:
+        bold;
+
+    letter-spacing:
+        1px;
+
+    text-transform:
+        uppercase;
+}
+
+
+.kpis {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        7px;
+
+    margin-bottom:
+        17px;
+}
+
+
+.kpi {
+
+    background:
+        #202f3b;
+
+    border:
+        1px solid #324756;
+
+    border-radius:
+        5px;
+
+    padding:
+        10px;
+}
+
+
+.kpi-number {
+
+    font-size:
+        20px;
+
+    font-weight:
+        bold;
+}
+
+
+.kpi-label {
+
+    margin-top:
+        3px;
+
+    color:
+        #9cadba;
+
+    font-size:
+        10px;
+
+    text-transform:
+        uppercase;
+}
+
+
+.time-buttons,
+.layer-buttons {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        7px;
+
+    margin-bottom:
+        17px;
+}
+
+
+.time-button,
+.layer-button,
+.action-button {
+
+    border:
+        1px solid #405563;
+
+    border-radius:
+        4px;
+
+    padding:
+        9px;
+
+    background:
+        #202f3b;
+
+    color:
+        white;
+
+    cursor:
+        pointer;
+
+    font-size:
+        11px;
+}
+
+
+.time-button:hover,
+.layer-button:hover,
+.action-button:hover {
+
+    background:
+        #2b3e4c;
+}
+
+
+.time-button.active,
+.layer-button.active {
+
+    background:
+        white;
+
+    color:
+        #111;
+
+    font-weight:
+        bold;
+}
+
+
+#searchInput {
+
+    width:
+        100%;
+
+    padding:
+        10px;
+
+    background:
+        #202f3b;
+
+    border:
+        1px solid #405563;
+
+    border-radius:
+        4px;
+
+    color:
+        white;
+
+    outline:
+        none;
+
+    margin-bottom:
+        8px;
+}
+
+
+.category-actions {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        7px;
+
+    margin-bottom:
+        7px;
+}
+
+
+.category {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    padding:
+        6px 3px;
+
+    font-size:
+        12px;
+
+    cursor:
+        pointer;
+}
+
+
+.category input {
+
+    margin-right:
+        8px;
+}
+
+
+.category-icon {
+
+    width:
+        24px;
+
+    height:
+        24px;
+
+    margin-right:
+        9px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    color:
+        white;
+
+    font-size:
+        9px;
+
+    font-weight:
+        bold;
+}
+
+
+.financing {
+    background: #3a78a8;
+}
+
+
+.weapons {
+    background: #7c5fa3;
+}
+
+
+.cbrn {
+    background: #658f53;
+}
+
+
+.online {
+    background: #397e87;
+}
+
+
+.attacks {
+    background: #b44e4e;
+}
+
+
+.arrests {
+    background: #b17b38;
+}
+
+
+.legal {
+    background: #687482;
+}
+
+
+.ai {
+    background: #944c85;
+}
+
+
+.analytics-list {
+
+    margin:
+        0 0 15px 0;
+
+    padding:
+        0;
+
+    list-style:
+        none;
+}
+
+
+.analytics-item {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    gap:
+        10px;
+
+    padding:
+        6px 0;
+
+    border-bottom:
+        1px solid #2f404e;
+
+    font-size:
+        11px;
+}
+
+
+.analytics-name {
+
+    color:
+        #e7edf2;
+}
+
+
+.analytics-value {
+
+    font-weight:
+        bold;
+
+    white-space:
+        nowrap;
+}
+
+
+.trend-up {
+    color: #92d39b;
+}
+
+
+.trend-down {
+    color: #e39a9a;
+}
+
+
+.trend-flat {
+    color: #a9b6c1;
+}
+
+
+.coverage-box {
+
+    background:
+        #202f3b;
+
+    border:
+        1px solid #324756;
+
+    border-radius:
+        5px;
+
+    padding:
+        10px;
+
+    margin-bottom:
+        18px;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.7;
+}
+
+
+.coverage-row {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+}
+
+
+.coverage-label {
+
+    color:
+        #9cadba;
+}
+
+
+.coverage-value {
+
+    font-weight:
+        bold;
+}
+
+
+.ct-marker {
+
+    width:
+        25px;
+
+    height:
+        25px;
+
+    border:
+        2px solid white;
+
+    border-radius:
+        50%;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        white;
+
+    font-size:
+        8px;
+
+    font-weight:
+        bold;
+
+    box-shadow:
+        0 1px 5px rgba(0,0,0,.45);
+}
+
+
+.popup-title {
+
+    font-size:
+        14px;
+
+    font-weight:
+        bold;
+
+    line-height:
+        1.35;
+
+    margin-bottom:
+        7px;
+}
+
+
+.popup-category {
+
+    font-size:
+        10px;
+
+    text-transform:
+        uppercase;
+
+    color:
+        #64727c;
+
+    margin-bottom:
+        7px;
+}
+
+
+.popup-location {
+
+    margin-top:
+        7px;
+}
+
+
+.popup-source {
+
+    margin-top:
+        10px;
+
+    padding-top:
+        8px;
+
+    border-top:
+        1px solid #ddd;
+
+    font-size:
+        11px;
+}
+
+
+.popup-source a {
+
+    text-decoration:
+        none;
+
+    font-weight:
+        bold;
+}
+
+
+#database-info {
+
+    margin-top:
+        20px;
+
+    padding-top:
+        13px;
+
+    border-top:
+        1px solid #344956;
+
+    font-size:
+        10px;
+
+    color:
+        #899ca9;
+
+    line-height:
+        1.6;
+}
+
+
+
+/* =========================================================
+   ACCESS SCREEN
+========================================================= */
+
+#access-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0d1620;
+    color: white;
+}
+
+#access-box {
+    width: 390px;
+    max-width: calc(100vw - 40px);
+    padding: 32px;
+    text-align: center;
+    background: #17232e;
+    border: 1px solid #344958;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
+
+#access-logo {
+    height: 76px;
+    width: auto;
+    margin-bottom: 18px;
+}
+
+#access-box h1 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+#access-subtitle {
+    margin-top: 7px;
+    margin-bottom: 26px;
+    color: #91a5b5;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#access-password {
+    width: 100%;
+    padding: 12px;
+    color: white;
+    background: #202f3b;
+    border: 1px solid #455a69;
+    border-radius: 5px;
+    outline: none;
+    font-size: 14px;
+}
+
+#access-password:focus {
+    border-color: #8aa7bd;
+}
+
+#access-button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    background: white;
+    color: #111;
+    font-weight: bold;
+}
+
+#access-error {
+    min-height: 18px;
+    margin-top: 12px;
+    color: #e59494;
+    font-size: 11px;
+}
+
+#access-note {
+    margin-top: 20px;
+    color: #758b9b;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+body.locked #header,
+body.locked #main {
+    visibility: hidden;
+}
+
+
+.location-badge{display:inline-block;margin-top:6px;padding:3px 6px;border-radius:3px;font-size:9px;font-weight:bold;text-transform:uppercase;letter-spacing:.4px}.location-city{background:#dfeee3;color:#245b34}.location-capital{background:#fff0cc;color:#725100}.location-unlocated{background:#e7e7e7;color:#555}
+
+
+/* =========================================================
+   INTERPOL OFFICES LAYER
+========================================================= */
+
+.interpol-office-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 7px rgba(0,0,0,.55);
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.interpol-office-hq {
+    width: 34px;
+    height: 34px;
+    border-radius: 7px;
+    background: #0056a6;
+    font-size: 10px;
+}
+
+.interpol-office-igci {
+    width: 31px;
+    height: 31px;
+    border-radius: 7px;
+    background: #0072bc;
+    font-size: 9px;
+}
+
+.interpol-office-regional {
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background: #2678b8;
+    font-size: 8px;
+}
+
+.interpol-office-representative {
+    width: 27px;
+    height: 27px;
+    transform: rotate(45deg);
+    background: #506f8a;
+    font-size: 8px;
+}
+
+.interpol-office-representative span {
+    transform: rotate(-45deg);
+}
+
+.interpol-office-liaison {
+    width: 27px;
+    height: 27px;
+    border-radius: 4px;
+    background: #4f8c7a;
+    font-size: 8px;
+}
+
+.office-popup-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.office-popup-type {
+    margin-bottom: 6px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #5d6f7d;
+}
+
+.office-popup-location {
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.office-popup-note {
+    margin-top: 7px;
+    padding-top: 7px;
+    border-top: 1px solid #ddd;
+    font-size: 10px;
+    color: #666;
+}
+
+.office-legend {
+    margin-top: 8px;
+    padding: 9px;
+    background: #202f3b;
+    border: 1px solid #324756;
+    border-radius: 5px;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+.office-legend-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.office-legend-symbol {
+    width: 11px;
+    height: 11px;
+    display: inline-block;
+    border: 1px solid white;
+    background: #2678b8;
+}
+
+.office-legend-symbol.hq {
+    border-radius: 2px;
+    background: #0056a6;
+}
+
+.office-legend-symbol.regional {
+    border-radius: 50%;
+    background: #2678b8;
+}
+
+.office-legend-symbol.representative {
+    transform: rotate(45deg);
+    background: #506f8a;
+}
+
+.office-legend-symbol.liaison {
+    border-radius: 2px;
+    background: #4f8c7a;
+}
+
+</style>
+
+</head>
+
+
+<body class="locked">
+
+<div id="access-screen">
+    <div id="access-box">
+        <img id="access-logo" src="interpol-logo.png" alt="INTERPOL">
+        <h1>INTERPOL CT Intelligence Map</h1>
+        <div id="access-subtitle">Restricted access</div>
+
+        <input
+            id="access-password"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+        >
+
+        <button id="access-button">ACCESS MAP</button>
+        <div id="access-error"></div>
+
+        <div id="access-note">
+            Access is intended for authorised users only.
+        </div>
+    </div>
+</div>
+
+
+
+<div id="header">
+
+
+    <div id="brand">
+
+
+        <img
+            id="logo"
+            src="interpol-logo.png"
+            alt="INTERPOL"
+        >
+
+
+        <div id="title">
+
+
+            <h1>
+                INTERPOL CT Intelligence Map
+            </h1>
+
+
+            <div>
+                Global Counter-Terrorism Situational Awareness
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div id="updated">
+
+
+        <div id="lastUpdated">
+
+            Loading database...
+
+        </div>
+
+
+        <div id="counter">
+
+            —
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<div id="main">
+
+
+<div id="sidebar">
+
+
+<div class="section-title">
+Situation overview
+</div>
+
+
+<div class="kpis">
+
+
+<div class="kpi">
+
+<div
+    class="kpi-number"
+    id="kpi24"
+>
+—
+</div>
+
+<div class="kpi-label">
+Last 24 hours
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+    class="kpi-number"
+    id="kpi7"
+>
+—
+</div>
+
+<div class="kpi-label">
+Last 7 days
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+    class="kpi-number"
+    id="kpi30"
+>
+—
+</div>
+
+<div class="kpi-label">
+Last 30 days
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+    class="kpi-number"
+    id="kpi90"
+>
+—
+</div>
+
+<div class="kpi-label">
+Last 90 days
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="section-title">
+Search
+</div>
+
+
+<input
+    id="searchInput"
+    type="text"
+    placeholder="Search title, city, country, source..."
+>
+
+
+
+<div class="section-title">
+Time period
+</div>
+
+
+<div class="time-buttons">
+
+
+<button
+    class="time-button"
+    data-days="1"
+>
+24 HOURS
+</button>
+
+
+<button
+    class="time-button"
+    data-days="7"
+>
+7 DAYS
+</button>
+
+
+<button
+    class="time-button"
+    data-days="30"
+>
+30 DAYS
+</button>
+
+
+<button
+    class="time-button active"
+    data-days="90"
+>
+90 DAYS
+</button>
+
+
+</div>
+
+
+
+<div class="section-title">
+Map layers
+</div>
+
+
+<div class="layer-buttons">
+
+
+<button
+    class="layer-button active"
+    id="markersToggle"
+>
+EVENTS
+</button>
+
+
+<button
+    class="layer-button"
+    id="heatToggle"
+>
+HEAT ZONES
+</button>
+
+<button
+    class="layer-button active"
+    id="officesToggle"
+>
+INTERPOL OFFICES
+</button>
+
+
+</div>
+
+
+
+<div class="section-title">
+Intelligence categories
+</div>
+
+
+<div class="category-actions">
+
+
+<button
+    class="action-button"
+    id="selectAll"
+>
+SELECT ALL
+</button>
+
+
+<button
+    class="action-button"
+    id="clearAll"
+>
+CLEAR
+</button>
+
+
+</div>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Terrorist Financing"
+    checked
+>
+
+<span class="category-icon financing">
+TF
+</span>
+
+Terrorist Financing
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Weapons"
+    checked
+>
+
+<span class="category-icon weapons">
+W
+</span>
+
+Weapons
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="CBRN"
+    checked
+>
+
+<span class="category-icon cbrn">
+C
+</span>
+
+CBRN
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Online Radicalization / Cyberterrorism"
+    checked
+>
+
+<span class="category-icon online">
+O
+</span>
+
+Online / Cyber
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Attacks"
+    checked
+>
+
+<span class="category-icon attacks">
+A
+</span>
+
+Attacks
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Arrests"
+    checked
+>
+
+<span class="category-icon arrests">
+AR
+</span>
+
+Arrests
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Legal / Judicial"
+    checked
+>
+
+<span class="category-icon legal">
+J
+</span>
+
+Legal / Judicial
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Disinformation / Emerging Technologies / AI"
+    checked
+>
+
+<span class="category-icon ai">
+AI
+</span>
+
+AI / Emerging Technologies
+
+</label>
+
+
+
+<div class="section-title">
+Top trends — 30 days
+</div>
+
+
+<ul
+    class="analytics-list"
+    id="trendList"
+>
+</ul>
+
+
+
+<div class="section-title">
+Top countries
+</div>
+
+
+<ul
+    class="analytics-list"
+    id="topCountries"
+>
+</ul>
+
+
+
+<div class="section-title">
+Top hotspots
+</div>
+
+
+<ul
+    class="analytics-list"
+    id="topHotspots"
+>
+</ul>
+
+
+
+<div class="section-title">
+Geolocation coverage
+</div>
+
+
+<div class="coverage-box">
+
+
+<div class="coverage-row">
+
+<span class="coverage-label">
+City-level
+</span>
+
+<span
+    class="coverage-value"
+    id="coverageCity"
+>
+—
+</span>
+
+</div>
+
+
+<div class="coverage-row">
+
+<span class="coverage-label">
+Country → capital
+</span>
+
+<span
+    class="coverage-value"
+    id="coverageCountry"
+>
+—
+</span>
+
+</div>
+
+
+<div class="coverage-row">
+
+<span class="coverage-label">
+Unknown
+</span>
+
+<span
+    class="coverage-value"
+    id="coverageUnknown"
+>
+—
+</span>
+
+</div>
+
+
+<div class="coverage-row">
+
+<span class="coverage-label">
+Visible rate
+</span>
+
+<span
+    class="coverage-value"
+    id="coverageRate"
+>
+—
+</span>
+
+</div>
+
+
+</div>
+
+
+
+<div id="database-info">
+
+English-language open-source monitoring
+
+<br>
+
+Rolling database: 90 days
+
+<br>
+
+Default operational view: 90 days
+
+<br>
+
+Automated daily update
+
+</div>
+
+
+</div>
+
+
+
+<div id="map"></div>
+
+
+</div>
+
+
+
+
+<script>
+(function () {
+    const PASSWORD = "panda";
+    const SESSION_KEY = "ct_map_authorized";
+
+    function unlock() {
+        sessionStorage.setItem(SESSION_KEY, "yes");
+        document.body.classList.remove("locked");
+
+        const screen = document.getElementById("access-screen");
+        if (screen) {
+            screen.style.display = "none";
+        }
+
+        setTimeout(function () {
+            window.dispatchEvent(new Event("resize"));
+        }, 50);
+    }
+
+    function tryAccess() {
+        const input = document.getElementById("access-password");
+        const error = document.getElementById("access-error");
+
+        if (input.value === PASSWORD) {
+            error.textContent = "";
+            unlock();
+        } else {
+            error.textContent = "Incorrect password.";
+            input.value = "";
+            input.focus();
+        }
+    }
+
+    document.getElementById("access-button").addEventListener("click", tryAccess);
+
+    document.getElementById("access-password").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            tryAccess();
+        }
+    });
+
+    if (sessionStorage.getItem(SESSION_KEY) === "yes") {
+        unlock();
+    } else {
+        document.getElementById("access-password").focus();
+    }
+})();
+
+
+document.getElementById(
+    "officesToggle"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+        showInterpolOffices =
+            !showInterpolOffices;
+
+
+        this.classList.toggle(
+            "active",
+            showInterpolOffices
+        );
+
+
+        if (
+            showInterpolOffices
+        ) {
+
+            if (
+                !map.hasLayer(
+                    interpolOfficesLayer
+                )
+            ) {
+
+                map.addLayer(
+                    interpolOfficesLayer
+                );
+
+            }
+
+        }
+
+
+        else {
+
+            if (
+                map.hasLayer(
+                    interpolOfficesLayer
+                )
+            ) {
+
+                map.removeLayer(
+                    interpolOfficesLayer
+                );
+
+            }
+
+        }
+
+    }
+
+);
+
+</script>
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+>
+</script>
+
+
+<script
+    src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"
+>
+</script>
+
+
+<script
+    src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"
+>
+</script>
+
+
+
+<script>
+
+
+const map = L.map(
+
+    "map",
+
+    {
+
+        worldCopyJump:
+            true,
+
+        minZoom:
+            2
+
+    }
+
+).setView(
+    [
+        25,
+        15
+    ],
+    2
+);
+
+
+
+L.tileLayer(
+
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+
+    {
+
+        attribution:
+            "&copy; OpenStreetMap contributors",
+
+        maxZoom:
+            18
+
+    }
+
+).addTo(
+    map
+);
+
+
+
+const markerCluster =
+L.markerClusterGroup({
+
+    showCoverageOnHover:
+        false,
+
+    maxClusterRadius:
+        45,
+
+    spiderfyOnMaxZoom:
+        true
+
+});
+
+
+map.addLayer(
+    markerCluster
+);
+
+// ============================================================
+// INTERPOL OFFICES
+// Current General Secretariat duty stations
+// Coordinates represent office city locations unless an exact
+// public visitor address is available.
+// ============================================================
+
+const interpolOffices = [
+
+    {
+        name: "INTERPOL General Secretariat Headquarters",
+        type: "Headquarters",
+        city: "Lyon",
+        country: "France",
+        latitude: 45.7856,
+        longitude: 4.8520,
+        code: "HQ",
+        markerClass: "interpol-office-hq",
+        note: "General Secretariat Headquarters — 200 quai Charles de Gaulle, 69006 Lyon."
+    },
+
+    {
+        name: "INTERPOL Global Complex for Innovation",
+        type: "Global Complex",
+        city: "Singapore",
+        country: "Singapore",
+        latitude: 1.3053,
+        longitude: 103.8244,
+        code: "IGCI",
+        markerClass: "interpol-office-igci",
+        note: "INTERPOL Global Complex for Innovation — 18 Napier Road, Singapore 258510."
+    },
+
+    {
+        name: "Regional Bureau Buenos Aires",
+        type: "Regional Bureau",
+        city: "Buenos Aires",
+        country: "Argentina",
+        latitude: -34.6037,
+        longitude: -58.3816,
+        code: "RB",
+        markerClass: "interpol-office-regional",
+        note: "Regional Bureau — city-level marker."
+    },
+
+    {
+        name: "Regional Bureau Yaoundé",
+        type: "Regional Bureau",
+        city: "Yaoundé",
+        country: "Cameroon",
+        latitude: 3.8480,
+        longitude: 11.5021,
+        code: "RB",
+        markerClass: "interpol-office-regional",
+        note: "Regional Bureau — city-level marker."
+    },
+
+    {
+        name: "Regional Bureau Abidjan",
+        type: "Regional Bureau",
+        city: "Abidjan",
+        country: "Côte d’Ivoire",
+        latitude: 5.35995,
+        longitude: -4.00826,
+        code: "RB",
+        markerClass: "interpol-office-regional",
+        note: "Regional Bureau — city-level marker."
+    },
+
+    {
+        name: "Regional Bureau San Salvador",
+        type: "Regional Bureau",
+        city: "San Salvador",
+        country: "El Salvador",
+        latitude: 13.6929,
+        longitude: -89.2182,
+        code: "RB",
+        markerClass: "interpol-office-regional",
+        note: "Regional Bureau — city-level marker."
+    },
+
+    {
+        name: "Regional Bureau Nairobi",
+        type: "Regional Bureau",
+        city: "Nairobi",
+        country: "Kenya",
+        latitude: -1.2864,
+        longitude: 36.8172,
+        code: "RB",
+        markerClass: "interpol-office-regional",
+        note: "Regional Bureau — city-level marker."
+    },
+
+    {
+        name: "Regional Bureau Harare",
+        type: "Regional Bureau",
+        city: "Harare",
+        country: "Zimbabwe",
+        latitude: -17.8252,
+        longitude: 31.0335,
+        code: "RB",
+        markerClass: "interpol-office-regional",
+        note: "Regional Bureau — city-level marker."
+    },
+
+    {
+        name: "Special Representative Office to the African Union",
+        type: "Special Representative Office",
+        city: "Addis Ababa",
+        country: "Ethiopia",
+        latitude: 9.0300,
+        longitude: 38.7400,
+        code: "SRO",
+        markerClass: "interpol-office-representative",
+        note: "Special Representative of INTERPOL to the African Union."
+    },
+
+    {
+        name: "Special Representative Office to the European Union",
+        type: "Special Representative Office",
+        city: "Brussels",
+        country: "Belgium",
+        latitude: 50.8503,
+        longitude: 4.3517,
+        code: "SRO",
+        markerClass: "interpol-office-representative",
+        note: "Special Representative of INTERPOL to the European Union."
+    },
+
+    {
+        name: "Special Representative Office to the United Nations",
+        type: "Special Representative Office",
+        city: "New York",
+        country: "United States",
+        latitude: 40.7128,
+        longitude: -74.0060,
+        code: "SRO",
+        markerClass: "interpol-office-representative",
+        note: "Special Representative of INTERPOL to the United Nations."
+    },
+
+    {
+        name: "Liaison Office at UNODC",
+        type: "Liaison Office",
+        city: "Vienna",
+        country: "Austria",
+        latitude: 48.2082,
+        longitude: 16.3738,
+        code: "LO",
+        markerClass: "interpol-office-liaison",
+        note: "INTERPOL Liaison Office at the United Nations Office on Drugs and Crime."
+    },
+
+    {
+        name: "Liaison Office at Europol",
+        type: "Liaison Office",
+        city: "The Hague",
+        country: "Netherlands",
+        latitude: 52.0705,
+        longitude: 4.3007,
+        code: "LO",
+        markerClass: "interpol-office-liaison",
+        note: "INTERPOL Liaison Office at Europol."
+    },
+
+    {
+        name: "INTERPOL Liaison Office for the Caribbean",
+        type: "Liaison Office",
+        city: "Bridgetown",
+        country: "Barbados",
+        latitude: 13.0975,
+        longitude: -59.6167,
+        code: "LO",
+        markerClass: "interpol-office-liaison",
+        note: "INTERPOL Liaison Office for the Caribbean region."
+    }
+
+];
+
+
+const interpolOfficesLayer =
+    L.layerGroup();
+
+
+let showInterpolOffices =
+    true;
+
+
+function createInterpolOfficeMarker(
+    office
+) {
+
+    let innerHtml =
+        office.code;
+
+
+    if (
+        office.markerClass
+        ===
+        "interpol-office-representative"
+    ) {
+
+        innerHtml =
+            `<span>${office.code}</span>`;
+
+    }
+
+
+    const size =
+
+        office.markerClass
+        ===
+        "interpol-office-hq"
+        ?
+        [34, 34]
+        :
+        (
+            office.markerClass
+            ===
+            "interpol-office-igci"
+            ?
+            [31, 31]
+            :
+            [27, 27]
+        );
+
+
+    const icon =
+        L.divIcon({
+
+            className:
+                "",
+
+            html:
+                `<div class="interpol-office-marker ${office.markerClass}">
+                    ${innerHtml}
+                </div>`,
+
+            iconSize:
+                size,
+
+            iconAnchor:
+                [
+                    size[0] / 2,
+                    size[1] / 2
+                ]
+
+        });
+
+
+    const marker =
+        L.marker(
+
+            [
+                office.latitude,
+                office.longitude
+            ],
+
+            {
+                icon:
+                    icon,
+
+                zIndexOffset:
+                    1000
+            }
+
+        );
+
+
+    marker.bindPopup(`
+
+        <div>
+
+            <div class="office-popup-title">
+                ${escapeHtml(office.name)}
+            </div>
+
+            <div class="office-popup-type">
+                ${escapeHtml(office.type)}
+            </div>
+
+            <div class="office-popup-location">
+
+                <strong>
+                    Location:
+                </strong>
+
+                ${escapeHtml(office.city)},
+                ${escapeHtml(office.country)}
+
+            </div>
+
+            <div class="office-popup-note">
+                ${escapeHtml(office.note)}
+            </div>
+
+        </div>
+
+    `);
+
+
+    return marker;
+
+}
+
+
+function initialiseInterpolOffices() {
+
+    interpolOfficesLayer.clearLayers();
+
+
+    interpolOffices.forEach(
+
+        office => {
+
+            interpolOfficesLayer.addLayer(
+
+                createInterpolOfficeMarker(
+                    office
+                )
+
+            );
+
+        }
+
+    );
+
+
+    if (
+        showInterpolOffices
+    ) {
+
+        interpolOfficesLayer.addTo(
+            map
+        );
+
+    }
+
+}
+
+
+initialiseInterpolOffices();
+
+
+
+let heatLayer =
+    null;
+
+
+let allEvents =
+    [];
+
+
+let selectedDays =
+    90;
+
+
+let showMarkers =
+    true;
+
+
+let showHeat =
+    false;
+
+
+let searchText =
+    "";
+
+
+
+const categoryStyle = {
+
+
+"Terrorist Financing": {
+
+    code:
+        "TF",
+
+    className:
+        "financing"
+
+},
+
+
+"Weapons": {
+
+    code:
+        "W",
+
+    className:
+        "weapons"
+
+},
+
+
+"CBRN": {
+
+    code:
+        "C",
+
+    className:
+        "cbrn"
+
+},
+
+
+"Online Radicalization / Cyberterrorism": {
+
+    code:
+        "O",
+
+    className:
+        "online"
+
+},
+
+
+"Attacks": {
+
+    code:
+        "A",
+
+    className:
+        "attacks"
+
+},
+
+
+"Arrests": {
+
+    code:
+        "AR",
+
+    className:
+        "arrests"
+
+},
+
+
+"Legal / Judicial": {
+
+    code:
+        "J",
+
+    className:
+        "legal"
+
+},
+
+
+"Disinformation / Emerging Technologies / AI": {
+
+    code:
+        "AI",
+
+    className:
+        "ai"
+
+}
+
+
+};
+
+
+
+function escapeHtml(
+    value
+) {
+
+
+    return String(
+        value || ""
+    )
+
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+
+
+fetch(
+    "events.json"
+)
+
+.then(
+    response => {
+
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                "Unable to load events.json"
+            );
+
+        }
+
+
+        return response.json();
+
+    }
+)
+
+.then(
+    data => {
+
+
+        allEvents =
+            data.events
+            ||
+            [];
+
+
+        if (
+            data.last_updated
+        ) {
+
+
+            const updated =
+                new Date(
+                    data.last_updated
+                );
+
+
+            document.getElementById(
+                "lastUpdated"
+            ).innerText =
+
+                "Updated "
+
+                +
+
+                updated.toLocaleString(
+                    "en-GB"
+                );
+
+        }
+
+
+        refreshDashboard();
+
+    }
+)
+
+.catch(
+    error => {
+
+
+        console.error(
+            error
+        );
+
+
+        document.getElementById(
+            "counter"
+        ).innerText =
+            "Database unavailable";
+
+    }
+);
+
+
+
+function withinDays(
+    dateString,
+    days
+) {
+
+
+    if (
+        !dateString
+    ) {
+
+        return false;
+
+    }
+
+
+    const eventDate =
+        new Date(
+            dateString
+        );
+
+
+    if (
+        isNaN(
+            eventDate.getTime()
+        )
+    ) {
+
+        return false;
+
+    }
+
+
+    const cutoff =
+        new Date(
+
+            Date.now()
+
+            -
+
+            days
+            *
+            24
+            *
+            60
+            *
+            60
+            *
+            1000
+
+        );
+
+
+    return (
+        eventDate >= cutoff
+    );
+
+}
+
+
+
+function selectedCategories() {
+
+
+    return Array.from(
+
+        document.querySelectorAll(
+            ".category-filter:checked"
+        )
+
+    ).map(
+
+        checkbox =>
+            checkbox.value
+
+    );
+
+}
+
+
+
+function eventCategories(
+    event
+) {
+
+
+    if (
+        Array.isArray(
+            event.categories
+        )
+    ) {
+
+        return event.categories;
+
+    }
+
+
+    return [
+        event.category
+    ];
+
+}
+
+
+
+function categoryMatches(
+    event
+) {
+
+
+    const selected =
+        selectedCategories();
+
+
+    const categories =
+        eventCategories(
+            event
+        );
+
+
+    return categories.some(
+
+        category =>
+            selected.includes(
+                category
+            )
+
+    );
+
+}
+
+
+
+function searchMatches(
+    event
+) {
+
+
+    if (
+        !searchText
+    ) {
+
+        return true;
+
+    }
+
+
+    const combined = (
+
+        (event.title || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.summary || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.city || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.country || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.source || "")
+
+    ).toLowerCase();
+
+
+    return combined.includes(
+        searchText
+    );
+
+}
+
+
+
+function filteredAllEvents() {
+
+
+    return allEvents.filter(
+
+        event =>
+
+            withinDays(
+                event.published,
+                selectedDays
+            )
+
+            &&
+
+            categoryMatches(
+                event
+            )
+
+            &&
+
+            searchMatches(
+                event
+            )
+
+    );
+
+}
+
+
+
+function filteredMappedEvents() {
+
+
+    return filteredAllEvents().filter(
+
+        event =>
+
+            event.latitude != null
+
+            &&
+
+            event.longitude != null
+
+    );
+
+}
+
+
+
+function countMapped(
+    days
+) {
+
+
+    const selected =
+        selectedCategories();
+
+
+    return allEvents.filter(
+
+        event => {
+
+
+            const categories =
+                eventCategories(
+                    event
+                );
+
+
+            return (
+
+                event.latitude != null
+
+                &&
+
+                event.longitude != null
+
+                &&
+
+                withinDays(
+                    event.published,
+                    days
+                )
+
+                &&
+
+                categories.some(
+                    category =>
+                        selected.includes(
+                            category
+                        )
+                )
+
+            );
+
+        }
+
+    ).length;
+
+}
+
+
+
+function updateKPIs() {
+
+
+    document.getElementById(
+        "kpi24"
+    ).innerText =
+        countMapped(
+            1
+        );
+
+
+    document.getElementById(
+        "kpi7"
+    ).innerText =
+        countMapped(
+            7
+        );
+
+
+    document.getElementById(
+        "kpi30"
+    ).innerText =
+        countMapped(
+            30
+        );
+
+
+    document.getElementById(
+        "kpi90"
+    ).innerText =
+        countMapped(
+            90
+        );
+
+}
+
+
+
+function createMarker(
+    event
+) {
+    const primaryCategory = event.category;
+    const style = categoryStyle[primaryCategory] || {code:"?", className:"legal"};
+    const icon = L.divIcon({
+        className:"",
+        html:`<div class="ct-marker ${style.className}">${style.code}</div>`,
+        iconSize:[25,25],
+        iconAnchor:[12,12]
+    });
+    const marker = L.marker([event.latitude,event.longitude],{icon:icon});
+    const title = escapeHtml(event.title);
+    const categories = escapeHtml(eventCategories(event).join(" / "));
+    let dateText = "";
+    if(event.published){dateText=new Date(event.published).toLocaleDateString("en-GB");}
+    let locationText="";
+    let locationBadge="";
+    if(event.location_precision==="city"){
+        locationText=[event.city,event.country].filter(Boolean).join(", ");
+        locationBadge='<span class="location-badge location-city">City-level location</span>';
+    } else if(event.location_precision==="country_capital"){
+        locationText=[event.city,event.country].filter(Boolean).join(", ");
+        locationBadge='<span class="location-badge location-capital">Country-level — marker positioned on capital</span>';
+    } else if(event.location_precision==="unlocated"){
+        locationText="Unlocated placeholder (0,0)";
+        locationBadge='<span class="location-badge location-unlocated">No country identified — placeholder only</span>';
+    } else {
+        locationText=[event.city,event.country].filter(Boolean).join(", ");
+    }
+    let sourceBlock="";
+    if(event.source && event.url){
+        sourceBlock=`<div class="popup-source">Source: <a href="${escapeHtml(event.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.source)}</a></div>`;
+    }
+    marker.bindPopup(`<div><div class="popup-title">${title}</div><div class="popup-category">${categories}</div><div>${dateText}</div><div class="popup-location"><strong>Location:</strong> ${escapeHtml(locationText)}<br>${locationBadge}</div>${sourceBlock}</div>`);
+    return marker;
+}
+
+
+function renderEvents() {
+
+
+    markerCluster.clearLayers();
+
+
+    if (
+        heatLayer
+    ) {
+
+
+        map.removeLayer(
+            heatLayer
+        );
+
+
+        heatLayer =
+            null;
+
+    }
+
+
+    const visible =
+        filteredMappedEvents();
+
+
+    if (
+        showMarkers
+    ) {
+
+
+        visible.forEach(
+
+            event => {
+
+
+                markerCluster.addLayer(
+
+                    createMarker(
+                        event
+                    )
+
+                );
+
+            }
+
+        );
+
+
+        if (
+            !map.hasLayer(
+                markerCluster
+            )
+        ) {
+
+
+            map.addLayer(
+                markerCluster
+            );
+
+        }
+
+    }
+
+
+    else {
+
+
+        if (
+            map.hasLayer(
+                markerCluster
+            )
+        ) {
+
+
+            map.removeLayer(
+                markerCluster
+            );
+
+        }
+
+    }
+
+
+    if (
+        showHeat
+    ) {
+
+
+        const heatPoints = visible
+            .filter(event => event.location_precision === "city")
+            .map(event => [Number(event.latitude), Number(event.longitude), 1]);
+
+        heatLayer =
+        L.heatLayer(
+
+            heatPoints,
+
+            {
+
+                radius:
+                    30,
+
+                blur:
+                    24,
+
+                maxZoom:
+                    7,
+
+                minOpacity:
+                    0.30
+
+            }
+
+        ).addTo(
+            map
+        );
+
+    }
+
+
+    const totalSelected =
+        filteredAllEvents().length;
+
+
+    document.getElementById(
+        "counter"
+    ).innerText =
+
+        visible.length
+
+        +
+
+        " visible / "
+
+        +
+
+        totalSelected
+
+        +
+
+        " selected";
+
+}
+
+
+
+function updateCoverage() {
+    const events=filteredAllEvents();
+    let city=0;
+    let country=0;
+    let unknown=0;
+    events.forEach(event=>{
+        if(event.location_precision==="city") city++;
+        else if(event.location_precision==="country_capital") country++;
+        else unknown++;
+    });
+    const total=city+country+unknown;
+    const rate=total?(((city+country)/total)*100).toFixed(1):"0.0";
+    document.getElementById("coverageCity").innerText=city;
+    document.getElementById("coverageCountry").innerText=country;
+    document.getElementById("coverageUnknown").innerText=unknown;
+    document.getElementById("coverageRate").innerText=rate+"%";
+}
+
+
+function renderRanking(
+    elementId,
+    values
+) {
+
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+
+    element.innerHTML =
+        "";
+
+
+    if (
+        values.length
+        ===
+        0
+    ) {
+
+
+        element.innerHTML = `
+
+        <li class="analytics-item">
+
+            <span class="analytics-name">
+                No data
+            </span>
+
+            <span class="analytics-value">
+                —
+            </span>
+
+        </li>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    values.forEach(
+
+        item => {
+
+
+            const li =
+                document.createElement(
+                    "li"
+                );
+
+
+            li.className =
+                "analytics-item";
+
+
+            li.innerHTML = `
+
+                <span class="analytics-name">
+
+                    ${escapeHtml(item[0])}
+
+                </span>
+
+                <span class="analytics-value">
+
+                    ${item[1]}
+
+                </span>
+
+            `;
+
+
+            element.appendChild(
+                li
+            );
+
+        }
+
+    );
+
+}
+
+
+
+function updateTopLocations() {
+    const visible=filteredMappedEvents();
+    const countryCounts={};
+    const cityCounts={};
+    visible.forEach(event=>{
+        if(event.country && event.location_precision!=="unlocated"){
+            countryCounts[event.country]=(countryCounts[event.country]||0)+1;
+        }
+        if(event.city && event.location_precision==="city"){
+            const hotspot=event.city+(event.country?", "+event.country:"");
+            cityCounts[hotspot]=(cityCounts[hotspot]||0)+1;
+        }
+    });
+    const countries=Object.entries(countryCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const hotspots=Object.entries(cityCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    renderRanking("topCountries",countries);
+    renderRanking("topHotspots",hotspots);
+}
+
+
+function updateTrends() {
+
+
+    const selected =
+        selectedCategories();
+
+
+    const now =
+        Date.now();
+
+
+    const day =
+        24
+        *
+        60
+        *
+        60
+        *
+        1000;
+
+
+    const currentStart =
+        now
+        -
+        30
+        *
+        day;
+
+
+    const previousStart =
+        now
+        -
+        60
+        *
+        day;
+
+
+    const rows =
+        [];
+
+
+    Object.keys(
+        categoryStyle
+    ).forEach(
+
+        category => {
+
+
+            if (
+                !selected.includes(
+                    category
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            let current =
+                0;
+
+
+            let previous =
+                0;
+
+
+            allEvents.forEach(
+
+                event => {
+
+
+                    if (
+                        !eventCategories(
+                            event
+                        ).includes(
+                            category
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const time =
+                        new Date(
+                            event.published
+                        ).getTime();
+
+
+                    if (
+                        isNaN(
+                            time
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    if (
+
+                        time
+                        >=
+                        currentStart
+
+                        &&
+
+                        time
+                        <=
+                        now
+
+                    ) {
+
+
+                        current++;
+
+
+                    }
+
+
+                    else if (
+
+                        time
+                        >=
+                        previousStart
+
+                        &&
+
+                        time
+                        <
+                        currentStart
+
+                    ) {
+
+
+                        previous++;
+
+                    }
+
+                }
+
+            );
+
+
+            let display =
+                "→ 0%";
+
+
+            let cssClass =
+                "trend-flat";
+
+
+            let numericChange =
+                0;
+
+
+            if (
+
+                previous
+                ===
+                0
+
+                &&
+
+                current
+                >
+                0
+
+            ) {
+
+
+                display =
+                    "NEW";
+
+
+                cssClass =
+                    "trend-up";
+
+
+                numericChange =
+                    9999;
+
+            }
+
+
+            else if (
+                previous
+                >
+                0
+            ) {
+
+
+                const change =
+
+                    (
+                        current
+                        -
+                        previous
+                    )
+
+                    /
+
+                    previous
+
+                    *
+
+                    100;
+
+
+                numericChange =
+                    change;
+
+
+                if (
+                    change
+                    >
+                    5
+                ) {
+
+
+                    display =
+                        "↑ "
+                        +
+                        Math.round(
+                            change
+                        )
+                        +
+                        "%";
+
+
+                    cssClass =
+                        "trend-up";
+
+
+                }
+
+
+                else if (
+                    change
+                    <
+                    -5
+                ) {
+
+
+                    display =
+                        "↓ "
+                        +
+                        Math.abs(
+                            Math.round(
+                                change
+                            )
+                        )
+                        +
+                        "%";
+
+
+                    cssClass =
+                        "trend-down";
+
+
+                }
+
+
+                else {
+
+
+                    display =
+                        "→ "
+                        +
+                        Math.round(
+                            change
+                        )
+                        +
+                        "%";
+
+                }
+
+            }
+
+
+            rows.push({
+
+                category,
+                current,
+                previous,
+                numericChange,
+                display,
+                cssClass
+
+            });
+
+        }
+
+    );
+
+
+    rows.sort(
+
+        (a,b) =>
+            b.numericChange
+            -
+            a.numericChange
+
+    );
+
+
+    const list =
+        document.getElementById(
+            "trendList"
+        );
+
+
+    list.innerHTML =
+        "";
+
+
+    rows.slice(
+        0,
+        5
+    ).forEach(
+
+        row => {
+
+
+            const shortNames = {
+
+                "Terrorist Financing":
+                    "Financing",
+
+                "Weapons":
+                    "Weapons",
+
+                "CBRN":
+                    "CBRN",
+
+                "Online Radicalization / Cyberterrorism":
+                    "Online / Cyber",
+
+                "Attacks":
+                    "Attacks",
+
+                "Arrests":
+                    "Arrests",
+
+                "Legal / Judicial":
+                    "Legal / Judicial",
+
+                "Disinformation / Emerging Technologies / AI":
+                    "AI / Tech"
+
+            };
+
+
+            const li =
+                document.createElement(
+                    "li"
+                );
+
+
+            li.className =
+                "analytics-item";
+
+
+            li.innerHTML = `
+
+                <span class="analytics-name">
+
+                    ${shortNames[row.category] || row.category}
+
+                </span>
+
+                <span class="analytics-value ${row.cssClass}">
+
+                    ${row.display}
+
+                </span>
+
+            `;
+
+
+            list.appendChild(
+                li
+            );
+
+        }
+
+    );
+
+}
+
+
+
+function refreshDashboard() {
+
+
+    updateKPIs();
+
+    renderEvents();
+
+    updateCoverage();
+
+    updateTopLocations();
+
+    updateTrends();
+
+}
+
+
+
+document.querySelectorAll(
+    ".time-button"
+).forEach(
+
+    button => {
+
+
+        button.addEventListener(
+
+            "click",
+
+            function() {
+
+
+                document.querySelectorAll(
+                    ".time-button"
+                ).forEach(
+
+                    item =>
+                        item.classList.remove(
+                            "active"
+                        )
+
+                );
+
+
+                this.classList.add(
+                    "active"
+                );
+
+
+                selectedDays =
+                    parseInt(
+                        this.dataset.days
+                    );
+
+
+                refreshDashboard();
+
+            }
+
+        );
+
+    }
+
+);
+
+
+
+document.querySelectorAll(
+    ".category-filter"
+).forEach(
+
+    checkbox => {
+
+
+        checkbox.addEventListener(
+
+            "change",
+
+            refreshDashboard
+
+        );
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "searchInput"
+).addEventListener(
+
+    "input",
+
+    function() {
+
+
+        searchText =
+            this.value
+            .trim()
+            .toLowerCase();
+
+
+        refreshDashboard();
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "markersToggle"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+
+        showMarkers =
+            !showMarkers;
+
+
+        this.classList.toggle(
+            "active",
+            showMarkers
+        );
+
+
+        renderEvents();
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "heatToggle"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+
+        showHeat =
+            !showHeat;
+
+
+        this.classList.toggle(
+            "active",
+            showHeat
+        );
+
+
+        renderEvents();
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "selectAll"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+
+        document.querySelectorAll(
+            ".category-filter"
+        ).forEach(
+
+            checkbox =>
+                checkbox.checked =
+                    true
+
+        );
+
+
+        refreshDashboard();
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "clearAll"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+
+        document.querySelectorAll(
+            ".category-filter"
+        ).forEach(
+
+            checkbox =>
+                checkbox.checked =
+                    false
+
+        );
+
+
+        refreshDashboard();
+
+    }
+
+);
+
+
+</script>
+
+
+</body>
+
+</html>
