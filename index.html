@@ -1152,13 +1152,13 @@ Last 30 days
 
 <div
     class="kpi-number"
-    id="kpi90"
+    id="kpi180"
 >
 —
 </div>
 
 <div class="kpi-label">
-Last 90 days
+Last 180 days
 </div>
 
 </div>
@@ -1214,10 +1214,18 @@ Time period
 
 
 <button
-    class="time-button active"
+    class="time-button"
     data-days="90"
 >
 90 DAYS
+</button>
+
+
+<button
+    class="time-button active"
+    data-days="180"
+>
+6 MONTHS
 </button>
 
 
@@ -1573,15 +1581,15 @@ Visible rate
 
 <div id="database-info">
 
-English-language open-source monitoring · contextual geolocation V4
+English-language open-source monitoring · contextual geolocation V5
 
 <br>
 
-Rolling database: 90 days
+Rolling database: 180 days
 
 <br>
 
-Default operational view: 90 days
+Default operational view: 6 months
 
 <br>
 
@@ -1756,17 +1764,51 @@ const map = L.map(
 
 
 
+// ============================================================
+// ENGLISH-LANGUAGE BASEMAP
+//
+// The previous OpenStreetMap raster layer displayed many place
+// names in their local language.  This two-layer Esri canvas uses
+// a neutral geographic base plus a separate reference-label layer.
+// It keeps the intelligence overlays visually dominant and presents
+// the international reference labels in English.
+// ============================================================
+
+const englishBaseLayer =
 L.tileLayer(
 
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
 
     {
 
         attribution:
-            "&copy; OpenStreetMap contributors",
+            "Tiles &copy; Esri &mdash; Sources: Esri, HERE, Garmin, OpenStreetMap contributors, and the GIS user community",
 
         maxZoom:
-            18
+            16
+
+    }
+
+).addTo(
+    map
+);
+
+
+const englishReferenceLayer =
+L.tileLayer(
+
+    "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+
+    {
+
+        attribution:
+            "Place labels &copy; Esri",
+
+        maxZoom:
+            16,
+
+        pane:
+            "overlayPane"
 
     }
 
@@ -2149,7 +2191,7 @@ let allEvents =
 
 
 let selectedDays =
-    90;
+    180;
 
 
 let showMarkers =
@@ -2612,6 +2654,10 @@ function filteredMappedEvents() {
 
         event =>
 
+            event.excluded_from_map !== true
+
+            &&
+
             event.latitude != null
 
             &&
@@ -2645,6 +2691,10 @@ function countMapped(
 
 
             return (
+
+                event.excluded_from_map !== true
+
+                &&
 
                 event.latitude != null
 
@@ -2706,10 +2756,10 @@ function updateKPIs() {
 
 
     document.getElementById(
-        "kpi90"
+        "kpi180"
     ).innerText =
         countMapped(
-            90
+            180
         );
 
 }
@@ -2896,7 +2946,7 @@ function createMarker(
 
         locationBadge =
             `<span class="location-badge location-inferred">
-                Country inferred — marker positioned on capital
+                Country-level event — marker positioned on capital
             </span>`;
 
     }
