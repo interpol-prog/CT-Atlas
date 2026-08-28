@@ -5,18 +5,20 @@ import json
 import re
 import sys
 import time
+import unicodedata
 
 import requests
 
+from collections import Counter
 from datetime import datetime, timezone, timedelta
 from difflib import SequenceMatcher
 from email.utils import parsedate_to_datetime
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlsplit, urlunsplit
 
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V3
+# OSINT COLLECTOR V4 — INTELLIGENT EVENT DEDUPLICATION
 #
 # Expanded coverage + stricter event relevance.
 #
@@ -815,7 +817,7 @@ def collect_all(days):
     print()
     print("=" * 70)
     print("INTERPOL CT Intelligence Map")
-    print("OSINT Collector V3")
+    print("OSINT Collector V4 — intelligent event deduplication")
     print("=" * 70)
     print(f"Window: {days} days")
     print("Language: English")
@@ -874,162 +876,1548 @@ def collect_all(days):
     return records
 
 
-def title_similarity(
-    title1,
-    title2,
-):
-    a = normalize_title(title1)
-    b = normalize_title(title2)
 
-    if not a or not b:
+# ============================================================
+# INTELLIGENT EVENT-LEVEL DEDUPLICATION V4
+#
+# The collector receives many different headlines about the same
+# real-world event.  Deduplication therefore uses more than title
+# similarity:
+#
+# - canonical URL
+# - normalized title similarity
+# - meaningful token overlap
+# - title containment
+# - named entities / personalities
+# - terrorist organisation aliases
+# - CT action families
+# - explicit country clues
+# - numbers / casualty counts / amounts
+# - summary overlap
+# - publication-time proximity
+# - previously merged headline variants
+#
+# It deliberately avoids merging two events merely because they
+# involve the same group or the same country.
+# ============================================================
+
+MAX_DEDUP_WINDOW_DAYS = 7
+MAX_RELATED_ARTICLES = 24
+
+
+DEDUP_GENERIC_WORDS = {
+    "terror",
+    "terrorism",
+    "terrorist",
+    "terrorists",
+    "extremist",
+    "extremists",
+    "extremism",
+    "militant",
+    "militants",
+    "jihadist",
+    "jihadists",
+    "security",
+    "official",
+    "officials",
+    "authorities",
+    "government",
+    "police",
+    "report",
+    "reports",
+    "reported",
+    "news",
+    "latest",
+    "breaking",
+    "update",
+    "updates",
+    "case",
+    "cases",
+    "suspect",
+    "suspects",
+}
+
+
+ACTION_FAMILIES = {
+    "attack": {
+        "attack", "attacks", "attacked", "assault", "ambush",
+        "bomb", "bombing", "blast", "explosion", "shooting",
+        "shot", "stabbing", "stabbed", "ramming", "rocket",
+        "drone attack", "suicide bomber", "suicide bombing",
+        "killed", "wounded",
+    },
+    "arrest": {
+        "arrest", "arrests", "arrested", "detained", "detention",
+        "captured", "raid", "raided", "custody",
+    },
+    "legal": {
+        "charged", "charges", "trial", "court", "convicted",
+        "conviction", "sentenced", "sentence", "indicted",
+        "indictment", "guilty", "prosecution", "appeal",
+    },
+    "finance": {
+        "financing", "funding", "fundraising", "donation",
+        "donations", "assets frozen", "assets seized",
+        "sanctioned", "sanctions", "money laundering",
+        "cryptocurrency", "crypto", "hawala",
+    },
+    "weapons": {
+        "weapons", "weapon", "arms", "firearms", "ammunition",
+        "explosives", "explosive", "ied", "missile", "rocket",
+        "weapons cache", "arms cache", "smuggling", "trafficking",
+    },
+    "online": {
+        "propaganda", "recruitment", "radicalization",
+        "radicalisation", "cyberattack", "cyber attack",
+        "hacking", "deepfake", "artificial intelligence",
+        "generative ai", "social media", "encrypted messaging",
+    },
+    "cbrn": {
+        "chemical", "biological", "radiological", "nuclear",
+        "radioactive", "cbrn", "ricin", "sarin", "chlorine",
+        "dirty bomb",
+    },
+}
+
+
+ACTOR_ALIASES = {
+    "islamic_state": {
+        "isis", "isil", "daesh", "islamic state",
+    },
+    "al_qaeda": {
+        "al-qaeda", "al qaeda", "alqaeda",
+    },
+    "al_shabaab": {
+        "al-shabaab", "al shabaab",
+    },
+    "boko_haram": {
+        "boko haram",
+    },
+    "iswap": {
+        "iswap", "islamic state west africa province",
+    },
+    "taliban": {
+        "taliban",
+    },
+    "ttp": {
+        "ttp", "tehrik-i-taliban pakistan",
+        "tehreek-e-taliban pakistan",
+    },
+    "hamas": {
+        "hamas",
+    },
+    "hezbollah": {
+        "hezbollah", "hizballah", "hizbollah",
+    },
+    "pij": {
+        "palestinian islamic jihad", "islamic jihad",
+    },
+    "houthis": {
+        "houthis", "houthi", "ansar allah",
+    },
+    "lashkar_e_taiba": {
+        "lashkar-e-taiba", "lashkar e taiba", "let",
+    },
+    "jaish_e_mohammed": {
+        "jaish-e-mohammed", "jaish e mohammed", "jem",
+    },
+}
+
+
+COUNTRY_CANONICAL = {
+    "united states": {
+        "united states", "u.s.", "u.s", "usa", "america", "american",
+    },
+    "united kingdom": {
+        "united kingdom", "u.k.", "u.k", "uk", "britain", "british",
+    },
+    "afghanistan": {
+        "afghanistan", "afghan",
+    },
+    "pakistan": {
+        "pakistan", "pakistani",
+    },
+    "india": {
+        "india", "indian",
+    },
+    "israel": {
+        "israel", "israeli",
+    },
+    "palestinian territory": {
+        "palestine", "palestinian", "gaza", "west bank",
+    },
+    "lebanon": {
+        "lebanon", "lebanese",
+    },
+    "iraq": {
+        "iraq", "iraqi",
+    },
+    "syria": {
+        "syria", "syrian",
+    },
+    "iran": {
+        "iran", "iranian",
+    },
+    "turkiye": {
+        "turkey", "turkiye", "türkiye", "turkish",
+    },
+    "russia": {
+        "russia", "russian",
+    },
+    "ukraine": {
+        "ukraine", "ukrainian",
+    },
+    "somalia": {
+        "somalia", "somali",
+    },
+    "kenya": {
+        "kenya", "kenyan",
+    },
+    "nigeria": {
+        "nigeria", "nigerian",
+    },
+    "niger": {
+        "niger", "nigerien",
+    },
+    "mali": {
+        "mali", "malian",
+    },
+    "burkina faso": {
+        "burkina faso", "burkinabe", "burkinabè",
+    },
+    "mozambique": {
+        "mozambique", "mozambican",
+    },
+    "egypt": {
+        "egypt", "egyptian",
+    },
+    "france": {
+        "france", "french",
+    },
+    "germany": {
+        "germany", "german",
+    },
+    "belgium": {
+        "belgium", "belgian",
+    },
+    "canada": {
+        "canada", "canadian",
+    },
+    "australia": {
+        "australia", "australian",
+    },
+    "philippines": {
+        "philippines", "philippine", "filipino",
+    },
+    "malaysia": {
+        "malaysia", "malaysian",
+    },
+    "indonesia": {
+        "indonesia", "indonesian",
+    },
+    "tunisia": {
+        "tunisia", "tunisian",
+    },
+    "morocco": {
+        "morocco", "moroccan",
+    },
+    "algeria": {
+        "algeria", "algerian",
+    },
+    "libya": {
+        "libya", "libyan",
+    },
+    "yemen": {
+        "yemen", "yemeni",
+    },
+    "saudi arabia": {
+        "saudi arabia", "saudi",
+    },
+    "united arab emirates": {
+        "united arab emirates", "uae", "emirati",
+    },
+}
+
+
+def ascii_text(text):
+    value = clean_text(text)
+
+    value = unicodedata.normalize(
+        "NFKD",
+        value,
+    )
+
+    value = "".join(
+        character
+        for character in value
+        if not unicodedata.combining(
+            character
+        )
+    )
+
+    return value
+
+
+def normalize_event_text(text):
+    value = ascii_text(
+        text
+    ).lower()
+
+    value = re.sub(
+        r"https?://\S+",
+        " ",
+        value,
+    )
+
+    value = re.sub(
+        r"[^a-z0-9$€£%'\-\s]",
+        " ",
+        value,
+    )
+
+    value = re.sub(
+        r"\s+",
+        " ",
+        value,
+    )
+
+    return value.strip()
+
+
+def canonical_url(url):
+    if not url:
+        return ""
+
+    try:
+        parts = urlsplit(
+            url
+        )
+
+        return urlunsplit(
+            (
+                parts.scheme.lower(),
+                parts.netloc.lower(),
+                parts.path.rstrip("/"),
+                "",
+                "",
+            )
+        )
+
+    except Exception:
+        return str(url).strip()
+
+
+def meaningful_tokens(text):
+    normalized = normalize_event_text(
+        text
+    )
+
+    tokens = []
+
+    for token in normalized.split():
+        if token in STOPWORDS:
+            continue
+
+        if token in DEDUP_GENERIC_WORDS:
+            continue
+
+        if len(token) <= 2:
+            continue
+
+        tokens.append(
+            token
+        )
+
+    return set(
+        tokens
+    )
+
+
+def jaccard(
+    values1,
+    values2,
+):
+    set1 = set(
+        values1
+    )
+
+    set2 = set(
+        values2
+    )
+
+    if not set1 or not set2:
         return 0.0
+
+    return (
+        len(
+            set1 & set2
+        )
+        /
+        len(
+            set1 | set2
+        )
+    )
+
+
+def containment_similarity(
+    values1,
+    values2,
+):
+    set1 = set(
+        values1
+    )
+
+    set2 = set(
+        values2
+    )
+
+    if not set1 or not set2:
+        return 0.0
+
+    shared = len(
+        set1 & set2
+    )
+
+    return shared / min(
+        len(set1),
+        len(set2),
+    )
+
+
+def extract_named_entities(text):
+    """
+    Lightweight named-entity extraction for headlines.
+    Multi-word capitalized names and acronyms are strong dedup clues.
+    """
+
+    original = clean_text(
+        text
+    )
+
+    candidates = re.findall(
+        r"\b(?:[A-Z][A-Za-zÀ-ÿ'\-]{2,}|[A-Z]{2,})"
+        r"(?:\s+(?:[A-Z][A-Za-zÀ-ÿ'\-]{2,}|[A-Z]{2,})){0,4}\b",
+        original,
+    )
+
+    entities = set()
+
+    for candidate in candidates:
+        normalized = normalize_event_text(
+            candidate
+        )
+
+        words = normalized.split()
+
+        if not words:
+            continue
+
+        if all(
+            word in STOPWORDS
+            or
+            word in DEDUP_GENERIC_WORDS
+            for word in words
+        ):
+            continue
+
+        if (
+            len(words) == 1
+            and
+            len(words[0]) < 4
+            and
+            not candidate.isupper()
+        ):
+            continue
+
+        entities.add(
+            normalized
+        )
+
+    return entities
+
+
+def extract_actor_families(text):
+    normalized = (
+        " "
+        +
+        normalize_event_text(
+            text
+        )
+        +
+        " "
+    )
+
+    actors = set()
+
+    for canonical, aliases in ACTOR_ALIASES.items():
+        for alias in aliases:
+            pattern = (
+                r"(?<![a-z0-9])"
+                +
+                re.escape(
+                    normalize_event_text(
+                        alias
+                    )
+                )
+                +
+                r"(?![a-z0-9])"
+            )
+
+            if re.search(
+                pattern,
+                normalized,
+            ):
+                actors.add(
+                    canonical
+                )
+                break
+
+    return actors
+
+
+def extract_action_families(text):
+    normalized = (
+        " "
+        +
+        normalize_event_text(
+            text
+        )
+        +
+        " "
+    )
+
+    actions = set()
+
+    for family, terms in ACTION_FAMILIES.items():
+        for term in terms:
+            normalized_term = normalize_event_text(
+                term
+            )
+
+            if (
+                " "
+                +
+                normalized_term
+                +
+                " "
+            ) in normalized:
+                actions.add(
+                    family
+                )
+                break
+
+            pattern = (
+                r"(?<![a-z0-9])"
+                +
+                re.escape(
+                    normalized_term
+                )
+                +
+                r"(?![a-z0-9])"
+            )
+
+            if re.search(
+                pattern,
+                normalized,
+            ):
+                actions.add(
+                    family
+                )
+                break
+
+    return actions
+
+
+def extract_country_families(text):
+    normalized = (
+        " "
+        +
+        normalize_event_text(
+            text
+        )
+        +
+        " "
+    )
+
+    found = set()
+
+    for canonical, aliases in COUNTRY_CANONICAL.items():
+        for alias in aliases:
+            normalized_alias = normalize_event_text(
+                alias
+            )
+
+            pattern = (
+                r"(?<![a-z0-9])"
+                +
+                re.escape(
+                    normalized_alias
+                )
+                +
+                r"(?![a-z0-9])"
+            )
+
+            if re.search(
+                pattern,
+                normalized,
+            ):
+                found.add(
+                    canonical
+                )
+                break
+
+    return found
+
+
+def extract_numbers(text):
+    normalized = normalize_event_text(
+        text
+    )
+
+    numbers = set(
+        re.findall(
+            r"(?:[$€£]\s*)?\b\d+(?:[.,]\d+)?(?:\s*(?:million|billion|thousand|m|bn))?\b",
+            normalized,
+        )
+    )
+
+    # Years are weak evidence and can make unrelated stories look alike.
+    return {
+        number
+        for number in numbers
+        if not re.fullmatch(
+            r"(?:19|20)\d{2}",
+            number.strip(),
+        )
+    }
+
+
+def event_datetime(event):
+    published = event.get(
+        "published"
+    )
+
+    if not published:
+        return None
+
+    try:
+        dt = datetime.fromisoformat(
+            published
+        )
+
+        if dt.tzinfo is None:
+            dt = dt.replace(
+                tzinfo=timezone.utc
+            )
+
+        return dt.astimezone(
+            timezone.utc
+        )
+
+    except Exception:
+        return None
+
+
+def event_variants(event):
+    variants = [
+        {
+            "title":
+                event.get(
+                    "title",
+                    "",
+                ),
+            "summary":
+                event.get(
+                    "summary",
+                    "",
+                ),
+            "source":
+                event.get(
+                    "source",
+                    "",
+                ),
+            "url":
+                event.get(
+                    "url",
+                    "",
+                ),
+            "published":
+                event.get(
+                    "published",
+                ),
+        }
+    ]
+
+    for article in event.get(
+        "related_articles",
+        [],
+    ):
+        if not isinstance(
+            article,
+            dict,
+        ):
+            continue
+
+        variants.append(
+            {
+                "title":
+                    article.get(
+                        "title",
+                        "",
+                    ),
+                "summary":
+                    article.get(
+                        "summary",
+                        "",
+                    ),
+                "source":
+                    article.get(
+                        "source",
+                        "",
+                    ),
+                "url":
+                    article.get(
+                        "url",
+                        "",
+                    ),
+                "published":
+                    article.get(
+                        "published",
+                    ),
+            }
+        )
+
+    return variants[
+        :MAX_RELATED_ARTICLES
+    ]
+
+
+def build_profile(event):
+    title = clean_text(
+        event.get(
+            "title",
+            "",
+        )
+    )
+
+    summary = clean_text(
+        event.get(
+            "summary",
+            "",
+        )
+    )
+
+    combined = (
+        title
+        +
+        " "
+        +
+        summary
+    )
+
+    normalized_title = normalize_event_text(
+        title
+    )
+
+    title_tokens = meaningful_tokens(
+        title
+    )
+
+    summary_tokens = meaningful_tokens(
+        summary
+    )
+
+    return {
+        "normalized_title":
+            normalized_title,
+        "title_tokens":
+            title_tokens,
+        "summary_tokens":
+            summary_tokens,
+        "entities":
+            extract_named_entities(
+                title
+            ),
+        "actors":
+            extract_actor_families(
+                combined
+            ),
+        "actions":
+            extract_action_families(
+                combined
+            ),
+        "countries":
+            extract_country_families(
+                combined
+            ),
+        "numbers":
+            extract_numbers(
+                combined
+            ),
+        "url":
+            canonical_url(
+                event.get(
+                    "url",
+                    "",
+                )
+            ),
+    }
+
+
+def profile_pair_score(
+    event1,
+    event2,
+):
+    profile1 = build_profile(
+        event1
+    )
+
+    profile2 = build_profile(
+        event2
+    )
+
+    if (
+        profile1[
+            "url"
+        ]
+        and
+        profile1[
+            "url"
+        ]
+        ==
+        profile2[
+            "url"
+        ]
+    ):
+        return (
+            True,
+            1.0,
+            "same_url",
+        )
+
+    title1 = profile1[
+        "normalized_title"
+    ]
+
+    title2 = profile2[
+        "normalized_title"
+    ]
+
+    if not title1 or not title2:
+        return (
+            False,
+            0.0,
+            "missing_title",
+        )
+
+    if title1 == title2:
+        return (
+            True,
+            0.99,
+            "same_normalized_title",
+        )
+
+    dt1 = event_datetime(
+        event1
+    )
+
+    dt2 = event_datetime(
+        event2
+    )
+
+    day_gap = None
+
+    if dt1 and dt2:
+        day_gap = abs(
+            (
+                dt1
+                -
+                dt2
+            ).total_seconds()
+        ) / 86400.0
+
+        if day_gap > MAX_DEDUP_WINDOW_DAYS:
+            return (
+                False,
+                0.0,
+                "outside_time_window",
+            )
 
     sequence = SequenceMatcher(
         None,
-        a,
-        b,
+        title1,
+        title2,
     ).ratio()
 
-    tokens_a = set(a.split())
-    tokens_b = set(b.split())
+    title_jaccard = jaccard(
+        profile1[
+            "title_tokens"
+        ],
+        profile2[
+            "title_tokens"
+        ],
+    )
 
-    if not tokens_a or not tokens_b:
-        overlap = 0.0
-    else:
-        overlap = (
-            len(tokens_a & tokens_b)
-            /
-            len(tokens_a | tokens_b)
+    title_containment = containment_similarity(
+        profile1[
+            "title_tokens"
+        ],
+        profile2[
+            "title_tokens"
+        ],
+    )
+
+    lexical = max(
+        sequence,
+        title_jaccard,
+        title_containment,
+    )
+
+    summary_overlap = jaccard(
+        profile1[
+            "summary_tokens"
+        ],
+        profile2[
+            "summary_tokens"
+        ],
+    )
+
+    entity_overlap = containment_similarity(
+        profile1[
+            "entities"
+        ],
+        profile2[
+            "entities"
+        ],
+    )
+
+    actor_overlap = containment_similarity(
+        profile1[
+            "actors"
+        ],
+        profile2[
+            "actors"
+        ],
+    )
+
+    action_overlap = containment_similarity(
+        profile1[
+            "actions"
+        ],
+        profile2[
+            "actions"
+        ],
+    )
+
+    country_overlap = containment_similarity(
+        profile1[
+            "countries"
+        ],
+        profile2[
+            "countries"
+        ],
+    )
+
+    number_overlap = containment_similarity(
+        profile1[
+            "numbers"
+        ],
+        profile2[
+            "numbers"
+        ],
+    )
+
+    shared_title_tokens = len(
+        profile1[
+            "title_tokens"
+        ]
+        &
+        profile2[
+            "title_tokens"
+        ]
+    )
+
+    # Two articles that clearly concern different countries should
+    # not be merged merely because the same organisation is involved.
+    country_conflict = (
+        bool(
+            profile1[
+                "countries"
+            ]
+        )
+        and
+        bool(
+            profile2[
+                "countries"
+            ]
+        )
+        and
+        not (
+            profile1[
+                "countries"
+            ]
+            &
+            profile2[
+                "countries"
+            ]
+        )
+    )
+
+    if country_conflict:
+        return (
+            False,
+            lexical,
+            "country_conflict",
         )
 
-    return max(
-        sequence,
-        overlap,
+    weighted = (
+        lexical
+        *
+        0.42
+        +
+        summary_overlap
+        *
+        0.12
+        +
+        entity_overlap
+        *
+        0.16
+        +
+        actor_overlap
+        *
+        0.10
+        +
+        action_overlap
+        *
+        0.08
+        +
+        country_overlap
+        *
+        0.07
+        +
+        number_overlap
+        *
+        0.05
     )
+
+    if day_gap is not None:
+        if day_gap <= 1.0:
+            weighted += 0.06
+
+        elif day_gap <= 2.0:
+            weighted += 0.03
+
+        elif day_gap >= 5.0:
+            weighted -= 0.04
+
+    strong_anchor = (
+        entity_overlap >= 0.50
+        or
+        actor_overlap >= 1.0
+        or
+        country_overlap >= 1.0
+    )
+
+    same_action_context = (
+        action_overlap >= 1.0
+        or
+        not profile1[
+            "actions"
+        ]
+        or
+        not profile2[
+            "actions"
+        ]
+    )
+
+    # Very similar headline: usually the same wire story or rewrite.
+    if lexical >= 0.86:
+        return (
+            True,
+            max(
+                weighted,
+                lexical,
+            ),
+            "very_high_title_similarity",
+        )
+
+    # Strong lexical match + meaningful shared words + contextual anchor.
+    if (
+        lexical >= 0.70
+        and
+        shared_title_tokens >= 4
+        and
+        strong_anchor
+    ):
+        return (
+            True,
+            max(
+                weighted,
+                lexical,
+            ),
+            "title_plus_anchor",
+        )
+
+    # Strong CT signature even when editors radically rewrite the title.
+    # Same actor + same country + same action, with at least two shared
+    # meaningful headline tokens, is a strong indication of one event.
+    if (
+        actor_overlap >= 1.0
+        and
+        country_overlap >= 1.0
+        and
+        action_overlap >= 1.0
+        and
+        shared_title_tokens >= 2
+        and
+        lexical >= 0.35
+        and
+        (
+            day_gap is None
+            or
+            day_gap <= 3.0
+        )
+        and
+        weighted >= 0.45
+    ):
+        return (
+            True,
+            weighted,
+            "actor_country_action_signature",
+        )
+
+    # Paraphrased headline: same entities/actor, same CT action and
+    # compatible geography within a short time window.
+    if (
+        lexical >= 0.44
+        and
+        strong_anchor
+        and
+        same_action_context
+        and
+        (
+            actor_overlap >= 1.0
+            or
+            country_overlap >= 1.0
+            or
+            (
+                entity_overlap >= 0.50
+                and
+                shared_title_tokens >= 4
+            )
+        )
+        and
+        (
+            day_gap is None
+            or
+            day_gap <= 3.0
+        )
+        and
+        weighted >= 0.56
+    ):
+        return (
+            True,
+            weighted,
+            "paraphrase_entity_context",
+        )
+
+    # Titles may be radically rewritten while summaries preserve the
+    # same facts.
+    if (
+        summary_overlap >= 0.58
+        and
+        strong_anchor
+        and
+        same_action_context
+        and
+        (
+            day_gap is None
+            or
+            day_gap <= 3.0
+        )
+    ):
+        return (
+            True,
+            max(
+                weighted,
+                summary_overlap,
+            ),
+            "summary_fact_overlap",
+        )
+
+    # Very strong combination of entity + actor + place/action.
+    if (
+        entity_overlap >= 0.70
+        and
+        (
+            actor_overlap >= 1.0
+            or
+            country_overlap >= 1.0
+        )
+        and
+        same_action_context
+        and
+        weighted >= 0.50
+        and
+        (
+            day_gap is None
+            or
+            day_gap <= 2.0
+        )
+    ):
+        return (
+            True,
+            weighted,
+            "entity_actor_event_signature",
+        )
+
+    return (
+        False,
+        weighted,
+        "different_event",
+    )
+
+
+def event_match(
+    incoming,
+    existing,
+):
+    best_match = (
+        False,
+        0.0,
+        "different_event",
+    )
+
+    incoming_variants = event_variants(
+        incoming
+    )
+
+    existing_variants = event_variants(
+        existing
+    )
+
+    for incoming_variant in incoming_variants:
+        for existing_variant in existing_variants:
+            match = profile_pair_score(
+                incoming_variant,
+                existing_variant,
+            )
+
+            if match[1] > best_match[1]:
+                best_match = match
+
+            if (
+                match[0]
+                and
+                match[1] >= 0.90
+            ):
+                return match
+
+    return best_match
 
 
 def same_event(
     event1,
     event2,
 ):
-    if (
-        event1.get("url")
-        and
-        event1.get("url")
-        ==
-        event2.get("url")
-    ):
-        return True
+    return event_match(
+        event1,
+        event2,
+    )[0]
 
-    date1 = event1.get(
-        "published"
+
+def article_identity(article):
+    url = canonical_url(
+        article.get(
+            "url",
+            "",
+        )
     )
 
-    date2 = event2.get(
-        "published"
-    )
+    if url:
+        return (
+            "url:"
+            +
+            url
+        )
 
-    if date1 and date2:
-        try:
-            dt1 = datetime.fromisoformat(
-                date1
-            )
-
-            dt2 = datetime.fromisoformat(
-                date2
-            )
-
-            if abs(
-                (dt1 - dt2).days
-            ) > 3:
-                return False
-
-        except Exception:
-            pass
-
-    score = title_similarity(
-        event1.get("title", ""),
-        event2.get("title", ""),
-    )
-
-    tokens1 = set(
-        normalize_title(
-            event1.get(
+    return (
+        "title:"
+        +
+        normalize_event_text(
+            article.get(
                 "title",
                 "",
             )
-        ).split()
-    )
-
-    tokens2 = set(
-        normalize_title(
-            event2.get(
-                "title",
+        )
+        +
+        "|"
+        +
+        str(
+            article.get(
+                "published",
                 "",
             )
-        ).split()
+        )[:10]
     )
 
-    shared = tokens1 & tokens2
 
-    if score >= 0.82:
-        return True
+def ensure_event_metadata(event):
+    sources = event.get(
+        "sources"
+    )
+
+    if not isinstance(
+        sources,
+        list,
+    ):
+        sources = []
+
+    source = clean_text(
+        event.get(
+            "source",
+            "",
+        )
+    )
 
     if (
-        score >= 0.60
+        source
         and
-        len(shared) >= 5
+        source not in sources
     ):
-        return True
+        sources.append(
+            source
+        )
 
-    return False
+    event[
+        "sources"
+    ] = sources
+
+    related = event.get(
+        "related_articles"
+    )
+
+    if not isinstance(
+        related,
+        list,
+    ):
+        related = []
+
+    event[
+        "related_articles"
+    ] = related[
+        :MAX_RELATED_ARTICLES
+    ]
+
+    event[
+        "source_count"
+    ] = len(
+        set(
+            sources
+        )
+    )
+
+    event[
+        "article_count"
+    ] = max(
+        int(
+            event.get(
+                "article_count",
+                1,
+            )
+            or
+            1
+        ),
+        1,
+    )
+
+    if not event.get(
+        "first_reported"
+    ):
+        event[
+            "first_reported"
+        ] = event.get(
+            "published"
+        )
+
+    if not event.get(
+        "last_reported"
+    ):
+        event[
+            "last_reported"
+        ] = event.get(
+            "published"
+        )
 
 
 def merge_event(
     existing,
     new,
+    match_score=None,
+    match_method=None,
 ):
-    existing["source_count"] = (
-        existing.get(
-            "source_count",
-            1,
-        )
-        +
-        1
+    ensure_event_metadata(
+        existing
     )
 
-    existing_categories = existing.get(
-        "categories",
-        [
-            existing.get(
-                "category"
-            )
-        ],
+    ensure_event_metadata(
+        new
     )
 
-    new_categories = new.get(
-        "categories",
-        [
-            new.get(
-                "category"
-            )
-        ],
-    )
-
-    for category in new_categories:
-        if (
-            category
-            and
-            category not in existing_categories
-        ):
-            existing_categories.append(
+    existing_categories = list(
+        dict.fromkeys(
+            [
                 category
-            )
-
-    existing["categories"] = (
-        existing_categories
+                for category in (
+                    existing.get(
+                        "categories",
+                        [
+                            existing.get(
+                                "category"
+                            )
+                        ],
+                    )
+                    +
+                    new.get(
+                        "categories",
+                        [
+                            new.get(
+                                "category"
+                            )
+                        ],
+                    )
+                )
+                if category
+            ]
+        )
     )
 
+    existing[
+        "categories"
+    ] = existing_categories
+
+    # Keep a history of genuinely different articles/headlines.
+    known_article_ids = {
+        article_identity(
+            {
+                "title":
+                    existing.get(
+                        "title",
+                        "",
+                    ),
+                "url":
+                    existing.get(
+                        "url",
+                        "",
+                    ),
+                "published":
+                    existing.get(
+                        "published",
+                    ),
+            }
+        )
+    }
+
+    for article in existing.get(
+        "related_articles",
+        [],
+    ):
+        known_article_ids.add(
+            article_identity(
+                article
+            )
+        )
+
+    candidate_article = {
+        "title":
+            new.get(
+                "title",
+                "",
+            ),
+        "summary":
+            new.get(
+                "summary",
+                "",
+            ),
+        "published":
+            new.get(
+                "published"
+            ),
+        "source":
+            new.get(
+                "source",
+                "",
+            ),
+        "url":
+            new.get(
+                "url",
+                "",
+            ),
+    }
+
+    candidate_id = article_identity(
+        candidate_article
+    )
+
+    new_unique_article = (
+        candidate_id
+        not in known_article_ids
+    )
+
+    if new_unique_article:
+        existing[
+            "related_articles"
+        ].append(
+            candidate_article
+        )
+
+        existing[
+            "related_articles"
+        ] = existing[
+            "related_articles"
+        ][
+            :MAX_RELATED_ARTICLES
+        ]
+
+        existing[
+            "article_count"
+        ] = (
+            existing.get(
+                "article_count",
+                1,
+            )
+            +
+            1
+        )
+
+    for source in new.get(
+        "sources",
+        [],
+    ):
+        if (
+            source
+            and
+            source not in existing[
+                "sources"
+            ]
+        ):
+            existing[
+                "sources"
+            ].append(
+                source
+            )
+
+    existing[
+        "source_count"
+    ] = len(
+        set(
+            existing[
+                "sources"
+            ]
+        )
+    )
+
+    # Keep the best editorial representative as the cluster headline.
     if (
         source_rank(
             new.get(
@@ -1045,71 +2433,287 @@ def merge_event(
             )
         )
     ):
-        existing["source"] = new.get(
+        old_representative = {
+            "title":
+                existing.get(
+                    "title",
+                    "",
+                ),
+            "summary":
+                existing.get(
+                    "summary",
+                    "",
+                ),
+            "published":
+                existing.get(
+                    "published"
+                ),
+            "source":
+                existing.get(
+                    "source",
+                    "",
+                ),
+            "url":
+                existing.get(
+                    "url",
+                    "",
+                ),
+        }
+
+        old_id = article_identity(
+            old_representative
+        )
+
+        related_ids = {
+            article_identity(
+                article
+            )
+            for article in existing.get(
+                "related_articles",
+                [],
+            )
+        }
+
+        if (
+            old_id
+            not in related_ids
+            and
+            old_id
+            !=
+            candidate_id
+        ):
+            existing[
+                "related_articles"
+            ].append(
+                old_representative
+            )
+
+        existing[
+            "source"
+        ] = new.get(
             "source"
         )
 
-        existing["url"] = new.get(
+        existing[
+            "url"
+        ] = new.get(
             "url"
         )
 
-        existing["title"] = new.get(
+        existing[
+            "title"
+        ] = new.get(
             "title"
         )
 
-        existing["summary"] = new.get(
+        existing[
+            "summary"
+        ] = new.get(
             "summary"
         )
 
-    old_date = existing.get(
-        "published"
-    )
+    dates = [
+        value
+        for value in (
+            existing.get(
+                "first_reported"
+            ),
+            existing.get(
+                "published"
+            ),
+            new.get(
+                "published"
+            ),
+        )
+        if value
+    ]
 
-    new_date = new.get(
-        "published"
-    )
+    if dates:
+        existing[
+            "first_reported"
+        ] = min(
+            dates
+        )
 
-    if old_date and new_date:
-        if new_date < old_date:
-            existing["published"] = (
-                new_date
+        existing[
+            "published"
+        ] = existing[
+            "first_reported"
+        ]
+
+        existing[
+            "last_reported"
+        ] = max(
+            dates
+            +
+            [
+                existing.get(
+                    "last_reported"
+                )
+            ]
+            if existing.get(
+                "last_reported"
             )
+            else dates
+        )
+
+    if match_score is not None:
+        existing[
+            "dedup_confidence"
+        ] = round(
+            max(
+                float(
+                    existing.get(
+                        "dedup_confidence",
+                        0.0,
+                    )
+                    or
+                    0.0
+                ),
+                float(
+                    match_score
+                ),
+            ),
+            3,
+        )
+
+    if match_method:
+        methods = existing.get(
+            "dedup_methods",
+            [],
+        )
+
+        if not isinstance(
+            methods,
+            list,
+        ):
+            methods = []
+
+        if match_method not in methods:
+            methods.append(
+                match_method
+            )
+
+        existing[
+            "dedup_methods"
+        ] = methods
 
 
 def deduplicate_events(records):
     print()
-    print("Deduplicating events...")
+    print(
+        "Deduplicating events with multi-signal event clustering..."
+    )
+
+    prepared = []
+
+    for record in records:
+        ensure_event_metadata(
+            record
+        )
+
+        prepared.append(
+            record
+        )
+
+    # Chronological ordering makes candidate comparison much cheaper:
+    # once an existing cluster is more than MAX_DEDUP_WINDOW_DAYS away,
+    # older clusters do not need to be checked.
+    prepared.sort(
+        key=lambda event:
+            (
+                event_datetime(
+                    event
+                )
+                or
+                datetime.min.replace(
+                    tzinfo=timezone.utc
+                )
+            )
+    )
 
     events = []
 
+    method_counts = Counter()
+
     for number, record in enumerate(
-        records,
+        prepared,
         start=1,
     ):
-        duplicate = None
+        record_dt = event_datetime(
+            record
+        )
 
-        for existing in events:
-            if same_event(
+        best_existing = None
+        best_score = 0.0
+        best_method = None
+
+        for existing in reversed(
+            events
+        ):
+            existing_dt = event_datetime(
+                existing
+            )
+
+            if (
+                record_dt
+                and
+                existing_dt
+            ):
+                gap_days = (
+                    record_dt
+                    -
+                    existing_dt
+                ).total_seconds() / 86400.0
+
+                if gap_days > MAX_DEDUP_WINDOW_DAYS:
+                    break
+
+            matched, score, method = event_match(
                 record,
                 existing,
-            ):
-                duplicate = existing
-                break
+            )
 
-        if duplicate is None:
-            events.append(record)
+            if (
+                matched
+                and
+                score > best_score
+            ):
+                best_existing = existing
+                best_score = score
+                best_method = method
+
+                if score >= 0.98:
+                    break
+
+        if best_existing is None:
+            events.append(
+                record
+            )
+
         else:
             merge_event(
-                duplicate,
+                best_existing,
                 record,
+                best_score,
+                best_method,
             )
+
+            method_counts[
+                best_method
+            ] += 1
 
         if number % 250 == 0:
             print(
                 f"   Processed "
                 f"{number}/"
-                f"{len(records)}"
+                f"{len(prepared)}"
             )
+
+    for event in events:
+        ensure_event_metadata(
+            event
+        )
 
     print(
         f"Raw accepted records: "
@@ -1117,9 +2721,25 @@ def deduplicate_events(records):
     )
 
     print(
-        f"Unique events: "
+        f"Unique event clusters: "
         f"{len(events)}"
     )
+
+    print(
+        f"Articles merged: "
+        f"{len(records) - len(events)}"
+    )
+
+    if method_counts:
+        print(
+            "Merge methods:"
+        )
+
+        for method, count in method_counts.most_common():
+            print(
+                f"   {method}: "
+                f"{count}"
+            )
 
     return events
 
@@ -1194,6 +2814,8 @@ def save_database(events):
             "Google News RSS",
         "relevance_filter":
             "CT event relevance filter V3",
+        "deduplication":
+            "Multi-signal event clustering V4",
         "search_query_count":
             sum(
                 len(terms)
