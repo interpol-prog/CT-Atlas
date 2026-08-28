@@ -853,7 +853,7 @@ body.locked #main {
 
 
 /* =========================================================
-   INTERPOL OFFICES LAYER
+   INTERPOL OFFICES LAYER — RED PULSING MARKERS
 ========================================================= */
 
 .interpol-office-marker {
@@ -861,16 +861,42 @@ body.locked #main {
     align-items: center;
     justify-content: center;
     border: 2px solid #ffffff;
-    box-shadow: 0 2px 7px rgba(0,0,0,.55);
+    background: #d71920 !important;
+    box-shadow:
+        0 0 0 0 rgba(215,25,32,.85),
+        0 2px 8px rgba(0,0,0,.6);
     font-weight: bold;
     color: #ffffff;
+    animation: interpolOfficePulse 1.25s infinite;
+}
+
+@keyframes interpolOfficePulse {
+    0% {
+        box-shadow:
+            0 0 0 0 rgba(215,25,32,.85),
+            0 2px 8px rgba(0,0,0,.6);
+        filter: brightness(1);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 10px rgba(215,25,32,0),
+            0 2px 12px rgba(0,0,0,.7);
+        filter: brightness(1.4);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 0 rgba(215,25,32,0),
+            0 2px 8px rgba(0,0,0,.6);
+        filter: brightness(1);
+    }
 }
 
 .interpol-office-hq {
     width: 34px;
     height: 34px;
     border-radius: 7px;
-    background: #0056a6;
     font-size: 10px;
 }
 
@@ -878,7 +904,6 @@ body.locked #main {
     width: 31px;
     height: 31px;
     border-radius: 7px;
-    background: #0072bc;
     font-size: 9px;
 }
 
@@ -886,7 +911,6 @@ body.locked #main {
     width: 27px;
     height: 27px;
     border-radius: 50%;
-    background: #2678b8;
     font-size: 8px;
 }
 
@@ -894,7 +918,6 @@ body.locked #main {
     width: 27px;
     height: 27px;
     transform: rotate(45deg);
-    background: #506f8a;
     font-size: 8px;
 }
 
@@ -906,7 +929,6 @@ body.locked #main {
     width: 27px;
     height: 27px;
     border-radius: 4px;
-    background: #4f8c7a;
     font-size: 8px;
 }
 
@@ -958,27 +980,30 @@ body.locked #main {
     height: 11px;
     display: inline-block;
     border: 1px solid white;
-    background: #2678b8;
+    background: #d71920 !important;
+    box-shadow: 0 0 6px rgba(215,25,32,.8);
 }
 
 .office-legend-symbol.hq {
     border-radius: 2px;
-    background: #0056a6;
 }
 
 .office-legend-symbol.regional {
     border-radius: 50%;
-    background: #2678b8;
 }
 
 .office-legend-symbol.representative {
     transform: rotate(45deg);
-    background: #506f8a;
 }
 
 .office-legend-symbol.liaison {
     border-radius: 2px;
-    background: #4f8c7a;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .interpol-office-marker {
+        animation: none;
+    }
 }
 
 
@@ -1001,33 +1026,44 @@ body.locked #main {
 
 
 /* =========================================================
-   CHRONOLOGY PANEL
+   EVENT LIST MODAL
+========================================================= */
+
+/* =========================================================
+   EVENT LIST MODAL — NOT A RIGHT SIDEBAR
 ========================================================= */
 
 #chronologyPanel {
     position: fixed;
-    top: 78px;
-    right: 0;
+    inset: 78px 0 0 0;
     z-index: 5000;
-    width: 470px;
-    max-width: calc(100vw - 40px);
-    height: calc(100vh - 78px);
-    display: flex;
-    flex-direction: column;
-    background: #111d28;
-    color: white;
-    border-left: 1px solid #334554;
-    box-shadow: -16px 0 38px rgba(0,0,0,.34);
-    transform: translateX(101%);
-    transition: transform .22s ease;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    background: rgba(4,10,15,.72);
+    backdrop-filter: blur(2px);
 }
 
 #chronologyPanel.open {
-    transform: translateX(0);
+    display: flex;
 }
 
 body.locked #chronologyPanel {
     visibility: hidden;
+}
+
+.chronology-modal {
+    width: min(1180px, 96vw);
+    height: min(820px, calc(100vh - 118px));
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #111d28;
+    color: white;
+    border: 1px solid #405563;
+    border-radius: 8px;
+    box-shadow: 0 22px 65px rgba(0,0,0,.58);
 }
 
 .chronology-header {
@@ -1035,7 +1071,7 @@ body.locked #chronologyPanel {
     align-items: flex-start;
     justify-content: space-between;
     gap: 14px;
-    padding: 18px 18px 13px 18px;
+    padding: 17px 18px 12px 18px;
     border-bottom: 1px solid #334554;
 }
 
@@ -1072,9 +1108,15 @@ body.locked #chronologyPanel {
 }
 
 .chronology-controls {
-    padding: 12px 14px;
+    padding: 11px 14px;
     border-bottom: 1px solid #2d3f4d;
     background: #17232e;
+}
+
+.chronology-control-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 8px;
 }
 
 #chronologySearch,
@@ -1096,11 +1138,46 @@ body.locked #chronologyPanel {
     border-color: #8aa7bd;
 }
 
-.chronology-filter-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.chronology-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 7px;
-    margin-top: 7px;
+    margin-top: 8px;
+}
+
+.chronology-action-button {
+    padding: 8px 11px;
+    border: 1px solid #405563;
+    border-radius: 4px;
+    background: #202f3b;
+    color: white;
+    cursor: pointer;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.chronology-action-button:hover {
+    background: #2b3e4c;
+}
+
+#chronologyExport {
+    background: #1f6545;
+    border-color: #33825e;
+}
+
+#chronologyExport:hover {
+    background: #287a56;
+}
+
+#chronologySelectionCount {
+    margin-left: auto;
+    color: #a9bac6;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
 }
 
 #chronologyCount {
@@ -1120,7 +1197,11 @@ body.locked #chronologyPanel {
 
 .chronology-item {
     position: relative;
-    padding: 12px 14px 13px 17px;
+    display: grid;
+    grid-template-columns: 30px 145px minmax(260px, 1fr) 190px 95px;
+    gap: 10px;
+    align-items: start;
+    padding: 11px 14px 11px 16px;
     border-bottom: 1px solid #263844;
     cursor: pointer;
     background: #111d28;
@@ -1150,34 +1231,25 @@ body.locked #chronologyPanel {
 .chronology-item.ai::before { background: #944c85; }
 
 .chronology-item.unmapped {
-    cursor: default;
     opacity: .72;
 }
 
-.chronology-topline {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 5px;
+.chronology-checkbox {
+    margin-top: 3px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
 }
 
 .chronology-date {
     color: #a9bac6;
     font-size: 10px;
     font-weight: bold;
+    line-height: 1.4;
 }
 
-.chronology-category {
-    flex: 0 0 auto;
-    padding: 3px 5px;
-    border: 1px solid #405563;
-    border-radius: 3px;
-    color: #c8d4dc;
-    font-size: 8px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: .45px;
+.chronology-main {
+    min-width: 0;
 }
 
 .chronology-title {
@@ -1188,16 +1260,29 @@ body.locked #chronologyPanel {
 }
 
 .chronology-meta {
-    margin-top: 6px;
+    margin-top: 5px;
     color: #8fa4b5;
     font-size: 10px;
-    line-height: 1.45;
+    line-height: 1.4;
 }
 
 .chronology-source {
-    margin-top: 4px;
-    color: #708796;
-    font-size: 9px;
+    color: #8fa4b5;
+    font-size: 10px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.chronology-category {
+    padding: 3px 5px;
+    border: 1px solid #405563;
+    border-radius: 3px;
+    color: #c8d4dc;
+    font-size: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: .45px;
+    text-align: center;
 }
 
 .chronology-empty {
@@ -1212,10 +1297,33 @@ body.locked #chronologyPanel {
     grid-column: span 2;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 900px) {
     #chronologyPanel {
-        width: 100vw;
-        max-width: 100vw;
+        padding: 8px;
+    }
+
+    .chronology-modal {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+
+    .chronology-control-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chronology-item {
+        grid-template-columns: 28px 105px 1fr;
+    }
+
+    .chronology-source,
+    .chronology-category {
+        display: none;
+    }
+
+    #chronologySelectionCount {
+        width: 100%;
+        margin-left: 0;
     }
 }
 
@@ -1487,7 +1595,7 @@ INTERPOL OFFICES
     class="layer-button"
     id="chronologyToggle"
 >
-CHRONOLOGY
+EVENT LIST
 </button>
 
 
@@ -1808,7 +1916,7 @@ Visible rate
 
 <div id="database-info">
 
-English-language open-source monitoring · contextual geolocation V6
+English-language open-source monitoring · contextual geolocation V6 · intelligent deduplication V4
 
 <br>
 
@@ -1840,77 +1948,121 @@ Automated daily update
     aria-hidden="true"
 >
 
-    <div class="chronology-header">
+    <div
+        class="chronology-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="chronologyHeading"
+    >
 
-        <div>
+        <div class="chronology-header">
 
-            <div class="chronology-heading">
-                EVENT CHRONOLOGY
+            <div>
+
+                <div
+                    class="chronology-heading"
+                    id="chronologyHeading"
+                >
+                    EVENT LIST
+                </div>
+
+                <div class="chronology-subtitle">
+                    Chronological intelligence feed · select events and export them to Excel
+                </div>
+
             </div>
 
-            <div class="chronology-subtitle">
-                Chronological intelligence feed · follows active map filters
+            <button
+                id="chronologyClose"
+                type="button"
+                aria-label="Close event list"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="chronology-controls">
+
+            <div class="chronology-control-grid">
+
+                <input
+                    id="chronologySearch"
+                    type="text"
+                    placeholder="Search the event list..."
+                >
+
+                <select id="chronologyCountry">
+                    <option value="">All countries</option>
+                </select>
+
+                <select id="chronologySort">
+
+                    <option value="newest">
+                        Newest first
+                    </option>
+
+                    <option value="oldest">
+                        Oldest first
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="chronology-actions">
+
+                <button
+                    class="chronology-action-button"
+                    id="chronologySelectAll"
+                    type="button"
+                >
+                    SELECT ALL SHOWN
+                </button>
+
+                <button
+                    class="chronology-action-button"
+                    id="chronologyClearSelection"
+                    type="button"
+                >
+                    CLEAR SELECTION
+                </button>
+
+                <button
+                    class="chronology-action-button"
+                    id="chronologyExport"
+                    type="button"
+                >
+                    EXPORT EXCEL
+                </button>
+
+                <span id="chronologySelectionCount">
+                    0 selected
+                </span>
+
             </div>
 
         </div>
 
-        <button
-            id="chronologyClose"
-            type="button"
-            aria-label="Close chronology"
-        >
-            ×
-        </button>
 
-    </div>
-
-
-    <div class="chronology-controls">
-
-        <input
-            id="chronologySearch"
-            type="text"
-            placeholder="Search chronology..."
-        >
-
-        <div class="chronology-filter-row">
-
-            <select id="chronologyCountry">
-                <option value="">All countries</option>
-            </select>
-
-            <select id="chronologySort">
-
-                <option value="newest">
-                    Newest first
-                </option>
-
-                <option value="oldest">
-                    Oldest first
-                </option>
-
-            </select>
-
+        <div id="chronologyCount">
+            —
         </div>
 
-    </div>
 
+        <div id="chronologyList">
 
-    <div id="chronologyCount">
-        —
-    </div>
+            <div class="chronology-empty">
+                Loading events...
+            </div>
 
-
-    <div id="chronologyList">
-
-        <div class="chronology-empty">
-            Loading events...
         </div>
 
     </div>
 
 </div>
-
 
 
 <script>
@@ -2035,6 +2187,11 @@ document.getElementById(
 
 <script
     src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"
+>
+</script>
+
+<script
+    src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"
 >
 </script>
 
@@ -2523,6 +2680,10 @@ let chronologySort =
 
 let chronologyOpen =
     false;
+
+
+const chronologySelectedKeys =
+    new Set();
 
 
 const eventMarkerIndex =
@@ -4261,7 +4422,7 @@ function updateTrends() {
 
 
 // ============================================================
-// EVENT CHRONOLOGY
+// EVENT LIST + EXCEL EXPORT
 // ============================================================
 
 function chronologyBaseEvents() {
@@ -4431,6 +4592,65 @@ function chronologyMatches(
 }
 
 
+function chronologyFilteredEvents() {
+
+    const events =
+        chronologyBaseEvents()
+        .filter(
+            chronologyMatches
+        );
+
+
+    events.sort(
+
+        (a,b) => {
+
+            const aTime =
+                new Date(
+                    a.published
+                    ||
+                    0
+                ).getTime();
+
+
+            const bTime =
+                new Date(
+                    b.published
+                    ||
+                    0
+                ).getTime();
+
+
+            return (
+
+                chronologySort
+                ===
+                "oldest"
+
+                ?
+
+                aTime
+                -
+                bTime
+
+                :
+
+                bTime
+                -
+                aTime
+
+            );
+
+        }
+
+    );
+
+
+    return events;
+
+}
+
+
 function updateChronologyCountryOptions(
     events
 ) {
@@ -4577,6 +4797,39 @@ function updateChronologyCountryOptions(
 }
 
 
+function updateChronologySelectionCount() {
+
+    const element =
+        document.getElementById(
+            "chronologySelectionCount"
+        );
+
+
+    if (
+        element
+    ) {
+
+        element.innerText =
+
+            chronologySelectedKeys.size
+
+            +
+
+            (
+                chronologySelectedKeys.size
+                ===
+                1
+                ?
+                " selected"
+                :
+                " selected"
+            );
+
+    }
+
+}
+
+
 function focusChronologyEvent(
     eventKey
 ) {
@@ -4649,6 +4902,11 @@ function focusChronologyEvent(
         eventMarkerIndex.get(
             eventKey
         );
+
+
+    setChronologyOpen(
+        false
+    );
 
 
     if (
@@ -4732,55 +4990,8 @@ function renderChronology() {
     );
 
 
-    let events =
-        baseEvents.filter(
-            chronologyMatches
-        );
-
-
-    events.sort(
-
-        (a,b) => {
-
-            const aTime =
-                new Date(
-                    a.published
-                    ||
-                    0
-                ).getTime();
-
-
-            const bTime =
-                new Date(
-                    b.published
-                    ||
-                    0
-                ).getTime();
-
-
-            return (
-
-                chronologySort
-                ===
-                "oldest"
-
-                ?
-
-                aTime
-                -
-                bTime
-
-                :
-
-                bTime
-                -
-                aTime
-
-            );
-
-        }
-
-    );
+    const events =
+        chronologyFilteredEvents();
 
 
     count.innerText =
@@ -4794,9 +5005,9 @@ function renderChronology() {
             ===
             1
             ?
-            " event"
+            " event shown"
             :
-            " events"
+            " events shown"
         )
 
         +
@@ -4822,6 +5033,9 @@ function renderChronology() {
 
     list.innerHTML =
         "";
+
+
+    updateChronologySelectionCount();
 
 
     if (
@@ -4874,12 +5088,6 @@ function renderChronology() {
 
             const mapped =
 
-                event.excluded_from_map
-                !==
-                true
-
-                &&
-
                 event.latitude
                 !=
                 null
@@ -4920,6 +5128,78 @@ function renderChronology() {
                     :
                     " unmapped"
                 );
+
+
+            const checkbox =
+                document.createElement(
+                    "input"
+                );
+
+
+            checkbox.type =
+                "checkbox";
+
+
+            checkbox.className =
+                "chronology-checkbox";
+
+
+            checkbox.checked =
+                chronologySelectedKeys.has(
+                    event._mapKey
+                );
+
+
+            checkbox.setAttribute(
+                "aria-label",
+                "Select event for Excel export"
+            );
+
+
+            checkbox.addEventListener(
+
+                "click",
+
+                function(clickEvent) {
+
+                    clickEvent.stopPropagation();
+
+                }
+
+            );
+
+
+            checkbox.addEventListener(
+
+                "change",
+
+                function() {
+
+                    if (
+                        this.checked
+                    ) {
+
+                        chronologySelectedKeys.add(
+                            event._mapKey
+                        );
+
+                    }
+
+
+                    else {
+
+                        chronologySelectedKeys.delete(
+                            event._mapKey
+                        );
+
+                    }
+
+
+                    updateChronologySelectionCount();
+
+                }
+
+            );
 
 
             const published =
@@ -4982,46 +5262,124 @@ function renderChronology() {
                 "Unknown source";
 
 
-            item.innerHTML = `
+            const sourceCount =
+                Number(
+                    event.source_count
+                    ||
+                    1
+                );
 
-                <div class="chronology-topline">
 
-                    <span class="chronology-date">
-                        ${escapeHtml(dateText)}
-                    </span>
+            const sourceLabel =
 
-                    <span class="chronology-category">
-                        ${escapeHtml(style.code)}
-                    </span>
+                sourceText
 
-                </div>
+                +
 
+                (
+                    sourceCount > 1
+                    ?
+                    " · "
+                    +
+                    sourceCount
+                    +
+                    " sources"
+                    :
+                    ""
+                );
+
+
+            const dateCell =
+                document.createElement(
+                    "div"
+                );
+
+
+            dateCell.className =
+                "chronology-date";
+
+
+            dateCell.textContent =
+                dateText;
+
+
+            const mainCell =
+                document.createElement(
+                    "div"
+                );
+
+
+            mainCell.className =
+                "chronology-main";
+
+
+            mainCell.innerHTML = `
 
                 <div class="chronology-title">
                     ${escapeHtml(event.title || "Untitled event")}
                 </div>
 
-
                 <div class="chronology-meta">
-
                     ${escapeHtml(chronologyLocationText(event))}
-
                     ·
-
                     ${escapeHtml(categoryText)}
-
-                </div>
-
-
-                <div class="chronology-source">
-
-                    ${escapeHtml(sourceText)}
-
-                    ${mapped ? " · Click to locate on map" : " · No mapped coordinates"}
-
+                    ${mapped ? " · Click row to locate" : " · No mapped coordinates"}
                 </div>
 
             `;
+
+
+            const sourceCell =
+                document.createElement(
+                    "div"
+                );
+
+
+            sourceCell.className =
+                "chronology-source";
+
+
+            sourceCell.textContent =
+                sourceLabel;
+
+
+            const categoryCell =
+                document.createElement(
+                    "div"
+                );
+
+
+            categoryCell.className =
+                "chronology-category";
+
+
+            categoryCell.textContent =
+                style.code;
+
+
+            item.appendChild(
+                checkbox
+            );
+
+
+            item.appendChild(
+                dateCell
+            );
+
+
+            item.appendChild(
+                mainCell
+            );
+
+
+            item.appendChild(
+                sourceCell
+            );
+
+
+            item.appendChild(
+                categoryCell
+            );
 
 
             if (
@@ -5109,9 +5467,378 @@ function setChronologyOpen(
 
         renderChronology();
 
+
+        setTimeout(
+
+            function() {
+
+                document.getElementById(
+                    "chronologySearch"
+                ).focus();
+
+            },
+
+            20
+
+        );
+
     }
 
 }
+
+
+function selectAllChronologyShown() {
+
+    chronologyFilteredEvents().forEach(
+
+        event => {
+
+            chronologySelectedKeys.add(
+                event._mapKey
+            );
+
+        }
+
+    );
+
+
+    renderChronology();
+
+}
+
+
+function clearChronologySelection() {
+
+    chronologySelectedKeys.clear();
+
+
+    renderChronology();
+
+}
+
+
+function excelRowsFromEvents(
+    events
+) {
+
+    return events.map(
+
+        event => {
+
+            const date =
+                event.published
+                ?
+                new Date(
+                    event.published
+                )
+                :
+                null;
+
+
+            return {
+
+                "Published":
+                    date
+                    &&
+                    !isNaN(
+                        date.getTime()
+                    )
+                    ?
+                    date.toISOString()
+                    :
+                    event.published
+                    ||
+                    "",
+
+                "Country":
+                    event.country
+                    ||
+                    "",
+
+                "Region":
+                    event.region
+                    ||
+                    "",
+
+                "City":
+                    event.city
+                    ||
+                    "",
+
+                "Location precision":
+                    event.location_precision
+                    ||
+                    "",
+
+                "Location confidence":
+                    event.location_confidence
+                    ||
+                    "",
+
+                "Categories":
+                    eventCategories(
+                        event
+                    ).join(
+                        " / "
+                    ),
+
+                "Title":
+                    event.title
+                    ||
+                    "",
+
+                "Primary source":
+                    event.source
+                    ||
+                    "",
+
+                "Distinct sources":
+                    Number(
+                        event.source_count
+                        ||
+                        1
+                    ),
+
+                "Articles merged":
+                    Number(
+                        event.article_count
+                        ||
+                        event.source_count
+                        ||
+                        1
+                    ),
+
+                "Geolocation method":
+                    event.location_method
+                    ||
+                    "",
+
+                "URL":
+                    event.url
+                    ||
+                    "",
+
+                "Summary":
+                    event.summary
+                    ||
+                    ""
+
+            };
+
+        }
+
+    );
+
+}
+
+
+function exportChronologyExcel() {
+
+    const selectedEvents =
+        allEvents.filter(
+
+            event =>
+                chronologySelectedKeys.has(
+                    event._mapKey
+                )
+
+                &&
+
+                event.excluded_from_map
+                !==
+                true
+
+        );
+
+
+    if (
+        selectedEvents.length
+        ===
+        0
+    ) {
+
+        alert(
+            "Select at least one event before exporting."
+        );
+
+
+        return;
+
+    }
+
+
+    if (
+        typeof XLSX
+        ===
+        "undefined"
+    ) {
+
+        alert(
+            "The Excel export library could not be loaded."
+        );
+
+
+        return;
+
+    }
+
+
+    selectedEvents.sort(
+
+        (a,b) =>
+
+            new Date(
+                b.published
+                ||
+                0
+            ).getTime()
+
+            -
+
+            new Date(
+                a.published
+                ||
+                0
+            ).getTime()
+
+    );
+
+
+    const rows =
+        excelRowsFromEvents(
+            selectedEvents
+        );
+
+
+    const worksheet =
+        XLSX.utils.json_to_sheet(
+            rows
+        );
+
+
+    worksheet["!cols"] = [
+        {wch: 24},
+        {wch: 20},
+        {wch: 22},
+        {wch: 20},
+        {wch: 20},
+        {wch: 20},
+        {wch: 34},
+        {wch: 70},
+        {wch: 28},
+        {wch: 16},
+        {wch: 16},
+        {wch: 28},
+        {wch: 55},
+        {wch: 90}
+    ];
+
+
+    const metadataRows = [
+
+        {
+            "Field":
+                "Exported at",
+            "Value":
+                new Date().toISOString()
+        },
+
+        {
+            "Field":
+                "Selected events",
+            "Value":
+                selectedEvents.length
+        },
+
+        {
+            "Field":
+                "Map period",
+            "Value":
+                selectedDays
+                +
+                " days"
+        },
+
+        {
+            "Field":
+                "Categories",
+            "Value":
+                selectedCategories().join(
+                    " / "
+                )
+        },
+
+        {
+            "Field":
+                "Event-list country filter",
+            "Value":
+                chronologyCountry
+                ||
+                "All countries"
+        },
+
+        {
+            "Field":
+                "Event-list search",
+            "Value":
+                chronologySearchText
+                ||
+                ""
+        }
+
+    ];
+
+
+    const metadataSheet =
+        XLSX.utils.json_to_sheet(
+            metadataRows
+        );
+
+
+    metadataSheet["!cols"] = [
+        {wch: 28},
+        {wch: 80}
+    ];
+
+
+    const workbook =
+        XLSX.utils.book_new();
+
+
+    XLSX.utils.book_append_sheet(
+        workbook,
+        worksheet,
+        "Events"
+    );
+
+
+    XLSX.utils.book_append_sheet(
+        workbook,
+        metadataSheet,
+        "Export info"
+    );
+
+
+    const stamp =
+        new Date()
+        .toISOString()
+        .slice(
+            0,
+            10
+        );
+
+
+    XLSX.writeFile(
+        workbook,
+        "INTERPOL_CT_events_"
+        +
+        stamp
+        +
+        ".xlsx"
+    );
+
+}
+
 
 
 function refreshDashboard() {
@@ -5372,6 +6099,31 @@ document.getElementById(
 
 
 document.getElementById(
+    "chronologyPanel"
+).addEventListener(
+
+    "click",
+
+    function(event) {
+
+        if (
+            event.target
+            ===
+            this
+        ) {
+
+            setChronologyOpen(
+                false
+            );
+
+        }
+
+    }
+
+);
+
+
+document.getElementById(
     "chronologySearch"
 ).addEventListener(
 
@@ -5426,6 +6178,39 @@ document.getElementById(
         renderChronology();
 
     }
+
+);
+
+
+document.getElementById(
+    "chronologySelectAll"
+).addEventListener(
+
+    "click",
+
+    selectAllChronologyShown
+
+);
+
+
+document.getElementById(
+    "chronologyClearSelection"
+).addEventListener(
+
+    "click",
+
+    clearChronologySelection
+
+);
+
+
+document.getElementById(
+    "chronologyExport"
+).addEventListener(
+
+    "click",
+
+    exportChronologyExcel
 
 );
 
