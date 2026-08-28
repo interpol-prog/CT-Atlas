@@ -3163,6 +3163,10 @@ function filteredMappedEvents() {
 
             &&
 
+            event.location_precision !== "unlocated"
+
+            &&
+
             event.latitude != null
 
             &&
@@ -5339,8 +5343,66 @@ function renderChronology() {
                 "chronology-source";
 
 
-            sourceCell.textContent =
-                sourceLabel;
+            if (
+                event.url
+            ) {
+
+                const sourceLink =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                sourceLink.href =
+                    event.url;
+
+
+                sourceLink.target =
+                    "_blank";
+
+
+                sourceLink.rel =
+                    "noopener noreferrer";
+
+
+                sourceLink.textContent =
+                    sourceLabel;
+
+
+                sourceLink.style.color =
+                    "inherit";
+
+
+                sourceLink.style.textDecoration =
+                    "underline";
+
+
+                sourceLink.addEventListener(
+
+                    "click",
+
+                    function(clickEvent) {
+
+                        clickEvent.stopPropagation();
+
+                    }
+
+                );
+
+
+                sourceCell.appendChild(
+                    sourceLink
+                );
+
+            }
+
+
+            else {
+
+                sourceCell.textContent =
+                    sourceLabel;
+
+            }
 
 
             const categoryCell =
@@ -5613,7 +5675,7 @@ function excelRowsFromEvents(
                     ||
                     "",
 
-                "URL":
+                "Source URL":
                     event.url
                     ||
                     "",
@@ -5714,6 +5776,55 @@ function exportChronologyExcel() {
         XLSX.utils.json_to_sheet(
             rows
         );
+
+
+    // Make Source URL cells real clickable Excel hyperlinks.
+    selectedEvents.forEach(
+
+        (event, index) => {
+
+            if (
+                !event.url
+            ) {
+
+                return;
+
+            }
+
+
+            const cellAddress =
+                "M"
+                +
+                (
+                    index
+                    +
+                    2
+                );
+
+
+            if (
+                worksheet[
+                    cellAddress
+                ]
+            ) {
+
+                worksheet[
+                    cellAddress
+                ].l = {
+
+                    Target:
+                        event.url,
+
+                    Tooltip:
+                        "Open source article"
+
+                };
+
+            }
+
+        }
+
+    );
 
 
     worksheet["!cols"] = [
