@@ -754,12 +754,129 @@ body {
 }
 
 
+
+/* =========================================================
+   ACCESS SCREEN
+========================================================= */
+
+#access-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0d1620;
+    color: white;
+}
+
+#access-box {
+    width: 390px;
+    max-width: calc(100vw - 40px);
+    padding: 32px;
+    text-align: center;
+    background: #17232e;
+    border: 1px solid #344958;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
+
+#access-logo {
+    height: 76px;
+    width: auto;
+    margin-bottom: 18px;
+}
+
+#access-box h1 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+#access-subtitle {
+    margin-top: 7px;
+    margin-bottom: 26px;
+    color: #91a5b5;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#access-password {
+    width: 100%;
+    padding: 12px;
+    color: white;
+    background: #202f3b;
+    border: 1px solid #455a69;
+    border-radius: 5px;
+    outline: none;
+    font-size: 14px;
+}
+
+#access-password:focus {
+    border-color: #8aa7bd;
+}
+
+#access-button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    background: white;
+    color: #111;
+    font-weight: bold;
+}
+
+#access-error {
+    min-height: 18px;
+    margin-top: 12px;
+    color: #e59494;
+    font-size: 11px;
+}
+
+#access-note {
+    margin-top: 20px;
+    color: #758b9b;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+body.locked #header,
+body.locked #main {
+    visibility: hidden;
+}
+
 </style>
 
 </head>
 
 
-<body>
+<body class="locked">
+
+<div id="access-screen">
+    <div id="access-box">
+        <img id="access-logo" src="interpol-logo.png" alt="INTERPOL">
+        <h1>INTERPOL CT Intelligence Map</h1>
+        <div id="access-subtitle">Restricted access</div>
+
+        <input
+            id="access-password"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+        >
+
+        <button id="access-button">ACCESS MAP</button>
+        <div id="access-error"></div>
+
+        <div id="access-note">
+            Access is intended for authorised users only.
+        </div>
+    </div>
+</div>
+
 
 
 <div id="header">
@@ -1309,6 +1426,56 @@ Automated daily update
 </div>
 
 
+
+
+<script>
+(function () {
+    const PASSWORD = "panda";
+    const SESSION_KEY = "ct_map_authorized";
+
+    function unlock() {
+        sessionStorage.setItem(SESSION_KEY, "yes");
+        document.body.classList.remove("locked");
+
+        const screen = document.getElementById("access-screen");
+        if (screen) {
+            screen.style.display = "none";
+        }
+
+        setTimeout(function () {
+            window.dispatchEvent(new Event("resize"));
+        }, 50);
+    }
+
+    function tryAccess() {
+        const input = document.getElementById("access-password");
+        const error = document.getElementById("access-error");
+
+        if (input.value === PASSWORD) {
+            error.textContent = "";
+            unlock();
+        } else {
+            error.textContent = "Incorrect password.";
+            input.value = "";
+            input.focus();
+        }
+    }
+
+    document.getElementById("access-button").addEventListener("click", tryAccess);
+
+    document.getElementById("access-password").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            tryAccess();
+        }
+    });
+
+    if (sessionStorage.getItem(SESSION_KEY) === "yes") {
+        unlock();
+    } else {
+        document.getElementById("access-password").focus();
+    }
+})();
+</script>
 
 <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
