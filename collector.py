@@ -18,8 +18,25 @@ from urllib.parse import quote_plus, urlsplit, urlunsplit
 
 
 # ============================================================
+# LIVE GITHUB ACTIONS LOGGING
+# ============================================================
+
+try:
+    sys.stdout.reconfigure(
+        line_buffering=True,
+        write_through=True,
+    )
+    sys.stderr.reconfigure(
+        line_buffering=True,
+        write_through=True,
+    )
+except Exception:
+    pass
+
+
+# ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V7 — THROTTLE-SAFE MULTI-SOURCE CT COVERAGE
+# OSINT COLLECTOR V7.2 — FAST DAILY + LIVE LOGS
 #
 # Expanded coverage + stricter event relevance.
 #
@@ -1708,7 +1725,7 @@ def collect_all(days):
     print()
     print("=" * 70)
     print("INTERPOL CT Intelligence Map")
-    print("OSINT Collector V7 — throttle-safe multi-source CT coverage")
+    print("OSINT Collector V7.2 — fast daily + live logs")
     print("=" * 70)
     print(f"Window: {days} days")
     print("Language: English")
@@ -3699,6 +3716,10 @@ def deduplicate_events(records):
         "Deduplicating events with multi-signal event clustering..."
     )
 
+    print(
+        f"   Preparing {len(records)} accepted records..."
+    )
+
     prepared = []
 
     for record in records:
@@ -3797,7 +3818,7 @@ def deduplicate_events(records):
                 best_method
             ] += 1
 
-        if number % 250 == 0:
+        if number % 50 == 0:
             print(
                 f"   Processed "
                 f"{number}/"
@@ -3853,6 +3874,166 @@ def load_existing():
             )
     except Exception:
         return []
+
+
+def deduplicate_incremental(
+    existing_events,
+    fresh_records,
+):
+    """
+    Fast daily update.
+
+    Existing events.json is already deduplicated from previous runs.
+    Re-clustering the whole 180-day database every morning is unnecessary.
+    Instead, only each NEW article is compared against the existing clusters
+    (and any new clusters created during this run).
+
+    Full all-vs-all clustering remains available for 180-day backfill mode.
+    """
+
+    print()
+    print(
+        "Incremental daily deduplication..."
+    )
+    print(
+        f"   Existing event clusters: "
+        f"{len(existing_events)}"
+    )
+    print(
+        f"   Fresh accepted records:  "
+        f"{len(fresh_records)}"
+    )
+
+    events = []
+
+    for event in existing_events:
+        ensure_event_metadata(
+            event
+        )
+        events.append(
+            event
+        )
+
+    method_counts = Counter()
+    merged_count = 0
+
+    for number, record in enumerate(
+        fresh_records,
+        start=1,
+    ):
+        ensure_event_metadata(
+            record
+        )
+
+        record_dt = event_datetime(
+            record
+        )
+
+        best_existing = None
+        best_score = 0.0
+        best_method = None
+
+        # Daily fresh volume is small, so scanning the existing clusters is
+        # both simple and fast. Restrict comparisons to the dedup time window
+        # whenever dates are available.
+        for existing in events:
+
+            existing_dt = event_datetime(
+                existing
+            )
+
+            if (
+                record_dt
+                and
+                existing_dt
+            ):
+                gap_days = abs(
+                    (
+                        record_dt
+                        -
+                        existing_dt
+                    ).total_seconds()
+                ) / 86400.0
+
+                if (
+                    gap_days
+                    >
+                    MAX_DEDUP_WINDOW_DAYS
+                ):
+                    continue
+
+            matched, score, method = event_match(
+                record,
+                existing,
+            )
+
+            if (
+                matched
+                and
+                score
+                >
+                best_score
+            ):
+                best_existing = existing
+                best_score = score
+                best_method = method
+
+                if score >= 0.98:
+                    break
+
+        if best_existing is None:
+            events.append(
+                record
+            )
+
+        else:
+            merge_event(
+                best_existing,
+                record,
+                best_score,
+                best_method,
+            )
+
+            merged_count += 1
+
+            method_counts[
+                best_method
+            ] += 1
+
+        if (
+            number % 20 == 0
+            or
+            number == len(
+                fresh_records
+            )
+        ):
+            print(
+                f"   Processed fresh records: "
+                f"{number}/"
+                f"{len(fresh_records)}"
+            )
+
+    print(
+        f"   New standalone clusters: "
+        f"{len(events) - len(existing_events)}"
+    )
+    print(
+        f"   Fresh records merged:     "
+        f"{merged_count}"
+    )
+
+    if method_counts:
+        print(
+            "   Merge methods:"
+        )
+
+        for method, count in method_counts.most_common():
+            print(
+                f"      {method}: "
+                f"{count}"
+            )
+
+    return events
 
 
 def prune_old(events):
@@ -4014,17 +4195,43 @@ def main():
         days = DAILY_LOOKBACK_DAYS
         existing = load_existing()
 
+        print(
+            f"Existing database loaded: "
+            f"{len(existing)} events"
+        )
+
     fresh = collect_all(days)
 
-    combined = (
-        existing
-        +
-        fresh
+    print()
+    print(
+        f"Collection returned "
+        f"{len(fresh)} accepted records."
     )
 
-    events = deduplicate_events(
-        combined
-    )
+    if (
+        len(sys.argv) > 1
+        and
+        sys.argv[1].lower()
+        ==
+        "backfill"
+    ):
+        print(
+            "Using FULL 180-day event clustering."
+        )
+
+        events = deduplicate_events(
+            fresh
+        )
+
+    else:
+        print(
+            "Using FAST incremental daily clustering."
+        )
+
+        events = deduplicate_incremental(
+            existing,
+            fresh,
+        )
 
     events = prune_old(
         events
