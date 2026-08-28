@@ -1,291 +1,2127 @@
-Oui. J’ai préparé la version AI-first à 100 %.
-
-Désormais, aucun événement ne sera placé parce que Worth, Mobile, Reading, Police, etc. correspondent mécaniquement à un nom de ville. GPT-5.6 Sol analyse sémantiquement chaque événement — titre, résumé, source, catégories et titres des articles fusionnés — puis GeoNames intervient seulement après pour valider/résoudre le lieu en coordonnées. GPT-5.6 Sol est actuellement le modèle OpenAI le plus puissant de cette gamme, et l’API Responses permet de forcer une sortie structurée JSON Schema.
-
-Les deux fichiers à remplacer
-
-geolocate.py — AI-FIRST
-
-.github/workflows/update-map.yml — AI-FIRST
-
-Ton requirements.txt actuel suffit : le script utilise déjà requests et geonamescache.
-
-Avant de lancer le workflow, il faut une seule configuration GitHub : dans ton repository, va dans Settings → Secrets and variables → Actions → New repository secret, crée :
-
-Name:
-OPENAI_API_KEY
-
-Secret:
-ta_clé_API_OpenAI
-
-Ne mets jamais la clé directement dans geolocate.py.
-
-Ce que fera maintenant GeoLocate
-
-Pour absolument chaque nouvel événement :
-
-Article
-  ↓
-GPT-5.6 Sol analyse le sens complet
-  ↓
-Quelle est la localisation DE L'ÉVÉNEMENT ?
-  ↓
-City / Region / Country / Unknown
-  ↓
-GeoNames valide le lieu
-  ↓
-coordonnées
-
-Le prompt lui dit explicitement que :
-
-"Worth" ≠ automatiquement Worth, USA
-"Mobile" ≠ automatiquement Mobile, Alabama
-"Police" ≠ automatiquement Police, Poland
-
-Jerusalem Post + attack in France
-→ France
-
-IDF + operation in Gaza
-→ Gaza / Palestinian Territory
-
-Taliban + Afghan security context
-→ Afghanistan
-
-Kashmir + Indian authorities
-→ Kashmir / India
-
-Kashmir + Pakistani authorities
-→ Kashmir / Pakistan
-
-Il peut aussi raisonner à partir d’une personnalité, organisation, institution, média local, tribunal, service de police, nationalité, landmark, région, articles associés, etc.
-
-Il y a même une deuxième passe IA
-
-Si GPT laisse encore quelque chose unlocated, le système lui renvoie ces événements avec une consigne plus poussée :
-
-cherche au minimum le pays le plus probable en utilisant tout le contexte disponible.
-
-Donc ce n’est plus :
-
-règles → IA si échec
-
-mais :
-
-IA → IA plus insistante si échec.
-
-Et ça ne repaye pas toute la base chaque matin
-
-“IA toujours” signifie que chaque décision géographique provient de l’IA. Mais une fois un événement analysé, sa décision est sauvegardée dans events.json :
-
-ai_geo_version
-ai_geo_model
-ai_geo_fingerprint
-ai_geo_complete
-ai_geo_reason
-
-Le lendemain, si l’article n’a pas changé, il n’est pas renvoyé inutilement à l’API.
-
-Donc typiquement :
-
-BACKFILL 180 jours
-1300 événements
-→ 1300 analysés par IA
-
-lendemain
-50 nouveaux événements
-→ seulement les ~50 nouveaux analysés
-
-lendemain suivant
-35 nouveaux
-→ seulement les ~35 nouveaux
-
-Et ils sont traités par lots de 20, donc 1 300 événements représentent environ 65 requêtes API plutôt que 1 300 requêtes distinctes.
-
-Le nouveau workflow remet aussi correctement le backfill
-
-Dans Actions → Run workflow, tu auras :
-
-mode
-  daily
-  backfill
-
-force_ai
-  false
-  true
-
-Pour la première installation de cette version, fais :
-
-mode: backfill
-force_ai: true
-
-Ainsi les 6 mois entiers seront reconstruits et tous les événements seront géolocalisés par GPT-5.6 Sol.
-
-Ensuite, les mises à jour quotidiennes se feront automatiquement avec le cache.
-
-Le modèle Sol est actuellement affiché à $4 par million de tokens d'entrée et $20 par million de tokens de sortie ; le backfill initial coûtera donc plus que les petites mises à jour quotidiennes, mais les réponses géographiques sont très courtes et les appels sont regroupés.
-
-C’est, à mon sens, le changement qui devrait éliminer le plus radicalement les aberrations de géolocalisation qu’on rencontrait avec les systèmes basés sur les mots. 
-
-geolocate_ai_first.py
-Code
-update-map_ai_first.yml
-Code
-il y a pas de IA gratuite?
-
-Oui. Pour ton usage, il existe des options gratuites, et on peut tout à fait remplacer OpenAI par une IA gratuite pour la géolocalisation.
-
-La meilleure option gratuite actuellement me semble être Groq Free Tier avec un modèle comme openai/gpt-oss-120b ou qwen/qwen3.8-27b. Groq propose bien un Free Plan avec jusqu’à 1 000 requêtes/jour sur plusieurs de ces modèles et environ 200 000 tokens/jour sur certains modèles.
-
-Pour ton cas, c’est intéressant parce que tu ne fais pas du chat : tu demandes seulement quelque chose comme :
-
-Article:
-"Police arrest ISIS suspect in Düsseldorf..."
-
-Return:
-country = Germany
-city = Düsseldorf
-region = North Rhine-Westphalia
-confidence = 0.96
-
-Donc les sorties sont très courtes. Et après le premier backfill, seuls les nouveaux événements quotidiens doivent être analysés.
-
-Une autre possibilité est Gemini API, qui possède actuellement un véritable niveau gratuit avec entrée et sortie sans frais sur certains modèles. En revanche, Google précise que, sur le niveau gratuit, le contenu peut être utilisé pour améliorer ses produits. Pour un projet professionnel CT, même si les données sont OSINT, je serais plus prudent avec cette option.
-
-Hugging Face offre aussi du gratuit, mais seulement 0,10 $ de crédits mensuels pour un compte Free, donc ce n’est pas vraiment suffisant pour notre carte.
-
-Ce que je choisirais
-
-Pour commencer :
-
-Groq + openai/gpt-oss-120b
-
-Architecture :
-
-article
-   ↓
-Groq free API
-   ↓
-GPT-OSS 120B
-   ↓
-compréhension sémantique du lieu
-   ↓
-GeoNames
-   ↓
-coordonnées
-
-Et on conserve exactement le principe que tu voulais :
-
-100 % des événements passent par l’IA.
-
-Donc plus de :
-
-Worth → Worth, Texas ❌
-Police → Police, Poland ❌
-Mobile → Mobile, Alabama ❌
-
-simplement parce qu’un mot correspond à une ville.
-
-Avec le quota actuel de Groq, 1 000 requêtes/jour et notre traitement par lots, c’est très largement suffisant pour les mises à jour quotidiennes.
-
-Pour le premier backfill de ~1 000–2 000 événements, on peut aussi envoyer 10–20 événements par requête, ce qui ne représente qu'environ 50–200 requêtes.
-
-Il faudrait simplement créer gratuitement une clé Groq et la mettre dans GitHub Secrets comme :
-
-GROQ_API_KEY
-
-Puis je remplace le geolocate.py OpenAI que je viens de faire par une version Groq AI-first gratuite, et le workflow utilisera Groq automatiquement. C’est probablement la solution que je choisirais pour cette carte avant de payer une API.
-
-si gemini est mieux que groq, fais gemini, je men fous quils collectent
-
-C’est fait. Pour ton cas précis de géolocalisation sémantique, je passe à Gemini 2.5 Flash : raisonnement, sortie JSON structurée et niveau gratuit. Google indique actuellement que l’entrée et la sortie de Gemini 2.5 Flash sont gratuites sur le Free Tier.
-
-1. Remplace entièrement geolocate.py
-
-Télécharger geolocate.py — Gemini AI-first
-
-Cette version fait passer 100 % des événements par Gemini. GeoNames ne décide plus qu’un mot est une ville ; il valide seulement le lieu que Gemini a compris sémantiquement.
-
-Donc :
-
-"Worth considering..."
-≠ Worth, USA
-
-"Police said..."
-≠ Police, Poland
-
-"Reading the statement..."
-≠ Reading, UK
-
-Gemini analyse le titre + résumé + source + catégories + articles liés, puis décide du lieu réel de l’événement.
-
-2. Remplace entièrement le workflow
-
-Télécharger update-map.yml — Gemini
-
-Il utilise :
-
-gemini-2.5-flash
-thinking budget: 4096
-batch: 20 événements
-
-Gemini 2.5 Flash supporte justement un budget de raisonnement configurable.
-
-3. Crée gratuitement ta clé Gemini
-
-Va dans Google AI Studio et crée une clé API : Créer une clé Gemini API
-
-Puis dans GitHub :
-
-Repository → Settings → Secrets and variables → Actions → New repository secret
-
-Nom :
-
-GEMINI_API_KEY
-
-Valeur : ta clé Gemini.
-
-Ne mets jamais la clé directement dans geolocate.py.
-
-4. Premier lancement
-
-Dans GitHub :
-
-Actions → Daily CT Intelligence Map Update → Run workflow
-
-Choisis :
-
-mode: backfill
-force_ai: true
-
-La première fois, Gemini recalculera toute la géolocalisation des 180 jours.
-
-J’ai volontairement changé la version du cache en :
-
-gemini-ai-first-v2
-
-Donc même les événements précédemment géolocalisés par notre ancien système seront réanalysés par Gemini.
-
-Ensuite, les jours suivants :
-
-nouveaux événements
-        ↓
-Gemini
-        ↓
-lieu de l'événement
-        ↓
-GeoNames validation
-        ↓
-coordonnées
-        ↓
-carte
-
-Les événements déjà analysés et inchangés restent en cache, donc tu ne consommes pas inutilement le quota gratuit chaque jour.
-
-Gemini renvoie également une confiance, la raison, les éléments géographiques utilisés, et distingue city, region, country ou unknown. Les sorties structurées JSON sont officiellement supportées par l’API Gemini.
-
-Tu n’as pas besoin de modifier collector.py pour passer à Gemini. 
-
-geolocate_gemini_ai_first.py
-Code
-update-map_gemini_ai_first.yml
-Code
+import hashlib
+import json
+import math
+import os
+import random
+import re
+import sys
+import time
+import unicodedata
+from collections import Counter, defaultdict
+from difflib import SequenceMatcher
+
+import geonamescache
+import requests
+
+
+# ============================================================
+# INTERPOL CT INTELLIGENCE MAP
+# GEMINI AI-FIRST GEOLOCATION V2
+#
+# Principle:
+#   - Gemini decides the event location for EVERY event.
+#   - No city/country is ever selected merely because a word happens
+#     to match a geographic name (e.g. Worth, Mobile, Reading, Police).
+#   - GeoNames is used AFTER the AI decision only to validate/resolve
+#     the chosen place into coordinates.
+#
+# Cost control:
+#   - Events are sent to Gemini in batches.
+#   - Each event is cached using a content fingerprint.
+#   - Daily runs only call the API for new/changed events.
+#   - A backfill rebuild naturally calls AI for the whole database.
+#
+# Environment variables:
+#   GEMINI_API_KEY      required
+#   GEMINI_GEO_MODEL    optional, default: gemini-2.5-flash
+#   GEMINI_THINKING_BUDGET optional, default: 4096
+#   AI_GEO_BATCH_SIZE   optional, default: 20
+#   AI_GEO_FORCE        optional, "1"/"true" to refresh every event
+# ============================================================
+
+
+INPUT_FILE = "events.json"
+OUTPUT_FILE = "events.json"
+
+GEMINI_API_BASE = (
+    "https://generativelanguage.googleapis.com/v1beta/models"
+)
+
+GEMINI_MODEL = os.getenv(
+    "GEMINI_GEO_MODEL",
+    "gemini-2.5-flash",
+)
+
+GEMINI_THINKING_BUDGET = int(
+    os.getenv(
+        "GEMINI_THINKING_BUDGET",
+        "4096",
+    )
+)
+
+# Bumping the version intentionally invalidates geolocation decisions
+# made by the previous engine. The first Gemini run therefore
+# re-evaluates the whole database; later daily runs reuse the cache.
+AI_GEO_VERSION = "gemini-ai-first-v2"
+BATCH_SIZE = max(
+    1,
+    min(
+        30,
+        int(
+            os.getenv(
+                "AI_GEO_BATCH_SIZE",
+                "20",
+            )
+        ),
+    ),
+)
+
+FORCE_AI = (
+    os.getenv(
+        "AI_GEO_FORCE",
+        "",
+    )
+    .strip()
+    .lower()
+    in {
+        "1",
+        "true",
+        "yes",
+        "y",
+    }
+)
+
+REQUEST_ATTEMPTS = 3
+REQUEST_TIMEOUT = 180
+REQUEST_PAUSE_SECONDS = 0.7
+
+try:
+    sys.stdout.reconfigure(
+        line_buffering=True,
+        write_through=True,
+    )
+    sys.stderr.reconfigure(
+        line_buffering=True,
+        write_through=True,
+    )
+except Exception:
+    pass
+
+
+# ============================================================
+# GEONAMES
+# ============================================================
+
+gc = geonamescache.GeonamesCache(
+    min_city_population=1000
+)
+
+CITIES = gc.get_cities()
+COUNTRIES = gc.get_countries()
+
+COUNTRY_BY_CODE = {}
+COUNTRY_BY_NAME = {}
+
+for country in COUNTRIES.values():
+    code = (
+        country.get("iso")
+        or ""
+    ).upper()
+
+    if code:
+        COUNTRY_BY_CODE[code] = country
+
+    name = (
+        country.get("name")
+        or ""
+    ).strip()
+
+    if name:
+        COUNTRY_BY_NAME[
+            name.casefold()
+        ] = country
+
+
+COUNTRY_NAME_ALIASES = {
+    "usa": "US",
+    "u.s.": "US",
+    "u.s.a.": "US",
+    "united states of america": "US",
+    "america": "US",
+
+    "uk": "GB",
+    "u.k.": "GB",
+    "britain": "GB",
+    "great britain": "GB",
+
+    "russia": "RU",
+    "iran": "IR",
+    "syria": "SY",
+    "south korea": "KR",
+    "north korea": "KP",
+    "laos": "LA",
+    "moldova": "MD",
+    "bolivia": "BO",
+    "venezuela": "VE",
+    "tanzania": "TZ",
+    "brunei": "BN",
+
+    "palestine": "PS",
+    "palestinian territory": "PS",
+    "palestinian territories": "PS",
+
+    "ivory coast": "CI",
+    "cote d'ivoire": "CI",
+    "côte d’ivoire": "CI",
+
+    "drc": "CD",
+    "dr congo": "CD",
+    "democratic republic of the congo": "CD",
+    "congo-kinshasa": "CD",
+
+    "congo-brazzaville": "CG",
+
+    "uae": "AE",
+    "u.a.e.": "AE",
+
+    "czech republic": "CZ",
+    "burma": "MM",
+}
+
+
+def normalize_name(value):
+    value = str(
+        value
+        or
+        ""
+    ).strip()
+
+    value = unicodedata.normalize(
+        "NFKD",
+        value
+    )
+
+    value = "".join(
+        character
+        for character in value
+        if not unicodedata.combining(
+            character
+        )
+    )
+
+    value = value.casefold()
+
+    value = re.sub(
+        r"[^a-z0-9]+",
+        " ",
+        value
+    )
+
+    return re.sub(
+        r"\s+",
+        " ",
+        value
+    ).strip()
+
+
+CITY_INDEX = defaultdict(list)
+
+for city in CITIES.values():
+    country_code = (
+        city.get(
+            "countrycode"
+        )
+        or
+        ""
+    ).upper()
+
+    names = set()
+
+    primary_name = city.get(
+        "name"
+    )
+
+    if primary_name:
+        names.add(
+            primary_name
+        )
+
+    alternate_names = city.get(
+        "alternatenames"
+    )
+
+    if isinstance(
+        alternate_names,
+        str
+    ):
+        alternate_names = [
+            name.strip()
+            for name
+            in alternate_names.split(",")
+            if name.strip()
+        ]
+
+    if isinstance(
+        alternate_names,
+        list
+    ):
+        for alternate in alternate_names:
+            if alternate:
+                names.add(
+                    str(
+                        alternate
+                    )
+                )
+
+    for name in names:
+        key = normalize_name(
+            name
+        )
+
+        if len(key) < 2:
+            continue
+
+        CITY_INDEX[
+            key
+        ].append(
+            city
+        )
+
+
+for key in CITY_INDEX:
+    CITY_INDEX[
+        key
+    ].sort(
+        key=lambda city:
+            city.get(
+                "population",
+                0
+            )
+            or
+            0,
+        reverse=True,
+    )
+
+
+# ============================================================
+# EVENT INPUT / CACHE
+# ============================================================
+
+def compact_text(
+    text,
+    max_chars
+):
+    text = re.sub(
+        r"<[^>]+>",
+        " ",
+        str(
+            text
+            or
+            ""
+        )
+    )
+
+    text = re.sub(
+        r"\s+",
+        " ",
+        text
+    ).strip()
+
+    if len(
+        text
+    ) <= max_chars:
+        return text
+
+    return (
+        text[
+            :max_chars
+        ].rstrip()
+        +
+        "…"
+    )
+
+
+def event_categories(
+    event
+):
+    categories = event.get(
+        "categories"
+    )
+
+    if isinstance(
+        categories,
+        list
+    ):
+        return [
+            str(
+                category
+            )
+            for category
+            in categories
+            if category
+        ]
+
+    category = event.get(
+        "category"
+    )
+
+    return (
+        [
+            str(
+                category
+            )
+        ]
+        if category
+        else []
+    )
+
+
+def related_article_context(
+    event
+):
+    related = event.get(
+        "related_articles"
+    )
+
+    if not isinstance(
+        related,
+        list
+    ):
+        return []
+
+    output = []
+
+    for article in related[:6]:
+        if not isinstance(
+            article,
+            dict
+        ):
+            continue
+
+        title = compact_text(
+            article.get(
+                "title"
+            ),
+            300,
+        )
+
+        source = compact_text(
+            article.get(
+                "source"
+            ),
+            120,
+        )
+
+        if title:
+            output.append(
+                {
+                    "title":
+                        title,
+                    "source":
+                        source,
+                }
+            )
+
+    return output
+
+
+def event_ai_payload(
+    event,
+    index
+):
+    event_id = str(
+        event.get(
+            "id"
+        )
+        or
+        f"event-{index}"
+    )
+
+    return {
+        "event_id":
+            event_id,
+
+        "title":
+            compact_text(
+                event.get(
+                    "title"
+                ),
+                650,
+            ),
+
+        "summary":
+            compact_text(
+                event.get(
+                    "summary"
+                ),
+                1800,
+            ),
+
+        "source":
+            compact_text(
+                event.get(
+                    "source"
+                ),
+                180,
+            ),
+
+        "categories":
+            event_categories(
+                event
+            ),
+
+        "published":
+            str(
+                event.get(
+                    "published"
+                )
+                or
+                ""
+            ),
+
+        "related_articles":
+            related_article_context(
+                event
+            ),
+    }
+
+
+def event_fingerprint(
+    payload
+):
+    material = json.dumps(
+        {
+            "title":
+                payload[
+                    "title"
+                ],
+            "summary":
+                payload[
+                    "summary"
+                ],
+            "source":
+                payload[
+                    "source"
+                ],
+            "categories":
+                payload[
+                    "categories"
+                ],
+            "related_articles":
+                payload[
+                    "related_articles"
+                ],
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+    )
+
+    return hashlib.sha256(
+        material.encode(
+            "utf-8"
+        )
+    ).hexdigest()
+
+
+def is_cached(
+    event,
+    fingerprint
+):
+    if FORCE_AI:
+        return False
+
+    return (
+        event.get(
+            "ai_geo_complete"
+        )
+        is True
+
+        and
+
+        event.get(
+            "ai_geo_version"
+        )
+        ==
+        AI_GEO_VERSION
+
+        and
+
+        event.get(
+            "ai_geo_fingerprint"
+        )
+        ==
+        fingerprint
+    )
+
+
+# ============================================================
+# STRUCTURED OUTPUT SCHEMA
+# ============================================================
+
+GEOLOCATION_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "results": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "event_id": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "country_iso2": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "region": {
+                        "type": "string"
+                    },
+                    "precision": {
+                        "type": "string",
+                        "enum": [
+                            "city",
+                            "region",
+                            "country",
+                            "unknown",
+                        ],
+                    },
+                    "confidence": {
+                        "type": "number"
+                    },
+                    "latitude": {
+                        "type": "number"
+                    },
+                    "longitude": {
+                        "type": "number"
+                    },
+                    "location_is_inferred": {
+                        "type": "boolean"
+                    },
+                    "evidence": {
+                        "type": "string"
+                    },
+                    "reason": {
+                        "type": "string"
+                    },
+                },
+                "required": [
+                    "event_id",
+                    "country",
+                    "country_iso2",
+                    "city",
+                    "region",
+                    "precision",
+                    "confidence",
+                    "latitude",
+                    "longitude",
+                    "location_is_inferred",
+                    "evidence",
+                    "reason",
+                ],
+            },
+        },
+    },
+    "required": [
+        "results"
+    ],
+}
+
+
+SYSTEM_INSTRUCTIONS = """
+You are the geographic intelligence component of a counter-terrorism
+situational-awareness map.
+
+Your job is to determine WHERE THE EVENT DESCRIBED IN EACH NEWS ITEM OCCURRED,
+or the best geographic location to which the event itself belongs.
+
+This is a semantic reasoning task. Never assign a location merely because a
+word is also the name of a city. For example, ordinary words such as Worth,
+Mobile, Reading, Police, Nice, Orange, Bath, Sale, Union, Hope, State, or
+Justice MUST NOT become cities unless the article context clearly uses them as
+a geographic place.
+
+Use all available context intelligently:
+- explicit city, district, province, region, country;
+- demonyms and nationalities;
+- police/security/judicial institutions;
+- terrorist or militant organisations;
+- government bodies;
+- public personalities;
+- landmarks and facilities;
+- local/regional news-source identity;
+- related article titles from the same deduplicated event;
+- geopolitical context and well-known entity-country relationships.
+
+IMPORTANT ORDER OF MEANING:
+1. The actual place of the attack/arrest/trial/operation/financing event.
+2. If no city can reasonably be determined, the relevant region.
+3. If no region can reasonably be determined, the relevant country.
+4. Use the publisher's home country only as a weak last-resort clue when the
+   publication is clearly local/regional and the event context supports it.
+5. Never use the headquarters of a global media outlet as the event location.
+6. A person's nationality or an organisation's home area is evidence, not
+   automatically the event location. Use it only when the event semantics
+   support that inference.
+7. If several countries are mentioned, decide which country the EVENT belongs
+   to, not which country merely appears first.
+8. Prefer a country-level answer over inventing a city.
+9. Return unknown only when there truly is not enough information to associate
+   the event with a country.
+
+For city or region results, provide approximate latitude/longitude for that
+place. For country-only results, latitude/longitude may be 0; the downstream
+validator will place the event on the national capital.
+
+country_iso2 must be a two-letter ISO 3166-1 alpha-2 code when a country is
+known, otherwise an empty string.
+
+confidence is between 0 and 1.
+Keep evidence and reason concise.
+"""
+
+
+# ============================================================
+# GEMINI GENERATECONTENT API
+# ============================================================
+
+def extract_gemini_text(
+    response_json
+):
+    candidates = response_json.get(
+        "candidates",
+        []
+    )
+
+    if not candidates:
+        prompt_feedback = response_json.get(
+            "promptFeedback",
+            {}
+        )
+
+        block_reason = prompt_feedback.get(
+            "blockReason"
+        )
+
+        if block_reason:
+            raise RuntimeError(
+                "Gemini blocked the request: "
+                f"{block_reason}"
+            )
+
+        return ""
+
+    candidate = candidates[0]
+
+    finish_reason = candidate.get(
+        "finishReason",
+        ""
+    )
+
+    content = candidate.get(
+        "content",
+        {}
+    )
+
+    parts = content.get(
+        "parts",
+        []
+    )
+
+    texts = [
+        part.get(
+            "text",
+            ""
+        )
+        for part in parts
+        if isinstance(
+            part,
+            dict
+        )
+        and part.get(
+            "text"
+        )
+    ]
+
+    output_text = "".join(
+        texts
+    ).strip()
+
+    if (
+        not output_text
+        and
+        finish_reason
+    ):
+        raise RuntimeError(
+            "Gemini returned no text. "
+            f"finishReason={finish_reason}"
+        )
+
+    return output_text
+
+
+def call_gemini_batch(
+    batch,
+    instructions_override=None,
+):
+    api_key = os.getenv(
+        "GEMINI_API_KEY"
+    )
+
+    if not api_key:
+        raise RuntimeError(
+            "GEMINI_API_KEY is missing. "
+            "Create a GitHub Actions repository secret "
+            "named GEMINI_API_KEY."
+        )
+
+    instructions = (
+        instructions_override
+        if instructions_override is not None
+        else SYSTEM_INSTRUCTIONS
+    )
+
+    user_input = (
+        "Geolocate every event below. "
+        "Return exactly one result for every event_id. "
+        "Do not omit an event. "
+        "The location must describe the EVENT itself, "
+        "not a coincidental place-name word.\n\n"
+        +
+        json.dumps(
+            {
+                "events":
+                    batch
+            },
+            ensure_ascii=False,
+        )
+    )
+
+    body = {
+        "systemInstruction": {
+            "parts": [
+                {
+                    "text":
+                        instructions
+                }
+            ]
+        },
+
+        "contents": [
+            {
+                "role":
+                    "user",
+
+                "parts": [
+                    {
+                        "text":
+                            user_input
+                    }
+                ],
+            }
+        ],
+
+        "generationConfig": {
+            "temperature":
+                0.1,
+
+            "maxOutputTokens":
+                8192,
+
+            "thinkingConfig": {
+                "thinkingBudget":
+                    GEMINI_THINKING_BUDGET
+            },
+
+            "responseMimeType":
+                "application/json",
+
+            "responseSchema":
+                GEOLOCATION_SCHEMA,
+        },
+    }
+
+    url = (
+        GEMINI_API_BASE
+        +
+        "/"
+        +
+        GEMINI_MODEL
+        +
+        ":generateContent"
+    )
+
+    headers = {
+        "x-goog-api-key":
+            api_key,
+
+        "Content-Type":
+            "application/json",
+    }
+
+    for attempt in range(
+        1,
+        REQUEST_ATTEMPTS + 1,
+    ):
+        try:
+            response = requests.post(
+                url,
+                headers=headers,
+                json=body,
+                timeout=REQUEST_TIMEOUT,
+            )
+
+            if response.status_code in {
+                408,
+                409,
+                429,
+                500,
+                502,
+                503,
+                504,
+            }:
+                retry_after = response.headers.get(
+                    "Retry-After"
+                )
+
+                if retry_after:
+                    try:
+                        delay = max(
+                            5,
+                            min(
+                                90,
+                                int(
+                                    float(
+                                        retry_after
+                                    )
+                                )
+                            ),
+                        )
+                    except Exception:
+                        delay = min(
+                            60,
+                            6 * attempt,
+                        )
+                else:
+                    delay = min(
+                        60,
+                        (
+                            6
+                            *
+                            attempt
+                        )
+                        +
+                        random.uniform(
+                            0,
+                            3
+                        ),
+                    )
+
+                print(
+                    f"   Gemini temporary error "
+                    f"{response.status_code}; "
+                    f"retrying after {delay:.0f}s"
+                )
+
+                time.sleep(
+                    delay
+                )
+
+                continue
+
+            if response.status_code >= 400:
+                raise RuntimeError(
+                    "Gemini API error "
+                    f"{response.status_code}: "
+                    f"{response.text[:1800]}"
+                )
+
+            payload = response.json()
+
+            output_text = extract_gemini_text(
+                payload
+            )
+
+            if not output_text:
+                raise RuntimeError(
+                    "Gemini response contained no output text."
+                )
+
+            parsed = json.loads(
+                output_text
+            )
+
+            results = parsed.get(
+                "results"
+            )
+
+            if not isinstance(
+                results,
+                list
+            ):
+                raise RuntimeError(
+                    "Gemini structured output did not contain "
+                    "a results array."
+                )
+
+            time.sleep(
+                REQUEST_PAUSE_SECONDS
+            )
+
+            return results
+
+        except (
+            requests.RequestException,
+            json.JSONDecodeError,
+        ) as error:
+            if attempt >= REQUEST_ATTEMPTS:
+                raise
+
+            delay = min(
+                30,
+                5 * attempt,
+            )
+
+            print(
+                f"   Gemini request error: "
+                f"{error}; retrying in {delay}s"
+            )
+
+            time.sleep(
+                delay
+            )
+
+    raise RuntimeError(
+        "Gemini batch request failed."
+    )
+
+
+# ============================================================
+# GEO VALIDATION / RESOLUTION
+# ============================================================
+
+def confidence_label(
+    score
+):
+    try:
+        score = float(
+            score
+        )
+    except Exception:
+        score = 0.0
+
+    if score >= 0.82:
+        return "high"
+
+    if score >= 0.58:
+        return "medium"
+
+    return "low"
+
+
+def valid_coordinates(
+    latitude,
+    longitude
+):
+    try:
+        latitude = float(
+            latitude
+        )
+        longitude = float(
+            longitude
+        )
+    except Exception:
+        return False
+
+    return (
+        -90
+        <=
+        latitude
+        <=
+        90
+
+        and
+
+        -180
+        <=
+        longitude
+        <=
+        180
+
+        and
+
+        not (
+            abs(
+                latitude
+            )
+            <
+            0.000001
+
+            and
+
+            abs(
+                longitude
+            )
+            <
+            0.000001
+        )
+    )
+
+
+def resolve_country_code(
+    result
+):
+    code = str(
+        result.get(
+            "country_iso2"
+        )
+        or
+        ""
+    ).strip().upper()
+
+    if code in COUNTRY_BY_CODE:
+        return code
+
+    country_name = str(
+        result.get(
+            "country"
+        )
+        or
+        ""
+    ).strip()
+
+    normalized = normalize_name(
+        country_name
+    )
+
+    alias_code = COUNTRY_NAME_ALIASES.get(
+        normalized
+    )
+
+    if (
+        alias_code
+        and
+        alias_code
+        in COUNTRY_BY_CODE
+    ):
+        return alias_code
+
+    country = COUNTRY_BY_NAME.get(
+        country_name.casefold()
+    )
+
+    if country:
+        return (
+            country.get(
+                "iso"
+            )
+            or
+            ""
+        ).upper()
+
+    # Fuzzy country-name fallback only AFTER AI has decided the country.
+    best = None
+    best_score = 0.0
+
+    for name, candidate in COUNTRY_BY_NAME.items():
+        score = SequenceMatcher(
+            None,
+            normalized,
+            normalize_name(
+                name
+            ),
+        ).ratio()
+
+        if score > best_score:
+            best_score = score
+            best = candidate
+
+    if (
+        best
+        and
+        best_score
+        >=
+        0.88
+    ):
+        return (
+            best.get(
+                "iso"
+            )
+            or
+            ""
+        ).upper()
+
+    return ""
+
+
+def resolve_city(
+    city_name,
+    country_code
+):
+    key = normalize_name(
+        city_name
+    )
+
+    if not key:
+        return None
+
+    candidates = CITY_INDEX.get(
+        key,
+        []
+    )
+
+    if country_code:
+        same_country = [
+            candidate
+            for candidate
+            in candidates
+            if (
+                candidate.get(
+                    "countrycode"
+                )
+                or
+                ""
+            ).upper()
+            ==
+            country_code
+        ]
+
+        if same_country:
+            return same_country[0]
+
+    if candidates:
+        return candidates[0]
+
+    # Conservative fuzzy validation around names beginning with
+    # the same first character. AI already chose the city; this step
+    # merely resolves spelling/transliteration.
+    best = None
+    best_score = 0.0
+
+    first = (
+        key[0]
+        if key
+        else ""
+    )
+
+    for indexed_name, indexed_candidates in CITY_INDEX.items():
+        if (
+            not indexed_name
+            or
+            indexed_name[0]
+            !=
+            first
+        ):
+            continue
+
+        score = SequenceMatcher(
+            None,
+            key,
+            indexed_name,
+        ).ratio()
+
+        if score < 0.90:
+            continue
+
+        candidate_pool = indexed_candidates
+
+        if country_code:
+            candidate_pool = [
+                candidate
+                for candidate
+                in indexed_candidates
+                if (
+                    candidate.get(
+                        "countrycode"
+                    )
+                    or
+                    ""
+                ).upper()
+                ==
+                country_code
+            ]
+
+        if (
+            candidate_pool
+            and
+            score
+            >
+            best_score
+        ):
+            best_score = score
+            best = candidate_pool[0]
+
+    return best
+
+
+def resolve_capital(
+    country_code
+):
+    country = COUNTRY_BY_CODE.get(
+        country_code
+    )
+
+    if not country:
+        return None
+
+    capital = country.get(
+        "capital"
+    )
+
+    if not capital:
+        return None
+
+    return resolve_city(
+        capital,
+        country_code
+    )
+
+
+def clear_location(
+    event
+):
+    event["city"] = None
+    event["region"] = None
+    event["country"] = None
+    event["country_code"] = None
+    event["latitude"] = None
+    event["longitude"] = None
+    event["location_precision"] = "unlocated"
+    event["location_confidence"] = "low"
+    event["location_confidence_score"] = 0.0
+    event["location_method"] = "ai_unlocated"
+    event["location_evidence"] = []
+    event["excluded_from_map"] = False
+
+
+def apply_ai_result(
+    event,
+    result,
+    fingerprint
+):
+    clear_location(
+        event
+    )
+
+    confidence = max(
+        0.0,
+        min(
+            1.0,
+            float(
+                result.get(
+                    "confidence"
+                )
+                or
+                0.0
+            ),
+        ),
+    )
+
+    precision = str(
+        result.get(
+            "precision"
+        )
+        or
+        "unknown"
+    ).strip().lower()
+
+    country_code = resolve_country_code(
+        result
+    )
+
+    country = COUNTRY_BY_CODE.get(
+        country_code
+    )
+
+    city_name = str(
+        result.get(
+            "city"
+        )
+        or
+        ""
+    ).strip()
+
+    region_name = str(
+        result.get(
+            "region"
+        )
+        or
+        ""
+    ).strip()
+
+    evidence = str(
+        result.get(
+            "evidence"
+        )
+        or
+        ""
+    ).strip()
+
+    reason = str(
+        result.get(
+            "reason"
+        )
+        or
+        ""
+    ).strip()
+
+    event["ai_geo_version"] = (
+        AI_GEO_VERSION
+    )
+
+    event["ai_geo_complete"] = True
+
+    event["ai_geo_fingerprint"] = (
+        fingerprint
+    )
+
+    event["ai_geo_model"] = (
+        GEMINI_MODEL
+    )
+
+    event["ai_geo_reason"] = reason
+
+    event["ai_geo_inferred"] = bool(
+        result.get(
+            "location_is_inferred"
+        )
+    )
+
+    event["location_confidence_score"] = (
+        round(
+            confidence,
+            3
+        )
+    )
+
+    event["location_confidence"] = (
+        confidence_label(
+            confidence
+        )
+    )
+
+    event["location_evidence"] = (
+        [
+            evidence
+        ]
+        if evidence
+        else []
+    )
+
+    if country:
+        event["country"] = (
+            country.get(
+                "name"
+            )
+        )
+
+        event["country_code"] = (
+            country_code
+        )
+
+    # --------------------------------------------------------
+    # CITY
+    # --------------------------------------------------------
+
+    if (
+        precision
+        ==
+        "city"
+
+        and
+
+        country_code
+
+        and
+
+        city_name
+    ):
+        city = resolve_city(
+            city_name,
+            country_code
+        )
+
+        if city:
+            event["city"] = (
+                city.get(
+                    "name"
+                )
+            )
+
+            event["latitude"] = float(
+                city.get(
+                    "latitude"
+                )
+            )
+
+            event["longitude"] = float(
+                city.get(
+                    "longitude"
+                )
+            )
+
+            event["location_precision"] = (
+                "city"
+            )
+
+            event["location_method"] = (
+                "ai_city_geonames"
+            )
+
+            return
+
+        # AI chose the city semantically but GeoNames could not resolve
+        # its English/transliterated name. Use AI's coordinates when they
+        # are valid instead of throwing away the semantic decision.
+        if valid_coordinates(
+            result.get(
+                "latitude"
+            ),
+            result.get(
+                "longitude"
+            ),
+        ):
+            event["city"] = city_name
+
+            event["latitude"] = float(
+                result[
+                    "latitude"
+                ]
+            )
+
+            event["longitude"] = float(
+                result[
+                    "longitude"
+                ]
+            )
+
+            event["location_precision"] = (
+                "city"
+            )
+
+            event["location_method"] = (
+                "ai_city_coordinates"
+            )
+
+            return
+
+    # --------------------------------------------------------
+    # REGION
+    # --------------------------------------------------------
+
+    if (
+        precision
+        ==
+        "region"
+
+        and
+
+        country_code
+    ):
+        if valid_coordinates(
+            result.get(
+                "latitude"
+            ),
+            result.get(
+                "longitude"
+            ),
+        ):
+            event["region"] = (
+                region_name
+                or
+                city_name
+                or
+                event[
+                    "country"
+                ]
+            )
+
+            event["latitude"] = float(
+                result[
+                    "latitude"
+                ]
+            )
+
+            event["longitude"] = float(
+                result[
+                    "longitude"
+                ]
+            )
+
+            event["location_precision"] = (
+                "region"
+            )
+
+            event["location_method"] = (
+                "ai_region_coordinates"
+            )
+
+            return
+
+    # --------------------------------------------------------
+    # COUNTRY / FALLBACK TO CAPITAL
+    #
+    # Also used when AI identified the country correctly but the city
+    # could not be validated.
+    # --------------------------------------------------------
+
+    if country_code:
+        capital = resolve_capital(
+            country_code
+        )
+
+        if capital:
+            event["city"] = (
+                capital.get(
+                    "name"
+                )
+            )
+
+            event["latitude"] = float(
+                capital.get(
+                    "latitude"
+                )
+            )
+
+            event["longitude"] = float(
+                capital.get(
+                    "longitude"
+                )
+            )
+
+            event["location_precision"] = (
+                "country_capital"
+            )
+
+            event["location_method"] = (
+                "ai_country_capital"
+            )
+
+            return
+
+    # --------------------------------------------------------
+    # TRUE UNKNOWN
+    # --------------------------------------------------------
+
+    event["location_precision"] = (
+        "unlocated"
+    )
+
+    event["location_method"] = (
+        "ai_unlocated"
+    )
+
+
+# ============================================================
+# RESCUE PASS
+# ============================================================
+
+RESCUE_INSTRUCTIONS = """
+You are doing a second-pass geographic inference for counter-terrorism news
+events that the first AI pass could not associate with a country.
+
+For each event, make a strong but reasoned attempt to identify the MOST LIKELY
+country to which the event itself belongs. Use semantic knowledge of people,
+organisations, security agencies, courts, local media, regions, landmarks,
+demonym/nationality and geopolitical context. Do not mistake ordinary English
+words for place names.
+
+Prefer country-level inference over returning unknown. Do NOT invent a city if
+only the country can be supported.
+
+Return unknown only when even the country genuinely cannot be inferred.
+"""
+
+
+def rescue_unknown_events(
+    unresolved
+):
+    if not unresolved:
+        return []
+
+    batches = []
+
+    for start in range(
+        0,
+        len(
+            unresolved
+        ),
+        BATCH_SIZE,
+    ):
+        batches.append(
+            unresolved[
+                start:
+                start + BATCH_SIZE
+            ]
+        )
+
+    results = []
+
+    rescue_instructions = (
+        SYSTEM_INSTRUCTIONS
+        +
+        "\n\n"
+        +
+        RESCUE_INSTRUCTIONS
+    )
+
+    for number, batch in enumerate(
+        batches,
+        start=1,
+    ):
+        print(
+            f"   Gemini rescue batch "
+            f"{number}/{len(batches)} "
+            f"({len(batch)} events)"
+        )
+
+        results.extend(
+            call_gemini_batch(
+                batch,
+                instructions_override=
+                    rescue_instructions,
+            )
+        )
+
+    return results
+
+
+# ============================================================
+# MAIN
+# ============================================================
+
+def main():
+    print()
+    print("=" * 72)
+    print("INTERPOL CT Intelligence Map")
+    print("GEMINI AI-FIRST GEOLOCATION V2")
+    print("=" * 72)
+    print(
+        f"Model: {GEMINI_MODEL}"
+    )
+    print(
+        f"Batch size: {BATCH_SIZE}"
+    )
+    print(
+        f"Force refresh: {FORCE_AI}"
+    )
+
+    if not os.getenv(
+        "GEMINI_API_KEY"
+    ):
+        raise RuntimeError(
+            "GEMINI_API_KEY is not available to geolocate.py."
+        )
+
+    with open(
+        INPUT_FILE,
+        "r",
+        encoding="utf-8",
+    ) as file:
+        data = json.load(
+            file
+        )
+
+    events = data.get(
+        "events",
+        []
+    )
+
+    print(
+        f"Events loaded: {len(events)}"
+    )
+
+    pending = []
+    fingerprints = {}
+    payload_by_id = {}
+    event_by_id = {}
+
+    cached_count = 0
+
+    for index, event in enumerate(
+        events
+    ):
+        payload = event_ai_payload(
+            event,
+            index,
+        )
+
+        event_id = payload[
+            "event_id"
+        ]
+
+        # Ensure uniqueness even if legacy records share an id.
+        if event_id in event_by_id:
+            event_id = (
+                event_id
+                +
+                "-"
+                +
+                str(
+                    index
+                )
+            )
+
+            payload[
+                "event_id"
+            ] = event_id
+
+        fingerprint = event_fingerprint(
+            payload
+        )
+
+        fingerprints[
+            event_id
+        ] = fingerprint
+
+        payload_by_id[
+            event_id
+        ] = payload
+
+        event_by_id[
+            event_id
+        ] = event
+
+        if is_cached(
+            event,
+            fingerprint
+        ):
+            cached_count += 1
+            continue
+
+        pending.append(
+            payload
+        )
+
+    print(
+        f"Gemini cached: {cached_count}"
+    )
+
+    print(
+        f"Gemini to process: {len(pending)}"
+    )
+
+    if pending:
+        total_batches = math.ceil(
+            len(
+                pending
+            )
+            /
+            BATCH_SIZE
+        )
+
+        completed = 0
+
+        for start in range(
+            0,
+            len(
+                pending
+            ),
+            BATCH_SIZE,
+        ):
+            batch_number = (
+                start
+                //
+                BATCH_SIZE
+                +
+                1
+            )
+
+            batch = pending[
+                start:
+                start + BATCH_SIZE
+            ]
+
+            print()
+            print(
+                f"Gemini batch "
+                f"{batch_number}/{total_batches} "
+                f"— {len(batch)} events"
+            )
+
+            results = call_gemini_batch(
+                batch
+            )
+
+            result_by_id = {
+                str(
+                    result.get(
+                        "event_id"
+                    )
+                ):
+                    result
+                for result
+                in results
+                if result.get(
+                    "event_id"
+                )
+            }
+
+            missing = []
+
+            for payload in batch:
+                event_id = payload[
+                    "event_id"
+                ]
+
+                result = result_by_id.get(
+                    event_id
+                )
+
+                if result is None:
+                    missing.append(
+                        event_id
+                    )
+                    continue
+
+                apply_ai_result(
+                    event_by_id[
+                        event_id
+                    ],
+                    result,
+                    fingerprints[
+                        event_id
+                    ],
+                )
+
+                completed += 1
+
+            if missing:
+                raise RuntimeError(
+                    "OpenAI omitted event IDs: "
+                    +
+                    ", ".join(
+                        missing[:10]
+                    )
+                )
+
+            print(
+                f"   Gemini geolocated: "
+                f"{completed}/{len(pending)}"
+            )
+
+    # --------------------------------------------------------
+    # AI RESCUE: AI AGAIN, NOT LEXICAL RULES.
+    # --------------------------------------------------------
+
+    unresolved_payloads = []
+
+    for event_id, event in event_by_id.items():
+        if (
+            event.get(
+                "location_precision"
+            )
+            ==
+            "unlocated"
+
+            and
+
+            event_id in payload_by_id
+        ):
+            unresolved_payloads.append(
+                payload_by_id[
+                    event_id
+                ]
+            )
+
+    if unresolved_payloads:
+        print()
+        print(
+            f"Gemini rescue pass for "
+            f"{len(unresolved_payloads)} "
+            f"unlocated events..."
+        )
+
+        rescue_results = rescue_unknown_events(
+            unresolved_payloads
+        )
+
+        for result in rescue_results:
+            event_id = str(
+                result.get(
+                    "event_id"
+                )
+                or
+                ""
+            )
+
+            if (
+                not event_id
+                or
+                event_id
+                not in event_by_id
+            ):
+                continue
+
+            # Only replace if rescue actually identifies a country.
+            if resolve_country_code(
+                result
+            ):
+                apply_ai_result(
+                    event_by_id[
+                        event_id
+                    ],
+                    result,
+                    fingerprints[
+                        event_id
+                    ],
+                )
+
+    # --------------------------------------------------------
+    # SUMMARY
+    # --------------------------------------------------------
+
+    precision_counts = Counter(
+        event.get(
+            "location_precision",
+            "unlocated",
+        )
+        for event in events
+    )
+
+    method_counts = Counter(
+        event.get(
+            "location_method",
+            "unknown",
+        )
+        for event in events
+    )
+
+    confidence_counts = Counter(
+        event.get(
+            "location_confidence",
+            "low",
+        )
+        for event in events
+    )
+
+    mapped_total = (
+        len(
+            events
+        )
+        -
+        precision_counts[
+            "unlocated"
+        ]
+    )
+
+    data[
+        "geolocation"
+    ] = {
+        "method":
+            "Gemini AI-first semantic geolocation",
+
+        "version":
+            AI_GEO_VERSION,
+
+        "model":
+            GEMINI_MODEL,
+
+        "ai_for_every_event":
+            True,
+
+        "cached_events":
+            cached_count,
+
+        "ai_processed_this_run":
+            len(
+                pending
+            ),
+
+        "city":
+            precision_counts[
+                "city"
+            ],
+
+        "region":
+            precision_counts[
+                "region"
+            ],
+
+        "country_capital":
+            precision_counts[
+                "country_capital"
+            ],
+
+        "unlocated":
+            precision_counts[
+                "unlocated"
+            ],
+
+        "mapped_total":
+            mapped_total,
+
+        "high_confidence":
+            confidence_counts[
+                "high"
+            ],
+
+        "medium_confidence":
+            confidence_counts[
+                "medium"
+            ],
+
+        "low_confidence":
+            confidence_counts[
+                "low"
+            ],
+
+        "methods":
+            dict(
+                method_counts
+            ),
+    }
+
+    with open(
+        OUTPUT_FILE,
+        "w",
+        encoding="utf-8",
+    ) as file:
+        json.dump(
+            data,
+            file,
+            ensure_ascii=False,
+            indent=2,
+        )
+
+    print()
+    print("=" * 72)
+    print("GEMINI GEOLOCATION COMPLETE")
+    print("=" * 72)
+    print(
+        f"City:              "
+        f"{precision_counts['city']}"
+    )
+    print(
+        f"Region:            "
+        f"{precision_counts['region']}"
+    )
+    print(
+        f"Country → capital: "
+        f"{precision_counts['country_capital']}"
+    )
+    print(
+        f"Unlocated:         "
+        f"{precision_counts['unlocated']}"
+    )
+    print(
+        f"Mapped total:      "
+        f"{mapped_total}/{len(events)}"
+    )
+    print(
+        f"Gemini cached:         "
+        f"{cached_count}"
+    )
+    print(
+        f"Gemini processed:      "
+        f"{len(pending)}"
+    )
+    print("=" * 72)
+
+
+if __name__ == "__main__":
+    main()
