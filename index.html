@@ -981,6 +981,24 @@ body.locked #main {
     background: #4f8c7a;
 }
 
+
+.location-region {
+    background: #dbe7f5;
+    color: #244f78;
+}
+
+.location-inferred {
+    background: #f3e1ff;
+    color: #634078;
+}
+
+.location-evidence {
+    margin-top: 6px;
+    font-size: 9px;
+    line-height: 1.4;
+    color: #6c7881;
+}
+
 </style>
 
 </head>
@@ -1488,6 +1506,22 @@ City-level
 <div class="coverage-row">
 
 <span class="coverage-label">
+Region-level
+</span>
+
+<span
+    class="coverage-value"
+    id="coverageRegion"
+>
+—
+</span>
+
+</div>
+
+
+<div class="coverage-row">
+
+<span class="coverage-label">
 Country → capital
 </span>
 
@@ -1539,7 +1573,7 @@ Visible rate
 
 <div id="database-info">
 
-English-language open-source monitoring
+English-language open-source monitoring · contextual geolocation V4
 
 <br>
 
@@ -2685,39 +2719,341 @@ function updateKPIs() {
 function createMarker(
     event
 ) {
-    const primaryCategory = event.category;
-    const style = categoryStyle[primaryCategory] || {code:"?", className:"legal"};
-    const icon = L.divIcon({
-        className:"",
-        html:`<div class="ct-marker ${style.className}">${style.code}</div>`,
-        iconSize:[25,25],
-        iconAnchor:[12,12]
-    });
-    const marker = L.marker([event.latitude,event.longitude],{icon:icon});
-    const title = escapeHtml(event.title);
-    const categories = escapeHtml(eventCategories(event).join(" / "));
-    let dateText = "";
-    if(event.published){dateText=new Date(event.published).toLocaleDateString("en-GB");}
-    let locationText="";
-    let locationBadge="";
-    if(event.location_precision==="city"){
-        locationText=[event.city,event.country].filter(Boolean).join(", ");
-        locationBadge='<span class="location-badge location-city">City-level location</span>';
-    } else if(event.location_precision==="country_capital"){
-        locationText=[event.city,event.country].filter(Boolean).join(", ");
-        locationBadge='<span class="location-badge location-capital">Country-level — marker positioned on capital</span>';
-    } else if(event.location_precision==="unlocated"){
-        locationText="Unlocated placeholder (0,0)";
-        locationBadge='<span class="location-badge location-unlocated">No country identified — placeholder only</span>';
-    } else {
-        locationText=[event.city,event.country].filter(Boolean).join(", ");
+
+    const primaryCategory =
+        event.category;
+
+
+    const style =
+
+        categoryStyle[
+            primaryCategory
+        ]
+
+        ||
+
+        {
+            code:
+                "?",
+            className:
+                "legal"
+        };
+
+
+    const icon =
+        L.divIcon({
+
+            className:
+                "",
+
+            html:
+
+                `<div class="ct-marker ${style.className}">
+                    ${style.code}
+                </div>`,
+
+            iconSize:
+                [25,25],
+
+            iconAnchor:
+                [12,12]
+
+        });
+
+
+    const marker =
+        L.marker(
+
+            [
+                event.latitude,
+                event.longitude
+            ],
+
+            {
+                icon:
+                    icon
+            }
+
+        );
+
+
+    const title =
+        escapeHtml(
+            event.title
+        );
+
+
+    const categories =
+        escapeHtml(
+
+            eventCategories(
+                event
+            ).join(
+                " / "
+            )
+
+        );
+
+
+    let dateText =
+        "";
+
+
+    if (
+        event.published
+    ) {
+
+        dateText =
+            new Date(
+                event.published
+            ).toLocaleDateString(
+                "en-GB"
+            );
+
     }
-    let sourceBlock="";
-    if(event.source && event.url){
-        sourceBlock=`<div class="popup-source">Source: <a href="${escapeHtml(event.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.source)}</a></div>`;
+
+
+    let locationText =
+        "";
+
+
+    let locationBadge =
+        "";
+
+
+    if (
+        event.location_precision
+        ===
+        "city"
+    ) {
+
+        locationText =
+            [
+                event.city,
+                event.country
+            ]
+            .filter(
+                Boolean
+            )
+            .join(
+                ", "
+            );
+
+
+        locationBadge =
+            `<span class="location-badge location-city">
+                City-level location
+            </span>`;
+
     }
-    marker.bindPopup(`<div><div class="popup-title">${title}</div><div class="popup-category">${categories}</div><div>${dateText}</div><div class="popup-location"><strong>Location:</strong> ${escapeHtml(locationText)}<br>${locationBadge}</div>${sourceBlock}</div>`);
+
+
+    else if (
+        event.location_precision
+        ===
+        "region"
+    ) {
+
+        locationText =
+            [
+                event.region,
+                event.country
+            ]
+            .filter(
+                Boolean
+            )
+            .join(
+                ", "
+            );
+
+
+        locationBadge =
+            `<span class="location-badge location-region">
+                Regional location
+            </span>`;
+
+    }
+
+
+    else if (
+        event.location_precision
+        ===
+        "country_capital"
+    ) {
+
+        locationText =
+            [
+                event.city,
+                event.country
+            ]
+            .filter(
+                Boolean
+            )
+            .join(
+                ", "
+            );
+
+
+        locationBadge =
+            `<span class="location-badge location-inferred">
+                Country inferred — marker positioned on capital
+            </span>`;
+
+    }
+
+
+    else if (
+        event.location_precision
+        ===
+        "unlocated"
+    ) {
+
+        locationText =
+            "No reliable country identified";
+
+
+        locationBadge =
+            `<span class="location-badge location-unlocated">
+                Unlocated
+            </span>`;
+
+    }
+
+
+    else {
+
+        locationText =
+            [
+                event.city,
+                event.region,
+                event.country
+            ]
+            .filter(
+                Boolean
+            )
+            .join(
+                ", "
+            );
+
+    }
+
+
+    let evidenceBlock =
+        "";
+
+
+    if (
+        Array.isArray(
+            event.location_evidence
+        )
+
+        &&
+
+        event.location_evidence.length
+        >
+        0
+    ) {
+
+        evidenceBlock = `
+
+            <div class="location-evidence">
+
+                Confidence:
+                ${escapeHtml(event.location_confidence || "unknown")}
+
+                <br>
+
+                Inference:
+                ${escapeHtml(event.location_method || "")}
+
+                <br>
+
+                Evidence:
+                ${escapeHtml(event.location_evidence.slice(0,4).join(" · "))}
+
+            </div>
+
+        `;
+
+    }
+
+
+    let sourceBlock =
+        "";
+
+
+    if (
+        event.source
+
+        &&
+
+        event.url
+    ) {
+
+        sourceBlock = `
+
+            <div class="popup-source">
+
+                Source:
+
+                <a
+                    href="${escapeHtml(event.url)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    ${escapeHtml(event.source)}
+
+                </a>
+
+            </div>
+
+        `;
+
+    }
+
+
+    marker.bindPopup(`
+
+        <div>
+
+            <div class="popup-title">
+                ${title}
+            </div>
+
+            <div class="popup-category">
+                ${categories}
+            </div>
+
+            <div>
+                ${dateText}
+            </div>
+
+            <div class="popup-location">
+
+                <strong>
+                    Location:
+                </strong>
+
+                ${escapeHtml(locationText)}
+
+                <br>
+
+                ${locationBadge}
+
+                ${evidenceBlock}
+
+            </div>
+
+            ${sourceBlock}
+
+        </div>
+
+    `);
+
+
     return marker;
+
 }
 
 
@@ -2869,21 +3205,149 @@ function renderEvents() {
 
 
 function updateCoverage() {
-    const events=filteredAllEvents();
-    let city=0;
-    let country=0;
-    let unknown=0;
-    events.forEach(event=>{
-        if(event.location_precision==="city") city++;
-        else if(event.location_precision==="country_capital") country++;
-        else unknown++;
-    });
-    const total=city+country+unknown;
-    const rate=total?(((city+country)/total)*100).toFixed(1):"0.0";
-    document.getElementById("coverageCity").innerText=city;
-    document.getElementById("coverageCountry").innerText=country;
-    document.getElementById("coverageUnknown").innerText=unknown;
-    document.getElementById("coverageRate").innerText=rate+"%";
+
+    const events =
+        filteredAllEvents();
+
+
+    let city =
+        0;
+
+
+    let region =
+        0;
+
+
+    let country =
+        0;
+
+
+    let unknown =
+        0;
+
+
+    events.forEach(
+
+        event => {
+
+            if (
+                event.location_precision
+                ===
+                "city"
+            ) {
+
+                city++;
+
+            }
+
+
+            else if (
+                event.location_precision
+                ===
+                "region"
+            ) {
+
+                region++;
+
+            }
+
+
+            else if (
+                event.location_precision
+                ===
+                "country_capital"
+            ) {
+
+                country++;
+
+            }
+
+
+            else {
+
+                unknown++;
+
+            }
+
+        }
+
+    );
+
+
+    const total =
+        city
+        +
+        region
+        +
+        country
+        +
+        unknown;
+
+
+    const rate =
+
+        total
+
+        ?
+
+        (
+            (
+                city
+                +
+                region
+                +
+                country
+            )
+
+            /
+
+            total
+
+            *
+
+            100
+
+        ).toFixed(
+            1
+        )
+
+        :
+
+        "0.0";
+
+
+    document.getElementById(
+        "coverageCity"
+    ).innerText =
+        city;
+
+
+    document.getElementById(
+        "coverageRegion"
+    ).innerText =
+        region;
+
+
+    document.getElementById(
+        "coverageCountry"
+    ).innerText =
+        country;
+
+
+    document.getElementById(
+        "coverageUnknown"
+    ).innerText =
+        unknown;
+
+
+    document.getElementById(
+        "coverageRate"
+    ).innerText =
+
+        rate
+        +
+        "%";
+
 }
 
 
