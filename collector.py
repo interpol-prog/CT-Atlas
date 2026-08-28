@@ -1970,6 +1970,269 @@ def collect_all(days):
 
     return records
 
+
+# ============================================================
+# INTELLIGENT EVENT-LEVEL DEDUPLICATION V7
+#
+# The collector receives many different headlines about the same
+# real-world event.  Deduplication therefore uses more than title
+# similarity:
+#
+# - canonical URL
+# - normalized title similarity
+# - meaningful token overlap
+# - title containment
+# - named entities / personalities
+# - terrorist organisation aliases
+# - CT action families
+# - explicit country clues
+# - numbers / casualty counts / amounts
+# - summary overlap
+# - publication-time proximity
+# - previously merged headline variants
+#
+# It deliberately avoids merging two events merely because they
+# involve the same group or the same country.
+# ============================================================
+
+MAX_DEDUP_WINDOW_DAYS = 7
+MAX_RELATED_ARTICLES = 24
+
+
+DEDUP_GENERIC_WORDS = {
+    "terror",
+    "terrorism",
+    "terrorist",
+    "terrorists",
+    "extremist",
+    "extremists",
+    "extremism",
+    "militant",
+    "militants",
+    "jihadist",
+    "jihadists",
+    "security",
+    "official",
+    "officials",
+    "authorities",
+    "government",
+    "police",
+    "report",
+    "reports",
+    "reported",
+    "news",
+    "latest",
+    "breaking",
+    "update",
+    "updates",
+    "case",
+    "cases",
+    "suspect",
+    "suspects",
+}
+
+
+ACTION_FAMILIES = {
+    "attack": {
+        "attack", "attacks", "attacked", "assault", "ambush",
+        "bomb", "bombing", "blast", "explosion", "shooting",
+        "shot", "stabbing", "stabbed", "ramming", "rocket",
+        "drone attack", "suicide bomber", "suicide bombing",
+        "killed", "wounded",
+    },
+    "arrest": {
+        "arrest", "arrests", "arrested", "detained", "detention",
+        "captured", "raid", "raided", "custody",
+    },
+    "legal": {
+        "charged", "charges", "trial", "court", "convicted",
+        "conviction", "sentenced", "sentence", "indicted",
+        "indictment", "guilty", "prosecution", "appeal",
+    },
+    "finance": {
+        "financing", "funding", "fundraising", "donation",
+        "donations", "assets frozen", "assets seized",
+        "sanctioned", "sanctions", "money laundering",
+        "cryptocurrency", "crypto", "hawala",
+    },
+    "weapons": {
+        "weapons", "weapon", "arms", "firearms", "ammunition",
+        "explosives", "explosive", "ied", "missile", "rocket",
+        "weapons cache", "arms cache", "smuggling", "trafficking",
+    },
+    "online": {
+        "propaganda", "recruitment", "radicalization",
+        "radicalisation", "cyberattack", "cyber attack",
+        "hacking", "deepfake", "artificial intelligence",
+        "generative ai", "social media", "encrypted messaging",
+    },
+    "cbrn": {
+        "chemical", "biological", "radiological", "nuclear",
+        "radioactive", "cbrn", "ricin", "sarin", "chlorine",
+        "dirty bomb",
+    },
+}
+
+
+ACTOR_ALIASES = {
+    "islamic_state": {
+        "isis", "isil", "daesh", "islamic state",
+    },
+    "al_qaeda": {
+        "al-qaeda", "al qaeda", "alqaeda",
+    },
+    "al_shabaab": {
+        "al-shabaab", "al shabaab",
+    },
+    "boko_haram": {
+        "boko haram",
+    },
+    "iswap": {
+        "iswap", "islamic state west africa province",
+    },
+    "taliban": {
+        "taliban",
+    },
+    "ttp": {
+        "ttp", "tehrik-i-taliban pakistan",
+        "tehreek-e-taliban pakistan",
+    },
+    "hamas": {
+        "hamas",
+    },
+    "hezbollah": {
+        "hezbollah", "hizballah", "hizbollah",
+    },
+    "pij": {
+        "palestinian islamic jihad", "islamic jihad",
+    },
+    "houthis": {
+        "houthis", "houthi", "ansar allah",
+    },
+    "lashkar_e_taiba": {
+        "lashkar-e-taiba", "lashkar e taiba", "let",
+    },
+    "jaish_e_mohammed": {
+        "jaish-e-mohammed", "jaish e mohammed", "jem",
+    },
+}
+
+
+COUNTRY_CANONICAL = {
+    "united states": {
+        "united states", "u.s.", "u.s", "usa", "america", "american",
+    },
+    "united kingdom": {
+        "united kingdom", "u.k.", "u.k", "uk", "britain", "british",
+    },
+    "afghanistan": {
+        "afghanistan", "afghan",
+    },
+    "pakistan": {
+        "pakistan", "pakistani",
+    },
+    "india": {
+        "india", "indian",
+    },
+    "israel": {
+        "israel", "israeli",
+    },
+    "palestinian territory": {
+        "palestine", "palestinian", "gaza", "west bank",
+    },
+    "lebanon": {
+        "lebanon", "lebanese",
+    },
+    "iraq": {
+        "iraq", "iraqi",
+    },
+    "syria": {
+        "syria", "syrian",
+    },
+    "iran": {
+        "iran", "iranian",
+    },
+    "turkiye": {
+        "turkey", "turkiye", "türkiye", "turkish",
+    },
+    "russia": {
+        "russia", "russian",
+    },
+    "ukraine": {
+        "ukraine", "ukrainian",
+    },
+    "somalia": {
+        "somalia", "somali",
+    },
+    "kenya": {
+        "kenya", "kenyan",
+    },
+    "nigeria": {
+        "nigeria", "nigerian",
+    },
+    "niger": {
+        "niger", "nigerien",
+    },
+    "mali": {
+        "mali", "malian",
+    },
+    "burkina faso": {
+        "burkina faso", "burkinabe", "burkinabè",
+    },
+    "mozambique": {
+        "mozambique", "mozambican",
+    },
+    "egypt": {
+        "egypt", "egyptian",
+    },
+    "france": {
+        "france", "french",
+    },
+    "germany": {
+        "germany", "german",
+    },
+    "belgium": {
+        "belgium", "belgian",
+    },
+    "canada": {
+        "canada", "canadian",
+    },
+    "australia": {
+        "australia", "australian",
+    },
+    "philippines": {
+        "philippines", "philippine", "filipino",
+    },
+    "malaysia": {
+        "malaysia", "malaysian",
+    },
+    "indonesia": {
+        "indonesia", "indonesian",
+    },
+    "tunisia": {
+        "tunisia", "tunisian",
+    },
+    "morocco": {
+        "morocco", "moroccan",
+    },
+    "algeria": {
+        "algeria", "algerian",
+    },
+    "libya": {
+        "libya", "libyan",
+    },
+    "yemen": {
+        "yemen", "yemeni",
+    },
+    "saudi arabia": {
+        "saudi arabia", "saudi",
+    },
+    "united arab emirates": {
+        "united arab emirates", "uae", "emirati",
+    },
+}
+
+
 def ascii_text(text):
     value = clean_text(text)
 
