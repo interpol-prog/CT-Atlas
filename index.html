@@ -848,6 +848,9 @@ body.locked #main {
     visibility: hidden;
 }
 
+
+.location-badge{display:inline-block;margin-top:6px;padding:3px 6px;border-radius:3px;font-size:9px;font-weight:bold;text-transform:uppercase;letter-spacing:.4px}.location-city{background:#dfeee3;color:#245b34}.location-capital{background:#fff0cc;color:#725100}.location-unlocated{background:#e7e7e7;color:#555}
+
 </style>
 
 </head>
@@ -1348,7 +1351,7 @@ City-level
 <div class="coverage-row">
 
 <span class="coverage-label">
-Country-only
+Country → capital
 </span>
 
 <span
@@ -1380,7 +1383,7 @@ Unknown
 <div class="coverage-row">
 
 <span class="coverage-label">
-Mapped rate
+Visible rate
 </span>
 
 <span
@@ -2143,197 +2146,40 @@ function updateKPIs() {
 function createMarker(
     event
 ) {
-
-
-    const primaryCategory =
-        event.category;
-
-
-    const style =
-
-        categoryStyle[
-            primaryCategory
-        ]
-
-        ||
-
-        {
-
-            code:
-                "?",
-
-            className:
-                "legal"
-
-        };
-
-
-    const icon =
-    L.divIcon({
-
-        className:
-            "",
-
-        html:
-
-            `<div class="ct-marker ${style.className}">
-                ${style.code}
-            </div>`,
-
-        iconSize:
-            [25,25],
-
-        iconAnchor:
-            [12,12]
-
+    const primaryCategory = event.category;
+    const style = categoryStyle[primaryCategory] || {code:"?", className:"legal"};
+    const icon = L.divIcon({
+        className:"",
+        html:`<div class="ct-marker ${style.className}">${style.code}</div>`,
+        iconSize:[25,25],
+        iconAnchor:[12,12]
     });
-
-
-    const marker =
-    L.marker(
-
-        [
-            event.latitude,
-            event.longitude
-        ],
-
-        {
-            icon:
-                icon
-        }
-
-    );
-
-
-    const title =
-        escapeHtml(
-            event.title
-        );
-
-
-    const location =
-        escapeHtml(
-
-            [
-                event.city,
-                event.country
-            ]
-
-            .filter(
-                Boolean
-            )
-
-            .join(
-                ", "
-            )
-
-        );
-
-
-    const categories =
-        escapeHtml(
-
-            eventCategories(
-                event
-            ).join(
-                " / "
-            )
-
-        );
-
-
-    let dateText =
-        "";
-
-
-    if (
-        event.published
-    ) {
-
-
-        dateText =
-            new Date(
-                event.published
-            ).toLocaleDateString(
-                "en-GB"
-            );
-
+    const marker = L.marker([event.latitude,event.longitude],{icon:icon});
+    const title = escapeHtml(event.title);
+    const categories = escapeHtml(eventCategories(event).join(" / "));
+    let dateText = "";
+    if(event.published){dateText=new Date(event.published).toLocaleDateString("en-GB");}
+    let locationText="";
+    let locationBadge="";
+    if(event.location_precision==="city"){
+        locationText=[event.city,event.country].filter(Boolean).join(", ");
+        locationBadge='<span class="location-badge location-city">City-level location</span>';
+    } else if(event.location_precision==="country_capital"){
+        locationText=[event.city,event.country].filter(Boolean).join(", ");
+        locationBadge='<span class="location-badge location-capital">Country-level — marker positioned on capital</span>';
+    } else if(event.location_precision==="unlocated"){
+        locationText="Unlocated placeholder (0,0)";
+        locationBadge='<span class="location-badge location-unlocated">No country identified — placeholder only</span>';
+    } else {
+        locationText=[event.city,event.country].filter(Boolean).join(", ");
     }
-
-
-    let sourceBlock =
-        "";
-
-
-    if (
-        event.source
-
-        &&
-
-        event.url
-    ) {
-
-
-        sourceBlock = `
-
-        <div class="popup-source">
-
-            Source:
-
-            <a
-                href="${escapeHtml(event.url)}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-
-                ${escapeHtml(event.source)}
-
-            </a>
-
-        </div>
-
-        `;
-
+    let sourceBlock="";
+    if(event.source && event.url){
+        sourceBlock=`<div class="popup-source">Source: <a href="${escapeHtml(event.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.source)}</a></div>`;
     }
-
-
-    marker.bindPopup(`
-
-        <div>
-
-            <div class="popup-title">
-                ${title}
-            </div>
-
-            <div class="popup-category">
-                ${categories}
-            </div>
-
-            <div>
-                ${dateText}
-            </div>
-
-            <div class="popup-location">
-
-                <strong>
-                    Location:
-                </strong>
-
-                ${location}
-
-            </div>
-
-            ${sourceBlock}
-
-        </div>
-
-    `);
-
-
+    marker.bindPopup(`<div><div class="popup-title">${title}</div><div class="popup-category">${categories}</div><div>${dateText}</div><div class="popup-location"><strong>Location:</strong> ${escapeHtml(locationText)}<br>${locationBadge}</div>${sourceBlock}</div>`);
     return marker;
-
 }
-
 
 
 function renderEvents() {
@@ -2425,25 +2271,9 @@ function renderEvents() {
     ) {
 
 
-        const heatPoints =
-            visible.map(
-
-                event => [
-
-                    Number(
-                        event.latitude
-                    ),
-
-                    Number(
-                        event.longitude
-                    ),
-
-                    1
-
-                ]
-
-            );
-
+        const heatPoints = visible
+            .filter(event => event.location_precision === "city")
+            .map(event => [Number(event.latitude), Number(event.longitude), 1]);
 
         heatLayer =
         L.heatLayer(
@@ -2485,7 +2315,7 @@ function renderEvents() {
 
         +
 
-        " mapped / "
+        " visible / "
 
         +
 
@@ -2500,124 +2330,22 @@ function renderEvents() {
 
 
 function updateCoverage() {
-
-
-    const events =
-        filteredAllEvents();
-
-
-    let city =
-        0;
-
-
-    let country =
-        0;
-
-
-    let unknown =
-        0;
-
-
-    events.forEach(
-
-        event => {
-
-
-            if (
-                event.location_precision
-                ===
-                "city"
-            ) {
-
-
-                city++;
-
-
-            }
-
-
-            else if (
-                event.location_precision
-                ===
-                "country"
-            ) {
-
-
-                country++;
-
-
-            }
-
-
-            else {
-
-
-                unknown++;
-
-            }
-
-        }
-
-    );
-
-
-    const total =
-        city
-        +
-        country
-        +
-        unknown;
-
-
-    const rate =
-
-        total
-
-        ?
-
-        (
-            city
-            /
-            total
-            *
-            100
-        ).toFixed(
-            1
-        )
-
-        :
-
-        "0.0";
-
-
-    document.getElementById(
-        "coverageCity"
-    ).innerText =
-        city;
-
-
-    document.getElementById(
-        "coverageCountry"
-    ).innerText =
-        country;
-
-
-    document.getElementById(
-        "coverageUnknown"
-    ).innerText =
-        unknown;
-
-
-    document.getElementById(
-        "coverageRate"
-    ).innerText =
-
-        rate
-        +
-        "%";
-
+    const events=filteredAllEvents();
+    let city=0;
+    let country=0;
+    let unknown=0;
+    events.forEach(event=>{
+        if(event.location_precision==="city") city++;
+        else if(event.location_precision==="country_capital") country++;
+        else unknown++;
+    });
+    const total=city+country+unknown;
+    const rate=total?(((city+country)/total)*100).toFixed(1):"0.0";
+    document.getElementById("coverageCity").innerText=city;
+    document.getElementById("coverageCountry").innerText=country;
+    document.getElementById("coverageUnknown").innerText=unknown;
+    document.getElementById("coverageRate").innerText=rate+"%";
 }
-
 
 
 function renderRanking(
@@ -2710,145 +2438,23 @@ function renderRanking(
 
 
 function updateTopLocations() {
-
-
-    const visible =
-        filteredMappedEvents();
-
-
-    const countryCounts =
-        {};
-
-
-    const cityCounts =
-        {};
-
-
-    visible.forEach(
-
-        event => {
-
-
-            if (
-                event.country
-            ) {
-
-
-                countryCounts[
-                    event.country
-                ] =
-
-                    (
-                        countryCounts[
-                            event.country
-                        ]
-                        ||
-                        0
-                    )
-
-                    +
-
-                    1;
-
-            }
-
-
-            if (
-                event.city
-            ) {
-
-
-                const hotspot =
-
-                    event.city
-
-                    +
-
-                    (
-                        event.country
-                        ?
-                        ", "
-                        +
-                        event.country
-                        :
-                        ""
-                    );
-
-
-                cityCounts[
-                    hotspot
-                ] =
-
-                    (
-                        cityCounts[
-                            hotspot
-                        ]
-                        ||
-                        0
-                    )
-
-                    +
-
-                    1;
-
-            }
-
+    const visible=filteredMappedEvents();
+    const countryCounts={};
+    const cityCounts={};
+    visible.forEach(event=>{
+        if(event.country && event.location_precision!=="unlocated"){
+            countryCounts[event.country]=(countryCounts[event.country]||0)+1;
         }
-
-    );
-
-
-    const countries =
-
-        Object.entries(
-            countryCounts
-        )
-
-        .sort(
-            (a,b) =>
-                b[1]
-                -
-                a[1]
-        )
-
-        .slice(
-            0,
-            5
-        );
-
-
-    const hotspots =
-
-        Object.entries(
-            cityCounts
-        )
-
-        .sort(
-            (a,b) =>
-                b[1]
-                -
-                a[1]
-        )
-
-        .slice(
-            0,
-            5
-        );
-
-
-    renderRanking(
-        "topCountries",
-        countries
-    );
-
-
-    renderRanking(
-        "topHotspots",
-        hotspots
-    );
-
+        if(event.city && event.location_precision==="city"){
+            const hotspot=event.city+(event.country?", "+event.country:"");
+            cityCounts[hotspot]=(cityCounts[hotspot]||0)+1;
+        }
+    });
+    const countries=Object.entries(countryCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const hotspots=Object.entries(cityCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    renderRanking("topCountries",countries);
+    renderRanking("topHotspots",hotspots);
 }
-
 
 
 function updateTrends() {
