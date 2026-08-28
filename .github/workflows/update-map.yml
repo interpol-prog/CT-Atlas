@@ -20,8 +20,8 @@ permissions:
 
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: ct-map-update-main
+  cancel-in-progress: true
 
 
 jobs:
@@ -34,6 +34,9 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
 
 
       - name: Set up Python
@@ -58,13 +61,24 @@ jobs:
           python geolocate.py
 
 
-      - name: Commit updated database
+      - name: Commit and push updated database
         run: |
           git config user.name "CT Intelligence Map Bot"
           git config user.email "actions@github.com"
+
           git add events.json
-          git diff --cached --quiet || git commit -m "Daily CT intelligence update"
-          git push
+
+          if git diff --cached --quiet; then
+            echo "No database changes to commit."
+          else
+            git commit -m "Daily CT intelligence update"
+
+            git fetch origin main
+
+            git rebase origin/main
+
+            git push origin main
+          fi
 
 
   deploy:
