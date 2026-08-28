@@ -1,0 +1,3304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+INTERPOL CT Intelligence Map
+</title>
+
+<link
+    rel="icon"
+    href="interpol-logo.png"
+>
+
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+/>
+
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+/>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+
+    height: 100%;
+
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        #0d1620;
+}
+
+
+#header {
+
+    height: 78px;
+
+    background:
+        #111d28;
+
+    color:
+        white;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        0 22px;
+
+    border-bottom:
+        1px solid #314252;
+}
+
+
+#brand {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        16px;
+}
+
+
+#logo {
+
+    height:
+        52px;
+
+    width:
+        auto;
+}
+
+
+#title h1 {
+
+    margin:
+        0;
+
+    font-size:
+        21px;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        0.4px;
+}
+
+
+#title div {
+
+    margin-top:
+        5px;
+
+    color:
+        #94a6b5;
+
+    font-size:
+        11px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        1px;
+}
+
+
+#updated {
+
+    text-align:
+        right;
+
+    font-size:
+        11px;
+
+    color:
+        #9fb0be;
+}
+
+
+#counter {
+
+    margin-top:
+        5px;
+
+    font-size:
+        14px;
+
+    color:
+        white;
+
+    font-weight:
+        bold;
+}
+
+
+#main {
+
+    height:
+        calc(100vh - 78px);
+
+    display:
+        flex;
+}
+
+
+#sidebar {
+
+    width:
+        330px;
+
+    background:
+        #17232e;
+
+    color:
+        white;
+
+    overflow-y:
+        auto;
+
+    padding:
+        17px;
+
+    border-right:
+        1px solid #334554;
+}
+
+
+#map {
+
+    flex:
+        1;
+
+    height:
+        100%;
+}
+
+
+.section-title {
+
+    margin-top:
+        13px;
+
+    margin-bottom:
+        10px;
+
+    color:
+        #8fa4b5;
+
+    font-size:
+        11px;
+
+    font-weight:
+        bold;
+
+    letter-spacing:
+        1px;
+
+    text-transform:
+        uppercase;
+}
+
+
+.kpis {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        7px;
+
+    margin-bottom:
+        17px;
+}
+
+
+.kpi {
+
+    background:
+        #202f3b;
+
+    border:
+        1px solid #324756;
+
+    border-radius:
+        5px;
+
+    padding:
+        10px;
+}
+
+
+.kpi-number {
+
+    font-size:
+        20px;
+
+    font-weight:
+        bold;
+}
+
+
+.kpi-label {
+
+    margin-top:
+        3px;
+
+    color:
+        #9cadba;
+
+    font-size:
+        10px;
+
+    text-transform:
+        uppercase;
+}
+
+
+.time-buttons,
+.layer-buttons {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        7px;
+
+    margin-bottom:
+        17px;
+}
+
+
+.time-button,
+.layer-button,
+.action-button {
+
+    border:
+        1px solid #405563;
+
+    border-radius:
+        4px;
+
+    padding:
+        9px;
+
+    background:
+        #202f3b;
+
+    color:
+        white;
+
+    cursor:
+        pointer;
+
+    font-size:
+        11px;
+}
+
+
+.time-button:hover,
+.layer-button:hover,
+.action-button:hover {
+
+    background:
+        #2b3e4c;
+}
+
+
+.time-button.active,
+.layer-button.active {
+
+    background:
+        white;
+
+    color:
+        #111;
+
+    font-weight:
+        bold;
+}
+
+
+#searchInput {
+
+    width:
+        100%;
+
+    padding:
+        10px;
+
+    background:
+        #202f3b;
+
+    border:
+        1px solid #405563;
+
+    border-radius:
+        4px;
+
+    color:
+        white;
+
+    outline:
+        none;
+
+    margin-bottom:
+        8px;
+}
+
+
+.category-actions {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        7px;
+
+    margin-bottom:
+        7px;
+}
+
+
+.category {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    padding:
+        6px 3px;
+
+    font-size:
+        12px;
+
+    cursor:
+        pointer;
+}
+
+
+.category input {
+
+    margin-right:
+        8px;
+}
+
+
+.category-icon {
+
+    width:
+        24px;
+
+    height:
+        24px;
+
+    margin-right:
+        9px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    color:
+        white;
+
+    font-size:
+        9px;
+
+    font-weight:
+        bold;
+}
+
+
+.financing {
+    background: #3a78a8;
+}
+
+
+.weapons {
+    background: #7c5fa3;
+}
+
+
+.cbrn {
+    background: #658f53;
+}
+
+
+.online {
+    background: #397e87;
+}
+
+
+.attacks {
+    background: #b44e4e;
+}
+
+
+.arrests {
+    background: #b17b38;
+}
+
+
+.legal {
+    background: #687482;
+}
+
+
+.ai {
+    background: #944c85;
+}
+
+
+.analytics-list {
+
+    margin:
+        0 0 15px 0;
+
+    padding:
+        0;
+
+    list-style:
+        none;
+}
+
+
+.analytics-item {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    gap:
+        10px;
+
+    padding:
+        6px 0;
+
+    border-bottom:
+        1px solid #2f404e;
+
+    font-size:
+        11px;
+}
+
+
+.analytics-name {
+
+    color:
+        #e7edf2;
+}
+
+
+.analytics-value {
+
+    font-weight:
+        bold;
+
+    white-space:
+        nowrap;
+}
+
+
+.trend-up {
+    color: #92d39b;
+}
+
+
+.trend-down {
+    color: #e39a9a;
+}
+
+
+.trend-flat {
+    color: #a9b6c1;
+}
+
+
+.coverage-box {
+
+    background:
+        #202f3b;
+
+    border:
+        1px solid #324756;
+
+    border-radius:
+        5px;
+
+    padding:
+        10px;
+
+    margin-bottom:
+        18px;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.7;
+}
+
+
+.coverage-row {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+}
+
+
+.coverage-label {
+
+    color:
+        #9cadba;
+}
+
+
+.coverage-value {
+
+    font-weight:
+        bold;
+}
+
+
+.ct-marker {
+
+    width:
+        25px;
+
+    height:
+        25px;
+
+    border:
+        2px solid white;
+
+    border-radius:
+        50%;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        white;
+
+    font-size:
+        8px;
+
+    font-weight:
+        bold;
+
+    box-shadow:
+        0 1px 5px rgba(0,0,0,.45);
+}
+
+
+.popup-title {
+
+    font-size:
+        14px;
+
+    font-weight:
+        bold;
+
+    line-height:
+        1.35;
+
+    margin-bottom:
+        7px;
+}
+
+
+.popup-category {
+
+    font-size:
+        10px;
+
+    text-transform:
+        uppercase;
+
+    color:
+        #64727c;
+
+    margin-bottom:
+        7px;
+}
+
+
+.popup-location {
+
+    margin-top:
+        7px;
+}
+
+
+.popup-source {
+
+    margin-top:
+        10px;
+
+    padding-top:
+        8px;
+
+    border-top:
+        1px solid #ddd;
+
+    font-size:
+        11px;
+}
+
+
+.popup-source a {
+
+    text-decoration:
+        none;
+
+    font-weight:
+        bold;
+}
+
+
+#database-info {
+
+    margin-top:
+        20px;
+
+    padding-top:
+        13px;
+
+    border-top:
+        1px solid #344956;
+
+    font-size:
+        10px;
+
+    color:
+        #899ca9;
+
+    line-height:
+        1.6;
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="header">
+
+
+    <div id="brand">
+
+
+        <img
+            id="logo"
+            src="interpol-logo.png"
+            alt="INTERPOL"
+        >
+
+
+        <div id="title">
+
+
+            <h1>
+                INTERPOL CT Intelligence Map
+            </h1>
+
+
+            <div>
+                Global Counter-Terrorism Situational Awareness
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div id="updated">
+
+
+        <div id="lastUpdated">
+
+            Loading database...
+
+        </div>
+
+
+        <div id="counter">
+
+            —
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<div id="main">
+
+
+<div id="sidebar">
+
+
+<div class="section-title">
+Situation overview
+</div>
+
+
+<div class="kpis">
+
+
+<div class="kpi">
+
+<div
+    class="kpi-number"
+    id="kpi24"
+>
+—
+</div>
+
+<div class="kpi-label">
+Last 24 hours
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+    class="kpi-number"
+    id="kpi7"
+>
+—
+</div>
+
+<div class="kpi-label">
+Last 7 days
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+    class="kpi-number"
+    id="kpi30"
+>
+—
+</div>
+
+<div class="kpi-label">
+Last 30 days
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+    class="kpi-number"
+    id="kpi90"
+>
+—
+</div>
+
+<div class="kpi-label">
+Last 90 days
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="section-title">
+Search
+</div>
+
+
+<input
+    id="searchInput"
+    type="text"
+    placeholder="Search title, city, country, source..."
+>
+
+
+
+<div class="section-title">
+Time period
+</div>
+
+
+<div class="time-buttons">
+
+
+<button
+    class="time-button"
+    data-days="1"
+>
+24 HOURS
+</button>
+
+
+<button
+    class="time-button"
+    data-days="7"
+>
+7 DAYS
+</button>
+
+
+<button
+    class="time-button active"
+    data-days="30"
+>
+30 DAYS
+</button>
+
+
+<button
+    class="time-button"
+    data-days="90"
+>
+90 DAYS
+</button>
+
+
+</div>
+
+
+
+<div class="section-title">
+Map layers
+</div>
+
+
+<div class="layer-buttons">
+
+
+<button
+    class="layer-button active"
+    id="markersToggle"
+>
+EVENTS
+</button>
+
+
+<button
+    class="layer-button"
+    id="heatToggle"
+>
+HEAT ZONES
+</button>
+
+
+</div>
+
+
+
+<div class="section-title">
+Intelligence categories
+</div>
+
+
+<div class="category-actions">
+
+
+<button
+    class="action-button"
+    id="selectAll"
+>
+SELECT ALL
+</button>
+
+
+<button
+    class="action-button"
+    id="clearAll"
+>
+CLEAR
+</button>
+
+
+</div>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Terrorist Financing"
+    checked
+>
+
+<span class="category-icon financing">
+TF
+</span>
+
+Terrorist Financing
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Weapons"
+    checked
+>
+
+<span class="category-icon weapons">
+W
+</span>
+
+Weapons
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="CBRN"
+    checked
+>
+
+<span class="category-icon cbrn">
+C
+</span>
+
+CBRN
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Online Radicalization / Cyberterrorism"
+    checked
+>
+
+<span class="category-icon online">
+O
+</span>
+
+Online / Cyber
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Attacks"
+    checked
+>
+
+<span class="category-icon attacks">
+A
+</span>
+
+Attacks
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Arrests"
+    checked
+>
+
+<span class="category-icon arrests">
+AR
+</span>
+
+Arrests
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Legal / Judicial"
+    checked
+>
+
+<span class="category-icon legal">
+J
+</span>
+
+Legal / Judicial
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Disinformation / Emerging Technologies / AI"
+    checked
+>
+
+<span class="category-icon ai">
+AI
+</span>
+
+AI / Emerging Technologies
+
+</label>
+
+
+
+<div class="section-title">
+Top trends — 30 days
+</div>
+
+
+<ul
+    class="analytics-list"
+    id="trendList"
+>
+</ul>
+
+
+
+<div class="section-title">
+Top countries
+</div>
+
+
+<ul
+    class="analytics-list"
+    id="topCountries"
+>
+</ul>
+
+
+
+<div class="section-title">
+Top hotspots
+</div>
+
+
+<ul
+    class="analytics-list"
+    id="topHotspots"
+>
+</ul>
+
+
+
+<div class="section-title">
+Geolocation coverage
+</div>
+
+
+<div class="coverage-box">
+
+
+<div class="coverage-row">
+
+<span class="coverage-label">
+City-level
+</span>
+
+<span
+    class="coverage-value"
+    id="coverageCity"
+>
+—
+</span>
+
+</div>
+
+
+<div class="coverage-row">
+
+<span class="coverage-label">
+Country-only
+</span>
+
+<span
+    class="coverage-value"
+    id="coverageCountry"
+>
+—
+</span>
+
+</div>
+
+
+<div class="coverage-row">
+
+<span class="coverage-label">
+Unknown
+</span>
+
+<span
+    class="coverage-value"
+    id="coverageUnknown"
+>
+—
+</span>
+
+</div>
+
+
+<div class="coverage-row">
+
+<span class="coverage-label">
+Mapped rate
+</span>
+
+<span
+    class="coverage-value"
+    id="coverageRate"
+>
+—
+</span>
+
+</div>
+
+
+</div>
+
+
+
+<div id="database-info">
+
+English-language open-source monitoring
+
+<br>
+
+Rolling database: 90 days
+
+<br>
+
+Default operational view: 30 days
+
+<br>
+
+Automated daily update
+
+</div>
+
+
+</div>
+
+
+
+<div id="map"></div>
+
+
+</div>
+
+
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+>
+</script>
+
+
+<script
+    src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"
+>
+</script>
+
+
+<script
+    src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"
+>
+</script>
+
+
+
+<script>
+
+
+const map = L.map(
+
+    "map",
+
+    {
+
+        worldCopyJump:
+            true,
+
+        minZoom:
+            2
+
+    }
+
+).setView(
+    [
+        25,
+        15
+    ],
+    2
+);
+
+
+
+L.tileLayer(
+
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+
+    {
+
+        attribution:
+            "&copy; OpenStreetMap contributors",
+
+        maxZoom:
+            18
+
+    }
+
+).addTo(
+    map
+);
+
+
+
+const markerCluster =
+L.markerClusterGroup({
+
+    showCoverageOnHover:
+        false,
+
+    maxClusterRadius:
+        45,
+
+    spiderfyOnMaxZoom:
+        true
+
+});
+
+
+map.addLayer(
+    markerCluster
+);
+
+
+
+let heatLayer =
+    null;
+
+
+let allEvents =
+    [];
+
+
+let selectedDays =
+    30;
+
+
+let showMarkers =
+    true;
+
+
+let showHeat =
+    false;
+
+
+let searchText =
+    "";
+
+
+
+const categoryStyle = {
+
+
+"Terrorist Financing": {
+
+    code:
+        "TF",
+
+    className:
+        "financing"
+
+},
+
+
+"Weapons": {
+
+    code:
+        "W",
+
+    className:
+        "weapons"
+
+},
+
+
+"CBRN": {
+
+    code:
+        "C",
+
+    className:
+        "cbrn"
+
+},
+
+
+"Online Radicalization / Cyberterrorism": {
+
+    code:
+        "O",
+
+    className:
+        "online"
+
+},
+
+
+"Attacks": {
+
+    code:
+        "A",
+
+    className:
+        "attacks"
+
+},
+
+
+"Arrests": {
+
+    code:
+        "AR",
+
+    className:
+        "arrests"
+
+},
+
+
+"Legal / Judicial": {
+
+    code:
+        "J",
+
+    className:
+        "legal"
+
+},
+
+
+"Disinformation / Emerging Technologies / AI": {
+
+    code:
+        "AI",
+
+    className:
+        "ai"
+
+}
+
+
+};
+
+
+
+function escapeHtml(
+    value
+) {
+
+
+    return String(
+        value || ""
+    )
+
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+
+
+fetch(
+    "events.json"
+)
+
+.then(
+    response => {
+
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                "Unable to load events.json"
+            );
+
+        }
+
+
+        return response.json();
+
+    }
+)
+
+.then(
+    data => {
+
+
+        allEvents =
+            data.events
+            ||
+            [];
+
+
+        if (
+            data.last_updated
+        ) {
+
+
+            const updated =
+                new Date(
+                    data.last_updated
+                );
+
+
+            document.getElementById(
+                "lastUpdated"
+            ).innerText =
+
+                "Updated "
+
+                +
+
+                updated.toLocaleString(
+                    "en-GB"
+                );
+
+        }
+
+
+        refreshDashboard();
+
+    }
+)
+
+.catch(
+    error => {
+
+
+        console.error(
+            error
+        );
+
+
+        document.getElementById(
+            "counter"
+        ).innerText =
+            "Database unavailable";
+
+    }
+);
+
+
+
+function withinDays(
+    dateString,
+    days
+) {
+
+
+    if (
+        !dateString
+    ) {
+
+        return false;
+
+    }
+
+
+    const eventDate =
+        new Date(
+            dateString
+        );
+
+
+    if (
+        isNaN(
+            eventDate.getTime()
+        )
+    ) {
+
+        return false;
+
+    }
+
+
+    const cutoff =
+        new Date(
+
+            Date.now()
+
+            -
+
+            days
+            *
+            24
+            *
+            60
+            *
+            60
+            *
+            1000
+
+        );
+
+
+    return (
+        eventDate >= cutoff
+    );
+
+}
+
+
+
+function selectedCategories() {
+
+
+    return Array.from(
+
+        document.querySelectorAll(
+            ".category-filter:checked"
+        )
+
+    ).map(
+
+        checkbox =>
+            checkbox.value
+
+    );
+
+}
+
+
+
+function eventCategories(
+    event
+) {
+
+
+    if (
+        Array.isArray(
+            event.categories
+        )
+    ) {
+
+        return event.categories;
+
+    }
+
+
+    return [
+        event.category
+    ];
+
+}
+
+
+
+function categoryMatches(
+    event
+) {
+
+
+    const selected =
+        selectedCategories();
+
+
+    const categories =
+        eventCategories(
+            event
+        );
+
+
+    return categories.some(
+
+        category =>
+            selected.includes(
+                category
+            )
+
+    );
+
+}
+
+
+
+function searchMatches(
+    event
+) {
+
+
+    if (
+        !searchText
+    ) {
+
+        return true;
+
+    }
+
+
+    const combined = (
+
+        (event.title || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.summary || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.city || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.country || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.source || "")
+
+    ).toLowerCase();
+
+
+    return combined.includes(
+        searchText
+    );
+
+}
+
+
+
+function filteredAllEvents() {
+
+
+    return allEvents.filter(
+
+        event =>
+
+            withinDays(
+                event.published,
+                selectedDays
+            )
+
+            &&
+
+            categoryMatches(
+                event
+            )
+
+            &&
+
+            searchMatches(
+                event
+            )
+
+    );
+
+}
+
+
+
+function filteredMappedEvents() {
+
+
+    return filteredAllEvents().filter(
+
+        event =>
+
+            event.latitude != null
+
+            &&
+
+            event.longitude != null
+
+    );
+
+}
+
+
+
+function countMapped(
+    days
+) {
+
+
+    const selected =
+        selectedCategories();
+
+
+    return allEvents.filter(
+
+        event => {
+
+
+            const categories =
+                eventCategories(
+                    event
+                );
+
+
+            return (
+
+                event.latitude != null
+
+                &&
+
+                event.longitude != null
+
+                &&
+
+                withinDays(
+                    event.published,
+                    days
+                )
+
+                &&
+
+                categories.some(
+                    category =>
+                        selected.includes(
+                            category
+                        )
+                )
+
+            );
+
+        }
+
+    ).length;
+
+}
+
+
+
+function updateKPIs() {
+
+
+    document.getElementById(
+        "kpi24"
+    ).innerText =
+        countMapped(
+            1
+        );
+
+
+    document.getElementById(
+        "kpi7"
+    ).innerText =
+        countMapped(
+            7
+        );
+
+
+    document.getElementById(
+        "kpi30"
+    ).innerText =
+        countMapped(
+            30
+        );
+
+
+    document.getElementById(
+        "kpi90"
+    ).innerText =
+        countMapped(
+            90
+        );
+
+}
+
+
+
+function createMarker(
+    event
+) {
+
+
+    const primaryCategory =
+        event.category;
+
+
+    const style =
+
+        categoryStyle[
+            primaryCategory
+        ]
+
+        ||
+
+        {
+
+            code:
+                "?",
+
+            className:
+                "legal"
+
+        };
+
+
+    const icon =
+    L.divIcon({
+
+        className:
+            "",
+
+        html:
+
+            `<div class="ct-marker ${style.className}">
+                ${style.code}
+            </div>`,
+
+        iconSize:
+            [25,25],
+
+        iconAnchor:
+            [12,12]
+
+    });
+
+
+    const marker =
+    L.marker(
+
+        [
+            event.latitude,
+            event.longitude
+        ],
+
+        {
+            icon:
+                icon
+        }
+
+    );
+
+
+    const title =
+        escapeHtml(
+            event.title
+        );
+
+
+    const location =
+        escapeHtml(
+
+            [
+                event.city,
+                event.country
+            ]
+
+            .filter(
+                Boolean
+            )
+
+            .join(
+                ", "
+            )
+
+        );
+
+
+    const categories =
+        escapeHtml(
+
+            eventCategories(
+                event
+            ).join(
+                " / "
+            )
+
+        );
+
+
+    let dateText =
+        "";
+
+
+    if (
+        event.published
+    ) {
+
+
+        dateText =
+            new Date(
+                event.published
+            ).toLocaleDateString(
+                "en-GB"
+            );
+
+    }
+
+
+    let sourceBlock =
+        "";
+
+
+    if (
+        event.source
+
+        &&
+
+        event.url
+    ) {
+
+
+        sourceBlock = `
+
+        <div class="popup-source">
+
+            Source:
+
+            <a
+                href="${escapeHtml(event.url)}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                ${escapeHtml(event.source)}
+
+            </a>
+
+        </div>
+
+        `;
+
+    }
+
+
+    marker.bindPopup(`
+
+        <div>
+
+            <div class="popup-title">
+                ${title}
+            </div>
+
+            <div class="popup-category">
+                ${categories}
+            </div>
+
+            <div>
+                ${dateText}
+            </div>
+
+            <div class="popup-location">
+
+                <strong>
+                    Location:
+                </strong>
+
+                ${location}
+
+            </div>
+
+            ${sourceBlock}
+
+        </div>
+
+    `);
+
+
+    return marker;
+
+}
+
+
+
+function renderEvents() {
+
+
+    markerCluster.clearLayers();
+
+
+    if (
+        heatLayer
+    ) {
+
+
+        map.removeLayer(
+            heatLayer
+        );
+
+
+        heatLayer =
+            null;
+
+    }
+
+
+    const visible =
+        filteredMappedEvents();
+
+
+    if (
+        showMarkers
+    ) {
+
+
+        visible.forEach(
+
+            event => {
+
+
+                markerCluster.addLayer(
+
+                    createMarker(
+                        event
+                    )
+
+                );
+
+            }
+
+        );
+
+
+        if (
+            !map.hasLayer(
+                markerCluster
+            )
+        ) {
+
+
+            map.addLayer(
+                markerCluster
+            );
+
+        }
+
+    }
+
+
+    else {
+
+
+        if (
+            map.hasLayer(
+                markerCluster
+            )
+        ) {
+
+
+            map.removeLayer(
+                markerCluster
+            );
+
+        }
+
+    }
+
+
+    if (
+        showHeat
+    ) {
+
+
+        const heatPoints =
+            visible.map(
+
+                event => [
+
+                    Number(
+                        event.latitude
+                    ),
+
+                    Number(
+                        event.longitude
+                    ),
+
+                    1
+
+                ]
+
+            );
+
+
+        heatLayer =
+        L.heatLayer(
+
+            heatPoints,
+
+            {
+
+                radius:
+                    30,
+
+                blur:
+                    24,
+
+                maxZoom:
+                    7,
+
+                minOpacity:
+                    0.30
+
+            }
+
+        ).addTo(
+            map
+        );
+
+    }
+
+
+    const totalSelected =
+        filteredAllEvents().length;
+
+
+    document.getElementById(
+        "counter"
+    ).innerText =
+
+        visible.length
+
+        +
+
+        " mapped / "
+
+        +
+
+        totalSelected
+
+        +
+
+        " selected";
+
+}
+
+
+
+function updateCoverage() {
+
+
+    const events =
+        filteredAllEvents();
+
+
+    let city =
+        0;
+
+
+    let country =
+        0;
+
+
+    let unknown =
+        0;
+
+
+    events.forEach(
+
+        event => {
+
+
+            if (
+                event.location_precision
+                ===
+                "city"
+            ) {
+
+
+                city++;
+
+
+            }
+
+
+            else if (
+                event.location_precision
+                ===
+                "country"
+            ) {
+
+
+                country++;
+
+
+            }
+
+
+            else {
+
+
+                unknown++;
+
+            }
+
+        }
+
+    );
+
+
+    const total =
+        city
+        +
+        country
+        +
+        unknown;
+
+
+    const rate =
+
+        total
+
+        ?
+
+        (
+            city
+            /
+            total
+            *
+            100
+        ).toFixed(
+            1
+        )
+
+        :
+
+        "0.0";
+
+
+    document.getElementById(
+        "coverageCity"
+    ).innerText =
+        city;
+
+
+    document.getElementById(
+        "coverageCountry"
+    ).innerText =
+        country;
+
+
+    document.getElementById(
+        "coverageUnknown"
+    ).innerText =
+        unknown;
+
+
+    document.getElementById(
+        "coverageRate"
+    ).innerText =
+
+        rate
+        +
+        "%";
+
+}
+
+
+
+function renderRanking(
+    elementId,
+    values
+) {
+
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+
+    element.innerHTML =
+        "";
+
+
+    if (
+        values.length
+        ===
+        0
+    ) {
+
+
+        element.innerHTML = `
+
+        <li class="analytics-item">
+
+            <span class="analytics-name">
+                No data
+            </span>
+
+            <span class="analytics-value">
+                —
+            </span>
+
+        </li>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    values.forEach(
+
+        item => {
+
+
+            const li =
+                document.createElement(
+                    "li"
+                );
+
+
+            li.className =
+                "analytics-item";
+
+
+            li.innerHTML = `
+
+                <span class="analytics-name">
+
+                    ${escapeHtml(item[0])}
+
+                </span>
+
+                <span class="analytics-value">
+
+                    ${item[1]}
+
+                </span>
+
+            `;
+
+
+            element.appendChild(
+                li
+            );
+
+        }
+
+    );
+
+}
+
+
+
+function updateTopLocations() {
+
+
+    const visible =
+        filteredMappedEvents();
+
+
+    const countryCounts =
+        {};
+
+
+    const cityCounts =
+        {};
+
+
+    visible.forEach(
+
+        event => {
+
+
+            if (
+                event.country
+            ) {
+
+
+                countryCounts[
+                    event.country
+                ] =
+
+                    (
+                        countryCounts[
+                            event.country
+                        ]
+                        ||
+                        0
+                    )
+
+                    +
+
+                    1;
+
+            }
+
+
+            if (
+                event.city
+            ) {
+
+
+                const hotspot =
+
+                    event.city
+
+                    +
+
+                    (
+                        event.country
+                        ?
+                        ", "
+                        +
+                        event.country
+                        :
+                        ""
+                    );
+
+
+                cityCounts[
+                    hotspot
+                ] =
+
+                    (
+                        cityCounts[
+                            hotspot
+                        ]
+                        ||
+                        0
+                    )
+
+                    +
+
+                    1;
+
+            }
+
+        }
+
+    );
+
+
+    const countries =
+
+        Object.entries(
+            countryCounts
+        )
+
+        .sort(
+            (a,b) =>
+                b[1]
+                -
+                a[1]
+        )
+
+        .slice(
+            0,
+            5
+        );
+
+
+    const hotspots =
+
+        Object.entries(
+            cityCounts
+        )
+
+        .sort(
+            (a,b) =>
+                b[1]
+                -
+                a[1]
+        )
+
+        .slice(
+            0,
+            5
+        );
+
+
+    renderRanking(
+        "topCountries",
+        countries
+    );
+
+
+    renderRanking(
+        "topHotspots",
+        hotspots
+    );
+
+}
+
+
+
+function updateTrends() {
+
+
+    const selected =
+        selectedCategories();
+
+
+    const now =
+        Date.now();
+
+
+    const day =
+        24
+        *
+        60
+        *
+        60
+        *
+        1000;
+
+
+    const currentStart =
+        now
+        -
+        30
+        *
+        day;
+
+
+    const previousStart =
+        now
+        -
+        60
+        *
+        day;
+
+
+    const rows =
+        [];
+
+
+    Object.keys(
+        categoryStyle
+    ).forEach(
+
+        category => {
+
+
+            if (
+                !selected.includes(
+                    category
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            let current =
+                0;
+
+
+            let previous =
+                0;
+
+
+            allEvents.forEach(
+
+                event => {
+
+
+                    if (
+                        !eventCategories(
+                            event
+                        ).includes(
+                            category
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const time =
+                        new Date(
+                            event.published
+                        ).getTime();
+
+
+                    if (
+                        isNaN(
+                            time
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    if (
+
+                        time
+                        >=
+                        currentStart
+
+                        &&
+
+                        time
+                        <=
+                        now
+
+                    ) {
+
+
+                        current++;
+
+
+                    }
+
+
+                    else if (
+
+                        time
+                        >=
+                        previousStart
+
+                        &&
+
+                        time
+                        <
+                        currentStart
+
+                    ) {
+
+
+                        previous++;
+
+                    }
+
+                }
+
+            );
+
+
+            let display =
+                "→ 0%";
+
+
+            let cssClass =
+                "trend-flat";
+
+
+            let numericChange =
+                0;
+
+
+            if (
+
+                previous
+                ===
+                0
+
+                &&
+
+                current
+                >
+                0
+
+            ) {
+
+
+                display =
+                    "NEW";
+
+
+                cssClass =
+                    "trend-up";
+
+
+                numericChange =
+                    9999;
+
+            }
+
+
+            else if (
+                previous
+                >
+                0
+            ) {
+
+
+                const change =
+
+                    (
+                        current
+                        -
+                        previous
+                    )
+
+                    /
+
+                    previous
+
+                    *
+
+                    100;
+
+
+                numericChange =
+                    change;
+
+
+                if (
+                    change
+                    >
+                    5
+                ) {
+
+
+                    display =
+                        "↑ "
+                        +
+                        Math.round(
+                            change
+                        )
+                        +
+                        "%";
+
+
+                    cssClass =
+                        "trend-up";
+
+
+                }
+
+
+                else if (
+                    change
+                    <
+                    -5
+                ) {
+
+
+                    display =
+                        "↓ "
+                        +
+                        Math.abs(
+                            Math.round(
+                                change
+                            )
+                        )
+                        +
+                        "%";
+
+
+                    cssClass =
+                        "trend-down";
+
+
+                }
+
+
+                else {
+
+
+                    display =
+                        "→ "
+                        +
+                        Math.round(
+                            change
+                        )
+                        +
+                        "%";
+
+                }
+
+            }
+
+
+            rows.push({
+
+                category,
+                current,
+                previous,
+                numericChange,
+                display,
+                cssClass
+
+            });
+
+        }
+
+    );
+
+
+    rows.sort(
+
+        (a,b) =>
+            b.numericChange
+            -
+            a.numericChange
+
+    );
+
+
+    const list =
+        document.getElementById(
+            "trendList"
+        );
+
+
+    list.innerHTML =
+        "";
+
+
+    rows.slice(
+        0,
+        5
+    ).forEach(
+
+        row => {
+
+
+            const shortNames = {
+
+                "Terrorist Financing":
+                    "Financing",
+
+                "Weapons":
+                    "Weapons",
+
+                "CBRN":
+                    "CBRN",
+
+                "Online Radicalization / Cyberterrorism":
+                    "Online / Cyber",
+
+                "Attacks":
+                    "Attacks",
+
+                "Arrests":
+                    "Arrests",
+
+                "Legal / Judicial":
+                    "Legal / Judicial",
+
+                "Disinformation / Emerging Technologies / AI":
+                    "AI / Tech"
+
+            };
+
+
+            const li =
+                document.createElement(
+                    "li"
+                );
+
+
+            li.className =
+                "analytics-item";
+
+
+            li.innerHTML = `
+
+                <span class="analytics-name">
+
+                    ${shortNames[row.category] || row.category}
+
+                </span>
+
+                <span class="analytics-value ${row.cssClass}">
+
+                    ${row.display}
+
+                </span>
+
+            `;
+
+
+            list.appendChild(
+                li
+            );
+
+        }
+
+    );
+
+}
+
+
+
+function refreshDashboard() {
+
+
+    updateKPIs();
+
+    renderEvents();
+
+    updateCoverage();
+
+    updateTopLocations();
+
+    updateTrends();
+
+}
+
+
+
+document.querySelectorAll(
+    ".time-button"
+).forEach(
+
+    button => {
+
+
+        button.addEventListener(
+
+            "click",
+
+            function() {
+
+
+                document.querySelectorAll(
+                    ".time-button"
+                ).forEach(
+
+                    item =>
+                        item.classList.remove(
+                            "active"
+                        )
+
+                );
+
+
+                this.classList.add(
+                    "active"
+                );
+
+
+                selectedDays =
+                    parseInt(
+                        this.dataset.days
+                    );
+
+
+                refreshDashboard();
+
+            }
+
+        );
+
+    }
+
+);
+
+
+
+document.querySelectorAll(
+    ".category-filter"
+).forEach(
+
+    checkbox => {
+
+
+        checkbox.addEventListener(
+
+            "change",
+
+            refreshDashboard
+
+        );
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "searchInput"
+).addEventListener(
+
+    "input",
+
+    function() {
+
+
+        searchText =
+            this.value
+            .trim()
+            .toLowerCase();
+
+
+        refreshDashboard();
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "markersToggle"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+
+        showMarkers =
+            !showMarkers;
+
+
+        this.classList.toggle(
+            "active",
+            showMarkers
+        );
+
+
+        renderEvents();
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "heatToggle"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+
+        showHeat =
+            !showHeat;
+
+
+        this.classList.toggle(
+            "active",
+            showHeat
+        );
+
+
+        renderEvents();
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "selectAll"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+
+        document.querySelectorAll(
+            ".category-filter"
+        ).forEach(
+
+            checkbox =>
+                checkbox.checked =
+                    true
+
+        );
+
+
+        refreshDashboard();
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "clearAll"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+
+        document.querySelectorAll(
+            ".category-filter"
+        ).forEach(
+
+            checkbox =>
+                checkbox.checked =
+                    false
+
+        );
+
+
+        refreshDashboard();
+
+    }
+
+);
+
+
+</script>
+
+
+</body>
+
+</html>
