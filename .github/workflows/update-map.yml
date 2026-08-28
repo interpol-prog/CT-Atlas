@@ -7,6 +7,22 @@ on:
       timezone: "Europe/Paris"
 
   workflow_dispatch:
+    inputs:
+
+      mode:
+        description: "Collection mode"
+        required: true
+        default: "daily"
+        type: choice
+        options:
+          - daily
+          - backfill
+
+      force_ai:
+        description: "Re-run AI geolocation for every existing event"
+        required: true
+        default: false
+        type: boolean
 
   push:
     branches:
@@ -51,14 +67,48 @@ jobs:
           pip install -r requirements.txt
 
 
-      - name: Collect latest CT events
+      - name: Collect CT events
         run: |
-          python collector.py
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
+             [ "${{ inputs.mode }}" = "backfill" ]; then
+
+            echo "Running 180-day backfill."
+            python -u collector.py backfill
+
+          else
+
+            echo "Running daily collection."
+            python -u collector.py
+
+          fi
 
 
-      - name: Geolocate events
+      - name: Gemini AI geolocate every event
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_GEO_MODEL: "gemini-2.5-flash"
+          GEMINI_THINKING_BUDGET: "4096"
+          AI_GEO_BATCH_SIZE: "20"
         run: |
-          python geolocate.py
+
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "GEMINI_API_KEY GitHub secret is missing."
+            exit 1
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
+             [ "${{ inputs.force_ai }}" = "true" ]; then
+
+            echo "Forcing Gemini geolocation refresh for all events."
+            AI_GEO_FORCE=1 python -u geolocate.py
+
+          else
+
+            echo "Using cached Gemini geolocation for unchanged events."
+            python -u geolocate.py
+
+          fi
 
 
       - name: Commit and push updated database
@@ -69,15 +119,17 @@ jobs:
           git add events.json
 
           if git diff --cached --quiet; then
+
             echo "No database changes to commit."
+
           else
-            git commit -m "Daily CT intelligence update"
+
+            git commit -m "Update CT intelligence map"
 
             git fetch origin main
-
             git rebase origin/main
-
             git push origin main
+
           fi
 
 
