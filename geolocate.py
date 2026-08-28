@@ -16,7 +16,7 @@ import requests
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# GEMINI AI-FIRST GEOLOCATION V2
+# GEMINI AI-FIRST GEOLOCATION V3 — INTERACTIONS API
 #
 # Principle:
 #   - Gemini decides the event location for EVERY event.
@@ -33,8 +33,7 @@ import requests
 #
 # Environment variables:
 #   GEMINI_API_KEY      required
-#   GEMINI_GEO_MODEL    optional, default: gemini-2.5-flash
-#   GEMINI_THINKING_BUDGET optional, default: 4096
+#   GEMINI_GEO_MODEL    optional, default: gemini-3.6-flash
 #   AI_GEO_BATCH_SIZE   optional, default: 20
 #   AI_GEO_FORCE        optional, "1"/"true" to refresh every event
 # ============================================================
@@ -43,26 +42,18 @@ import requests
 INPUT_FILE = "events.json"
 OUTPUT_FILE = "events.json"
 
-GEMINI_API_BASE = (
-    "https://generativelanguage.googleapis.com/v1beta/models"
+GEMINI_INTERACTIONS_URL = (
+    "https://generativelanguage.googleapis.com/v1beta/interactions"
 )
 
 GEMINI_MODEL = os.getenv(
     "GEMINI_GEO_MODEL",
-    "gemini-2.5-flash",
+    "gemini-3.6-flash",
 )
 
-GEMINI_THINKING_BUDGET = int(
-    os.getenv(
-        "GEMINI_THINKING_BUDGET",
-        "4096",
-    )
-)
-
-# Bumping the version intentionally invalidates geolocation decisions
-# made by the previous engine. The first Gemini run therefore
-# re-evaluates the whole database; later daily runs reuse the cache.
-AI_GEO_VERSION = "gemini-ai-first-v2"
+# Bumping the version intentionally invalidates decisions from the
+# previous Gemini 2.5 / generateContent integration.
+AI_GEO_VERSION = "gemini-ai-first-v3-interactions"
 BATCH_SIZE = max(
     1,
     min(
@@ -91,9 +82,9 @@ FORCE_AI = (
     }
 )
 
-REQUEST_ATTEMPTS = 3
-REQUEST_TIMEOUT = 180
-REQUEST_PAUSE_SECONDS = 0.7
+REQUEST_ATTEMPTS = 5
+REQUEST_TIMEOUT = 240
+REQUEST_PAUSE_SECONDS = 6.0
 
 try:
     sys.stdout.reconfigure(
@@ -686,88 +677,113 @@ Keep evidence and reason concise.
 
 
 # ============================================================
-# GEMINI GENERATECONTENT API
+# GEMINI INTERACTIONS API
 # ============================================================
 
 def extract_gemini_text(
     response_json
 ):
-    candidates = response_json.get(
-        "candidates",
-        []
-    )
+    """
+    Extract final model text from the current Gemini Interactions API.
+    """
 
-    if not candidates:
-        prompt_feedback = response_json.get(
-            "promptFeedback",
-            {}
-        )
-
-        block_reason = prompt_feedback.get(
-            "blockReason"
-        )
-
-        if block_reason:
-            raise RuntimeError(
-                "Gemini blocked the request: "
-                f"{block_reason}"
-            )
-
-        return ""
-
-    candidate = candidates[0]
-
-    finish_reason = candidate.get(
-        "finishReason",
-        ""
-    )
-
-    content = candidate.get(
-        "content",
-        {}
-    )
-
-    parts = content.get(
-        "parts",
-        []
-    )
-
-    texts = [
-        part.get(
-            "text",
+    status = str(
+        response_json.get(
+            "status",
             ""
         )
-        for part in parts
-        if isinstance(
-            part,
-            dict
-        )
-        and part.get(
-            "text"
-        )
-    ]
+        or
+        ""
+    ).lower()
 
-    output_text = "".join(
+    if status in {
+        "failed",
+        "cancelled",
+        "incomplete",
+        "budget_exceeded",
+    }:
+        raise RuntimeError(
+            "Gemini interaction ended with status "
+            f"{status}: "
+            f"{response_json.get('error')}"
+        )
+
+    texts = []
+
+    for step in response_json.get(
+        "steps",
+        []
+    ):
+        if not isinstance(
+            step,
+            dict
+        ):
+            continue
+
+        if step.get(
+            "type"
+        ) != "model_output":
+            continue
+
+        content = step.get(
+            "content",
+            []
+        )
+
+        if isinstance(
+            content,
+            dict
+        ):
+            content = [
+                content
+            ]
+
+        if not isinstance(
+            content,
+            list
+        ):
+            continue
+
+        for part in content:
+            if not isinstance(
+                part,
+                dict
+            ):
+                continue
+
+            if (
+                part.get(
+                    "type"
+                )
+                ==
+                "text"
+            ):
+                value = part.get(
+                    "text",
+                    ""
+                )
+
+                if value:
+                    texts.append(
+                        value
+                    )
+
+    return "".join(
         texts
     ).strip()
-
-    if (
-        not output_text
-        and
-        finish_reason
-    ):
-        raise RuntimeError(
-            "Gemini returned no text. "
-            f"finishReason={finish_reason}"
-        )
-
-    return output_text
 
 
 def call_gemini_batch(
     batch,
     instructions_override=None,
 ):
+    """
+    Geolocate a batch with Gemini 3.6 Flash using Interactions API.
+
+    response_format forces valid JSON matching our geolocation schema.
+    No deprecated sampling parameters are sent.
+    """
+
     api_key = os.getenv(
         "GEMINI_API_KEY"
     )
@@ -802,58 +818,34 @@ def call_gemini_batch(
     )
 
     body = {
-        "systemInstruction": {
-            "parts": [
-                {
-                    "text":
-                        instructions
-                }
-            ]
-        },
+        "model":
+            GEMINI_MODEL,
 
-        "contents": [
-            {
-                "role":
-                    "user",
+        "input":
+            user_input,
 
-                "parts": [
-                    {
-                        "text":
-                            user_input
-                    }
-                ],
-            }
-        ],
+        "system_instruction":
+            instructions,
 
-        "generationConfig": {
-            "temperature":
-                0.1,
+        "store":
+            False,
 
-            "maxOutputTokens":
-                8192,
+        "response_format": {
+            "type":
+                "text",
 
-            "thinkingConfig": {
-                "thinkingBudget":
-                    GEMINI_THINKING_BUDGET
-            },
-
-            "responseMimeType":
+            "mime_type":
                 "application/json",
 
-            "responseSchema":
+            "schema":
                 GEOLOCATION_SCHEMA,
         },
-    }
 
-    url = (
-        GEMINI_API_BASE
-        +
-        "/"
-        +
-        GEMINI_MODEL
-        +
-        ":generateContent"
-    )
+        "generation_config": {
+            "max_output_tokens":
+                12000,
+        },
+    }
 
     headers = {
         "x-goog-api-key":
@@ -869,7 +861,7 @@ def call_gemini_batch(
     ):
         try:
             response = requests.post(
-                url,
+                GEMINI_INTERACTIONS_URL,
                 headers=headers,
                 json=body,
                 timeout=REQUEST_TIMEOUT,
@@ -891,9 +883,9 @@ def call_gemini_batch(
                 if retry_after:
                     try:
                         delay = max(
-                            5,
+                            10,
                             min(
-                                90,
+                                180,
                                 int(
                                     float(
                                         retry_after
@@ -903,27 +895,29 @@ def call_gemini_batch(
                         )
                     except Exception:
                         delay = min(
-                            60,
-                            6 * attempt,
+                            120,
+                            12 * attempt,
                         )
                 else:
                     delay = min(
-                        60,
+                        120,
                         (
-                            6
+                            12
                             *
                             attempt
                         )
                         +
                         random.uniform(
                             0,
-                            3
+                            5
                         ),
                     )
 
                 print(
                     f"   Gemini temporary error "
                     f"{response.status_code}; "
+                    f"attempt {attempt}/"
+                    f"{REQUEST_ATTEMPTS}; "
                     f"retrying after {delay:.0f}s"
                 )
 
@@ -937,7 +931,7 @@ def call_gemini_batch(
                 raise RuntimeError(
                     "Gemini API error "
                     f"{response.status_code}: "
-                    f"{response.text[:1800]}"
+                    f"{response.text[:2200]}"
                 )
 
             payload = response.json()
@@ -948,7 +942,9 @@ def call_gemini_batch(
 
             if not output_text:
                 raise RuntimeError(
-                    "Gemini response contained no output text."
+                    "Gemini interaction contained no model text. "
+                    f"status={payload.get('status')}; "
+                    f"response={json.dumps(payload)[:1800]}"
                 )
 
             parsed = json.loads(
@@ -982,13 +978,16 @@ def call_gemini_batch(
                 raise
 
             delay = min(
-                30,
-                5 * attempt,
+                90,
+                10
+                *
+                attempt,
             )
 
             print(
-                f"   Gemini request error: "
-                f"{error}; retrying in {delay}s"
+                f"   Gemini request/JSON error: "
+                f"{error}; "
+                f"retrying in {delay}s"
             )
 
             time.sleep(
@@ -996,7 +995,7 @@ def call_gemini_batch(
             )
 
     raise RuntimeError(
-        "Gemini batch request failed."
+        "Gemini batch request failed after all retries."
     )
 
 
@@ -1698,7 +1697,7 @@ def main():
     print()
     print("=" * 72)
     print("INTERPOL CT Intelligence Map")
-    print("GEMINI AI-FIRST GEOLOCATION V2")
+    print("GEMINI AI-FIRST GEOLOCATION V3 — INTERACTIONS API")
     print("=" * 72)
     print(
         f"Model: {GEMINI_MODEL}"
