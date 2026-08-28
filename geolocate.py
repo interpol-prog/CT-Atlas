@@ -10,19 +10,11 @@ import geonamescache
 # INTERPOL CT INTELLIGENCE MAP
 # CONSERVATIVE OFFLINE GEOLOCATION
 #
-# Goals:
-# - Prefer event location over any place merely mentioned
-# - Title has more weight than summary
-# - Reward event/location expressions such as:
-#       "attack in X"
-#       "arrested in X"
-#       "bombing near X"
-# - Penalize expressions such as:
-#       "London-based"
-#       "speaking in Paris"
-#       "headquartered in..."
-# - Require city/country consistency where possible
-# - Add confidence level
+# - Context-aware city/country detection
+# - Title weighted more than summary
+# - Event-location expressions rewarded
+# - Ambiguous/common English words blocked
+# - Confidence scoring
 # - Prefer UNKNOWN over false precision
 # ============================================================
 
@@ -93,93 +85,184 @@ COUNTRY_ALIASES = {
 
 
 # ============================================================
-# COMMON ALTERNATIVE PLACE NAMES
-#
-# These are useful in CT reporting.
+# IMPORTANT CT CITY ALIASES
 # ============================================================
 
 CITY_ALIASES = {
 
     "mogadishu": "Mogadishu",
+
     "baghdad": "Baghdad",
+
     "kabul": "Kabul",
+
     "maiduguri": "Maiduguri",
+
     "mosul": "Mosul",
+
     "raqqa": "Ar Raqqah",
+
     "idlib": "Idlib",
+
     "aleppo": "Aleppo",
+
     "damascus": "Damascus",
+
     "beirut": "Beirut",
+
     "gaza city": "Gaza",
+
     "sanaa": "Sanaa",
+
     "sana'a": "Sanaa",
+
     "karachi": "Karachi",
+
     "peshawar": "Peshawar",
+
     "quetta": "Quetta",
+
     "islamabad": "Islamabad",
+
     "lahore": "Lahore",
+
     "kirkuk": "Kirkuk",
+
     "erbil": "Erbil",
+
     "arbil": "Erbil",
+
     "bamako": "Bamako",
+
     "ouagadougou": "Ouagadougou",
+
     "niamey": "Niamey",
+
     "ndjamena": "N'Djamena",
+
     "n'djamena": "N'Djamena",
+
     "abuja": "Abuja",
+
     "lagos": "Lagos",
+
     "nairobi": "Nairobi",
+
     "mombasa": "Mombasa"
+}
+
+
+# ============================================================
+# HARD-BLOCKED CITY TERMS
+#
+# These may be real place names in GeoNames, but are far too
+# common as ordinary English words in CT reporting.
+#
+# They must NEVER be used as cities.
+# ============================================================
+
+BLOCKED_CITY_TERMS = {
+
+    "police",
+
+    "security",
+
+    "justice",
+
+    "market",
+
+    "church",
+
+    "airport",
+
+    "mission",
+
+    "union",
+
+    "college",
+
+    "commerce",
+
+    "enterprise",
+
+    "liberty",
+
+    "independence",
+
+    "peace",
+
+    "war",
+
+    "hope",
+
+    "center",
+
+    "centre",
+
+    "government",
+
+    "state",
+
+    "court",
+
+    "capital",
+
+    "army",
+
+    "military",
+
+    "intelligence",
+
+    "embassy",
+
+    "border",
+
+    "camp",
+
+    "base",
+
+    "station",
+
+    "office"
 }
 
 
 # ============================================================
 # AMBIGUOUS CITY NAMES
 #
-# These words can occur frequently in normal English and
-# should not generate a location unless context is strong.
+# Not completely forbidden, but require strong context.
 # ============================================================
 
 AMBIGUOUS_CITY_NAMES = {
 
     "reading",
+
     "mobile",
+
     "nice",
+
     "orange",
+
     "split",
+
     "bath",
+
     "sale",
+
     "most",
+
     "beer",
+
     "boom",
-    "war",
-    "peace",
+
     "victoria",
-    "union",
-    "college",
-    "normal",
-    "enterprise",
-    "commerce",
-    "liberty",
-    "independence",
-    "hope",
-    "mission",
-    "security",
-    "justice",
-    "centre",
-    "center",
-    "police",
-    "church",
-    "market",
-    "airport"
+
+    "normal"
 }
 
 
 # ============================================================
 # EVENT WORDS
-#
-# Presence near a location strongly suggests that the
-# location is the actual event location.
 # ============================================================
 
 EVENT_WORDS = {
@@ -191,15 +274,19 @@ EVENT_WORDS = {
     "bomb",
     "bombing",
     "bombed",
+
     "explosion",
     "exploded",
     "blast",
 
     "shooting",
     "shot",
+
     "killed",
     "killing",
+
     "murdered",
+
     "assassinated",
     "assassination",
 
@@ -214,8 +301,11 @@ EVENT_WORDS = {
     "detention",
 
     "charged",
+
     "convicted",
+
     "sentenced",
+
     "trial",
 
     "seized",
@@ -244,7 +334,7 @@ EVENT_WORDS = {
 
 
 # ============================================================
-# LOCATION CUE WORDS
+# LOCATION PREPOSITIONS
 # ============================================================
 
 LOCATION_PREPOSITIONS = {
@@ -261,10 +351,7 @@ LOCATION_PREPOSITIONS = {
 
 
 # ============================================================
-# NEGATIVE LOCATION CONTEXTS
-#
-# These usually describe the journalist, organisation,
-# speaker, institution, etc. rather than the event itself.
+# NEGATIVE CONTEXTS
 # ============================================================
 
 NEGATIVE_PATTERNS = [
@@ -304,7 +391,7 @@ NEGATIVE_PATTERNS = [
 
 
 # ============================================================
-# INDEX CITIES
+# CITY INDEX
 # ============================================================
 
 city_index = defaultdict(
@@ -322,14 +409,22 @@ for city in cities.values():
     if not name:
         continue
 
+
+    key = name.lower()
+
+
+    # Never even index hard-blocked terms
+
+    if key in BLOCKED_CITY_TERMS:
+        continue
+
+
     city_index[
-        name.lower()
+        key
     ].append(
         city
     )
 
-
-# Sort same-name cities by population
 
 for name in city_index:
 
@@ -353,7 +448,7 @@ for name in city_index:
 
 
 # ============================================================
-# INDEX COUNTRIES
+# COUNTRY INDEX
 # ============================================================
 
 country_index = {}
@@ -374,7 +469,7 @@ for country in countries.values():
 
 
 # ============================================================
-# HELPERS
+# TEXT HELPERS
 # ============================================================
 
 def normalize_text(
@@ -382,7 +477,9 @@ def normalize_text(
 ):
 
     if not text:
+
         return ""
+
 
     text = re.sub(
         r"<[^>]+>",
@@ -390,11 +487,13 @@ def normalize_text(
         str(text)
     )
 
+
     text = re.sub(
         r"\s+",
         " ",
         text
     )
+
 
     return text.strip()
 
@@ -407,14 +506,24 @@ def normalize_for_search(
         text
     ).lower()
 
-    text = (
-        text
-        .replace("’", "'")
-        .replace("–", "-")
-        .replace("—", "-")
-    )
 
-    return text
+    return (
+
+        text
+        .replace(
+            "’",
+            "'"
+        )
+        .replace(
+            "–",
+            "-"
+        )
+        .replace(
+            "—",
+            "-"
+        )
+
+    )
 
 
 def word_boundary_pattern(
@@ -459,7 +568,116 @@ def contains_phrase(
 
 
 # ============================================================
-# COUNTRY DETECTION
+# EVENT CONTEXT
+# ============================================================
+
+def has_event_context(
+    context
+):
+
+    context = normalize_for_search(
+        context
+    )
+
+
+    for word in EVENT_WORDS:
+
+        if contains_phrase(
+            context,
+            word.lower()
+        ):
+
+            return True
+
+
+    return False
+
+
+# ============================================================
+# LOCATION CUE
+# ============================================================
+
+def has_location_cue(
+    context,
+    place_name
+):
+
+    context = normalize_for_search(
+        context
+    )
+
+
+    place_name = place_name.lower()
+
+
+    for prep in LOCATION_PREPOSITIONS:
+
+        pattern = (
+
+            r"\b"
+
+            +
+
+            re.escape(
+                prep
+            )
+
+            +
+
+            r"\s+(?:the\s+)?"
+
+            +
+
+            re.escape(
+                place_name
+            )
+
+            +
+
+            r"\b"
+
+        )
+
+
+        if re.search(
+            pattern,
+            context
+        ):
+
+            return True
+
+
+    return False
+
+
+# ============================================================
+# NEGATIVE CONTEXT
+# ============================================================
+
+def has_negative_context(
+    context
+):
+
+    context = normalize_for_search(
+        context
+    )
+
+
+    for pattern in NEGATIVE_PATTERNS:
+
+        if re.search(
+            pattern,
+            context
+        ):
+
+            return True
+
+
+    return False
+
+
+# ============================================================
+# COUNTRY MENTIONS
 # ============================================================
 
 def country_mentions(
@@ -470,11 +688,12 @@ def country_mentions(
         text
     )
 
+
     matches = []
 
 
     # --------------------------------------------------------
-    # COUNTRY ALIASES
+    # ALIASES
     # --------------------------------------------------------
 
     for alias, official in (
@@ -485,6 +704,7 @@ def country_mentions(
             alias
         )
 
+
         for match in re.finditer(
             pattern,
             text_lower
@@ -493,6 +713,7 @@ def country_mentions(
             country = country_index.get(
                 official.lower()
             )
+
 
             if country:
 
@@ -514,7 +735,7 @@ def country_mentions(
 
 
     # --------------------------------------------------------
-    # OFFICIAL COUNTRY NAMES
+    # OFFICIAL NAMES
     # --------------------------------------------------------
 
     for name, country in (
@@ -527,9 +748,11 @@ def country_mentions(
 
             continue
 
+
         pattern = word_boundary_pattern(
             name
         )
+
 
         for match in re.finditer(
             pattern,
@@ -553,9 +776,12 @@ def country_mentions(
             })
 
 
-    # Remove duplicate occurrences
+    # --------------------------------------------------------
+    # REMOVE DUPLICATES
+    # --------------------------------------------------------
 
     unique = {}
+
 
     for item in matches:
 
@@ -577,6 +803,7 @@ def country_mentions(
 
         )
 
+
         unique[
             key
         ] = item
@@ -588,7 +815,7 @@ def country_mentions(
 
 
 # ============================================================
-# COUNTRY SCORE
+# SCORE COUNTRIES
 # ============================================================
 
 def score_country_mentions(
@@ -600,14 +827,10 @@ def score_country_mentions(
         float
     )
 
-    evidence = defaultdict(
-        list
-    )
 
-
-    # --------------------------------------------------------
+    # ========================================================
     # TITLE
-    # --------------------------------------------------------
+    # ========================================================
 
     for mention in country_mentions(
         title
@@ -619,16 +842,13 @@ def score_country_mentions(
             "iso"
         )
 
+
         score = 80
 
-        position = mention[
+
+        if mention[
             "start"
-        ]
-
-
-        # Earlier title mention = slightly more meaningful
-
-        if position < 40:
+        ] < 40:
 
             score += 20
 
@@ -639,7 +859,11 @@ def score_country_mentions(
 
             max(
                 0,
-                position - 70
+                mention[
+                    "start"
+                ]
+                -
+                70
             )
 
             :
@@ -687,16 +911,9 @@ def score_country_mentions(
         ] += score
 
 
-        evidence[
-            code
-        ].append(
-            "title"
-        )
-
-
-    # --------------------------------------------------------
+    # ========================================================
     # SUMMARY
-    # --------------------------------------------------------
+    # ========================================================
 
     for mention in country_mentions(
         summary
@@ -708,11 +925,8 @@ def score_country_mentions(
             "iso"
         )
 
-        score = 25
 
-        position = mention[
-            "start"
-        ]
+        score = 25
 
 
         context = normalize_for_search(
@@ -721,7 +935,11 @@ def score_country_mentions(
 
             max(
                 0,
-                position - 80
+                mention[
+                    "start"
+                ]
+                -
+                80
             )
 
             :
@@ -769,715 +987,7 @@ def score_country_mentions(
         ] += score
 
 
-        evidence[
-            code
-        ].append(
-            "summary"
-        )
-
-
-    return scores, evidence
-
-
-# ============================================================
-# EVENT CONTEXT
-# ============================================================
-
-def has_event_context(
-    context
-):
-
-    context_lower = normalize_for_search(
-        context
-    )
-
-    for word in EVENT_WORDS:
-
-        if contains_phrase(
-            context_lower,
-            word.lower()
-        ):
-
-            return True
-
-    return False
-
-
-# ============================================================
-# LOCATION CUE
-# ============================================================
-
-def has_location_cue(
-    context,
-    place_name
-):
-
-    context_lower = normalize_for_search(
-        context
-    )
-
-    place_lower = place_name.lower()
-
-
-    for prep in LOCATION_PREPOSITIONS:
-
-        pattern = (
-
-            r"\b"
-
-            +
-
-            re.escape(
-                prep
-            )
-
-            +
-
-            r"\s+(?:the\s+)?"
-
-            +
-
-            re.escape(
-                place_lower
-            )
-
-            +
-
-            r"\b"
-
-        )
-
-
-        if re.search(
-            pattern,
-            context_lower
-        ):
-
-            return True
-
-
-    return False
-
-
-# ============================================================
-# NEGATIVE CONTEXT
-# ============================================================
-
-def has_negative_context(
-    context
-):
-
-    context_lower = normalize_for_search(
-        context
-    )
-
-    for pattern in NEGATIVE_PATTERNS:
-
-        if re.search(
-            pattern,
-            context_lower
-        ):
-
-            return True
-
-    return False
-
-
-# ============================================================
-# CITY PHRASES
-# ============================================================
-
-def candidate_phrases(
-    text
-):
-
-    clean = re.sub(
-
-        r"[^A-Za-zÀ-ÿ0-9\s'\-]",
-
-        " ",
-
-        normalize_text(
-            text
-        )
-
-    )
-
-
-    words = clean.split()
-
-
-    phrases = []
-
-
-    # GeoNames place names are rarely more than four words
-
-    for length in (
-        4,
-        3,
-        2,
-        1
-    ):
-
-        for index in range(
-
-            0,
-
-            len(
-                words
-            )
-            -
-            length
-            +
-            1
-
-        ):
-
-            phrase_words = words[
-                index:
-                index
-                +
-                length
-            ]
-
-
-            phrase = " ".join(
-                phrase_words
-            ).lower()
-
-
-            phrases.append({
-
-                "phrase":
-                    phrase,
-
-                "index":
-                    index,
-
-                "length":
-                    length
-
-            })
-
-
-    return phrases
-
-
-# ============================================================
-# FIND CITY OCCURRENCES
-# ============================================================
-
-def city_mentions(
-    text
-):
-
-    normalized = normalize_for_search(
-        text
-    )
-
-    results = []
-
-
-    names_to_check = set()
-
-
-    for candidate in candidate_phrases(
-        text
-    ):
-
-        phrase = candidate[
-            "phrase"
-        ]
-
-
-        if phrase in city_index:
-
-            names_to_check.add(
-                phrase
-            )
-
-
-        if phrase in CITY_ALIASES:
-
-            alias_target = CITY_ALIASES[
-                phrase
-            ].lower()
-
-            if alias_target in city_index:
-
-                names_to_check.add(
-                    alias_target
-                )
-
-
-    for city_name in names_to_check:
-
-        # Try actual GeoNames name
-
-        aliases = {
-            city_name
-        }
-
-
-        for alias, canonical in (
-            CITY_ALIASES.items()
-        ):
-
-            if (
-                canonical.lower()
-                ==
-                city_name
-            ):
-
-                aliases.add(
-                    alias
-                )
-
-
-        for alias in aliases:
-
-            pattern = word_boundary_pattern(
-                alias
-            )
-
-
-            for match in re.finditer(
-                pattern,
-                normalized
-            ):
-
-                for city in city_index[
-                    city_name
-                ]:
-
-                    results.append({
-
-                        "city":
-                            city,
-
-                        "matched":
-                            alias,
-
-                        "start":
-                            match.start(),
-
-                        "end":
-                            match.end()
-
-                    })
-
-
-    return results
-
-
-# ============================================================
-# SCORE CITY
-# ============================================================
-
-def score_city_mention(
-    mention,
-    full_text,
-    source_weight,
-    preferred_country_code=None
-):
-
-    city = mention[
-        "city"
-    ]
-
-    city_name = city.get(
-        "name",
-        ""
-    )
-
-    matched = mention[
-        "matched"
-    ]
-
-    population = (
-
-        city.get(
-            "population",
-            0
-        )
-
-        or
-
-        0
-
-    )
-
-
-    score = source_weight
-
-
-    # --------------------------------------------------------
-    # POPULATION
-    #
-    # Only a small bonus. Population should resolve ambiguity,
-    # not determine event location by itself.
-    # --------------------------------------------------------
-
-    if population > 0:
-
-        score += min(
-
-            18,
-
-            math.log10(
-                population
-                +
-                1
-            )
-            *
-            3
-
-        )
-
-
-    # --------------------------------------------------------
-    # TITLE POSITION
-    # --------------------------------------------------------
-
-    if mention[
-        "start"
-    ] < 45:
-
-        score += 10
-
-
-    # --------------------------------------------------------
-    # COUNTRY CONSISTENCY
-    # --------------------------------------------------------
-
-    if preferred_country_code:
-
-        if (
-            city.get(
-                "countrycode"
-            )
-            ==
-            preferred_country_code
-        ):
-
-            score += 80
-
-        else:
-
-            # Explicit country contradicts this city
-
-            score -= 90
-
-
-    # --------------------------------------------------------
-    # LOCAL CONTEXT
-    # --------------------------------------------------------
-
-    context_start = max(
-        0,
-        mention[
-            "start"
-        ]
-        -
-        90
-    )
-
-
-    context_end = min(
-
-        len(
-            full_text
-        ),
-
-        mention[
-            "end"
-        ]
-        +
-        90
-
-    )
-
-
-    context = full_text[
-        context_start:
-        context_end
-    ]
-
-
-    # Event word close to location
-
-    if has_event_context(
-        context
-    ):
-
-        score += 65
-
-
-    # "attack in X", "arrested near X", etc.
-
-    if has_location_cue(
-        context,
-        matched
-    ):
-
-        score += 75
-
-
-    # Negative context
-
-    if has_negative_context(
-        context
-    ):
-
-        score -= 100
-
-
-    # --------------------------------------------------------
-    # AMBIGUOUS WORD
-    # --------------------------------------------------------
-
-    if matched.lower() in AMBIGUOUS_CITY_NAMES:
-
-        score -= 90
-
-
-    # --------------------------------------------------------
-    # SHORT CITY NAME
-    # --------------------------------------------------------
-
-    if len(
-        matched
-    ) <= 3:
-
-        score -= 45
-
-
-    return score
-
-
-# ============================================================
-# FIND BEST CITY
-# ============================================================
-
-def find_best_city(
-    title,
-    summary,
-    preferred_country_code=None
-):
-
-    candidates = defaultdict(
-        lambda: {
-            "score": 0,
-            "city": None,
-            "evidence": []
-        }
-    )
-
-
-    # --------------------------------------------------------
-    # TITLE
-    #
-    # Much stronger signal
-    # --------------------------------------------------------
-
-    for mention in city_mentions(
-        title
-    ):
-
-        city = mention[
-            "city"
-        ]
-
-
-        key = city.get(
-            "geonameid"
-        )
-
-
-        if key is None:
-
-            key = (
-
-                city.get(
-                    "name"
-                ),
-
-                city.get(
-                    "countrycode"
-                ),
-
-                city.get(
-                    "latitude"
-                ),
-
-                city.get(
-                    "longitude"
-                )
-
-            )
-
-
-        score = score_city_mention(
-
-            mention,
-            normalize_for_search(
-                title
-            ),
-            source_weight=85,
-            preferred_country_code=
-                preferred_country_code
-
-        )
-
-
-        candidates[
-            key
-        ][
-            "score"
-        ] += score
-
-
-        candidates[
-            key
-        ][
-            "city"
-        ] = city
-
-
-        candidates[
-            key
-        ][
-            "evidence"
-        ].append(
-            "title"
-        )
-
-
-    # --------------------------------------------------------
-    # SUMMARY
-    #
-    # Much weaker than title
-    # --------------------------------------------------------
-
-    for mention in city_mentions(
-        summary
-    ):
-
-        city = mention[
-            "city"
-        ]
-
-
-        key = city.get(
-            "geonameid"
-        )
-
-
-        if key is None:
-
-            key = (
-
-                city.get(
-                    "name"
-                ),
-
-                city.get(
-                    "countrycode"
-                ),
-
-                city.get(
-                    "latitude"
-                ),
-
-                city.get(
-                    "longitude"
-                )
-
-            )
-
-
-        score = score_city_mention(
-
-            mention,
-            normalize_for_search(
-                summary
-            ),
-            source_weight=25,
-            preferred_country_code=
-                preferred_country_code
-
-        )
-
-
-        candidates[
-            key
-        ][
-            "score"
-        ] += score
-
-
-        candidates[
-            key
-        ][
-            "city"
-        ] = city
-
-
-        candidates[
-            key
-        ][
-            "evidence"
-        ].append(
-            "summary"
-        )
-
-
-    if not candidates:
-
-        return None
-
-
-    ranked = sorted(
-
-        candidates.values(),
-
-        key=lambda item:
-            item[
-                "score"
-            ],
-
-        reverse=True
-    )
-
-
-    best = ranked[
-        0
-    ]
-
-
-    second_score = (
-
-        ranked[
-            1
-        ][
-            "score"
-        ]
-
-        if len(
-            ranked
-        ) > 1
-
-        else None
-
-    )
-
-
-    best[
-        "second_score"
-    ] = second_score
-
-
-    return best
+    return scores
 
 
 # ============================================================
@@ -1489,7 +999,7 @@ def find_best_country(
     summary
 ):
 
-    scores, evidence = score_country_mentions(
+    scores = score_country_mentions(
         title,
         summary
     )
@@ -1554,19 +1064,601 @@ def find_best_country(
             best_score,
 
         "second_score":
-            second_score,
-
-        "evidence":
-            evidence.get(
-                best_code,
-                []
-            )
+            second_score
 
     }
 
 
 # ============================================================
-# CLEAR EXISTING LOCATION
+# CANDIDATE CITY PHRASES
+# ============================================================
+
+def candidate_phrases(
+    text
+):
+
+    clean = re.sub(
+
+        r"[^A-Za-zÀ-ÿ0-9\s'\-]",
+
+        " ",
+
+        normalize_text(
+            text
+        )
+
+    )
+
+
+    words = clean.split()
+
+
+    phrases = []
+
+
+    for length in (
+        4,
+        3,
+        2,
+        1
+    ):
+
+        for index in range(
+
+            0,
+
+            len(
+                words
+            )
+            -
+            length
+            +
+            1
+
+        ):
+
+            phrase = " ".join(
+
+                words[
+                    index:
+                    index
+                    +
+                    length
+                ]
+
+            ).lower()
+
+
+            # ------------------------------------------------
+            # HARD BLOCK
+            # ------------------------------------------------
+
+            if phrase in BLOCKED_CITY_TERMS:
+
+                continue
+
+
+            phrases.append(
+                phrase
+            )
+
+
+    return phrases
+
+
+# ============================================================
+# CITY MENTIONS
+# ============================================================
+
+def city_mentions(
+    text
+):
+
+    normalized = normalize_for_search(
+        text
+    )
+
+
+    results = []
+
+
+    names_to_check = set()
+
+
+    for phrase in candidate_phrases(
+        text
+    ):
+
+        # ----------------------------------------------------
+        # HARD-BLOCK AGAIN FOR SAFETY
+        # ----------------------------------------------------
+
+        if phrase in BLOCKED_CITY_TERMS:
+
+            continue
+
+
+        if phrase in city_index:
+
+            names_to_check.add(
+                phrase
+            )
+
+
+        if phrase in CITY_ALIASES:
+
+            alias_target = CITY_ALIASES[
+                phrase
+            ].lower()
+
+
+            if alias_target in city_index:
+
+                names_to_check.add(
+                    alias_target
+                )
+
+
+    for city_name in names_to_check:
+
+        if city_name in BLOCKED_CITY_TERMS:
+
+            continue
+
+
+        aliases = {
+            city_name
+        }
+
+
+        for alias, canonical in (
+            CITY_ALIASES.items()
+        ):
+
+            if (
+                canonical.lower()
+                ==
+                city_name
+            ):
+
+                aliases.add(
+                    alias
+                )
+
+
+        for alias in aliases:
+
+            if alias in BLOCKED_CITY_TERMS:
+
+                continue
+
+
+            pattern = word_boundary_pattern(
+                alias
+            )
+
+
+            for match in re.finditer(
+                pattern,
+                normalized
+            ):
+
+                for city in city_index[
+                    city_name
+                ]:
+
+                    results.append({
+
+                        "city":
+                            city,
+
+                        "matched":
+                            alias,
+
+                        "start":
+                            match.start(),
+
+                        "end":
+                            match.end()
+
+                    })
+
+
+    return results
+
+
+# ============================================================
+# CITY SCORE
+# ============================================================
+
+def score_city_mention(
+    mention,
+    full_text,
+    source_weight,
+    preferred_country_code=None
+):
+
+    city = mention[
+        "city"
+    ]
+
+
+    matched = mention[
+        "matched"
+    ].lower()
+
+
+    # ========================================================
+    # ABSOLUTE REJECTION
+    # ========================================================
+
+    if matched in BLOCKED_CITY_TERMS:
+
+        return -100000
+
+
+    population = (
+
+        city.get(
+            "population",
+            0
+        )
+
+        or
+
+        0
+
+    )
+
+
+    score = source_weight
+
+
+    # ========================================================
+    # SMALL POPULATION BONUS
+    # ========================================================
+
+    if population > 0:
+
+        score += min(
+
+            18,
+
+            math.log10(
+                population
+                +
+                1
+            )
+            *
+            3
+
+        )
+
+
+    # ========================================================
+    # TITLE POSITION
+    # ========================================================
+
+    if mention[
+        "start"
+    ] < 45:
+
+        score += 10
+
+
+    # ========================================================
+    # COUNTRY COHERENCE
+    # ========================================================
+
+    if preferred_country_code:
+
+        if (
+            city.get(
+                "countrycode"
+            )
+            ==
+            preferred_country_code
+        ):
+
+            score += 80
+
+
+        else:
+
+            score -= 90
+
+
+    # ========================================================
+    # LOCAL CONTEXT
+    # ========================================================
+
+    context_start = max(
+
+        0,
+
+        mention[
+            "start"
+        ]
+        -
+        90
+
+    )
+
+
+    context_end = min(
+
+        len(
+            full_text
+        ),
+
+        mention[
+            "end"
+        ]
+        +
+        90
+
+    )
+
+
+    context = full_text[
+        context_start:
+        context_end
+    ]
+
+
+    if has_event_context(
+        context
+    ):
+
+        score += 65
+
+
+    if has_location_cue(
+        context,
+        matched
+    ):
+
+        score += 75
+
+
+    if has_negative_context(
+        context
+    ):
+
+        score -= 100
+
+
+    # ========================================================
+    # AMBIGUOUS ENGLISH WORD
+    # ========================================================
+
+    if matched in AMBIGUOUS_CITY_NAMES:
+
+        score -= 100
+
+
+    # ========================================================
+    # SHORT PLACE NAMES
+    # ========================================================
+
+    if len(
+        matched
+    ) <= 3:
+
+        score -= 50
+
+
+    return score
+
+
+# ============================================================
+# FIND BEST CITY
+# ============================================================
+
+def find_best_city(
+    title,
+    summary,
+    preferred_country_code=None
+):
+
+    candidates = defaultdict(
+        lambda: {
+
+            "score":
+                0,
+
+            "city":
+                None
+
+        }
+    )
+
+
+    # ========================================================
+    # TITLE
+    # ========================================================
+
+    for mention in city_mentions(
+        title
+    ):
+
+        city = mention[
+            "city"
+        ]
+
+
+        key = (
+
+            city.get(
+                "name"
+            ),
+
+            city.get(
+                "countrycode"
+            ),
+
+            city.get(
+                "latitude"
+            ),
+
+            city.get(
+                "longitude"
+            )
+
+        )
+
+
+        score = score_city_mention(
+
+            mention,
+
+            normalize_for_search(
+                title
+            ),
+
+            source_weight=85,
+
+            preferred_country_code=
+                preferred_country_code
+
+        )
+
+
+        if score <= -10000:
+
+            continue
+
+
+        candidates[
+            key
+        ][
+            "score"
+        ] += score
+
+
+        candidates[
+            key
+        ][
+            "city"
+        ] = city
+
+
+    # ========================================================
+    # SUMMARY
+    # ========================================================
+
+    for mention in city_mentions(
+        summary
+    ):
+
+        city = mention[
+            "city"
+        ]
+
+
+        key = (
+
+            city.get(
+                "name"
+            ),
+
+            city.get(
+                "countrycode"
+            ),
+
+            city.get(
+                "latitude"
+            ),
+
+            city.get(
+                "longitude"
+            )
+
+        )
+
+
+        score = score_city_mention(
+
+            mention,
+
+            normalize_for_search(
+                summary
+            ),
+
+            source_weight=25,
+
+            preferred_country_code=
+                preferred_country_code
+
+        )
+
+
+        if score <= -10000:
+
+            continue
+
+
+        candidates[
+            key
+        ][
+            "score"
+        ] += score
+
+
+        candidates[
+            key
+        ][
+            "city"
+        ] = city
+
+
+    if not candidates:
+
+        return None
+
+
+    ranked = sorted(
+
+        candidates.values(),
+
+        key=lambda item:
+            item[
+                "score"
+            ],
+
+        reverse=True
+    )
+
+
+    best = ranked[
+        0
+    ]
+
+
+    best[
+        "second_score"
+    ] = (
+
+        ranked[
+            1
+        ][
+            "score"
+        ]
+
+        if len(
+            ranked
+        ) > 1
+
+        else None
+
+    )
+
+
+    return best
+
+
+# ============================================================
+# CLEAR LOCATION
 # ============================================================
 
 def clear_location(
@@ -1577,41 +1669,49 @@ def clear_location(
         "city"
     ] = None
 
+
     event[
         "country"
     ] = None
+
 
     event[
         "country_code"
     ] = None
 
+
     event[
         "latitude"
     ] = None
+
 
     event[
         "longitude"
     ] = None
 
+
     event[
         "location_precision"
     ] = "unknown"
+
 
     event[
         "location_confidence"
     ] = "low"
 
+
     event[
         "location_score"
     ] = 0
 
+
     event[
         "location_method"
-    ] = "conservative_offline_geonames"
+    ] = "conservative_offline_geonames_v2"
 
 
 # ============================================================
-# SET CITY LOCATION
+# SET CITY
 # ============================================================
 
 def set_city_location(
@@ -1624,6 +1724,7 @@ def set_city_location(
     code = city.get(
         "countrycode"
     )
+
 
     country = countries.get(
         code
@@ -1695,11 +1796,11 @@ def set_city_location(
 
     event[
         "location_method"
-    ] = "conservative_offline_geonames"
+    ] = "conservative_offline_geonames_v2"
 
 
 # ============================================================
-# SET COUNTRY LOCATION
+# SET COUNTRY
 # ============================================================
 
 def set_country_location(
@@ -1727,8 +1828,6 @@ def set_country_location(
         "iso"
     )
 
-
-    # Never fake coordinates by using the capital or centroid.
 
     event[
         "latitude"
@@ -1760,7 +1859,7 @@ def set_country_location(
 
     event[
         "location_method"
-    ] = "conservative_offline_geonames"
+    ] = "conservative_offline_geonames_v2"
 
 
 # ============================================================
@@ -1798,7 +1897,7 @@ def geolocate_event(
 
 
     # ========================================================
-    # COUNTRY ANALYSIS
+    # COUNTRY FIRST
     # ========================================================
 
     country_result = find_best_country(
@@ -1810,15 +1909,18 @@ def geolocate_event(
     preferred_country_code = None
 
 
-    # Only use explicit country as a city-resolution constraint
-    # when country evidence is reasonably strong.
-
     if (
+
         country_result
+
         and
+
         country_result[
             "score"
-        ] >= 70
+        ]
+        >=
+        70
+
     ):
 
         preferred_country_code = (
@@ -1833,13 +1935,15 @@ def geolocate_event(
 
 
     # ========================================================
-    # CITY ANALYSIS
+    # CITY
     # ========================================================
 
     city_result = find_best_city(
 
         title,
+
         summary,
+
         preferred_country_code
 
     )
@@ -1851,21 +1955,16 @@ def geolocate_event(
             "score"
         ]
 
+
         city = city_result[
             "city"
         ]
+
 
         second_score = city_result.get(
             "second_score"
         )
 
-
-        # ----------------------------------------------------
-        # AMBIGUITY CHECK
-        #
-        # If two competing cities score almost equally,
-        # precision is not trustworthy.
-        # ----------------------------------------------------
 
         ambiguous = False
 
@@ -1883,14 +1982,16 @@ def geolocate_event(
                 ambiguous = True
 
 
-        # ----------------------------------------------------
-        # HIGH CONFIDENCE CITY
-        # ----------------------------------------------------
-
         if (
-            score >= 180
+
+            score
+            >=
+            180
+
             and
+
             not ambiguous
+
         ):
 
             set_city_location(
@@ -1902,17 +2003,20 @@ def geolocate_event(
 
             )
 
+
             return event
 
 
-        # ----------------------------------------------------
-        # MEDIUM CONFIDENCE CITY
-        # ----------------------------------------------------
-
         if (
-            score >= 135
+
+            score
+            >=
+            135
+
             and
+
             not ambiguous
+
         ):
 
             set_city_location(
@@ -1923,6 +2027,7 @@ def geolocate_event(
                 "medium"
 
             )
+
 
             return event
 
@@ -1933,89 +2038,102 @@ def geolocate_event(
 
     if country_result:
 
-        country_score = country_result[
+        score = country_result[
             "score"
         ]
 
-        second_country_score = country_result.get(
+
+        second_score = country_result.get(
             "second_score"
         )
 
 
-        country_ambiguous = False
+        ambiguous = False
 
 
-        if second_country_score is not None:
+        if second_score is not None:
 
             if (
-                country_score
+                score
                 -
-                second_country_score
+                second_score
                 <
                 35
             ):
 
-                country_ambiguous = True
+                ambiguous = True
 
 
         if (
-            country_score >= 135
+
+            score
+            >=
+            135
+
             and
-            not country_ambiguous
+
+            not ambiguous
+
         ):
 
             set_country_location(
 
                 event,
+
                 country_result[
                     "country"
                 ],
-                country_score,
+
+                score,
+
                 "high"
 
             )
 
+
             return event
 
 
         if (
-            country_score >= 80
+
+            score
+            >=
+            80
+
             and
-            not country_ambiguous
+
+            not ambiguous
+
         ):
 
             set_country_location(
 
                 event,
+
                 country_result[
                     "country"
                 ],
-                country_score,
+
+                score,
+
                 "medium"
 
             )
 
+
             return event
 
-
-    # ========================================================
-    # OTHERWISE UNKNOWN
-    # ========================================================
 
     return event
 
 
 # ============================================================
-# VALIDATE RESULT
+# VALIDATE
 # ============================================================
 
 def validate_event_location(
     event
 ):
-
-    # --------------------------------------------------------
-    # Coordinates must exist for city-level location
-    # --------------------------------------------------------
 
     if (
         event.get(
@@ -2024,6 +2142,33 @@ def validate_event_location(
         ==
         "city"
     ):
+
+        # ----------------------------------------------------
+        # HARD SAFETY CHECK
+        # ----------------------------------------------------
+
+        city_name = (
+
+            event.get(
+                "city"
+            )
+
+            or
+
+            ""
+
+        ).lower()
+
+
+        if city_name in BLOCKED_CITY_TERMS:
+
+            clear_location(
+                event
+            )
+
+
+            return event
+
 
         if (
 
@@ -2046,10 +2191,6 @@ def validate_event_location(
             )
 
 
-    # --------------------------------------------------------
-    # Coordinates should never exist for country-only entries
-    # --------------------------------------------------------
-
     if (
         event.get(
             "location_precision"
@@ -2059,15 +2200,17 @@ def validate_event_location(
     ):
 
         event[
+            "city"
+        ] = None
+
+
+        event[
             "latitude"
         ] = None
 
-        event[
-            "longitude"
-        ] = None
 
         event[
-            "city"
+            "longitude"
         ] = None
 
 
@@ -2086,13 +2229,16 @@ def main():
         "=" * 70
     )
 
+
     print(
         "INTERPOL CT Intelligence Map"
     )
 
+
     print(
-        "CONSERVATIVE OFFLINE GEOLOCATION"
+        "CONSERVATIVE GEOLOCATION V2"
     )
+
 
     print(
         "=" * 70
@@ -2127,9 +2273,11 @@ def main():
 
 
     city_high = 0
+
     city_medium = 0
 
     country_high = 0
+
     country_medium = 0
 
     unknown_count = 0
@@ -2138,6 +2286,7 @@ def main():
     for number, event in enumerate(
 
         events,
+
         start=1
 
     ):
@@ -2163,52 +2312,68 @@ def main():
 
 
         if (
+
             precision
             ==
             "city"
+
             and
+
             confidence
             ==
             "high"
+
         ):
 
             city_high += 1
 
 
         elif (
+
             precision
             ==
             "city"
+
             and
+
             confidence
             ==
             "medium"
+
         ):
 
             city_medium += 1
 
 
         elif (
+
             precision
             ==
             "country"
+
             and
+
             confidence
             ==
             "high"
+
         ):
 
             country_high += 1
 
 
         elif (
+
             precision
             ==
             "country"
+
             and
+
             confidence
             ==
             "medium"
+
         ):
 
             country_medium += 1
@@ -2231,32 +2396,32 @@ def main():
 
 
     city_total = (
+
         city_high
         +
         city_medium
+
     )
 
 
     country_total = (
+
         country_high
         +
         country_medium
+
     )
 
-
-    # ========================================================
-    # DATABASE GEOLOCATION METADATA
-    # ========================================================
 
     data[
         "geolocation"
     ] = {
 
         "method":
-            "Conservative offline GeoNames contextual matching",
+            "Conservative offline GeoNames contextual matching v2",
 
         "strategy":
-            "Prefer unknown over uncertain city precision",
+            "Blocked ambiguous common-language city names",
 
         "city_locations":
             city_total,
@@ -2282,10 +2447,6 @@ def main():
     }
 
 
-    # ========================================================
-    # SAVE
-    # ========================================================
-
     with open(
 
         OUTPUT_FILE,
@@ -2309,70 +2470,80 @@ def main():
         )
 
 
-    # ========================================================
-    # REPORT
-    # ========================================================
-
     print()
 
     print(
         "=" * 70
     )
 
+
     print(
         "GEOLOCATION COMPLETE"
     )
 
+
     print(
         "=" * 70
     )
+
 
     print(
         f"City-level HIGH:   "
         f"{city_high}"
     )
 
+
     print(
         f"City-level MEDIUM: "
         f"{city_medium}"
     )
+
 
     print(
         f"City-level TOTAL:  "
         f"{city_total}"
     )
 
+
     print()
+
 
     print(
         f"Country HIGH:      "
         f"{country_high}"
     )
 
+
     print(
         f"Country MEDIUM:    "
         f"{country_medium}"
     )
+
 
     print(
         f"Country TOTAL:     "
         f"{country_total}"
     )
 
+
     print()
+
 
     print(
         f"Unknown:           "
         f"{unknown_count}"
     )
 
+
     print(
         "=" * 70
     )
 
+
     print(
         "events.json updated."
     )
+
 
     print(
         "=" * 70
