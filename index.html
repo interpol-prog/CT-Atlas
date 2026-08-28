@@ -999,6 +999,226 @@ body.locked #main {
     color: #6c7881;
 }
 
+
+/* =========================================================
+   CHRONOLOGY PANEL
+========================================================= */
+
+#chronologyPanel {
+    position: fixed;
+    top: 78px;
+    right: 0;
+    z-index: 5000;
+    width: 470px;
+    max-width: calc(100vw - 40px);
+    height: calc(100vh - 78px);
+    display: flex;
+    flex-direction: column;
+    background: #111d28;
+    color: white;
+    border-left: 1px solid #334554;
+    box-shadow: -16px 0 38px rgba(0,0,0,.34);
+    transform: translateX(101%);
+    transition: transform .22s ease;
+}
+
+#chronologyPanel.open {
+    transform: translateX(0);
+}
+
+body.locked #chronologyPanel {
+    visibility: hidden;
+}
+
+.chronology-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 18px 18px 13px 18px;
+    border-bottom: 1px solid #334554;
+}
+
+.chronology-heading {
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: .5px;
+}
+
+.chronology-subtitle {
+    margin-top: 4px;
+    color: #91a5b5;
+    font-size: 10px;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: .65px;
+}
+
+#chronologyClose {
+    flex: 0 0 auto;
+    width: 31px;
+    height: 31px;
+    border: 1px solid #405563;
+    border-radius: 4px;
+    background: #202f3b;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+}
+
+#chronologyClose:hover {
+    background: #2b3e4c;
+}
+
+.chronology-controls {
+    padding: 12px 14px;
+    border-bottom: 1px solid #2d3f4d;
+    background: #17232e;
+}
+
+#chronologySearch,
+#chronologyCountry,
+#chronologySort {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #405563;
+    border-radius: 4px;
+    background: #202f3b;
+    color: white;
+    outline: none;
+    font-size: 11px;
+}
+
+#chronologySearch:focus,
+#chronologyCountry:focus,
+#chronologySort:focus {
+    border-color: #8aa7bd;
+}
+
+.chronology-filter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    margin-top: 7px;
+}
+
+#chronologyCount {
+    padding: 8px 14px;
+    border-bottom: 1px solid #2d3f4d;
+    color: #91a5b5;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .65px;
+}
+
+#chronologyList {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.chronology-item {
+    position: relative;
+    padding: 12px 14px 13px 17px;
+    border-bottom: 1px solid #263844;
+    cursor: pointer;
+    background: #111d28;
+}
+
+.chronology-item:hover {
+    background: #182734;
+}
+
+.chronology-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    background: #687482;
+}
+
+.chronology-item.financing::before { background: #3a78a8; }
+.chronology-item.weapons::before { background: #7c5fa3; }
+.chronology-item.cbrn::before { background: #658f53; }
+.chronology-item.online::before { background: #397e87; }
+.chronology-item.attacks::before { background: #b44e4e; }
+.chronology-item.arrests::before { background: #b17b38; }
+.chronology-item.legal::before { background: #687482; }
+.chronology-item.ai::before { background: #944c85; }
+
+.chronology-item.unmapped {
+    cursor: default;
+    opacity: .72;
+}
+
+.chronology-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.chronology-date {
+    color: #a9bac6;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.chronology-category {
+    flex: 0 0 auto;
+    padding: 3px 5px;
+    border: 1px solid #405563;
+    border-radius: 3px;
+    color: #c8d4dc;
+    font-size: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: .45px;
+}
+
+.chronology-title {
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.chronology-meta {
+    margin-top: 6px;
+    color: #8fa4b5;
+    font-size: 10px;
+    line-height: 1.45;
+}
+
+.chronology-source {
+    margin-top: 4px;
+    color: #708796;
+    font-size: 9px;
+}
+
+.chronology-empty {
+    padding: 30px 18px;
+    text-align: center;
+    color: #8fa4b5;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+#chronologyToggle {
+    grid-column: span 2;
+}
+
+@media (max-width: 850px) {
+    #chronologyPanel {
+        width: 100vw;
+        max-width: 100vw;
+    }
+}
+
 </style>
 
 </head>
@@ -1261,6 +1481,13 @@ HEAT ZONES
     id="officesToggle"
 >
 INTERPOL OFFICES
+</button>
+
+<button
+    class="layer-button"
+    id="chronologyToggle"
+>
+CHRONOLOGY
 </button>
 
 
@@ -1581,7 +1808,7 @@ Visible rate
 
 <div id="database-info">
 
-English-language open-source monitoring · contextual geolocation V5
+English-language open-source monitoring · contextual geolocation V6
 
 <br>
 
@@ -1607,6 +1834,82 @@ Automated daily update
 
 </div>
 
+
+<div
+    id="chronologyPanel"
+    aria-hidden="true"
+>
+
+    <div class="chronology-header">
+
+        <div>
+
+            <div class="chronology-heading">
+                EVENT CHRONOLOGY
+            </div>
+
+            <div class="chronology-subtitle">
+                Chronological intelligence feed · follows active map filters
+            </div>
+
+        </div>
+
+        <button
+            id="chronologyClose"
+            type="button"
+            aria-label="Close chronology"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="chronology-controls">
+
+        <input
+            id="chronologySearch"
+            type="text"
+            placeholder="Search chronology..."
+        >
+
+        <div class="chronology-filter-row">
+
+            <select id="chronologyCountry">
+                <option value="">All countries</option>
+            </select>
+
+            <select id="chronologySort">
+
+                <option value="newest">
+                    Newest first
+                </option>
+
+                <option value="oldest">
+                    Oldest first
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div id="chronologyCount">
+        —
+    </div>
+
+
+    <div id="chronologyList">
+
+        <div class="chronology-empty">
+            Loading events...
+        </div>
+
+    </div>
+
+</div>
 
 
 
@@ -2206,6 +2509,26 @@ let searchText =
     "";
 
 
+let chronologySearchText =
+    "";
+
+
+let chronologyCountry =
+    "";
+
+
+let chronologySort =
+    "newest";
+
+
+let chronologyOpen =
+    false;
+
+
+const eventMarkerIndex =
+    new Map();
+
+
 
 const categoryStyle = {
 
@@ -2372,6 +2695,27 @@ fetch(
             data.events
             ||
             [];
+
+
+        allEvents.forEach(
+
+            (event, index) => {
+
+                event._mapKey =
+
+                    event.id
+
+                    ||
+
+                    (
+                        "event-"
+                        +
+                        index
+                    );
+
+            }
+
+        );
 
 
         if (
@@ -3113,6 +3457,9 @@ function renderEvents() {
     markerCluster.clearLayers();
 
 
+    eventMarkerIndex.clear();
+
+
     if (
         heatLayer
     ) {
@@ -3143,12 +3490,20 @@ function renderEvents() {
             event => {
 
 
-                markerCluster.addLayer(
-
+                const marker =
                     createMarker(
                         event
-                    )
+                    );
 
+
+                markerCluster.addLayer(
+                    marker
+                );
+
+
+                eventMarkerIndex.set(
+                    event._mapKey,
+                    marker
                 );
 
             }
@@ -3905,6 +4260,860 @@ function updateTrends() {
 
 
 
+// ============================================================
+// EVENT CHRONOLOGY
+// ============================================================
+
+function chronologyBaseEvents() {
+
+    return filteredAllEvents().filter(
+
+        event =>
+            event.excluded_from_map !== true
+
+    );
+
+}
+
+
+function chronologyLocationText(
+    event
+) {
+
+    if (
+        event.location_precision
+        ===
+        "region"
+    ) {
+
+        return [
+            event.region,
+            event.country
+        ]
+        .filter(
+            Boolean
+        )
+        .join(
+            ", "
+        );
+
+    }
+
+
+    return [
+        event.city,
+        event.country
+    ]
+    .filter(
+        Boolean
+    )
+    .join(
+        ", "
+    )
+
+    ||
+
+    "Unlocated";
+
+}
+
+
+function chronologyMatches(
+    event
+) {
+
+    if (
+        chronologyCountry
+    ) {
+
+        if (
+            chronologyCountry
+            ===
+            "__UNLOCATED__"
+        ) {
+
+            if (
+                event.country
+            ) {
+
+                return false;
+
+            }
+
+        }
+
+
+        else if (
+            event.country
+            !==
+            chronologyCountry
+        ) {
+
+            return false;
+
+        }
+
+    }
+
+
+    if (
+        !chronologySearchText
+    ) {
+
+        return true;
+
+    }
+
+
+    const combined = (
+
+        (event.title || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.summary || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.city || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.region || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.country || "")
+
+        +
+
+        " "
+
+        +
+
+        (event.source || "")
+
+        +
+
+        " "
+
+        +
+
+        eventCategories(
+            event
+        ).join(
+            " "
+        )
+
+    ).toLowerCase();
+
+
+    return combined.includes(
+        chronologySearchText
+    );
+
+}
+
+
+function updateChronologyCountryOptions(
+    events
+) {
+
+    const select =
+        document.getElementById(
+            "chronologyCountry"
+        );
+
+
+    if (
+        !select
+    ) {
+
+        return;
+
+    }
+
+
+    const previous =
+        chronologyCountry;
+
+
+    const countries =
+        Array.from(
+
+            new Set(
+
+                events
+                .map(
+                    event =>
+                        event.country
+                )
+                .filter(
+                    Boolean
+                )
+
+            )
+
+        )
+        .sort(
+            (a,b) =>
+                a.localeCompare(
+                    b
+                )
+        );
+
+
+    const hasUnlocated =
+        events.some(
+            event =>
+                !event.country
+        );
+
+
+    select.innerHTML =
+        '<option value="">All countries</option>';
+
+
+    countries.forEach(
+
+        country => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                country;
+
+
+            option.textContent =
+                country;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+
+    );
+
+
+    if (
+        hasUnlocated
+    ) {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            "__UNLOCATED__";
+
+
+        option.textContent =
+            "Unlocated";
+
+
+        select.appendChild(
+            option
+        );
+
+    }
+
+
+    const values =
+        Array.from(
+            select.options
+        ).map(
+            option =>
+                option.value
+        );
+
+
+    if (
+        values.includes(
+            previous
+        )
+    ) {
+
+        select.value =
+            previous;
+
+    }
+
+
+    else {
+
+        chronologyCountry =
+            "";
+
+
+        select.value =
+            "";
+
+    }
+
+}
+
+
+function focusChronologyEvent(
+    eventKey
+) {
+
+    const event =
+        allEvents.find(
+
+            candidate =>
+                candidate._mapKey
+                ===
+                eventKey
+
+        );
+
+
+    if (
+        !event
+
+        ||
+
+        event.excluded_from_map
+        ===
+        true
+
+        ||
+
+        event.latitude
+        ==
+        null
+
+        ||
+
+        event.longitude
+        ==
+        null
+
+        ||
+
+        event.location_precision
+        ===
+        "unlocated"
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        !showMarkers
+    ) {
+
+        showMarkers =
+            true;
+
+
+        document.getElementById(
+            "markersToggle"
+        ).classList.add(
+            "active"
+        );
+
+
+        renderEvents();
+
+    }
+
+
+    const marker =
+        eventMarkerIndex.get(
+            eventKey
+        );
+
+
+    if (
+        !marker
+    ) {
+
+        map.setView(
+
+            [
+                Number(
+                    event.latitude
+                ),
+                Number(
+                    event.longitude
+                )
+            ],
+
+            6
+
+        );
+
+
+        return;
+
+    }
+
+
+    markerCluster.zoomToShowLayer(
+
+        marker,
+
+        function() {
+
+            map.panTo(
+                marker.getLatLng()
+            );
+
+
+            marker.openPopup();
+
+        }
+
+    );
+
+}
+
+
+function renderChronology() {
+
+    const list =
+        document.getElementById(
+            "chronologyList"
+        );
+
+
+    const count =
+        document.getElementById(
+            "chronologyCount"
+        );
+
+
+    if (
+        !list
+
+        ||
+
+        !count
+    ) {
+
+        return;
+
+    }
+
+
+    const baseEvents =
+        chronologyBaseEvents();
+
+
+    updateChronologyCountryOptions(
+        baseEvents
+    );
+
+
+    let events =
+        baseEvents.filter(
+            chronologyMatches
+        );
+
+
+    events.sort(
+
+        (a,b) => {
+
+            const aTime =
+                new Date(
+                    a.published
+                    ||
+                    0
+                ).getTime();
+
+
+            const bTime =
+                new Date(
+                    b.published
+                    ||
+                    0
+                ).getTime();
+
+
+            return (
+
+                chronologySort
+                ===
+                "oldest"
+
+                ?
+
+                aTime
+                -
+                bTime
+
+                :
+
+                bTime
+                -
+                aTime
+
+            );
+
+        }
+
+    );
+
+
+    count.innerText =
+
+        events.length
+
+        +
+
+        (
+            events.length
+            ===
+            1
+            ?
+            " event"
+            :
+            " events"
+        )
+
+        +
+
+        " · "
+
+        +
+
+        selectedDays
+
+        +
+
+        (
+            selectedDays
+            ===
+            1
+            ?
+            " day"
+            :
+            " days"
+        );
+
+
+    list.innerHTML =
+        "";
+
+
+    if (
+        events.length
+        ===
+        0
+    ) {
+
+        list.innerHTML = `
+
+            <div class="chronology-empty">
+                No events match the current filters.
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    const fragment =
+        document.createDocumentFragment();
+
+
+    events.forEach(
+
+        event => {
+
+            const primaryCategory =
+                event.category;
+
+
+            const style =
+
+                categoryStyle[
+                    primaryCategory
+                ]
+
+                ||
+
+                {
+                    code:
+                        "?",
+                    className:
+                        "legal"
+                };
+
+
+            const mapped =
+
+                event.excluded_from_map
+                !==
+                true
+
+                &&
+
+                event.latitude
+                !=
+                null
+
+                &&
+
+                event.longitude
+                !=
+                null
+
+                &&
+
+                event.location_precision
+                !==
+                "unlocated";
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+
+                "chronology-item "
+
+                +
+
+                style.className
+
+                +
+
+                (
+                    mapped
+                    ?
+                    ""
+                    :
+                    " unmapped"
+                );
+
+
+            const published =
+                event.published
+                ?
+                new Date(
+                    event.published
+                )
+                :
+                null;
+
+
+            const dateText =
+
+                published
+
+                &&
+
+                !isNaN(
+                    published.getTime()
+                )
+
+                ?
+
+                published.toLocaleString(
+
+                    "en-GB",
+
+                    {
+                        day:
+                            "2-digit",
+                        month:
+                            "short",
+                        year:
+                            "numeric",
+                        hour:
+                            "2-digit",
+                        minute:
+                            "2-digit"
+                    }
+
+                )
+
+                :
+
+                "Unknown date";
+
+
+            const categoryText =
+                eventCategories(
+                    event
+                ).join(
+                    " / "
+                );
+
+
+            const sourceText =
+                event.source
+                ||
+                "Unknown source";
+
+
+            item.innerHTML = `
+
+                <div class="chronology-topline">
+
+                    <span class="chronology-date">
+                        ${escapeHtml(dateText)}
+                    </span>
+
+                    <span class="chronology-category">
+                        ${escapeHtml(style.code)}
+                    </span>
+
+                </div>
+
+
+                <div class="chronology-title">
+                    ${escapeHtml(event.title || "Untitled event")}
+                </div>
+
+
+                <div class="chronology-meta">
+
+                    ${escapeHtml(chronologyLocationText(event))}
+
+                    ·
+
+                    ${escapeHtml(categoryText)}
+
+                </div>
+
+
+                <div class="chronology-source">
+
+                    ${escapeHtml(sourceText)}
+
+                    ${mapped ? " · Click to locate on map" : " · No mapped coordinates"}
+
+                </div>
+
+            `;
+
+
+            if (
+                mapped
+            ) {
+
+                item.addEventListener(
+
+                    "click",
+
+                    function() {
+
+                        focusChronologyEvent(
+                            event._mapKey
+                        );
+
+                    }
+
+                );
+
+            }
+
+
+            fragment.appendChild(
+                item
+            );
+
+        }
+
+    );
+
+
+    list.appendChild(
+        fragment
+    );
+
+}
+
+
+function setChronologyOpen(
+    open
+) {
+
+    chronologyOpen =
+        open;
+
+
+    const panel =
+        document.getElementById(
+            "chronologyPanel"
+        );
+
+
+    const toggle =
+        document.getElementById(
+            "chronologyToggle"
+        );
+
+
+    panel.classList.toggle(
+        "open",
+        chronologyOpen
+    );
+
+
+    panel.setAttribute(
+        "aria-hidden",
+        chronologyOpen
+        ?
+        "false"
+        :
+        "true"
+    );
+
+
+    toggle.classList.toggle(
+        "active",
+        chronologyOpen
+    );
+
+
+    if (
+        chronologyOpen
+    ) {
+
+        renderChronology();
+
+    }
+
+}
+
+
 function refreshDashboard() {
 
 
@@ -3917,6 +5126,8 @@ function refreshDashboard() {
     updateTopLocations();
 
     updateTrends();
+
+    renderChronology();
 
 }
 
@@ -4118,6 +5329,128 @@ document.getElementById(
 
 
         refreshDashboard();
+
+    }
+
+);
+
+
+
+
+document.getElementById(
+    "chronologyToggle"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+        setChronologyOpen(
+            !chronologyOpen
+        );
+
+    }
+
+);
+
+
+document.getElementById(
+    "chronologyClose"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+        setChronologyOpen(
+            false
+        );
+
+    }
+
+);
+
+
+document.getElementById(
+    "chronologySearch"
+).addEventListener(
+
+    "input",
+
+    function() {
+
+        chronologySearchText =
+            this.value
+            .trim()
+            .toLowerCase();
+
+
+        renderChronology();
+
+    }
+
+);
+
+
+document.getElementById(
+    "chronologyCountry"
+).addEventListener(
+
+    "change",
+
+    function() {
+
+        chronologyCountry =
+            this.value;
+
+
+        renderChronology();
+
+    }
+
+);
+
+
+document.getElementById(
+    "chronologySort"
+).addEventListener(
+
+    "change",
+
+    function() {
+
+        chronologySort =
+            this.value;
+
+
+        renderChronology();
+
+    }
+
+);
+
+
+document.addEventListener(
+
+    "keydown",
+
+    function(event) {
+
+        if (
+            event.key
+            ===
+            "Escape"
+
+            &&
+
+            chronologyOpen
+        ) {
+
+            setChronologyOpen(
+                false
+            );
+
+        }
 
     }
 
