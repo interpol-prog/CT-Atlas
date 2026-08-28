@@ -39,7 +39,7 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-08-28T23:05:14.941994+00:00",
+  "last_updated": "2026-08-28T23:08:22.015532+00:00",
   "number_of_events": 1228,
   "events": [
     {
@@ -143,7 +143,8 @@
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "same_normalized_title",
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "same_url"
       ]
     },
     {
@@ -868,7 +869,11 @@
         "person:trump:title",
         "person:trump:summary"
       ],
-      "excluded_from_map": false
+      "excluded_from_map": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "0909d30c8afe97b2",
@@ -1871,9 +1876,10 @@
       "article_count": 2,
       "first_reported": "2026-08-28T07:01:02+00:00",
       "last_reported": "2026-08-28T09:10:49+00:00",
-      "dedup_confidence": 0.588,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "actor_country_action_signature"
+        "actor_country_action_signature",
+        "same_url"
       ],
       "location_score": 449.3,
       "location_method": "explicit_context_city",
@@ -2107,7 +2113,11 @@
         "person:trump:title",
         "person:trump:summary"
       ],
-      "excluded_from_map": false
+      "excluded_from_map": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "722c040f5362f41f",
@@ -2353,7 +2363,11 @@
         "city:tel aviv:title",
         "city:tel aviv:summary"
       ],
-      "excluded_from_map": false
+      "excluded_from_map": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "80369e853efa9c17",
@@ -3137,7 +3151,11 @@
       "location_score": 0,
       "location_method": "no_geographic_signal",
       "location_evidence": [],
-      "excluded_from_map": false
+      "excluded_from_map": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "8c231abb3f6050a4",
@@ -6808,7 +6826,11 @@
         "country:u.s.:title",
         "country:u.s.:summary"
       ],
-      "excluded_from_map": false
+      "excluded_from_map": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "7421b9fd0f57db9f",
@@ -8287,9 +8309,10 @@
       "article_count": 2,
       "first_reported": "2026-08-26T09:24:59+00:00",
       "last_reported": "2026-08-26T09:25:53+00:00",
-      "dedup_confidence": 0.99,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url"
       ],
       "location_score": 95.0,
       "location_method": "intrinsic_country_capital",
