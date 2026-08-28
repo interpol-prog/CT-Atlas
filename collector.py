@@ -6,6 +6,7 @@ import re
 import sys
 import time
 import unicodedata
+import random
 
 import requests
 
@@ -18,7 +19,7 @@ from urllib.parse import quote_plus, urlsplit, urlunsplit
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V6 — MULTI-SOURCE CT COVERAGE
+# OSINT COLLECTOR V7 — THROTTLE-SAFE MULTI-SOURCE CT COVERAGE
 #
 # Expanded coverage + stricter event relevance.
 #
@@ -35,6 +36,18 @@ GOOGLE_NEWS_BASE = "https://news.google.com/rss/search"
 GOOGLE_LANGUAGE = "en-US"
 GOOGLE_COUNTRY = "US"
 GOOGLE_EDITION = "US:en"
+
+# Google News RSS is intentionally queried conservatively.
+# The previous version issued 351 searches during a backfill and could
+# trigger long 503 retry storms. V7 keeps all source families but uses
+# broader searches + local classification.
+REQUEST_ATTEMPTS = 2
+REQUEST_PAUSE_SECONDS = 0.85
+SERVER_ERROR_COOLDOWN_SECONDS = 45
+SERVER_ERROR_STREAK_LIMIT = 4
+
+QUERY_STATS = Counter()
+SERVER_ERROR_STREAK = 0
 
 
 CATEGORIES = {
@@ -254,6 +267,91 @@ CATEGORIES = {
         '"terrorist synthetic media"',
         '"terrorist voice cloning"',
         '"extremist artificial intelligence"',
+    ],
+}
+
+
+# ============================================================
+# COMPACT CORE SEARCH BANK
+#
+# These are discovery queries, not the taxonomy itself.
+# Articles are still locally tested against the full category relevance
+# rules. Six strong searches per category provide broad recall without
+# issuing hundreds of near-duplicate Google News requests.
+# ============================================================
+
+CORE_SEARCH_QUERIES = {
+
+    "Terrorist Financing": [
+        '"terrorist financing"',
+        '"terrorist funding"',
+        '"terrorist cryptocurrency"',
+        '"terrorist sanctions"',
+        '"terrorist money laundering"',
+        '"terrorist fundraising"',
+    ],
+
+    "Weapons": [
+        '"terrorist weapons"',
+        '"terrorist explosives"',
+        '"terrorist drone"',
+        '"weapons trafficking" terrorism',
+        '"terrorist IED"',
+        '"terrorist weapons cache"',
+    ],
+
+    "CBRN": [
+        '"chemical terrorism"',
+        '"biological terrorism"',
+        '"radiological terrorism"',
+        '"nuclear terrorism"',
+        '"dirty bomb" terrorism',
+        '"CBRN" terrorism',
+    ],
+
+    "Online Radicalization / Cyberterrorism": [
+        '"online radicalization" terrorism',
+        '"terrorist propaganda" online',
+        '"terrorist recruitment" online',
+        '"terrorist encrypted messaging"',
+        '"cyberterrorism"',
+        '"terrorist hacking"',
+    ],
+
+    "Attacks": [
+        '"terrorist attack"',
+        '"terrorist bombing"',
+        '"suicide bombing" terrorism',
+        '"jihadist attack"',
+        '"ISIS attack"',
+        '"terrorist shooting"',
+    ],
+
+    "Arrests": [
+        '"terror suspect arrested"',
+        '"terrorism arrests"',
+        '"ISIS suspect arrested"',
+        '"terrorist cell arrested"',
+        '"jihadist arrested"',
+        '"terrorism raid" arrests',
+    ],
+
+    "Legal / Judicial": [
+        '"terrorism trial"',
+        '"terrorist sentenced"',
+        '"terrorist convicted"',
+        '"terror suspect charged"',
+        '"terrorism indictment"',
+        '"terrorism prosecution"',
+    ],
+
+    "Disinformation / Emerging Technologies / AI": [
+        '"terrorist artificial intelligence"',
+        '"terrorist deepfake"',
+        '"terrorist disinformation"',
+        '"terrorism emerging technology"',
+        '"terrorist autonomous drone"',
+        '"terrorist synthetic media"',
     ],
 }
 
@@ -641,6 +739,91 @@ def targeted_source_query(
     )
 
 
+
+# ============================================================
+# THROTTLE-SAFE SOURCE DISCOVERY
+#
+# Official sources: one broad CT query per domain.
+# Targeted media: one query per source, with a second theme only for
+# high-volume sources. Results are classified locally into the 8 categories.
+# ============================================================
+
+OFFICIAL_BROAD_QUERIES = [
+    {
+        "name": "U.S. Department of Justice",
+        "query": 'site:justice.gov (terrorism OR terrorist OR ISIS OR ISIL OR "material support")',
+    },
+    {
+        "name": "U.S. Treasury / OFAC",
+        "query": 'site:home.treasury.gov (terrorism OR terrorist OR ISIS OR Hamas OR Hezbollah OR "al-Qaeda")',
+    },
+    {
+        "name": "Europol",
+        "query": 'site:europol.europa.eu (terrorism OR terrorist OR extremist)',
+    },
+    {
+        "name": "Counter Terrorism Policing UK",
+        "query": 'site:counterterrorism.police.uk (terrorism OR terrorist OR extremist)',
+    },
+    {
+        "name": "GOV.UK",
+        "query": 'site:gov.uk/government/news (terrorism OR terrorist OR extremism)',
+    },
+    {
+        "name": "INTERPOL",
+        "query": 'site:interpol.int/en/News-and-Events/News (terrorism OR terrorist OR "foreign terrorist fighters")',
+    },
+]
+
+SOURCE_QUERY_THEME_PRIMARY = (
+    '(terrorism OR terrorist OR ISIS OR ISIL OR Daesh OR "Islamic State" '
+    'OR "al-Qaeda")'
+)
+
+SOURCE_QUERY_THEME_SECONDARY = (
+    '(extremist OR jihadist OR "al-Shabaab" OR "Boko Haram" OR Taliban '
+    'OR Hamas OR Hezbollah)'
+)
+
+DEEP_SCAN_SOURCES = {
+    "ACLED",
+    "Reuters",
+    "Associated Press",
+    "BBC News",
+    "CNN",
+    "France 24 English",
+    "Deutsche Welle English",
+    "Al Jazeera English",
+    "i24NEWS",
+}
+
+
+def targeted_source_queries(source):
+    queries = [
+        (
+            "site:"
+            +
+            source["site"]
+            +
+            " "
+            +
+            SOURCE_QUERY_THEME_PRIMARY
+        )
+    ]
+
+    if source["name"] in DEEP_SCAN_SOURCES:
+        queries.append(
+            "site:"
+            +
+            source["site"]
+            +
+            " "
+            +
+            SOURCE_QUERY_THEME_SECONDARY
+        )
+
+    return queries
+
 SOURCE_PRIORITY = {
     "U.S. Department of Justice": 130,
     "US Department of Justice": 130,
@@ -987,6 +1170,32 @@ def is_relevant_article(
     return False
 
 
+
+def classify_article_categories(
+    title,
+    summary,
+):
+    """
+    Classify one broad-source result locally instead of asking Google News
+    once per source x category.
+
+    The full existing relevance rules remain authoritative.
+    """
+    categories = []
+
+    for category in CATEGORIES.keys():
+        if is_relevant_article(
+            category,
+            title,
+            summary,
+        ):
+            categories.append(
+                category
+            )
+
+    return categories
+
+
 def get_source(entry):
     try:
         return clean_text(
@@ -1083,6 +1292,256 @@ def build_google_url(
     )
 
 
+def request_google_news(
+    url,
+    label="query",
+):
+    """
+    Execute one Google News request with a short retry policy and a global
+    circuit breaker for repeated 429/503 responses.
+
+    This prevents hundreds of pointless retry loops when Google is throttling
+    the GitHub Actions runner.
+    """
+    global SERVER_ERROR_STREAK
+
+    for attempt in range(
+        1,
+        REQUEST_ATTEMPTS + 1,
+    ):
+        try:
+            response = session.get(
+                url,
+                timeout=30,
+            )
+
+            if response.status_code in {
+                429,
+                503,
+            }:
+                QUERY_STATS["throttled"] += 1
+                SERVER_ERROR_STREAK += 1
+
+                retry_after = response.headers.get(
+                    "Retry-After"
+                )
+
+                if retry_after:
+                    try:
+                        delay = min(
+                            120,
+                            max(
+                                5,
+                                int(
+                                    retry_after
+                                )
+                            )
+                        )
+                    except Exception:
+                        delay = 10
+                else:
+                    delay = (
+                        8
+                        +
+                        attempt * 5
+                        +
+                        random.uniform(
+                            0,
+                            3
+                        )
+                    )
+
+                print(
+                    f"      Google News returned "
+                    f"{response.status_code} "
+                    f"({label}) — cooldown "
+                    f"{delay:.0f}s"
+                )
+
+                if (
+                    SERVER_ERROR_STREAK
+                    >=
+                    SERVER_ERROR_STREAK_LIMIT
+                ):
+                    print(
+                        "      Repeated throttling detected — "
+                        f"global cooldown "
+                        f"{SERVER_ERROR_COOLDOWN_SECONDS}s"
+                    )
+
+                    time.sleep(
+                        SERVER_ERROR_COOLDOWN_SECONDS
+                    )
+
+                    SERVER_ERROR_STREAK = 0
+
+                else:
+                    time.sleep(
+                        delay
+                    )
+
+                continue
+
+            response.raise_for_status()
+
+            SERVER_ERROR_STREAK = 0
+            QUERY_STATS["successful"] += 1
+
+            time.sleep(
+                REQUEST_PAUSE_SECONDS
+                +
+                random.uniform(
+                    0,
+                    0.25
+                )
+            )
+
+            return response
+
+        except requests.RequestException as error:
+            QUERY_STATS["request_errors"] += 1
+
+            print(
+                f"      Request attempt "
+                f"{attempt}/"
+                f"{REQUEST_ATTEMPTS} failed "
+                f"({label}): "
+                f"{error}"
+            )
+
+            if attempt < REQUEST_ATTEMPTS:
+                time.sleep(
+                    5
+                    +
+                    random.uniform(
+                        0,
+                        2
+                    )
+                )
+
+    QUERY_STATS["failed"] += 1
+
+    return None
+
+
+def entry_to_event(
+    entry,
+    categories,
+    acquisition_channel=None,
+    targeted_source=None,
+    targeted_source_kind=None,
+):
+    article_url = entry.get(
+        "link"
+    )
+
+    if not article_url:
+        return None
+
+    source = get_source(
+        entry
+    )
+
+    title = remove_source_suffix(
+        entry.get(
+            "title",
+            "",
+        ),
+        source,
+    )
+
+    if not title:
+        return None
+
+    summary = clean_text(
+        entry.get(
+            "summary",
+            "",
+        )
+    )
+
+    published_dt = parse_date(
+        entry.get(
+            "published",
+            "",
+        )
+    )
+
+    published = (
+        published_dt.isoformat()
+        if published_dt
+        else None
+    )
+
+    primary_category = (
+        categories[0]
+        if categories
+        else None
+    )
+
+    if not primary_category:
+        return None
+
+    event = {
+        "id":
+            create_event_id(
+                title,
+                published,
+            ),
+        "category":
+            primary_category,
+        "categories":
+            categories,
+        "title":
+            title,
+        "summary":
+            summary,
+        "published":
+            published,
+        "source":
+            source,
+        "source_count":
+            1,
+        "url":
+            article_url,
+        "collector":
+            "Google News RSS",
+        "country":
+            None,
+        "country_code":
+            None,
+        "city":
+            None,
+        "region":
+            None,
+        "latitude":
+            None,
+        "longitude":
+            None,
+        "location_precision":
+            "unknown",
+        "location_confidence":
+            "low",
+    }
+
+    if acquisition_channel:
+        event[
+            "acquisition_channel"
+        ] = acquisition_channel
+
+    if targeted_source:
+        event[
+            "targeted_source"
+        ] = targeted_source
+
+    if targeted_source_kind:
+        event[
+            "targeted_source_kind"
+        ] = targeted_source_kind
+
+    return event
+
+
 def collect_query(
     category,
     term,
@@ -1093,159 +1552,193 @@ def collect_query(
         days,
     )
 
-    for attempt in range(1, 4):
-        try:
-            response = session.get(
-                url,
-                timeout=30,
+    response = request_google_news(
+        url,
+        label=category,
+    )
+
+    if response is None:
+        return []
+
+    feed = feedparser.parse(
+        response.content
+    )
+
+    results = []
+    rejected = 0
+
+    for entry in feed.entries:
+        source = get_source(
+            entry
+        )
+
+        title = remove_source_suffix(
+            entry.get(
+                "title",
+                "",
+            ),
+            source,
+        )
+
+        summary = clean_text(
+            entry.get(
+                "summary",
+                "",
+            )
+        )
+
+        if not is_relevant_article(
+            category,
+            title,
+            summary,
+        ):
+            rejected += 1
+            continue
+
+        event = entry_to_event(
+            entry,
+            [category],
+        )
+
+        if event:
+            results.append(
+                event
             )
 
-            response.raise_for_status()
+    if rejected:
+        print(
+            f"      rejected → "
+            f"{rejected}"
+        )
 
-            feed = feedparser.parse(
-                response.content
+    return results
+
+
+def collect_broad_query(
+    term,
+    days,
+    label,
+    acquisition_channel,
+    targeted_source=None,
+    targeted_source_kind=None,
+):
+    """
+    One broad source query can yield articles for any of the 8 CT categories.
+    Classification is performed locally, which is the key reduction in
+    Google News request volume.
+    """
+    url = build_google_url(
+        term,
+        days,
+    )
+
+    response = request_google_news(
+        url,
+        label=label,
+    )
+
+    if response is None:
+        return []
+
+    feed = feedparser.parse(
+        response.content
+    )
+
+    results = []
+    rejected = 0
+
+    for entry in feed.entries:
+        source = get_source(
+            entry
+        )
+
+        title = remove_source_suffix(
+            entry.get(
+                "title",
+                "",
+            ),
+            source,
+        )
+
+        if not title:
+            continue
+
+        summary = clean_text(
+            entry.get(
+                "summary",
+                "",
+            )
+        )
+
+        categories = classify_article_categories(
+            title,
+            summary,
+        )
+
+        if not categories:
+            rejected += 1
+            continue
+
+        event = entry_to_event(
+            entry,
+            categories,
+            acquisition_channel=
+                acquisition_channel,
+            targeted_source=
+                targeted_source,
+            targeted_source_kind=
+                targeted_source_kind,
+        )
+
+        if event:
+            results.append(
+                event
             )
 
-            results = []
-            rejected = 0
+    if rejected:
+        print(
+            f"      locally rejected → "
+            f"{rejected}"
+        )
 
-            for entry in feed.entries:
-                article_url = entry.get(
-                    "link"
-                )
-
-                if not article_url:
-                    continue
-
-                source = get_source(entry)
-
-                title = remove_source_suffix(
-                    entry.get(
-                        "title",
-                        "",
-                    ),
-                    source,
-                )
-
-                if not title:
-                    continue
-
-                summary = clean_text(
-                    entry.get(
-                        "summary",
-                        "",
-                    )
-                )
-
-                if not is_relevant_article(
-                    category,
-                    title,
-                    summary,
-                ):
-                    rejected += 1
-                    continue
-
-                published_dt = parse_date(
-                    entry.get(
-                        "published",
-                        "",
-                    )
-                )
-
-                published = (
-                    published_dt.isoformat()
-                    if published_dt
-                    else None
-                )
-
-                results.append({
-                    "id":
-                        create_event_id(
-                            title,
-                            published,
-                        ),
-                    "category":
-                        category,
-                    "categories":
-                        [category],
-                    "title":
-                        title,
-                    "summary":
-                        summary,
-                    "published":
-                        published,
-                    "source":
-                        source,
-                    "source_count":
-                        1,
-                    "url":
-                        article_url,
-                    "collector":
-                        "Google News RSS",
-                    "country":
-                        None,
-                    "country_code":
-                        None,
-                    "city":
-                        None,
-                    "region":
-                        None,
-                    "latitude":
-                        None,
-                    "longitude":
-                        None,
-                    "location_precision":
-                        "unknown",
-                    "location_confidence":
-                        "low",
-                })
-
-            if rejected:
-                print(
-                    f"      rejected → "
-                    f"{rejected}"
-                )
-
-            return results
-
-        except Exception as error:
-            print(
-                f"      Attempt "
-                f"{attempt}/3 failed: "
-                f"{error}"
-            )
-
-            if attempt < 3:
-                time.sleep(
-                    attempt * 3
-                )
-
-    return []
+    return results
 
 
 def collect_all(days):
     print()
     print("=" * 70)
     print("INTERPOL CT Intelligence Map")
-    print("OSINT Collector V6 — multi-source CT coverage")
+    print("OSINT Collector V7 — throttle-safe multi-source CT coverage")
     print("=" * 70)
     print(f"Window: {days} days")
     print("Language: English")
     print("Relevance filter: strict event mode")
+    print(
+        "Acquisition strategy: compact discovery + local source classification"
+    )
 
     records = []
+
+    # ========================================================
+    # 1. COMPACT GENERAL DISCOVERY
+    # ========================================================
+
+    print()
+    print("=" * 70)
+    print("CORE CT DISCOVERY")
+    print("=" * 70)
 
     for category_number, (
         category,
         terms,
     ) in enumerate(
-        CATEGORIES.items(),
+        CORE_SEARCH_QUERIES.items(),
         start=1,
     ):
         print()
         print(
             f"[{category_number}/"
-            f"{len(CATEGORIES)}] "
+            f"{len(CORE_SEARCH_QUERIES)}] "
             f"{category}"
         )
 
@@ -1258,60 +1751,6 @@ def collect_all(days):
             print(
                 f"   Query "
                 f"{query_number}/"
-                f"{len(terms)}: "
-                f"{term}"
-            )
-
-            results = collect_query(
-                category,
-                term,
-                days,
-            )
-
-            records.extend(results)
-            subtotal += len(results)
-
-            print(
-                f"      accepted → "
-                f"{len(results)}"
-            )
-
-            time.sleep(0.35)
-
-        print(
-            f"   CATEGORY TOTAL: "
-            f"{subtotal}"
-        )
-
-
-    # ========================================================
-    # AUTHORITATIVE PRIMARY-SOURCE PASS
-    # ========================================================
-
-    print()
-    print("=" * 70)
-    print("OFFICIAL / PRIMARY CT SOURCES")
-    print("=" * 70)
-
-    official_total = 0
-
-    for category, terms in OFFICIAL_SOURCE_QUERIES.items():
-
-        print()
-        print(
-            f"[OFFICIAL] {category}"
-        )
-
-        category_total = 0
-
-        for query_number, term in enumerate(
-            terms,
-            start=1,
-        ):
-
-            print(
-                f"   Official query "
-                f"{query_number}/"
                 f"{len(terms)}"
             )
 
@@ -1321,22 +1760,11 @@ def collect_all(days):
                 days,
             )
 
-            # Tag acquisition channel. The normal source field remains
-            # the publisher returned by Google News.
-            for event in results:
-                event["acquisition_channel"] = (
-                    "official_primary_source_query"
-                )
-
             records.extend(
                 results
             )
 
-            category_total += len(
-                results
-            )
-
-            official_total += len(
+            subtotal += len(
                 results
             )
 
@@ -1345,24 +1773,66 @@ def collect_all(days):
                 f"{len(results)}"
             )
 
-            time.sleep(
-                0.35
-            )
-
         print(
-            f"   OFFICIAL CATEGORY TOTAL: "
-            f"{category_total}"
+            f"   CATEGORY TOTAL: "
+            f"{subtotal}"
         )
 
-    print()
-    print(
-        f"Official-source accepted records: "
-        f"{official_total}"
-    )
+    # ========================================================
+    # 2. OFFICIAL / PRIMARY SOURCES
+    #    6 broad queries instead of 29 category-specific ones.
+    # ========================================================
 
+    print()
+    print("=" * 70)
+    print("OFFICIAL / PRIMARY CT SOURCES")
+    print("=" * 70)
+
+    official_total = 0
+
+    for source in OFFICIAL_BROAD_QUERIES:
+        print()
+        print(
+            f"[OFFICIAL] "
+            f"{source['name']}"
+        )
+
+        results = collect_broad_query(
+            source[
+                "query"
+            ],
+            days,
+            label=
+                source[
+                    "name"
+                ],
+            acquisition_channel=
+                "official_primary_source_query",
+            targeted_source=
+                source[
+                    "name"
+                ],
+            targeted_source_kind=
+                "official_primary_source",
+        )
+
+        records.extend(
+            results
+        )
+
+        official_total += len(
+            results
+        )
+
+        print(
+            f"      accepted → "
+            f"{len(results)}"
+        )
 
     # ========================================================
-    # TARGETED INTERNATIONAL / SPECIALIST SOURCE PASS
+    # 3. TARGETED INTERNATIONAL / SPECIALIST SOURCES
+    #    One query per source; selected high-volume sources get
+    #    a second complementary query.
     # ========================================================
 
     print()
@@ -1376,7 +1846,6 @@ def collect_all(days):
         TARGETED_SOURCE_SITES,
         start=1,
     ):
-
         print()
         print(
             f"[SOURCE "
@@ -1386,41 +1855,38 @@ def collect_all(days):
         )
 
         source_total = 0
+        source_queries = targeted_source_queries(
+            source
+        )
 
-        for category in CATEGORIES.keys():
-
-            query = targeted_source_query(
-                source,
-                category,
-            )
-
+        for query_number, query in enumerate(
+            source_queries,
+            start=1,
+        ):
             print(
-                f"   {category}"
+                f"   Source query "
+                f"{query_number}/"
+                f"{len(source_queries)}"
             )
 
-            results = collect_query(
-                category,
+            results = collect_broad_query(
                 query,
                 days,
-            )
-
-            for event in results:
-
-                event["acquisition_channel"] = (
-                    "targeted_source_query"
-                )
-
-                event["targeted_source"] = (
+                label=
                     source[
                         "name"
-                    ]
-                )
-
-                event["targeted_source_kind"] = (
+                    ],
+                acquisition_channel=
+                    "targeted_source_query",
+                targeted_source=
+                    source[
+                        "name"
+                    ],
+                targeted_source_kind=
                     source[
                         "kind"
-                    ]
-                )
+                    ],
+            )
 
             records.extend(
                 results
@@ -1439,288 +1905,70 @@ def collect_all(days):
                 f"{len(results)}"
             )
 
-            # Slightly shorter than the broad query pass because
-            # site-restricted searches are narrower.
-            time.sleep(
-                0.25
-            )
-
         print(
             f"   SOURCE TOTAL: "
             f"{source_total}"
         )
 
     print()
+    print("=" * 70)
+    print("ACQUISITION SUMMARY")
+    print("=" * 70)
     print(
-        f"Targeted-source accepted records: "
+        f"Raw accepted records: "
+        f"{len(records)}"
+    )
+    print(
+        f"Official-source records: "
+        f"{official_total}"
+    )
+    print(
+        f"Targeted-source records: "
         f"{targeted_total}"
     )
+    print(
+        f"Successful Google News requests: "
+        f"{QUERY_STATS['successful']}"
+    )
+    print(
+        f"Failed Google News requests: "
+        f"{QUERY_STATS['failed']}"
+    )
+    print(
+        f"Throttle responses (429/503): "
+        f"{QUERY_STATS['throttled']}"
+    )
+
+    total_requests = (
+        QUERY_STATS[
+            "successful"
+        ]
+        +
+        QUERY_STATS[
+            "failed"
+        ]
+    )
+
+    # Never silently build a backfill from a severely throttled sample.
+    # A failed workflow leaves the previous events.json untouched.
+    if (
+        total_requests >= 10
+        and
+        QUERY_STATS[
+            "failed"
+        ]
+        /
+        total_requests
+        >
+        0.20
+    ):
+        raise RuntimeError(
+            "Too many Google News queries failed "
+            f"({QUERY_STATS['failed']}/{total_requests}). "
+            "Database not replaced to avoid an incomplete backfill."
+        )
 
     return records
-
-
-
-# ============================================================
-# INTELLIGENT EVENT-LEVEL DEDUPLICATION V4
-#
-# The collector receives many different headlines about the same
-# real-world event.  Deduplication therefore uses more than title
-# similarity:
-#
-# - canonical URL
-# - normalized title similarity
-# - meaningful token overlap
-# - title containment
-# - named entities / personalities
-# - terrorist organisation aliases
-# - CT action families
-# - explicit country clues
-# - numbers / casualty counts / amounts
-# - summary overlap
-# - publication-time proximity
-# - previously merged headline variants
-#
-# It deliberately avoids merging two events merely because they
-# involve the same group or the same country.
-# ============================================================
-
-MAX_DEDUP_WINDOW_DAYS = 7
-MAX_RELATED_ARTICLES = 24
-
-
-DEDUP_GENERIC_WORDS = {
-    "terror",
-    "terrorism",
-    "terrorist",
-    "terrorists",
-    "extremist",
-    "extremists",
-    "extremism",
-    "militant",
-    "militants",
-    "jihadist",
-    "jihadists",
-    "security",
-    "official",
-    "officials",
-    "authorities",
-    "government",
-    "police",
-    "report",
-    "reports",
-    "reported",
-    "news",
-    "latest",
-    "breaking",
-    "update",
-    "updates",
-    "case",
-    "cases",
-    "suspect",
-    "suspects",
-}
-
-
-ACTION_FAMILIES = {
-    "attack": {
-        "attack", "attacks", "attacked", "assault", "ambush",
-        "bomb", "bombing", "blast", "explosion", "shooting",
-        "shot", "stabbing", "stabbed", "ramming", "rocket",
-        "drone attack", "suicide bomber", "suicide bombing",
-        "killed", "wounded",
-    },
-    "arrest": {
-        "arrest", "arrests", "arrested", "detained", "detention",
-        "captured", "raid", "raided", "custody",
-    },
-    "legal": {
-        "charged", "charges", "trial", "court", "convicted",
-        "conviction", "sentenced", "sentence", "indicted",
-        "indictment", "guilty", "prosecution", "appeal",
-    },
-    "finance": {
-        "financing", "funding", "fundraising", "donation",
-        "donations", "assets frozen", "assets seized",
-        "sanctioned", "sanctions", "money laundering",
-        "cryptocurrency", "crypto", "hawala",
-    },
-    "weapons": {
-        "weapons", "weapon", "arms", "firearms", "ammunition",
-        "explosives", "explosive", "ied", "missile", "rocket",
-        "weapons cache", "arms cache", "smuggling", "trafficking",
-    },
-    "online": {
-        "propaganda", "recruitment", "radicalization",
-        "radicalisation", "cyberattack", "cyber attack",
-        "hacking", "deepfake", "artificial intelligence",
-        "generative ai", "social media", "encrypted messaging",
-    },
-    "cbrn": {
-        "chemical", "biological", "radiological", "nuclear",
-        "radioactive", "cbrn", "ricin", "sarin", "chlorine",
-        "dirty bomb",
-    },
-}
-
-
-ACTOR_ALIASES = {
-    "islamic_state": {
-        "isis", "isil", "daesh", "islamic state",
-    },
-    "al_qaeda": {
-        "al-qaeda", "al qaeda", "alqaeda",
-    },
-    "al_shabaab": {
-        "al-shabaab", "al shabaab",
-    },
-    "boko_haram": {
-        "boko haram",
-    },
-    "iswap": {
-        "iswap", "islamic state west africa province",
-    },
-    "taliban": {
-        "taliban",
-    },
-    "ttp": {
-        "ttp", "tehrik-i-taliban pakistan",
-        "tehreek-e-taliban pakistan",
-    },
-    "hamas": {
-        "hamas",
-    },
-    "hezbollah": {
-        "hezbollah", "hizballah", "hizbollah",
-    },
-    "pij": {
-        "palestinian islamic jihad", "islamic jihad",
-    },
-    "houthis": {
-        "houthis", "houthi", "ansar allah",
-    },
-    "lashkar_e_taiba": {
-        "lashkar-e-taiba", "lashkar e taiba", "let",
-    },
-    "jaish_e_mohammed": {
-        "jaish-e-mohammed", "jaish e mohammed", "jem",
-    },
-}
-
-
-COUNTRY_CANONICAL = {
-    "united states": {
-        "united states", "u.s.", "u.s", "usa", "america", "american",
-    },
-    "united kingdom": {
-        "united kingdom", "u.k.", "u.k", "uk", "britain", "british",
-    },
-    "afghanistan": {
-        "afghanistan", "afghan",
-    },
-    "pakistan": {
-        "pakistan", "pakistani",
-    },
-    "india": {
-        "india", "indian",
-    },
-    "israel": {
-        "israel", "israeli",
-    },
-    "palestinian territory": {
-        "palestine", "palestinian", "gaza", "west bank",
-    },
-    "lebanon": {
-        "lebanon", "lebanese",
-    },
-    "iraq": {
-        "iraq", "iraqi",
-    },
-    "syria": {
-        "syria", "syrian",
-    },
-    "iran": {
-        "iran", "iranian",
-    },
-    "turkiye": {
-        "turkey", "turkiye", "türkiye", "turkish",
-    },
-    "russia": {
-        "russia", "russian",
-    },
-    "ukraine": {
-        "ukraine", "ukrainian",
-    },
-    "somalia": {
-        "somalia", "somali",
-    },
-    "kenya": {
-        "kenya", "kenyan",
-    },
-    "nigeria": {
-        "nigeria", "nigerian",
-    },
-    "niger": {
-        "niger", "nigerien",
-    },
-    "mali": {
-        "mali", "malian",
-    },
-    "burkina faso": {
-        "burkina faso", "burkinabe", "burkinabè",
-    },
-    "mozambique": {
-        "mozambique", "mozambican",
-    },
-    "egypt": {
-        "egypt", "egyptian",
-    },
-    "france": {
-        "france", "french",
-    },
-    "germany": {
-        "germany", "german",
-    },
-    "belgium": {
-        "belgium", "belgian",
-    },
-    "canada": {
-        "canada", "canadian",
-    },
-    "australia": {
-        "australia", "australian",
-    },
-    "philippines": {
-        "philippines", "philippine", "filipino",
-    },
-    "malaysia": {
-        "malaysia", "malaysian",
-    },
-    "indonesia": {
-        "indonesia", "indonesian",
-    },
-    "tunisia": {
-        "tunisia", "tunisian",
-    },
-    "morocco": {
-        "morocco", "moroccan",
-    },
-    "algeria": {
-        "algeria", "algerian",
-    },
-    "libya": {
-        "libya", "libyan",
-    },
-    "yemen": {
-        "yemen", "yemeni",
-    },
-    "saudi arabia": {
-        "saudi arabia", "saudi",
-    },
-    "united arab emirates": {
-        "united arab emirates", "uae", "emirati",
-    },
-}
-
 
 def ascii_text(text):
     value = clean_text(text)
@@ -3394,7 +3642,7 @@ def save_database(events):
         "language":
             "English",
         "collector":
-            "Google News RSS + official-source and targeted-source passes",
+            "Google News RSS V7 throttle-safe compact discovery + local classification",
         "relevance_filter":
             "CT event relevance filter V3",
         "deduplication":
@@ -3404,46 +3652,42 @@ def save_database(events):
                 sum(
                     len(terms)
                     for terms
-                    in CATEGORIES.values()
+                    in CORE_SEARCH_QUERIES.values()
+                )
+                +
+                len(
+                    OFFICIAL_BROAD_QUERIES
                 )
                 +
                 sum(
-                    len(terms)
-                    for terms
-                    in OFFICIAL_SOURCE_QUERIES.values()
-                )
-                +
-                (
                     len(
-                        TARGETED_SOURCE_SITES
+                        targeted_source_queries(
+                            source
+                        )
                     )
-                    *
-                    len(
-                        TARGETED_MEDIA_CATEGORY_TERMS
-                    )
+                    for source
+                    in TARGETED_SOURCE_SITES
                 )
             ),
         "general_search_query_count":
             sum(
                 len(terms)
                 for terms
-                in CATEGORIES.values()
+                in CORE_SEARCH_QUERIES.values()
             ),
         "official_source_query_count":
-            sum(
-                len(terms)
-                for terms
-                in OFFICIAL_SOURCE_QUERIES.values()
+            len(
+                OFFICIAL_BROAD_QUERIES
             ),
         "targeted_source_query_count":
-            (
+            sum(
                 len(
-                    TARGETED_SOURCE_SITES
+                    targeted_source_queries(
+                        source
+                    )
                 )
-                *
-                len(
-                    TARGETED_MEDIA_CATEGORY_TERMS
-                )
+                for source
+                in TARGETED_SOURCE_SITES
             ),
         "targeted_sources":
             [
@@ -3548,7 +3792,7 @@ def main():
     )
     print(
         f"Search queries: "
-        f"{sum(len(v) for v in CATEGORIES.values()) + sum(len(v) for v in OFFICIAL_SOURCE_QUERIES.values()) + (len(TARGETED_SOURCE_SITES) * len(TARGETED_MEDIA_CATEGORY_TERMS))}"
+        f"{sum(len(v) for v in CORE_SEARCH_QUERIES.values()) + len(OFFICIAL_BROAD_QUERIES) + sum(len(targeted_source_queries(source)) for source in TARGETED_SOURCE_SITES)}"
     )
     print(
         "CT event relevance filter: ON"
