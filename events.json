@@ -5,12 +5,42 @@
   "default_map_period": 180,
   "daily_lookback_days": 3,
   "language": "English",
-  "collector": "Google News RSS",
+  "collector": "Google News RSS V7 throttle-safe compact discovery + local classification",
   "relevance_filter": "CT event relevance filter V3",
   "deduplication": "Multi-signal event clustering V4",
-  "search_query_count": 194,
-  "last_updated": "2026-08-28T21:42:40.532655+00:00",
-  "number_of_events": 1227,
+  "search_query_count": 79,
+  "general_search_query_count": 48,
+  "official_source_query_count": 6,
+  "targeted_source_query_count": 25,
+  "targeted_sources": [
+    "ACLED",
+    "Reuters",
+    "Associated Press",
+    "BBC News",
+    "CNN",
+    "France 24 English",
+    "Deutsche Welle English",
+    "Al Jazeera English",
+    "i24NEWS",
+    "RT",
+    "RFI English",
+    "Voice of America",
+    "Radio Free Europe / Radio Liberty",
+    "Sky News",
+    "Euronews English",
+    "The Guardian"
+  ],
+  "acled_mode": "Publicly indexed ACLED analysis/news via Google News; direct ACLED API not enabled",
+  "official_sources": [
+    "U.S. Department of Justice",
+    "U.S. Department of the Treasury / OFAC",
+    "Counter Terrorism Policing UK",
+    "Europol",
+    "UK Government / Counter-Terrorism",
+    "INTERPOL English News"
+  ],
+  "last_updated": "2026-08-28T23:05:14.941994+00:00",
+  "number_of_events": 1228,
   "events": [
     {
       "id": "f31f319658b68657",
@@ -46,7 +76,11 @@
         "demonym:australian:title",
         "demonym:australian:summary"
       ],
-      "excluded_from_map": false
+      "excluded_from_map": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "8804913e5c8891b3",
@@ -54,12 +88,12 @@
       "categories": [
         "Legal / Judicial"
       ],
-      "title": "Why I opposed Nnamdi Kanu’s terrorism trial – Lawyer",
-      "summary": "Why I opposed Nnamdi Kanu’s terrorism trial – Lawyer Punch Newspapers",
+      "title": "Why I Opposed Nnamdi Kanu’s Terrorism-Related Trial As His Lead Counsel — Lawyer Ejimakor",
+      "summary": "Why I Opposed Nnamdi Kanu’s Terrorism-Related Trial As His Lead Counsel — Lawyer Ejimakor Sahara Reporters",
       "published": "2026-08-28T18:00:00+00:00",
-      "source": "Punch Newspapers",
+      "source": "Sahara Reporters",
       "source_count": 2,
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE51NnZYT0h1dkxtRGJUZlFuYUpQR2pISlllTE5iRGZNR1JBR29JbFh4RGdFS1hoYi1ydE9yOU02Ym5iVjJXMVJzeGxoSm9VNXEyRXZ4NkJ2YVdvRTdCSUNnckxWenE5bGU5aEluYVMzdC1DYmVHS25ZZjdaNWFiNDg?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQLUFmd3ZpbnNhSnp0cWlKUWlhQllSY3FFSDJQZE5Na3VOZUphdEk3ZEJfdzU4SE5VNzB6NlJIZmFYUXpPdTEwZVFicXhCcUg3STE2a0c2Y2lzU2pramVpaWxjeWhtQjcwOXJGd0RwclpDc0xDZ0JWWFJLb3RuQ2Y4UGFNUnlmcEExZV9HaTFNemo1NFBETFNMRGc3dHdYc3Zfczk1enUzVVVyWVdNWG5yZXhza3czcVBpNHpZWUt4RQ?oc=5",
       "collector": "Google News RSS",
       "country": "Nigeria",
       "country_code": "NG",
@@ -94,6 +128,13 @@
           "published": "2026-08-28T19:05:59+00:00",
           "source": "Sahara Reporters",
           "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQLUFmd3ZpbnNhSnp0cWlKUWlhQllSY3FFSDJQZE5Na3VOZUphdEk3ZEJfdzU4SE5VNzB6NlJIZmFYUXpPdTEwZVFicXhCcUg3STE2a0c2Y2lzU2pramVpaWxjeWhtQjcwOXJGd0RwclpDc0xDZ0JWWFJLb3RuQ2Y4UGFNUnlmcEExZV9HaTFNemo1NFBETFNMRGc3dHdYc3Zfczk1enUzVVVyWVdNWG5yZXhza3czcVBpNHpZWUt4RQ?oc=5"
+        },
+        {
+          "title": "Why I opposed Nnamdi Kanu’s terrorism trial – Lawyer",
+          "summary": "Why I opposed Nnamdi Kanu’s terrorism trial – Lawyer Punch Newspapers",
+          "published": "2026-08-28T18:00:00+00:00",
+          "source": "Punch Newspapers",
+          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE51NnZYT0h1dkxtRGJUZlFuYUpQR2pISlllTE5iRGZNR1JBR29JbFh4RGdFS1hoYi1ydE9yOU02Ym5iVjJXMVJzeGxoSm9VNXEyRXZ4NkJ2YVdvRTdCSUNnckxWenE5bGU5aEluYVMzdC1DYmVHS25ZZjdaNWFiNDg?oc=5"
         }
       ],
       "article_count": 3,
@@ -784,6 +825,49 @@
       "location_score": 0,
       "location_method": "no_geographic_signal",
       "location_evidence": [],
+      "excluded_from_map": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "605b0630f6df94ab",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial"
+      ],
+      "title": "Prosecutors say seven charged with damaging Trump Scottish golf course had 'terrorism connection'",
+      "summary": "Prosecutors say seven charged with damaging Trump Scottish golf course had 'terrorism connection' Reuters",
+      "published": "2026-08-28T13:20:57+00:00",
+      "source": "Reuters",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPQzMwSkxsUFl3VWxYMElLdmpSaDhGWHBSbl9fV1FnVV94WTI1bnppUmV1S3U4QzZheE5sYlgwRm5xRVFsNDlOSE1QNUtLc09vbkJqWlJ4RkFZNjBUR1hUd2NuR0xrZHozaUJacmpQY1pyUlNKSE5MZTB1bDEwa1JydWxGNW96UVlUYzgwazg5STBHdnZVNlRLQVZyLW1RYkFjX096YkVLLVRTdVBRTUc2cFFEMXlKcGhxakJwUTdiZUxIWldRelE?oc=5",
+      "collector": "Google News RSS",
+      "country": "United States",
+      "country_code": "US",
+      "city": "Washington",
+      "region": null,
+      "latitude": 38.89511,
+      "longitude": -77.03637,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "targeted_source_query",
+      "targeted_source": "Reuters",
+      "targeted_source_kind": "international_media",
+      "sources": [
+        "Reuters"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-28T13:20:57+00:00",
+      "last_reported": "2026-08-28T13:20:57+00:00",
+      "location_score": 100.0,
+      "location_method": "intrinsic_country_capital",
+      "location_evidence": [
+        "person:trump:title",
+        "person:trump:summary"
+      ],
       "excluded_from_map": false
     },
     {
@@ -1499,64 +1583,6 @@
       "last_reported": "2026-08-28T09:15:12+00:00"
     },
     {
-      "id": "93538fcdb1e1185d",
-      "category": "Attacks",
-      "categories": [
-        "Attacks"
-      ],
-      "title": "Two northern Israel teens indicted for planning ISIS-inspired attacks on security forces",
-      "summary": "Two northern Israel teens indicted for planning ISIS-inspired attacks on security forces The Times of Israel",
-      "published": "2026-08-28T09:10:49+00:00",
-      "source": "The Times of Israel",
-      "source_count": 2,
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNNXJ5bUJycnJ3cTFaOV9mUHFBdVdFNm9LUnA1bDRPSHJrTmstMGxoSkEzcjJ4YlN6dTVtTERXbENieUw0QWQ4eHJTdDlUMi1jX3BCS2RHemJ6dXg4VlFmQmw4MzZPLVp3dHUwT2EzazdwMzIxRExtaVlpbERnRVQ2S0RHU3EzeWtUeHJYLWIta3BWOWFMNjlPUkM3UGhBNzJwTjZHTzJubE1JRmpkaDlpeHFWT1hGMlBTcDFWSXhtMmnSAcABQVVfeXFMTTVyeW1CcnJyd3ExWjlfZlBxQXVXRTZvS1JwNWw0T0hya05rLTBsaEpBM3IyeGJTenU1bUxEV2xDYnlMNEFkOHhyU3Q5VDItY19wQktkR3pienV4OFZRZkJsODM2Ty1ad3R1ME9hM2s3cDMyMURMbWlZaWxEZ0VUNktER1NxM3lrVHhyWC1iLWtwVjlhTDY5T1JDN1BoQTcycE42R08ybmxNSUZqZGg5aXhxVk9YRjJQU3AxVkl4bTJp?oc=5",
-      "collector": "Google News RSS",
-      "country": "Israel",
-      "country_code": "IL",
-      "city": "Jerusalem",
-      "latitude": 31.76904,
-      "longitude": 35.21633,
-      "location_precision": "country_capital",
-      "location_confidence": "high",
-      "location_score": 240.0,
-      "location_method": "intrinsic_country_capital",
-      "region": null,
-      "location_evidence": [
-        "country:israel:title",
-        "country:israel:summary"
-      ],
-      "excluded_from_map": false,
-      "sources": [
-        "The Times of Israel",
-        "Daijiworld"
-      ],
-      "related_articles": [
-        {
-          "title": "Two Arab youths indicted in Israel over alleged ISIS links, terror attack plans",
-          "summary": "Two Arab youths indicted in Israel over alleged ISIS links, terror attack plans Daijiworld",
-          "published": "2026-08-28T10:03:06+00:00",
-          "source": "Daijiworld",
-          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1veXlTX0sxTGY3Ri1vcXRTRUtPOUxVQmJJZDdJY1NoR3k4NVhhU1BaWHRxT24zQmZoRFdoUGpEbFRQbWJrZ0JIQU1rSElGWHU3Wk82d09MWWF1Y2YxZVhqdGpsN3A?oc=5"
-        },
-        {
-          "title": "Two Arab youths indicted in Israel over alleged ISIS links, terror attack plans",
-          "summary": "Two Arab youths indicted in Israel over alleged ISIS links, terror attack plans Daijiworld",
-          "published": "2026-08-28T10:03:06+00:00",
-          "source": "Daijiworld",
-          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5mUWFiT18zajRoa3U2MF9lemdrc3BBMWVxZEVZaDMyOGpLRk1EeVZqbGhCTkxRNGpTaHpWUWJQeXo2NjlIWk1vRmduZ3pXd0FVejN4Z3BqSEFvNldVRjU3cjdYQTVPRF9lNmc?oc=5"
-        }
-      ],
-      "article_count": 3,
-      "first_reported": "2026-08-28T09:10:49+00:00",
-      "last_reported": "2026-08-28T10:07:47+00:00",
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "actor_country_action_signature",
-        "same_normalized_title",
-        "same_url"
-      ]
-    },
-    {
       "id": "e5bfe2909c351a6b",
       "category": "Attacks",
       "categories": [
@@ -1804,6 +1830,60 @@
       "last_reported": "2026-08-28T07:08:15+00:00"
     },
     {
+      "id": "972be034307fdc8a",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Legal / Judicial"
+      ],
+      "title": "Israeli Teen, Haifa Man To Be Indicted Over Alleged ISIS-linked Attack Plots",
+      "summary": "Israeli Teen, Haifa Man To Be Indicted Over Alleged ISIS-linked Attack Plots i24NEWS",
+      "published": "2026-08-28T07:01:02+00:00",
+      "source": "i24NEWS",
+      "source_count": 3,
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNRFVxaVBEbWhNZ0k2SzVjWHVJOVZDMV9EZE5qWjZnUmhTQVFkT01DYVdYZllSUldCcVgxTDFkWG9OQ05pQUtORVk2ODBCeGNyLVQycVpjMmxGUjFfTi1KWWlXXzZUTktyR0dfY0UtR0g1cS1Ed19qLXFHRXV3b3ktQmxMYVU1dld4U09vTjZ6RzhiUlZlRlVwc3N3UFpwQjlkelA0MF9jVmtvMVgxbW50LUE2TDZaOUlaM3JqOXhLbkcyb29q?oc=5",
+      "collector": "Google News RSS",
+      "country": "Israel",
+      "country_code": "IL",
+      "city": "Haifa",
+      "region": null,
+      "latitude": 32.81303,
+      "longitude": 34.99928,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "targeted_source_query",
+      "targeted_source": "i24NEWS",
+      "targeted_source_kind": "regional_international_media",
+      "sources": [
+        "i24NEWS",
+        "The Times of Israel",
+        "Daijiworld"
+      ],
+      "related_articles": [
+        {
+          "title": "Two northern Israel teens indicted for planning ISIS-inspired attacks on security forces",
+          "summary": "Two northern Israel teens indicted for planning ISIS-inspired attacks on security forces The Times of Israel",
+          "published": "2026-08-28T09:10:49+00:00",
+          "source": "The Times of Israel",
+          "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNNXJ5bUJycnJ3cTFaOV9mUHFBdVdFNm9LUnA1bDRPSHJrTmstMGxoSkEzcjJ4YlN6dTVtTERXbENieUw0QWQ4eHJTdDlUMi1jX3BCS2RHemJ6dXg4VlFmQmw4MzZPLVp3dHUwT2EzazdwMzIxRExtaVlpbERnRVQ2S0RHU3EzeWtUeHJYLWIta3BWOWFMNjlPUkM3UGhBNzJwTjZHTzJubE1JRmpkaDlpeHFWT1hGMlBTcDFWSXhtMmnSAcABQVVfeXFMTTVyeW1CcnJyd3ExWjlfZlBxQXVXRTZvS1JwNWw0T0hya05rLTBsaEpBM3IyeGJTenU1bUxEV2xDYnlMNEFkOHhyU3Q5VDItY19wQktkR3pienV4OFZRZkJsODM2Ty1ad3R1ME9hM2s3cDMyMURMbWlZaWxEZ0VUNktER1NxM3lrVHhyWC1iLWtwVjlhTDY5T1JDN1BoQTcycE42R08ybmxNSUZqZGg5aXhxVk9YRjJQU3AxVkl4bTJp?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-28T07:01:02+00:00",
+      "last_reported": "2026-08-28T09:10:49+00:00",
+      "dedup_confidence": 0.588,
+      "dedup_methods": [
+        "actor_country_action_signature"
+      ],
+      "location_score": 449.3,
+      "location_method": "explicit_context_city",
+      "location_evidence": [
+        "city:haifa:title",
+        "city:haifa:summary"
+      ],
+      "excluded_from_map": false
+    },
+    {
       "id": "f8c978da843ce645",
       "category": "Attacks",
       "categories": [
@@ -1989,6 +2069,45 @@
       "article_count": 1,
       "first_reported": "2026-08-28T04:32:00+00:00",
       "last_reported": "2026-08-28T04:32:00+00:00"
+    },
+    {
+      "id": "ebaebfcd4966ccfc",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial"
+      ],
+      "title": "Seven charged with damaging Trump’s Scottish golf course accused of ‘terrorist connection’",
+      "summary": "Seven charged with damaging Trump’s Scottish golf course accused of ‘terrorist connection’ The Guardian",
+      "published": "2026-08-28T04:24:00+00:00",
+      "source": "The Guardian",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOejItZWJWNkp2MXZvUFVmcU9RaWZodmpnN2lEMzU0ZmxQRkxnY0RTa20xcncwRWpHU0VXNjlZakFNNmE0MmlhOUZDcXVDekVqNFg4ZUdCX2tKWVBSeDFrV0FrNHdaRHdtbDhHMm1HYk1QQ2gzVTJ3aVhQWHRLRnZ1eXo0WW82cF9JSTYwZERjZWpiQUJYdVZ2anlZZlgxSTFpMmNTWUJSR2RIeW15c0o2RmxzMjhXMVc5eWhMV2MyWFpTRGpq?oc=5",
+      "collector": "Google News RSS",
+      "country": "United States",
+      "country_code": "US",
+      "city": "Washington",
+      "region": null,
+      "latitude": 38.89511,
+      "longitude": -77.03637,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "targeted_source_query",
+      "targeted_source": "The Guardian",
+      "targeted_source_kind": "international_media",
+      "sources": [
+        "The Guardian"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-28T04:24:00+00:00",
+      "last_reported": "2026-08-28T04:24:00+00:00",
+      "location_score": 100.0,
+      "location_method": "intrinsic_country_capital",
+      "location_evidence": [
+        "person:trump:title",
+        "person:trump:summary"
+      ],
+      "excluded_from_map": false
     },
     {
       "id": "722c040f5362f41f",
@@ -2198,6 +2317,45 @@
       "last_reported": "2026-08-28T02:25:41+00:00"
     },
     {
+      "id": "2a67ad2682703efe",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Emily Damari, former British-Israeli Hamas hostage, married in Tel Aviv",
+      "summary": "Emily Damari, former British-Israeli Hamas hostage, married in Tel Aviv BBC",
+      "published": "2026-08-28T01:43:23+00:00",
+      "source": "BBC",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFA1MmJiZzF4RF80Q1paQk82bDlGaG1GMGpUOUk3eDRyQnpEOEswdkxBRUE1TEZkMFBmdENIUi1tOEhzSlozY0VIaXByTml5QmJNazlWS0MtbXRTZw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Israel",
+      "country_code": "IL",
+      "city": "Tel Aviv",
+      "region": null,
+      "latitude": 32.08088,
+      "longitude": 34.78057,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "targeted_source_query",
+      "targeted_source": "BBC News",
+      "targeted_source_kind": "international_media",
+      "sources": [
+        "BBC"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-28T01:43:23+00:00",
+      "last_reported": "2026-08-28T01:43:23+00:00",
+      "location_score": 470.2,
+      "location_method": "explicit_context_city",
+      "location_evidence": [
+        "city:tel aviv:title",
+        "city:tel aviv:summary"
+      ],
+      "excluded_from_map": false
+    },
+    {
       "id": "80369e853efa9c17",
       "category": "Legal / Judicial",
       "title": "Federal High Court Weighs 14-Day Remand Extension for EPRP Leaders and Defense Lawyer on Terrorism Charges",
@@ -2343,7 +2501,11 @@
       "location_evidence": [
         "source_static:news24"
       ],
-      "excluded_from_map": false
+      "excluded_from_map": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "8c549fc675361eeb",
@@ -2942,6 +3104,42 @@
       ]
     },
     {
+      "id": "1824381f6fa2eff9",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial"
+      ],
+      "title": "Two Mexican Nationals Plead Guilty to Alien Smuggling and Providing Material Support to a Designated Foreign Terrorist Organization",
+      "summary": "Two Mexican Nationals Plead Guilty to Alien Smuggling and Providing Material Support to a Designated Foreign Terrorist Organization Department of Justice (.gov)",
+      "published": "2026-08-27T18:57:34+00:00",
+      "source": "Department of Justice (.gov)",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNdkN5dk5LX0JuZ0RmUjF4LV9vMUowN3pBbG9tSGtvNFN1d2RFcVQtVlFEOGFmbERna1MwLVRfTG13UzJldlRBUEVyUHVxazR1NEZWam5BQ3lnRGJ5dnVvLTk3M3kybE9PNzRlWVhiVS1WQy1Ec2h0dlNRbE84REIzRnFjeWFkSnQ2OXJfRUQyRC1xVnZPNG1oNWRLYzZfa0hzY0pJZnV4RFVPcFFjcElJSkk2QjIwWnNJdTZyNFBZYnk?oc=5",
+      "collector": "Google News RSS",
+      "country": null,
+      "country_code": null,
+      "city": null,
+      "region": null,
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "location_precision": "unlocated",
+      "location_confidence": "low",
+      "acquisition_channel": "official_primary_source_query",
+      "targeted_source": "U.S. Department of Justice",
+      "targeted_source_kind": "official_primary_source",
+      "sources": [
+        "Department of Justice (.gov)"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-27T18:57:34+00:00",
+      "last_reported": "2026-08-27T18:57:34+00:00",
+      "location_score": 0,
+      "location_method": "no_geographic_signal",
+      "location_evidence": [],
+      "excluded_from_map": false
+    },
+    {
       "id": "8c231abb3f6050a4",
       "category": "Online Radicalization / Cyberterrorism",
       "title": "UN Watch in the News — August 2026",
@@ -3150,55 +3348,6 @@
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "same_url"
-      ]
-    },
-    {
-      "id": "d8f10849aec1f3a1",
-      "category": "Attacks",
-      "categories": [
-        "Attacks"
-      ],
-      "title": "Car bomb kills Russian air force lieutenant colonel",
-      "summary": "Car bomb kills Russian air force lieutenant colonel The Times",
-      "published": "2026-08-27T16:45:19+00:00",
-      "source": "The Times",
-      "source_count": 2,
-      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPbHZENVlSbUc4YU8tc1JDaWlOeXBnbTRDckRhNHpnOExQa2QwY0lRc1VTa3p6eWlLZU5MQ0tscTdQWFk2MHhmYUJxZlVYSGZHbWVvNzc0bExabjF0X2xMcnJzZ28yMjRhVmtJc2xMT25yWlBxQ3JaN2tUWmlCaXJKQkd6SmFEcS1QOFBsZnQ0SWFsMy04Q2pyclQzSFVrS2d2OUpYUVNsUFU3Z01xY1B3RFJLbWF0ZmJ0SWRJ?oc=5",
-      "collector": "Google News RSS",
-      "country": "Russia",
-      "country_code": "RU",
-      "city": "Moscow",
-      "latitude": 55.75204,
-      "longitude": 37.61781,
-      "location_precision": "country_capital",
-      "location_confidence": "medium",
-      "location_score": 150.0,
-      "location_method": "intrinsic_country_capital",
-      "region": null,
-      "location_evidence": [
-        "demonym:russian:title",
-        "demonym:russian:summary"
-      ],
-      "excluded_from_map": false,
-      "sources": [
-        "The Times",
-        "Комерсант Український"
-      ],
-      "related_articles": [
-        {
-          "title": "A Russian suicide bomber struck the Readeat warehouses and the “BookTicket” service",
-          "summary": "A Russian suicide bomber struck the Readeat warehouses and the “BookTicket” service Комерсант Український",
-          "published": "2026-08-28T08:08:00+00:00",
-          "source": "Комерсант Український",
-          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOMS0tOUlIZzBmRjRuaWtRRGt1NVJjcWZ3NWl4OHQ3MWhNa3NZM2N4OGR3MmZoMG1UemdwQ2lGaDREbjl3NWkyZmhwNnpoUVpIT2Vobm5NVFIxWW53djlfclYxTjJuQkJiR015NXVRbWxQdTVHRG02UGpJUUR0QlJaR1dudi1RaFRCWjAtZFhvRmJDZ9IBmgFBVV95cUxOMmJPdlRJU3huZ3ZES2pKRzlXZU9BY0FJMm5KdVF6NjlPQ2JZR0RMeUx3NDZXak1oVXZicEcwcmVPZHFub0dGV3ZTczV1SThXUE5sVmpKMGl0c0l5YmlQOERycFlwU2lBVlpveG1aVWJhSUF4WkJaT1QxVUpuZk1VZ0pVNExTUkFWQTFVbjBTWTB2QnREaE1kUXN3?oc=5"
-        }
-      ],
-      "article_count": 2,
-      "first_reported": "2026-08-27T16:45:19+00:00",
-      "last_reported": "2026-08-28T08:08:00+00:00",
-      "dedup_confidence": 0.511,
-      "dedup_methods": [
-        "entity_actor_event_signature"
       ]
     },
     {
@@ -3547,64 +3696,6 @@
       "article_count": 1,
       "first_reported": "2026-08-27T15:04:42+00:00",
       "last_reported": "2026-08-27T15:04:42+00:00"
-    },
-    {
-      "id": "a61929a3d074aec8",
-      "category": "Attacks",
-      "categories": [
-        "Attacks"
-      ],
-      "title": "Report: Canadian Broadcasting Corporation Dictates that 9/11 Cannot Be Called a ‘Terror Attack’",
-      "summary": "Report: Canadian Broadcasting Corporation Dictates that 9/11 Cannot Be Called a ‘Terror Attack’ Mediaite",
-      "published": "2026-08-27T15:03:36+00:00",
-      "source": "Mediaite",
-      "source_count": 3,
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOc0JJcGRhUks4ZXNKR3prRUxNcWhYSWhuRWdHMEQ4TUhjSDRUOHhaME1QV2hZTmM3TUtQQTBtSlhjeXBpbl8xejA1bDd3SC1uZVM4V085OEpYV1djbmVWSXdvWWt1NEZpNWlSNS1DcVVSSDd5eGo4WV95OXBMYkZ5MlV4R1JOV2g4SmQ3RTVScXdJSTQ0eDlUNDc3NXdiVGt0c1ZJV2FFY3ltSVd2TmYwSUN3Z0dlVGhOZWNEUGFDaENpSk80TWR3b1BB?oc=5",
-      "collector": "Google News RSS",
-      "country": "Canada",
-      "country_code": "CA",
-      "city": "Ottawa",
-      "latitude": 45.41117,
-      "longitude": -75.69812,
-      "location_precision": "country_capital",
-      "location_confidence": "medium",
-      "location_score": 150.0,
-      "location_method": "intrinsic_country_capital",
-      "region": null,
-      "location_evidence": [
-        "demonym:canadian:title",
-        "demonym:canadian:summary"
-      ],
-      "excluded_from_map": false,
-      "sources": [
-        "Mediaite",
-        "National Review",
-        "Washington Times"
-      ],
-      "related_articles": [
-        {
-          "title": "Canadian Broadcasting Corporation Tells Staff Not to Refer to 9/11 as a Terrorist Attack",
-          "summary": "Canadian Broadcasting Corporation Tells Staff Not to Refer to 9/11 as a Terrorist Attack National Review",
-          "published": "2026-08-27T15:03:36+00:00",
-          "source": "National Review",
-          "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOdGhZXzBISTN0UzNld0lmdHhicENZdGV6OU9JcEx5MEEzSkVLM2huTGk3WFItanlILUJ0WTZKZ2xrczFsRlNRaVJ5MklHQTEzU2JIbm81aXctZVE1b3J4QTR2cUR5Uzk3M010OXZzRXdTSVNQRGVFSTFOakpwa0tBS29OWGRyazNrdXgycEpsTUYyWlhNbVRRUHI4SzVTWUhzcklrSnh3ekZDaHhYTXRqeWNtZHM3aDVoYUHSAb8BQVVfeXFMTU1QcWJ1U3dzOUhsVWZJM2Fkem5xX005TEtybUFwRVhxbUJUMGRXWVcwelVuZjc5dGNPTjY2eExkRE12V1hBbXNKMlRqbGxUXzNqb1FLQTJJNDVXOWhMYm9Tc3hfSmUxY2YyVDdMdzRMQU9ZNElnazdaOTJjeDZHSWN6NVZRSDlWM3FORXpHVnozTV9rdVU4SU11c0pDVkdaTTMwLWZPdEVIcXBsMTB2Ym53YzNUaEo1aXdtdW5zRU0?oc=5"
-        },
-        {
-          "title": "Canadian Broadcasting Corporation defends memo telling staff not to call 9/11 a ‘terrorist attack’",
-          "summary": "Canadian Broadcasting Corporation defends memo telling staff not to call 9/11 a ‘terrorist attack’ Washington Times",
-          "published": "2026-08-28T15:17:10+00:00",
-          "source": "Washington Times",
-          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNSk1XTWQwLWhtc2tJQXNZemZjYnJJaHJrZkljN0Q1T3I4UGEzUkViVkJlNnRvUndRbXp0R0VOYVg1QzNsYThtSnlneVBoeUNYYUVwaWRRSm9LM2NKaTVkYnE5X3Vmd3pTUHhHNmdUUnBkcDEzTy10ZzZmWG92VjhnSUlkZi1URXhXaEEwa09oNUVxMWlpSERQYXR3TGtjOHN0YmdhTmVSVVNQTUNoRHFJbENuTEphZXI4SHRn?oc=5"
-        }
-      ],
-      "article_count": 3,
-      "first_reported": "2026-08-27T15:03:36+00:00",
-      "last_reported": "2026-08-28T15:17:10+00:00",
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "title_plus_anchor",
-        "same_url"
-      ]
     },
     {
       "id": "79486caccaaf7c51",
@@ -4135,7 +4226,7 @@
       "summary": "Russian military serviceman killed in St Petersburg car blast Al Jazeera",
       "published": "2026-08-27T12:42:21+00:00",
       "source": "Al Jazeera",
-      "source_count": 2,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOMnowdm1vZTM3MGlMellyUGNGc1IwUTluOUp2aXZCb2ZRcnluQlQ5VFZhVVpfb3pueWw2eVYtR0RaZ3J3WHVpb1lVT1NjRG5weVdJa1RuWkxjdTlVaHVLV3lWcDRyNmMzYnRPcmNnekk0czQ5bWNjY2NqdWo2UUxxSkRRRTRFQU5Xa1NtNE1IYTBGTkNYNzhUU1d0d1Z1Y2xMUG96MNIBqgFBVV95cUxOUWE5TGFHWWlBSEd1Um91ZUg4UG10WHlJVVliT3NGVHdRcW5EVEkzWUMxVXRqT241VnVxdl9DMVZ1TnhKS1dQbWlFbWdCNEFDRkUweTlidjZZWmR3VmlvX1YxOEhNYUxaS19XY2ZyQ3ZQUTU2ZUdwSVFvMUFQQVd0UE42TDVYNUI2WVZ2Zm1jT2JWZGpqdFdqc1loR0Rfc0V6aHdnZW5JZDYxdw?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -4155,7 +4246,9 @@
       "excluded_from_map": false,
       "sources": [
         "teleSUR English",
-        "Al Jazeera"
+        "Al Jazeera",
+        "The Times",
+        "Комерсант Український"
       ],
       "related_articles": [
         {
@@ -4171,14 +4264,22 @@
           "published": "2026-08-27T12:42:21+00:00",
           "source": "teleSUR English",
           "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQSjJpMkR1cFcwcGJoSjdsUlV4bHl1WndGdm1HTVhVbmhmN3pjUUJqRC1BQ1JMT0M4YXNxU2p5c1lJZ2YyeVFySHdGMUQ1bXd3UjB4emtRa3VGNDQ5T0R2dUlvaWp6MjVOQTktWmlPVGRvNmFaN2F0VXAyNDFSZmlmbGZfSm1tV0w4TWVkV05UTWV3VldkdXc?oc=5"
+        },
+        {
+          "title": "Car bomb kills Russian air force lieutenant colonel",
+          "summary": "Car bomb kills Russian air force lieutenant colonel The Times",
+          "published": "2026-08-27T16:45:19+00:00",
+          "source": "The Times",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPbHZENVlSbUc4YU8tc1JDaWlOeXBnbTRDckRhNHpnOExQa2QwY0lRc1VTa3p6eWlLZU5MQ0tscTdQWFk2MHhmYUJxZlVYSGZHbWVvNzc0bExabjF0X2xMcnJzZ28yMjRhVmtJc2xMT25yWlBxQ3JaN2tUWmlCaXJKQkd6SmFEcS1QOFBsZnQ0SWFsMy04Q2pyclQzSFVrS2d2OUpYUVNsUFU3Z01xY1B3RFJLbWF0ZmJ0SWRJ?oc=5"
         }
       ],
-      "article_count": 2,
+      "article_count": 3,
       "first_reported": "2026-08-27T12:42:21+00:00",
       "last_reported": "2026-08-27T17:59:05+00:00",
       "dedup_confidence": 0.589,
       "dedup_methods": [
-        "paraphrase_entity_context"
+        "paraphrase_entity_context",
+        "entity_actor_event_signature"
       ]
     },
     {
@@ -5779,7 +5880,7 @@
       "summary": "🟢 Juno Jump Start: CBC orders reporters not to call 9/11 a ‘terrorist attack’ in leaked memo Juno News",
       "published": "2026-08-27T00:16:00+00:00",
       "source": "Juno News",
-      "source_count": 1,
+      "source_count": 12,
       "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE8zazdacFFRRDRoUDV4b0dBWmdIUHFUVlBuM1UzNHd1WjhKQlh3ck5MaU8wU1poLVliWW9DREtWNTJBcnh5dUdSaFNlSG84OWMzMHBxaVY1V05kR0M1V0hMMmxCc0lOVjE0X2Y3TlVqY0I?oc=5",
       "collector": "Google News RSS",
       "country": null,
@@ -5795,60 +5896,47 @@
       "location_evidence": [],
       "excluded_from_map": false,
       "sources": [
-        "Juno News"
-      ],
-      "related_articles": [],
-      "article_count": 1,
-      "first_reported": "2026-08-27T00:16:00+00:00",
-      "last_reported": "2026-08-28T11:06:09+00:00",
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "same_url"
-      ]
-    },
-    {
-      "id": "876ef11bf9dc6d45",
-      "category": "Attacks",
-      "title": "CBC tells staff to avoid calling 9/11 a terrorist attack",
-      "published": "2026-08-27T00:16:00+00:00",
-      "source": "The Jerusalem Post",
-      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBUOWhIS0t2eVNTckxpUS0zNmNfZlliZDI0R1I5VmRtYnBPMmh3UXpBRUtmcUNYUXhzVURqU1RySTZBcEtsSy1TTy1HVzBydENKRUlSRVp4YW43ZjVJYTJ3S1RickJCM2Q4MnVEaUdvVHJQcGwtVW93?oc=5",
-      "collector": "Google News",
-      "source_count": 7,
-      "country": "Israel",
-      "city": "Jerusalem",
-      "latitude": 31.76904,
-      "longitude": 35.21633,
-      "location_precision": "country_capital",
-      "categories": [
-        "Attacks"
-      ],
-      "country_code": "IL",
-      "location_confidence": "low",
-      "location_score": 108.0,
-      "location_method": "inferred_country_capital",
-      "region": null,
-      "location_evidence": [
-        "source_static:jerusalem post",
-        "source_city:jerusalem"
-      ],
-      "excluded_from_map": false,
-      "sources": [
+        "Juno News",
         "The Jerusalem Post",
         "Yahoo News Canada",
         "New York Post",
         "RBC-Ukraine",
         "Editor and Publisher",
         "Toronto Sun",
-        "National Post"
+        "National Post",
+        "Mediaite",
+        "National Review",
+        "Washington Times",
+        "Yahoo"
       ],
       "related_articles": [
+        {
+          "title": "CBC tells staff to avoid calling 9/11 a terrorist attack",
+          "summary": "",
+          "published": "2026-08-27T00:16:00+00:00",
+          "source": "The Jerusalem Post",
+          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBUOWhIS0t2eVNTckxpUS0zNmNfZlliZDI0R1I5VmRtYnBPMmh3UXpBRUtmcUNYUXhzVURqU1RySTZBcEtsSy1TTy1HVzBydENKRUlSRVp4YW43ZjVJYTJ3S1RickJCM2Q4MnVEaUdvVHJQcGwtVW93?oc=5"
+        },
         {
           "title": "CBC tells staff not to call 9/11 a 'terrorist attack'",
           "summary": "CBC tells staff not to call 9/11 a 'terrorist attack' Yahoo News Canada",
           "published": "2026-08-27T00:16:00+00:00",
           "source": "Yahoo News Canada",
           "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE00VHBUSUt6SkVJa1hhdEVzZW9jdlR3NkpROENCUUhKVVVxVy1VXzdLaW1HNWl5dmtwbnZrNm56d2FyN1hMSlk1azhvOXRIckhDRG9Ydld2c0o5aDdSd1pBaWgyMU8wQzdaazNXU2t3d0U0UU0?oc=5"
+        },
+        {
+          "title": "Report: Canadian Broadcasting Corporation Dictates that 9/11 Cannot Be Called a ‘Terror Attack’",
+          "summary": "Report: Canadian Broadcasting Corporation Dictates that 9/11 Cannot Be Called a ‘Terror Attack’ Mediaite",
+          "published": "2026-08-27T15:03:36+00:00",
+          "source": "Mediaite",
+          "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOc0JJcGRhUks4ZXNKR3prRUxNcWhYSWhuRWdHMEQ4TUhjSDRUOHhaME1QV2hZTmM3TUtQQTBtSlhjeXBpbl8xejA1bDd3SC1uZVM4V085OEpYV1djbmVWSXdvWWt1NEZpNWlSNS1DcVVSSDd5eGo4WV95OXBMYkZ5MlV4R1JOV2g4SmQ3RTVScXdJSTQ0eDlUNDc3NXdiVGt0c1ZJV2FFY3ltSVd2TmYwSUN3Z0dlVGhOZWNEUGFDaENpSk80TWR3b1BB?oc=5"
+        },
+        {
+          "title": "Canadian Broadcasting Corporation Tells Staff Not to Refer to 9/11 as a Terrorist Attack",
+          "summary": "Canadian Broadcasting Corporation Tells Staff Not to Refer to 9/11 as a Terrorist Attack National Review",
+          "published": "2026-08-27T15:03:36+00:00",
+          "source": "National Review",
+          "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOdGhZXzBISTN0UzNld0lmdHhicENZdGV6OU9JcEx5MEEzSkVLM2huTGk3WFItanlILUJ0WTZKZ2xrczFsRlNRaVJ5MklHQTEzU2JIbm81aXctZVE1b3J4QTR2cUR5Uzk3M010OXZzRXdTSVNQRGVFSTFOakpwa0tBS29OWGRyazNrdXgycEpsTUYyWlhNbVRRUHI4SzVTWUhzcklrSnh3ekZDaHhYTXRqeWNtZHM3aDVoYUHSAb8BQVVfeXFMTU1QcWJ1U3dzOUhsVWZJM2Fkem5xX005TEtybUFwRVhxbUJUMGRXWVcwelVuZjc5dGNPTjY2eExkRE12V1hBbXNKMlRqbGxUXzNqb1FLQTJJNDVXOWhMYm9Tc3hfSmUxY2YyVDdMdzRMQU9ZNElnazdaOTJjeDZHSWN6NVZRSDlWM3FORXpHVnozTV9rdVU4SU11c0pDVkdaTTMwLWZPdEVIcXBsMTB2Ym53YzNUaEo1aXdtdW5zRU0?oc=5"
         },
         {
           "title": "Canada’s CBC instructs staff not to call 9/11 a ‘terrorist attack’ in news coverage",
@@ -5858,18 +5946,18 @@
           "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOU0JudlkwbGZURVhWNWREX3A2MHpPSmlJRWxyTkZ4RlUwTXNBRzV2R0lkSVRQM3JaQXNyMGtZNzYwUjd2MEUza3dQMm01OUJmd21uYjBQamtIZ2N1bVBjdFgtWUtjc3FkVkZVVmx2a0RjQ3BYMEs0cXFwNksxaUJsSU41ZW1kbHhGeW1FRnhtV3gyU2I0NXgxQy04a0VlUXFwU1I4VndLSHFQMENnR1M4ZHM2YlJvTjNo?oc=5"
         },
         {
-          "title": "9/11 attacks no longer 'terrorist': Canada’s CBC faces backlash over new wording",
-          "summary": "9/11 attacks no longer 'terrorist': Canada’s CBC faces backlash over new wording RBC-Ukraine",
-          "published": "2026-08-28T04:00:05+00:00",
-          "source": "RBC-Ukraine",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPNXMzZndxZEVzRXpZbXFaS21ySUM4dWVud0hPVUptQVlhZmNESUpyb0VoZVkwcjRuWUloeG5Ha3oxdTNiRjVtVlZOQ2RuZWtkQ3Vvc2lHVnpwYzZpM29PZEc2QzN2ZWQzTWpXMEE5c2NUSDhEMGgta1o1dk5BR0tmU3h5S0I1QkZ1enk4RUZkRV9pVDg?oc=5"
-        },
-        {
           "title": "CBC tells staff not to call 9/11 a ‘terrorist attack’",
           "summary": "CBC tells staff not to call 9/11 a ‘terrorist attack’ Editor and Publisher",
           "published": "2026-08-28T14:47:00+00:00",
           "source": "Editor and Publisher",
           "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQbkthcjRTVEdhUkhxZlVBR1puQkRRbDlQMTVYWi01YTJ3UWtBcEJEeTFiYXVXX056ckNtdjNRRTNfODZCMnJ6VVpFckxfUWJIVjF0VFVCSlN3d1dJYUMzTFByMUZseE9qak44QU1vRjN3R1ptdk1SRzRaWWtsMEE2cmxJb09FNlI1STdKNGVHUXdsZG84b1diRjllX3VCSWlmM2c?oc=5"
+        },
+        {
+          "title": "Canadian Broadcasting Corporation defends memo telling staff not to call 9/11 a ‘terrorist attack’",
+          "summary": "Canadian Broadcasting Corporation defends memo telling staff not to call 9/11 a ‘terrorist attack’ Washington Times",
+          "published": "2026-08-28T15:17:10+00:00",
+          "source": "Washington Times",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNSk1XTWQwLWhtc2tJQXNZemZjYnJJaHJrZkljN0Q1T3I4UGEzUkViVkJlNnRvUndRbXp0R0VOYVg1QzNsYThtSnlneVBoeUNYYUVwaWRRSm9LM2NKaTVkYnE5X3Vmd3pTUHhHNmdUUnBkcDEzTy10ZzZmWG92VjhnSUlkZi1URXhXaEEwa09oNUVxMWlpSERQYXR3TGtjOHN0YmdhTmVSVVNQTUNoRHFJbENuTEphZXI4SHRn?oc=5"
         },
         {
           "title": "OPINION: Open complaint to CBC over not calling 9/11 'terrorist attack'",
@@ -5884,18 +5972,25 @@
           "published": "2026-08-28T19:35:17+00:00",
           "source": "National Post",
           "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1sTGlZd0hiSmR3N2wzemhYTjNtWXdlRDlhVXA1VHhnOFlrZ3ppdEhqWjhKWVdiUW5EYWZVbTZYN3RQOWVHMVl2dF9FMllzanZDd3RtZnN1SEc4eEljLVZfbm9INWpkYmJUdlF1WXZ3?oc=5"
+        },
+        {
+          "title": "Sebastian Gorka reacts to the CBC advising journalists not to call 9/11 a “terrorist attack”",
+          "summary": "Sebastian Gorka reacts to the CBC advising journalists not to call 9/11 a “terrorist attack” Yahoo",
+          "published": "2026-08-28T22:00:31+00:00",
+          "source": "Yahoo",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNZXNTbU9wVXo3T2E3Qm8zNmYySFFSRVpoTGVkdm44M1VJSzVpTWRYSnFhSUxEME1ZNFVrX3dlRGR3SlFZM2hPTllweThNa3A0dXFCTlJyc29BUWw2aFZOdEFtZjlrVjhqYzFNU3c4ZHRLbTYta2FwVWYxSk11UTlUVTMxY1FEYkJEckd6cQ?oc=5"
         }
       ],
-      "article_count": 7,
+      "article_count": 11,
       "first_reported": "2026-08-27T00:16:00+00:00",
-      "last_reported": "2026-08-28T19:35:17+00:00",
+      "last_reported": "2026-08-28T22:00:31+00:00",
       "dedup_confidence": 1.0,
       "dedup_methods": [
+        "same_url",
+        "paraphrase_entity_context",
         "very_high_title_similarity",
         "title_plus_anchor",
-        "same_url",
-        "entity_actor_event_signature",
-        "paraphrase_entity_context"
+        "entity_actor_event_signature"
       ]
     },
     {
@@ -6678,6 +6773,42 @@
       "article_count": 1,
       "first_reported": "2026-08-26T18:21:00+00:00",
       "last_reported": "2026-08-26T18:21:00+00:00"
+    },
+    {
+      "id": "bc6985083c1eb887",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "U.S. Official Reveals New Classified Documents on ISIS Kabul Airport Attack",
+      "summary": "U.S. Official Reveals New Classified Documents on ISIS Kabul Airport Attack 8AM Media",
+      "published": "2026-08-26T18:05:48+00:00",
+      "source": "8AM Media",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOendqYy1TMzl5R3pOXzZkZUpSOVRHMUVuOWlIbzN5dzhQSDVOSHB6b2V4VHR2TGloanU5TXNZdGd5ekRmS0kwZ2Y5WmxNSlR2RTBkOUFmbWxNbVdOcHRzWV9zSEtOV2hzQ3Nwa1ItX05EdnRzX1dObEUxUHNGUTZkWlNRTXpyMWdEYW1OOXhQaXpvZUZING1MdHZYNDd5QQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "United States",
+      "country_code": "US",
+      "city": "Washington",
+      "region": null,
+      "latitude": 38.89511,
+      "longitude": -77.03637,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "sources": [
+        "8AM Media"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-26T18:05:48+00:00",
+      "last_reported": "2026-08-26T18:05:48+00:00",
+      "location_score": 240.0,
+      "location_method": "intrinsic_country_capital",
+      "location_evidence": [
+        "country:u.s.:title",
+        "country:u.s.:summary"
+      ],
+      "excluded_from_map": false
     },
     {
       "id": "7421b9fd0f57db9f",
@@ -7561,46 +7692,6 @@
       ]
     },
     {
-      "id": "25fad5716bb74a09",
-      "category": "Attacks",
-      "categories": [
-        "Attacks"
-      ],
-      "title": "SSU officers foil terrorist attack by Russian intelligence services against defense company executive in Kyiv",
-      "summary": "SSU officers foil terrorist attack by Russian intelligence services against defense company executive in Kyiv Ukrinform",
-      "published": "2026-08-26T11:39:00+00:00",
-      "source": "Ukrinform",
-      "source_count": 1,
-      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxOUVFqNFNrVmRMWTRrMC1UTW80RTM1MlNWTGs1ZTZvQlhvS1B1dlV2T0lJYmo4R0xIcHFPWS11TFFtbXloMGljdGFFVEgxcm5RQ2FBaFFEYkRRaTJCWkRTNUVROG5TX2VaVUhQc3VJcGV6YmtGX0xvNjdDS2Z4X3o1QUNnRDFoQ2ZfcDVXR1h5MkF3TVBhVXlfSlA0UDVTTnhtMWt2YmlBMnJrLWRpVDRiakFqR08xQkJENGhmbWNCblA0ZUJPdkt0bF82NFRpUWVnV25uVkU3a0hNeUJsTWVqV1lQVEprT2VYY2FSUEV0MDhBeGhYMXFvaThtMGxEcGJVLWfSAYICQVVfeXFMTlFRajRTa1ZkTFk0azAtVE1vNEUzNTJTVkxrNWU2b0JYb0tQdXZVdk9JSWJqOEdMSHBxT1ktdUxRbW15aDBpY3RhRVRIMXJuUUNhQWhRRGJEUWkyQlpEUzVFUThuU19lWlVIUHN1SXBlemJrRl9MbzY3Q0tmeF96NUFDZ0QxaENmX3A1V0dYeTJBd01QYVV5X0pQNFA1U054bTFrdmJpQTJyay1kaVQ0YmpBakdPMUJCRDRoZm1jQm5QNGVCT3ZLdGxfNjRUaVFlZ1dublZFN2tITXlCbE1laldZUFRKa09lWGNhUlBFdDA4QXhoWDFxb2k4bTBsRHBiVS1n?oc=5",
-      "collector": "Google News RSS",
-      "country": "Ukraine",
-      "country_code": "UA",
-      "city": "Kyiv",
-      "latitude": 50.45466,
-      "longitude": 30.5238,
-      "location_precision": "city",
-      "location_confidence": "high",
-      "location_score": 254.0,
-      "location_method": "explicit_context_city",
-      "region": null,
-      "location_evidence": [
-        "city:kyiv:title",
-        "city:kyiv:summary"
-      ],
-      "excluded_from_map": false,
-      "sources": [
-        "Ukrinform"
-      ],
-      "related_articles": [],
-      "article_count": 1,
-      "first_reported": "2026-08-26T11:39:00+00:00",
-      "last_reported": "2026-08-27T01:38:00+00:00",
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "same_url"
-      ]
-    },
-    {
       "id": "98e46e2f1ca5248d",
       "category": "Weapons",
       "categories": [
@@ -7785,7 +7876,7 @@
       "summary": "Terrorist attack against head of defense industry enterprise foiled in Kyiv region, request for extradition of suspect from Poland initiated - SBU Українські Національні Новини (УНН)",
       "published": "2026-08-26T11:16:41+00:00",
       "source": "Українські Національні Новини (УНН)",
-      "source_count": 3,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMitAJBVV95cUxOZlgyYWJkNWRkNWoyYTJTeTVwdm1IbDFlUVlKWlI5NTNnUzg4eTVYMVVuYjlTMldud3hIOE1aVEJ1MG5ycU1XYklNYkVWRHZNaHRmTGpMTE13OEtKWDFGUFA0SlduU3hfeE4zanhSSTNvQWdEa3BTSEN2bW8tb1VaaVlqWHlMS0xRNXdlb05jYXRvM19kY0owNnBvbE1hNVJtbjl6ZldadHFGeENHUnpyb0NZMFdFa1pPdnBxOVJfaHdjeFhkc2h3Y1JBbnl6V3NYYWcybnYxZ3R2cHQ5Y1psN05RVTVhWXFEOVRYRFQtakdyLVVUOVppaFpMS2I4OUcwM2JTUDFJWmg0eEJvS0Zpd0hFbGRfdnpzaXI5ZE9lUW41WXpzbl91MG9yLTdwZmtFZEtwYtIBtAJBVV95cUxOZlgyYWJkNWRkNWoyYTJTeTVwdm1IbDFlUVlKWlI5NTNnUzg4eTVYMVVuYjlTMldud3hIOE1aVEJ1MG5ycU1XYklNYkVWRHZNaHRmTGpMTE13OEtKWDFGUFA0SlduU3hfeE4zanhSSTNvQWdEa3BTSEN2bW8tb1VaaVlqWHlMS0xRNXdlb05jYXRvM19kY0owNnBvbE1hNVJtbjl6ZldadHFGeENHUnpyb0NZMFdFa1pPdnBxOVJfaHdjeFhkc2h3Y1JBbnl6V3NYYWcybnYxZ3R2cHQ5Y1psN05RVTVhWXFEOVRYRFQtakdyLVVUOVppaFpMS2I4OUcwM2JTUDFJWmg0eEJvS0Zpd0hFbGRfdnpzaXI5ZE9lUW41WXpzbl91MG9yLTdwZmtFZEtwYg?oc=5",
       "collector": "Google News RSS",
       "country": "Ukraine",
@@ -7806,7 +7897,8 @@
       "sources": [
         "Українські Національні Новини (УНН)",
         "Бабель",
-        "shelter.in.ua"
+        "shelter.in.ua",
+        "Ukrinform"
       ],
       "related_articles": [
         {
@@ -7829,11 +7921,18 @@
           "published": "2026-08-26T11:39:00+00:00",
           "source": "shelter.in.ua",
           "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQTGUwcUVWd1lSanliQjl3ZkVjY3ZiX3FLU2I5VUozU2N5XzIxcDc5d252a2xUOU5yYWlNSnNudmlQWTJ4UlZ3b0JLTVpYMEh4T0lTcHhDeW1ZVXVSZk9SVk40YXprOGh0OVhTN01jbTdfdXR0RjhYVmFNRzlZeTFFcUZ3UmgwQ3hCSDhQZlRqZWstblZBSW43bzZzWFl2czhnY2FBQUtXZDNFdlZ2RGJGUU0xcUp2QQ?oc=5"
+        },
+        {
+          "title": "SSU officers foil terrorist attack by Russian intelligence services against defense company executive in Kyiv",
+          "summary": "SSU officers foil terrorist attack by Russian intelligence services against defense company executive in Kyiv Ukrinform",
+          "published": "2026-08-26T11:39:00+00:00",
+          "source": "Ukrinform",
+          "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxOUVFqNFNrVmRMWTRrMC1UTW80RTM1MlNWTGs1ZTZvQlhvS1B1dlV2T0lJYmo4R0xIcHFPWS11TFFtbXloMGljdGFFVEgxcm5RQ2FBaFFEYkRRaTJCWkRTNUVROG5TX2VaVUhQc3VJcGV6YmtGX0xvNjdDS2Z4X3o1QUNnRDFoQ2ZfcDVXR1h5MkF3TVBhVXlfSlA0UDVTTnhtMWt2YmlBMnJrLWRpVDRiakFqR08xQkJENGhmbWNCblA0ZUJPdkt0bF82NFRpUWVnV25uVkU3a0hNeUJsTWVqV1lQVEprT2VYY2FSUEV0MDhBeGhYMXFvaThtMGxEcGJVLWfSAYICQVVfeXFMTlFRajRTa1ZkTFk0azAtVE1vNEUzNTJTVkxrNWU2b0JYb0tQdXZVdk9JSWJqOEdMSHBxT1ktdUxRbW15aDBpY3RhRVRIMXJuUUNhQWhRRGJEUWkyQlpEUzVFUThuU19lWlVIUHN1SXBlemJrRl9MbzY3Q0tmeF96NUFDZ0QxaENmX3A1V0dYeTJBd01QYVV5X0pQNFA1U054bTFrdmJpQTJyay1kaVQ0YmpBakdPMUJCRDRoZm1jQm5QNGVCT3ZLdGxfNjRUaVFlZ1dublZFN2tITXlCbE1laldZUFRKa09lWGNhUlBFdDA4QXhoWDFxb2k4bTBsRHBiVS1n?oc=5"
         }
       ],
-      "article_count": 4,
+      "article_count": 5,
       "first_reported": "2026-08-26T11:16:41+00:00",
-      "last_reported": "2026-08-26T11:39:00+00:00",
+      "last_reported": "2026-08-27T01:38:00+00:00",
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "same_url",
@@ -8150,6 +8249,57 @@
       "last_reported": "2026-08-26T09:58:13+00:00"
     },
     {
+      "id": "1f90bd8e172ee62f",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "‘I wake up with nightmares’: Ex-hostage who dug his own grave describes cruelty of Hamas captivity",
+      "summary": "‘I wake up with nightmares’: Ex-hostage who dug his own grave describes cruelty of Hamas captivity CNN",
+      "published": "2026-08-26T09:24:59+00:00",
+      "source": "CNN",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQQ19rUkVUMFVwMk5qdGpQQ1BueEFBek9iY0NpSTMwS2YyN25JMXhWWU9PZUNrT0hPY3EtaFJObFlxUmdLaklfZ292VkRxMmZOVFBST1NybFZMaTREdFBZUnByVFljaXZlcE1aLXktREtTeXRzQzNfNDlQNlZ4Z2ZzdzFXNkt3bDNhQ2NYVUwxTTlWUnpNMFNReHlVcHA5QS1i?oc=5",
+      "collector": "Google News RSS",
+      "country": "Palestinian Territory",
+      "country_code": "PS",
+      "city": "East Jerusalem",
+      "region": null,
+      "latitude": 31.78336,
+      "longitude": 35.23388,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "targeted_source_query",
+      "targeted_source": "CNN",
+      "targeted_source_kind": "international_media",
+      "sources": [
+        "CNN"
+      ],
+      "related_articles": [
+        {
+          "title": "‘I wake up with nightmares’: Ex-hostage who dug his own grave describes cruelty of Hamas captivity",
+          "summary": "‘I wake up with nightmares’: Ex-hostage who dug his own grave describes cruelty of Hamas captivity CNN",
+          "published": "2026-08-26T09:25:53+00:00",
+          "source": "CNN",
+          "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPRkNWWGFqM3FXVHZUNlE1RzhqbUtsbGJkWXZKMllRejB3RWtmRllsLUYtYkw0Rm54REU0UE5ENkxyemlNa21zMi1RcjBDQjhidGdtc2pVUHYzMXZ4Q01uZEkya19faFVMQk5DcjQyOWdnNDZiZUpHbnZNSzI3aWVqOEoxaFIxTnhLMnZrOUN3ZmQ5SWhZd3NWSWJwRmI4cXpwN2tqTVJn?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-26T09:24:59+00:00",
+      "last_reported": "2026-08-26T09:25:53+00:00",
+      "dedup_confidence": 0.99,
+      "dedup_methods": [
+        "same_normalized_title"
+      ],
+      "location_score": 95.0,
+      "location_method": "intrinsic_country_capital",
+      "location_evidence": [
+        "organisation:hamas:title",
+        "organisation:hamas:summary"
+      ],
+      "excluded_from_map": false
+    },
+    {
       "id": "2264252643478043",
       "category": "Attacks",
       "categories": [
@@ -8333,7 +8483,7 @@
       ],
       "title": "Libyan man cleared over Lockerbie terrorist bombing dies",
       "summary": "Libyan man cleared over Lockerbie terrorist bombing dies The Herald",
-      "published": "2026-08-26T07:28:09+00:00",
+      "published": "2026-08-26T07:27:31+00:00",
       "source": "The Herald",
       "source_count": 1,
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOdkE0TTdzV3RPa3FEQnpxcVhtX3Yycm9ucExqcWZTTzEzcDgyRGdGa1BMYVBJNExjYVZfbjM3SXVrcEVWa3I0a3pYYjFjSWxyaGxHeWVtbUZqSjZyYUc1aDhndjhFenBRY2xqSFp6YjBCX3BabHJDZGZTX2tTMWQzcVk1Uk9hSEN2RmsxZ3E3OVdqV0t6RVZmSDB1MGZLUQ?oc=5",
@@ -8341,29 +8491,29 @@
       "country": "Libya",
       "country_code": "LY",
       "city": "Tripoli",
+      "region": null,
       "latitude": 32.88743,
       "longitude": 13.18733,
       "location_precision": "country_capital",
       "location_confidence": "medium",
-      "location_score": 150.0,
-      "location_method": "intrinsic_country_capital",
-      "region": null,
-      "location_evidence": [
-        "demonym:libyan:title",
-        "demonym:libyan:summary"
-      ],
-      "excluded_from_map": false,
       "sources": [
         "The Herald"
       ],
       "related_articles": [],
       "article_count": 1,
-      "first_reported": "2026-08-26T07:28:09+00:00",
+      "first_reported": "2026-08-26T07:27:31+00:00",
       "last_reported": "2026-08-26T07:28:09+00:00",
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "same_url"
-      ]
+      ],
+      "location_score": 150.0,
+      "location_method": "intrinsic_country_capital",
+      "location_evidence": [
+        "demonym:libyan:title",
+        "demonym:libyan:summary"
+      ],
+      "excluded_from_map": false
     },
     {
       "id": "a25d93d52d35793c",
@@ -16132,12 +16282,11 @@
       "country_code": "NG",
       "location_precision": "country_capital",
       "location_confidence": "low",
-      "location_score": 115.0,
+      "location_score": 60.0,
       "location_method": "inferred_country_capital",
       "region": null,
       "location_evidence": [
-        "source_static:punch newspapers",
-        "learned_source:punch newspapers:3"
+        "source_static:punch newspapers"
       ],
       "excluded_from_map": false,
       "sources": [
@@ -17195,58 +17344,6 @@
       "last_reported": "2026-08-03T07:00:00+00:00"
     },
     {
-      "id": "535b6346cfedd94a",
-      "category": "Attacks",
-      "title": "Suicide blast hits Swat police station",
-      "published": "2026-08-03T07:00:00+00:00",
-      "source": "The Express Tribune",
-      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPQ0hqSFFzRmp6YXFWTm5uZ0EyZGNSTk9UcDc4eEhhZlRzekxkQTI4WTZCeXZKOVFaaVNFR1dtaGVraVUxbDNLcmJTQnMyYzZuNkc1VlZsUl9ORVpPU1REVEs4X1FpUnlfWlFIV2lodlktNERaWVo5TlRoUmVXZmxTRtIBiAFBVV95cUxQeWF3M2llMzdocjdsSHN1ZElMX3E1SUNuaUFucEEwOHpUNllIeFhJNEVKdzVQNERXcXJFelJjbHptLTdWY0VCYmtSS19WRkJ5N2EwaFNWbHRUemJnUEN5eGVsbjh6OE9xZ1V2S0tpd2xyMFN5STltYUhoWlNJSmtUY1YtSG1SM3BI?oc=5",
-      "collector": "Google News",
-      "source_count": 2,
-      "country": null,
-      "city": null,
-      "latitude": 0.0,
-      "longitude": 0.0,
-      "country_code": null,
-      "location_precision": "unlocated",
-      "location_confidence": "low",
-      "location_score": 0,
-      "location_method": "no_geographic_signal",
-      "region": null,
-      "location_evidence": [],
-      "excluded_from_map": false,
-      "sources": [
-        "The Express Tribune",
-        "India Today"
-      ],
-      "related_articles": [
-        {
-          "title": "Swat suicide attack toll rises to 17 after police station peace rally blast",
-          "summary": "",
-          "published": "2026-08-03T07:00:00+00:00",
-          "source": "India Today",
-          "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNaXVMQ3dNeEJKNjRjS1A2a1hXUy1tendJcU1oZk1HLTM4RkIzakJWaF91ajQwbnJxSGVCOV9vWVNTWXpUeVVmNmZ2ay1fNnp6ZzRxOHZmTkZlZ2ZnbjNmN0Q4dnpDTWgxS250U3QzT0dHdkFBSnNKakl3ZVpFYlIzaTQ1LTlLWUlNYmdVZWxZbVcyWHhaWHhlcEVuUTB0Y19zQUY0X0RfeE82bkNldmYzMGdYQ19TdGNOdWRpY0Z5YVZERWZrNXRn0gHMAUFVX3lxTE41WjNMc1pWLU56NWE2NXJ6WWRMakJQbGlWZS0wc3h4SVpLS2c4MWFMRl9fR3gwNE5rOURLX0gwLXlyc2ZGRXlJb0pVMXFTQTZuVmlJcDV4cjNfOFIyNmFLSDQwdXp5Mlk4N0J4ZVNIR2dhVWRYUHZtSmRtaWRUOVNuMUJCVjhMU2ZhZmpyZ2lQVlluQV9rMHAtWjRVSWg4S3JpU0pIUDlnOVBvc2l4V1Nlby01dW1WSG5fT0xqZXNMQ2RHdFFnMTJxVlBoSQ?oc=5"
-        },
-        {
-          "title": "Swat mourns as blast toll rises to 17",
-          "summary": "",
-          "published": "2026-08-04T07:00:00+00:00",
-          "source": "The Express Tribune",
-          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBzZ3V1aDdCNTR2cG1fTndBSW82R1JweHVOeUhoNXhWTktvekVXSE9TcEVVTUV6S0xTc2llMEZVQW5FeklkRzBFVkM0aVFud2JlTFAyOGpOUFd5SFNxRGRkUERNQ3ZOSkRiS1hnZnB4QnFuSGNCbDR6dERuOHNGMk3SAYcBQVVfeXFMT3pxWExJeDg1dTdWN0NvYnVzUktUNzhKT0hHM3VPeXpTMS0wRDVuZVBUeHNpQXVOME5leWZYUnRwZ2lqMmhFV0NfWDNLdnhaOGh4ejg2bUt0NjZyVmN4aXg3eUhQaHo1SFFSbThPREtVRnZpaU5fQ05Kdzc0QnBpSXpod1FyZ2hV?oc=5"
-        }
-      ],
-      "article_count": 3,
-      "first_reported": "2026-08-03T07:00:00+00:00",
-      "last_reported": "2026-08-04T07:00:00+00:00",
-      "categories": [
-        "Attacks"
-      ],
-      "dedup_confidence": 0.8,
-      "dedup_methods": [
-        "title_plus_anchor"
-      ]
-    },
-    {
       "id": "64805c5c8fc054f8",
       "category": "Attacks",
       "title": "Chaos escalates in Pakistan-occupied Kashmir, suicide bombing in KP",
@@ -17916,7 +18013,7 @@
       "source": "India Today",
       "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPRENseHhLZDAyeTdkUVAxTGpGSFdqU2RLem9KeWFvNmdNTF9SMGZBNndabHZCUDN2VmttZzFndFYwT0hHVjRvcGV4WU8xalpSQjFaYTBhcUhLUkJMUUt3V0V0ckJIZjBOTnlzMGxFVUZJaEFLdzlwaXZIMGJkLWEtMl8zTVIyWlBpeE84ZHZRb2RsbEVSZXo1dkJIVHpyczFxRnhDSkpsN2o4SlV2ZWdaQ1NsT09XbUUya2lWVHY2Q2dFeWdyLVFUd3hzcEY3SmpCaEk1R3NUSjRQQdIB3wFBVV95cUxQaTB5X1NOV3F6QlFwVjZNb3BzUURSOEJLYkFrN1ZlRVFpdVlaN2NUbTFrSXRGSF8yWmlEQ3AtY0g5Qy1wTWpZMmN2UGJGcm5GcmlhM3JjN0hDYVNNenpwazY3RFNTOHhyTVNNR2ZJR01sU05xRWlMM2xaOWZKMWxXQlkzZ1ItSFhWX1NBUEk0elJMaHhlT1hEd1p0T0hvSmhzdERPQmZZTFE2c2JOLUd6ME9fcnJkdmFwQVBKLWU4UVAtV1gtVXJ6cmVIVzhQVXl2ak5QYWpyck5uUURHZ240?oc=5",
       "collector": "Google News",
-      "source_count": 1,
+      "source_count": 2,
       "country": "India",
       "city": "New Delhi",
       "latitude": 28.62137,
@@ -17933,12 +18030,28 @@
       ],
       "excluded_from_map": false,
       "sources": [
-        "India Today"
+        "India Today",
+        "The Express Tribune"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Suicide blast hits Swat police station",
+          "summary": "",
+          "published": "2026-08-03T07:00:00+00:00",
+          "source": "The Express Tribune",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPQ0hqSFFzRmp6YXFWTm5uZ0EyZGNSTk9UcDc4eEhhZlRzekxkQTI4WTZCeXZKOVFaaVNFR1dtaGVraVUxbDNLcmJTQnMyYzZuNkc1VlZsUl9ORVpPU1REVEs4X1FpUnlfWlFIV2lodlktNERaWVo5TlRoUmVXZmxTRtIBiAFBVV95cUxQeWF3M2llMzdocjdsSHN1ZElMX3E1SUNuaUFucEEwOHpUNllIeFhJNEVKdzVQNERXcXJFelJjbHptLTdWY0VCYmtSS19WRkJ5N2EwaFNWbHRUemJnUEN5eGVsbjh6OE9xZ1V2S0tpd2xyMFN5STltYUhoWlNJSmtUY1YtSG1SM3BI?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-02T07:00:00+00:00",
-      "last_reported": "2026-08-02T07:00:00+00:00"
+      "last_reported": "2026-08-03T07:00:00+00:00",
+      "categories": [
+        "Attacks"
+      ],
+      "dedup_confidence": 0.562,
+      "dedup_methods": [
+        "paraphrase_entity_context"
+      ]
     },
     {
       "id": "060bd4e3256c6011",
@@ -20384,7 +20497,7 @@
       "source": "France 24",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPM0tMQTZ2MkthUEpEdlowclc1NENlSi01S1ZEUDFrQjBSOEo0MW10S0pBV3R3X0M4WGdrdE1qbDNxdGJ3ZDg2YWtnRUNiTllkZTVqcWJEREVQLW9Tbk10c2dUWUZoZzlZWXgzVFk5akExWE5oZ1ZDLUV2Tk5Yd1V1ZUpFVnJGcC1oRGVtNllocmRMNW42SEhXZUg5R2M3RGNPSnN0WTYwdzA?oc=5",
       "collector": "Google News",
-      "source_count": 1,
+      "source_count": 8,
       "country": "Germany",
       "city": "Berlin",
       "latitude": 52.52437,
@@ -20400,38 +20513,7 @@
       ],
       "excluded_from_map": false,
       "sources": [
-        "France 24"
-      ],
-      "related_articles": [],
-      "article_count": 1,
-      "first_reported": "2026-07-26T07:00:00+00:00",
-      "last_reported": "2026-07-26T07:00:00+00:00"
-    },
-    {
-      "id": "fc9c0df46a17a821",
-      "category": "Attacks",
-      "title": "Berlin Pride terror attack",
-      "published": "2026-07-26T07:00:00+00:00",
-      "source": "DW.com",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1ieFRSN2V3SzJoYUJFMFpwNjlELWt5U0stUzFkZzhTalc3MTB3dmJCU3lvbWlhMlZLbjE4VkZrblpXLThxaVZmZTJSLVpPTURnQ05mdjNodGFJUW1OTDV2ZDNWcTBPWDFoQWxZ0gFrQVVfeXFMT0cweHlzWGxxaXlTenk1dW9LVjF5aThRcWxwbkQySnlxUXFGd1ZZcTdtWU9mdUxseGRQSmNWNnV1ZHkwQkhsYUNqU1NpbEZDYW9lbnJCcm1DanVjRW96WFB2XzNxY0drTlM5bXM?oc=5",
-      "collector": "Google News",
-      "source_count": 7,
-      "country": "Germany",
-      "city": "Berlin",
-      "latitude": 52.52437,
-      "longitude": 13.41053,
-      "country_code": "DE",
-      "location_precision": "city",
-      "location_confidence": "medium",
-      "location_score": 271.0,
-      "location_method": "country_assisted_city",
-      "region": null,
-      "location_evidence": [
-        "city:berlin:title",
-        "learned_entity:berlin pride:2"
-      ],
-      "excluded_from_map": false,
-      "sources": [
+        "France 24",
         "facebook.com",
         "DW.com",
         "NDTV",
@@ -20443,103 +20525,18 @@
       "related_articles": [
         {
           "title": "Berlin Pride terror attack",
-          "summary": "",
+          "summary": null,
           "published": "2026-07-26T07:00:00+00:00",
           "source": "DW.com",
           "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1ieFRSN2V3SzJoYUJFMFpwNjlELWt5U0stUzFkZzhTalc3MTB3dmJCU3lvbWlhMlZLbjE4VkZrblpXLThxaVZmZTJSLVpPTURnQ05mdjNodGFJUW1OTDV2ZDNWcTBPWDFoQWxZ0gFrQVVfeXFMT0cweHlzWGxxaXlTenk1dW9LVjF5aThRcWxwbkQySnlxUXFGd1ZZcTdtWU9mdUxseGRQSmNWNnV1ZHkwQkhsYUNqU1NpbEZDYW9lbnJCcm1DanVjRW96WFB2XzNxY0drTlM5bXM?oc=5"
-        },
-        {
-          "title": "Berlin police officials announced they shot and killed the chief suspect in Saturday's Pride terror attack. The following day was filled with mourning and solidarity in a vigil near the site, as Berliners — and the nation — came together. #dwnews",
-          "summary": "",
-          "published": "2026-07-26T07:00:00+00:00",
-          "source": "facebook.com",
-          "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOamEyZkw0SVIwb0JmcGxibEpHczhfV1BVWFh3QmZqbks2ZU9BcmJmbEp5dDVsM1VYdGktWjh5XzJtNWQwdmF2bDR4UlJqVDA4VGUxbzZJbTRublprd21PVkFBTmZGaEZKOHdqUWZxVWxMVnNNZkJUd0s2b2gwNDVoaHo3RHpXdFFHZXhnV2xtQXFCRFZLNHNKM3RFZS1WT3BpVHN5VGc1UUNISkVOQk5KaElDR1Y1aUpsQVRfY1Q3WlJIQm51U1ljcm9EZEdWRnR3bTl1M1MxeGdvd2VCTXNKeg?oc=5"
-        },
-        {
-          "title": "Germany's Interior Minister Alexander Dobrindt said authorities believed the Berlin Pride van ramming attack on Saturday night, July 25, had an Islamist motive. \"Everything we see here indicates that this was an Islamist terror attack,\" Dobrindt told reporters at t",
-          "summary": "",
-          "published": "2026-07-26T07:00:00+00:00",
-          "source": "facebook.com",
-          "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxQZVNpZnI2UVh4b2lkVFREUzNkR2JlU2s3U0hNWmVjQ25XZ3lEOFFfOEt2QllRMXFXZlZzWlliOG9ReF9UZmhoQlZHYjFfNldOOW9HY2J4VXEzZzkzTGN3MTBqZ21GdE1GX3Z5ZkN1ZXFvYkVoamNJbkxKS1FFVWFTSlVWaVJ6QTBQdUlqbGo3TmxWNXJFeHpVQ25XbWZzeFlHV0thRE54Uzl2T0RFYTBCMDhsV291SkpXSVJ5NzNRcXJCYmJhRGhRd0R6cmp3QzFGb3VnVXQzQzd3djlXdmljc0ln?oc=5"
-        },
-        {
-          "title": "Germany Suspects \"Islamic Terror\" Angle In Deadly Berlin Pride Attack",
-          "summary": "",
-          "published": "2026-07-26T07:00:00+00:00",
-          "source": "NDTV",
-          "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOcEpZQ3FyaTVTWGxGRElwbHJfYW5hdDhpVXgyQm52VGRheHJlMjFhUDVVcDh1SFRXR09NVE1SRkxSOEEtV245Wi1fSjJtOUFRQ3BPcUd0bV9oaEk1cE1WS1pmekJWdTd5Q296MnVXaWJCZXdJWk9RTEtLdE9ZVlFMTE9oRFJRLXJObU05T2xMbEEtUU5maGFnbFVDNm0zQ1lQVjhIdkNfWjhkTnpR0gG0AUFVX3lxTE0xOVVZSllNcjc1cElxZWlUQ0VjeXNIblZpbjk4SEZNamlTTmgzblh5ZGRlUWZVYlJ1QlB3MjZVWndZaE85WFRDQmkwLXhOMzJJR0M3WmhkNUFGc3dNUU9hZVhZTDQ5ZjFXVDFIZ1pqVC1NNkZpaWRFaTMxN2NoNFEyOXdBNTM3Y29NRnktRXBZSENnY0RiWHN3SXM4UzN1QkFnWThudXgyNFlBU2xhc1RSOE93Uw?oc=5"
-        },
-        {
-          "title": "Terrorist attack at huge Berlin Pride parade celebration leaves 1 dead, dozens injured",
-          "summary": "",
-          "published": "2026-07-27T07:00:00+00:00",
-          "source": "Advocate.com",
-          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE0tVFk4Z0lNTDVZRE8yLWd1QjlaZzZ2NHdORlV4aWJmbEVvWG5MTGJKSXVHWkpWSEZ4WXFROWgwcnBSeHlSMEplaEIybUdWVndqY212SExWZVVTVjFfMC16TEpXamVqOERkYU9R?oc=5"
-        },
-        {
-          "title": "Merz Criticizes Terrorism Laws After Deadly Berlin Pride Attack",
-          "summary": "",
-          "published": "2026-07-27T07:00:00+00:00",
-          "source": "The New York Times",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQVWxLellGLXNlWGZ5Y1VXenhISHFfbGRuUGVLQnB0RDJOcU9kOThwZm5DV1M3U2ZlN2EwNThDQnloRUVobmlGZ2o3UEVFN29LbmZ2TExTR0o5cTJjNE1FQ2gzU3BsUXNLRVFBekFsc3pHelZhZlZCOW5XLWJLQmN1OVdfdC11Z0paTmxBQlZn?oc=5"
-        },
-        {
-          "title": "Video: Berlin Locals Left Shaken After Pride Terror Attack",
-          "summary": "",
-          "published": "2026-07-27T07:00:00+00:00",
-          "source": "The New York Times",
-          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPd0hVODB6MGFGSHZXTEI1QzFmNnFBSGpGbGFkOXRONUgtc1hvdHF3WU04Qm95YXdMemtQaXcwSVhiQnEydGp1UG13NEw4M0ZqelhlLXN5ZTBvYmNEbS14aFg0eDlfaUpkcHdzcnM4UmxGWG9PcE5qdm5FaDJNcVA1ZjdBX01xUkZjZmZpM0dYTnlMb2pfQWFaN29zbHhxLWdSalE?oc=5"
-        },
-        {
-          "title": "Germany: Berlin Pride attack prompts calls for clampdown",
-          "summary": "",
-          "published": "2026-07-27T07:00:00+00:00",
-          "source": "DW.com",
-          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNakVtWnFjSEFieE1BMm1pOGZ2SkRZM2hyVnZaRERuMldLVFFLYzAwZmtheV85UThEc082LTg1YmxRWkpPU2h0TnExYk8xSXczRjJEYWRtbHphUk0ybkFoT25pVWszR3VpVi1KTnR2QUl3dGpuOHhrNzZ4dkVzYW5IN2NuLUgxRXZLN0s1eW44MG9PNldFNnc?oc=5"
-        },
-        {
-          "title": "What does the Berlin Pride attack mean for city's identity?",
-          "summary": "",
-          "published": "2026-07-27T07:00:00+00:00",
-          "source": "DW.com",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNRXdsTEFpS3VvQllBdThZc2JIQkJxTUQ0RmRfZnkwZWluQUlKMGNHRzMxdk94Z2FscW1EeWxxZGJwSHkxbXpNaW9FdHdkX0wtZ1BHSmpQYXJnVmNFTC1qRWZlQW1MRnNBY1pfUmljVGtGODBQMnh4TGdrWU5PdjBIZDd4UGlfdG1IRDJyZElmRjRCZVd1VGpXWk5n?oc=5"
-        },
-        {
-          "title": "We must not scapegoat refugees after Berlin Pride terrorist attack",
-          "summary": "",
-          "published": "2026-07-28T07:00:00+00:00",
-          "source": "Los Angeles Blade",
-          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOSWlqd2VNMUw5TERFbWFIQ1dNa201ZkpLOUVuTkNTc1lLZGt0WXIxOFpUR1c5Q21HbkdoUndaOUI4OUIwMS1lRnRnUmJFMWlvVF9XVXdIY29QMjdHYldpMnptOGU4dXZkNnJ4a1lTWkQ2RWt5WGNwUkgwOTFuRnpYS3VZaGU0RGhLd2dUaEo3OUdhOUlpUjJxOUViYmJyQkk1MmduV3VhQ2hIVXVVVHVn?oc=5"
-        },
-        {
-          "title": "Berlin vows tougher laws after jihadist Pride attack",
-          "summary": "",
-          "published": "2026-07-28T07:00:00+00:00",
-          "source": "euractiv.com",
-          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQR1h1cDI3dDdROTZIMnRXVVNEd3NNU2Q5UlM5NW1hdm9ueWp6MVJQeU5MT1lLY3oxV0tHWTlYVGpQNHo5UFpIZ2FfVmJlZEpSdjJVaWItVEROSnJZb1BNQ2pfeUVZYzR0bVZNUmRwLVZQNHFEM0xOQmlIM2xoQlA5OHhic2gwcGpPTUZ3eVZ1dXU5cXl0ajZRX1RwaGEtYTFfeHc?oc=5"
-        },
-        {
-          "title": "Berlin Pride attack: Are German juvenile courts too lenient?",
-          "summary": "",
-          "published": "2026-07-30T07:00:00+00:00",
-          "source": "DW.com",
-          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPR1lkYVJOYkh0c080dndVbVJiRmVhZmtmb0p2Zkg4a1FSNGJrT1o1WHA2V3EzQ1FUNDJoNDNPV1ljUWpOdkpWa0JZb2dETmY4UGFfQzhQOUk5aG1mRXotUk5fanZTc2ZRd1hXNEE3dUFnRFhZdHFVN19Hd0VFbllmQVZudmNGaldXWWc5dE1uY3JoNmRYa3fSAZYBQVVfeXFMTXdPUlprX21EeUJhemhHR0JZRGpjSmR5ZjJEV2pzLW9hOC0xdWZVbWZ5dG9yZUV3TlRfQmV5ZVlDY2EtU3ZKZjd4YUVVQmNmTHZSZGZJc1pEYld5TG5td3d3V1N6MjRHdEQxQjdxUnktLWh2eFhTVlRlQnVGemNiU3BrUzlaaGo0R0FZaWp0UDE0bkFCVkpR?oc=5"
-        },
-        {
-          "title": "Hamburg Pride draws 300,000 after Berlin terror attack",
-          "summary": "",
-          "published": "2026-08-01T07:00:00+00:00",
-          "source": "DW.com",
-          "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPLWJ3MG40RS05T3ZaSXc5V3dqMk8wVm5tczEyWTJzb1pFUmlzY2k4THBTZHNtZzZKNGVBb3BxbmhuWExScENJV2kzREdZZHJ1eVRSNjVENFFQQ0F4MzBGUzRyM1puN09nMDlPUWlnZVVsQ0sxZkotMFdjbDkzemV1cVhLUlAxZjRhOGpVN0N6SFVJVFc3?oc=5"
         }
       ],
-      "article_count": 13,
+      "article_count": 2,
       "first_reported": "2026-07-26T07:00:00+00:00",
-      "last_reported": "2026-08-01T07:00:00+00:00",
+      "last_reported": "2026-07-26T07:00:00+00:00",
       "categories": [
         "Attacks"
       ],
-      "summary": null,
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "very_high_title_similarity"
@@ -20742,12 +20739,11 @@
       "location_precision": "country_capital",
       "country_code": "NG",
       "location_confidence": "low",
-      "location_score": 115.0,
+      "location_score": 60.0,
       "location_method": "inferred_country_capital",
       "region": null,
       "location_evidence": [
-        "source_static:punch newspapers",
-        "learned_source:punch newspapers:3"
+        "source_static:punch newspapers"
       ],
       "excluded_from_map": false,
       "sources": [
@@ -20988,37 +20984,6 @@
       "excluded_from_map": false,
       "sources": [
         "The Jerusalem Post"
-      ],
-      "related_articles": [],
-      "article_count": 1,
-      "first_reported": "2026-07-25T07:00:00+00:00",
-      "last_reported": "2026-07-25T07:00:00+00:00"
-    },
-    {
-      "id": "48ecd9c407ce80c0",
-      "category": "Attacks",
-      "title": "27 Killed as Militants Attack Joint Check Post in Pakistan",
-      "published": "2026-07-25T07:00:00+00:00",
-      "source": "iranpress.com",
-      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQODBoSVZfNkN4N044LXk0QTJRNHoxMTBjQVZzSmdqV1VLNzI0Q0VPUkRxVlVLZXp0SDVlc1RudWRYMmthTEVDQVpxMDJwSDcyUl9uQ2s4dkRsRFgtYnhyQWM4ZnVONzNmdHpLVnBPX2xKVnFkelhmY2NQTUtlaGRPYjNYUXAyRmJLMVdGVTdvTQ?oc=5",
-      "collector": "Google News",
-      "source_count": 1,
-      "country": "Pakistan",
-      "city": "Islamabad",
-      "latitude": 33.72148,
-      "longitude": 73.04329,
-      "country_code": "PK",
-      "location_precision": "country_capital",
-      "location_confidence": "high",
-      "location_score": 220.0,
-      "location_method": "intrinsic_country_capital",
-      "region": null,
-      "location_evidence": [
-        "country:pakistan:title"
-      ],
-      "excluded_from_map": false,
-      "sources": [
-        "iranpress.com"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -21390,7 +21355,7 @@
       "source": "AP News",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOVFNDdmc1OHhoMm9LRmpabnQ5S0lJdGF5cF91NWM4ZGdzTTF4dUxZRWhfNEZIM3ZCNG03dkhkdWU2VHA0Yk12amVtTlZrRm1QcHE3RzJmdWxsejlNTzBwMjBBWFZMTEoyWGdlckhHXzBRTWJBLUFyWEczc2ZEazdDWVZEYVlrYkNUOVQ4dnpUZlUwYS1TZWpRSUdUbHR6cDh4dGdWMkFpZmN1alZaTzFCb2M2Yw?oc=5",
       "collector": "Google News",
-      "source_count": 6,
+      "source_count": 7,
       "country": "Pakistan",
       "city": "Islamabad",
       "latitude": 33.72148,
@@ -21411,7 +21376,8 @@
         "WION",
         "AL.com",
         "The Indian Express",
-        "Arab News PK"
+        "Arab News PK",
+        "iranpress.com"
       ],
       "related_articles": [
         {
@@ -21448,9 +21414,16 @@
           "published": "2026-07-26T07:00:00+00:00",
           "source": "Arab News PK",
           "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFBtaHNlZzBLUDZ6b0JFTU13NjRFbWZZRDJvcU53R001cTdmWnNueDI4eGY1Ym85TTctSzhUWXBOQ0wwMHdjVWplc2htdHBISnljSV82WEJWWk4?oc=5"
+        },
+        {
+          "title": "27 Killed as Militants Attack Joint Check Post in Pakistan",
+          "summary": "",
+          "published": "2026-07-25T07:00:00+00:00",
+          "source": "iranpress.com",
+          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQODBoSVZfNkN4N044LXk0QTJRNHoxMTBjQVZzSmdqV1VLNzI0Q0VPUkRxVlVLZXp0SDVlc1RudWRYMmthTEVDQVpxMDJwSDcyUl9uQ2s4dkRsRFgtYnhyQWM4ZnVONzNmdHpLVnBPX2xKVnFkelhmY2NQTUtlaGRPYjNYUXAyRmJLMVdGVTdvTQ?oc=5"
         }
       ],
-      "article_count": 6,
+      "article_count": 7,
       "first_reported": "2026-07-24T07:00:00+00:00",
       "last_reported": "2026-07-26T07:00:00+00:00",
       "categories": [
@@ -25049,12 +25022,11 @@
       "location_precision": "country_capital",
       "country_code": "NG",
       "location_confidence": "low",
-      "location_score": 115.0,
+      "location_score": 60.0,
       "location_method": "inferred_country_capital",
       "region": null,
       "location_evidence": [
-        "source_static:punch newspapers",
-        "learned_source:punch newspapers:3"
+        "source_static:punch newspapers"
       ],
       "excluded_from_map": false,
       "sources": [
@@ -36391,12 +36363,11 @@
       "location_precision": "country_capital",
       "country_code": "NG",
       "location_confidence": "low",
-      "location_score": 115.0,
+      "location_score": 60.0,
       "location_method": "inferred_country_capital",
       "region": null,
       "location_evidence": [
-        "source_static:punch newspapers",
-        "learned_source:punch newspapers:3"
+        "source_static:punch newspapers"
       ],
       "excluded_from_map": false,
       "sources": [
@@ -37988,13 +37959,12 @@
       "country_code": "NG",
       "location_precision": "country_capital",
       "location_confidence": "low",
-      "location_score": 190.0,
+      "location_score": 135.0,
       "location_method": "inferred_country_capital",
       "region": null,
       "location_evidence": [
         "person:nnamdi kanu:title",
-        "source_static:punch newspapers",
-        "learned_source:punch newspapers:3"
+        "source_static:punch newspapers"
       ],
       "excluded_from_map": false,
       "sources": [
@@ -40010,6 +39980,79 @@
       "article_count": 1,
       "first_reported": "2026-05-31T07:00:00+00:00",
       "last_reported": "2026-05-31T07:00:00+00:00"
+    },
+    {
+      "id": "5fb1f16419a5aa70",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Golders Green terror suspect moments after first attack",
+      "summary": "Golders Green terror suspect moments after first attack Sky News",
+      "published": "2026-04-30T09:59:03+00:00",
+      "source": "Sky News",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPWHNyV2F2RVpMUm4zeTZLbS1faXZ5RUhwLXVxbW9ONVZlcENaYndNNEhaa0VmZXZ5dG5kV0xOZ0hGVUhVSl9fQ3RlNmF0Yll3RXFfbnl2bEFDS3FSMWcwS3dONFRTWVJ2c1gzcExnalFIRFJ4d0dHN0JjVXZfWmxzRGZjVUVIZWZNdGpLLTNra29aTUx0TkE?oc=5",
+      "collector": "Google News RSS",
+      "country": null,
+      "country_code": null,
+      "city": null,
+      "region": null,
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "location_precision": "unlocated",
+      "location_confidence": "low",
+      "acquisition_channel": "targeted_source_query",
+      "targeted_source": "Sky News",
+      "targeted_source_kind": "international_media",
+      "sources": [
+        "Sky News"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-04-30T09:59:03+00:00",
+      "last_reported": "2026-04-30T09:59:03+00:00",
+      "location_score": 0,
+      "location_method": "no_geographic_signal",
+      "location_evidence": [],
+      "excluded_from_map": false
+    },
+    {
+      "id": "6f7673c79837e1c7",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Arrests"
+      ],
+      "title": "Man arrested over Golders Green terror attack 'has history of serious violence and mental health issues'",
+      "summary": "Man arrested over Golders Green terror attack 'has history of serious violence and mental health issues' Sky News",
+      "published": "2026-04-29T15:26:25+00:00",
+      "source": "Sky News",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNbkVsaTNTSDJFUno4bFkwX3VqaWRseVFaU25nd1RiMkdhSjFkQ3hrYk5qZVVVcHAtdzQ3WjJCZnpGRDZNbU5qZGdaQ3EyWWQ2OV9mX1JpN1dsYVl6aEJ0VVJ3bWdJS05XeFVaMmhvYWQ2Y3pldHhtQ19WUVl5Q1JKQnpkdW5OR0RzdDZjVFIxVkNDYXRwUHRybnNjWHIyRzF0Tld1UC1ad0o4eTh6aUhGNWdlNGgxclE3aWpHZkE3b1dqUVdfcGFucGxfbm8yX0NGVTZTNg?oc=5",
+      "collector": "Google News RSS",
+      "country": null,
+      "country_code": null,
+      "city": null,
+      "region": null,
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "location_precision": "unlocated",
+      "location_confidence": "low",
+      "acquisition_channel": "targeted_source_query",
+      "targeted_source": "Sky News",
+      "targeted_source_kind": "international_media",
+      "sources": [
+        "Sky News"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-04-29T15:26:25+00:00",
+      "last_reported": "2026-04-29T15:26:25+00:00",
+      "location_score": 0,
+      "location_method": "no_geographic_signal",
+      "location_evidence": [],
+      "excluded_from_map": false
     }
   ],
   "geolocation": {
@@ -40017,22 +40060,22 @@
     "strategy": "Two-pass maximum-coverage multi-signal inference",
     "city": 214,
     "region": 29,
-    "country_capital": 614,
-    "unlocated": 370,
-    "mapped_total": 857,
+    "country_capital": 613,
+    "unlocated": 372,
+    "mapped_total": 856,
     "high_confidence": 252,
     "medium_confidence": 340,
-    "low_confidence": 635,
+    "low_confidence": 636,
     "learned_sources": 28,
     "learned_entities": 14,
-    "pass2_recovered": 299,
+    "pass2_recovered": 297,
     "methods": {
       "intrinsic_country_capital": 349,
-      "inferred_country_capital": 265,
+      "inferred_country_capital": 264,
       "landmark_city": 12,
-      "explicit_context_city": 125,
-      "no_geographic_signal": 370,
-      "country_assisted_city": 27,
+      "explicit_context_city": 126,
+      "no_geographic_signal": 372,
+      "country_assisted_city": 26,
       "context_city": 50,
       "region_context": 29
     }
