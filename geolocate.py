@@ -8,7 +8,7 @@ import geonamescache
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# CONTEXTUAL GEOLOCATION V4
+# CONTEXTUAL GEOLOCATION V6 — MAXIMUM COVERAGE
 #
 # Multi-signal, two-pass geolocation:
 #
@@ -25,7 +25,7 @@ import geonamescache
 # LEARNING
 #   - Learns recurring source -> country associations
 #   - Learns recurring named-entity -> country associations
-#     from high-confidence events in the same 90-day database.
+#     from high-confidence events in the same rolling database.
 #
 # PASS 2 — unresolved / weak events
 #   - Re-runs city matching using the inferred country
@@ -38,8 +38,9 @@ import geonamescache
 #   - If absolutely no geographic signal exists, event is left at
 #     the neutral 0,0 placeholder and marked unlocated.
 #
-# The source/outlet is NEVER treated as the event location unless
-# no better evidence exists; it is a final country-level fallback.
+# Local/regional source geography, organisations and personalities may be
+# used as LOW-confidence fallbacks when no better event-location evidence
+# exists. Global outlets never determine the event country.
 # ============================================================
 
 
@@ -1258,8 +1259,9 @@ def clear_location(event):
     event["location_precision"] = "unknown"
     event["location_confidence"] = "low"
     event["location_score"] = 0
-    event["location_method"] = "contextual_geolocation_v4"
+    event["location_method"] = "contextual_geolocation_v6"
     event["location_evidence"] = []
+    event["excluded_from_map"] = False
 
 
 def set_city(
@@ -1314,6 +1316,7 @@ def set_city(
     )
     event["location_method"] = method
     event["location_evidence"] = reasons[:8]
+    event["excluded_from_map"] = False
 
 
 def set_region(
@@ -1352,6 +1355,7 @@ def set_region(
     )
     event["location_method"] = "region_context"
     event["location_evidence"] = reasons[:8]
+    event["excluded_from_map"] = False
 
 
 def set_country_capital(
@@ -1413,6 +1417,7 @@ def set_country_capital(
     )
     event["location_method"] = method
     event["location_evidence"] = reasons[:8]
+    event["excluded_from_map"] = False
 
     return True
 
@@ -1429,6 +1434,7 @@ def set_unlocated(event):
     event["location_score"] = 0
     event["location_method"] = "no_geographic_signal"
     event["location_evidence"] = []
+    event["excluded_from_map"] = False
 
 
 # ============================================================
@@ -2150,6 +2156,85 @@ def static_source_country(source):
     return None
 
 
+def source_city_country(source):
+    """
+    Last-resort geography from a local/regional outlet name.
+
+    Examples:
+      CityNews Toronto -> Canada
+      Nairobi News -> Kenya
+
+    Known global outlets are excluded before this function is used.
+    """
+
+    if not source:
+        return None
+
+    if is_global_source(source):
+        return None
+
+    mentions = city_mentions(source)
+
+    if not mentions:
+        return None
+
+    ranked = []
+
+    for mention in mentions:
+        city = mention["city"]
+        matched = mention["matched"]
+
+        population = city.get("population", 0) or 0
+        score = 45
+
+        if population:
+            score += min(
+                20,
+                math.log10(population + 1) * 3
+            )
+
+        if matched in AMBIGUOUS_CITY_NAMES:
+            score -= 80
+
+        ranked.append(
+            (
+                score,
+                city.get("countrycode"),
+                city.get("name"),
+                matched,
+            )
+        )
+
+    ranked.sort(
+        key=lambda item: item[0],
+        reverse=True
+    )
+
+    if not ranked:
+        return None
+
+    best = ranked[0]
+
+    if best[0] < 40:
+        return None
+
+    if (
+        len(ranked) > 1
+        and
+        best[0] - ranked[1][0] < 5
+        and
+        best[1] != ranked[1][1]
+    ):
+        return None
+
+    return {
+        "code": best[1],
+        "city": best[2],
+        "matched": best[3],
+        "score": best[0],
+    }
+
+
 # ============================================================
 # ENTITY EXTRACTION FOR SELF-LEARNING
 # ============================================================
@@ -2738,9 +2823,9 @@ def learn_source_countries(
         )
 
         if (
-            best_count >= 3
+            best_count >= 2
             and
-            dominance >= 0.80
+            dominance >= 0.70
         ):
             model[
                 source
@@ -2827,7 +2912,7 @@ def learn_entity_countries(
         if (
             best_count >= 2
             and
-            dominance >= 0.85
+            dominance >= 0.70
         ):
             model[
                 entity
@@ -2914,6 +2999,28 @@ def collect_learned_evidence(
             reason
         )
 
+    # Geographic place embedded in a local/regional source name.
+    # This is weaker than an event place but useful as a final fallback.
+    source_city = source_city_country(
+        source
+    )
+
+    if source_city:
+        add_evidence(
+            evidence,
+            source_city[
+                "code"
+            ],
+            48,
+            (
+                "source_city:"
+                +
+                source_city[
+                    "matched"
+                ]
+            )
+        )
+
     # Learned source model
     learned_source = source_model.get(
         normalize(source)
@@ -2985,8 +3092,8 @@ def second_pass_geolocate(
 
     country_result = choose_country(
         combined,
-        minimum_score=50,
-        minimum_gap=15
+        minimum_score=25,
+        minimum_gap=5
     )
 
     preferred_code = (
@@ -3025,7 +3132,7 @@ def second_pass_geolocate(
         )
 
         if (
-            score >= 175
+            score >= 155
             and
             not ambiguous
         ):
@@ -3065,7 +3172,7 @@ def second_pass_geolocate(
         and
         region_result[
             "score"
-        ] >= 100
+        ] >= 85
     ):
         # If Kashmir is generic but another signal identifies India/Pakistan,
         # attach the region to the inferred country while keeping regional coords.
@@ -3140,7 +3247,7 @@ def main():
     print()
     print("=" * 72)
     print("INTERPOL CT Intelligence Map")
-    print("CONTEXTUAL GEOLOCATION V4 — TWO-PASS ENTITY INFERENCE")
+    print("CONTEXTUAL GEOLOCATION V6 — MAXIMUM COVERAGE")
     print("=" * 72)
 
     with open(
@@ -3316,9 +3423,9 @@ def main():
         "geolocation"
     ] = {
         "method":
-            "Contextual GeoNames + entity/source inference V4",
+            "Contextual GeoNames + maximum-coverage entity/source inference V6",
         "strategy":
-            "Two-pass multi-signal country inference",
+            "Two-pass maximum-coverage multi-signal inference",
         "city":
             precision_counts[
                 "city"
