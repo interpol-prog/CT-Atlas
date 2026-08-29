@@ -16,7 +16,7 @@ import requests
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# GEMINI AI-FIRST GEOLOCATION V3 — INTERACTIONS API
+# GEMINI AI-FIRST GEOLOCATION V4 — HIGH-THROUGHPUT + CHECKPOINTS
 #
 # Principle:
 #   - Gemini decides the event location for EVERY event.
@@ -33,7 +33,8 @@ import requests
 #
 # Environment variables:
 #   GEMINI_API_KEY      required
-#   GEMINI_GEO_MODEL    optional, default: gemini-3.6-flash
+#   GEMINI_GEO_MODEL    optional, default: gemini-3.5-flash-lite
+#   GEMINI_RESCUE_MODEL optional, default: gemini-3.6-flash
 #   AI_GEO_BATCH_SIZE   optional, default: 20
 #   AI_GEO_FORCE        optional, "1"/"true" to refresh every event
 # ============================================================
@@ -48,12 +49,16 @@ GEMINI_INTERACTIONS_URL = (
 
 GEMINI_MODEL = os.getenv(
     "GEMINI_GEO_MODEL",
+    "gemini-3.5-flash-lite",
+)
+
+GEMINI_RESCUE_MODEL = os.getenv(
+    "GEMINI_RESCUE_MODEL",
     "gemini-3.6-flash",
 )
 
-# Bumping the version intentionally invalidates decisions from the
-# previous Gemini 2.5 / generateContent integration.
-AI_GEO_VERSION = "gemini-ai-first-v3-interactions"
+# New cache version: every event must be geolocated by the current AI engine.
+AI_GEO_VERSION = "gemini-ai-first-v4-checkpoint"
 BATCH_SIZE = max(
     1,
     min(
@@ -84,7 +89,7 @@ FORCE_AI = (
 
 REQUEST_ATTEMPTS = 5
 REQUEST_TIMEOUT = 240
-REQUEST_PAUSE_SECONDS = 6.0
+REQUEST_PAUSE_SECONDS = 10.0
 
 try:
     sys.stdout.reconfigure(
@@ -382,7 +387,7 @@ def related_article_context(
 
     output = []
 
-    for article in related[:6]:
+    for article in related[:3]:
         if not isinstance(
             article,
             dict
@@ -445,7 +450,7 @@ def event_ai_payload(
                 event.get(
                     "summary"
                 ),
-                1800,
+                900,
             ),
 
         "source":
@@ -776,6 +781,7 @@ def extract_gemini_text(
 def call_gemini_batch(
     batch,
     instructions_override=None,
+    model_override=None,
 ):
     """
     Geolocate a batch with Gemini 3.6 Flash using Interactions API.
@@ -817,9 +823,15 @@ def call_gemini_batch(
         )
     )
 
+    active_model = (
+        model_override
+        if model_override
+        else GEMINI_MODEL
+    )
+
     body = {
         "model":
-            GEMINI_MODEL,
+            active_model,
 
         "input":
             user_input,
@@ -1616,6 +1628,82 @@ def apply_ai_result(
 
 
 # ============================================================
+# QUOTA-SAFE CHECKPOINTS
+# ============================================================
+
+def save_checkpoint(
+    data,
+    label,
+):
+    """Save AI progress after every successful batch."""
+
+    with open(
+        OUTPUT_FILE,
+        "w",
+        encoding="utf-8",
+    ) as file:
+        json.dump(
+            data,
+            file,
+            ensure_ascii=False,
+            indent=2,
+        )
+
+    print(
+        f"   Checkpoint saved: {label}"
+    )
+
+
+def quota_or_capacity_error(
+    error,
+):
+    message = str(
+        error
+    ).casefold()
+
+    return (
+        "429" in message
+        or
+        "resource_exhausted" in message
+        or
+        "too_many_requests" in message
+        or
+        "quota" in message
+        or
+        "rate limit" in message
+        or
+        "rate-limit" in message
+    )
+
+
+def prepare_pending_event(
+    event,
+):
+    """
+    AI-only mapping safeguard.
+
+    Any event not yet processed by this AI version has its old/legacy
+    geolocation removed before API processing. If quota is reached, remaining
+    events stay unlocated (and therefore hidden from the map) rather than
+    showing a lexical false positive.
+    """
+
+    clear_location(
+        event
+    )
+
+    event["ai_geo_complete"] = False
+    event["ai_geo_version"] = AI_GEO_VERSION
+    event["ai_geo_model"] = None
+    event["ai_geo_reason"] = (
+        "Awaiting Gemini semantic geolocation"
+    )
+    event["location_method"] = (
+        "awaiting_ai_geolocation"
+    )
+
+
+# ============================================================
 # RESCUE PASS
 # ============================================================
 
@@ -1678,13 +1766,28 @@ def rescue_unknown_events(
             f"({len(batch)} events)"
         )
 
-        results.extend(
-            call_gemini_batch(
-                batch,
-                instructions_override=
-                    rescue_instructions,
+        try:
+            results.extend(
+                call_gemini_batch(
+                    batch,
+                    instructions_override=
+                        rescue_instructions,
+                    model_override=
+                        GEMINI_RESCUE_MODEL,
+                )
             )
-        )
+
+        except RuntimeError as error:
+            if quota_or_capacity_error(
+                error
+            ):
+                print(
+                    "   Gemini 3.6 rescue quota/capacity reached. "
+                    "Keeping the valid Flash-Lite AI location."
+                )
+                break
+
+            raise
 
     return results
 
@@ -1697,10 +1800,13 @@ def main():
     print()
     print("=" * 72)
     print("INTERPOL CT Intelligence Map")
-    print("GEMINI AI-FIRST GEOLOCATION V3 — INTERACTIONS API")
+    print("GEMINI AI-FIRST GEOLOCATION V4 — HIGH-THROUGHPUT + CHECKPOINTS")
     print("=" * 72)
     print(
-        f"Model: {GEMINI_MODEL}"
+        f"Primary model: {GEMINI_MODEL}"
+    )
+    print(
+        f"Rescue model:  {GEMINI_RESCUE_MODEL}"
     )
     print(
         f"Batch size: {BATCH_SIZE}"
@@ -1792,8 +1898,18 @@ def main():
             cached_count += 1
             continue
 
+        prepare_pending_event(
+            event
+        )
+
         pending.append(
             payload
+        )
+
+    if pending:
+        save_checkpoint(
+            data,
+            "pending legacy locations cleared",
         )
 
     print(
@@ -1842,9 +1958,34 @@ def main():
                 f"— {len(batch)} events"
             )
 
-            results = call_gemini_batch(
-                batch
-            )
+            try:
+                results = call_gemini_batch(
+                    batch,
+                    model_override=
+                        GEMINI_MODEL,
+                )
+
+            except RuntimeError as error:
+                if quota_or_capacity_error(
+                    error
+                ):
+                    print()
+                    print(
+                        "Gemini free-tier quota/capacity reached."
+                    )
+                    print(
+                        "Progress is saved. The next run will resume "
+                        "with only the remaining unprocessed events."
+                    )
+
+                    save_checkpoint(
+                        data,
+                        "quota-safe partial progress",
+                    )
+
+                    break
+
+                raise
 
             result_by_id = {
                 str(
@@ -1891,7 +2032,7 @@ def main():
 
             if missing:
                 raise RuntimeError(
-                    "OpenAI omitted event IDs: "
+                    "Gemini omitted event IDs: "
                     +
                     ", ".join(
                         missing[:10]
@@ -1903,6 +2044,14 @@ def main():
                 f"{completed}/{len(pending)}"
             )
 
+            save_checkpoint(
+                data,
+                (
+                    f"primary batch "
+                    f"{batch_number}/{total_batches}"
+                ),
+            )
+
     # --------------------------------------------------------
     # AI RESCUE: AI AGAIN, NOT LEXICAL RULES.
     # --------------------------------------------------------
@@ -1912,10 +2061,31 @@ def main():
     for event_id, event in event_by_id.items():
         if (
             event.get(
-                "location_precision"
+                "ai_geo_complete"
             )
-            ==
-            "unlocated"
+            is True
+
+            and
+
+            (
+                event.get(
+                    "location_precision"
+                )
+                ==
+                "unlocated"
+
+                or
+
+                float(
+                    event.get(
+                        "location_confidence_score"
+                    )
+                    or
+                    0.0
+                )
+                <
+                0.55
+            )
 
             and
 
@@ -1970,6 +2140,11 @@ def main():
                     ],
                 )
 
+        save_checkpoint(
+            data,
+            "Gemini 3.6 rescue pass",
+        )
+
     # --------------------------------------------------------
     # SUMMARY
     # --------------------------------------------------------
@@ -2017,8 +2192,11 @@ def main():
         "version":
             AI_GEO_VERSION,
 
-        "model":
+        "primary_model":
             GEMINI_MODEL,
+
+        "rescue_model":
+            GEMINI_RESCUE_MODEL,
 
         "ai_for_every_event":
             True,
