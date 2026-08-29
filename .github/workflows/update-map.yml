@@ -84,7 +84,7 @@ jobs:
           fi
 
 
-      - name: Gemini AI-first geolocate every event
+      - name: Gemini AI-first resilient geolocation
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_GEO_MODEL: "gemini-3.5-flash-lite"
