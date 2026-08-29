@@ -67,19 +67,57 @@ jobs:
           pip install -r requirements.txt
 
 
-      - name: Collect CT events
+      - name: Collect and AI-select CT events
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AI_SELECTION_MODEL: "gemini-3.5-flash-lite"
+          AI_SELECTION_THRESHOLD: "50"
+          AI_SELECTION_BATCH_SIZE: "50"
         run: |
+
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "GEMINI_API_KEY GitHub secret is missing."
+            exit 1
+          fi
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
              [ "${{ inputs.mode }}" = "backfill" ]; then
 
-            echo "Running 180-day backfill."
+            echo "Running 180-day backfill with Gemini article selection."
             python -u collector.py backfill
 
           else
 
-            echo "Running daily collection."
+            echo "Running daily collection with Gemini article selection."
             python -u collector.py
+
+          fi
+
+
+      - name: Persist AI article-selection cache
+        if: always()
+        run: |
+          git config user.name "CT Intelligence Map Bot"
+          git config user.email "actions@github.com"
+
+          if [ -f ai_article_selection_cache.json ]; then
+
+            git add ai_article_selection_cache.json
+
+            if git diff --cached --quiet; then
+
+              echo "No AI article-selection cache changes to commit."
+
+            else
+
+              git commit -m "Update AI article selection cache"
+              git push origin main
+
+            fi
+
+          else
+
+            echo "No AI article-selection cache file yet."
 
           fi
 
