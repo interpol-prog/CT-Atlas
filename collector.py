@@ -2,6 +2,7 @@ import feedparser
 import hashlib
 import html
 import json
+import os
 import re
 import sys
 import time
@@ -36,7 +37,7 @@ except Exception:
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V7.2 — FAST DAILY + LIVE LOGS
+# OSINT COLLECTOR V8 — GEMINI AI ARTICLE SELECTION
 #
 # Expanded coverage + stricter event relevance.
 #
@@ -65,6 +66,55 @@ SERVER_ERROR_STREAK_LIMIT = 4
 
 QUERY_STATS = Counter()
 SERVER_ERROR_STREAK = 0
+
+
+# ============================================================
+# GEMINI AI ARTICLE SELECTION
+#
+# The deterministic relevance filter remains a cheap first-pass candidate
+# filter. After event-level deduplication, Gemini reviews every candidate
+# event semantically and assigns a relevance score from 0 to 100.
+#
+# User preference: keep score >= 50 to avoid over-filtering.
+# ============================================================
+
+AI_SELECTION_ENABLED = True
+
+GEMINI_INTERACTIONS_URL = (
+    "https://generativelanguage.googleapis.com/v1beta/interactions"
+)
+
+AI_SELECTION_MODEL = os.getenv(
+    "AI_SELECTION_MODEL",
+    "gemini-3.5-flash-lite",
+)
+
+AI_SELECTION_THRESHOLD = int(
+    os.getenv(
+        "AI_SELECTION_THRESHOLD",
+        "50",
+    )
+)
+
+AI_SELECTION_BATCH_SIZE = max(
+    1,
+    min(
+        60,
+        int(
+            os.getenv(
+                "AI_SELECTION_BATCH_SIZE",
+                "50",
+            )
+        ),
+    ),
+)
+
+AI_SELECTION_VERSION = "gemini-ct-selection-v1"
+AI_SELECTION_CACHE_FILE = "ai_article_selection_cache.json"
+
+AI_SELECTION_ATTEMPTS = 5
+AI_SELECTION_TIMEOUT = 240
+AI_SELECTION_PAUSE_SECONDS = 8.0
 
 
 CATEGORIES = {
@@ -1986,6 +2036,1226 @@ def collect_all(days):
         )
 
     return records
+
+
+
+# ============================================================
+# GEMINI AI EVENT SELECTION ENGINE
+# ============================================================
+
+AI_SELECTION_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "results": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "event_id": {
+                        "type": "string"
+                    },
+                    "relevance_score": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 100,
+                    },
+                    "is_current_ct_event": {
+                        "type": "boolean"
+                    },
+                    "categories": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "Terrorist Financing",
+                                "Weapons",
+                                "CBRN",
+                                "Online Radicalization / Cyberterrorism",
+                                "Attacks",
+                                "Arrests",
+                                "Legal / Judicial",
+                                "Disinformation / Emerging Technologies / AI",
+                            ],
+                        },
+                    },
+                    "reason": {
+                        "type": "string"
+                    },
+                },
+                "required": [
+                    "event_id",
+                    "relevance_score",
+                    "is_current_ct_event",
+                    "categories",
+                    "reason",
+                ],
+            },
+        },
+    },
+    "required": [
+        "results"
+    ],
+}
+
+
+AI_SELECTION_INSTRUCTIONS = """
+You are the final editorial relevance filter for an operational
+counter-terrorism situational-awareness map.
+
+For EVERY candidate event, judge whether it is genuinely useful as a CURRENT
+counter-terrorism intelligence event.
+
+Score relevance from 0 to 100.
+
+KEEPING POLICY:
+- The software keeps every event with score >= 50.
+- Therefore do NOT be excessively strict.
+- A plausible, operationally useful CT event should normally score at least 50.
+- Strong, specific current CT events should score 75-100.
+
+HIGH-SCORING EXAMPLES:
+- terrorist attack, attempted attack, disrupted plot;
+- arrest, raid, wanted terrorist, terrorist cell;
+- prosecution, charge, conviction, sentencing or extradition for terrorism;
+- terrorist financing, sanctions, asset seizure, crypto/hawala financing;
+- weapons, explosives, drones or CBRN connected to terrorists;
+- terrorist propaganda, recruitment, radicalization, cyberterrorism;
+- concrete terrorist use of AI, deepfakes or emerging technology;
+- operational developments involving named terrorist organisations.
+
+LOW-SCORING / REJECT EXAMPLES:
+- generic political commentary mentioning terrorism only incidentally;
+- ordinary crime with no meaningful terrorism nexus;
+- historical retrospectives, anniversaries or commemorations;
+- generic opinion pieces, book reviews or cultural references;
+- broad foreign-policy stories where terrorism is not the event;
+- an article that merely mentions 9/11, ISIS, Hamas, Taliban, etc. without a
+  current CT event;
+- unrelated cybercrime, cryptocurrency, sanctions, weapons or AI stories.
+
+IMPORTANT:
+- Do not judge relevance based only on keywords.
+- Understand the event semantically.
+- A named terrorist group can establish CT relevance even if the literal word
+  "terrorism" is absent.
+- Conversely, the word "terrorism" alone does not make an article relevant.
+- Source reputation does not determine relevance.
+- Evaluate the EVENT, not the publisher.
+- If an event is genuinely relevant but only moderately informative, prefer a
+  score just above 50 rather than rejecting it.
+
+Also return the most appropriate category or categories from the supplied
+taxonomy. Multiple categories are allowed.
+
+Keep the reason concise and specific.
+"""
+
+
+class AISelectionIncompleteError(RuntimeError):
+    pass
+
+
+class AISelectionQuotaError(RuntimeError):
+    pass
+
+
+class AISelectionTransientError(RuntimeError):
+    pass
+
+
+def selection_compact_text(
+    value,
+    limit,
+):
+    value = clean_text(
+        value
+    )
+
+    if len(
+        value
+    ) <= limit:
+        return value
+
+    return (
+        value[
+            :limit
+        ].rstrip()
+        +
+        "…"
+    )
+
+
+def selection_payload(
+    event,
+    index,
+):
+    event_id = str(
+        event.get(
+            "id"
+        )
+        or
+        f"candidate-{index}"
+    )
+
+    related = []
+
+    for article in (
+        event.get(
+            "related_articles"
+        )
+        or
+        []
+    )[:4]:
+        if not isinstance(
+            article,
+            dict
+        ):
+            continue
+
+        title = selection_compact_text(
+            article.get(
+                "title"
+            ),
+            280,
+        )
+
+        source = selection_compact_text(
+            article.get(
+                "source"
+            ),
+            100,
+        )
+
+        if title:
+            related.append(
+                {
+                    "title":
+                        title,
+                    "source":
+                        source,
+                }
+            )
+
+    return {
+        "event_id":
+            event_id,
+
+        "title":
+            selection_compact_text(
+                event.get(
+                    "title"
+                ),
+                650,
+            ),
+
+        "summary":
+            selection_compact_text(
+                event.get(
+                    "summary"
+                ),
+                1100,
+            ),
+
+        "source":
+            selection_compact_text(
+                event.get(
+                    "source"
+                ),
+                140,
+            ),
+
+        "published":
+            str(
+                event.get(
+                    "published"
+                )
+                or
+                ""
+            ),
+
+        "current_categories":
+            list(
+                event.get(
+                    "categories"
+                )
+                or
+                (
+                    [
+                        event.get(
+                            "category"
+                        )
+                    ]
+                    if event.get(
+                        "category"
+                    )
+                    else []
+                )
+            ),
+
+        "related_articles":
+            related,
+    }
+
+
+def selection_fingerprint(
+    event
+):
+    material = {
+        "url":
+            str(
+                event.get(
+                    "url"
+                )
+                or
+                ""
+            ),
+
+        "title":
+            normalize_title(
+                event.get(
+                    "title"
+                )
+                or
+                ""
+            ),
+
+        "summary":
+            selection_compact_text(
+                event.get(
+                    "summary"
+                ),
+                1000,
+            ),
+    }
+
+    return hashlib.sha256(
+        json.dumps(
+            material,
+            ensure_ascii=False,
+            sort_keys=True,
+        ).encode(
+            "utf-8"
+        )
+    ).hexdigest()
+
+
+def load_selection_cache():
+    try:
+        with open(
+            AI_SELECTION_CACHE_FILE,
+            "r",
+            encoding="utf-8",
+        ) as file:
+            cache = json.load(
+                file
+            )
+
+        if (
+            cache.get(
+                "version"
+            )
+            !=
+            AI_SELECTION_VERSION
+        ):
+            return {
+                "version":
+                    AI_SELECTION_VERSION,
+                "model":
+                    AI_SELECTION_MODEL,
+                "threshold":
+                    AI_SELECTION_THRESHOLD,
+                "items":
+                    {},
+            }
+
+        if not isinstance(
+            cache.get(
+                "items"
+            ),
+            dict
+        ):
+            cache[
+                "items"
+            ] = {}
+
+        return cache
+
+    except Exception:
+        return {
+            "version":
+                AI_SELECTION_VERSION,
+            "model":
+                AI_SELECTION_MODEL,
+            "threshold":
+                AI_SELECTION_THRESHOLD,
+            "items":
+                {},
+        }
+
+
+def save_selection_cache(
+    cache
+):
+    cache[
+        "version"
+    ] = AI_SELECTION_VERSION
+
+    cache[
+        "model"
+    ] = AI_SELECTION_MODEL
+
+    cache[
+        "threshold"
+    ] = AI_SELECTION_THRESHOLD
+
+    cache[
+        "last_updated"
+    ] = datetime.now(
+        timezone.utc
+    ).isoformat()
+
+    with open(
+        AI_SELECTION_CACHE_FILE,
+        "w",
+        encoding="utf-8",
+    ) as file:
+        json.dump(
+            cache,
+            file,
+            ensure_ascii=False,
+            indent=2,
+        )
+
+
+def extract_interaction_text(
+    payload
+):
+    status = str(
+        payload.get(
+            "status",
+            ""
+        )
+        or
+        ""
+    ).lower()
+
+    if status in {
+        "incomplete",
+        "budget_exceeded",
+    }:
+        raise AISelectionIncompleteError(
+            f"Gemini interaction status={status}"
+        )
+
+    if status in {
+        "failed",
+        "cancelled",
+    }:
+        raise RuntimeError(
+            "Gemini article-selection interaction "
+            f"ended with status {status}: "
+            f"{payload.get('error')}"
+        )
+
+    texts = []
+
+    for step in payload.get(
+        "steps",
+        []
+    ):
+        if not isinstance(
+            step,
+            dict
+        ):
+            continue
+
+        if step.get(
+            "type"
+        ) != "model_output":
+            continue
+
+        content = step.get(
+            "content",
+            []
+        )
+
+        if isinstance(
+            content,
+            dict
+        ):
+            content = [
+                content
+            ]
+
+        for part in content:
+            if (
+                isinstance(
+                    part,
+                    dict
+                )
+                and
+                part.get(
+                    "type"
+                )
+                ==
+                "text"
+                and
+                part.get(
+                    "text"
+                )
+            ):
+                texts.append(
+                    part[
+                        "text"
+                    ]
+                )
+
+    output = "".join(
+        texts
+    ).strip()
+
+    if not output:
+        raise AISelectionIncompleteError(
+            "Gemini returned no article-selection text."
+        )
+
+    return output
+
+
+def call_ai_selection_batch(
+    batch
+):
+    api_key = os.getenv(
+        "GEMINI_API_KEY"
+    )
+
+    if not api_key:
+        raise RuntimeError(
+            "GEMINI_API_KEY is missing. "
+            "AI article selection cannot run."
+        )
+
+    body = {
+        "model":
+            AI_SELECTION_MODEL,
+
+        "input":
+            (
+                "Review every candidate CT event below. "
+                "Return exactly one result for every event_id.\n\n"
+                +
+                json.dumps(
+                    {
+                        "events":
+                            batch
+                    },
+                    ensure_ascii=False,
+                )
+            ),
+
+        "system_instruction":
+            AI_SELECTION_INSTRUCTIONS,
+
+        "store":
+            False,
+
+        "response_format": {
+            "type":
+                "text",
+
+            "mime_type":
+                "application/json",
+
+            "schema":
+                AI_SELECTION_SCHEMA,
+        },
+
+        "generation_config": {
+            "max_output_tokens":
+                16000,
+
+            "thinking_level":
+                "minimal",
+        },
+    }
+
+    headers = {
+        "x-goog-api-key":
+            api_key,
+
+        "Content-Type":
+            "application/json",
+    }
+
+    for attempt in range(
+        1,
+        AI_SELECTION_ATTEMPTS + 1,
+    ):
+        try:
+            response = requests.post(
+                GEMINI_INTERACTIONS_URL,
+                headers=headers,
+                json=body,
+                timeout=AI_SELECTION_TIMEOUT,
+            )
+
+            if response.status_code == 429:
+                delay = min(
+                    120,
+                    15 * attempt,
+                )
+
+                print(
+                    f"   AI selection quota 429; "
+                    f"attempt {attempt}/"
+                    f"{AI_SELECTION_ATTEMPTS}; "
+                    f"retrying in {delay}s"
+                )
+
+                if attempt >= AI_SELECTION_ATTEMPTS:
+                    raise AISelectionQuotaError(
+                        "Gemini article-selection quota reached."
+                    )
+
+                time.sleep(
+                    delay
+                )
+
+                continue
+
+            if response.status_code in {
+                408,
+                409,
+                500,
+                502,
+                503,
+                504,
+            }:
+                delay = min(
+                    90,
+                    12 * attempt,
+                )
+
+                print(
+                    f"   AI selection temporary HTTP "
+                    f"{response.status_code}; "
+                    f"retrying in {delay}s"
+                )
+
+                if attempt >= AI_SELECTION_ATTEMPTS:
+                    raise AISelectionTransientError(
+                        "Gemini article-selection service unavailable."
+                    )
+
+                time.sleep(
+                    delay
+                )
+
+                continue
+
+            if response.status_code >= 400:
+                raise RuntimeError(
+                    "Gemini article-selection API error "
+                    f"{response.status_code}: "
+                    f"{response.text[:1800]}"
+                )
+
+            payload = response.json()
+
+            output_text = extract_interaction_text(
+                payload
+            )
+
+            try:
+                parsed = json.loads(
+                    output_text
+                )
+
+            except json.JSONDecodeError as error:
+                raise AISelectionIncompleteError(
+                    "Invalid Gemini article-selection JSON."
+                ) from error
+
+            results = parsed.get(
+                "results"
+            )
+
+            if not isinstance(
+                results,
+                list
+            ):
+                raise AISelectionIncompleteError(
+                    "Gemini selection result has no results array."
+                )
+
+            time.sleep(
+                AI_SELECTION_PAUSE_SECONDS
+            )
+
+            return results
+
+        except AISelectionIncompleteError:
+            raise
+
+        except requests.RequestException as error:
+            if attempt >= AI_SELECTION_ATTEMPTS:
+                raise AISelectionTransientError(
+                    "Gemini article-selection network failure."
+                ) from error
+
+            delay = min(
+                90,
+                10 * attempt,
+            )
+
+            print(
+                f"   AI selection network error: "
+                f"{error}; retrying in {delay}s"
+            )
+
+            time.sleep(
+                delay
+            )
+
+    raise AISelectionTransientError(
+        "Gemini article-selection request failed."
+    )
+
+
+def process_ai_selection_batch(
+    batch
+):
+    try:
+        results = call_ai_selection_batch(
+            batch
+        )
+
+        returned = {
+            str(
+                result.get(
+                    "event_id"
+                )
+            )
+            for result
+            in results
+            if result.get(
+                "event_id"
+            )
+        }
+
+        expected = {
+            str(
+                item.get(
+                    "event_id"
+                )
+            )
+            for item
+            in batch
+        }
+
+        if returned != expected:
+            raise AISelectionIncompleteError(
+                "Gemini omitted one or more candidate events."
+            )
+
+        return results
+
+    except AISelectionIncompleteError:
+        if len(
+            batch
+        ) <= 1:
+            raise
+
+        midpoint = max(
+            1,
+            len(
+                batch
+            )
+            //
+            2
+        )
+
+        left = batch[
+            :midpoint
+        ]
+
+        right = batch[
+            midpoint:
+        ]
+
+        print(
+            f"   AI selection incomplete for "
+            f"{len(batch)} events; splitting into "
+            f"{len(left)} + {len(right)}."
+        )
+
+        return (
+            process_ai_selection_batch(
+                left
+            )
+            +
+            process_ai_selection_batch(
+                right
+            )
+        )
+
+
+def apply_ai_selection(
+    event,
+    result,
+):
+    try:
+        score = int(
+            result.get(
+                "relevance_score",
+                0,
+            )
+        )
+    except Exception:
+        score = 0
+
+    score = max(
+        0,
+        min(
+            100,
+            score,
+        ),
+    )
+
+    categories = [
+        category
+        for category
+        in (
+            result.get(
+                "categories"
+            )
+            or
+            []
+        )
+        if category
+        in CATEGORIES
+    ]
+
+    if (
+        score
+        >=
+        AI_SELECTION_THRESHOLD
+
+        and
+
+        not categories
+    ):
+        categories = list(
+            event.get(
+                "categories"
+            )
+            or
+            (
+                [
+                    event.get(
+                        "category"
+                    )
+                ]
+                if event.get(
+                    "category"
+                )
+                else []
+            )
+        )
+
+    event[
+        "ai_selection_complete"
+    ] = True
+
+    event[
+        "ai_selection_version"
+    ] = AI_SELECTION_VERSION
+
+    event[
+        "ai_selection_model"
+    ] = AI_SELECTION_MODEL
+
+    event[
+        "ai_relevance_score"
+    ] = score
+
+    event[
+        "ai_relevance_reason"
+    ] = clean_text(
+        result.get(
+            "reason"
+        )
+        or
+        ""
+    )
+
+    event[
+        "ai_current_ct_event"
+    ] = bool(
+        result.get(
+            "is_current_ct_event"
+        )
+    )
+
+    event[
+        "ai_selected"
+    ] = (
+        score
+        >=
+        AI_SELECTION_THRESHOLD
+    )
+
+    if categories:
+        event[
+            "categories"
+        ] = categories
+
+        event[
+            "category"
+        ] = categories[
+            0
+        ]
+
+    return (
+        score
+        >=
+        AI_SELECTION_THRESHOLD
+    )
+
+
+def ai_select_events(
+    events
+):
+    if not AI_SELECTION_ENABLED:
+        return events
+
+    print()
+    print("=" * 70)
+    print("GEMINI AI ARTICLE SELECTION")
+    print("=" * 70)
+    print(
+        f"Candidate event clusters: "
+        f"{len(events)}"
+    )
+    print(
+        f"Model: {AI_SELECTION_MODEL}"
+    )
+    print(
+        f"Keep threshold: "
+        f"{AI_SELECTION_THRESHOLD}/100"
+    )
+
+    cache = load_selection_cache()
+
+    event_by_id = {}
+    fingerprint_by_id = {}
+    pending = []
+    decisions = {}
+
+    cached_count = 0
+
+    for index, event in enumerate(
+        events
+    ):
+        payload = selection_payload(
+            event,
+            index,
+        )
+
+        event_id = payload[
+            "event_id"
+        ]
+
+        if event_id in event_by_id:
+            event_id = (
+                event_id
+                +
+                "-"
+                +
+                str(
+                    index
+                )
+            )
+
+            payload[
+                "event_id"
+            ] = event_id
+
+        fingerprint = selection_fingerprint(
+            event
+        )
+
+        event_by_id[
+            event_id
+        ] = event
+
+        fingerprint_by_id[
+            event_id
+        ] = fingerprint
+
+        cached = (
+            cache.get(
+                "items",
+                {}
+            ).get(
+                fingerprint
+            )
+        )
+
+        if (
+            isinstance(
+                cached,
+                dict
+            )
+            and
+            cached.get(
+                "version"
+            )
+            ==
+            AI_SELECTION_VERSION
+        ):
+            decisions[
+                event_id
+            ] = cached[
+                "result"
+            ]
+
+            cached_count += 1
+
+        else:
+            pending.append(
+                payload
+            )
+
+    print(
+        f"Cached AI decisions: "
+        f"{cached_count}"
+    )
+    print(
+        f"Need AI review: "
+        f"{len(pending)}"
+    )
+
+    total_batches = (
+        (
+            len(
+                pending
+            )
+            +
+            AI_SELECTION_BATCH_SIZE
+            -
+            1
+        )
+        //
+        AI_SELECTION_BATCH_SIZE
+    )
+
+    for start in range(
+        0,
+        len(
+            pending
+        ),
+        AI_SELECTION_BATCH_SIZE,
+    ):
+        batch_number = (
+            start
+            //
+            AI_SELECTION_BATCH_SIZE
+            +
+            1
+        )
+
+        batch = pending[
+            start:
+            start + AI_SELECTION_BATCH_SIZE
+        ]
+
+        print(
+            f"AI selection batch "
+            f"{batch_number}/{total_batches} "
+            f"— {len(batch)} events"
+        )
+
+        try:
+            results = process_ai_selection_batch(
+                batch
+            )
+
+        except (
+            AISelectionQuotaError,
+            AISelectionTransientError,
+            AISelectionIncompleteError,
+        ) as error:
+            save_selection_cache(
+                cache
+            )
+
+            print()
+            print(
+                "AI article selection could not finish safely."
+            )
+            print(
+                f"Reason: {error}"
+            )
+            print(
+                "The current events.json will NOT be replaced."
+            )
+            print(
+                "The AI selection cache has been saved so the next "
+                "workflow run can resume."
+            )
+
+            return None
+
+        for result in results:
+            event_id = str(
+                result.get(
+                    "event_id"
+                )
+                or
+                ""
+            )
+
+            if event_id not in event_by_id:
+                continue
+
+            decisions[
+                event_id
+            ] = result
+
+            fingerprint = fingerprint_by_id[
+                event_id
+            ]
+
+            cache[
+                "items"
+            ][
+                fingerprint
+            ] = {
+                "version":
+                    AI_SELECTION_VERSION,
+
+                "reviewed_at":
+                    datetime.now(
+                        timezone.utc
+                    ).isoformat(),
+
+                "result":
+                    result,
+            }
+
+        save_selection_cache(
+            cache
+        )
+
+        print(
+            f"   AI selection checkpoint saved."
+        )
+
+    selected = []
+    rejected = []
+
+    for event_id, event in event_by_id.items():
+        result = decisions.get(
+            event_id
+        )
+
+        if result is None:
+            print(
+                f"Missing AI selection decision for "
+                f"{event_id}; aborting safely."
+            )
+
+            save_selection_cache(
+                cache
+            )
+
+            return None
+
+        keep = apply_ai_selection(
+            event,
+            result,
+        )
+
+        if keep:
+            selected.append(
+                event
+            )
+        else:
+            rejected.append(
+                event
+            )
+
+    score_bands = Counter()
+
+    for event in events:
+        score = event.get(
+            "ai_relevance_score",
+            0,
+        )
+
+        if score >= 80:
+            score_bands[
+                "80-100"
+            ] += 1
+        elif score >= 60:
+            score_bands[
+                "60-79"
+            ] += 1
+        elif score >= 50:
+            score_bands[
+                "50-59"
+            ] += 1
+        else:
+            score_bands[
+                "0-49"
+            ] += 1
+
+    print()
+    print(
+        f"AI KEPT:     "
+        f"{len(selected)}"
+    )
+    print(
+        f"AI REJECTED: "
+        f"{len(rejected)}"
+    )
+    print(
+        "Score bands: "
+        +
+        ", ".join(
+            f"{band}={count}"
+            for band, count
+            in score_bands.items()
+        )
+    )
+
+    if rejected:
+        print()
+        print(
+            "Rejected examples:"
+        )
+
+        for event in sorted(
+            rejected,
+            key=lambda item:
+                item.get(
+                    "ai_relevance_score",
+                    0,
+                )
+        )[:10]:
+            print(
+                f"   "
+                f"{event.get('ai_relevance_score', 0):>3}/100 "
+                f"— "
+                f"{selection_compact_text(event.get('title'), 110)}"
+            )
+
+    save_selection_cache(
+        cache
+    )
+
+    return selected
 
 
 # ============================================================
@@ -4086,9 +5356,20 @@ def save_database(events):
         "language":
             "English",
         "collector":
-            "Google News RSS V7 throttle-safe compact discovery + local classification",
+            "Google News RSS V8 + Gemini semantic article selection",
         "relevance_filter":
-            "CT event relevance filter V3",
+            "Deterministic CT candidate filter + Gemini semantic final selection",
+
+        "ai_article_selection": {
+            "enabled":
+                AI_SELECTION_ENABLED,
+            "model":
+                AI_SELECTION_MODEL,
+            "threshold":
+                AI_SELECTION_THRESHOLD,
+            "version":
+                AI_SELECTION_VERSION,
+        },
         "deduplication":
             "Multi-signal event clustering V4",
         "search_query_count":
@@ -4176,22 +5457,35 @@ def save_database(events):
 
 
 def main():
-    if (
-        len(sys.argv) > 1
+    is_backfill = (
+        len(
+            sys.argv
+        )
+        >
+        1
+
         and
-        sys.argv[1].lower()
+
+        sys.argv[
+            1
+        ].lower()
         ==
         "backfill"
-    ):
+    )
+
+    if is_backfill:
         print(
             "180-DAY BACKFILL MODE"
         )
+
         days = RETENTION_DAYS
         existing = []
+
     else:
         print(
             "DAILY UPDATE MODE"
         )
+
         days = DAILY_LOOKBACK_DAYS
         existing = load_existing()
 
@@ -4200,37 +5494,80 @@ def main():
             f"{len(existing)} events"
         )
 
-    fresh = collect_all(days)
+    fresh = collect_all(
+        days
+    )
 
     print()
     print(
         f"Collection returned "
-        f"{len(fresh)} accepted records."
+        f"{len(fresh)} deterministic candidate records."
     )
 
-    if (
-        len(sys.argv) > 1
-        and
-        sys.argv[1].lower()
-        ==
-        "backfill"
-    ):
+    # --------------------------------------------------------
+    # Deduplicate BEFORE AI review.
+    #
+    # This prevents Gemini from reviewing 30-50 copies of the same
+    # underlying story found through different Google News searches.
+    # --------------------------------------------------------
+
+    print()
+    print(
+        "Clustering fresh candidate records before AI selection..."
+    )
+
+    fresh_clusters = deduplicate_events(
+        fresh
+    )
+
+    print(
+        f"Fresh candidate event clusters: "
+        f"{len(fresh_clusters)}"
+    )
+
+    selected_fresh = ai_select_events(
+        fresh_clusters
+    )
+
+    if selected_fresh is None:
+        print()
+        print("=" * 70)
+        print("COLLECTION PAUSED — AI SELECTION INCOMPLETE")
+        print("=" * 70)
         print(
-            "Using FULL 180-day event clustering."
+            "events.json has not been replaced."
+        )
+        print(
+            f"Progress is preserved in "
+            f"{AI_SELECTION_CACHE_FILE}."
         )
 
-        events = deduplicate_events(
-            fresh
+        # Non-zero exit lets the workflow stop before geolocation.
+        # A dedicated `if: always()` workflow step commits the cache.
+        raise SystemExit(
+            75
         )
+
+    print()
+    print(
+        f"Gemini selected "
+        f"{len(selected_fresh)}/"
+        f"{len(fresh_clusters)} "
+        f"candidate event clusters."
+    )
+
+    if is_backfill:
+        events = selected_fresh
 
     else:
         print(
-            "Using FAST incremental daily clustering."
+            "Using FAST incremental daily clustering "
+            "against the existing database."
         )
 
         events = deduplicate_incremental(
             existing,
-            fresh,
+            selected_fresh,
         )
 
     events = prune_old(
@@ -4246,7 +5583,9 @@ def main():
         reverse=True,
     )
 
-    save_database(events)
+    save_database(
+        events
+    )
 
     print()
     print("=" * 70)
@@ -4265,7 +5604,8 @@ def main():
         f"{sum(len(v) for v in CORE_SEARCH_QUERIES.values()) + len(OFFICIAL_BROAD_QUERIES) + sum(len(targeted_source_queries(source)) for source in TARGETED_SOURCE_SITES)}"
     )
     print(
-        "CT event relevance filter: ON"
+        f"AI article threshold: "
+        f"{AI_SELECTION_THRESHOLD}/100"
     )
     print(
         f"Saved to: "
