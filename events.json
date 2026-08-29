@@ -5,8 +5,14 @@
   "default_map_period": 180,
   "daily_lookback_days": 3,
   "language": "English",
-  "collector": "Google News RSS V7 throttle-safe compact discovery + local classification",
-  "relevance_filter": "CT event relevance filter V3",
+  "collector": "Google News RSS V8 + Gemini semantic article selection",
+  "relevance_filter": "Deterministic CT candidate filter + Gemini semantic final selection",
+  "ai_article_selection": {
+    "enabled": true,
+    "model": "gemini-3.5-flash-lite",
+    "threshold": 50,
+    "version": "gemini-ct-selection-v1"
+  },
   "deduplication": "Multi-signal event clustering V4",
   "search_query_count": 79,
   "general_search_query_count": 48,
@@ -39,7 +45,7 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-08-29T07:23:55.441075+00:00",
+  "last_updated": "2026-08-29T08:05:49.122930+00:00",
   "number_of_events": 1230,
   "events": [
     {
@@ -3781,7 +3787,8 @@
       "id": "1824381f6fa2eff9",
       "category": "Legal / Judicial",
       "categories": [
-        "Legal / Judicial"
+        "Legal / Judicial",
+        "Terrorist Financing"
       ],
       "title": "Two Mexican Nationals Plead Guilty to Alien Smuggling and Providing Material Support to a Designated Foreign Terrorist Organization",
       "summary": "Two Mexican Nationals Plead Guilty to Alien Smuggling and Providing Material Support to a Designated Foreign Terrorist Organization Department of Justice (.gov)",
@@ -3797,7 +3804,7 @@
       "latitude": 38.89511,
       "longitude": -77.03637,
       "location_precision": "country_capital",
-      "location_confidence": "medium",
+      "location_confidence": "high",
       "acquisition_channel": "official_primary_source_query",
       "targeted_source": "U.S. Department of Justice",
       "targeted_source_kind": "official_primary_source",
@@ -3811,19 +3818,19 @@
       "location_score": 0,
       "location_method": "ai_country_capital",
       "location_evidence": [
-        "Department of Justice (.gov)"
+        "Department of Justice (.gov) press release regarding guilty pleas of Mexican nationals for supporting a designated foreign terrorist organization."
       ],
       "excluded_from_map": false,
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "same_url"
       ],
-      "location_confidence_score": 0.8,
+      "location_confidence_score": 0.9,
       "ai_geo_complete": true,
       "ai_geo_version": "gemini-ai-first-v5-resilient",
       "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Prosecuted by the US Department of Justice involving material support to a foreign terrorist organization.",
-      "ai_geo_fingerprint": "146b3e8a249c9a0e40863b92ab95a33d394cf94a3aa85bda347bf1e35410713f",
+      "ai_geo_reason": "Prosecutions under U.S. material support laws by the Department of Justice take place in federal courts within the United States, though the specific city is not named in the summary.",
+      "ai_geo_fingerprint": "10714a519b075162f5586c5444c9aa2a48ad0ee400dc5de94f337622485333e6",
       "ai_geo_inferred": true
     },
     {
@@ -8414,7 +8421,8 @@
       "country_code": "NO",
       "location_precision": "country_capital",
       "categories": [
-        "Attacks"
+        "Attacks",
+        "Arrests"
       ],
       "location_confidence": "high",
       "location_score": 175.0,
@@ -8439,9 +8447,9 @@
       "ai_geo_complete": true,
       "ai_geo_version": "gemini-ai-first-v5-resilient",
       "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "The arrest occurred in Norway.",
-      "ai_geo_fingerprint": "62f5636c89fe121cfadb003683bdd7d98895b37432b3a1d1252efe87dfef28fe",
-      "ai_geo_inferred": false
+      "ai_geo_reason": "The event is an arrest in Norway regarding a terror plot; no specific city is provided.",
+      "ai_geo_fingerprint": "19856b22ffe861916e026ce1663f32c0ef4f83e7b9e19ccd341dd949afac8805",
+      "ai_geo_inferred": true
     },
     {
       "id": "c70722ad27ab9458",
@@ -9245,7 +9253,8 @@
       "id": "73607ae9e6d59b86",
       "category": "Attacks",
       "categories": [
-        "Attacks"
+        "Attacks",
+        "Arrests"
       ],
       "title": "National Police and Security Service of Ukraine prevent terrorist attack against head of defense enterprise",
       "summary": "National Police and Security Service of Ukraine prevent terrorist attack against head of defense enterprise ukranews.com",
@@ -9259,13 +9268,13 @@
       "city": "Kyiv",
       "latitude": 50.45466,
       "longitude": 30.5238,
-      "location_precision": "country_capital",
+      "location_precision": "city",
       "location_confidence": "high",
       "location_score": 240.0,
-      "location_method": "ai_country_capital",
+      "location_method": "ai_city_geonames",
       "region": null,
       "location_evidence": [
-        "National Police and Security Service of Ukraine"
+        "National Police and Security Service of Ukraine prevent terrorist attack against head of defense enterprise (connected to Kyiv region in related reports)."
       ],
       "excluded_from_map": false,
       "sources": [
@@ -9279,13 +9288,13 @@
       "dedup_methods": [
         "same_url"
       ],
-      "location_confidence_score": 0.95,
+      "location_confidence_score": 0.9,
       "ai_geo_complete": true,
       "ai_geo_version": "gemini-ai-first-v5-resilient",
       "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Security operation conducted by Ukrainian law enforcement in Ukraine.",
-      "ai_geo_fingerprint": "bc09df3e403b02312407a222e0fc3c1ccb0e165e8cde470d3dab19fe23341c0b",
-      "ai_geo_inferred": false
+      "ai_geo_reason": "The SBU and National Police of Ukraine foiled a terrorist attack targeting a defense enterprise official in the Kyiv region.",
+      "ai_geo_fingerprint": "e192125aa61938d76376507ffa371565517574c65a694ac8cef9e8c4e9c80749",
+      "ai_geo_inferred": true
     },
     {
       "id": "98e46e2f1ca5248d",
@@ -9500,7 +9509,8 @@
       "id": "fc45d9e94f67357b",
       "category": "Attacks",
       "categories": [
-        "Attacks"
+        "Attacks",
+        "Arrests"
       ],
       "title": "Terrorist attack against head of defense industry enterprise foiled in Kyiv region, request for extradition of suspect from Poland initiated - SBU",
       "summary": "Terrorist attack against head of defense industry enterprise foiled in Kyiv region, request for extradition of suspect from Poland initiated - SBU Українські Національні Новини (УНН)",
@@ -9518,9 +9528,9 @@
       "location_confidence": "high",
       "location_score": 254.0,
       "location_method": "ai_region_coordinates",
-      "region": "Kyiv region",
+      "region": "Kyiv",
       "location_evidence": [
-        "Kyiv region"
+        "Terrorist attack against head of defense industry enterprise foiled in Kyiv region, request for extradition of suspect from Poland initiated - SBU"
       ],
       "excluded_from_map": false,
       "sources": [
@@ -9580,8 +9590,8 @@
       "ai_geo_complete": true,
       "ai_geo_version": "gemini-ai-first-v5-resilient",
       "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Terrorist attack foiled in the Kyiv region of Ukraine.",
-      "ai_geo_fingerprint": "b05d5e65f6c7cdf117b44ec24483b397cdf6ae6aafa0663a87a7c597aa15f375",
+      "ai_geo_reason": "The foiled attack and target location are explicitly in the Kyiv region of Ukraine.",
+      "ai_geo_fingerprint": "c831b97562bb315bb2b2df14239891bd360d6ef2238c72e8acc9b9d9603d9b45",
       "ai_geo_inferred": false
     },
     {
@@ -38850,18 +38860,18 @@
       "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPUm4zR1B2RXZqWE5zb3pRSEJXTDRBLTJEMlYwVWJ1MkRLZG5RLUI0N1hZWi1tYWF5UnhONzM0eC01Wl85YXV0LWZoalNPODZ4VDF5bHA5b0QxQV9QNXRZTlpaMUNLdEhrMjVFMFpDc0dOV0VTaW1QUWd4c2wxWThjcW93?oc=5",
       "collector": "Google News",
       "source_count": 1,
-      "country": null,
-      "city": null,
-      "latitude": null,
-      "longitude": null,
-      "location_precision": "unlocated",
-      "country_code": null,
-      "location_confidence": "low",
+      "country": "France",
+      "city": "Paris",
+      "latitude": 48.85341,
+      "longitude": 2.3488,
+      "location_precision": "city",
+      "country_code": "FR",
+      "location_confidence": "medium",
       "location_score": 60.0,
-      "location_method": "ai_unlocated",
+      "location_method": "ai_city_geonames",
       "region": null,
       "location_evidence": [
-        "FATF report on QR codes and crypto"
+        "FATF report release"
       ],
       "excluded_from_map": false,
       "sources": [
@@ -38871,13 +38881,13 @@
       "article_count": 1,
       "first_reported": "2026-06-29T07:00:00+00:00",
       "last_reported": "2026-06-29T07:00:00+00:00",
-      "location_confidence_score": 0.0,
+      "location_confidence_score": 0.6,
       "ai_geo_complete": true,
       "ai_geo_version": "gemini-ai-first-v5-resilient",
       "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Global FATF warning about global trends without a specific country event.",
+      "ai_geo_reason": "The Financial Action Task Force (FATF) is headquartered in Paris, France, where its global reports are issued.",
       "ai_geo_fingerprint": "3376add11fbb0793a77bd7136fd6eac9c3bf582583ddd88eb18b07f747fa3291",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": true
     },
     {
       "id": "05459d0fed2105b6",
@@ -39040,18 +39050,18 @@
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPN2xiYWlkTXoteUZaaHRMRm00bUs5eFJTNEl1V19FVldFUmZUbGVFTk9kRE9FMjdjQzh4QldHSTdzTkpVNDkxZm1HUmNpajhGOG54LTNEajhiWmNvS2RJbU9IYmVYelZHWnZfbzI3WFNkb09OSjY0MzFFWDgwYXZZYmliZGVfbGMzVlRreTJkeHdMcDFwSExUa05OeWlIVzNFd0FXbHhrdjNiQy03ekxXR3NDaVNYd9IBwwFBVV95cUxNaGtOdDNlN3V1ZHdrZE5jNUpnaUN1R3hWX0hUMVJwcTJjZFFRM0FQd3NLWTR2M0tnYTBVRHJlOTAyM0NCME40UTlUVmd2SC1zTDBYdzBtdmFRSk1nbks3Yl93ZDlxbTlnY25OcVVuekRDYUNvelFjMVVTblprQmNDR1VzX2REUDJLVTVtcHA2bEpSZUYxVkhWV0FEb1Q1elpPZE1PMGV3T3FqZ2NyRWVhcmFNRTh1V29jVDN6am1LMzRjeW8?oc=5",
       "collector": "Google News",
       "source_count": 1,
-      "country": null,
-      "city": null,
-      "latitude": null,
-      "longitude": null,
-      "country_code": null,
-      "location_precision": "unlocated",
-      "location_confidence": "low",
+      "country": "France",
+      "city": "Paris",
+      "latitude": 48.85341,
+      "longitude": 2.3488,
+      "country_code": "FR",
+      "location_precision": "city",
+      "location_confidence": "medium",
       "location_score": 185.0,
-      "location_method": "ai_unlocated",
+      "location_method": "ai_city_geonames",
       "region": null,
       "location_evidence": [
-        "FATF warns global terror financing goes digital"
+        "FATF warning report"
       ],
       "excluded_from_map": false,
       "sources": [
@@ -39061,13 +39071,13 @@
       "article_count": 1,
       "first_reported": "2026-06-28T07:00:00+00:00",
       "last_reported": "2026-06-28T07:00:00+00:00",
-      "location_confidence_score": 0.0,
+      "location_confidence_score": 0.6,
       "ai_geo_complete": true,
       "ai_geo_version": "gemini-ai-first-v5-resilient",
       "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Global announcement by the FATF with no specific country target.",
+      "ai_geo_reason": "The Financial Action Task Force (FATF) issues its official reports and warnings from its headquarters in Paris, France.",
       "ai_geo_fingerprint": "7375a3043000a8ab5a7718e25c5f45077afd47fc1e329308394acacf967ab571",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": true
     },
     {
       "id": "88eaf45fdbe394a9",
@@ -39192,18 +39202,18 @@
       "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxNcVFiNDdXb3lhMFc1RU13QWx4TDBHR19LZzJaVWRManNLUGpGYkVfX2t1QU96bTVZdmtOemRmaWNvS3RIdGxlRG5mZVVVOHJnRVhjSVh4M0Y5dC00eHVLd3pPbVlYS3hWVmdQOW1QcWZnak9xNGpzSm9zUUhNWWVURk9ySzJ0clRMbkJkSzFZLXZmMHctNkFxSVVJRnBRYlBzdVV1VGh2R3BybU5VdnJlMFBSWC1ybFY3T2oxazdGT0tLaWxBcGxDSDQ5enB0OEFrS2pTdnVvRWVVbVZMQVl2TGpGZXBYUTF3a2c?oc=5",
       "collector": "Google News",
       "source_count": 1,
-      "country": null,
-      "city": null,
-      "latitude": null,
-      "longitude": null,
-      "country_code": null,
-      "location_precision": "unlocated",
-      "location_confidence": "low",
+      "country": "France",
+      "city": "Paris",
+      "latitude": 48.85341,
+      "longitude": 2.3488,
+      "country_code": "FR",
+      "location_precision": "city",
+      "location_confidence": "medium",
       "location_score": 125.0,
-      "location_method": "ai_unlocated",
+      "location_method": "ai_city_geonames",
       "region": null,
       "location_evidence": [
-        "FATF flags rising terrorist financing risks globally"
+        "FATF global risk assessment release"
       ],
       "excluded_from_map": false,
       "sources": [
@@ -39213,13 +39223,13 @@
       "article_count": 1,
       "first_reported": "2026-06-27T07:00:00+00:00",
       "last_reported": "2026-06-27T07:00:00+00:00",
-      "location_confidence_score": 0.0,
+      "location_confidence_score": 0.6,
       "ai_geo_complete": true,
       "ai_geo_version": "gemini-ai-first-v5-resilient",
       "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Global FATF findings report.",
+      "ai_geo_reason": "Reports and risk assessments by the Financial Action Task Force (FATF) originate from its headquarters in Paris, France.",
       "ai_geo_fingerprint": "42c7fdf11e4ea82e3bdfed40a97c6aa68035f1edf7b93428ff09c4fb399d9747",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": true
     },
     {
       "id": "97effac4d37516bc",
@@ -49239,7 +49249,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Golders Green is a suburban area in northwest London, United Kingdom.",
       "ai_geo_fingerprint": "f28c3b3af0a106b8431303c0cbfea09c301f3d19bfb91c839c271ebed5e2eade",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "6f7673c79837e1c7",
@@ -49294,23 +49308,23 @@
     "primary_model": "gemini-3.5-flash-lite",
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
-    "cached_events": 0,
-    "ai_processed_this_run": 1230,
-    "ai_pending_at_start": 1230,
-    "city": 411,
+    "cached_events": 1226,
+    "ai_processed_this_run": 4,
+    "ai_pending_at_start": 4,
+    "city": 415,
     "region": 227,
-    "country_capital": 574,
-    "unlocated": 18,
-    "mapped_total": 1212,
-    "high_confidence": 1040,
-    "medium_confidence": 171,
-    "low_confidence": 19,
+    "country_capital": 573,
+    "unlocated": 15,
+    "mapped_total": 1215,
+    "high_confidence": 1041,
+    "medium_confidence": 173,
+    "low_confidence": 16,
     "methods": {
-      "ai_city_geonames": 400,
-      "ai_country_capital": 574,
+      "ai_city_geonames": 404,
+      "ai_country_capital": 573,
       "ai_region_coordinates": 227,
       "ai_city_coordinates": 11,
-      "ai_unlocated": 18
+      "ai_unlocated": 15
     }
   }
 }
