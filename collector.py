@@ -37,7 +37,7 @@ except Exception:
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V8 — GEMINI AI ARTICLE SELECTION
+# OSINT COLLECTOR V9 — MULTILINGUAL GEMINI INTELLIGENCE
 #
 # Expanded coverage + stricter event relevance.
 #
@@ -99,17 +99,17 @@ AI_SELECTION_THRESHOLD = int(
 AI_SELECTION_BATCH_SIZE = max(
     1,
     min(
-        60,
+        40,
         int(
             os.getenv(
                 "AI_SELECTION_BATCH_SIZE",
-                "50",
+                "20",
             )
         ),
     ),
 )
 
-AI_SELECTION_VERSION = "gemini-ct-selection-v1"
+AI_SELECTION_VERSION = "gemini-ct-selection-v2-multilingual"
 AI_SELECTION_CACHE_FILE = "ai_article_selection_cache.json"
 
 AI_SELECTION_ATTEMPTS = 5
@@ -891,6 +891,117 @@ def targeted_source_queries(source):
 
     return queries
 
+
+# ============================================================
+# MULTILINGUAL CT DISCOVERY
+#
+# Google News is queried in local-language editions. These records are NOT
+# rejected by the English keyword filter: Gemini is the semantic final judge.
+# Every retained record is normalized to English before final deduplication.
+# ============================================================
+
+MULTILINGUAL_PROFILES = [
+    {
+        "code": "fr", "name": "French", "hl": "fr", "gl": "FR", "ceid": "FR:fr",
+        "queries": [
+            {"term": '(terrorisme OR terroriste OR djihadiste OR attentat OR Daech)', "category": "Attacks"},
+            {"term": '(\"financement du terrorisme\" OR radicalisation OR propagande djihadiste OR cyberterrorisme OR arrestation terroriste)', "category": "Terrorist Financing"},
+        ],
+        "sites": ["lemonde.fr", "france24.com/fr"],
+        "site_terms": '(terrorisme OR terroriste OR djihadiste OR Daech OR attentat)',
+    },
+    {
+        "code": "ar", "name": "Arabic", "hl": "ar", "gl": "SA", "ceid": "SA:ar",
+        "queries": [
+            {"term": '(إرهاب OR إرهابي OR داعش OR القاعدة OR جهادي OR هجوم إرهابي)', "category": "Attacks"},
+            {"term": '(تمويل الإرهاب OR اعتقال إرهابي OR تطرف OR تجنيد إرهابي OR دعاية إرهابية)', "category": "Terrorist Financing"},
+        ],
+        "sites": ["aljazeera.net", "alarabiya.net"],
+        "site_terms": '(إرهاب OR إرهابي OR داعش OR القاعدة OR جهادي)',
+    },
+    {
+        "code": "de", "name": "German", "hl": "de", "gl": "DE", "ceid": "DE:de",
+        "queries": [
+            {"term": '(Terrorismus OR Terrorist OR Dschihadist OR Anschlag OR IS-Terror)', "category": "Attacks"},
+            {"term": '(Terrorfinanzierung OR Terrorverdächtiger OR Radikalisierung OR Cyberterrorismus OR Festnahme)', "category": "Arrests"},
+        ],
+        "sites": ["tagesschau.de", "spiegel.de"],
+        "site_terms": '(Terrorismus OR Terrorist OR Dschihadist OR Anschlag)',
+    },
+    {
+        "code": "es", "name": "Spanish", "hl": "es", "gl": "ES", "ceid": "ES:es",
+        "queries": [
+            {"term": '(terrorismo OR terrorista OR yihadista OR atentado OR Estado Islámico)', "category": "Attacks"},
+            {"term": '(financiación del terrorismo OR radicalización OR detenido terrorismo OR propaganda yihadista)', "category": "Terrorist Financing"},
+        ],
+        "sites": ["elpais.com", "elmundo.es"],
+        "site_terms": '(terrorismo OR terrorista OR yihadista OR atentado)',
+    },
+    {
+        "code": "it", "name": "Italian", "hl": "it", "gl": "IT", "ceid": "IT:it",
+        "queries": [
+            {"term": '(terrorismo OR terrorista OR jihadista OR attentato OR Stato Islamico)', "category": "Attacks"},
+            {"term": '(finanziamento terrorismo OR radicalizzazione OR arrestato terrorismo OR propaganda jihadista)', "category": "Arrests"},
+        ],
+        "sites": ["ansa.it", "repubblica.it"],
+        "site_terms": '(terrorismo OR terrorista OR jihadista OR attentato)',
+    },
+    {
+        "code": "tr", "name": "Turkish", "hl": "tr", "gl": "TR", "ceid": "TR:tr",
+        "queries": [
+            {"term": '(terör OR terörist OR DEAŞ OR IŞİD OR terör saldırısı)', "category": "Attacks"},
+            {"term": '(terör finansmanı OR terör operasyonu OR terör şüphelisi OR radikalleşme OR terör propagandası)', "category": "Arrests"},
+        ],
+        "sites": ["aa.com.tr/tr", "trthaber.com"],
+        "site_terms": '(terör OR terörist OR DEAŞ OR IŞİD)',
+    },
+    {
+        "code": "ru", "name": "Russian", "hl": "ru", "gl": "RU", "ceid": "RU:ru",
+        "queries": [
+            {"term": '(терроризм OR террорист OR теракт OR ИГИЛ OR джихадист)', "category": "Attacks"},
+            {"term": '(финансирование терроризма OR задержан террорист OR радикализация OR террористическая пропаганда)', "category": "Arrests"},
+        ],
+        "sites": ["interfax.ru", "kommersant.ru"],
+        "site_terms": '(терроризм OR террорист OR теракт OR ИГИЛ)',
+    },
+    {
+        "code": "ur", "name": "Urdu", "hl": "ur", "gl": "PK", "ceid": "PK:ur",
+        "queries": [
+            {"term": '(دہشت گردی OR دہشت گرد OR داعش OR القاعدہ OR دہشت گرد حملہ)', "category": "Attacks"},
+            {"term": '(دہشت گردی کی مالی معاونت OR دہشت گرد گرفتار OR شدت پسندی OR دہشت گرد پروپیگنڈا)', "category": "Terrorist Financing"},
+        ],
+        "sites": ["jang.com.pk", "express.pk"],
+        "site_terms": '(دہشت گردی OR دہشت گرد OR داعش OR القاعدہ)',
+    },
+    {
+        "code": "fa", "name": "Persian", "hl": "fa", "gl": "IR", "ceid": "IR:fa",
+        "queries": [
+            {"term": '(تروریسم OR تروریست OR داعش OR القاعده OR حمله تروریستی)', "category": "Attacks"},
+            {"term": '(تامین مالی تروریسم OR بازداشت تروریست OR افراط گرایی OR تبلیغات تروریستی)', "category": "Terrorist Financing"},
+        ],
+        "sites": ["iranintl.com", "bbc.com/persian"],
+        "site_terms": '(تروریسم OR تروریست OR داعش OR القاعده)',
+    },
+    {
+        "code": "he", "name": "Hebrew", "hl": "he", "gl": "IL", "ceid": "IL:he",
+        "queries": [
+            {"term": '(טרור OR מחבל OR פיגוע OR דאעש OR אל-קאעדה)', "category": "Attacks"},
+            {"term": '(מימון טרור OR נעצר חשוד בטרור OR הקצנה OR תעמולת טרור)', "category": "Terrorist Financing"},
+        ],
+        "sites": ["ynet.co.il", "haaretz.co.il"],
+        "site_terms": '(טרור OR מחבל OR פיגוע OR דאעש)',
+    },
+]
+
+
+def multilingual_query_count():
+    return sum(
+        len(profile.get("queries", []))
+        + len(profile.get("sites", []))
+        for profile in MULTILINGUAL_PROFILES
+    )
+
+
 SOURCE_PRIORITY = {
     "U.S. Department of Justice": 130,
     "US Department of Justice": 130,
@@ -1342,6 +1453,9 @@ def source_rank(source):
 def build_google_url(
     term,
     days,
+    language=None,
+    country=None,
+    edition=None,
 ):
     query = (
         term
@@ -1350,12 +1464,16 @@ def build_google_url(
 
     encoded = quote_plus(query)
 
+    language = language or GOOGLE_LANGUAGE
+    country = country or GOOGLE_COUNTRY
+    edition = edition or GOOGLE_EDITION
+
     return (
         f"{GOOGLE_NEWS_BASE}"
         f"?q={encoded}"
-        f"&hl={GOOGLE_LANGUAGE}"
-        f"&gl={GOOGLE_COUNTRY}"
-        f"&ceid={GOOGLE_EDITION}"
+        f"&hl={language}"
+        f"&gl={country}"
+        f"&ceid={edition}"
     )
 
 
@@ -1497,6 +1615,9 @@ def entry_to_event(
     acquisition_channel=None,
     targeted_source=None,
     targeted_source_kind=None,
+    original_language_hint="en",
+    collection_language_name="English",
+    collection_locale=None,
 ):
     article_url = entry.get(
         "link"
@@ -1563,6 +1684,18 @@ def entry_to_event(
             title,
         "summary":
             summary,
+        "original_title":
+            title,
+        "original_summary":
+            summary,
+        "original_language":
+            original_language_hint or "en",
+        "collection_language":
+            original_language_hint or "en",
+        "collection_language_name":
+            collection_language_name or "English",
+        "collection_locale":
+            collection_locale,
         "published":
             published,
         "source":
@@ -1771,14 +1904,181 @@ def collect_broad_query(
     return results
 
 
+
+def collect_multilingual_query(
+    term,
+    days,
+    profile,
+    category_hint,
+    targeted_source=None,
+):
+    """
+    Collect a local-language Google News query without the English lexical
+    relevance filter. Query specificity gives us candidates; Gemini later
+    decides semantic CT relevance and translates retained events to English.
+    """
+
+    url = build_google_url(
+        term,
+        days,
+        language=profile["hl"],
+        country=profile["gl"],
+        edition=profile["ceid"],
+    )
+
+    label = (
+        f"{profile['name']}"
+        + (
+            f" / {targeted_source}"
+            if targeted_source
+            else ""
+        )
+    )
+
+    response = request_google_news(
+        url,
+        label=label,
+    )
+
+    if response is None:
+        return []
+
+    feed = feedparser.parse(
+        response.content
+    )
+
+    results = []
+
+    for entry in feed.entries:
+        event = entry_to_event(
+            entry,
+            [category_hint],
+            acquisition_channel=(
+                "multilingual_targeted_source"
+                if targeted_source
+                else "multilingual_discovery"
+            ),
+            targeted_source=targeted_source,
+            targeted_source_kind=(
+                "local_language_media"
+                if targeted_source
+                else None
+            ),
+            original_language_hint=profile["code"],
+            collection_language_name=profile["name"],
+            collection_locale=profile["ceid"],
+        )
+
+        if event:
+            results.append(event)
+
+    return results
+
+
+def collect_multilingual(days):
+    records = []
+    language_counts = Counter()
+
+    print()
+    print("=" * 70)
+    print("MULTILINGUAL CT DISCOVERY")
+    print("=" * 70)
+
+    for number, profile in enumerate(
+        MULTILINGUAL_PROFILES,
+        start=1,
+    ):
+        print()
+        print(
+            f"[LANGUAGE {number}/{len(MULTILINGUAL_PROFILES)}] "
+            f"{profile['name']} ({profile['code']})"
+        )
+
+        subtotal = 0
+
+        for query_number, query in enumerate(
+            profile.get("queries", []),
+            start=1,
+        ):
+            print(
+                f"   Discovery query {query_number}/"
+                f"{len(profile.get('queries', []))}"
+            )
+
+            results = collect_multilingual_query(
+                query["term"],
+                days,
+                profile,
+                query["category"],
+            )
+
+            records.extend(results)
+            subtotal += len(results)
+
+            print(
+                f"      candidates → {len(results)}"
+            )
+
+        for site in profile.get("sites", []):
+            query = (
+                "site:"
+                + site
+                + " "
+                + profile["site_terms"]
+            )
+
+            print(
+                f"   Targeted local source: {site}"
+            )
+
+            results = collect_multilingual_query(
+                query,
+                days,
+                profile,
+                "Attacks",
+                targeted_source=site,
+            )
+
+            records.extend(results)
+            subtotal += len(results)
+
+            print(
+                f"      candidates → {len(results)}"
+            )
+
+        language_counts[profile["code"]] += subtotal
+
+        print(
+            f"   LANGUAGE TOTAL: {subtotal}"
+        )
+
+    print()
+    print(
+        "Multilingual candidate records: "
+        f"{len(records)}"
+    )
+
+    if language_counts:
+        print(
+            "By collection language: "
+            + ", ".join(
+                f"{code}={count}"
+                for code, count
+                in sorted(language_counts.items())
+            )
+        )
+
+    return records
+
+
 def collect_all(days):
     print()
     print("=" * 70)
     print("INTERPOL CT Intelligence Map")
-    print("OSINT Collector V7.2 — fast daily + live logs")
+    print("OSINT Collector V9 — multilingual Gemini intelligence")
     print("=" * 70)
     print(f"Window: {days} days")
-    print("Language: English")
+    print("Collection languages: English + French + Arabic + German + Spanish + Italian + Turkish + Russian + Urdu + Persian + Hebrew")
     print("Relevance filter: strict event mode")
     print(
         "Acquisition strategy: compact discovery + local source classification"
@@ -1977,6 +2277,22 @@ def collect_all(days):
             f"{source_total}"
         )
 
+    # ========================================================
+    # 4. MULTILINGUAL DISCOVERY
+    # ========================================================
+
+    multilingual_records = collect_multilingual(
+        days
+    )
+
+    records.extend(
+        multilingual_records
+    )
+
+    multilingual_total = len(
+        multilingual_records
+    )
+
     print()
     print("=" * 70)
     print("ACQUISITION SUMMARY")
@@ -1992,6 +2308,10 @@ def collect_all(days):
     print(
         f"Targeted-source records: "
         f"{targeted_total}"
+    )
+    print(
+        f"Multilingual records: "
+        f"{multilingual_total}"
     )
     print(
         f"Successful Google News requests: "
@@ -2078,6 +2398,18 @@ AI_SELECTION_SCHEMA = {
                             ],
                         },
                     },
+                    "original_language": {
+                        "type": "string"
+                    },
+                    "english_title": {
+                        "type": "string"
+                    },
+                    "english_summary": {
+                        "type": "string"
+                    },
+                    "canonical_event": {
+                        "type": "string"
+                    },
                     "reason": {
                         "type": "string"
                     },
@@ -2087,6 +2419,10 @@ AI_SELECTION_SCHEMA = {
                     "relevance_score",
                     "is_current_ct_event",
                     "categories",
+                    "original_language",
+                    "english_title",
+                    "english_summary",
+                    "canonical_event",
                     "reason",
                 ],
             },
@@ -2143,6 +2479,21 @@ IMPORTANT:
 - Evaluate the EVENT, not the publisher.
 - If an event is genuinely relevant but only moderately informative, prefer a
   score just above 50 rather than rejecting it.
+
+The input can be in English, French, Arabic, German, Spanish, Italian, Turkish,
+Russian, Urdu, Persian, Hebrew, or another language. Understand the ORIGINAL
+LANGUAGE directly; do not penalize an event because it is not written in English.
+
+For every candidate also return:
+- original_language: best ISO 639-1 language code when possible;
+- english_title: a faithful, concise English headline describing the event;
+- english_summary: a faithful English summary in at most two sentences;
+- canonical_event: a short language-neutral-in-meaning English description of
+  action + main actor/group + place if stated + essential object/target. This is
+  used for cross-language deduplication.
+
+Do not add facts that are absent from the source material. Translation must preserve
+uncertainty, allegations and attribution.
 
 Also return the most appropriate category or categories from the supplied
 taxonomy. Multiple categories are allowed.
@@ -2262,6 +2613,19 @@ def selection_payload(
                     "source"
                 ),
                 140,
+            ),
+
+        "collection_language_hint":
+            str(
+                event.get(
+                    "original_language"
+                )
+                or
+                event.get(
+                    "collection_language"
+                )
+                or
+                ""
             ),
 
         "published":
@@ -2572,7 +2936,7 @@ def call_ai_selection_batch(
 
         "generation_config": {
             "max_output_tokens":
-                16000,
+                24000,
 
             "thinking_level":
                 "minimal",
@@ -2915,6 +3279,114 @@ def apply_ai_selection(
         ] = categories[
             0
         ]
+
+    # Preserve original-language material before normalizing the map fields.
+    if not event.get(
+        "original_title"
+    ):
+        event[
+            "original_title"
+        ] = event.get(
+            "title",
+            "",
+        )
+
+    if not event.get(
+        "original_summary"
+    ):
+        event[
+            "original_summary"
+        ] = event.get(
+            "summary",
+            "",
+        )
+
+    detected_language = clean_text(
+        result.get(
+            "original_language"
+        )
+        or
+        event.get(
+            "original_language"
+        )
+        or
+        "en"
+    ).lower()
+
+    event[
+        "original_language"
+    ] = detected_language
+
+    english_title = clean_text(
+        result.get(
+            "english_title"
+        )
+        or
+        ""
+    )
+
+    english_summary = clean_text(
+        result.get(
+            "english_summary"
+        )
+        or
+        ""
+    )
+
+    canonical_event = clean_text(
+        result.get(
+            "canonical_event"
+        )
+        or
+        ""
+    )
+
+    event[
+        "translated_to_english"
+    ] = (
+        detected_language
+        not in {
+            "en",
+            "eng",
+            "english",
+        }
+    )
+
+    if english_title:
+        event[
+            "title"
+        ] = english_title
+
+    if english_summary:
+        event[
+            "summary"
+        ] = english_summary
+
+    event[
+        "ai_canonical_event"
+    ] = canonical_event
+
+    # Give the existing smart deduplicator an additional normalized English
+    # semantic variant without replacing the visible English headline.
+    if canonical_event:
+        variants = event.get(
+            "title_variants"
+        )
+
+        if not isinstance(
+            variants,
+            list,
+        ):
+            variants = []
+
+        if canonical_event not in variants:
+            variants.append(
+                canonical_event
+            )
+
+        event[
+            "title_variants"
+        ] = variants
 
     return (
         score
@@ -3929,6 +4401,39 @@ def event_variants(event):
         }
     ]
 
+    for title_variant in event.get(
+        "title_variants",
+        [],
+    ):
+        if not title_variant:
+            continue
+
+        variants.append(
+            {
+                "title":
+                    title_variant,
+                "summary":
+                    event.get(
+                        "summary",
+                        "",
+                    ),
+                "source":
+                    event.get(
+                        "source",
+                        "",
+                    ),
+                "url":
+                    event.get(
+                        "url",
+                        "",
+                    ),
+                "published":
+                    event.get(
+                        "published",
+                    ),
+            }
+        )
+
     for article in event.get(
         "related_articles",
         [],
@@ -4715,6 +5220,16 @@ def merge_event(
                 "title",
                 "",
             ),
+        "original_title":
+            new.get(
+                "original_title",
+                "",
+            ),
+        "original_language":
+            new.get(
+                "original_language",
+                "",
+            ),
         "summary":
             new.get(
                 "summary",
@@ -4820,6 +5335,16 @@ def merge_event(
                     "title",
                     "",
                 ),
+            "original_title":
+                existing.get(
+                    "original_title",
+                    "",
+                ),
+            "original_language":
+                existing.get(
+                    "original_language",
+                    "",
+                ),
             "summary":
                 existing.get(
                     "summary",
@@ -4892,6 +5417,23 @@ def merge_event(
         ] = new.get(
             "summary"
         )
+
+        for field in (
+            "original_title",
+            "original_summary",
+            "original_language",
+            "collection_language",
+            "collection_language_name",
+            "collection_locale",
+            "translated_to_english",
+            "ai_canonical_event",
+        ):
+            if field in new:
+                existing[
+                    field
+                ] = new.get(
+                    field
+                )
 
     dates = [
         value
@@ -5354,9 +5896,14 @@ def save_database(events):
         "daily_lookback_days":
             DAILY_LOOKBACK_DAYS,
         "language":
-            "English",
+            "English display; multilingual source collection",
+        "source_languages":
+            [
+                "en", "fr", "ar", "de", "es", "it",
+                "tr", "ru", "ur", "fa", "he"
+            ],
         "collector":
-            "Google News RSS V8 + Gemini semantic article selection",
+            "Google News RSS V9 multilingual + Gemini selection/translation",
         "relevance_filter":
             "Deterministic CT candidate filter + Gemini semantic final selection",
 
@@ -5393,6 +5940,8 @@ def save_database(events):
                     for source
                     in TARGETED_SOURCE_SITES
                 )
+                +
+                multilingual_query_count()
             ),
         "general_search_query_count":
             sum(
@@ -5414,6 +5963,16 @@ def save_database(events):
                 for source
                 in TARGETED_SOURCE_SITES
             ),
+        "multilingual_query_count":
+            multilingual_query_count(),
+        "multilingual_languages":
+            [
+                profile[
+                    "name"
+                ]
+                for profile
+                in MULTILINGUAL_PROFILES
+            ],
         "targeted_sources":
             [
                 source[
@@ -5556,6 +6115,23 @@ def main():
         f"candidate event clusters."
     )
 
+    # Gemini has now normalized every retained candidate into English. Run the
+    # smart deduplicator again so French/Arabic/German/etc. reports of the same
+    # event can converge into one multilingual event cluster.
+    print()
+    print(
+        "Cross-language deduplication on AI-normalized English events..."
+    )
+
+    selected_fresh = deduplicate_events(
+        selected_fresh
+    )
+
+    print(
+        f"Post-translation event clusters: "
+        f"{len(selected_fresh)}"
+    )
+
     if is_backfill:
         events = selected_fresh
 
@@ -5601,7 +6177,7 @@ def main():
     )
     print(
         f"Search queries: "
-        f"{sum(len(v) for v in CORE_SEARCH_QUERIES.values()) + len(OFFICIAL_BROAD_QUERIES) + sum(len(targeted_source_queries(source)) for source in TARGETED_SOURCE_SITES)}"
+        f"{sum(len(v) for v in CORE_SEARCH_QUERIES.values()) + len(OFFICIAL_BROAD_QUERIES) + sum(len(targeted_source_queries(source)) for source in TARGETED_SOURCE_SITES) + multilingual_query_count()}"
     )
     print(
         f"AI article threshold: "
