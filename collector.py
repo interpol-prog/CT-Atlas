@@ -11,9 +11,10 @@ import random
 
 import requests
 
-from collections import Counter
+from collections import Counter, defaultdict
 from datetime import datetime, timezone, timedelta
 from difflib import SequenceMatcher
+from functools import lru_cache
 from email.utils import parsedate_to_datetime
 from urllib.parse import quote_plus, urlsplit, urlunsplit
 
@@ -37,7 +38,7 @@ except Exception:
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V9 — MULTILINGUAL GEMINI INTELLIGENCE
+# OSINT COLLECTOR V9.1 — MULTILINGUAL GEMINI + FAST INDEXED DEDUP
 #
 # Expanded coverage + stricter event relevance.
 #
@@ -4345,11 +4346,12 @@ def extract_numbers(text):
     }
 
 
-def event_datetime(event):
-    published = event.get(
-        "published"
-    )
-
+@lru_cache(
+    maxsize=50000
+)
+def _event_datetime_cached(
+    published
+):
     if not published:
         return None
 
@@ -4369,6 +4371,18 @@ def event_datetime(event):
 
     except Exception:
         return None
+
+
+def event_datetime(event):
+    return _event_datetime_cached(
+        str(
+            event.get(
+                "published"
+            )
+            or
+            ""
+        )
+    )
 
 
 def event_variants(event):
@@ -4478,19 +4492,20 @@ def event_variants(event):
     ]
 
 
-def build_profile(event):
+@lru_cache(
+    maxsize=100000
+)
+def _build_profile_cached(
+    title,
+    summary,
+    url,
+):
     title = clean_text(
-        event.get(
-            "title",
-            "",
-        )
+        title
     )
 
     summary = clean_text(
-        event.get(
-            "summary",
-            "",
-        )
+        summary
     )
 
     combined = (
@@ -4505,49 +4520,85 @@ def build_profile(event):
         title
     )
 
-    title_tokens = meaningful_tokens(
-        title
-    )
-
-    summary_tokens = meaningful_tokens(
-        summary
-    )
-
     return {
         "normalized_title":
             normalized_title,
+
         "title_tokens":
-            title_tokens,
+            meaningful_tokens(
+                title
+            ),
+
         "summary_tokens":
-            summary_tokens,
+            meaningful_tokens(
+                summary
+            ),
+
         "entities":
             extract_named_entities(
                 title
             ),
+
         "actors":
             extract_actor_families(
                 combined
             ),
+
         "actions":
             extract_action_families(
                 combined
             ),
+
         "countries":
             extract_country_families(
                 combined
             ),
+
         "numbers":
             extract_numbers(
                 combined
             ),
+
         "url":
             canonical_url(
-                event.get(
-                    "url",
-                    "",
-                )
+                url
             ),
     }
+
+
+def build_profile(event):
+    """
+    Profile construction is one of the most expensive parts of event matching.
+    The same title/summary variants are compared repeatedly during dedup, so
+    cache immutable profiles by their text and URL.
+    """
+
+    return _build_profile_cached(
+        str(
+            event.get(
+                "title",
+                "",
+            )
+            or
+            ""
+        ),
+        str(
+            event.get(
+                "summary",
+                "",
+            )
+            or
+            ""
+        ),
+        str(
+            event.get(
+                "url",
+                "",
+            )
+            or
+            ""
+        ),
+    )
 
 
 def profile_pair_score(
@@ -5688,24 +5739,323 @@ def load_existing():
         return []
 
 
+def _dedup_day_key(
+    event
+):
+    dt = event_datetime(
+        event
+    )
+
+    if not dt:
+        return None
+
+    return dt.date()
+
+
+def _quick_signature(
+    event
+):
+    """
+    Cheap event signature used only to choose plausible candidates for the
+    expensive event_match() function.
+
+    It never decides that two events are duplicates by itself.
+    """
+
+    profile = build_profile(
+        event
+    )
+
+    canonical = normalize_event_text(
+        event.get(
+            "ai_canonical_event",
+            ""
+        )
+        or
+        ""
+    )
+
+    title = profile[
+        "normalized_title"
+    ]
+
+    return {
+        "title":
+            title,
+
+        "canonical":
+            canonical,
+
+        "tokens":
+            set(
+                profile[
+                    "title_tokens"
+                ]
+            ),
+
+        "actors":
+            set(
+                profile[
+                    "actors"
+                ]
+            ),
+
+        "actions":
+            set(
+                profile[
+                    "actions"
+                ]
+            ),
+
+        "countries":
+            set(
+                profile[
+                    "countries"
+                ]
+            ),
+
+        "entities":
+            set(
+                profile[
+                    "entities"
+                ]
+            ),
+
+        "url":
+            profile[
+                "url"
+            ],
+    }
+
+
+def _quick_candidate_compatible(
+    incoming_signature,
+    existing_signature,
+):
+    """
+    Conservative pre-filter.
+
+    Returning False means the pair is clearly implausible.
+    Returning True only means it deserves the full event_match() analysis.
+    """
+
+    incoming_url = incoming_signature[
+        "url"
+    ]
+
+    existing_url = existing_signature[
+        "url"
+    ]
+
+    if (
+        incoming_url
+        and
+        existing_url
+        and
+        incoming_url
+        ==
+        existing_url
+    ):
+        return True
+
+    incoming_title = incoming_signature[
+        "title"
+    ]
+
+    existing_title = existing_signature[
+        "title"
+    ]
+
+    if (
+        incoming_title
+        and
+        incoming_title
+        ==
+        existing_title
+    ):
+        return True
+
+    incoming_canonical = incoming_signature[
+        "canonical"
+    ]
+
+    existing_canonical = existing_signature[
+        "canonical"
+    ]
+
+    if (
+        incoming_canonical
+        and
+        existing_canonical
+        and
+        incoming_canonical
+        ==
+        existing_canonical
+    ):
+        return True
+
+    incoming_countries = incoming_signature[
+        "countries"
+    ]
+
+    existing_countries = existing_signature[
+        "countries"
+    ]
+
+    # Explicitly incompatible geography is never worth the expensive match.
+    if (
+        incoming_countries
+        and
+        existing_countries
+        and
+        not (
+            incoming_countries
+            &
+            existing_countries
+        )
+    ):
+        return False
+
+    shared_actors = (
+        incoming_signature[
+            "actors"
+        ]
+        &
+        existing_signature[
+            "actors"
+        ]
+    )
+
+    shared_actions = (
+        incoming_signature[
+            "actions"
+        ]
+        &
+        existing_signature[
+            "actions"
+        ]
+    )
+
+    shared_countries = (
+        incoming_countries
+        &
+        existing_countries
+    )
+
+    shared_entities = (
+        incoming_signature[
+            "entities"
+        ]
+        &
+        existing_signature[
+            "entities"
+        ]
+    )
+
+    shared_tokens = (
+        incoming_signature[
+            "tokens"
+        ]
+        &
+        existing_signature[
+            "tokens"
+        ]
+    )
+
+    # Strong semantic anchors.
+    if (
+        shared_actors
+        and
+        (
+            shared_actions
+            or
+            shared_countries
+        )
+    ):
+        return True
+
+    if (
+        shared_countries
+        and
+        shared_actions
+        and
+        len(
+            shared_tokens
+        )
+        >=
+        2
+    ):
+        return True
+
+    if (
+        shared_entities
+        and
+        len(
+            shared_tokens
+        )
+        >=
+        2
+    ):
+        return True
+
+    # English-normalized/canonical titles allow a cheap lexical rescue for
+    # rewritten multilingual coverage of the same event.
+    if (
+        incoming_title
+        and
+        existing_title
+    ):
+        lexical = SequenceMatcher(
+            None,
+            incoming_title,
+            existing_title,
+        ).ratio()
+
+        if lexical >= 0.52:
+            return True
+
+    if (
+        incoming_canonical
+        and
+        existing_canonical
+    ):
+        canonical_similarity = SequenceMatcher(
+            None,
+            incoming_canonical,
+            existing_canonical,
+        ).ratio()
+
+        if canonical_similarity >= 0.55:
+            return True
+
+    return False
+
+
 def deduplicate_incremental(
     existing_events,
     fresh_records,
 ):
     """
-    Fast daily update.
+    Fast indexed daily update.
 
-    Existing events.json is already deduplicated from previous runs.
-    Re-clustering the whole 180-day database every morning is unnecessary.
-    Instead, only each NEW article is compared against the existing clusters
-    (and any new clusters created during this run).
+    Previous implementation scanned every eligible existing event and ran the
+    full multi-variant event_match() against it. With multilingual clusters,
+    one event can contain many title/article variants, making that approach
+    extremely expensive.
 
-    Full all-vs-all clustering remains available for 180-day backfill mode.
+    V9.1:
+      1. indexes existing events by day, exact URL and normalized title;
+      2. restricts candidates to the +/- MAX_DEDUP_WINDOW_DAYS window;
+      3. applies a cheap semantic compatibility test;
+      4. calls the original full event_match() only on that shortlist.
+
+    The final duplicate decision is STILL made by the same intelligent
+    event_match() logic, so matching quality is preserved.
     """
 
     print()
     print(
-        "Incremental daily deduplication..."
+        "FAST indexed incremental deduplication..."
     )
     print(
         f"   Existing event clusters: "
@@ -5718,16 +6068,104 @@ def deduplicate_incremental(
 
     events = []
 
-    for event in existing_events:
+    day_index = defaultdict(
+        set
+    )
+
+    url_index = defaultdict(
+        set
+    )
+
+    title_index = defaultdict(
+        set
+    )
+
+    signatures = {}
+
+    def index_event(
+        index,
+        event
+    ):
         ensure_event_metadata(
             event
         )
+
+        signature = _quick_signature(
+            event
+        )
+
+        signatures[
+            index
+        ] = signature
+
+        day = _dedup_day_key(
+            event
+        )
+
+        if day is not None:
+            day_index[
+                day
+            ].add(
+                index
+            )
+
+        url = signature[
+            "url"
+        ]
+
+        if url:
+            url_index[
+                url
+            ].add(
+                index
+            )
+
+        title = signature[
+            "title"
+        ]
+
+        if title:
+            title_index[
+                title
+            ].add(
+                index
+            )
+
+        # Exact title variants are cheap and valuable.
+        for variant in event.get(
+            "title_variants",
+            []
+        )[:MAX_RELATED_ARTICLES]:
+            normalized = normalize_event_text(
+                variant
+            )
+
+            if normalized:
+                title_index[
+                    normalized
+                ].add(
+                    index
+                )
+
+    for event in existing_events:
+        index = len(
+            events
+        )
+
         events.append(
+            event
+        )
+
+        index_event(
+            index,
             event
         )
 
     method_counts = Counter()
     merged_count = 0
+
+    total_full_comparisons = 0
+    total_shortlisted = 0
 
     for number, record in enumerate(
         fresh_records,
@@ -5737,42 +6175,158 @@ def deduplicate_incremental(
             record
         )
 
-        record_dt = event_datetime(
+        incoming_signature = _quick_signature(
             record
         )
 
+        candidates = set()
+
+        # ----------------------------------------------------
+        # Exact anchors first.
+        # ----------------------------------------------------
+
+        incoming_url = incoming_signature[
+            "url"
+        ]
+
+        if incoming_url:
+            candidates.update(
+                url_index.get(
+                    incoming_url,
+                    set()
+                )
+            )
+
+        incoming_title = incoming_signature[
+            "title"
+        ]
+
+        if incoming_title:
+            candidates.update(
+                title_index.get(
+                    incoming_title,
+                    set()
+                )
+            )
+
+        # ----------------------------------------------------
+        # Time-window candidates.
+        # ----------------------------------------------------
+
+        record_day = _dedup_day_key(
+            record
+        )
+
+        time_candidates = set()
+
+        if record_day is not None:
+            for offset in range(
+                -MAX_DEDUP_WINDOW_DAYS,
+                MAX_DEDUP_WINDOW_DAYS + 1,
+            ):
+                day = (
+                    record_day
+                    +
+                    timedelta(
+                        days=offset
+                    )
+                )
+
+                time_candidates.update(
+                    day_index.get(
+                        day,
+                        set()
+                    )
+                )
+
+        else:
+            # Rare legacy/no-date case: preserve recall.
+            time_candidates.update(
+                range(
+                    len(
+                        events
+                    )
+                )
+            )
+
+        # ----------------------------------------------------
+        # Cheap semantic shortlist.
+        # ----------------------------------------------------
+
+        for candidate_index in time_candidates:
+            if candidate_index in candidates:
+                continue
+
+            existing_signature = signatures.get(
+                candidate_index
+            )
+
+            if existing_signature is None:
+                continue
+
+            if _quick_candidate_compatible(
+                incoming_signature,
+                existing_signature,
+            ):
+                candidates.add(
+                    candidate_index
+                )
+
+        total_shortlisted += len(
+            candidates
+        )
+
         best_existing = None
+        best_existing_index = None
         best_score = 0.0
         best_method = None
 
-        # Daily fresh volume is small, so scanning the existing clusters is
-        # both simple and fast. Restrict comparisons to the dedup time window
-        # whenever dates are available.
-        for existing in events:
+        # Exact matches are usually at the beginning after sorting.
+        candidate_list = list(
+            candidates
+        )
 
-            existing_dt = event_datetime(
-                existing
-            )
+        candidate_list.sort(
+            key=lambda candidate_index:
+                (
+                    0
+                    if (
+                        incoming_url
+                        and
+                        signatures[
+                            candidate_index
+                        ][
+                            "url"
+                        ]
+                        ==
+                        incoming_url
+                    )
+                    else
+                    1,
 
-            if (
-                record_dt
-                and
-                existing_dt
-            ):
-                gap_days = abs(
-                    (
-                        record_dt
-                        -
-                        existing_dt
-                    ).total_seconds()
-                ) / 86400.0
+                    0
+                    if (
+                        incoming_title
+                        and
+                        signatures[
+                            candidate_index
+                        ][
+                            "title"
+                        ]
+                        ==
+                        incoming_title
+                    )
+                    else
+                    1,
+                )
+        )
 
-                if (
-                    gap_days
-                    >
-                    MAX_DEDUP_WINDOW_DAYS
-                ):
-                    continue
+        for candidate_index in candidate_list:
+            existing = events[
+                candidate_index
+            ]
+
+            total_full_comparisons += 1
 
             matched, score, method = event_match(
                 record,
@@ -5787,6 +6341,9 @@ def deduplicate_incremental(
                 best_score
             ):
                 best_existing = existing
+                best_existing_index = (
+                    candidate_index
+                )
                 best_score = score
                 best_method = method
 
@@ -5794,7 +6351,16 @@ def deduplicate_incremental(
                     break
 
         if best_existing is None:
+            new_index = len(
+                events
+            )
+
             events.append(
+                record
+            )
+
+            index_event(
+                new_index,
                 record
             )
 
@@ -5812,17 +6378,39 @@ def deduplicate_incremental(
                 best_method
             ] += 1
 
+            # Refresh the quick signature/index so subsequent fresh events can
+            # benefit from the newly merged title/source variants.
+            index_event(
+                best_existing_index,
+                best_existing,
+            )
+
         if (
             number % 20 == 0
             or
-            number == len(
+            number
+            ==
+            len(
                 fresh_records
             )
         ):
+            average_candidates = (
+                total_shortlisted
+                /
+                number
+                if number
+                else
+                0
+            )
+
             print(
                 f"   Processed fresh records: "
                 f"{number}/"
-                f"{len(fresh_records)}"
+                f"{len(fresh_records)} "
+                f"| avg shortlist "
+                f"{average_candidates:.1f} "
+                f"| full matches "
+                f"{total_full_comparisons}"
             )
 
     print(
@@ -5832,6 +6420,10 @@ def deduplicate_incremental(
     print(
         f"   Fresh records merged:     "
         f"{merged_count}"
+    )
+    print(
+        f"   Full expensive comparisons: "
+        f"{total_full_comparisons}"
     )
 
     if method_counts:
