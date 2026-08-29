@@ -1,14 +1,12 @@
 name: Daily CT Intelligence Map Update
 
 on:
-
   schedule:
     - cron: "17 6 * * *"
       timezone: "Europe/Paris"
 
   workflow_dispatch:
     inputs:
-
       mode:
         description: "Collection mode"
         required: true
@@ -24,44 +22,35 @@ on:
         default: false
         type: boolean
 
-
 permissions:
   contents: write
   pages: write
   id-token: write
 
-
 concurrency:
   group: ct-map-update-main
   cancel-in-progress: false
 
-
 jobs:
-
   update:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
           ref: main
           fetch-depth: 0
 
-
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
 
       - name: Collect multilingual and AI-select CT events
         env:
@@ -70,7 +59,6 @@ jobs:
           AI_SELECTION_THRESHOLD: "50"
           AI_SELECTION_BATCH_SIZE: "20"
         run: |
-
           if [ -z "$GEMINI_API_KEY" ]; then
             echo "GEMINI_API_KEY GitHub secret is missing."
             exit 1
@@ -78,19 +66,14 @@ jobs:
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
              [ "${{ inputs.mode }}" = "backfill" ]; then
-
             echo "Running 180-day multilingual backfill with Gemini selection and English normalization."
             python -u collector.py backfill
-
           else
-
             echo "Running daily multilingual collection with Gemini selection and English normalization."
             python -u collector.py
-
           fi
 
-
-      - name: Persist AI article-selection cache
+      - name: Persist AI article-selection cache safely
         if: always()
         run: |
           set -e
@@ -98,32 +81,30 @@ jobs:
           git config user.name "CT Intelligence Map Bot"
           git config user.email "actions@github.com"
 
+          if [ -f events.json ] && ! git diff --quiet -- events.json; then
+            echo "Temporarily preserving collector-generated events.json."
+            cp events.json /tmp/events.after-collector.json
+            git restore --staged --worktree events.json
+          fi
+
           push_with_rebase_retry() {
-
             for attempt in 1 2 3 4 5; do
-
-              echo "Sync/push attempt ${attempt}/5"
-
+              echo "Cache sync/push attempt ${attempt}/5"
               git fetch origin main
 
               if ! git rebase origin/main; then
-
                 echo "Rebase conflict while persisting AI cache."
                 git rebase --abort || true
-                exit 1
-
+                return 1
               fi
 
               if git push origin HEAD:main; then
-
-                echo "Push succeeded."
+                echo "AI cache push succeeded."
                 return 0
-
               fi
 
               echo "Remote main changed again; retrying."
               sleep $((attempt * 4))
-
             done
 
             echo "Unable to push AI cache after 5 attempts."
@@ -131,26 +112,22 @@ jobs:
           }
 
           if [ -f ai_article_selection_cache.json ]; then
-
             git add ai_article_selection_cache.json
 
             if git diff --cached --quiet; then
-
               echo "No AI article-selection cache changes to commit."
-
             else
-
               git commit -m "Update AI article selection cache"
               push_with_rebase_retry
-
             fi
-
           else
-
             echo "No AI article-selection cache file yet."
-
           fi
 
+          if [ -f /tmp/events.after-collector.json ]; then
+            echo "Restoring collector-generated events.json."
+            cp /tmp/events.after-collector.json events.json
+          fi
 
       - name: Gemini AI-first resilient geolocation
         env:
@@ -159,7 +136,6 @@ jobs:
           GEMINI_RESCUE_MODEL: "gemini-3.6-flash"
           AI_GEO_BATCH_SIZE: "20"
         run: |
-
           if [ -z "$GEMINI_API_KEY" ]; then
             echo "GEMINI_API_KEY GitHub secret is missing."
             exit 1
@@ -167,17 +143,12 @@ jobs:
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
              [ "${{ inputs.force_ai }}" = "true" ]; then
-
             echo "Forcing Gemini geolocation refresh for all events."
             AI_GEO_FORCE=1 python -u geolocate.py
-
           else
-
             echo "Using cached Gemini geolocation for unchanged events."
             python -u geolocate.py
-
           fi
-
 
       - name: Commit and push updated database
         run: |
@@ -186,56 +157,39 @@ jobs:
           git config user.name "CT Intelligence Map Bot"
           git config user.email "actions@github.com"
 
-          push_with_rebase_retry() {
-
-            for attempt in 1 2 3 4 5; do
-
-              echo "Sync/push attempt ${attempt}/5"
-
-              git fetch origin main
-
-              if ! git rebase origin/main; then
-
-                echo "Rebase conflict while publishing events.json."
-                git rebase --abort || true
-                exit 1
-
-              fi
-
-              if git push origin HEAD:main; then
-
-                echo "Push succeeded."
-                return 0
-
-              fi
-
-              echo "Remote main changed again; retrying."
-              sleep $((attempt * 4))
-
-            done
-
-            echo "Unable to push events.json after 5 attempts."
-            return 1
-          }
-
           git add events.json
 
           if git diff --cached --quiet; then
-
             echo "No database changes to commit."
-
-          else
-
-            git commit -m "Update CT intelligence map"
-            push_with_rebase_retry
-
+            exit 0
           fi
 
+          git commit -m "Update CT intelligence map"
+
+          for attempt in 1 2 3 4 5; do
+            echo "Database sync/push attempt ${attempt}/5"
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              echo "Rebase conflict while publishing events.json."
+              git rebase --abort || true
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo "Database push succeeded."
+              exit 0
+            fi
+
+            echo "Remote main changed again; retrying."
+            sleep $((attempt * 4))
+          done
+
+          echo "Unable to push events.json after 5 attempts."
+          exit 1
 
   deploy:
-
     needs: update
-
     runs-on: ubuntu-latest
 
     environment:
@@ -243,22 +197,18 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-
       - name: Checkout updated repository
         uses: actions/checkout@v6
         with:
           ref: main
 
-
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-
 
       - name: Upload website
         uses: actions/upload-pages-artifact@v4
         with:
           path: "."
-
 
       - name: Deploy GitHub Pages
         id: deployment
