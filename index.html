@@ -5644,8 +5644,41 @@ function excelRowsFromEvents(
                         " / "
                     ),
 
-                "Title":
+                "AI relevance score":
+                    Number(
+                        event.ai_relevance_score
+                        ||
+                        0
+                    ),
+
+                "AI relevance reason":
+                    event.ai_relevance_reason
+                    ||
+                    "",
+
+                "English Title":
                     event.title
+                    ||
+                    "",
+
+                "Original language":
+                    event.original_language
+                    ||
+                    event.collection_language
+                    ||
+                    "en",
+
+                "Original title":
+                    event.original_title
+                    ||
+                    event.title
+                    ||
+                    "",
+
+                "Original summary":
+                    event.original_summary
+                    ||
+                    event.summary
                     ||
                     "",
 
@@ -5680,7 +5713,7 @@ function excelRowsFromEvents(
                     ||
                     "",
 
-                "Summary":
+                "English Summary":
                     event.summary
                     ||
                     ""
@@ -5793,7 +5826,7 @@ function exportChronologyExcel() {
 
 
             const cellAddress =
-                "M"
+                "R"
                 +
                 (
                     index
@@ -5835,7 +5868,12 @@ function exportChronologyExcel() {
         {wch: 20},
         {wch: 20},
         {wch: 34},
+        {wch: 18},
+        {wch: 55},
         {wch: 70},
+        {wch: 18},
+        {wch: 70},
+        {wch: 90},
         {wch: 28},
         {wch: 16},
         {wch: 16},
