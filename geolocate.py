@@ -16,7 +16,7 @@ import requests
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# GEMINI AI-FIRST GEOLOCATION V4 — HIGH-THROUGHPUT + CHECKPOINTS
+# GEMINI AI-FIRST GEOLOCATION V5 — RESILIENT BATCHING + CHECKPOINTS
 #
 # Principle:
 #   - Gemini decides the event location for EVERY event.
@@ -58,7 +58,7 @@ GEMINI_RESCUE_MODEL = os.getenv(
 )
 
 # New cache version: every event must be geolocated by the current AI engine.
-AI_GEO_VERSION = "gemini-ai-first-v4-checkpoint"
+AI_GEO_VERSION = "gemini-ai-first-v5-resilient"
 BATCH_SIZE = max(
     1,
     min(
@@ -685,11 +685,26 @@ Keep evidence and reason concise.
 # GEMINI INTERACTIONS API
 # ============================================================
 
+class GeminiIncompleteError(RuntimeError):
+    """Interaction completed, but Gemini says the result is incomplete."""
+
+
+class GeminiQuotaError(RuntimeError):
+    """Free-tier quota/rate limit was reached."""
+
+
+class GeminiTransientError(RuntimeError):
+    """Temporary Gemini service/capacity problem after retries."""
+
+
 def extract_gemini_text(
     response_json
 ):
     """
-    Extract final model text from the current Gemini Interactions API.
+    Extract final model text from Gemini Interactions API.
+
+    An `incomplete` interaction is recoverable: the caller will retry the
+    same events in smaller sub-batches instead of aborting the workflow.
     """
 
     status = str(
@@ -701,11 +716,19 @@ def extract_gemini_text(
         ""
     ).lower()
 
+    if status == "incomplete":
+        raise GeminiIncompleteError(
+            "Gemini interaction status=incomplete"
+        )
+
+    if status == "budget_exceeded":
+        raise GeminiIncompleteError(
+            "Gemini interaction status=budget_exceeded"
+        )
+
     if status in {
         "failed",
         "cancelled",
-        "incomplete",
-        "budget_exceeded",
     }:
         raise RuntimeError(
             "Gemini interaction ended with status "
@@ -777,17 +800,18 @@ def extract_gemini_text(
         texts
     ).strip()
 
-
 def call_gemini_batch(
     batch,
     instructions_override=None,
     model_override=None,
 ):
     """
-    Geolocate a batch with Gemini 3.6 Flash using Interactions API.
+    Run one Gemini interaction.
 
-    response_format forces valid JSON matching our geolocation schema.
-    No deprecated sampling parameters are sent.
+    HTTP 429 is surfaced as GeminiQuotaError.
+    Repeated 5xx/timeouts are surfaced as GeminiTransientError.
+    `incomplete` is surfaced as GeminiIncompleteError so the caller can
+    recursively split the batch.
     """
 
     api_key = os.getenv(
@@ -829,6 +853,17 @@ def call_gemini_batch(
         else GEMINI_MODEL
     )
 
+    # Flash-Lite is an extraction/classification workload. Google recommends
+    # minimal thinking for this use case. Rescue with 3.6 gets low thinking.
+    thinking_level = (
+        "minimal"
+        if active_model
+        ==
+        GEMINI_MODEL
+        else
+        "low"
+    )
+
     body = {
         "model":
             active_model,
@@ -855,7 +890,10 @@ def call_gemini_batch(
 
         "generation_config": {
             "max_output_tokens":
-                12000,
+                24000,
+
+            "thinking_level":
+                thinking_level,
         },
     }
 
@@ -866,6 +904,9 @@ def call_gemini_batch(
         "Content-Type":
             "application/json",
     }
+
+    last_transient_status = None
+    last_request_error = None
 
     for attempt in range(
         1,
@@ -879,15 +920,7 @@ def call_gemini_batch(
                 timeout=REQUEST_TIMEOUT,
             )
 
-            if response.status_code in {
-                408,
-                409,
-                429,
-                500,
-                502,
-                503,
-                504,
-            }:
+            if response.status_code == 429:
                 retry_after = response.headers.get(
                     "Retry-After"
                 )
@@ -908,13 +941,13 @@ def call_gemini_batch(
                     except Exception:
                         delay = min(
                             120,
-                            12 * attempt,
+                            15 * attempt,
                         )
                 else:
                     delay = min(
                         120,
                         (
-                            12
+                            15
                             *
                             attempt
                         )
@@ -926,12 +959,64 @@ def call_gemini_batch(
                     )
 
                 print(
-                    f"   Gemini temporary error "
+                    f"   Gemini quota/rate limit 429; "
+                    f"attempt {attempt}/"
+                    f"{REQUEST_ATTEMPTS}; "
+                    f"retrying after {delay:.0f}s"
+                )
+
+                if attempt >= REQUEST_ATTEMPTS:
+                    raise GeminiQuotaError(
+                        "Gemini HTTP 429 quota/rate limit "
+                        "after all retries."
+                    )
+
+                time.sleep(
+                    delay
+                )
+
+                continue
+
+            if response.status_code in {
+                408,
+                409,
+                500,
+                502,
+                503,
+                504,
+            }:
+                last_transient_status = (
+                    response.status_code
+                )
+
+                delay = min(
+                    90,
+                    (
+                        12
+                        *
+                        attempt
+                    )
+                    +
+                    random.uniform(
+                        0,
+                        5
+                    ),
+                )
+
+                print(
+                    f"   Gemini temporary HTTP "
                     f"{response.status_code}; "
                     f"attempt {attempt}/"
                     f"{REQUEST_ATTEMPTS}; "
                     f"retrying after {delay:.0f}s"
                 )
+
+                if attempt >= REQUEST_ATTEMPTS:
+                    raise GeminiTransientError(
+                        "Gemini temporary HTTP "
+                        f"{response.status_code} "
+                        "after all retries."
+                    )
 
                 time.sleep(
                     delay
@@ -953,15 +1038,21 @@ def call_gemini_batch(
             )
 
             if not output_text:
-                raise RuntimeError(
-                    "Gemini interaction contained no model text. "
-                    f"status={payload.get('status')}; "
-                    f"response={json.dumps(payload)[:1800]}"
+                raise GeminiIncompleteError(
+                    "Gemini returned completed interaction "
+                    "without model text."
                 )
 
-            parsed = json.loads(
-                output_text
-            )
+            try:
+                parsed = json.loads(
+                    output_text
+                )
+
+            except json.JSONDecodeError as error:
+                raise GeminiIncompleteError(
+                    "Gemini returned incomplete/invalid JSON: "
+                    f"{error}"
+                ) from error
 
             results = parsed.get(
                 "results"
@@ -971,9 +1062,8 @@ def call_gemini_batch(
                 results,
                 list
             ):
-                raise RuntimeError(
-                    "Gemini structured output did not contain "
-                    "a results array."
+                raise GeminiIncompleteError(
+                    "Gemini JSON did not contain a results array."
                 )
 
             time.sleep(
@@ -982,33 +1072,152 @@ def call_gemini_batch(
 
             return results
 
+        except GeminiIncompleteError:
+            # Do not burn five identical calls. The resilient caller will
+            # immediately retry these events in smaller groups.
+            raise
+
         except (
             requests.RequestException,
-            json.JSONDecodeError,
         ) as error:
+            last_request_error = error
+
             if attempt >= REQUEST_ATTEMPTS:
-                raise
+                raise GeminiTransientError(
+                    "Gemini network request failed after all retries: "
+                    f"{error}"
+                ) from error
 
             delay = min(
                 90,
-                10
-                *
-                attempt,
+                10 * attempt,
             )
 
             print(
-                f"   Gemini request/JSON error: "
-                f"{error}; "
-                f"retrying in {delay}s"
+                f"   Gemini request error: "
+                f"{error}; retrying in {delay}s"
             )
 
             time.sleep(
                 delay
             )
 
-    raise RuntimeError(
-        "Gemini batch request failed after all retries."
+    if last_transient_status is not None:
+        raise GeminiTransientError(
+            "Gemini temporary service error "
+            f"{last_transient_status}."
+        )
+
+    if last_request_error is not None:
+        raise GeminiTransientError(
+            "Gemini request failed: "
+            f"{last_request_error}"
+        )
+
+    raise GeminiTransientError(
+        "Gemini batch request ended unexpectedly."
     )
+
+
+def process_batch_resilient(
+    batch,
+    instructions_override=None,
+    model_override=None,
+    depth=0,
+):
+    """
+    Process an event batch without ever failing the whole workflow merely
+    because Gemini returned an incomplete result.
+
+    Strategy:
+      20 events -> if incomplete -> 10 + 10
+      10 -> 5 + 5
+      ...
+      singleton still incomplete -> leave that one unlocated for next run.
+
+    Quota and temporary service errors are re-raised so main() can checkpoint
+    all completed work and exit cleanly.
+    """
+
+    try:
+        return call_gemini_batch(
+            batch,
+            instructions_override=
+                instructions_override,
+            model_override=
+                model_override,
+        )
+
+    except GeminiIncompleteError as error:
+        if len(
+            batch
+        ) <= 1:
+            event_id = (
+                batch[0].get(
+                    "event_id",
+                    "unknown"
+                )
+                if batch
+                else
+                "unknown"
+            )
+
+            print(
+                f"   Gemini still incomplete for single event "
+                f"{event_id}; leaving it unlocated for a later run."
+            )
+
+            return []
+
+        midpoint = max(
+            1,
+            len(
+                batch
+            )
+            //
+            2
+        )
+
+        left = batch[
+            :midpoint
+        ]
+
+        right = batch[
+            midpoint:
+        ]
+
+        print(
+            f"   Gemini returned incomplete for "
+            f"{len(batch)} events; splitting into "
+            f"{len(left)} + {len(right)}."
+        )
+
+        left_results = process_batch_resilient(
+            left,
+            instructions_override=
+                instructions_override,
+            model_override=
+                model_override,
+            depth=
+                depth + 1,
+        )
+
+        right_results = process_batch_resilient(
+            right,
+            instructions_override=
+                instructions_override,
+            model_override=
+                model_override,
+            depth=
+                depth + 1,
+        )
+
+        return (
+            left_results
+            +
+            right_results
+        )
+
 
 
 # ============================================================
@@ -1768,7 +1977,7 @@ def rescue_unknown_events(
 
         try:
             results.extend(
-                call_gemini_batch(
+                process_batch_resilient(
                     batch,
                     instructions_override=
                         rescue_instructions,
@@ -1777,17 +1986,18 @@ def rescue_unknown_events(
                 )
             )
 
-        except RuntimeError as error:
-            if quota_or_capacity_error(
-                error
-            ):
-                print(
-                    "   Gemini 3.6 rescue quota/capacity reached. "
-                    "Keeping the valid Flash-Lite AI location."
-                )
-                break
-
-            raise
+        except (
+            GeminiQuotaError,
+            GeminiTransientError,
+        ) as error:
+            print(
+                "   Gemini 3.6 rescue unavailable for the rest "
+                f"of this run: {error}"
+            )
+            print(
+                "   Keeping all valid primary-model locations."
+            )
+            break
 
     return results
 
@@ -1800,7 +2010,7 @@ def main():
     print()
     print("=" * 72)
     print("INTERPOL CT Intelligence Map")
-    print("GEMINI AI-FIRST GEOLOCATION V4 — HIGH-THROUGHPUT + CHECKPOINTS")
+    print("GEMINI AI-FIRST GEOLOCATION V5 — RESILIENT BATCHING + CHECKPOINTS")
     print("=" * 72)
     print(
         f"Primary model: {GEMINI_MODEL}"
@@ -1813,6 +2023,12 @@ def main():
     )
     print(
         f"Force refresh: {FORCE_AI}"
+    )
+    print(
+        "Primary thinking: minimal"
+    )
+    print(
+        "Incomplete handling: recursive batch split"
     )
 
     if not os.getenv(
@@ -1920,6 +2136,8 @@ def main():
         f"Gemini to process: {len(pending)}"
     )
 
+    completed = 0
+
     if pending:
         total_batches = math.ceil(
             len(
@@ -1928,8 +2146,6 @@ def main():
             /
             BATCH_SIZE
         )
-
-        completed = 0
 
         for start in range(
             0,
@@ -1959,33 +2175,34 @@ def main():
             )
 
             try:
-                results = call_gemini_batch(
+                results = process_batch_resilient(
                     batch,
                     model_override=
                         GEMINI_MODEL,
                 )
 
-            except RuntimeError as error:
-                if quota_or_capacity_error(
-                    error
-                ):
-                    print()
-                    print(
-                        "Gemini free-tier quota/capacity reached."
-                    )
-                    print(
-                        "Progress is saved. The next run will resume "
-                        "with only the remaining unprocessed events."
-                    )
+            except (
+                GeminiQuotaError,
+                GeminiTransientError,
+            ) as error:
+                print()
+                print(
+                    "Gemini quota/capacity temporarily unavailable."
+                )
+                print(
+                    f"Reason: {error}"
+                )
+                print(
+                    "Progress is saved. The next workflow run will "
+                    "resume with only the remaining unprocessed events."
+                )
 
-                    save_checkpoint(
-                        data,
-                        "quota-safe partial progress",
-                    )
+                save_checkpoint(
+                    data,
+                    "quota/capacity-safe partial progress",
+                )
 
-                    break
-
-                raise
+                break
 
             result_by_id = {
                 str(
@@ -2031,8 +2248,14 @@ def main():
                 completed += 1
 
             if missing:
-                raise RuntimeError(
-                    "Gemini omitted event IDs: "
+                print(
+                    f"   Gemini omitted {len(missing)} event(s) "
+                    "from this batch; they remain unlocated and "
+                    "will be retried on a later run."
+                )
+
+                print(
+                    "   Missing IDs: "
                     +
                     ", ".join(
                         missing[:10]
@@ -2205,6 +2428,9 @@ def main():
             cached_count,
 
         "ai_processed_this_run":
+            completed,
+
+        "ai_pending_at_start":
             len(
                 pending
             ),
