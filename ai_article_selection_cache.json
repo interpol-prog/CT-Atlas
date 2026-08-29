@@ -1,0 +1,442 @@
+{
+  "version": "gemini-ct-selection-v1",
+  "model": "gemini-3.5-flash-lite",
+  "threshold": 50,
+  "items": {
+    "28f9ee169100eb9be883483fe5841e854bec13f88917a2e614a177ef8f3f03a5": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359511+00:00",
+      "result": {
+        "event_id": "902e9586e6d2d85d",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Historical retrospective about riots from 30 years ago, not a current counter-terrorism event."
+      }
+    },
+    "c2e438380628b35155a129a82ba067a67a7074c019d26040117767e23ddf7d5e": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359537+00:00",
+      "result": {
+        "event_id": "5fb1f16419a5aa70",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Current reporting on a terrorist attack suspect."
+      }
+    },
+    "86b98ed06b56794faf35cf4fae6dd4c8a6ddaec653bb048168f69cc76dc91401": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359540+00:00",
+      "result": {
+        "event_id": "1f90bd8e172ee62f",
+        "relevance_score": 70,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "First-hand testimony of a former hostage regarding Hamas captivity."
+      }
+    },
+    "b68b3ed59c0d18c2634a7efd417a66e4d9f423eab6507e7184c81ddca04306bd": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359543+00:00",
+      "result": {
+        "event_id": "c4d6b9fc1e1359bf",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Official state condemnation of a recent terrorist attack in Nigeria."
+      }
+    },
+    "07de4c9da257c34d30b0653d9c63583016fc7b514189b3643e7d689ebb7f9566": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359545+00:00",
+      "result": {
+        "event_id": "fc45d9e94f67357b",
+        "relevance_score": 95,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Arrests"
+        ],
+        "reason": "Disrupted terrorist attack plot against a defense industry executive by security forces, with extradition requested."
+      }
+    },
+    "a019060f249fad5cdc2791c241bdfdcd09d2d677b429ecb5b629559f34e233ed": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359546+00:00",
+      "result": {
+        "event_id": "4efbc57bb70143a9",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "reason": "Ongoing legal trial shedding light on an active state-sponsored terror network targeting Americans."
+      }
+    },
+    "246d58d3ed5770ab073be6d4f77c9cbe5a9a85add3b2f4eaf2d87dfbdeebea08": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359548+00:00",
+      "result": {
+        "event_id": "1bfd60c602337691",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "reason": "Law enforcement arrest of a teenager over a suspected terrorist attack plot."
+      }
+    },
+    "2eb78577721e903ddb81db031066a8d202893c95e22093bc6dc571926550551b": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359550+00:00",
+      "result": {
+        "event_id": "73607ae9e6d59b86",
+        "relevance_score": 95,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Arrests"
+        ],
+        "reason": "Security services successfully prevented a targeted terrorist attack against a defense enterprise head."
+      }
+    },
+    "816d00ebae10baa065fdfbc588c752b676d4ec84b33a525eab32007945d524d6": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359551+00:00",
+      "result": {
+        "event_id": "bc6985083c1eb887",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Declassification and release of new government documents concerning the ISIS Kabul airport attack."
+      }
+    },
+    "a741ab7b6caec89c3fbbd649d69bd5accd84f42fd3555048574ad66d1104b8b3": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359553+00:00",
+      "result": {
+        "event_id": "10275a4de551602b",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Media commentary/controversy regarding a broadcaster's style guidelines, not a CT event."
+      }
+    },
+    "5693a2f7e77b965e124afa9ddfe5fac3ede6a49d6ea43ccfefa01dcf7f539806": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359555+00:00",
+      "result": {
+        "event_id": "f44214c5c964ea1d",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Media reporting on internal editorial guidelines and public controversy."
+      }
+    },
+    "9cd3b0129c95cf230aa1d03f2d32d10c17b79ff7e41aed4650e3b8d2bffa7df8": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359557+00:00",
+      "result": {
+        "event_id": "d43f7abbed5026db",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Historical analysis/revelation about past Al-Qaeda plots near the time of 9/11."
+      }
+    },
+    "15ff60e1e0bbcc5a1918f165fffb00eb469b14f0390e0699a2c79552e921609d": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359559+00:00",
+      "result": {
+        "event_id": "3b71a4c96f40e84a",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Media controversy regarding a news agency's style guide."
+      }
+    },
+    "d6cb5595442c303f0b691dfd00fd1dcb66aa80ad62aab8d3e97d31fd48e38dbc": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359561+00:00",
+      "result": {
+        "event_id": "623615ebdb90c542",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Political commentary and domestic political dispute over a politician's statement."
+      }
+    },
+    "224d7259670b01ecda2a2bfd16a26853dc31b8448e6ae878ebf02067ac599f9c": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359562+00:00",
+      "result": {
+        "event_id": "af9e1ab0e28b60dd",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Media controversy and reporting on editorial policy updates."
+      }
+    },
+    "2276a0ec8d7881d1283addb0be7d3c10c062a88b66551471ad65157bb5c7a290": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359564+00:00",
+      "result": {
+        "event_id": "9ba7a1a42094d748",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Memorial event / unveiling of a mural remembering past victims."
+      }
+    },
+    "f96a44e01f060e9a05d9f33598028dfd48f8c836f07d83f170aab3eaa92c16b3": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359566+00:00",
+      "result": {
+        "event_id": "1824381f6fa2eff9",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial",
+          "Terrorist Financing"
+        ],
+        "reason": "Department of Justice announcement of guilty pleas for alien smuggling and material support to a designated foreign terrorist organization."
+      }
+    },
+    "9eaed7927b93444ac730bf76dd9e5b5a48156a2462e7043ce0b19844a83c676a": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359568+00:00",
+      "result": {
+        "event_id": "6b48074d0b7aab8a",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "reason": "Educational or legal explainer article regarding a specialized court."
+      }
+    },
+    "fc33199590c8924946c5b10fbee4fd985fca198e59a1ef715731437cab7eef87": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359569+00:00",
+      "result": {
+        "event_id": "6a9c97d9291e49f3",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Fatal terrorist attack targeting border guard personnel in eastern Iran."
+      }
+    },
+    "99e10437b3a8f4cc92cbbcfd73b93674bffec2dbcaa8d205c43b71b27435eaa5": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359571+00:00",
+      "result": {
+        "event_id": "aa61f05742a1a579",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "News coverage of media reporting guidelines controversy."
+      }
+    },
+    "33b7be974018d7bd1988cc70c8af334482f9af3fd9213d7e180423877dccb460": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359573+00:00",
+      "result": {
+        "event_id": "2a67ad2682703efe",
+        "relevance_score": 50,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Personal milestone of a former Hamas hostage, maintaining indirect relevance to ongoing hostage contexts."
+      }
+    },
+    "872df4abbe61fdfb3e9c0b4d68f20e6d5d5f52311a0ed4ae4b34df05f897771d": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359574+00:00",
+      "result": {
+        "event_id": "6b22e74485723f6d",
+        "relevance_score": 70,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "reason": "Criminal charges brought with prosecutors alleging a terrorism connection."
+      }
+    },
+    "12eb454b00d9408ebd6ff71f9d6c6aba05de460a4fab051cad9a322a607333e3": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359576+00:00",
+      "result": {
+        "event_id": "972be034307fdc8a",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Legal / Judicial"
+        ],
+        "reason": "Upcoming indictments of individuals involved in alleged ISIS-linked attack plots."
+      }
+    },
+    "aba4e227ca5a239b478a0b4481e06ccc04fc04c8ab561433cf26ab9087647f08": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359578+00:00",
+      "result": {
+        "event_id": "e445b0f904064d71",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Diplomatic/media reaction to a broadcasting controversy."
+      }
+    },
+    "dd96701e28aed448497b779d23eb1228aacf82ea040e955b015ddce122c5499d": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359580+00:00",
+      "result": {
+        "event_id": "df599b4965b4ba63",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Media reporting on internal newsroom policy memos."
+      }
+    },
+    "110bd475e61deb74d023e3588804c549a7f91af2cb44e87221da29975fa4a70a": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359581+00:00",
+      "result": {
+        "event_id": "fe31eed351d20053",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Major terrorist attack resulting in multiple fatalities in Nigeria."
+      }
+    },
+    "0387ddbcb5a42aa5db2adfd8215db54f6deb64a1db522b7f6a25ac63ee7ee660": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359583+00:00",
+      "result": {
+        "event_id": "605b0630f6df94ab",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "reason": "Prosecutorial statements regarding terrorism connections in an ongoing criminal case."
+      }
+    },
+    "2974aa1637bf1ff7011c07f49026d3541e704238f2e203591b473e7633a645df": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359584+00:00",
+      "result": {
+        "event_id": "1b95db9cdfdda095",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Commentary on broadcaster policy decisions."
+      }
+    },
+    "97273c8abff527b27ddf14dc6f25a5515f7aa21623d6f3988279a748fc4c2572": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359586+00:00",
+      "result": {
+        "event_id": "36a503c987e65402",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Opinion piece/complaint regarding editorial standards."
+      }
+    },
+    "2b953b4ec7a6ed5e18b47bb7cc7d3964b802e0cb1ad7307c77a4ddca80782b66": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359587+00:00",
+      "result": {
+        "event_id": "8804913e5c8891b3",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "reason": "Legal proceedings and defense commentary regarding a high-profile terrorism trial."
+      }
+    },
+    "fff5b489adc3ac3cdc0d227b7f71bde1991a1d80ed401d616fbb091cd030817e": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359589+00:00",
+      "result": {
+        "event_id": "f31f319658b68657",
+        "relevance_score": 25,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Opinion/commentary about the nature of a past attack rather than a new operational event."
+      }
+    },
+    "fc8ab9f0fe49b77ee803833334a8a4801409a748681eb3d0fa9fe522191b4448": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359591+00:00",
+      "result": {
+        "event_id": "e0e9ea8884405b17",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Media reporting on the reversal of a news organization's editorial style guideline."
+      }
+    },
+    "9f022cd8cfe6bdf3834f679c6271ec4dcdcc9c3367c4493a46a37f6c3ebaa23c": {
+      "version": "gemini-ct-selection-v1",
+      "reviewed_at": "2026-08-29T08:05:37.359592+00:00",
+      "result": {
+        "event_id": "819e18335debec25",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "reason": "Opinion piece on news terminology and editorial policies."
+      }
+    }
+  },
+  "last_updated": "2026-08-29T08:05:37.360591+00:00"
+}
