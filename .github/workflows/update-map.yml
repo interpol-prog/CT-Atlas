@@ -25,7 +25,6 @@ on:
         type: boolean
 
 
-
 permissions:
   contents: write
   pages: write
@@ -94,8 +93,42 @@ jobs:
       - name: Persist AI article-selection cache
         if: always()
         run: |
+          set -e
+
           git config user.name "CT Intelligence Map Bot"
           git config user.email "actions@github.com"
+
+          push_with_rebase_retry() {
+
+            for attempt in 1 2 3 4 5; do
+
+              echo "Sync/push attempt ${attempt}/5"
+
+              git fetch origin main
+
+              if ! git rebase origin/main; then
+
+                echo "Rebase conflict while persisting AI cache."
+                git rebase --abort || true
+                exit 1
+
+              fi
+
+              if git push origin HEAD:main; then
+
+                echo "Push succeeded."
+                return 0
+
+              fi
+
+              echo "Remote main changed again; retrying."
+              sleep $((attempt * 4))
+
+            done
+
+            echo "Unable to push AI cache after 5 attempts."
+            return 1
+          }
 
           if [ -f ai_article_selection_cache.json ]; then
 
@@ -108,7 +141,7 @@ jobs:
             else
 
               git commit -m "Update AI article selection cache"
-              git push origin main
+              push_with_rebase_retry
 
             fi
 
@@ -148,8 +181,42 @@ jobs:
 
       - name: Commit and push updated database
         run: |
+          set -e
+
           git config user.name "CT Intelligence Map Bot"
           git config user.email "actions@github.com"
+
+          push_with_rebase_retry() {
+
+            for attempt in 1 2 3 4 5; do
+
+              echo "Sync/push attempt ${attempt}/5"
+
+              git fetch origin main
+
+              if ! git rebase origin/main; then
+
+                echo "Rebase conflict while publishing events.json."
+                git rebase --abort || true
+                exit 1
+
+              fi
+
+              if git push origin HEAD:main; then
+
+                echo "Push succeeded."
+                return 0
+
+              fi
+
+              echo "Remote main changed again; retrying."
+              sleep $((attempt * 4))
+
+            done
+
+            echo "Unable to push events.json after 5 attempts."
+            return 1
+          }
 
           git add events.json
 
@@ -160,10 +227,7 @@ jobs:
           else
 
             git commit -m "Update CT intelligence map"
-
-            git fetch origin main
-            git rebase origin/main
-            git push origin main
+            push_with_rebase_retry
 
           fi
 
