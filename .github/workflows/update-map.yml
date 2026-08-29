@@ -67,12 +67,12 @@ jobs:
           pip install -r requirements.txt
 
 
-      - name: Collect and AI-select CT events
+      - name: Collect multilingual and AI-select CT events
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           AI_SELECTION_MODEL: "gemini-3.5-flash-lite"
           AI_SELECTION_THRESHOLD: "50"
-          AI_SELECTION_BATCH_SIZE: "50"
+          AI_SELECTION_BATCH_SIZE: "20"
         run: |
 
           if [ -z "$GEMINI_API_KEY" ]; then
@@ -83,12 +83,12 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
              [ "${{ inputs.mode }}" = "backfill" ]; then
 
-            echo "Running 180-day backfill with Gemini article selection."
+            echo "Running 180-day multilingual backfill with Gemini selection and English normalization."
             python -u collector.py backfill
 
           else
 
-            echo "Running daily collection with Gemini article selection."
+            echo "Running daily multilingual collection with Gemini selection and English normalization."
             python -u collector.py
 
           fi
