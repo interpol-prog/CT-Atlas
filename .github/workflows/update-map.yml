@@ -84,10 +84,11 @@ jobs:
           fi
 
 
-      - name: Gemini 3.6 AI geolocate every event
+      - name: Gemini AI-first geolocate every event
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_GEO_MODEL: "gemini-3.6-flash"
+          GEMINI_GEO_MODEL: "gemini-3.5-flash-lite"
+          GEMINI_RESCUE_MODEL: "gemini-3.6-flash"
           AI_GEO_BATCH_SIZE: "20"
         run: |
 
