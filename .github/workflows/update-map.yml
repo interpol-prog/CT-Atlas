@@ -24,9 +24,6 @@ on:
         default: false
         type: boolean
 
-  push:
-    branches:
-      - main
 
 
 permissions:
@@ -37,7 +34,7 @@ permissions:
 
 concurrency:
   group: ct-map-update-main
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 
 jobs:
