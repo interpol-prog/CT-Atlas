@@ -83786,7 +83786,418 @@
         "canonical_event": "FBI thwarts terrorist attack plot in Ohio",
         "reason": "Disrupted terrorist plot and counter-terrorism operation by law enforcement."
       }
+    },
+    "d259b4fdbbdcd470995cfe539ee6c74e3b5d7d6cca95f0eca8b5406cf7e8e890": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157042+00:00",
+      "result": {
+        "event_id": "5e7191f0c0fb956b",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "Spain",
+        "english_summary": "General news or index page regarding Spain.",
+        "canonical_event": "general news about Spain",
+        "reason": "Generic stub or index page with no current counter-terrorism event."
+      }
+    },
+    "a41280929423d55e2ec81e8ee6b1c7af02e8ba8d57c4048bfba964e0ba6d6038": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157067+00:00",
+      "result": {
+        "event_id": "b26ddf4503bf7e08-121",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Qalibaf advised the US to spend money on helping Americans rather than the army",
+        "english_summary": "Iranian official Qalibaf suggested that the US government should allocate funds to aid its citizens rather than military spending.",
+        "canonical_event": "Mohammad Baqer Qalibaf advised US spending priorities",
+        "reason": "Foreign policy commentary/rhetoric with no direct counter-terrorism operation or event."
+      }
+    },
+    "7ce86bd6ce581d146cbf99f2ce5e7928048eb9eab7cd12cd67ea3da253632c54": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157071+00:00",
+      "result": {
+        "event_id": "f65f10a9f9b9d9e7",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks",
+          "Legal / Judicial"
+        ],
+        "original_language": "he",
+        "english_title": "Two northern residents to be indicted for pledging allegiance to ISIS and planning attacks",
+        "english_summary": "Two residents from northern Israel are facing charges after allegedly swearing allegiance to ISIS and planning terrorist attacks at the Temple Mount and an IDF base.",
+        "canonical_event": "indictment of two individuals for ISIS allegiance and plotting attacks in Israel",
+        "reason": "Specific current counter-terrorism case involving arrests, charges, and disrupted ISIS-linked attack plots."
+      }
+    },
+    "45f4b7ffb63676acffc848cad55f5276a9896e33afb0ea83281444af89a1567a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157075+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-909",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Bessent: Irregular Yen movements could destabilize global markets",
+        "english_summary": "Comments regarding currency movements and potential impacts on global markets.",
+        "canonical_event": "financial commentary on Yen movements by Bessent",
+        "reason": "Economic and financial news story with no terrorism nexus."
+      }
+    },
+    "6d2c463eacd6896b31eecda5e9e53d3d4fab72c92d53f9579b0ecaec2771fe7e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157079+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-913",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Police uncover a Jewish terrorist organization targeting Palestinians",
+        "english_summary": "Israeli police have uncovered and announced the existence of a Jewish extremist/terrorist network targeting Palestinians.",
+        "canonical_event": "police unmasking of Jewish extremist terrorist network targeting Palestinians",
+        "reason": "Counter-terrorism disclosure regarding the uncovering of a domestic militant/terrorist cell."
+      }
+    },
+    "b7d853f535cea51e2126eddddf9dcfbe1891f3302a1e463ccab153cbc274f666": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157081+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-930",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Sheikh Mowafaq Tarif: Killing worshippers in mosques is terrorist and cowardly",
+        "english_summary": "Religious leader Sheikh Mowafaq Tarif condemns attacks on mosques as acts of terrorism.",
+        "canonical_event": "religious leader condemns mosque attacks",
+        "reason": "Generic condemnation and political/religious commentary on terrorism without a specific reported operational event."
+      }
+    },
+    "b033e32f6cec13d23db51c8df4c2ea2b2e8fd677e890fbad7a0443eb8516fccc": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157084+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-942",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Bennett: Mahmoud Abbas finances terrorism and encourages it",
+        "english_summary": "Former Israeli official Naftali Bennett accuses Palestinian Authority President Mahmoud Abbas of financing and encouraging terrorism.",
+        "canonical_event": "Naftali Bennett accuses Mahmoud Abbas of financing terrorism",
+        "reason": "Political rhetoric and accusation rather than a distinct new counter-terrorism operational or legal event."
+      }
+    },
+    "502f07ca1b1cf083cbc68814b2e143d5660a592d371d94c1c41f040322139309": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157087+00:00",
+      "result": {
+        "event_id": "8676744ca3fa7cdb",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "HubX's success turns eyes to mobile app entrepreneurs in Turkey",
+        "english_summary": "An article detailing the business success of a Turkish mobile startup dubbed 'Turcorn'.",
+        "canonical_event": "business success of mobile startup HubX in Turkey",
+        "reason": "Business and tech startup news with no connection to terrorism."
+      }
+    },
+    "91d26f70f19ca997a6ce84b5072de773953788bdb67658d3c914e5a1a3cc31c0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157090+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1062",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "El Othmani/Al-Azami commentary on financing",
+        "english_summary": "An opinion or political article discussing political/economic grievances in Morocco.",
+        "canonical_event": "opinion article on economic or political issues in Morocco",
+        "reason": "Political commentary using metaphorical language about 'terrorists' in an internal political dispute."
+      }
+    },
+    "019a602a6d6ce0bd0491f31a774716ee1e69fd1a415bc81d73cbdcac0572dd80": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157092+00:00",
+      "result": {
+        "event_id": "225494de240dfe29",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Legal / Judicial"
+        ],
+        "original_language": "ru",
+        "english_title": "Teenagers aged 14 and 16 indicted for espionage for Iran",
+        "english_summary": "Two teenagers aged 14 and 16 have been formally charged in Israel with spying on behalf of Iran.",
+        "canonical_event": "indictment of two teenagers for Iranian espionage in Israel",
+        "reason": "State security arrest and formal indictment concerning hostile intelligence activity linked to a designated state sponsor of terrorism."
+      }
+    },
+    "52c7d8c5a2d6a6090e1a02b9a35443ad9d5804cfe0648c6fb91aa148c036ddc2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157095+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1101",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President Tebboune calls for strengthening African action against terrorism",
+        "english_summary": "Algerian President Abdelmadjid Tebboune makes diplomatic statements urging joint African cooperation against terrorism.",
+        "canonical_event": "President Tebboune calls for joint African counter-terrorism cooperation",
+        "reason": "General diplomatic statement and policy call regarding counter-terrorism without a specific operational incident."
+      }
+    },
+    "7482736c8c8af35588d60a1b4196c5011d725da7001e1f18a1e2fb525ec50bf4": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157099+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1108",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President Tebboune calls for strengthening joint African action to face terrorism",
+        "english_summary": "Algerian President reiterates the need for collective continental efforts to combat terrorism.",
+        "canonical_event": "President Tebboune calls for joint African counter-terrorism action",
+        "reason": "Duplicate or near-duplicate diplomatic statement regarding counter-terrorism cooperation."
+      }
+    },
+    "8894cda5f4ac036f346253f6acef43e5d4d51753bef620a03dca24839090c218": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157103+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1117",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President of the Republic: Addressing terrorism remains a top priority for joint African action",
+        "english_summary": "Presidential remarks emphasizing counter-terrorism as a priority in African cooperation.",
+        "canonical_event": "Presidential statement prioritizing counter-terrorism in African action",
+        "reason": "High-level political/diplomatic remarks on counter-terrorism priorities."
+      }
+    },
+    "d0775502bb9db0a11c8df9a9263547f869e70298d65f76c72b7391b34e28fbd0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157107+00:00",
+      "result": {
+        "event_id": "bde71c16a9da104c",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Legal / Judicial"
+        ],
+        "original_language": "en",
+        "english_title": "Palestinian arrested in Greece for alleged Hamas membership",
+        "english_summary": "Greek authorities have arrested a Palestinian national on allegations of membership in Hamas.",
+        "canonical_event": "arrest of a Palestinian national in Greece for alleged Hamas membership",
+        "reason": "Direct operational counter-terrorism arrest of an individual linked to a designated terrorist organization."
+      }
+    },
+    "7a5ff2fbd687d69febe50800d3f6aa5b7e769a1ba2fb3231484e2865c8a29da1": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157110+00:00",
+      "result": {
+        "event_id": "42f74ea6ea8c8c75",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Heavy rainfall causes floods, water inundations, and landslides in Artvin",
+        "english_summary": "Severe weather conditions trigger natural disasters including floods and landslides in the Artvin region of Turkey.",
+        "canonical_event": "floods and landslides caused by heavy rain in Artvin, Turkey",
+        "reason": "Natural disaster / weather event with no connection to terrorism."
+      }
+    },
+    "d469eaf9fc91fe859de36a5e3eff55d9f83ebc4218d00afc495022fd3cac96d3": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157113+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1175",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "he",
+        "english_title": "Elisha Ben Kimon author snippet",
+        "english_summary": "Author byline or brief snippet from Ynet reporter Elisha Ben Kimon.",
+        "canonical_event": "author snippet or byline on Ynet",
+        "reason": "Fragmentary author tag with no standalone event information."
+      }
+    },
+    "38ce17354738fd1b2e04b77b0eb42a90e171f2b0e6bd259f9b97b807c57bccfc": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157116+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1178",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Terrorist Financing",
+          "Legal / Judicial"
+        ],
+        "original_language": "ar",
+        "english_title": "Laftagreen added to the terrorist list",
+        "english_summary": "An individual or entity named Laftagreen has been officially designated and added to a terrorism sanctions list.",
+        "canonical_event": "designation and addition of Laftagreen to a terrorist list",
+        "reason": "Sanctions / counter-terrorism designation action placing an entity on a terrorist watchlist."
+      }
+    },
+    "891e771175abb3764497a33510f9621d5a20a4772473c6c384acac9fb9f4045a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157119+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1183",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Fish overpowers the Euro: Why did Iceland close its door to Brussels?",
+        "english_summary": "An analysis piece regarding Iceland's economic relations, fisheries policy, and stance toward the European Union.",
+        "canonical_event": "article on Iceland's relations with the European Union regarding fisheries",
+        "reason": "Geopolitical and economic commentary regarding European integration, unrelated to terrorism."
+      }
+    },
+    "e33a375dee019bc9e91e897b8f976d203db5ffb163b00c67406acd0533eb3d02": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157121+00:00",
+      "result": {
+        "event_id": "7500f45b620ad783",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "en",
+        "english_title": "IRGC states US attack on Larak Island will be answered",
+        "english_summary": "The Islamic Revolutionary Guard Corps (IRGC) claims that a US military/terrorist action occurred on Larak Island and vows retaliation.",
+        "canonical_event": "IRGC allegation of US attack on Larak Island and vow of retaliation",
+        "reason": "Geopolitical military escalation involving allegations of hostile attacks between state actors."
+      }
+    },
+    "de7f9cd8155dc55b3c566b28da02722f2b92ec97de6a8cac8d4e2be1cd0314f3": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:25.157124+00:00",
+      "result": {
+        "event_id": "84e4fbbe0cb14a40",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Shift toward dictatorship and political radicalization in the United States",
+        "english_summary": "An ideological commentary discussing political trends and polarization within the United States.",
+        "canonical_event": "commentary on political polarization and radicalization in the US",
+        "reason": "Political opinion and socio-political commentary rather than a specific operational counter-terrorism event."
+      }
+    },
+    "8b8f358a34ed6106b1431b24b17695d06aa95de944dc6f3c8ca7300d34dd260a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:36.683272+00:00",
+      "result": {
+        "event_id": "75967ac82d6083b0",
+        "relevance_score": 35,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "Mali-Algeria: Reconciliation or marriage of convenience in the face of the Sahel crisis?",
+        "english_summary": "An analysis article discussing diplomatic relations between Mali and Algeria regarding the security crisis in the Sahel.",
+        "canonical_event": "diplomatic relations and security policy discussion between Mali and Algeria regarding the Sahel crisis",
+        "reason": "This is a broad geopolitical commentary and analysis piece rather than a specific counter-terrorism operational event."
+      }
+    },
+    "38ef48b4c51d711ddb6606d2275a82efd6e954fbd1e7dd96d73d662d63c22a92": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:36.683288+00:00",
+      "result": {
+        "event_id": "1624320b6234ae88",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Week of debate on Report. Ranucci: I defend myself alone",
+        "english_summary": "An Italian media and domestic public affairs news item regarding a television broadcast and journalist.",
+        "canonical_event": "media debate involving Italian journalist Ranucci",
+        "reason": "Unrelated domestic media news with no connection to counter-terrorism."
+      }
+    },
+    "2feab3552eedd77f0809b421cdfa08bcf3f8cf7314d86976c9bcc71ebfdc00f0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:36.683315+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1213",
+        "relevance_score": 35,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Mecca Joint Defense Agreement: What files are on the table for its first committee meeting?",
+        "english_summary": "An overview article discussing the agenda for the first committee meeting of the Mecca Joint Defense Agreement.",
+        "canonical_event": "committee meeting discussing the Mecca Joint Defense Agreement",
+        "reason": "General military and defense cooperation news without a specific counter-terrorism operational focus."
+      }
+    },
+    "a77e36649b579361fdde6edf49c8123bbc86d284b7249a0e5bb7923850bb82a6": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:36.683319+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1214",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Are Egyptian deposits and remittances affected by US action against Banque Misr in the UAE?",
+        "english_summary": "An economic analysis piece examining potential impacts on Egyptian bank deposits following US regulatory or financial measures involving Banque Misr in the UAE.",
+        "canonical_event": "economic analysis of US financial actions affecting Banque Misr in the UAE",
+        "reason": "General banking and economic news, lacks any concrete terrorism or terrorist-financing nexus in the summary/title."
+      }
+    },
+    "a31904fdf38d720b1afc314b61fd86e2c4a86c5e9e9a59b401b5830f9bf612a6": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:36.683322+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1215",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Popular Mobilization Forces carry out raid and search operation seeking remnants of terrorism in Anbar",
+        "english_summary": "Iraq's Popular Mobilization Forces (PMF) executed a search and raid operation in Anbar province targeting remnants of terrorist elements.",
+        "canonical_event": "counter-terrorism raid and search operation by Popular Mobilization Forces in Anbar",
+        "reason": "A direct operational counter-terrorism security sweep targeting terrorist remnants."
+      }
+    },
+    "074c34489f1de45396f62eca7ec779013cc55d58d25fe4c38917634f2da2ddce": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:49:36.683324+00:00",
+      "result": {
+        "event_id": "f59eb79b7d4c3741",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Pickpocket at central station – Arrest and presentation",
+        "english_summary": "Local police arrested a pickpocket at the main train station.",
+        "canonical_event": "arrest of a pickpocket at a central railway station by police",
+        "reason": "Ordinary common crime (pickpocketing) with no terrorism nexus."
+      }
     }
   },
-  "last_updated": "2026-08-30T20:29:11.136482+00:00"
+  "last_updated": "2026-08-30T20:49:36.799264+00:00"
 }
