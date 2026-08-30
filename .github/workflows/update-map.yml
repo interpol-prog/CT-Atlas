@@ -2,13 +2,13 @@ name: Daily CT Intelligence Map Update
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "17 0 * * *"
       timezone: "Europe/Paris"
-    - cron: "0 6 * * *"
+    - cron: "17 6 * * *"
       timezone: "Europe/Paris"
-    - cron: "0 12 * * *"
+    - cron: "17 12 * * *"
       timezone: "Europe/Paris"
-    - cron: "0 18 * * *"
+    - cron: "17 18 * * *"
       timezone: "Europe/Paris"
 
   workflow_dispatch:
