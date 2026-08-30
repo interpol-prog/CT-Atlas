@@ -2148,6 +2148,7 @@ body::before {
     <div id="situationSummary">
         <span><strong id="summaryNewEvents">—</strong> events</span>
         <span><strong id="summaryAttacks">—</strong> attacks</span>
+        <span><strong id="summaryDeaths">—</strong> deaths</span>
         <span><strong id="summaryArrests">—</strong> arrests</span>
         <span><strong id="summaryJudicial">—</strong> judicial</span>
         <span><strong id="summaryFinancing">—</strong> financing</span>
@@ -2711,9 +2712,9 @@ Automated updates · 00:00 / 06:00 / 12:00 / 18:00 CET/CEST
                 <div class="value" id="railCountries">—</div>
                 <div class="label">Countries</div>
             </div>
-            <div class="mini-metric">
-                <div class="value">11</div>
-                <div class="label">Languages</div>
+            <div class="mini-metric" title="10 non-English source languages translated into English; 11 collection languages in total including English.">
+                <div class="value">10</div>
+                <div class="label">Translated languages</div>
             </div>
             <div class="mini-metric">
                 <div class="value">119</div>
@@ -2735,7 +2736,7 @@ Automated updates · 00:00 / 06:00 / 12:00 / 18:00 CET/CEST
 </div>
 
 <div id="operationalDisclaimer">
-    Open-source analytical environment · AI-assisted classification and geolocation · verify against primary sources before operational use
+    Open-source analytical environment · 10 source languages translated into English · 24h deaths derived conservatively from explicit fatality figures in deduplicated attack reports · verify against primary sources before operational use
 </div>
 
 
@@ -6969,6 +6970,52 @@ function visibleEventsForPeriod(
 }
 
 
+
+function extractAttackDeathCount(event) {
+
+    const text =
+        (
+            (event.title || "")
+            + " "
+            + (event.summary || "")
+            + " "
+            + (event.original_title || "")
+        )
+        .replace(/,/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    if (!text) {
+        return 0;
+    }
+
+    const patterns = [
+        /\bdeath toll(?:\s+(?:has\s+)?(?:risen|rose|rises|climbed|stands|reached|reaches|at))?\s*(?:to|at|:)?\s*(\d{1,5})\b/gi,
+        /\b(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|officers\s+|police\s+|victims\s+)?(?:were\s+)?(?:killed|dead|died|fatalities|deaths)\b/gi,
+        /\b(?:killed|left dead|leaves dead|leaving dead|dead|deaths|fatalities)\s*[:\-]?\s*(\d{1,5})\b/gi,
+        /\b(\d{1,5})\s+fatal\b/gi
+    ];
+
+    const values = [];
+
+    patterns.forEach(pattern => {
+        let match;
+        while ((match = pattern.exec(text)) !== null) {
+            const value = Number(match[1]);
+            if (Number.isFinite(value) && value >= 0 && value <= 10000) {
+                values.push(value);
+            }
+        }
+    });
+
+    if (values.length === 0) {
+        return 0;
+    }
+
+    return Math.max(...values);
+}
+
+
 function updateCommandCenterPanels() {
 
     const events24 =
@@ -7064,6 +7111,32 @@ function updateCommandCenterPanels() {
         ]
         ||
         0
+    );
+
+
+    const deaths24 =
+        events24
+        .filter(
+            event =>
+                eventCategories(
+                    event
+                ).includes(
+                    "Attacks"
+                )
+        )
+        .reduce(
+            (total, event) =>
+                total
+                +
+                extractAttackDeathCount(
+                    event
+                ),
+            0
+        );
+
+    setText(
+        "summaryDeaths",
+        deaths24
     );
 
     setText(
