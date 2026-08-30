@@ -2,11 +2,13 @@ name: Daily CT Intelligence Map Update
 
 on:
   schedule:
-    - cron: "17 6 * * *"
+    - cron: "0 0 * * *"
       timezone: "Europe/Paris"
-    - cron: "47 8 * * *"
+    - cron: "0 6 * * *"
       timezone: "Europe/Paris"
-    - cron: "17 11 * * *"
+    - cron: "0 12 * * *"
+      timezone: "Europe/Paris"
+    - cron: "0 18 * * *"
       timezone: "Europe/Paris"
 
   workflow_dispatch:
@@ -39,9 +41,6 @@ jobs:
   update:
     runs-on: ubuntu-latest
 
-    outputs:
-      should_run: ${{ steps.daily_guard.outputs.should_run }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -49,50 +48,17 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Decide whether scheduled daily update is needed
-        id: daily_guard
-        shell: bash
-        run: |
-          set -e
-
-          if [ "${{ github.event_name }}" != "schedule" ]; then
-            echo "Manual run: update will execute."
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          TODAY_PARIS="$(TZ=Europe/Paris date +%F)"
-          LAST_SUCCESS=""
-
-          if [ -f daily_update_state.json ]; then
-            LAST_SUCCESS="$(python -c 'import json; from pathlib import Path; p=Path("daily_update_state.json"); print(json.loads(p.read_text(encoding="utf-8")).get("last_success_local_date", ""))' 2>/dev/null || true)"
-          fi
-
-          echo "Today in Paris: ${TODAY_PARIS}"
-          echo "Last successful scheduled update: ${LAST_SUCCESS:-none}"
-
-          if [ "$LAST_SUCCESS" = "$TODAY_PARIS" ]; then
-            echo "A successful daily update already ran today. Skipping this fallback schedule."
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "No successful daily update recorded today. Running now."
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Set up Python
-        if: steps.daily_guard.outputs.should_run == 'true'
         uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
       - name: Install dependencies
-        if: steps.daily_guard.outputs.should_run == 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Collect multilingual and AI-select CT events
-        if: steps.daily_guard.outputs.should_run == 'true'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           AI_SELECTION_MODEL: "gemini-3.5-flash-lite"
@@ -104,17 +70,16 @@ jobs:
             exit 1
           fi
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
-             [ "${{ inputs.mode }}" = "backfill" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.mode }}" = "backfill" ]; then
             echo "Running 180-day multilingual backfill with Gemini selection and English normalization."
             python -u collector.py backfill
           else
-            echo "Running daily multilingual collection with Gemini selection and English normalization."
+            echo "Running scheduled/manual daily multilingual collection with Gemini selection and English normalization."
             python -u collector.py
           fi
 
       - name: Persist AI article-selection cache safely
-        if: always() && steps.daily_guard.outputs.should_run == 'true'
+        if: always()
         run: |
           set -e
 
@@ -170,7 +135,6 @@ jobs:
           fi
 
       - name: Gemini AI-first resilient geolocation
-        if: steps.daily_guard.outputs.should_run == 'true'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_GEO_MODEL: "gemini-3.5-flash-lite"
@@ -182,8 +146,7 @@ jobs:
             exit 1
           fi
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
-             [ "${{ inputs.force_ai }}" = "true" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force_ai }}" = "true" ]; then
             echo "Forcing Gemini geolocation refresh for all events."
             AI_GEO_FORCE=1 python -u geolocate.py
           else
@@ -191,24 +154,17 @@ jobs:
             python -u geolocate.py
           fi
 
-      - name: Record successful daily update
-        if: steps.daily_guard.outputs.should_run == 'true'
-        shell: bash
-        run: |
-          python -c 'import json, os; from datetime import datetime; from pathlib import Path; from zoneinfo import ZoneInfo; now=datetime.now(ZoneInfo("Europe/Paris")); payload={"last_success_local_date":now.strftime("%Y-%m-%d"),"last_success_local_time":now.isoformat(timespec="seconds"),"trigger":os.environ.get("GITHUB_EVENT_NAME",""),"run_id":os.environ.get("GITHUB_RUN_ID",""),"run_number":os.environ.get("GITHUB_RUN_NUMBER","")}; Path("daily_update_state.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2)+"\n", encoding="utf-8"); print(json.dumps(payload, indent=2))'
-
       - name: Commit and push updated database
-        if: steps.daily_guard.outputs.should_run == 'true'
         run: |
           set -e
 
           git config user.name "CT Intelligence Map Bot"
           git config user.email "actions@github.com"
 
-          git add events.json daily_update_state.json
+          git add events.json
 
           if git diff --cached --quiet; then
-            echo "No database/state changes to commit."
+            echo "No database changes to commit."
             exit 0
           fi
 
@@ -225,7 +181,7 @@ jobs:
             fi
 
             if git push origin HEAD:main; then
-              echo "Database/state push succeeded."
+              echo "Database push succeeded."
               exit 0
             fi
 
@@ -238,7 +194,6 @@ jobs:
 
   deploy:
     needs: update
-    if: needs.update.outputs.should_run == 'true'
     runs-on: ubuntu-latest
 
     environment:
