@@ -71,8 +71,8 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-08-30T20:30:18.818899+00:00",
-  "number_of_events": 1501,
+  "last_updated": "2026-08-30T20:50:47.041284+00:00",
+  "number_of_events": 1505,
   "events": [
     {
       "id": "a7c1755336dc9916",
@@ -133,6 +133,69 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The event explicitly describes a thwarted terrorist attack in Ohio, USA.",
       "ai_geo_fingerprint": "52c2b02607d3713b03c60dc2b3f2c07d78d1995e3ecaeb0b1d4c636695789b2a",
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "7500f45b620ad783",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "IRGC states US attack on Larak Island will be answered",
+      "summary": "The Islamic Revolutionary Guard Corps (IRGC) claims that a US military/terrorist action occurred on Larak Island and vows retaliation.",
+      "original_title": "IRGC: US terrorist attack on Larak Island will be answered, aggressor to be punished",
+      "original_summary": "IRGC: US terrorist attack on Larak Island will be answered, aggressor to be punished PressTV",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English",
+      "collection_locale": null,
+      "published": "2026-08-30T19:33:00+00:00",
+      "source": "PressTV",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOZC1vY3AzT3hHSmtWUlhjX0QtYzI4MzRsaU01aFZwWW1mZHMxdU1PaXhwQTFtSExnRzFWeFpzazZxaFpJSmhPc2Z2SXBJR3F4ZzhfRHMtQXdPVXRIVFl0cUhxajRablkxUThWNmJ6RFdoUGNQck0yelR4dTRfLUNJM1VGMGlFOWlsU0tHWlROcEJHWnNPUWRRcEFVdkhPYkdRWVM2S0UzNWhLZ3ZkTXh3S0ZOeWgzRndvSjg5VHRvTWFMVWNZb2FQVGE4anlXMUJE?oc=5",
+      "collector": "Google News RSS",
+      "country": "Iran",
+      "country_code": "IR",
+      "city": "Larak Island",
+      "region": null,
+      "latitude": 26.8528,
+      "longitude": 56.3533,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "sources": [
+        "PressTV"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T19:33:00+00:00",
+      "last_reported": "2026-08-30T19:33:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Geopolitical military escalation involving allegations of hostile attacks between state actors.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "IRGC allegation of US attack on Larak Island and vow of retaliation",
+      "title_variants": [
+        "IRGC allegation of US attack on Larak Island and vow of retaliation"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_coordinates",
+      "location_evidence": [
+        "Larak Island, IRGC statements"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event explicitly describes an attack/incident involving the IRGC on Larak Island in Iran.",
+      "ai_geo_fingerprint": "726258ff1bfa4592e7faa1ca3b8ef08c965a4e6e16bd25df33d5f63526791dd2",
       "ai_geo_inferred": false
     },
     {
@@ -193,7 +256,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The event mentions Swiss police investigating a potential terrorist shooting in Switzerland.",
       "ai_geo_fingerprint": "3ef0282afff151b55e323cf7db1de76de7747e4561c1c243b5f3b84bf87af92a",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -255,7 +322,8 @@
       ],
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "same_url"
       ],
       "location_confidence_score": 0.9,
       "location_method": "ai_region_coordinates",
@@ -330,7 +398,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The discussion and context concern security and retaliatory attacks in the West Bank.",
       "ai_geo_fingerprint": "06293c678c1879c2e07560161eef03c046b7985d2e660e6d6554679e93d3de61",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "0695aca03a1e6145",
@@ -390,6 +462,71 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Analytical piece published by French media outlet Le Figaro; global topic with no specific geographic attack location.",
       "ai_geo_fingerprint": "3e41b77460038349f4b799fe44df668afa0019a89c1743976e585e9ed3b6198d",
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Terrorist Financing",
+      "categories": [
+        "Terrorist Financing",
+        "Legal / Judicial"
+      ],
+      "title": "Laftagreen added to the terrorist list",
+      "summary": "An individual or entity named Laftagreen has been officially designated and added to a terrorism sanctions list.",
+      "original_title": "إدراج لفتاغرين في قائمة الإرهابيين",
+      "original_summary": "إدراج لفتاغرين في قائمة الإرهابيين alsomal.net",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-30T18:26:50+00:00",
+      "source": "alsomal.net",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMirgJBVV95cUxPYlpwaWl6TFJhZ2hsOFd1T2wyQncySGNET2pzdEZSVk4zMTVyWHRseVllYzRKaU1sNTU2YUJPbXB0NWY4a1Rab01iRWJzUFd2OFRCMEcyaDliM2VtVU5oTXVYZl9QZk1pbEI0MXVfUVBFUzF1SDZrSmIxM2JOcklpWVgxa1VSdzZpZERpdjZLdmo4OU9qeUFJUllRRGVleGpFV3hrZ0tvR0kyd3hfbEZQbHFCME03MkRvbXA2dnFyanJUUjJlVW5jUms2R1dTWUktWkNEblpJcVZJSVJVc0ZsRWxwNmFtUmpVWmh4eWdURUZscWJIOG5fVHNkbGVnR3RSWWlhek0xQ21NcWFyWE9qekJmVElEeWVJOGwxdlpMVDYweWRBTGtIQkg2eklQUQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Somalia",
+      "country_code": "SO",
+      "city": "Mogadishu",
+      "region": null,
+      "latitude": 2.03711,
+      "longitude": 45.34375,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "alsomal.net"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T18:26:50+00:00",
+      "last_reported": "2026-08-30T18:26:50+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Sanctions / counter-terrorism designation action placing an entity on a terrorist watchlist.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "designation and addition of Laftagreen to a terrorist list",
+      "title_variants": [
+        "designation and addition of Laftagreen to a terrorist list"
+      ],
+      "location_confidence_score": 0.6,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "alsomal.net source"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The article is from a Somali news source discussing terrorism sanctions, defaulting to Somalia as the national context.",
+      "ai_geo_fingerprint": "60b755b05bf65503ba1bb3cde83d5bc6f67e3ba343956b3031b36054009fe20b",
       "ai_geo_inferred": true
     },
     {
@@ -450,7 +587,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Refers to the same livestock poisoning and stone-throwing incident in the Binyamin region.",
       "ai_geo_fingerprint": "433dc659b2798f9f2711db2ed76fb48ab869f89e38d17790dc487638a5242237",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -510,7 +651,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Settler attacks targeting homes in the town of Beita, West Bank.",
       "ai_geo_fingerprint": "eb7e9c81524f7e89288ccbf6a03f952aa1cfad07da67fd9a0819411e1c3ce994",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -572,7 +717,8 @@
       ],
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "same_url"
       ],
       "location_confidence_score": 0.9,
       "location_method": "ai_city_geonames",
@@ -591,7 +737,8 @@
       "id": "bde71c16a9da104c",
       "category": "Arrests",
       "categories": [
-        "Arrests"
+        "Arrests",
+        "Legal / Judicial"
       ],
       "title": "Palestinian arrested in Greece for alleged Hamas membership",
       "summary": "A Palestinian individual has been arrested in Greece based on allegations of membership in Hamas.",
@@ -603,7 +750,7 @@
       "collection_locale": null,
       "published": "2026-08-30T16:58:48+00:00",
       "source": "dw.com",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOTXYtdl9RTkxyY3gwaXctbzFuYlljS2lsbDM2M0ZYN3c3c0ExUFFMUWQ5a2FITVF2M0FnWnBLbDU4WWdnQm9iTm1CeFNVSzZ2Y1pEQ0lqc3dKUGlHQ0lORk1PNFg0dTFQOHdTQVB4dTVKWUVuNWxQaEZJM2lyTU5hWjl0bjZZLWU5SXc3WUlidHh0UjZqenMtck9zMlFWU0pReERxaFZzaw?oc=5",
       "collector": "Google News RSS",
       "country": "Greece",
@@ -618,7 +765,8 @@
       "targeted_source": "Deutsche Welle English",
       "targeted_source_kind": "international_media",
       "sources": [
-        "dw.com"
+        "dw.com",
+        "DW.com"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -647,7 +795,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The arrest took place in Greece.",
       "ai_geo_fingerprint": "978069e49807685f71d14219e8e8e5057e980dcca3621fd2654dc613c37e71bd",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "1e24b8e4e590d4d1",
@@ -707,7 +859,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Reports regarding the leader of the Islamic State, whose core operational zone is historically Iraq and Syria.",
       "ai_geo_fingerprint": "fb046d9accf99fb780b9d42ce04600054a711049573ecf3753190e55fa35d03e",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -768,7 +924,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Criminal case opened against terrorism sympathizer in the Kurgan region of Russia.",
       "ai_geo_fingerprint": "eafd03a32ebce7fb389389761ef97dfc1e3ea22dfb0e3f3336876c35bbef03e0",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "ba039e6980e67328",
@@ -829,7 +989,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The sentencing took place in Nantes, France.",
       "ai_geo_fingerprint": "23de2674925a6743d5a118c78b451d13db599e246a950543a1033c134d7868b5",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -1056,7 +1220,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Statement made by the Algerian President regarding African counter-terrorism.",
       "ai_geo_fingerprint": "1cb01fcef9d006f015078bd12315c2658c902cdf2d2b02c08b152845d3f3e42c",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -1117,9 +1285,10 @@
       "title_variants": [
         "Russian official proposes counter-terrorism awareness campaigns in schools regarding convicted youth"
       ],
-      "dedup_confidence": 0.564,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "paraphrase_entity_context"
+        "paraphrase_entity_context",
+        "same_url"
       ],
       "location_confidence_score": 0.95,
       "location_method": "ai_country_capital",
@@ -1193,7 +1362,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Security forces intercepted terror funds on the way to Jerusalem.",
       "ai_geo_fingerprint": "ba9607151778fc70667a0bac6f8abf1af5d4ba27a34021922027d430c52d63a1",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "e605b1cf5ed57009",
@@ -1641,7 +1814,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Operation conducted by Turkish special services in Turkey.",
       "ai_geo_fingerprint": "a433e73210eeea4baa273dbdb3810c243afabff70cc1579658d2037d2d4d2077",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -2046,7 +2223,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Military troops repelled an attack in Kukawa, Nigeria.",
       "ai_geo_fingerprint": "124531d38425828b0e92d217cc3a7bb6f30363a39b86664a32465611fdf4e299",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -2568,7 +2749,7 @@
       "collection_locale": "IL:he",
       "published": "2026-08-30T10:12:00+00:00",
       "source": "הארץ",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOUld4R3Itc3FPQlZlWC1JdC1BaG9wNGZvTlFJQngyQ3BZbUFEeVp5S3M4Q0huZDJlNnJMdk1VcHc4OGVrbEpFN3NLMkVnWk9iVFpHQUdDbHlSU1ljWUoybElXNmc1UktMTkpmOHZtOEMtZGF4ZTVVZzUzVE5YWmZDc2ZsUENidGJwSVVRWTZrR3VHY2dldGpUMklkRzFxVkNWbEVORQ?oc=5",
       "collector": "Google News RSS",
       "country": "Israel",
@@ -2583,7 +2764,8 @@
       "targeted_source": "haaretz.co.il",
       "targeted_source_kind": "local_language_media",
       "sources": [
-        "הארץ"
+        "הארץ",
+        "NEWSru.co.il"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -2612,7 +2794,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Reported by Haaretz regarding teenagers working for an Iranian agent inside Israel.",
       "ai_geo_fingerprint": "a6f1b2ca90c4f7f5e77fd6e7ee4fd59d892e1c08130f1cced65d5e26296d9c0b",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -3288,7 +3474,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Official security assessment regarding Baghdad, Iraq.",
       "ai_geo_fingerprint": "069b4e273b9723f8fbe72c3203d15214bf46df676bfc42cc8488c3df8e5cbf22",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -3699,7 +3889,72 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Attack took place in Barcelona, Spain.",
       "ai_geo_fingerprint": "a0604c35a238628af13290a06fb9eaa33ce213653f6756380030ae65b408ad3f",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Attacks"
+      ],
+      "title": "Police uncover a Jewish terrorist organization targeting Palestinians",
+      "summary": "Israeli police have uncovered and announced the existence of a Jewish extremist/terrorist network targeting Palestinians.",
+      "original_title": "الشرطة: الكشف عن تنظيم يهودي إرهابي استهدف فلسطينيين",
+      "original_summary": "الشرطة: الكشف عن تنظيم يهودي إرهابي استهدف فلسطينيين كل العرب",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-30T05:09:29+00:00",
+      "source": "كل العرب",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMixwRBVV95cUxNRmdiZnJkdjdZeElXLUZLRkhQWWt0UzNhRHotWDN3UkpYdTBlVzh5VjZJMG5fVTQ3Tjl0cUF5YThhVGJtdFZBdWE1Nm1SN1ByREliTGtJYlZOVHd2SHU2eHdHRmg0NzJiU3ZWZ0ZlWndzUzhzei05WUU5TFY2RzN4bHJMY0F5Vl91bEVBaDhIbWRwZHp3bFI2eVM4V2RFMVhoMHJlbFFFV1loOVNSZmI3RXZYNUdMZ1ZiaDE1WjBMZmQ3V191V1hnaUk0MDNFQTFPZHFUMG1vWVJBZXh0RExQeW1mTDFPbzRGMmpLNFVCWk40RG1EUGhYUm4zOXZLUWNKSUpNVmgwa3pVay1lQXE0dGhxZl9EUXlnWWl4elk0dl9Ld0dCSElhcTNPX3dLR1lVLWRGVXBEMGRvM0lNeHphaEZXNk03OGlwMktrSjJjWFRfMlVzclJpcWpOTmdtRm9pdnZCdWxNaVpla1Vla2tGWE53ZFViVVU3c3Q1QjZrM0d4YlNiTjNXLXF3R0JMZW1ENWZKMWJ3UEE4QWZFWlFCaFpLQ2h1TVlianBVTWUtN3kzN0FuY3BoRVhnUHh1eDd2ZUNzUXIxTzllV3Y1VlNFZTRkQTNOejZrcDJnOTVUa3BJSURDUnB3N0FNZE5YMWlscDJhNEpqRjBwZzdWRHRpUEhuN3otaVFObUFjTFh3OW14bm4wOG90X2J5RUpJWUpQYlpnSUQ4SHZUcENqT1dwSDJZTGVWZGJoN09wdm56RzBvM01IZmpv0gFOQVVfeXFMT25fRmpNa1MxZ0d6b2dOd25Hc2Z4a1FXRTRJaDB0Q2xLV29xeHdjWFkxTFFSNjR5ZHR1Z1NpOTRXa09xQWxkazkxYUZENzhn?oc=5",
+      "collector": "Google News RSS",
+      "country": "Israel",
+      "country_code": "IL",
+      "city": "Jerusalem",
+      "region": null,
+      "latitude": 31.76904,
+      "longitude": 35.21633,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "كل العرب"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T05:09:29+00:00",
+      "last_reported": "2026-08-30T05:09:29+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Counter-terrorism disclosure regarding the uncovering of a domestic militant/terrorist cell.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "police unmasking of Jewish extremist terrorist network targeting Palestinians",
+      "title_variants": [
+        "police unmasking of Jewish extremist terrorist network targeting Palestinians"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Israeli police uncovered a Jewish terrorist organization targeting Palestinians"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The action is taken by Israeli police uncovering a domestic terrorist network, placing the event in Israel.",
+      "ai_geo_fingerprint": "aa505b03f3402bc376d6f15f4c8ba8331e0db26fa462c2aee44b93a189376b2a",
+      "ai_geo_inferred": true
     },
     {
       "id": "a7c1755336dc9916",
@@ -4568,7 +4823,8 @@
       "category": "Attacks",
       "categories": [
         "Attacks",
-        "Weapons"
+        "Weapons",
+        "Arrests"
       ],
       "title": "Popular Mobilization Forces destroy two hideouts of terrorist ISIS in security operation in Anbar",
       "summary": "Iraq's Popular Mobilization Forces destroyed two ISIS terrorist hideouts during a security operation in Anbar.",
@@ -5121,7 +5377,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Shooting incident at the Moon Pyramid archaeological site at Teotihuacan, Mexico.",
       "ai_geo_fingerprint": "da3c35448ed54a12ad54637456d8760c4a78bbf52d25c16c18194a6923ce9549",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "22c665cb20605b3c",
@@ -7618,10 +7878,11 @@
       "article_count": 3,
       "first_reported": "2026-08-29T08:44:22+00:00",
       "last_reported": "2026-08-29T14:31:21+00:00",
-      "dedup_confidence": 0.99,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
         "paraphrase_entity_context",
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url"
       ],
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -7901,7 +8162,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The attack explicitly targeted the Berlin Christopher Street Day event in Berlin, Germany.",
       "ai_geo_fingerprint": "c066ad5fafe1a06a623fc6ce6d8df112a7195ce15c9c5413a16112d6b27b4a7b",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "22c665cb20605b3c",
@@ -8353,11 +8618,12 @@
       "title_variants": [
         "retaking of military base after mutiny in Niger"
       ],
-      "dedup_confidence": 0.8,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
         "paraphrase_entity_context",
         "entity_actor_event_signature",
-        "title_plus_anchor"
+        "title_plus_anchor",
+        "same_url"
       ],
       "location_confidence_score": 1.0,
       "location_method": "ai_city_geonames",
@@ -8781,7 +9047,7 @@
           "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxQZTBrTHJiRmE5NHVBZ3BJYWYyUmJhblNRYWhtYkZpMkJwSWNwTHdiWWlyTEtpOTVLcTVTNmk1WVhIMUFoN0xlbTFpQkgwVjdET21Jdkx6ZU5QbFF0eTYtU0ZTdkV3Tk5sNTNKMC05Y0l6eWFBTjUwVTZJX3Z4SmFDYVVSbktBNk5WQ0gyUEw4dXEyMS1zR1ZoNDhyNk1fOVpiR1h0bFhBNjJrN1JFd3dqM0FnY2hoSHQ2Q1A0M3dsSThHbENWMWtUZWYyYkdzaDRFYkJINmJJTE5JRmM1STE5NW5aWkRCV3U2a0phbGlMV2Jfa2p2UWdYb3Fn0gH6AUFVX3lxTFBlMGtMcmJGYTk0dUFncElhZjJSYmFuU1FhaG1iRmkyQnBJY3BMd2JZaXJMS2k5NUtxNVM2aTVZWEgxQWg3TGVtMWlCSDBWN0RPbUl2THplTlBsUXR5Ni1TRlN2RXdOTmw1M0owLTljSXp5YUFONTBVNklfdnhKYUNhVVJuS0E2TlZDSDJQTDh1cTIxLXNHVmg0OHI2TV85WmJHWHRsWEE2Mms3UkV3d2ozQWdjaGhIdDZDUDQzd2xJOEdsQ1Yxa1RlZjJiR3NoNEViQkg2YklMTklGYzVJMTk1blpaREJXdTZrSmFsaUxXYl9ranZRZ1hvcWc?oc=5"
         }
       ],
-      "article_count": 30,
+      "article_count": 31,
       "first_reported": "2026-08-29T02:50:25+00:00",
       "last_reported": "2026-08-30T06:52:28+00:00",
       "dedup_confidence": 1.0,
@@ -9678,9 +9944,10 @@
       "title_variants": [
         "US visa revocation for former Iraqi minister accused of terrorism"
       ],
-      "dedup_confidence": 0.573,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "paraphrase_entity_context"
+        "paraphrase_entity_context",
+        "same_url"
       ],
       "location_confidence_score": 0.8,
       "location_method": "ai_country_capital",
@@ -12314,9 +12581,10 @@
       "article_count": 6,
       "first_reported": "2026-08-28T13:01:14+00:00",
       "last_reported": "2026-08-30T17:03:53+00:00",
-      "dedup_confidence": 0.99,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url"
       ],
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -13195,7 +13463,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "French media reporting on domestic arrest for glorification of terrorism indicates France.",
       "ai_geo_fingerprint": "d34a24ba43d98b2f94512404cea0c478d8841762250465ea31fabb78c39c9c63",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "89f6039810af2991",
@@ -13486,7 +13758,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Gush Etzion junction is located in the West Bank / Israel region.",
       "ai_geo_fingerprint": "b0159a54c724be9c1125c267253f198d76b51b050dd99d5bb3f16e943a5463e0",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "42a5d4019cc1c94f",
@@ -14109,7 +14385,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The event explicitly took place in Caen, France.",
       "ai_geo_fingerprint": "6a3f276725e3e0cfb69c8cc1009c373f1a187218f5152b8c49d59c380d89e9bb",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9059075e22cd0602",
@@ -14298,9 +14578,10 @@
       "article_count": 2,
       "first_reported": "2026-08-28T08:40:56+00:00",
       "last_reported": "2026-08-28T08:45:55+00:00",
-      "dedup_confidence": 0.99,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url"
       ],
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -14881,6 +15162,83 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicitly states a court in Samara.",
       "ai_geo_fingerprint": "94d606463bf2655751e166858622cb818dff884d968e64f971d967fb128fb9bf",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "a40441d02160e098",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Weapons",
+        "Arrests"
+      ],
+      "title": "Car bomb explodes outside residential building, killing Putin officer",
+      "summary": "An explosive device in a car bomb detonated outside a residential building in the context of the Ukraine war, killing a Russian officer.",
+      "original_title": "Ukraine-Krieg aktuell : Autobombe explodiert vor Wohnhaus - Sprengsatz tötet Putin-Offizier",
+      "original_summary": "Ukraine-Krieg aktuell : Autobombe explodiert vor Wohnhaus - Sprengsatz tötet Putin-Offizier News.de",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-08-28T07:39:20+00:00",
+      "source": "News.de",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxNeks4cmx0RU1pVnF2cWFpSkpRWWNVaHpDWFB5MWF0QnJaOGZSTGRnUXNRMlNZOFVWUkl4OXVMNDJUdXEzMW1uT0p0NHJHNTY2TWxJaHNBVTlXSUtaZjBkRDFLamtBcUN2aW14UVdvcGp0SWZfNklORVdCcFh3UUY5aDdES2ZfSE5DY203Q0g0MHBDS0owWExzQ1FFZVBsVW1wVVRaWklRck1rcUtLZEc3UGhud3NReXRhUW1Mdi1qaUlzZi1xR3BwVERQcVJMV0ZPOHJGV2lIaVFTMW02T3FOZVk2c1VpQ0FBS0Q5MVZNc1dwSUFKOEZ5SExrTms4ck5HVXp3?oc=5",
+      "collector": "Google News RSS",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": "Saint Petersburg",
+      "region": null,
+      "latitude": 59.93863,
+      "longitude": 30.31413,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "News.de",
+        "kommersant.ru"
+      ],
+      "related_articles": [
+        {
+          "title": "Suspect in St. Petersburg military car bombing flees Russia",
+          "original_title": "«Фонтанка»: подорвавшая машину военного в Петербурге девушка сбежала из России",
+          "original_language": "ru",
+          "summary": "According to Fontanka, the female suspect who blew up a military serviceman's car in St. Petersburg has fled Russia.",
+          "published": "2026-08-28T08:23:33+00:00",
+          "source": "kommersant.ru",
+          "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFA4ZFhiNDZ1M3lpM1VkZ3ZEWnNlcm5hLWQzYkE0YmFJaE9MTnR0LUVnWkxMdVl6cHA4V1NtWnQ2TjJUZjR0NTg1dmw1S1YwUQ?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-28T07:39:20+00:00",
+      "last_reported": "2026-08-28T08:23:33+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Targeted assassination via explosive device (car bomb).",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "car bomb explosion kills officer in Russia/Ukraine conflict context",
+      "title_variants": [
+        "car bomb explosion kills officer in Russia/Ukraine conflict context"
+      ],
+      "dedup_confidence": 0.585,
+      "dedup_methods": [
+        "paraphrase_entity_context"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "St. Petersburg military car bombing, Putin officer killed"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Related articles and context specify that the military car bombing targeting a Russian officer occurred in St. Petersburg, Russia.",
+      "ai_geo_fingerprint": "7b12ea6185f4a43da47246bef29931c51bbd6797e2cd51cae02586981be5c15c",
       "ai_geo_inferred": false
     },
     {
@@ -16431,7 +16789,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The Amur region (Amur Oblast) is a federal subject of Russia.",
       "ai_geo_fingerprint": "5853d1b36721c466f4d2eed8b63268bff44849af8c46f72f74054b972cfdbce6",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "89f6039810af2991",
@@ -21897,7 +22259,7 @@
       ],
       "article_count": 5,
       "first_reported": "2026-08-27T09:36:51+00:00",
-      "last_reported": "2026-08-28T07:39:20+00:00",
+      "last_reported": "2026-08-28T10:49:34+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -22088,9 +22450,10 @@
       "ai_geo_reason": "The strike took place in Khan Yunis, Gaza.",
       "ai_geo_fingerprint": "2e938f8ff333f3f4de39a3b63934198d274a3a74d28aaff3a12c67987a10dd78",
       "ai_geo_inferred": false,
-      "dedup_confidence": 0.714,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "title_plus_anchor"
+        "title_plus_anchor",
+        "same_url"
       ]
     },
     {
@@ -23659,9 +24022,10 @@
       "ai_geo_reason": "The attack occurred in the Luhansk region of Ukraine.",
       "ai_geo_fingerprint": "05ec0846b99bf3b652c5577a23a4bf4e58cbde80b71e6c9e79d39af6a43b09ef",
       "ai_geo_inferred": false,
-      "dedup_confidence": 0.833,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "title_plus_anchor"
+        "title_plus_anchor",
+        "same_url"
       ]
     },
     {
@@ -29346,7 +29710,7 @@
           "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxPS01ROFlPVjlmaDM0UUU1QTgycDJaM05XUHN5YnBWRlFkbmFuTGQwTlJhRzJMM2hQZUowTVlHT0ppSkU4T2Ntd2R0Q2M0aHlXSkxGdDVSUEMwTjhwNGxrQVpEVUxId2RIeGZJSUhQSlNHaWdBWkJFNVk0RGh0WC1yRTU3NGc3bF9FZUtJVF9udU5Hd1BsZHpVa2I1cl9aVW9YMENFYkRnUkhfQXlDMHJheTB2M25RdU9WRzZtdTJBMVJxc2VpYUhrSV9lSjhrNjdHT1o0QzhiZnhaY3hrVEZQenZXNEV0RGZBR3NCZGlvSFRXRnR1U2JFSTR0MF9zRVFlbVIw?oc=5"
         }
       ],
-      "article_count": 29,
+      "article_count": 30,
       "first_reported": "2026-08-24T17:25:00+00:00",
       "last_reported": "2026-08-28T07:00:00+00:00",
       "dedup_confidence": 1.0,
@@ -106013,22 +106377,22 @@
     "primary_model": "gemini-3.5-flash-lite",
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
-    "cached_events": 1472,
-    "ai_processed_this_run": 29,
-    "ai_pending_at_start": 29,
-    "city": 661,
+    "cached_events": 1501,
+    "ai_processed_this_run": 4,
+    "ai_pending_at_start": 4,
+    "city": 663,
     "region": 304,
-    "country_capital": 527,
+    "country_capital": 529,
     "unlocated": 9,
-    "mapped_total": 1492,
-    "high_confidence": 1362,
-    "medium_confidence": 134,
+    "mapped_total": 1496,
+    "high_confidence": 1365,
+    "medium_confidence": 135,
     "low_confidence": 5,
     "methods": {
       "ai_region_coordinates": 304,
-      "ai_country_capital": 527,
-      "ai_city_coordinates": 19,
-      "ai_city_geonames": 642,
+      "ai_city_coordinates": 20,
+      "ai_country_capital": 529,
+      "ai_city_geonames": 643,
       "ai_unlocated": 9
     }
   }
