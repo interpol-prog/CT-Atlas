@@ -65,18 +65,7 @@ jobs:
           LAST_SUCCESS=""
 
           if [ -f daily_update_state.json ]; then
-            LAST_SUCCESS="$(python - <<'PY'
-import json
-from pathlib import Path
-
-path = Path("daily_update_state.json")
-try:
-    data = json.loads(path.read_text(encoding="utf-8"))
-    print(data.get("last_success_local_date", ""))
-except Exception:
-    print("")
-PY
-)"
+            LAST_SUCCESS="$(python -c 'import json; from pathlib import Path; p=Path("daily_update_state.json"); print(json.loads(p.read_text(encoding="utf-8")).get("last_success_local_date", ""))' 2>/dev/null || true)"
           fi
 
           echo "Today in Paris: ${TODAY_PARIS}"
@@ -206,30 +195,7 @@ PY
         if: steps.daily_guard.outputs.should_run == 'true'
         shell: bash
         run: |
-          python - <<'PY'
-import json
-import os
-from datetime import datetime
-from pathlib import Path
-from zoneinfo import ZoneInfo
-
-now = datetime.now(ZoneInfo("Europe/Paris"))
-
-payload = {
-    "last_success_local_date": now.strftime("%Y-%m-%d"),
-    "last_success_local_time": now.isoformat(timespec="seconds"),
-    "trigger": os.environ.get("GITHUB_EVENT_NAME", ""),
-    "run_id": os.environ.get("GITHUB_RUN_ID", ""),
-    "run_number": os.environ.get("GITHUB_RUN_NUMBER", "")
-}
-
-Path("daily_update_state.json").write_text(
-    json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
-    encoding="utf-8"
-)
-
-print(json.dumps(payload, indent=2))
-PY
+          python -c 'import json, os; from datetime import datetime; from pathlib import Path; from zoneinfo import ZoneInfo; now=datetime.now(ZoneInfo("Europe/Paris")); payload={"last_success_local_date":now.strftime("%Y-%m-%d"),"last_success_local_time":now.isoformat(timespec="seconds"),"trigger":os.environ.get("GITHUB_EVENT_NAME",""),"run_id":os.environ.get("GITHUB_RUN_ID",""),"run_number":os.environ.get("GITHUB_RUN_NUMBER","")}; Path("daily_update_state.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2)+"\n", encoding="utf-8"); print(json.dumps(payload, indent=2))'
 
       - name: Commit and push updated database
         if: steps.daily_guard.outputs.should_run == 'true'
