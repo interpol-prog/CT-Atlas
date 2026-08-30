@@ -71,9 +71,766 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-08-30T14:40:04.204448+00:00",
-  "number_of_events": 1472,
+  "last_updated": "2026-08-30T20:30:18.818899+00:00",
+  "number_of_events": 1501,
   "events": [
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Attacks"
+      ],
+      "title": "FBI announces thwarting of a terrorist attack in Ohio on Independence Day",
+      "summary": "The FBI announced the disruption and foiling of a planned terrorist attack in the state of Ohio during Independence Day celebrations.",
+      "original_title": "\"إف.بى.آى\" يعلن إحباط هجوم إرهابى بولاية أوهايو فى عيد الاستقلال",
+      "original_summary": "\"إف.بى.آى\" يعلن إحباط هجوم إرهابى بولاية أوهايو فى عيد الاستقلال شبكة تواصل الإخبارية",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-30T20:18:22+00:00",
+      "source": "شبكة تواصل الإخبارية",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE01dVhPeDhINS1IblVfZUVIOEJBRE1Yel9TMlpxNUVORnp2bW1YNGptTHQ1czNzZnBjTkZhSHZoMDJqVkRwLXl2TWRFQ0JVQVhHLXVB?oc=5",
+      "collector": "Google News RSS",
+      "country": "United States",
+      "country_code": "US",
+      "city": null,
+      "region": "Ohio",
+      "latitude": 40.4173,
+      "longitude": -82.9071,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "شبكة تواصل الإخبارية"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T20:18:22+00:00",
+      "last_reported": "2026-08-30T20:18:22+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Disrupted terrorist plot and counter-terrorism operation by law enforcement.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "FBI thwarts terrorist attack plot in Ohio",
+      "title_variants": [
+        "FBI thwarts terrorist attack plot in Ohio"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "planned terrorist attack in the state of Ohio"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event explicitly describes a thwarted terrorist attack in Ohio, USA.",
+      "ai_geo_fingerprint": "52c2b02607d3713b03c60dc2b3f2c07d78d1995e3ecaeb0b1d4c636695789b2a",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Swiss police state party shooting could be a terrorist attack",
+      "summary": "Swiss police have stated that a shooting incident at a party could potentially be a terrorist attack.",
+      "original_title": "В полиции Швейцарии заявили, что стрельба на вечеринке могла быть терактом",
+      "original_summary": "В полиции Швейцарии заявили, что стрельба на вечеринке могла быть терактом Рамблер",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-08-30T19:26:23+00:00",
+      "source": "Рамблер",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOMzdDb3ctUGNqWE9lbXlWOUVNMWJ6NGp2Z21aelBGamZSRm1hbHR1NUtvNlB2cUhLc0hVcXVmS2djOXBSQjQ0Y3FXeDQyWmZwcWZ4eFY3T3RWdTFEU3dyX0s4cUFmeXpDdnU0bDFhMnQ2WnR2MmFJME1lZXBKMFN0Z2tWaEVFQlpFZUhMQ2FQWU5MOHFqMHh5RHAxX1NBWktwU3lyX0daaTF5V2NOczkxWkFydl92TU5iMWttS1lB0gHDAUFVX3lxTE1WdHo1S0ZyQmRrcEhDU3JKWURHN2VqeDZveHBrNC1odE5KTXJZbng0U1huR04wM2dXbU0zRDc5VFBCVUNvWnJ6VFFSeGRDUkp5Z1l1eEFiN3hneEdwVHlldElVbXFzUmFwSTVJdFVZVkZWVnNKNHEyTkRPM1BUcWs0eXBrMTNyWmJ6eVEwb0pBcTFTMlJfUDgwQmJHa2JCV3Etdi1RQ3JOdUFBLWJJdVlCZVByaFlidnZsNnF0bjJZeGJIdw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Switzerland",
+      "country_code": "CH",
+      "city": "Bern",
+      "region": null,
+      "latitude": 46.94809,
+      "longitude": 7.44744,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Рамблер"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T19:26:23+00:00",
+      "last_reported": "2026-08-30T19:26:23+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Ongoing investigation into a potential terrorist shooting incident.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Swiss police investigate shooting at a party as a potential terrorist attack in Switzerland",
+      "title_variants": [
+        "Swiss police investigate shooting at a party as a potential terrorist attack in Switzerland"
+      ],
+      "location_confidence_score": 0.85,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Swiss police state party shooting could be a terrorist attack"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event mentions Swiss police investigating a potential terrorist shooting in Switzerland.",
+      "ai_geo_fingerprint": "3ef0282afff151b55e323cf7db1de76de7747e4561c1c243b5f3b84bf87af92a",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Poisoning terror strikes again: Goat herd poisoned in Binyamin, shepherds rescued under a barrage of stones",
+      "summary": "A herd of goats was poisoned in the Binyamin region of the West Bank, and shepherds were attacked and rescued under stone-throwing.",
+      "original_title": "טרור ההרעלות מכה שוב: עדר עיזים הורעל בבנימין, הרועים חולצו תחת מטר אבנים",
+      "original_summary": "טרור ההרעלות מכה שוב: עדר עיזים הורעל בבנימין, הרועים חולצו תחת מטר אבנים ice (אייס)",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-08-30T19:06:00+00:00",
+      "source": "ice (אייס)",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9hZEs5RFpPQ0tOODlkMU1HMkFFcFhURkRkQ3k4YkctUzM1YzMtMTQzTGZobXYxT1Nfb21BZm14UThNYzFrQTBrNUllOE1FOS15ejlzVDZJYVFHTjZOamNPaFIyOA?oc=5",
+      "collector": "Google News RSS",
+      "country": "Palestinian Territory",
+      "country_code": "PS",
+      "city": null,
+      "region": "Binyamin",
+      "latitude": 31.95,
+      "longitude": 35.23,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "ice (אייס)",
+        "אמס"
+      ],
+      "related_articles": [
+        {
+          "title": "Poisoning attack: Goats convulsed to death, severe documentation",
+          "original_title": "פיגוע הרעלה: העיזים פרכסו למוות. תיעוד קשה",
+          "original_language": "he",
+          "summary": "Media coverage featuring footage of livestock dying after a poisoning attack in the West Bank.",
+          "published": "2026-08-30T19:06:53+00:00",
+          "source": "אמס",
+          "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5GeGprMm9BN1pwRkM0SzlfQ3dIN0lWdFJua0s0SjhfQ0NDby1mU0VOUVJCbkJSdG8zSWQ3YmRSYmRCMWMyT29lSjZLSzgxdw?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-30T19:06:00+00:00",
+      "last_reported": "2026-08-30T19:06:53+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 65,
+      "ai_relevance_reason": "Specific violent incident involving coordinated sabotage/poisoning of livestock and physical assault, treated as ideological/terror-related rural violence.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Poison attack on livestock and assault on shepherds in Binyamin, West Bank",
+      "title_variants": [
+        "Poison attack on livestock and assault on shepherds in Binyamin, West Bank"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "very_high_title_similarity"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Binyamin region of the West Bank"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event occurred in the Binyamin region of the West Bank.",
+      "ai_geo_fingerprint": "3611602dc282d91cef251384b1f328a419b58c6ad437500e18fdab6ff9a4c09f",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "IDF senior officials: Increased risk of armed Palestinians organizing to return fire at settlers",
+      "summary": "Senior Israeli military officials warn of a growing threat that armed Palestinian groups are organizing retaliatory attacks against settlers in the West Bank.",
+      "original_title": "בכירים בצה\"ל: גדל הסיכון שפלסטינים חמושים יתארגנו להשיב אש למתנחלים",
+      "original_summary": "בכירים בצה\"ל: גדל הסיכון שפלסטינים חמושים יתארגנו להשיב אש למתנחלים הארץ",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-08-30T18:59:00+00:00",
+      "source": "הארץ",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxONDVjdXhCSWdJZTQ5bkNYeWthMFBfUHA4R2Jia3VXMzREYVNWeTRHOG16MEZHZVlTZkJyUzNhdEtXdHhBNjZNUVNDcXR3YnJCQUh2WllEVkZBWEh0dEh6YzBOa0w2cksyY2dSNEN0MllIYWNKOXJtWUVucVRfZnJNdWdvT3RlOGZwX004Ylh5MG5EVFJHczR1Mnp1MWxDZFlWcGdxUkEwZEZTLWs?oc=5",
+      "collector": "Google News RSS",
+      "country": "Palestinian Territory",
+      "country_code": "PS",
+      "city": null,
+      "region": "West Bank",
+      "latitude": 31.95,
+      "longitude": 35.33,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "haaretz.co.il",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "הארץ"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T18:59:00+00:00",
+      "last_reported": "2026-08-30T18:59:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Operational military intelligence assessment concerning imminent militant organization and potential attacks in the West Bank.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "IDF assessment on rising threat of armed Palestinian attacks against settlers in West Bank",
+      "title_variants": [
+        "IDF assessment on rising threat of armed Palestinian attacks against settlers in West Bank"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "armed Palestinian groups... settlers in the West Bank"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The discussion and context concern security and retaliatory attacks in the West Bank.",
+      "ai_geo_fingerprint": "06293c678c1879c2e07560161eef03c046b7985d2e660e6d6554679e93d3de61",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "0695aca03a1e6145",
+      "category": "Terrorist Financing",
+      "categories": [
+        "Terrorist Financing"
+      ],
+      "title": "Terrorism: Ransoms, the lifeblood of jihadist groups' war",
+      "summary": "An analytical investigative piece examining how jihadist groups finance their operations through kidnapping for ransom.",
+      "original_title": "Terrorisme : les rançons, nerf de la guerre des groupes djihadistes",
+      "original_summary": "Terrorisme : les rançons, nerf de la guerre des groupes djihadistes Le Figaro",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-30T18:51:13+00:00",
+      "source": "Le Figaro",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQbW1scEN5RFN1VWNTT0VjeUlfRm4zVU93TnVNLXpMQVRnNFJUanRFVmVsdl9zUkZUNm9tQVI4MUdKSWNzQTl1TFpJaF9USkk2SFB2SFFQM2g5RGo0OUE4cldzNUpidkJuX1p0ci11dU9mTE9kLUh4WFJpUUw2SmZwa0lYMk52aHpTLWpjQzJTRzRDZ3RCeWFoWnYzNzBrNS14OTV0MWktNFpjbDlPTHhRaTdqbHQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "France",
+      "country_code": "FR",
+      "city": "Paris",
+      "region": null,
+      "latitude": 48.85341,
+      "longitude": 2.3488,
+      "location_precision": "country_capital",
+      "location_confidence": "low",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Le Figaro"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T18:51:13+00:00",
+      "last_reported": "2026-08-30T18:51:13+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 65,
+      "ai_relevance_reason": "In-depth analytical reporting on terrorist financing mechanisms (ransoms) used by jihadist networks.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Analysis of ransom-based financing by jihadist groups",
+      "title_variants": [
+        "Analysis of ransom-based financing by jihadist groups"
+      ],
+      "location_confidence_score": 0.5,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Le Figaro reporting on jihadist ransoms"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Analytical piece published by French media outlet Le Figaro; global topic with no specific geographic attack location.",
+      "ai_geo_fingerprint": "3e41b77460038349f4b799fe44df668afa0019a89c1743976e585e9ed3b6198d",
+      "ai_geo_inferred": true
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Severe poisoning attack in Binyamin: Goats die, herders attacked with stones",
+      "summary": "An incident in the Binyamin region involving livestock poisoning and shepherds being attacked with stones.",
+      "original_title": "פיגוע הרעלה קשה בבנימין: עיזים גססו למוות, רועי הצאן הותקפו באבנים",
+      "original_summary": "פיגוע הרעלה קשה בבנימין: עיזים גססו למוות, רועי הצאן הותקפו באבנים JDN",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-08-30T17:42:24+00:00",
+      "source": "JDN",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE1GUERJbnJXT1k1MkZJY180b1dQWFhTenV4cE9JTWZnYlV4RGxJSjhjSU8tM3Q3RXRXQ2dqU2VUWjRPUEVIVTZGWlhNVQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Palestinian Territory",
+      "country_code": "PS",
+      "city": null,
+      "region": "Binyamin",
+      "latitude": 31.95,
+      "longitude": 35.23,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "JDN"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T17:42:24+00:00",
+      "last_reported": "2026-08-30T17:42:24+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Local violent incident and ideological confrontation involving property destruction and assault.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Attack on shepherds and livestock poisoning in Binyamin region",
+      "title_variants": [
+        "Attack on shepherds and livestock poisoning in Binyamin region"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Binyamin region involving livestock poisoning"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Refers to the same livestock poisoning and stone-throwing incident in the Binyamin region.",
+      "ai_geo_fingerprint": "433dc659b2798f9f2711db2ed76fb48ab869f89e38d17790dc487638a5242237",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Extremist settlers attack citizens' homes in Beita",
+      "summary": "Settlers launched attacks targeting homes of local residents in the town of Beita.",
+      "original_title": "مستوطنون إرهابيون يهاجمون منازل مواطنين في بيتا",
+      "original_summary": "مستوطنون إرهابيون يهاجمون منازل مواطنين في بيتا النجاح الإخباري",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-30T17:07:56+00:00",
+      "source": "النجاح الإخباري",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBXSHFuYVVqLXF3ZFcwVzF6b0xnNkZPaG5iSVRjemtXN0VLbmFyUjJsVm9YbUREenUwQTd3SWVUcXNfR2ZCZkJBVmt5R001WTBQUmRzZmJVN0dLSHcxTXI5VFBNckw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Palestinian Territory",
+      "country_code": "PS",
+      "city": "Beita",
+      "region": null,
+      "latitude": 32.148,
+      "longitude": 35.283,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "النجاح الإخباري"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T17:07:56+00:00",
+      "last_reported": "2026-08-30T17:07:56+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Local security incident involving ideological violence against property.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Settler attack on homes in Beita",
+      "title_variants": [
+        "Settler attack on homes in Beita"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_city_coordinates",
+      "location_evidence": [
+        "town of Beita"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Settler attacks targeting homes in the town of Beita, West Bank.",
+      "ai_geo_fingerprint": "eb7e9c81524f7e89288ccbf6a03f952aa1cfad07da67fd9a0819411e1c3ce994",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Live ammunition injuries during an attack by extremist settlers on Al-Mughayyir",
+      "summary": "Several individuals sustained live ammunition injuries during an attack carried out by settlers in the village of Al-Mughayyir.",
+      "original_title": "إصابات بالرصاص الحي خلال هجوم للمستعمرين الإرهابيين على المغير",
+      "original_summary": "إصابات بالرصاص الحي خلال هجوم للمستعمرين الإرهابيين على المغير وكالة صدى نيوز",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-30T17:00:57+00:00",
+      "source": "وكالة صدى نيوز",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBLc2E0UXV5c2FyTFp2dE4yNVJ2anlMWHRoUEhHZHdxaXlYeW51MnBRQmczS0tYT20zakdneUo1X1Y0WFNIVkNXVnBCR3E3YlhxQ0E?oc=5",
+      "collector": "Google News RSS",
+      "country": "Palestinian Territory",
+      "country_code": "PS",
+      "city": "Al Mughayyir",
+      "region": null,
+      "latitude": 32.0192,
+      "longitude": 35.34783,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "وكالة صدى نيوز",
+        "أمد للإعلام"
+      ],
+      "related_articles": [
+        {
+          "title": "Ramallah: 4 injuries during an attack by extremist settlers on Al-Mughayyir",
+          "original_title": "رام الله: 4 إصابات خلال هجوم مستوطنين إرهابيين على المغير- فيديو",
+          "original_language": "ar",
+          "summary": "Four people were injured during a settler attack in Al-Mughayyir near Ramallah.",
+          "published": "2026-08-30T17:20:50+00:00",
+          "source": "أمد للإعلام",
+          "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE82UGFXWU5aRWVjbjhOVlJKT1NJZVIzZkIzQ1Fna0U2YTMzQ25JTlZ4MElrdFctbkVYS0s5MVFHMmNVNWVCLTdpd0JR?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-30T17:00:57+00:00",
+      "last_reported": "2026-08-30T17:20:50+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Reports of political/ideological violence and localized clashes resulting in injuries.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Settler attack resulting in injuries in Al-Mughayyir",
+      "title_variants": [
+        "Settler attack resulting in injuries in Al-Mughayyir"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "very_high_title_similarity"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "village of Al-Mughayyir"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Attack by extremist settlers in the village of Al-Mughayyir.",
+      "ai_geo_fingerprint": "90f357cfbf5192ef0a8ae7f8852ffe9d57f64a4ba829775516a40057fa23699e",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "bde71c16a9da104c",
+      "category": "Arrests",
+      "categories": [
+        "Arrests"
+      ],
+      "title": "Palestinian arrested in Greece for alleged Hamas membership",
+      "summary": "A Palestinian individual has been arrested in Greece based on allegations of membership in Hamas.",
+      "original_title": "Palestinian arrested in Greece for alleged Hamas membership",
+      "original_summary": "Palestinian arrested in Greece for alleged Hamas membership dw.com",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English",
+      "collection_locale": null,
+      "published": "2026-08-30T16:58:48+00:00",
+      "source": "dw.com",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOTXYtdl9RTkxyY3gwaXctbzFuYlljS2lsbDM2M0ZYN3c3c0ExUFFMUWQ5a2FITVF2M0FnWnBLbDU4WWdnQm9iTm1CeFNVSzZ2Y1pEQ0lqc3dKUGlHQ0lORk1PNFg0dTFQOHdTQVB4dTVKWUVuNWxQaEZJM2lyTU5hWjl0bjZZLWU5SXc3WUlidHh0UjZqenMtck9zMlFWU0pReERxaFZzaw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Greece",
+      "country_code": "GR",
+      "city": "Athens",
+      "region": null,
+      "latitude": 37.98376,
+      "longitude": 23.72784,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "targeted_source_query",
+      "targeted_source": "Deutsche Welle English",
+      "targeted_source_kind": "international_media",
+      "sources": [
+        "dw.com"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T16:58:48+00:00",
+      "last_reported": "2026-08-30T16:58:48+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Direct law enforcement counter-terrorism arrest of a suspected terrorist group member.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "Arrest of a Palestinian for alleged Hamas membership in Greece",
+      "title_variants": [
+        "Arrest of a Palestinian for alleged Hamas membership in Greece"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Palestinian arrested in Greece"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The arrest took place in Greece.",
+      "ai_geo_fingerprint": "978069e49807685f71d14219e8e8e5057e980dcca3621fd2654dc613c37e71bd",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "1e24b8e4e590d4d1",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Leader of Islamic State, world's most bloodthirsty terrorist group, reported dead",
+      "summary": "Reports indicate the death of a leader associated with the Islamic State terrorist organization.",
+      "original_title": "Murió líder de Estado Islámico, grupo terrorista más sanguinario del mundo",
+      "original_summary": "Murió líder de Estado Islámico, grupo terrorista más sanguinario del mundo ATV.pe",
+      "original_language": "es",
+      "collection_language": "es",
+      "collection_language_name": "Spanish",
+      "collection_locale": "ES:es",
+      "published": "2026-08-30T16:16:37+00:00",
+      "source": "ATV.pe",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQVWRPTmJDdEw4N3AtSVhyTXBWX0VNekM0MlBOdGNDN1VoYUtBOGZrMk02MHdKbkpNWE54aVRyOTBHVGYxOTBjRTVCQ2h5NTFYQUNyZjhYOXlFTGNCU3RRRDhoTnhZQ3MxMUQ5VTRmcDdHeUFIRzh1eHh4TlFLLVZaOW1FMm9La19aem4zRFdkLTZvM3ZlTk52N29UN1NTYkgw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Iraq",
+      "country_code": "IQ",
+      "city": "Baghdad",
+      "region": null,
+      "latitude": 33.34058,
+      "longitude": 44.40088,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "ATV.pe"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T16:16:37+00:00",
+      "last_reported": "2026-08-30T16:16:37+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 80,
+      "ai_relevance_reason": "Significant leadership development involving a designated terrorist organization.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "death of Islamic State leader reported",
+      "title_variants": [
+        "death of Islamic State leader reported"
+      ],
+      "location_confidence_score": 0.6,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Leader of Islamic State reported dead"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Reports regarding the leader of the Islamic State, whose core operational zone is historically Iraq and Syria.",
+      "ai_geo_fingerprint": "fb046d9accf99fb780b9d42ce04600054a711049573ecf3753190e55fa35d03e",
+      "ai_geo_inferred": true
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial",
+        "Arrests"
+      ],
+      "title": "Criminal case opened against terrorism sympathizer in Kurgan region",
+      "summary": "In the Kurgan region, law enforcement has opened a criminal case against an individual accused of supporting terrorism.",
+      "original_title": "В Курганской области возбуждено уголовное дело в отношении сторонника терроризма",
+      "original_summary": "В Курганской области возбуждено уголовное дело в отношении сторонника терроризма SHADR.info",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-08-30T15:34:03+00:00",
+      "source": "SHADR.info",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPUktXY2tleVVScS0ycG1SOWhWb2tlV1lnU2dxcjloY3d6Ri0xbWhqUVM3NWdRWFk3WDgyeGdVbXdfRXI0d3FEQkJYVGU5U2tlQlhpNUstUFV2cXlObTgzSW9vLXlZdUEtYUhXdUxnMGE3b0w4bk5Uc1NCTVNPQUsyUTA3aUNSSWtjcWZTMFRqS01xSnBtNnd3X2JFMTB1eHhleEdTWHZTRUE?oc=5",
+      "collector": "Google News RSS",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": null,
+      "region": "Kurgan Oblast",
+      "latitude": 55.45,
+      "longitude": 65.33,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "SHADR.info"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T15:34:03+00:00",
+      "last_reported": "2026-08-30T15:34:03+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 80,
+      "ai_relevance_reason": "Involves an ongoing criminal investigation and legal action regarding terrorism support.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "criminal case opened against terrorism supporter in Kurgan region",
+      "title_variants": [
+        "criminal case opened against terrorism supporter in Kurgan region"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Kurgan region"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Criminal case opened against terrorism sympathizer in the Kurgan region of Russia.",
+      "ai_geo_fingerprint": "eafd03a32ebce7fb389389761ef97dfc1e3ea22dfb0e3f3336876c35bbef03e0",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "ba039e6980e67328",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial",
+        "Online Radicalization / Cyberterrorism"
+      ],
+      "title": "Young man convicted in Nantes for glorifying terrorism",
+      "summary": "A young man originally from Deux-Sèvres, who converted to Islam, was sentenced in Nantes for defending terrorism.",
+      "original_title": "Un jeune homme originaire des Deux-Sèvres converti à l’islam condamné pour apologie du terrorisme à Nantes",
+      "original_summary": "Un jeune homme originaire des Deux-Sèvres converti à l’islam condamné pour apologie du terrorisme à Nantes lanouvellerepublique.fr",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-30T15:29:49+00:00",
+      "source": "lanouvellerepublique.fr",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNQTg0dnBYakNEZ1hXc3pxTjlLaUp0azhpNU1SRGprUFl6ZHk3eEw0STZoZ2tkMkYwNTZvc1oyRWpyaXJvSm1NMXgzSzJXOEM4eS1yZ0FsQS1OWjUzcV80S196VTFwS1hMbkJtWlQ5UDQxbzhIcFVwS0EwOXVkRFBOMUU1VzNld05SWFBVWFFVRUZyUWl1bnR4S1JLUFJOYkRfNGZBNkNramR1R05ySzQ4R3JkRkVjQjFtQzZhNV9hbVN5TVhTY0hhY0FEc2xXZXpIb0VzZ1ctZzhMNFdBMjhPN19EVTN1eDdLMFY1UXNobnlTX1d4eGc?oc=5",
+      "collector": "Google News RSS",
+      "country": "France",
+      "country_code": "FR",
+      "city": "Nantes",
+      "region": null,
+      "latitude": 47.21725,
+      "longitude": -1.55336,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "lanouvellerepublique.fr"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T15:29:49+00:00",
+      "last_reported": "2026-08-30T15:29:49+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Directly reports on a legal prosecution and conviction for terrorism apologia.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "conviction for glorification of terrorism in Nantes",
+      "title_variants": [
+        "conviction for glorification of terrorism in Nantes"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "sentenced in Nantes"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The sentencing took place in Nantes, France.",
+      "ai_geo_fingerprint": "23de2674925a6743d5a118c78b451d13db599e246a950543a1033c134d7868b5",
+      "ai_geo_inferred": false
+    },
     {
       "id": "a7c1755336dc9916",
       "category": "Attacks",
@@ -225,7 +982,8 @@
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "very_high_title_similarity",
-        "title_plus_anchor"
+        "title_plus_anchor",
+        "same_url"
       ],
       "location_confidence_score": 0.9,
       "location_method": "ai_country_capital",
@@ -241,6 +999,203 @@
       "ai_geo_inferred": true
     },
     {
+      "id": "a7c1755336dc9916",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Algerian President Tebboune Emphasizes Counter-Terrorism as African Priority",
+      "summary": "Algerian President Abdelmadjid Tebboune stated that combating terrorism must remain a top priority for joint African action.",
+      "original_title": "الرئيس تبون : التصدي للإرهاب ينبغي أن يبقى على رأس أولويات العمل الإفريقي المشترك",
+      "original_summary": "الرئيس تبون : التصدي للإرهاب ينبغي أن يبقى على رأس أولويات العمل الإفريقي المشترك الحياة",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-30T14:12:46+00:00",
+      "source": "الحياة",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMivwJBVV95cUxORVRpd1c2TktkZ0Y4MWs2YlRqOFNBSE5pRW1xZktZTnZHNjR3VzN3bG9iTkhnUWQ2MmlQWVREYi0ybzI3V0dtZHNmajdHZ3UzckZsVjloaDRfMnlRNFQzTmxHQUxZMTc1VGNqakl2VnJYcm5RNDBYbkdSVkc0VGlUX0Z2NEpkYXNtWUJSN2RlUk45MEFxWjFURzlyQjNWdUxiTWV6YVhIa3FxaDR3N3BJLVdxLUZIN05DVXVRRzlMUDhXYWJFR1RYMFNOQWNPd3VueHR2dmtnckktQ2VBUGlJXzBFcGZDMmE2Szk2QlZOSkNVcHdMMTRrV1J6UW5JTldOZG1uTlJ5eDgzTWR0SHdRck9LdUFobFg3OHdqR2dXaGdFQ1NBWlMzU0E3ckJFb2dkYmdVZWd4cGJwdlYyU3J3?oc=5",
+      "collector": "Google News RSS",
+      "country": "Algeria",
+      "country_code": "DZ",
+      "city": "Algiers",
+      "region": null,
+      "latitude": 36.73225,
+      "longitude": 3.08746,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "الحياة"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T14:12:46+00:00",
+      "last_reported": "2026-08-30T14:12:46+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 65,
+      "ai_relevance_reason": "High-level governmental counter-terrorism policy statement.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Algerian President calls for prioritizing counter-terrorism in joint African action",
+      "title_variants": [
+        "Algerian President calls for prioritizing counter-terrorism in joint African action"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Algerian President Abdelmadjid Tebboune"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Statement made by the Algerian President regarding African counter-terrorism.",
+      "ai_geo_fingerprint": "1cb01fcef9d006f015078bd12315c2658c902cdf2d2b02c08b152845d3f3e42c",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Online Radicalization / Cyberterrorism",
+      "categories": [
+        "Online Radicalization / Cyberterrorism",
+        "Legal / Judicial"
+      ],
+      "title": "Russian Human Rights Council Head Proposes School Counter-Terrorism Awareness Campaigns",
+      "summary": "The head of the Russian Presidential Council for Civil Society and Human Rights proposed regularly informing schoolchildren about teenagers convicted of terrorism.",
+      "original_title": "«Так, чтобы их тошнить стало»: глава СПЧ предложил постоянно рассказывать школьникам об осужденных за терроризм подростках",
+      "original_summary": "«Так, чтобы их тошнить стало»: глава СПЧ предложил постоянно рассказывать школьникам об осужденных за терроризм подростках Новая газета Европа",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-08-30T13:51:25+00:00",
+      "source": "Новая газета Европа",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxOa2dNTTF5YWFZWW9QMzBWWURLMFNWRlpramt2TndOcEdXVjVpb0F3cGIwTkZIZjhFUEhaOW1hb1Jfcm9KQlBtRnEtQnptejdVNnFvX0lOUldPcVBDZ2FiYWwza0JhSnVVM0xtRDlyaWp6WmNVRjdsYkhtd2hBZm0tc0trSVdSa0FXS1lqTHUxRHU0eVYwV1l3TFNBNXJ5Y3M5bmxfb3FEdlNGMy1nTGRyZzdjay1DS202UzFOWmtIMHVoV3pGVXBNZExISE5XM3RQeThBWXIxN2dycUxxU0U2SmpyX1Z5R21sbXg3VTZyWHVQd1ZEMUJETHVZNmVFRzhLS0JVeNIBigJBVV95cUxQRzdObU02MEE4dklkZ3lKeExYNktjWW5tX1BjdXRJRHc1RXVyUDJUUTQ1Rmx5dExOT3c0Vk9OSWxhYkJ0Tl9DNVN2am12b2FHbjBLZWc1d0ZLck1pY0p2Mmlxb0otZXBoLTRIR3ZEQnZ5RWI4TFB5eWZpSjAxbkVteklzcldhbU45Z25tUnBpX1IzT3JLaFFvazhDQ1NtRFo2a0VMTGxnTjdZQUNvRlZkQndXZURRaVpkSXVYQ040VS1wdjEzMlRLaTZlWjNTdm45cUkxT2VDQVczRmFCZ0cxaEZqcEZmX3ZxV0NLVmpjSndyaEx6eEVsQmxmdU9rcGFEZWZZVFhuVkl3Zw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": "Moscow",
+      "region": null,
+      "latitude": 55.75204,
+      "longitude": 37.61781,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Новая газета Европа",
+        "Русская служба The Moscow Times"
+      ],
+      "related_articles": [
+        {
+          "title": "Head of Russian HRC suggests intimidating schoolchildren with stories about teenagers convicted of terrorism",
+          "original_title": "«Надо долбить». Глава СПЧ предложил запугивать школьников историями об осужденных за терроризм подростках",
+          "original_language": "ru",
+          "summary": "The head of the Russian Presidential Council for Civil Society and Human Rights proposed deterring students by showing them examples of teenagers convicted of terrorism offenses.",
+          "published": "2026-08-30T15:22:00+00:00",
+          "source": "Русская служба The Moscow Times",
+          "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNM1BMZjNjb2lRZDNnR09QWC10TUY2UER1V01kRHVsaWRaLXpUUTdwSU9XSE9ROE1MX3BKUGJieklwaFQ4eVZhc3Fjc2R0TjRYV21rMUY1Qk04V3RqZFZ0Tmg5cE9XTU9qTVRZVDdLSkZFTldkN2FRcVh4NHF6OG01SG10b0hlU01LVGtTV1dZU2J6cWlZOHNMSVJzVVhka2RDUkJ5Zno2YXZzS2Q1U2p1b05EWC1qQUtBeWsxaXhkWkZvcG9vU0ZOV1FDdFR0b0NsbE43U0F1N3ZwX2hsX292RHJKejBOdw?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-30T13:51:25+00:00",
+      "last_reported": "2026-08-30T15:22:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Policy proposal and public awareness initiative related to countering violent extremism and terrorism recruitment among youth.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Russian official proposes counter-terrorism awareness campaigns in schools regarding convicted youth",
+      "title_variants": [
+        "Russian official proposes counter-terrorism awareness campaigns in schools regarding convicted youth"
+      ],
+      "dedup_confidence": 0.564,
+      "dedup_methods": [
+        "paraphrase_entity_context"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Russian Human Rights Council Head"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Proposal by the head of the Russian Presidential Council.",
+      "ai_geo_fingerprint": "a9ef36279ec5dfd8da1bea63a1ba32fee4dbcaa79cd158b4fecf52aa08352bbb",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Terrorist Financing",
+      "categories": [
+        "Terrorist Financing",
+        "Arrests"
+      ],
+      "title": "Over 1 Million NIS Suspected Terror Funds Seized en Route to Jerusalem, Driver Arrested",
+      "summary": "Security forces intercepted a vehicle on the way to Jerusalem, seizing over one million NIS suspected of being terrorist financing funds and arresting the driver.",
+      "original_title": "בדרך לירושלים: כוחותינו תפסו מעל מיליון ש\"ח החשודים ככספי טרור, הנהג נעצר | צפו",
+      "original_summary": "בדרך לירושלים: כוחותינו תפסו מעל מיליון ש\"ח החשודים ככספי טרור, הנהג נעצר | צפו חדשות 04",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-08-30T13:38:50+00:00",
+      "source": "חדשות 04",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE9KQjJKSGJBaHZiRVZyUnVQWEpGTnUwakx5VW16Mk1sRWpFUGR4QkozUzdCMzIwY20yQ1F4TXl1WVJZaUZPaEZ4T2F3?oc=5",
+      "collector": "Google News RSS",
+      "country": "Israel",
+      "country_code": "IL",
+      "city": "Jerusalem",
+      "region": null,
+      "latitude": 31.76904,
+      "longitude": 35.21633,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "חדשות 04"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T13:38:50+00:00",
+      "last_reported": "2026-08-30T13:38:50+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Direct counter-terrorism operation involving terrorist financing seizure and arrest.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Security forces seize over 1 million NIS in suspected terrorist funds and arrest driver en route to Jerusalem",
+      "title_variants": [
+        "Security forces seize over 1 million NIS in suspected terrorist funds and arrest driver en route to Jerusalem"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "en route to Jerusalem"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Security forces intercepted terror funds on the way to Jerusalem.",
+      "ai_geo_fingerprint": "ba9607151778fc70667a0bac6f8abf1af5d4ba27a34021922027d430c52d63a1",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "e605b1cf5ed57009",
       "category": "Arrests",
       "categories": [
@@ -254,7 +1209,7 @@
       "collection_language": "de",
       "collection_language_name": "German",
       "collection_locale": "DE:de",
-      "published": "2026-08-30T13:32:42+00:00",
+      "published": "2026-08-30T13:31:00+00:00",
       "source": "TAG24",
       "source_count": 1,
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQTVdEWTE1NGJ5OUFnQ2g3UmlhMWdVZkpNNGlBcDc3NmVnRlpFUWE0OXJWRzYtOTdsR0dueFRocS1nWEFLMjZuWGNTQVVaVkRVTHdNXzk5eEJfZER4cUtablBjbE9ORW0yQ21wZFFGS1NZRlVuQ3dpTTk2eTZ3UWVtMzBBd1RjbEpyMkl0MEphZ0g0NUUweU9FYWZCbkwzQmp4M2NQSkxqM3k4N2VCQ0FSVi1XOUk?oc=5",
@@ -273,7 +1228,7 @@
       ],
       "related_articles": [],
       "article_count": 1,
-      "first_reported": "2026-08-30T13:32:42+00:00",
+      "first_reported": "2026-08-30T13:31:00+00:00",
       "last_reported": "2026-08-30T13:32:42+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -298,7 +1253,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The event explicitly took place at Hamburg Central Station in Germany.",
       "ai_geo_fingerprint": "1e53d1d3dc4765d47fb5ad9f261245015048cb2d8d4e11f2c7e0920b4637a511",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "d5a543d418a336d0",
@@ -360,7 +1319,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The protest took place in Paris, France.",
       "ai_geo_fingerprint": "34cd762ab64cfd50e449f577328a148f20c992f30678b377c9e90a9e9775058d",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "223460b9a149856c",
@@ -420,7 +1383,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Broad UN report covering Europe and North America, reported by a French media outlet.",
       "ai_geo_fingerprint": "0fd6fda759b6f74fb408a5d50faf18e208bed85b2f1c196b820ab7eccae02d2f",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -482,7 +1449,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "A drone was discovered near Zonguldak province in Turkey.",
       "ai_geo_fingerprint": "6ab8fa85785abe66631a8b71c4010315a79eab1e5dd4e1f47f76b6e953be4852",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "750bf754f710d9ec",
@@ -498,7 +1469,7 @@
       "collection_language": "fr",
       "collection_language_name": "French",
       "collection_locale": "FR:fr",
-      "published": "2026-08-30T13:18:43+00:00",
+      "published": "2026-08-30T13:18:17+00:00",
       "source": "Bamada.net",
       "source_count": 1,
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOUGVKR1NMa0lGc0dKY0F3anBfTVk4TjJVSzJNWkJRaTBRUEM0anpJWGtNc05JOXlvVmFaT2lXSi12dkxUMkJ3RVJ0cEVhQnFobl9oczNZSlBmZk9tS21iNEpua0lsdkM1Y0MzbmVyUWVlME5pM2d1dlNxTWNodXYtYktIYk9YQmdmVXFkY0tleU45ZG9xNkhLYTYwN0F5eDg4Qk1v?oc=5",
@@ -517,7 +1488,7 @@
       ],
       "related_articles": [],
       "article_count": 1,
-      "first_reported": "2026-08-30T13:18:43+00:00",
+      "first_reported": "2026-08-30T13:18:17+00:00",
       "last_reported": "2026-08-30T13:18:43+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -606,7 +1577,71 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The text explicitly states the incident occurred in Germany.",
       "ai_geo_fingerprint": "0b6f91960a0b2590287307924975fa8cd22afd8ce7fe86581c28ad072e0dec0f",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "078217ad8cc9a323",
+      "category": "Arrests",
+      "categories": [
+        "Arrests"
+      ],
+      "title": "Turkish special services detain 40 suspects linked to ISIS",
+      "summary": "Turkish security forces have detained 40 individuals suspected of having ties to the ISIS terrorist organization.",
+      "original_title": "Спецслужбы Турции задержали 40 подозреваемых в связях с ИГИЛ",
+      "original_summary": "Спецслужбы Турции задержали 40 подозреваемых в связях с ИГИЛ kazislam.kz",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-08-30T12:52:49+00:00",
+      "source": "kazislam.kz",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQWmVzZldTTWExSFJQclVOTXg5VE1kLWV4aFRKczlmN3BxNkFETEw5SFQxUDMxZ0VkVDF3NUo1T3JLSUtYR3BTdnl6Z284MlA2djhvdHRvQkxGZkJudUxzOXJMd01PXzZSd2hOT2x1aC1JcjB1cDF3SWZJT3R5dGhZS0xEcTFORFpEREd1bHI3WGpQMUI0dUNWZnpmV3c?oc=5",
+      "collector": "Google News RSS",
+      "country": "Turkey",
+      "country_code": "TR",
+      "city": "Ankara",
+      "region": null,
+      "latitude": 39.91987,
+      "longitude": 32.85427,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "kazislam.kz"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T12:52:49+00:00",
+      "last_reported": "2026-08-30T12:52:49+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 90,
+      "ai_relevance_reason": "Major law enforcement counter-terrorism sweep arresting multiple suspects tied to a designated terrorist group (ISIS).",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Turkish security services detain 40 ISIS suspects in Turkey",
+      "title_variants": [
+        "Turkish security services detain 40 ISIS suspects in Turkey"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Turkish special services detain 40 suspects"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Operation conducted by Turkish special services in Turkey.",
+      "ai_geo_fingerprint": "a433e73210eeea4baa273dbdb3810c243afabff70cc1579658d2037d2d4d2077",
+      "ai_geo_inferred": false
     },
     {
       "id": "a7c1755336dc9916",
@@ -955,6 +1990,65 @@
       ]
     },
     {
+      "id": "9680f9286106103d",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Troops Repel Terrorist Attack in Kukawa and Kill Several Insurgents",
+      "summary": "Military troops successfully repelled a terrorist attack in Kukawa, neutralizing several attackers.",
+      "original_title": "Troops Repel Terrorist Attack in Kukawa, Kill Several",
+      "original_summary": "Troops Repel Terrorist Attack in Kukawa, Kill Several THISDAYLIVE",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English",
+      "collection_locale": null,
+      "published": "2026-08-30T11:18:06+00:00",
+      "source": "THISDAYLIVE",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNM1hMWFI2RDVlRm43cHdiMTJoMnZMRE5GUExRYXcyYmROLXdIRXIwZHFHQjU1N0gxM2ZSSERkSVBvdnY4N2dVSkUzbzNCUnI1RmpvM2Izd3ZlTnR5a1gyd0ZhSGdRZHg0V3JiREpwbldDWkhHNWFvM2FkUmVub04xZGhNOG1wbzR2Y1pUa2RaRHg0SlpFQ2Jr?oc=5",
+      "collector": "Google News RSS",
+      "country": "Nigeria",
+      "country_code": "NG",
+      "city": "Kukawa",
+      "region": null,
+      "latitude": 12.92475,
+      "longitude": 13.56617,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "sources": [
+        "THISDAYLIVE"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T11:18:06+00:00",
+      "last_reported": "2026-08-30T11:18:06+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Direct report of a terrorist attack and military counter-action resulting in casualties.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "Military repels terrorist attack and kills several attackers in Kukawa",
+      "title_variants": [
+        "Military repels terrorist attack and kills several attackers in Kukawa"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "terrorist attack in Kukawa"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Military troops repelled an attack in Kukawa, Nigeria.",
+      "ai_geo_fingerprint": "124531d38425828b0e92d217cc3a7bb6f30363a39b86664a32465611fdf4e299",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "a7c1755336dc9916",
       "category": "Terrorist Financing",
       "categories": [
@@ -1081,7 +2175,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Smuggling operations targeting Gaza, handled via Israeli legal indictment.",
       "ai_geo_fingerprint": "208a16a41d9316312ad4abc78a4a84316bba63a42d3770e16d9402576999906e",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "2a036e20de8bfd2a",
@@ -1771,7 +2869,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The vehicle ramming attack occurred at the Berlin pride parade in Germany.",
       "ai_geo_fingerprint": "1e517989ceb15ff112aa15fe1cb86bc81e77a2d1f430524168d98c8732be8614",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "48f1598087d103cc",
@@ -1906,83 +3008,6 @@
       ]
     },
     {
-      "id": "a7c1755336dc9916",
-      "category": "Terrorist Financing",
-      "categories": [
-        "Terrorist Financing",
-        "Online Radicalization / Cyberterrorism"
-      ],
-      "title": "Terrorism messages: How WhatsApp is used to finance ISIS",
-      "summary": "An investigative report detailing how terrorist groups like ISIS exploit messaging applications such as WhatsApp for financing and operational communication.",
-      "original_title": "رسائل الإرهاب.. كيف يستخدم \"واتساب\" لتمويل \"داعش\"؟",
-      "original_summary": "رسائل الإرهاب.. كيف يستخدم \"واتساب\" لتمويل \"داعش\"؟ سكاي نيوز عربية",
-      "original_language": "ar",
-      "collection_language": "ar",
-      "collection_language_name": "Arabic",
-      "collection_locale": "SA:ar",
-      "published": "2026-08-30T08:40:47+00:00",
-      "source": "سكاي نيوز عربية",
-      "source_count": 2,
-      "url": "https://news.google.com/rss/articles/CBMi7gJBVV95cUxPQWRTSnFVb19sbW03cTJjN2l4U1VjNXZxSUZQQW1oX0JHY0RtTWo2UUxCRWZveU9meGZibUNFRTFkaWNxUVJBZDVmbXcxY1h5a2EyNXNjUjVOQmgwQTZnYTEwUzBVN185SnRCOEVVWjA3RzhXZDlYUGZ2VndOdERWSW9vN09lTE5SOTJXWEl0Y0NWSlpyMFZKclBCYVBXZ05SdDdhRmNuWWNENk5ubkZGLU9YLWkyeGEyaXVmQnRBVk9XQjJBS1NGRWFJM1o1M054Tkl5RXNPNGpNX0hLR1R0NU9MWWtmd2hPRnVPWnhJR0RNVjAtZVN0a09OY2ExbTR0WVc2UmpxeW9FYXFTU1c2MHVyeUxWR1UxZmJWQllXMjB6UWdQNnZJblB3WGhEVVNISFF1aW9PTkZCZ281T0VPbHhsVFlranBINFBDYjJ2QS1vYllTaUJ0V0R1WHJBM2FDTi1VR3FRNzBtdTFyaXfSAfMCQVVfeXFMUFZLMFVlbGIwRUdtc25wbTNMNDJFRjZyOTRTdVI3bmFVdy1hWWhzdkdLU2pmX2NUOXR6Q2Z3VnVrTlo5b3NCV1BjMVh5ajJacTlVR3JQSllyTEM5ZjdhQk5ESU9jZldhTFFXcGZaTzliWHk2NU9UeHA1bEY3MERpaFpqQ1dvX1lLVXNPRzJSX0pGbWl4Q2xFT1ZXZjdGRTJlbld6bURTXzNqdmxUYWxNdFBLRVl6Ym1HMTU0TEZpSEpSajVQNFNZc2k2WWNvN3dxUDZVNjVBQzk2WFBodU9oV1VXeWJibS1qUUN1cjZrRDU2YS1wRDA2XzFiLXU2X1pYMU5fVEVqOC1aNU1sbG9HbG0tc0pKN2l0QUh1LUdMVUNRcjJtcHdKZkVrMjJOMTBMdGtoY3JGOHlheG9PUlpncnJqQ2FVNmxOSlR0TGY2cXdpa2RsZXdCeURoYVVGTnM5eC14LXJwTVZKbWc0Y19SRmprem8?oc=5",
-      "collector": "Google News RSS",
-      "country": null,
-      "country_code": null,
-      "city": null,
-      "region": null,
-      "latitude": null,
-      "longitude": null,
-      "location_precision": "unlocated",
-      "location_confidence": "low",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "سكاي نيوز عربية",
-        "صحيفة الخليج"
-      ],
-      "related_articles": [
-        {
-          "title": "Investigation reveals WhatsApp used as a secret channel to transfer funds to ISIS",
-          "original_title": "تحقيق يكشف: «واتساب» قناة سرية استُخدمت لتحويل أموال إلى داعش",
-          "original_language": "ar",
-          "summary": "An investigative report reveals that the WhatsApp application was utilized as a secret channel for transferring money to ISIS.",
-          "published": "2026-08-30T09:33:45+00:00",
-          "source": "صحيفة الخليج",
-          "url": "https://news.google.com/rss/articles/CBMizARBVV95cUxPMFpINlkzcTYzd1pjUF9MeThMUlljejlYZUZnWVhwSThDWXNiV2NDOEJpdFRXNXhLTmV6TFpBak5MRE5vRVAzdWVOU1hqLWl4U1MzRVpfTWFiT2pMQTRNN29BSXVCbGNSN2EtLTN4b09EZXhqeVE5d3N0bVJNQVc0SjRLNDJESkVsOWlvWGdESm5fSEVKY2N5UTdHRlU3TkVuNFd5MVFRQjlULTFGcVhWVlpyWVF0cGEzc1NCTHRVVG5Ub2M3QUNPRENfWWx5SXFQdnBDT0NKZTFSY3kwNlplY1F4MlNXTEJZNlkzZ2xHbVRXUU5pbVFMajV4UHJENlRFd2tZTS1icTJPVlJxLXFkZTVjRkk5UVI4Uk1GcEkwLWZxSXZVSURYQ1ZmZ2kyRllQb192X0RkcmVBaUd2bVFSbTZVTnVLTi1qMU8wNnlGbUpXQllyQ1o1eTd4SHQ0T1hnZE81WEhQRXVEVGdJWTZNSUM5bDVwa3M0Q3ZKcHlsUFYtRnZyNjlMZnp5VENnNTY4MXVZRmNfZjhBNzM3WjkwUzZ3WkpkVXBiX3VHbnpZVElDdXdxajNGV1lEenVLRWtPenFyX1ZzRGtpTFZsYVhkeHQ5TVFadU1sRmR1QlNVNDRLVXl3d0kyYzZTZXBKRzhoczM5VjRtdFZfNk1WS08tajZYS1Ryak90MGc3ajh2dzFUUFZCX3ZKQ3hOOWRtTE42aVJyU3JMdFplOVlZWEFTRG5ENzJZeXFHQzVObzQ4TUJpZjBleUJpeVhGMlo?oc=5"
-        }
-      ],
-      "article_count": 2,
-      "first_reported": "2026-08-30T08:40:47+00:00",
-      "last_reported": "2026-08-30T09:33:45+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 75,
-      "ai_relevance_reason": "Detailed analytical report on terrorist financing mechanisms and digital platform exploitation by ISIS.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "Investigative report on ISIS terrorist financing and communication via WhatsApp",
-      "title_variants": [
-        "Investigative report on ISIS terrorist financing and communication via WhatsApp"
-      ],
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "paraphrase_entity_context",
-        "same_url"
-      ],
-      "location_confidence_score": 0.5,
-      "location_method": "ai_unlocated",
-      "location_evidence": [
-        "WhatsApp, ISIS"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Investigative report on global online terrorist financing/communication methods without a specific single event location.",
-      "ai_geo_fingerprint": "01fa5daebfe3792a18eb775427644388176215ffaccd71e4f3bd5523b94bca94",
-      "ai_geo_inferred": true
-    },
-    {
       "id": "119852f4c5c6de07",
       "category": "Attacks",
       "categories": [
@@ -2050,10 +3075,88 @@
       ]
     },
     {
+      "id": "a7c1755336dc9916",
+      "category": "Terrorist Financing",
+      "categories": [
+        "Terrorist Financing",
+        "Online Radicalization / Cyberterrorism"
+      ],
+      "title": "Terrorism messages: How WhatsApp is used to finance ISIS",
+      "summary": "An investigative report detailing how terrorist groups like ISIS exploit messaging applications such as WhatsApp for financing and operational communication.",
+      "original_title": "رسائل الإرهاب.. كيف يستخدم \"واتساب\" لتمويل \"داعش\"؟",
+      "original_summary": "رسائل الإرهاب.. كيف يستخدم \"واتساب\" لتمويل \"داعش\"؟ سكاي نيوز عربية",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-30T08:15:04+00:00",
+      "source": "سكاي نيوز عربية",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMi7gJBVV95cUxPQWRTSnFVb19sbW03cTJjN2l4U1VjNXZxSUZQQW1oX0JHY0RtTWo2UUxCRWZveU9meGZibUNFRTFkaWNxUVJBZDVmbXcxY1h5a2EyNXNjUjVOQmgwQTZnYTEwUzBVN185SnRCOEVVWjA3RzhXZDlYUGZ2VndOdERWSW9vN09lTE5SOTJXWEl0Y0NWSlpyMFZKclBCYVBXZ05SdDdhRmNuWWNENk5ubkZGLU9YLWkyeGEyaXVmQnRBVk9XQjJBS1NGRWFJM1o1M054Tkl5RXNPNGpNX0hLR1R0NU9MWWtmd2hPRnVPWnhJR0RNVjAtZVN0a09OY2ExbTR0WVc2UmpxeW9FYXFTU1c2MHVyeUxWR1UxZmJWQllXMjB6UWdQNnZJblB3WGhEVVNISFF1aW9PTkZCZ281T0VPbHhsVFlranBINFBDYjJ2QS1vYllTaUJ0V0R1WHJBM2FDTi1VR3FRNzBtdTFyaXfSAfMCQVVfeXFMUFZLMFVlbGIwRUdtc25wbTNMNDJFRjZyOTRTdVI3bmFVdy1hWWhzdkdLU2pmX2NUOXR6Q2Z3VnVrTlo5b3NCV1BjMVh5ajJacTlVR3JQSllyTEM5ZjdhQk5ESU9jZldhTFFXcGZaTzliWHk2NU9UeHA1bEY3MERpaFpqQ1dvX1lLVXNPRzJSX0pGbWl4Q2xFT1ZXZjdGRTJlbld6bURTXzNqdmxUYWxNdFBLRVl6Ym1HMTU0TEZpSEpSajVQNFNZc2k2WWNvN3dxUDZVNjVBQzk2WFBodU9oV1VXeWJibS1qUUN1cjZrRDU2YS1wRDA2XzFiLXU2X1pYMU5fVEVqOC1aNU1sbG9HbG0tc0pKN2l0QUh1LUdMVUNRcjJtcHdKZkVrMjJOMTBMdGtoY3JGOHlheG9PUlpncnJqQ2FVNmxOSlR0TGY2cXdpa2RsZXdCeURoYVVGTnM5eC14LXJwTVZKbWc0Y19SRmprem8?oc=5",
+      "collector": "Google News RSS",
+      "country": null,
+      "country_code": null,
+      "city": null,
+      "region": null,
+      "latitude": null,
+      "longitude": null,
+      "location_precision": "unlocated",
+      "location_confidence": "low",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "سكاي نيوز عربية",
+        "صحيفة الخليج"
+      ],
+      "related_articles": [
+        {
+          "title": "Investigation reveals WhatsApp used as a secret channel to transfer funds to ISIS",
+          "original_title": "تحقيق يكشف: «واتساب» قناة سرية استُخدمت لتحويل أموال إلى داعش",
+          "original_language": "ar",
+          "summary": "An investigative report reveals that the WhatsApp application was utilized as a secret channel for transferring money to ISIS.",
+          "published": "2026-08-30T09:33:45+00:00",
+          "source": "صحيفة الخليج",
+          "url": "https://news.google.com/rss/articles/CBMizARBVV95cUxPMFpINlkzcTYzd1pjUF9MeThMUlljejlYZUZnWVhwSThDWXNiV2NDOEJpdFRXNXhLTmV6TFpBak5MRE5vRVAzdWVOU1hqLWl4U1MzRVpfTWFiT2pMQTRNN29BSXVCbGNSN2EtLTN4b09EZXhqeVE5d3N0bVJNQVc0SjRLNDJESkVsOWlvWGdESm5fSEVKY2N5UTdHRlU3TkVuNFd5MVFRQjlULTFGcVhWVlpyWVF0cGEzc1NCTHRVVG5Ub2M3QUNPRENfWWx5SXFQdnBDT0NKZTFSY3kwNlplY1F4MlNXTEJZNlkzZ2xHbVRXUU5pbVFMajV4UHJENlRFd2tZTS1icTJPVlJxLXFkZTVjRkk5UVI4Uk1GcEkwLWZxSXZVSURYQ1ZmZ2kyRllQb192X0RkcmVBaUd2bVFSbTZVTnVLTi1qMU8wNnlGbUpXQllyQ1o1eTd4SHQ0T1hnZE81WEhQRXVEVGdJWTZNSUM5bDVwa3M0Q3ZKcHlsUFYtRnZyNjlMZnp5VENnNTY4MXVZRmNfZjhBNzM3WjkwUzZ3WkpkVXBiX3VHbnpZVElDdXdxajNGV1lEenVLRWtPenFyX1ZzRGtpTFZsYVhkeHQ5TVFadU1sRmR1QlNVNDRLVXl3d0kyYzZTZXBKRzhoczM5VjRtdFZfNk1WS08tajZYS1Ryak90MGc3ajh2dzFUUFZCX3ZKQ3hOOWRtTE42aVJyU3JMdFplOVlZWEFTRG5ENzJZeXFHQzVObzQ4TUJpZjBleUJpeVhGMlo?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-30T08:15:04+00:00",
+      "last_reported": "2026-08-30T09:33:45+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Detailed analytical report on terrorist financing mechanisms and digital platform exploitation by ISIS.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Investigative report on ISIS terrorist financing and communication via WhatsApp",
+      "title_variants": [
+        "Investigative report on ISIS terrorist financing and communication via WhatsApp"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "paraphrase_entity_context",
+        "same_url"
+      ],
+      "location_confidence_score": 0.5,
+      "location_method": "ai_unlocated",
+      "location_evidence": [
+        "WhatsApp, ISIS"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Investigative report on global online terrorist financing/communication methods without a specific single event location.",
+      "ai_geo_fingerprint": "01fa5daebfe3792a18eb775427644388176215ffaccd71e4f3bd5523b94bca94",
+      "ai_geo_inferred": true
+    },
+    {
       "id": "d842b10e44c2faad",
       "category": "Arrests",
       "categories": [
-        "Arrests"
+        "Arrests",
+        "Online Radicalization / Cyberterrorism"
       ],
       "title": "Four individuals arrested in Diyarbakır for hanging terrorist posters",
       "summary": "Turkish security forces arrested four individuals in Diyarbakır who were caught hanging posters associated with terrorists.",
@@ -2065,7 +3168,7 @@
       "collection_locale": "TR:tr",
       "published": "2026-08-30T07:58:38+00:00",
       "source": "GZT",
-      "source_count": 2,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxNM1NoSFFscGEzNUtXZ296NlFvaWN5RVhEVW9DVHBVRUxoZ1R2Vi01ZEhmWFlva0NFR2pvTE1XZWZuaDJLT2FSS3dNQ1VReS16WnlYU1gxbGxEcHBGOUhfcm9KN1dERDdFRFladVA5andhREVBcXo2Mk1laXRMNUI1YkJiUW5yb1E3RXZqWTg2R1VENkZOMkRhY0h0bm9CazJDdExMZFRJQndaZVBLc21Kek9IR0xxZU9CbWJlWmpKS242N0hXZjhuYkd1SWlDejVkaGplUlBtMHhyOW9haWRzdw?oc=5",
       "collector": "Google News RSS",
       "country": "Turkey",
@@ -2079,7 +3182,9 @@
       "acquisition_channel": "multilingual_discovery",
       "sources": [
         "GZT",
-        "Takvim"
+        "Takvim",
+        "Yeni Şafak",
+        "T24"
       ],
       "related_articles": [
         {
@@ -2109,7 +3214,8 @@
       ],
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "same_url"
       ],
       "location_confidence_score": 0.98,
       "location_method": "ai_city_geonames",
@@ -2122,6 +3228,66 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Turkish security forces arrested four individuals in Diyarbakır.",
       "ai_geo_fingerprint": "2b4689a4a8227e66c09efca96ecb1bd3382a756923522f39f63c3c273063b3db",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Iraq: No Daesh cells around Baghdad",
+      "summary": "Official statements indicate there are no active ISIS (Daesh) cells remaining around Baghdad.",
+      "original_title": "العراق: لا وجود لخلايا «داعش» حول بغداد",
+      "original_summary": "العراق: لا وجود لخلايا «داعش» حول بغداد الاتحاد للأخبار",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-30T07:40:01+00:00",
+      "source": "الاتحاد للأخبار",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMimgNBVV95cUxNaE5OcHhzU2pUSFZTSndhd19kOUsyOWdNRTJFVmsta1FjMWZmMWVoTXhKS29fZXJhT2tFSzV5c3F5Q2VmX0xiakxUQS1mbnMwcnhIaTdkbHQwa2ZFUmFUNHNvb2t3VU5TSkJUUGdOTU96WklQbEtkamRtYVktNk0zSHBkVGlBWTgzeVd2WGxvMF9aN1JsZkFEZ0RSTEhsOHllcXFjS1RUa3RxdHF6VDJNaF9mekF5aTBmZFl1dm9aTkpZSzdOMER5Q05nWWNTRm45ZUVyR2dyTFpCS0FLOS1QcjRxOWlOQlBhZm5oNGNhbUR4MGtNa1Z4QzdSUjlBQ251YWNycWxLbkNMUVFxYWlQR2twUXFPMF90SzFBWDhfNU1HTE9WRlp0NEozZEE3NDZ6OVlibzJrU09ueVhIWG5Cc05oZFdrSnFfTTBhWUthYzczYW1NXzlRemdBUlR5ZXR0VUpnQjZWLUIzaHBnbTJITHBDZm5KU0ZtajVrcnRmUFF2YnkwWVZseFRqY1lLR2JCZUhZSG15SUE0dw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Iraq",
+      "country_code": "IQ",
+      "city": "Baghdad",
+      "region": null,
+      "latitude": 33.34058,
+      "longitude": 44.40088,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "الاتحاد للأخبار"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T07:40:01+00:00",
+      "last_reported": "2026-08-30T07:40:01+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 65,
+      "ai_relevance_reason": "Security and counter-terrorism status update regarding terrorist cell presence around Baghdad.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Security assessment regarding absence of ISIS cells around Baghdad, Iraq",
+      "title_variants": [
+        "Security assessment regarding absence of ISIS cells around Baghdad, Iraq"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Daesh cells around Baghdad"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Official security assessment regarding Baghdad, Iraq.",
+      "ai_geo_fingerprint": "069b4e273b9723f8fbe72c3203d15214bf46df676bfc42cc8488c3df8e5cbf22",
       "ai_geo_inferred": false
     },
     {
@@ -2259,6 +3425,66 @@
       "categories": [
         "Attacks"
       ],
+      "title": "Washington warns of potential terrorist attacks at major events across Europe",
+      "summary": "Washington has issued a security warning regarding potential terrorist attacks targeting major events across Europe.",
+      "original_title": "واشنطن تحذر من هجمات إرهابية محتملة بالمناسبات الكبيرة في أنحاء أوروبا",
+      "original_summary": "واشنطن تحذر من هجمات إرهابية محتملة بالمناسبات الكبيرة في أنحاء أوروبا كل العرب",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-30T06:15:32+00:00",
+      "source": "كل العرب",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMitwRBVV95cUxQRmJZRXpFTlZCVXpBZUI3ejdwb0dsVHFtU3UzdU0xVkpJd0g4dVNQdGZ6UUUydko1RzlTVjlmYi1zZGRfTVlmZzFTd1UtX3lBRXJCN0lNRGtEdU1aakg2MWFUd21COWZhS2pfd0VMaG0tQjlvN0lEd1lXT3doLXNpbkhESlU1MFlhUWtoQTFtNWdxRVdIa29oYktmWkFMcmF3Sm5YU0RMTklhZ2s0cElUV0pXdmN4ZWhrM0s2bUU4RVJld082SkMzQXBYZHhtN0xnelVLNksxUHdfNFBXOGRXbzd6b3V6UXE0eHVGTWRSSWhyTVZIbXZrZGtQN1FLajhjNnV3MzN1UzhDb0l2d2lTSHlua1FUbmhUR1A3WmllUTUtNjRkY3ZaaU9rS1EzQnN4V3k0MmxSZFdheEpBN29HT0JZOU05OGJ6M0EwaU1odUtieDBtZjU1SDcxZXhTRHhBVE1hQ3dPY2xQeTRELUI0bFFhZWlIUmR4NW5hQXNURHFzbjNET0NfLXpoU19zZXdrN0hTS1dpV2U5RUt3bExjVFczZDZlZ1FVejBmY0xIQzRCVFZmZlFGd1I3RTBDeGcwclQydk1GMXNjWm5SWmpDS21ZSkRIdURBRXJOeXVZd1pSeE9fQkdXdnZndWxfc2JNeVRWdjFNZ1lRTmY5enJMRVZXeGpyYmw0ckVsMl9ndEd1MWdkOWh5Zm9BdlgydVZhZXhyVFlxME5kenNqZFhhSmx0bDB0bDTSAU5BVV95cUxNSXp0bkRDSUNrSC03UU91RTFwQ1dHM0JacmVlV0RnczlNejMxS2dISS1mWFhzZ1QtR3lzQzVHNXRVYW90cUF1d1FZV3pubmc?oc=5",
+      "collector": "Google News RSS",
+      "country": null,
+      "country_code": null,
+      "city": null,
+      "region": null,
+      "latitude": null,
+      "longitude": null,
+      "location_precision": "unlocated",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "كل العرب"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T06:15:32+00:00",
+      "last_reported": "2026-08-30T06:15:32+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 50,
+      "ai_relevance_reason": "General official security warning/threat advisory regarding potential terrorist attacks in Europe.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "US security warning on potential terrorist attacks in Europe",
+      "title_variants": [
+        "US security warning on potential terrorist attacks in Europe"
+      ],
+      "location_confidence_score": 0.8,
+      "location_method": "ai_unlocated",
+      "location_evidence": [
+        "major events across Europe"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Washington issued a warning targeting major events across Europe.",
+      "ai_geo_fingerprint": "474cd9e3cc0f6e42434ae384a167db7a5c0a30ca3a0b15eca4355de0462c0313",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
       "title": "Syrian Army announces liberation of Aleppo from terrorists",
       "summary": "The Syrian army stated that Aleppo has been liberated from terrorists and stability will be restored to every inch.",
       "original_title": "الجيش السوري: حررنا حلب من الارهابيين وسنعيد الاستقرار الى كل شبر",
@@ -2329,7 +3555,7 @@
       "collection_locale": "SA:ar",
       "published": "2026-08-30T06:07:17+00:00",
       "source": "خبرني",
-      "source_count": 8,
+      "source_count": 9,
       "url": "https://news.google.com/rss/articles/CBMirgNBVV95cUxOTFByVkNFR0dKTVprYnQ4U3pyUERnT0pfN2VBMG1BMkJZdVVqNkNtUWgtektyaHZmX3pJaEtnMXp2WmhEakthZzhucmtfNmxpYkhtVzB1X2tSVGkzeXlqV1FpNS1TODhFWUozWWp1SW51cmRsN0liSUJGaWw1T0poT2FPQnVoS1JDbDN2eE0ySzVJSm1IN3ZmN0VQY01hY3lrenlESnpuajZyY2VrOG1FLXpiU1ZHSVFocl9yZFFyM1lvNFNlbnRTUjkyZ2FIQ1J1RERPQjN3bjZ1cERoN0xuQWJGb1BTNUZjN2pTRmktdkdCQTRJMWdWWkdVaVd3SWdsY2g0bl9kWGNEZmQ1SUhSRVc2UnhLbmV0V2hVVGRyV3U1WXJRZnhPMlJXTVNlNlJoaUFYdXNSeUt4ejcyc0l0Z0Qwc09CRnpqZlhwZmlmQzM1dWZnNmtiWUVWWS1MQmk5Mk1wMFhXS1BFblBpUGR4Y0tlNGp6dE91ODRqeENZZGppazE0SVczOWs4MWFzSkV5YVJwdThMemxxOGJlS1BQQWhLU0VXZkhxY1pxbU13?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -2349,7 +3575,8 @@
         "بوابة دار المعارف",
         "تلفزيون فلسطين",
         "بوابة روز اليوسف",
-        "تطبيق نبض"
+        "تطبيق نبض",
+        "صحيفة الرأي"
       ],
       "related_articles": [
         {
@@ -2612,9 +3839,10 @@
       "ai_geo_reason": "Moshe Ya'alon is an Israeli official discussing the domestic 'Price Tag' settler violence issue in Israel.",
       "ai_geo_fingerprint": "4cc078f98e0faa1352551d283f2da301d95249df0ce9214d961bcc0940a96bb5",
       "ai_geo_inferred": true,
-      "dedup_confidence": 0.99,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url"
       ]
     },
     {
@@ -2804,7 +4032,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The Egyptian Ministry of Interior announced the disruption of a domestic terrorist plot in Egypt.",
       "ai_geo_fingerprint": "fdcec06098eb1c17a902e74f8e3371778f722f62b46fe4dd3614cc59faa067b8",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -2864,7 +4096,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The policy statement and assessment regarding ISIS financing originated from the United States.",
       "ai_geo_fingerprint": "59ef271bf1457522bd427677a1390e3ea53688305f8f3b74c34771f7998efc2d",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -2984,7 +4220,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The event explicitly took place in Syria.",
       "ai_geo_fingerprint": "33ffdb64530a25129a3241ab67f10f85fb3ab1e370708248ce6f0e3cc80ac273",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "1f9bdb1c79261398",
@@ -3636,10 +4876,20 @@
       "sources": [
         "المعلومة"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Iraqi drones pursue terrorism remnants in Anbar desert",
+          "original_title": "مسيرات عراقية تلاحق فلول الإرهاب في صحراء الانبار باتجاه الشريط الحدودي",
+          "original_language": "ar",
+          "summary": "Iraqi drones are tracking remnants of terrorism in the Anbar desert toward the border strip.",
+          "published": "2026-08-30T19:18:56+00:00",
+          "source": "المعلومة",
+          "url": "https://news.google.com/rss/articles/CBMi-gNBVV95cUxNNlYzQmpuVVh3VUFfeDE1OWpQTDRjanJ1WDFsYllXUzdrWUVlQTJVVGxHSkpuMEFBajBVTTRoTU5YU3dfTXZWTmtOaHNpT200U09MVUZoZkZGZFV1ZUtvR0JQcU1JSFlSY1cxcl9sc0ltNWpRSGp0RjdmekZRVU9OaERfQ05ZSkdqemZDSHlEcG0tTlFSQW1DYTVTdHdFTFI5SldyUFJxZHg4ZlNnaVVUbVdZcWNPUzczUThjc2xmVDZXMk9EZDhQOWxRM2lsOHdVTTVZNnZUNURsZTFqaTJudk1IbTFpNVlWR1oyX2FURU5xUzF5ZTkzMFNCNjQ2WmhFa3F5RHY1MGtYTkllV0tZbjN3WXlocl9DNXJSZHlsbVJYdW0yS1l1TDJKdHVTQ1JiSC1xVGZzNGlMSGY1OFhLVU11M3hBZU5jTHMwMmIwUmhZdjFhQ3phZnhuTUtzc3NaeHFiUUZVaGpHZ2Y3Z2pfUklRVC1RRWxhU281c25fUU5IZ2NiYlp6VXpuSXc3OS1FYjQ0TGcyQ2JIdWY4VklnMmR5dzJ5YTR0c3M5MGd6alVWQVVGdjh2MmJZcHJjRmxuUGt3aW9Mb2JtUXVPVjJta1pzSmpORUdjU3o0LUU3N2pVVkZQaklRNW1URDlmR2ZNTFBkVVFFTnVDdw?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-29T18:50:29+00:00",
-      "last_reported": "2026-08-29T18:50:29+00:00",
+      "last_reported": "2026-08-30T19:18:56+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -3666,7 +4916,8 @@
       "ai_geo_inferred": false,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "entity_actor_event_signature"
       ]
     },
     {
@@ -3811,6 +5062,66 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "22c665cb20605b3c",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Terror at the top of the 'Moon Pyramid' in Mexico: Gunman opens fire on tourists and commits suicide",
+      "summary": "A gunman opened fire on tourists at the Pyramid of the Moon archaeological site in Mexico before killing himself.",
+      "original_title": "אימה בראש \"פירמידת הירח\" במקסיקו: חמוש פתח באש לעבר תיירים והתאבד",
+      "original_summary": "אימה בראש \"פירמידת הירח\" במקסיקו: חמוש פתח באש לעבר תיירים והתאבד כיכר השבת",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-08-29T16:50:37+00:00",
+      "source": "כיכר השבת",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9UcUFkcFVJdE5HZXRncjh5ZWtPSjlRcGI4N0oxNTVTMm5zVWVnTHk2SjViTXY5SjYyZFlZZGhYU29Ca2VoaTBpMXV6RlIyOTZ4dXUyaXhWV0pMOUVvY3hQUTRTZ1FHSDhPRjB3QXlQNFlyT0NPUHhPRjln?oc=5",
+      "collector": "Google News RSS",
+      "country": "Mexico",
+      "country_code": "MX",
+      "city": null,
+      "region": "San Juan Teotihuacán",
+      "latitude": 19.6925,
+      "longitude": -98.8439,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "כיכר השבת"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-29T16:50:37+00:00",
+      "last_reported": "2026-08-29T16:50:37+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Active shooter / violent attack targeting civilians/tourists at a historical site.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "gunman shooting attack targeting tourists at Pyramid of the Moon in Mexico",
+      "title_variants": [
+        "gunman shooting attack targeting tourists at Pyramid of the Moon in Mexico"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Pyramid of the Moon archaeological site in Mexico"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Shooting incident at the Moon Pyramid archaeological site at Teotihuacan, Mexico.",
+      "ai_geo_fingerprint": "da3c35448ed54a12ad54637456d8760c4a78bbf52d25c16c18194a6923ce9549",
+      "ai_geo_inferred": false
     },
     {
       "id": "22c665cb20605b3c",
@@ -4352,7 +5663,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The event took place in Aden, Yemen.",
       "ai_geo_fingerprint": "6bded81a0278a8cc53a2ace5e1053fc30806352f433d21d71a0bfd6e4366775c",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "7a362cdbdcf3189f",
@@ -4434,7 +5749,7 @@
       "collection_locale": "DE:de",
       "published": "2026-08-29T15:03:48+00:00",
       "source": "kath.ch",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOOGplOEd6aEdlYzl3RXlaQmlzRzQxbS04bWN2aFcwdkNER1dMWElvX1dvdzczVXZlNTlOR2ZpMWQ4d0JzbjlaZTFBMThuSXlELTdYQkMwNW5nckx1aTU2anFmYm5JcGcwNXppYlJOZXdjYUZKSG44dS1ibmtQU2pGV0pVMUIwOXhiQnRlajAyVlMwbDB0d3c?oc=5",
       "collector": "Google News RSS",
       "country": "Switzerland",
@@ -4447,7 +5762,8 @@
       "location_confidence": "medium",
       "acquisition_channel": "multilingual_discovery",
       "sources": [
-        "kath.ch"
+        "kath.ch",
+        "Kath.ch"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -4771,7 +6087,7 @@
       "collection_locale": "SA:ar",
       "published": "2026-08-29T13:55:00+00:00",
       "source": "خبرگزاری مهر",
-      "source_count": 3,
+      "source_count": 5,
       "url": "https://news.google.com/rss/articles/CBMiiARBVV95cUxNdGVGX0FJX0ZOdVFYZU9pMllTZFpxUkFXdDJZR2pHVEZmaGYyTUg5UW9TWm1hMTkzd0dyMS1rc1JxUmtUbEE1bGZGc0V1NTRNLU1Db0pUOGxldTFmTFF0aUNub2FTNWh2eHJPdk8zck9mT3E1UmNGQlllaVlQRF96MzI2VlJBZ2s3X2o5NGJCcmRKQmxsTEVPaU5CN0hoVGJ5Rllsb2YwWmQwTlJ3eUM3c1MyRGxLOWtQazBZLWVuQzdVeERSaFpySlhDdzhQbnpyejVQWlVRT3YyVEU5MjJjV1ctcGZrU2s4Yjd5aWZjYnNvdENzaW9WYUViTURKMzBhWGtqdng5M3hpd1BsalF5enVpSzFETHJZTzJlTHZXTVJLOWVEcm1FQjc0VTZKYnBNOVZjYjBPMGFHS01aVVpkQm9rLS1zS25hSl9RY28xcVFRY193VkpzVUYyb2w2cjR5QzdpYkxpcFZZNU5Panh3dWw5WC04cDhKLWlVVkFnSXo3MXFIWXRMVnY0Q0dTVURCYUgwS1ZUTEJLYS16SGoybDhfeE84eXNKRHlDN0hwRmExVldNZFY1R1EzSlNlamVpU3lKQmJKOGtTSXhGaGh2cVRCdHdXSmVtdFI0Nk1LMnhzdTNPNXAzQzU5V2lvZy1sVUdjeF9EcXZ3dEFBSkJ5Q0ZsNVJJZlY1?oc=5",
       "collector": "Google News RSS",
       "country": "Iran",
@@ -4786,7 +6102,9 @@
       "sources": [
         "خبرگزاری مهر",
         "Vietnam.vn",
-        "מעריב"
+        "מעריב",
+        "خبرگزاری دفاع مقدس",
+        "وكالة سبأ"
       ],
       "related_articles": [
         {
@@ -4815,9 +6133,18 @@
           "published": "2026-08-30T08:45:51+00:00",
           "source": "מעריב",
           "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBYdlJqQ1gwc1p5eGVwaEROeVRieFdPSEppLWNTYzJZSHJFeFJEbXhia0UtQmIwaENjVkI3M3FhWTdPOU1kUjN6d3BoQ3BFTzFYTzVjRmFjOUJydlRIX3hVRTMzRjY?oc=5"
+        },
+        {
+          "title": "Dismantling of a terrorist cell in Saravan",
+          "original_title": "Démantèlement d’une équipe terroriste à Saravan",
+          "original_language": "fr",
+          "summary": "Security forces dismantled a terrorist team operating in Saravan, seizing weapons and equipment.",
+          "published": "2026-08-29T20:53:48+00:00",
+          "source": "خبرگزاری دفاع مقدس",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPb3UyZksyeHhIYXVGR0dUMTk3dVlCNWZpVEJZOWN3S2lLbWdrNmZkeTRhVTBDWjhGR29lUlpJcERyd050eS03SHhfbzVLd1pSX21BSkt0OW0xLW85UTlESlpETU1YMFRESVFTSjQtLUdXZkFHOWQydF9EYnByS213aG1lQnJXZkNEZ0gzQ1JZUXRETENMMF9tY05JX3RoU3lnZmVobXJKbEtrcEU?oc=5"
         }
       ],
-      "article_count": 4,
+      "article_count": 5,
       "first_reported": "2026-08-29T13:55:00+00:00",
       "last_reported": "2026-08-30T08:45:51+00:00",
       "ai_selection_complete": true,
@@ -5006,7 +6333,7 @@
       "collection_locale": "DE:de",
       "published": "2026-08-29T12:26:01+00:00",
       "source": "Euronews",
-      "source_count": 8,
+      "source_count": 9,
       "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNLTJxWU1BS0dIUllxTEtDYmxpZWthWlU2WFZ2eE5LLWlSU0hCMktqdjNBb1V2VnpJM0VkTkEwN3RJWUNEbmF1TFJoQVI3bnBCYXhaM1VURE00VVkyeU5RZUpGdGI1Q0UtSHJGajZ5Si1pNjJ2aW9GUXlpaDBvSXU5QnBaWFNWcXhJU2RVM24yVmxLU3U2REtiSGVn?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -5026,7 +6353,8 @@
         "Русская служба The Moscow Times",
         "Национальная Служба Новостей",
         "العربية",
-        "Euronews.com"
+        "Euronews.com",
+        "AD HOC NEWS"
       ],
       "related_articles": [
         {
@@ -5997,11 +7325,20 @@
           "published": "2026-08-29T09:48:02+00:00",
           "source": "النجاح الإخباري",
           "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE9qbkV2dnJpTUV1ZzR4MEIyVXlGSEgtMF8tVlVmdzFYRVM4bUdURnFkZHRmSmtDUUtnTmFlbjhTcl9VYXM0UU9UbUZ0b1RITWhyNUVKRktaMW1va015Qlo1aG5jV0g?oc=5"
+        },
+        {
+          "title": "Two sisters injured in an attack by extremist settlers in Silwad",
+          "original_title": "إصابة مواطنتين شقيقتين جراء اعتداء مستعمرين إرهابيين عليهما في سلواد",
+          "original_language": "ar",
+          "summary": "Two Palestinian sisters sustained injuries following an attack by extremist settlers in the town of Silwad.",
+          "published": "2026-08-29T12:49:19+00:00",
+          "source": "وكالة الانباء والمعلومات الفلسطينية - وفا",
+          "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFA0Vk0zRHJ2azVxV0FyZmVyUGNNajM1cXpUVGlrTUI5dXZHeGNHTG5iRjNMdFlCMGRpMlJRZ0ozRW9RdGRQa0tSampkcVRIU21YdE1qRw?oc=5"
         }
       ],
-      "article_count": 2,
+      "article_count": 3,
       "first_reported": "2026-08-29T09:15:33+00:00",
-      "last_reported": "2026-08-29T09:48:02+00:00",
+      "last_reported": "2026-08-29T12:49:19+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -6227,6 +7564,91 @@
       ]
     },
     {
+      "id": "31d6d03e906d4aca",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "The Nigerien Army contains a coup d'état attempt",
+      "summary": "The army in Niger has successfully contained a coup attempt following unrest in the capital.",
+      "original_title": "El Ejército de Níger contiene un golpe de Estado",
+      "original_summary": "El Ejército de Níger contiene un golpe de Estado El Periódico",
+      "original_language": "es",
+      "collection_language": "es",
+      "collection_language_name": "Spanish",
+      "collection_locale": "ES:es",
+      "published": "2026-08-29T08:44:22+00:00",
+      "source": "El Periódico",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQd2NoYkJqVnZ0VkxmUnRwNm9JZG5QT2FtXzRleDZJM1V3ckFsWlgzeENTUUlpbEF3dkFYMnN3S3pUTV9WREVHT2RnZXM1XzBURzRLT0hqVkJod094M3RkUEswdENMbVlBRDJaekNJR1ZPb0lYUDUzMWpjTlBPVkozSXM1dlk5Y29BZXdaWUJLWWE5UUxjZmVfZzdPcllSVDRMSW91ZUVaazBvU2dVT3FlbHhaZml1a3RiQlgxTlBDd0lyZ9IBwgFBVV95cUxNRU9Xc3U2MnZ3V0VhYVdFT2NEanFPR0l1c0FfZTc4SktyOXFVbllrTi1uR1JTNHBBSTFwck8xYzJGdzhvS0lfQU5kZVRJeUtTMmVkR1E4T210MlpmbHRzOVFleWF5NTBYc3NseGhtazNtVWRhXzZyVUdGV1lCeVZiXy03aU9Fc29ESk1FOGJPNUFLNDBwNDFKUk9UOGJXd1B6c0xteGI1R0dhcl9wUVlOQUpLRF9VcnVDWUVNbTd6eXFGQQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Niger",
+      "country_code": "NE",
+      "city": "Niamey",
+      "region": null,
+      "latitude": 13.51366,
+      "longitude": 2.1098,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "El Periódico",
+        "EL PAÍS"
+      ],
+      "related_articles": [
+        {
+          "title": "Un grupo de militares intenta dar un golpe de Estado en Níger",
+          "original_title": "Un grupo de militares intenta dar un golpe de Estado en Níger",
+          "original_language": "es",
+          "summary": "Un grupo de militares intenta dar un golpe de Estado en Níger EL PAÍS",
+          "published": "2026-08-29T14:31:21+00:00",
+          "source": "EL PAÍS",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxObnRtS3NuZDB4RXZtUG1INDBuUHZLMkJVRXhNWHdQby0ybTZjVVJUZGpVeXRqc3A1TUZvbDhNZnlmZjA5bWtnWXNnaTA2S19FMll5X0tta0FMcEVHODFUYzl1Y0ljREZjdEhiUk95YXlBejlGTWo0ZU92dmFLUTJvU2xLVjd2UmpkNVRROTFVQ29rTG53clVReFBIdFNqRVRkWDBBSUwxdHlmcFdfU2I00gHDAUFVX3lxTE1ZcldWZW8wSXVfUG5wRTV1LUo1bUVtS1pUY1ozdTBnZHh3bnFsZ3hQTjR4cnJFSXZxcjM3TVhqNmJvSU5rc09ta29CSTYwdGtkT0JQSVNHWmR0NlpPQjhDVm9Hd3FjbDJJR1B1dWFIYmRoRGx4OTl0eWNtdjl0MFVvcnhYOU91TXRXMVNtc0QxVUZ4anc2a0lrU3NYeTVfMHF4ckM1QlJlVThCa2Fick80T2hiUVFRbnlfT3dtUUdsUWM3SQ?oc=5"
+        },
+        {
+          "title": "Un grupo de militares intenta dar un golpe de Estado en Níger",
+          "original_title": "Un grupo de militares intenta dar un golpe de Estado en Níger",
+          "original_language": "es",
+          "summary": "Un grupo de militares intenta dar un golpe de Estado en Níger EL PAÍS",
+          "published": "2026-08-29T14:31:21+00:00",
+          "source": "EL PAÍS",
+          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNWXJXVmVvMEl1X1BucEU1dS1KNW1FbUtaVGNaM3UwZ2R4d25xbGd4UE40eHJyRUl2cXIzN01YajZib0lOa3NPbWtvQkk2MHRrZE9CUElTR1pkdDZaT0I4Q1ZvR3dxY2wySUdQdXVhSGJkaERseDk5dHljbXY5dDBVb3J4WDlPdU10VzFTbXNEMVVGeGp3NmtJa1NzWHk1XzBxeHJDNUJSZVU4QmthYnJPNE9oYlFRUW55X093bVFHbFFjN0nSAcMBQVVfeXFMTVlyV1ZlbzBJdV9QbnBFNXUtSjVtRW1LWlRjWjN1MGdkeHducWxneFBONHhyckVJdnFyMzdNWGo2Ym9JTmtzT21rb0JJNjB0a2RPQlBJU0daZHQ2Wk9COENWb0d3cWNsMklHUHV1YUhiZGhEbHg5OXR5Y212OXQwVW9yeFg5T3VNdFcxU21zRDFVRnhqdzZrSWtTc1h5NV8wcXhyQzVCUmVVOEJrYWJyTzRPaGJRUVFueV9Pd21RR2xRYzdJ?oc=5"
+        }
+      ],
+      "article_count": 3,
+      "first_reported": "2026-08-29T08:44:22+00:00",
+      "last_reported": "2026-08-29T14:31:21+00:00",
+      "dedup_confidence": 0.99,
+      "dedup_methods": [
+        "paraphrase_entity_context",
+        "same_normalized_title"
+      ],
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 55,
+      "ai_relevance_reason": "Reports on an armed coup attempt and military operations.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Nigerien army contains coup d'état attempt in Niamey",
+      "title_variants": [
+        "Nigerien army contains coup d'état attempt in Niamey"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "The army in Niger has successfully contained a coup attempt following unrest in the capital."
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The capital of Niger is Niamey, where coup attempts and capital unrest typically occur.",
+      "ai_geo_fingerprint": "d584bd6bf5cde3ab9a611d9887648a87275b256bf19ab3cf3e532ab1774da47b",
+      "ai_geo_inferred": true
+    },
+    {
       "id": "4b42519e9690a1d7",
       "category": "Attacks",
       "categories": [
@@ -6420,6 +7842,66 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "8a88a65b5e40ed56",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Following the attack on the Berlin CSD",
+      "summary": "Discussion and aftermath surrounding the attack targeting the Berlin Christopher Street Day event.",
+      "original_title": "Nach dem Anschlag auf den Berliner CSD",
+      "original_summary": "Nach dem Anschlag auf den Berliner CSD Islamische Zeitung",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-08-29T07:00:00+00:00",
+      "source": "Islamische Zeitung",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5RWUlHMzNCTWxUOFBaN2V4TVhuR0tuV3JFazEtdnBzbU5WN1dESldUX0dZX1EyS3BjSHY2MWdzV2YwZ3p6MlNteWVaVXpYdnh4NE16Tmk5cEMyMFh6MHhkTWxlQ2ZreDJMbFJmNlhSVkdIWWtSeFZWZg?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": "Berlin",
+      "region": null,
+      "latitude": 52.52437,
+      "longitude": 13.41053,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Islamische Zeitung"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-29T07:00:00+00:00",
+      "last_reported": "2026-08-29T07:00:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 80,
+      "ai_relevance_reason": "Follow-up and analysis of a targeted violent attack.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Aftermath and reporting on attack targeting Berlin CSD",
+      "title_variants": [
+        "Aftermath and reporting on attack targeting Berlin CSD"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Berlin CSD"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The attack explicitly targeted the Berlin Christopher Street Day event in Berlin, Germany.",
+      "ai_geo_fingerprint": "c066ad5fafe1a06a623fc6ce6d8df112a7195ce15c9c5413a16112d6b27b4a7b",
+      "ai_geo_inferred": false
     },
     {
       "id": "22c665cb20605b3c",
@@ -6743,6 +8225,154 @@
       ]
     },
     {
+      "id": "b519fc2a4375287f",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "In Niger, an important military base retaken with Russia's help following a mutiny",
+      "summary": "Following a military mutiny and attacks in Niamey, a key military base in Niger was secured with Russian assistance.",
+      "original_title": "Au Niger, une importante base militaire reprise avec l’aide de la Russie après une mutinerie",
+      "original_summary": "Au Niger, une importante base militaire reprise avec l’aide de la Russie après une mutinerie Le Monde.fr",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-29T03:42:00+00:00",
+      "source": "Le Monde.fr",
+      "source_count": 8,
+      "url": "https://news.google.com/rss/articles/CBMiswJBVV95cUxNbUNCcHhqV05nWENrLUZWc3ZrYVctSTVZWVFyQzE3WTM4X0RDTExSZFJlVzVETS14R21BeFJwX2V4YjRtT3JrQWhtUTlmM24tS3k0S0hzMDZpWlVsaDB1aDI3ZGI5ZnkxSjZvMFBqSDhNcExCMTFJME9tVDRrQUVjOVJfOGM1dlI4MmhkYkFhdjV1STdMa0kzYmUyUy1fakdmcWNBd05xbjBFU1poRXA5M29uTUNrUzVlMUpCNU1oeElaeVZiR1FJV2xnVmVsQVNrRVJWdzk2WXRrM3NXQjBzaWRGbWYwR0VZNDdqcVptQU1KN084cjVXc2xleURESF9HaHAzWUZBREs1Qm1SSjVyNTdONV8xaDFNSlpxRVhTc3ZOMWlfWnpYcEdodlRTeDJreFhN?oc=5",
+      "collector": "Google News RSS",
+      "country": "Niger",
+      "country_code": "NE",
+      "city": "Niamey",
+      "region": null,
+      "latitude": 13.51366,
+      "longitude": 2.1098,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "lemonde.fr",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "Le Monde.fr",
+        "العربية",
+        "Mepa News",
+        "Notizie Geopolitiche",
+        "la Repubblica",
+        "MarketScreener Italia",
+        "صحيفة الخليج",
+        "kommersant.ru"
+      ],
+      "related_articles": [
+        {
+          "title": "Niger: Calm returns to the capital Niamey the day after a military mutiny is thwarted",
+          "original_title": "النيجر.. الهدوء يعود للعاصمة نيامي غداة إحباط تمرد عسكري",
+          "original_language": "ar",
+          "summary": "Calm has been restored in Niamey, the capital of Niger, following the thwarting of a military mutiny.",
+          "published": "2026-08-29T07:00:00+00:00",
+          "source": "العربية",
+          "url": "https://news.google.com/rss/articles/CBMi4gNBVV95cUxQWVU3cFBxdzAxby1rRFY1QXlLaE9XQWF1SENFNFRxMGo3V1VZb2x5a0dacnlyQ0xVS3drcTFta0ZUb2FZWE05SEdUeGtJOG1vRkJHeHZSRC1EdzlOeVAxMzhNdzFVRUVSVXhRSjNDekdVR3pYWjVxUGk1M2I2dkduRTNtSjAtdktpaEVHT1JVNDZLYUFpUkpUYzZZQkRLRlU1Y3JVZGNLci14WDYteHMyVHd5YnBYaXUwcTNwV25hOWgzRG5XR2RaQVYyY3FrdmRSaTQ1cDBURzNyVkpZV29DRVNqb1g0XzlrR1lpN3NsbnRlbkxReW1xX3hVcGJiemFjRFdEbnlEN1ltY2FIeHd6U2FRZnkzZXc4dVJNWnhBa0JuWFdiT2pndkp0SkhLQWhrTDRIT0lST2dManczcG13UVV0LTBLX0U2U2FkWG5Od1hkSTNyakN0QURqVjZ0NmhIa3NVQmt0emlxbjZOZmYxazR0TU5tZm9oTG00NUhOMGJlS2NwWTEzWVF3bTVETkhYWWhNSE9fX1ZISFB3SENPZnlabDR4S1ZIM2M2ZkhmVTN5a3kySzJzVnJhSHA0cDZ0bFl2OERYTjdaaWRQZVJZdzJkYko5bGRvUkNrVXJGTkVfUdIB4gNBVV95cUxQWVU3cFBxdzAxby1rRFY1QXlLaE9XQWF1SENFNFRxMGo3V1VZb2x5a0dacnlyQ0xVS3drcTFta0ZUb2FZWE05SEdUeGtJOG1vRkJHeHZSRC1EdzlOeVAxMzhNdzFVRUVSVXhRSjNDekdVR3pYWjVxUGk1M2I2dkduRTNtSjAtdktpaEVHT1JVNDZLYUFpUkpUYzZZQkRLRlU1Y3JVZGNLci14WDYteHMyVHd5YnBYaXUwcTNwV25hOWgzRG5XR2RaQVYyY3FrdmRSaTQ1cDBURzNyVkpZV29DRVNqb1g0XzlrR1lpN3NsbnRlbkxReW1xX3hVcGJiemFjRFdEbnlEN1ltY2FIeHd6U2FRZnkzZXc4dVJNWnhBa0JuWFdiT2pndkp0SkhLQWhrTDRIT0lST2dManczcG13UVV0LTBLX0U2U2FkWG5Od1hkSTNyakN0QURqVjZ0NmhIa3NVQmt0emlxbjZOZmYxazR0TU5tZm9oTG00NUhOMGJlS2NwWTEzWVF3bTVETkhYWWhNSE9fX1ZISFB3SENPZnlabDR4S1ZIM2M2ZkhmVTN5a3kySzJzVnJhSHA0cDZ0bFl2OERYTjdaaWRQZVJZdzJkYko5bGRvUkNrVXJGTkVfUQ?oc=5"
+        },
+        {
+          "title": "Attack on the airport in Niger's capital Niamey",
+          "original_title": "Nijer'in başkenti Niamey'de havalimanına saldırı",
+          "original_language": "tr",
+          "summary": "An armed attack or security incident has occurred at the airport in Niamey, the capital of Niger.",
+          "published": "2026-08-29T08:17:32+00:00",
+          "source": "Mepa News",
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPOGJvMHBERkFGaHN6ZnNnUkxsNEVBcHNBdWpPNHlwQmdYVGR2QjBnOVFfSWxwNUJxdnlFblRrVFQ5Y3lxQS1rWkdaWjBZM29ST2ZHY0dtT095SGcxa0x6dXhBM2pDc1ZqMmlVaGttYnJ1SExHODhCZDlzRzM3VEYxTldIci02T2RqdGfSAZoBQVVfeXFMT3hadUlMSXBYa3VaejdtaVNiOEtHQzZneVNCNVc4cUItRXdqWlZVdzhEUWphd2g1YnRZYkpnUmZ6ejRhQmdvcHFMYzJSUF9CQi04a2s0X0ptdHNqNWM1VmdXQm5vMUhFb1F4bXlGMVdaRV9xdF9BaWg5THc1b2dlZjZJeG1TeHFGbnpuNkUtNmJVZ0dnb29lNnRjZw?oc=5"
+        },
+        {
+          "title": "Niger: Attack in the heart of Niamey targeting the airport, military base, and presidential palace area",
+          "original_title": "Niger. Attacco nel cuore di Niamey, colpiti aeroporto, base militare e area del palazzo presidenziale",
+          "original_language": "it",
+          "summary": "An armed attack struck central Niamey, targeting the airport, a military base, and the vicinity of the presidential palace.",
+          "published": "2026-08-29T08:30:14+00:00",
+          "source": "Notizie Geopolitiche",
+          "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOWVBwV203anAxbVhsQ25tcjV6WDRPZnBIdGI0MmFxUjBkRTVEM1ZyTGZPcC01YTYwZHFsYm14WWN4MksxbS1iYm5RZWJHOS1sRlNmYUQxdWY1TmdIVER0UHFHaF9tMEE2NkVzUnNFVTMyU2gtRkNxLVBIdW84cC04dENKR1hUcFE0ZjVZZ3l6aTlDRmozQXdvRlFpdkc1NzZkdDA2OXlRUzJGdk44di12TGJJMHVVdzJ2X294ZDZ6UWs5NDB5WUx6bGtrc2FxdkVF?oc=5"
+        },
+        {
+          "title": "Niger, gunfire at Niamey airport. Defense Ministry reports attempted military mutiny at a base",
+          "original_title": "Niger, spari all’aeroporto di Niamey. La Difesa: “Tentato ammutinamento di militari in una base”",
+          "original_language": "it",
+          "summary": "Gunfire was reported at Niamey airport, with the Defense Ministry confirming an attempted military mutiny at a base.",
+          "published": "2026-08-29T08:32:25+00:00",
+          "source": "la Repubblica",
+          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPandwZ3pQM3dCZElvTTRuTk5UVEVuRUR1RTN1dXkxX0Z5YWp1dmFJcUtqekU3d3Z5NTVNcmJiSmFIdUszaVk0LVFNUnhDX2t5cnBEd0s0anczd2ZoSXg0dVk2QURXNl9xYkpTS1k5ZVlSZUpxSG5tSEJvSFkwOVZRVUN5dWtjWGVNMEJxN3pXcFpMREJ4Y1JJZWlTVjh2MV9QLU1sRtIBqgFBVV95cUxNRlVrYmJSNVphSTJuUF9VYnQySHVhOFhWUkFFWEppclRGd19zWUJfazZzUGZLZFhRX2NKMDBWWkxUajR1MDV0cmd5Zy02QUNDU2NialpqYmYxNENRV0ZKbHFtSkFtYXpxaDJaQzdYOFlTdmpRSDViR1ZhdzdLaXdSNzdxV2FlNHdtbndvSElMd0xhMFRrNEw2Ynp5Y3lQYkJhVFkxd21HMm9TZw?oc=5"
+        },
+        {
+          "title": "Rebel soldiers attack airport and presidency in Niger's capital, according to sources",
+          "original_title": "Soldati ribelli attaccano l'aeroporto e la presidenza nella capitale del Niger, secondo alcune fonti",
+          "original_language": "it",
+          "summary": "According to reports, rebel soldiers launched attacks on the airport and presidential area in Niamey, Niger.",
+          "published": "2026-08-29T09:46:23+00:00",
+          "source": "MarketScreener Italia",
+          "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQaklJby14aW9qSzlvRkhtZlNITnNUQ2x3SXhsWWQ1bkY3ZC1yZFZLMWJnUkFscV9jMGRGODRtTVo5U3NtdkFzcmJNM0dmRVdKQndPNm1UQUxEWlZTdkNERlhWby16dDF1eEJvSkJPcjFtUmlocXBzRFhCM3NBS0hGVDc3b2xfbXZjbjRlSWUzSk1WTzl5N0twSDZ6X2tMa2pPbHJPR2d1WFdURF9YbVRTVnlxWDBMUEZQbGY3SlVZbE52dUlFQktzWTZUb2RZRmRlcGRhVjBIQkFDVng5SVVRSkpmalA1MGQ1N3c?oc=5"
+        },
+        {
+          "title": "Niger: Republican Guard Thwarts Rebel Attack as Clashes Continue",
+          "original_title": "النيجر: الحرس الجمهوري يحبط هجوم متمردين والمواجهات مستمرة",
+          "original_language": "ar",
+          "summary": "In Niger, the Republican Guard successfully thwarted a rebel attack while ongoing clashes continue in the capital.",
+          "published": "2026-08-29T09:52:32+00:00",
+          "source": "صحيفة الخليج",
+          "url": "https://news.google.com/rss/articles/CBMi2gRBVV95cUxQNW4tejlGT2ZDVmFMWllGc3BqZFhOdEY2dU5qX3haQV9HVkpNV0JnbTBuVHVwYTdOUHJxNHVfUjJiOVFEZEVabXlkeE9SQWtXV2Q4dmRRYmFQZnQtQnd4V1VkRGRJNklWdkh6ejJCLXVzSzRpOUpMQVFaR2duWlE2YXR1YllObkJxdC02TWFhUEpwVm9TVzJ0LUNtUFBZVDBRbkFWTUc1cHNJS2wxNnhib0N0Zzd2Rkg1NDFMdEpXWHJQMWEyeENBWC1JUXh4VWl3bkF6YWpGWlE5YUFKVm5GRWNBVEhWdy1nT0pKUklMdUtVQW52b1ZLeFdIUkZCbXpUZ1p1d2JxaGkwYWtSZGlCLWtCLW9oZ2JGSzFKaXoxaklhdDNiVHNtaXpGRHp2NEh6TDdRZ3NQMUFscHZvVXF1UUlLSnN1Z3M5V2toX0ZUUlpmTVdsNE95b2M2cU9aQms3aG1zVGRMdUxoZ2V0ajllc0Y1am1fUnpKWlNSTXhQM1p5TGY3SV92aVkxM2JUdk1teE5qR1RRNXdRRExhSDgtcDQ1X19ueWQ2LTgyeF9VWWszYVR5OC1walZISnVHMWpoY0pzbmpkTmt1MFIyczdTRjRLMHV2VEhfNFZacUMyN3JnclBDOFRiMy1sNjRmRlJFc0FqdG4tUHEyZHJZYWdSOEdGMW83UG5QRTNCU3pDMTJQWTAxeXVZMGpTQ2FEVktuSU53UTUzN0xabVVaNnlrSndWOEVveHl4Tk9oajdoeFZXcEJMM3Y2ZzdzbkVfaFdJbkpuY25NUDJkZw?oc=5"
+        },
+        {
+          "title": "Russian MFA: Attacks in Niger repelled with assistance of Ministry of Defense Africa Corps",
+          "original_title": "МИД РФ: атаки в Нигере отбили при содействии Африканского корпуса Минобороны",
+          "original_language": "ru",
+          "summary": "The Russian Foreign Ministry stated that recent attacks in Niger were repelled with the assistance of the Russian Defense Ministry's Africa Corps.",
+          "published": "2026-08-30T10:20:39+00:00",
+          "source": "kommersant.ru",
+          "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFA1dVM1NERSaHlSWXBVbEV5NDBBRXZqZGRiem04eGpnRVp2algwRzdxZ0JTYU9lNk14Z0oxX1VYTTFCaHJoNXRZV0NHazhXZw?oc=5"
+        },
+        {
+          "title": "Russian military helped suppress armed mutiny in Niger",
+          "original_title": "Российские военные помогли подавить вооруженный мятеж в Нигере",
+          "original_language": "ru",
+          "summary": "Russian military personnel reportedly assisted in suppressing an armed mutiny in Niger.",
+          "published": "2026-08-30T14:03:49+00:00",
+          "source": "kommersant.ru",
+          "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBVMVBkMkY3ZFJEaVFYd05pVGU0ZUJpaGJQSEFweVpsLWo4QldGZG5qUGdZbmo2RUljTG9GZEthRXgza2hUS2lCYVlsRXY4Zw?oc=5"
+        }
+      ],
+      "article_count": 9,
+      "first_reported": "2026-08-29T03:42:00+00:00",
+      "last_reported": "2026-08-30T14:03:49+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 55,
+      "ai_relevance_reason": "Involves armed mutiny and military security operations in Niger, relevant to regional stability and armed conflict context.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "retaking of military base after mutiny in Niger",
+      "title_variants": [
+        "retaking of military base after mutiny in Niger"
+      ],
+      "dedup_confidence": 0.8,
+      "dedup_methods": [
+        "paraphrase_entity_context",
+        "entity_actor_event_signature",
+        "title_plus_anchor"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Attack on the airport in Niger's capital Niamey"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event explicitly took place in Niamey, Niger.",
+      "ai_geo_fingerprint": "d8764554fe17e43919b90744fb751fad5709d7f34d27135565fef7d5c7a09611",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "ef825904967a282d",
       "category": "Attacks",
       "categories": [
@@ -6889,7 +8519,7 @@
       "collection_locale": "IT:it",
       "published": "2026-08-29T02:50:25+00:00",
       "source": "Euronews",
-      "source_count": 27,
+      "source_count": 28,
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQN3BteGc0c3VTWW9uMXc1cUxuSFJ5SjJWNDNYdEpDelB4dFpvZTdaQkJjYWs5SXJBMUJnY3pPRk1yOFI2S0xYNUx6RzJsU0xYM1poSDRZSE10UVhWUUZ1OHF2RkhhdVcwVWE4UUR5cDBfTEVYNS05WmZEMzJVMHNuczU0SXBhQlJxdG8xZGQxRDk4am5ySENkUDdlTWdqQVVYUlFF?oc=5",
       "collector": "Google News RSS",
       "country": "Niger",
@@ -6930,7 +8560,8 @@
         "kommersant.ru",
         "Mepa News",
         "Daily Beirut",
-        "Euronews.com"
+        "Euronews.com",
+        "RaiNews"
       ],
       "related_articles": [
         {
@@ -7150,7 +8781,7 @@
           "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxQZTBrTHJiRmE5NHVBZ3BJYWYyUmJhblNRYWhtYkZpMkJwSWNwTHdiWWlyTEtpOTVLcTVTNmk1WVhIMUFoN0xlbTFpQkgwVjdET21Jdkx6ZU5QbFF0eTYtU0ZTdkV3Tk5sNTNKMC05Y0l6eWFBTjUwVTZJX3Z4SmFDYVVSbktBNk5WQ0gyUEw4dXEyMS1zR1ZoNDhyNk1fOVpiR1h0bFhBNjJrN1JFd3dqM0FnY2hoSHQ2Q1A0M3dsSThHbENWMWtUZWYyYkdzaDRFYkJINmJJTE5JRmM1STE5NW5aWkRCV3U2a0phbGlMV2Jfa2p2UWdYb3Fn0gH6AUFVX3lxTFBlMGtMcmJGYTk0dUFncElhZjJSYmFuU1FhaG1iRmkyQnBJY3BMd2JZaXJMS2k5NUtxNVM2aTVZWEgxQWg3TGVtMWlCSDBWN0RPbUl2THplTlBsUXR5Ni1TRlN2RXdOTmw1M0owLTljSXp5YUFONTBVNklfdnhKYUNhVVJuS0E2TlZDSDJQTDh1cTIxLXNHVmg0OHI2TV85WmJHWHRsWEE2Mms3UkV3d2ozQWdjaGhIdDZDUDQzd2xJOEdsQ1Yxa1RlZjJiR3NoNEViQkg2YklMTklGYzVJMTk1blpaREJXdTZrSmFsaUxXYl9ranZRZ1hvcWc?oc=5"
         }
       ],
-      "article_count": 29,
+      "article_count": 30,
       "first_reported": "2026-08-29T02:50:25+00:00",
       "last_reported": "2026-08-30T06:52:28+00:00",
       "dedup_confidence": 1.0,
@@ -7840,68 +9471,6 @@
       "ai_geo_inferred": false
     },
     {
-      "id": "89f6039810af2991",
-      "category": "Terrorist Financing",
-      "categories": [
-        "Terrorist Financing"
-      ],
-      "title": "Targeting oil and banking networks: US imposes new sanctions on Iran",
-      "summary": "The United States has imposed new sanctions targeting Iranian oil and banking networks.",
-      "original_title": "تستهدف شبكات النفط والبنوك.. أمريكا تفرض عقوبات جديدة على إيران",
-      "original_summary": "تستهدف شبكات النفط والبنوك.. أمريكا تفرض عقوبات جديدة على إيران الجزيرة نت",
-      "original_language": "ar",
-      "collection_language": "ar",
-      "collection_language_name": "Arabic",
-      "collection_locale": "SA:ar",
-      "published": "2026-08-28T18:07:25+00:00",
-      "source": "الجزيرة نت",
-      "source_count": 1,
-      "url": "https://news.google.com/rss/articles/CBMi2AJBVV95cUxPTXlJX2pwTDA4WjNLV3VNNk9ZalhJZGd2c2YxWjRGYThmSWFfQ05iM0dfNkNuRXp6ODJGN08wSkk0c1NiaVBrRjh5T3hqYklYb3pLV21nY3JYMGVmS2hPa3E5NDY3a3JYSVB5dnpGbXVNOE5tRDE5YlJQeEQ3NmxkVHlZOW96NFRZQlk4eFBtR0FMOFhlUjFKck9ZQndtbG41Ty1yZ0xQOF9GQl9rXzdhVXRNRDNGdXNqajE2UUdqLXdYXzV2NWZXRjFzUXRGZE1iMnJqQlNYcnNvR2ZEWks1blpEZ1NPUzQ1MzRGdm5tSlNKS2huM0RaMjF6R3RMY2NEUFNtcC1zMEY1UW9MRHpiTjZfSXhrZmQ0cUNyYnNRXzNDUnhuUDNnY2lScEw2VzVNWGdERndJa2M2M19zUVJQQWY0NHpzUC1DUlBhNzgxcTlHNTFVMHRnZNIB3gJBVV95cUxPYTlsM0M5cjN5SF9pQzNOb05DZWVyeG9yN2ZRUVpRRFZ3bUUzRUFxbi1sVUNoa2V6NDR1YU95c2NqU3RzYWZWMmVqYUUtbmY4Zk9aaWtPVU00V3BvRzA3M2xENWRCUHNFMU9WVWQyS0pZdGprUUVtUkFlX3k5djZjUXk1QVNNT2FDaGJMa2V5N0pybmdOYTdmX0JIOXM0bTdlMjI5QnhsNGVNMjhPb1BLZ1JQS0U2bENMcDkzMk50Wk9uZXRpLUR0MXB4d3Znek5KNDBIc2pmTVhZRTQzbjZXdTcwNVc4NWFNVHJxZmFTd3RFOW50QS1odjhHR2lCUHJqOWMyZnB4cFM1Y19hd2RBZF9fdy1jMW5QdUswX2x6ak9aWFJsZEhtX2xxMzNVQTEyRFdpam85NV9pZDloNm5CMWtsc0xlOURob1UzaEhuMXVKQ05IbW82ZGdZeWRSQQ?oc=5",
-      "collector": "Google News RSS",
-      "country": "United States",
-      "country_code": "US",
-      "city": "Washington",
-      "region": null,
-      "latitude": 38.89511,
-      "longitude": -77.03637,
-      "location_precision": "country_capital",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_targeted_source",
-      "targeted_source": "aljazeera.net",
-      "targeted_source_kind": "local_language_media",
-      "sources": [
-        "الجزيرة نت"
-      ],
-      "related_articles": [],
-      "article_count": 1,
-      "first_reported": "2026-08-28T18:07:25+00:00",
-      "last_reported": "2026-08-28T18:07:25+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 85,
-      "ai_relevance_reason": "Sanctions targeting financial and network infrastructure associated with state sponsors of terrorism.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "Imposition of new US sanctions targeting Iranian oil and banking networks",
-      "title_variants": [
-        "Imposition of new US sanctions targeting Iranian oil and banking networks"
-      ],
-      "location_confidence_score": 0.9,
-      "location_method": "ai_country_capital",
-      "location_evidence": [
-        "US imposes new sanctions on Iran"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Sanctions enacted by the United States government.",
-      "ai_geo_fingerprint": "750daa6e246ccbb73a63e37fd09b08c4ca20607e1097952a0318c645ce13c305",
-      "ai_geo_inferred": true
-    },
-    {
       "id": "8804913e5c8891b3",
       "category": "Legal / Judicial",
       "categories": [
@@ -8049,6 +9618,82 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "29e25c54684f2e28",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial",
+        "Terrorist Financing"
+      ],
+      "title": "United States revokes visa of former Iraqi minister accused of terrorism",
+      "summary": "The United States revokes the visa of a former Iraqi female minister facing terrorism-related allegations.",
+      "original_title": "Les États-Unis annulent le visa d'une ancienne ministre irakienne accusée de terrorisme",
+      "original_summary": "Les États-Unis annulent le visa d'une ancienne ministre irakienne accusée de terrorisme Demócrata",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-28T17:40:27+00:00",
+      "source": "Demócrata",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQWURxQVN6d19UZ0FsWnRZb1pjMU04YlYxczZ3SS0wb0l5TjF4a3Y5RWJmTXBZNTd6MENGbDhneU1USGZOcFdwQkxHd1NqS2hTZVVZc3UzRzRUZkEtd2xnaTRmajRYODFiQmRFV2puQWJHUERPTG4yVUpuMXJ3VXZuOFF5YnRqc3ZndUFxcTRsLUpkNlUyQkxzeGFsRXVEek5LVFdhVkVrYzliVmxtYlZsWWdtZkVMT0xSU0hyR1JSZTNsMEhZNHVOOHl3cGx0N03SAc8BQVVfeXFMUFlEcUFTendfVGdBbFp0WW9aYzFNOGJWMXM2d0ktMG9JeU4xeGt2OUViZk1wWTU3ejBDRmw4Z3lNVEhmTnBXcEJMR3dTaktoU2VVWXN1M0c0VGZBLXdsZ2k0Zmo0WDgxYkJkRVdqbkFiR1BET0xuMlVKbjFyd1V2bjhReWJ0anN2Z3VBcXE0bC1KZDZVMkJMc3hhbEV1RHpOS1RXYVZFa2M5YlZsbWJWbFlnbWZFTE9MUlNIckdSUmUzbDBIWTR1Tjh5d3BsdDdN?oc=5",
+      "collector": "Google News RSS",
+      "country": "United States",
+      "country_code": "US",
+      "city": "Washington",
+      "region": null,
+      "latitude": 38.89511,
+      "longitude": -77.03637,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Demócrata",
+        "الشرق الأوسط"
+      ],
+      "related_articles": [
+        {
+          "title": "Honored by Biden and punished by Trump: former Iraqi minister on the 'terrorism' list",
+          "original_title": "كرّمها بايدن وعاقبها ترمب... وزيرة عراقية سابقة على قائمة «الإرهاب»",
+          "original_language": "ar",
+          "summary": "A former Iraqi minister finds herself subject to terrorism sanctions/designations after previous political honors.",
+          "published": "2026-08-29T13:30:09+00:00",
+          "source": "الشرق الأوسط",
+          "url": "https://news.google.com/rss/articles/CBMiugVBVV95cUxPZi1aTWRrdmQxUDdxOG9PTi1qUnltRG96WngyM3BNYmwxc1NfZ05XNTJEWUFuTlFFU25TNHRWc19XcXhCc1dDRDI4MHNmeWdqMlpjeVJBY3pscWNPa2hzZjRCZzcwQTlrbk1QRDJnQWt3V2p4ajBhb2F4MXZUYTNTWnFHRmV0Wk5sV1ROMk5ydTUtRkZFQ1dTMkJKX3FYYnllYTB3Mk5QWGpmTDAyZWUwUzVJdGJXTHVrSzNzLVpxUG84NE5KVGJYdVlraHMzc0txRURvTjRkVlQtZy1vLXZFY3lxT2Eydk9pbEgwQ21rTGVCZ0RiSHFHaDJQWDN2SVZlOE5scjQ3cUZ5OTNTSHFUUkZ3WHdmOXdfbHNpeDAzcHBmNUxuckcwdmZRMXNIQnV0NHdxRzBkLWQ4NUZoTzF1MnAzLTdKMGU0Sm9TNkk2TWU3dWVJWG83V3hYc21uOTJaQ1Jka1JLSllfUi1iTE9JVTVCOG14U29yWTlNb2hkdHZXMHNmT253ZzQ5cDVCXzYydTFicDFCVzJLdXFlZ3JmdzVua2g4alQzUlllTGNkWGZnb3MxdFFKQUtucUhhMWp3X1V4bmowQTNXTXhLdXpqY2FvMWJpZV8zOHBYbXZPaFduYmJZaTNUUkdzNVRGR3hqWVQwbUppenIxVUFRZVNPaV94T1U1RHpLSjR4TldfemZWc21BMmoxZWRVTHVYYTltd1VvSWY0cXJTZERnMllSRG1pNHEtRGRUcUlsbktMS3BiYTBlTlMzYW1TSGdGN3BVZXNTMkhNQnU0VFE4TzV0blViWm1fQjZmcnYzLTBaOWsxZTc3UXRLTUp0NHpxRWtkY0tKdmdfbEx0NkZ2dGJkUkszSEtuenBSNE1nZTBBeUszZkZLTGhqYmk4dGV5RGdia3FmNWNoT3FfQQ?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-28T17:40:27+00:00",
+      "last_reported": "2026-08-29T13:30:09+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Government counter-terrorism administrative action against an individual facing terrorism allegations.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "US visa revocation for former Iraqi minister accused of terrorism",
+      "title_variants": [
+        "US visa revocation for former Iraqi minister accused of terrorism"
+      ],
+      "dedup_confidence": 0.573,
+      "dedup_methods": [
+        "paraphrase_entity_context"
+      ],
+      "location_confidence_score": 0.8,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "United States revokes visa of former Iraqi minister"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The action (revoking a visa) was taken by the United States government.",
+      "ai_geo_fingerprint": "e5e57a4024500cac574cc22990b0619f6ed4ac24fc8cf0c30346b8f67e5af843",
+      "ai_geo_inferred": false
     },
     {
       "id": "89f6039810af2991",
@@ -8508,6 +10153,82 @@
     },
     {
       "id": "89f6039810af2991",
+      "category": "Terrorist Financing",
+      "categories": [
+        "Terrorist Financing"
+      ],
+      "title": "Targeting oil and banking networks: US imposes new sanctions on Iran",
+      "summary": "The United States has imposed new sanctions targeting Iranian oil and banking networks.",
+      "original_title": "تستهدف شبكات النفط والبنوك.. أمريكا تفرض عقوبات جديدة على إيران",
+      "original_summary": "تستهدف شبكات النفط والبنوك.. أمريكا تفرض عقوبات جديدة على إيران الجزيرة نت",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-28T16:00:33+00:00",
+      "source": "الجزيرة نت",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi2AJBVV95cUxPTXlJX2pwTDA4WjNLV3VNNk9ZalhJZGd2c2YxWjRGYThmSWFfQ05iM0dfNkNuRXp6ODJGN08wSkk0c1NiaVBrRjh5T3hqYklYb3pLV21nY3JYMGVmS2hPa3E5NDY3a3JYSVB5dnpGbXVNOE5tRDE5YlJQeEQ3NmxkVHlZOW96NFRZQlk4eFBtR0FMOFhlUjFKck9ZQndtbG41Ty1yZ0xQOF9GQl9rXzdhVXRNRDNGdXNqajE2UUdqLXdYXzV2NWZXRjFzUXRGZE1iMnJqQlNYcnNvR2ZEWks1blpEZ1NPUzQ1MzRGdm5tSlNKS2huM0RaMjF6R3RMY2NEUFNtcC1zMEY1UW9MRHpiTjZfSXhrZmQ0cUNyYnNRXzNDUnhuUDNnY2lScEw2VzVNWGdERndJa2M2M19zUVJQQWY0NHpzUC1DUlBhNzgxcTlHNTFVMHRnZNIB3gJBVV95cUxPYTlsM0M5cjN5SF9pQzNOb05DZWVyeG9yN2ZRUVpRRFZ3bUUzRUFxbi1sVUNoa2V6NDR1YU95c2NqU3RzYWZWMmVqYUUtbmY4Zk9aaWtPVU00V3BvRzA3M2xENWRCUHNFMU9WVWQyS0pZdGprUUVtUkFlX3k5djZjUXk1QVNNT2FDaGJMa2V5N0pybmdOYTdmX0JIOXM0bTdlMjI5QnhsNGVNMjhPb1BLZ1JQS0U2bENMcDkzMk50Wk9uZXRpLUR0MXB4d3Znek5KNDBIc2pmTVhZRTQzbjZXdTcwNVc4NWFNVHJxZmFTd3RFOW50QS1odjhHR2lCUHJqOWMyZnB4cFM1Y19hd2RBZF9fdy1jMW5QdUswX2x6ak9aWFJsZEhtX2xxMzNVQTEyRFdpam85NV9pZDloNm5CMWtsc0xlOURob1UzaEhuMXVKQ05IbW82ZGdZeWRSQQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "United States",
+      "country_code": "US",
+      "city": "Washington",
+      "region": null,
+      "latitude": 38.89511,
+      "longitude": -77.03637,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "aljazeera.net",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "الجزيرة نت"
+      ],
+      "related_articles": [
+        {
+          "title": "America expands sanctions against Iran and targets Bank of Egypt in the UAE",
+          "original_title": "أمريكا توسع العقوبات على إيران وتتجه إلى استهداف بنك مصر في الإمارات",
+          "original_language": "ar",
+          "summary": "The United States is expanding its sanctions against Iran, directing measures toward targets including Bank of Egypt operations in the UAE.",
+          "published": "2026-08-28T16:00:33+00:00",
+          "source": "الجزيرة نت",
+          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOM20yU28xUGlNZmxQMG45UWt3MFFTX3hIMkJuTGFuTTVxeVdwZkNZb2VjQmh4YThhb0tESTN3U0dxaWh2N0R4U0lhN1hFeWFTY045WmZGQnU0RUlhZzFpNHJzQ1A3V1NKR3dkc1NyRHR4anlNeWRYb0hFbEdHV3dmU004RdIBgwFBVV95cUxOM20yU28xUGlNZmxQMG45UWt3MFFTX3hIMkJuTGFuTTVxeVdwZkNZb2VjQmh4YThhb0tESTN3U0dxaWh2N0R4U0lhN1hFeWFTY045WmZGQnU0RUlhZzFpNHJzQ1A3V1NKR3dkc1NyRHR4anlNeWRYb0hFbEdHV3dmU004RQ?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-28T16:00:33+00:00",
+      "last_reported": "2026-08-28T18:07:25+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Sanctions targeting financial and network infrastructure associated with state sponsors of terrorism.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Imposition of new US sanctions targeting Iranian oil and banking networks",
+      "title_variants": [
+        "Imposition of new US sanctions targeting Iranian oil and banking networks"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "US imposes new sanctions on Iran"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Sanctions enacted by the United States government.",
+      "ai_geo_fingerprint": "750daa6e246ccbb73a63e37fd09b08c4ca20607e1097952a0318c645ce13c305",
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "89f6039810af2991",
       "category": "Online Radicalization / Cyberterrorism",
       "categories": [
         "Online Radicalization / Cyberterrorism"
@@ -8630,7 +10351,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The strikes and casualties occurred in Gaza.",
       "ai_geo_fingerprint": "47436c32643f97f2ae71ac8eec566aaadd7fc145d94db561f4160c6cab55aca6",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "f03782e30c57b3bc",
@@ -9322,7 +11047,7 @@
       "collection_locale": "FR:fr",
       "published": "2026-08-28T14:34:56+00:00",
       "source": "France 24",
-      "source_count": 2,
+      "source_count": 3,
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPVUxVLVRNb1ZvcDFEbmhCdTR3emdaelBCQlQ1alFZUmxIOHBDX1h1b00xOUtSNlhMTWNkMGFSRVJNcEZrRXRnajJhMmdnT2xMR2R6TTMwS3BDMW5DS25QWExCcnJiWlpTMVpWQ3BULU1MOEdZUUdmQ09xWkl6WjJjMVI3LWtmWmFfMGNNbl9aT2pWOWNYYTdWU1JFU0hSRHBPMWJmazZOWTlhRlhMNFV1cHZPdW9zMFUtUE1oMjNhT2hqTEU?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -9338,7 +11063,8 @@
       "targeted_source_kind": "local_language_media",
       "sources": [
         "Le Monde.fr",
-        "France 24"
+        "France 24",
+        "وكالة سبأ"
       ],
       "related_articles": [
         {
@@ -9783,70 +11509,6 @@
       ]
     },
     {
-      "id": "427e92396a789d52",
-      "category": "Legal / Judicial",
-      "categories": [
-        "Legal / Judicial"
-      ],
-      "title": "Early Parole Request from NSU Member Zschäpe",
-      "summary": "Beate Zschäpe, a member of the far-right terrorist group National Socialist Underground (NSU), has filed a request for early parole.",
-      "original_title": "NSU Üyesi Zschaepe'den Erken Tahliye Talebi",
-      "original_summary": "NSU Üyesi Zschaepe'den Erken Tahliye Talebi Son Dakika",
-      "original_language": "tr",
-      "collection_language": "tr",
-      "collection_language_name": "Turkish",
-      "collection_locale": "TR:tr",
-      "published": "2026-08-28T14:12:22+00:00",
-      "source": "Son Dakika",
-      "source_count": 1,
-      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOSlVELTRFRHI0d25rOTdSbnBsSVRWUFRVcENtR2RBMUlzakFjdkVNRi1IbndGbmlKODlkVkxreG9QMUpwNjhyZWR3LU5RR0VKdXRMSnVqR2FwTDZOd3NHdGlTaFY4bTdqX1hYSXQ2SGROYVZPLXBMR1E4cXlKNzdIWDI0RkkwS2M5ZkZyc0NMNDhNM0XSAZMBQVVfeXFMTkpVRC00RURyNHduazk3Um5wbElUVlBUVXBDbUdkQTFJc2pBY3ZFTUYtSG53Rm5pSjg5ZFZMa3hvUDFKcDY4cmVkdy1OUUdFSnV0TEp1akdhcEw2TndzR3RpU2hWOG03al9YWEl0NkhkTmFWTy1wTEdROHF5Sjc3SFgyNEZJMEtjOWZGcnNDTDQ4TTNF?oc=5",
-      "collector": "Google News RSS",
-      "country": "Germany",
-      "country_code": "DE",
-      "city": "Berlin",
-      "region": null,
-      "latitude": 52.52437,
-      "longitude": 13.41053,
-      "location_precision": "country_capital",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "Son Dakika"
-      ],
-      "related_articles": [],
-      "article_count": 1,
-      "first_reported": "2026-08-28T14:12:22+00:00",
-      "last_reported": "2026-08-28T14:12:22+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 60,
-      "ai_relevance_reason": "Judicial development involving a convicted member of a notorious terrorist organization.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "NSU member Beate Zschäpe requests early parole in Germany",
-      "title_variants": [
-        "NSU member Beate Zschäpe requests early parole in Germany"
-      ],
-      "location_confidence_score": 0.95,
-      "location_method": "ai_country_capital",
-      "location_evidence": [
-        "NSU Member Zschäpe, National Socialist Underground"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Beate Zschäpe is a member of the German far-right terrorist group National Socialist Underground (NSU), and her legal proceedings take place in Germany.",
-      "ai_geo_fingerprint": "f28e7493eb5d88411e6d86f9ef9bd56ee0d9ecee4a7d0b4edd1772a778f8b295",
-      "ai_geo_inferred": true,
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "same_url"
-      ]
-    },
-    {
       "id": "ee779f6ca522037c",
       "category": "Legal / Judicial",
       "categories": [
@@ -9877,10 +11539,20 @@
       "sources": [
         "The Times of Israël"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Scotland: Activists who vandalized Trump golf course are 'linked to terrorism'",
+          "original_title": "Écosse : Les militants qui ont vandalisé le golf de Trump sont « liés au terrorisme »",
+          "original_language": "fr",
+          "summary": "Authorities in Scotland indicate that activists who vandalized Donald Trump's golf course have links to terrorism.",
+          "published": "2026-08-28T14:25:40+00:00",
+          "source": "The Times of Israël",
+          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNT1ZBaXI3aFJZTGZLNTBTY3kwZGk5TWcyUXd1dWRoSk5WWVFpU2ZvU01wZ2tRLWJLbFQ2Y2t1d1ByMF9nblJLaUp2ZFo0SERmMG1VeGpua0xkb010cXM1enB6SGpEbzhhSWNPMUpvVEhFSVJhZ0NVZVh2Q3B1VGt5QTIzd1dlV1dJZmJCUDVjX2VvTjg0UVVGU2F5b3Nvcm9tS1kwQzdaNFoyQ2xXTkRaWXlMMNIBswFBVV95cUxNT1ZBaXI3aFJZTGZLNTBTY3kwZGk5TWcyUXd1dWRoSk5WWVFpU2ZvU01wZ2tRLWJLbFQ2Y2t1d1ByMF9nblJLaUp2ZFo0SERmMG1VeGpua0xkb010cXM1enB6SGpEbzhhSWNPMUpvVEhFSVJhZ0NVZVh2Q3B1VGt5QTIzd1dlV1dJZmJCUDVjX2VvTjg0UVVGU2F5b3Nvcm9tS1kwQzdaNFoyQ2xXTkRaWXlMMA?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-28T14:07:19+00:00",
-      "last_reported": "2026-08-28T14:07:19+00:00",
+      "last_reported": "2026-08-28T14:25:40+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -9907,7 +11579,84 @@
       "ai_geo_inferred": false,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "very_high_title_similarity"
+      ]
+    },
+    {
+      "id": "427e92396a789d52",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial"
+      ],
+      "title": "Early Parole Request from NSU Member Zschäpe",
+      "summary": "Beate Zschäpe, a member of the far-right terrorist group National Socialist Underground (NSU), has filed a request for early parole.",
+      "original_title": "NSU Üyesi Zschaepe'den Erken Tahliye Talebi",
+      "original_summary": "NSU Üyesi Zschaepe'den Erken Tahliye Talebi Son Dakika",
+      "original_language": "tr",
+      "collection_language": "tr",
+      "collection_language_name": "Turkish",
+      "collection_locale": "TR:tr",
+      "published": "2026-08-28T14:03:08+00:00",
+      "source": "Son Dakika",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOSlVELTRFRHI0d25rOTdSbnBsSVRWUFRVcENtR2RBMUlzakFjdkVNRi1IbndGbmlKODlkVkxreG9QMUpwNjhyZWR3LU5RR0VKdXRMSnVqR2FwTDZOd3NHdGlTaFY4bTdqX1hYSXQ2SGROYVZPLXBMR1E4cXlKNzdIWDI0RkkwS2M5ZkZyc0NMNDhNM0XSAZMBQVVfeXFMTkpVRC00RURyNHduazk3Um5wbElUVlBUVXBDbUdkQTFJc2pBY3ZFTUYtSG53Rm5pSjg5ZFZMa3hvUDFKcDY4cmVkdy1OUUdFSnV0TEp1akdhcEw2TndzR3RpU2hWOG03al9YWEl0NkhkTmFWTy1wTEdROHF5Sjc3SFgyNEZJMEtjOWZGcnNDTDQ4TTNF?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": "Berlin",
+      "region": null,
+      "latitude": 52.52437,
+      "longitude": 13.41053,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Son Dakika",
+        "ensondakika.com.tr"
+      ],
+      "related_articles": [
+        {
+          "title": "NSU Terrorist Organization Member Beate Zschäpe Files for Early Release in Germany",
+          "original_title": "Almanya'da NSU terör örgütü üyesi Beate Zschaepe erken tahliye talebinde bulundu",
+          "original_language": "tr",
+          "summary": "Beate Zschäpe, a member of the German neo-Nazi terrorist organization NSU, has petitioned for early release from prison.",
+          "published": "2026-08-28T14:03:08+00:00",
+          "source": "ensondakika.com.tr",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPdkVxVW1sMU1aQThSZFhBcGJZMFlZZXZsYk9PdFB6UGk4R1NMWGxlUXM3LXNWMzZCUlRrUldPODRTTlBMeHdpZHRKemZsdlpTbkROZlRRV280Sk5FeDFVV2xKZ1JGekVWd2JJVzI1ZGw5cXFqNkF5VlhNdlhKUzJSbi10NEZmcFNTWS05NHRSc0pZWGFpYVBxM0pZVTdUZTBEbmF0Nk5WYkpNNnBrMXYyOEhrM1ZIaWNWbXhN0gHIAUFVX3lxTE1VZktKZjByTS1GMHlReU1TTHpTTEtyV2lOT0Z2LXZvMUNELXlvdEVXZlZOQlV2Sk1uclZNUzZlR2c4ZGxsS1c2VUJFbFB4amVyS2F3YUxvRFhkMW50czVUbEU5VHF0SDVMci1sT25za0M0eHJSWk1kODVsUkxBaXROSmM4dGR4WjVUZ3RLQmkyOWdGbXhRNlR5am9uVTVsbFYtVTlyazNKdHNXSWZGQkJsYy1WVV9QVVNUd1VZa25UOUo3RUt0R2Vz?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-28T14:03:08+00:00",
+      "last_reported": "2026-08-28T14:12:22+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Judicial development involving a convicted member of a notorious terrorist organization.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "NSU member Beate Zschäpe requests early parole in Germany",
+      "title_variants": [
+        "NSU member Beate Zschäpe requests early parole in Germany"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "NSU Member Zschäpe, National Socialist Underground"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Beate Zschäpe is a member of the German far-right terrorist group National Socialist Underground (NSU), and her legal proceedings take place in Germany.",
+      "ai_geo_fingerprint": "f28e7493eb5d88411e6d86f9ef9bd56ee0d9ecee4a7d0b4edd1772a778f8b295",
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url",
+        "very_high_title_similarity"
       ]
     },
     {
@@ -10477,6 +12226,124 @@
       ]
     },
     {
+      "id": "c6d312330d50292e",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Attacks"
+      ],
+      "title": "Multiple Arrests and Incidents Related to Terrorism in Iraq and Pakistan",
+      "summary": "Aggregated news items noting the arrest of a suspect linked to Article 4 terrorism charges in Iraq, a terrorist attack on a police patrol in northwestern Pakistan, and arrests in Turkey.",
+      "original_title": "المزارعون الأمريكيون يواجهون أسوأ أزمة منذ 4 عقود",
+      "original_summary": "المزارعون الأمريكيون يواجهون أسوأ أزمة منذ 4 عقود الجزيرة نت",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-28T13:01:14+00:00",
+      "source": "الجزيرة نت",
+      "source_count": 6,
+      "url": "https://news.google.com/rss/articles/CBMizgJBVV95cUxPd0R2OHltcVZ1bzlMYm1vQ2JaWWJNSG5jVmJMT1lVQVVMeTgzUzNSUVdTVzRVSF9RaWN3MHg4ZVRYSkI2OG14T2NqUXU0R0lvMjlQWUM4MURjSlRnN3ZVNkN6WDc2RGNaSEhRaFdWaHFVSU1zMWNVLXlUckpUM1FLXzV5UFdQNXgwdHFrZzdYM2djVXpjd1dUdEhJTVkzZW9MVktsNWVRZmZmaHpYZ2hWZmstQmpoNTkxcms2bkdvcEMzZnBEOTlBQUwyRW5qUndCcVc2MUQ5QXBndGt1dzFMZURSbGpuZTYtT3pOSEVPcTVjYlZpaHpFUXhMX0VxMWV4cHBkMGtwMl9nY1UzRFVsWkljUGw2RzQ3Mmdad0lPRUNQUUdZQTlLalFocHU4MHRSV3hfM3JPaVdsajV6dWRudVQ1eWZWaWlFZWdLamdR0gHOAkFVX3lxTE93RHY4eW1xVnVvOUxibW9DYlpZYk1IbmNWYkxPWVVBVUx5ODNTM1JRV1NXNFVIX1FpY3cweDhlVFhKQjY4bXhPY2pRdTRHSW8yOVBZQzgxRGNKVGc3dlU2Q3pYNzZEY1pISFFoV1ZocVVJTXMxY1UteVRySlQzUUtfNXlQV1A1eDB0cWtnN1gzZ2NVemN3V1R0SElNWTNlb0xWS2w1ZVFmZmZoelhnaFZmay1Camg1OTFyazZuR29wQzNmcEQ5OUFBTDJFbmpSd0JxVzYxRDlBcGd0a3V3MUxlRFJsam5lNi1Pek5IRU9xNWNiVmloekVReExfRXExZXhwcGQwa3AyX2djVTNEVWxaSWNQbDZHNDcyZ1p3SU9FQ1BRR1lBOUtqUWhwdTgwdFJXeF8zck9pV2xqNXp1ZG51VDV5ZlZpaUVlZ0tqZ1E?oc=5",
+      "collector": "Google News RSS",
+      "country": "Iraq",
+      "country_code": "IQ",
+      "city": "Baghdad",
+      "region": null,
+      "latitude": 33.34058,
+      "longitude": 44.40088,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "aljazeera.net",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "الجزيرة نت",
+        "الواجهة - المربد",
+        "بوابة الأهرام",
+        "وكالة المرسى نيوز",
+        "newturkpost.com",
+        "النجاح الإخباري"
+      ],
+      "related_articles": [
+        {
+          "title": "الداخلية: قاتل العميد بحادث الدورة قبض عليه بدار شخص مطلوب وفق المادة 4 إرهاب",
+          "original_title": "الداخلية: قاتل العميد بحادث الدورة قبض عليه بدار شخص مطلوب وفق المادة 4 إرهاب",
+          "original_language": "ar",
+          "summary": "الداخلية: قاتل العميد بحادث الدورة قبض عليه بدار شخص مطلوب وفق المادة 4 إرهاب الواجهة - المربد",
+          "published": "2026-08-29T12:05:34+00:00",
+          "source": "الواجهة - المربد",
+          "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE52dGk3RHVjQ04tLTdIbFJRb2ZXTWJwOXhrNHg5eVJObUQ2TmtRbm9fVUUwUVR4N05IWGFISFFvczItNU9RcjFxYkFHSHZHZFlG?oc=5"
+        },
+        {
+          "title": "إصابة 4 من رجال الشرطة في هجوم إرهابي على دورية أمنية شمال غربي باكستان",
+          "original_title": "إصابة 4 من رجال الشرطة في هجوم إرهابي على دورية أمنية شمال غربي باكستان",
+          "original_language": "ar",
+          "summary": "إصابة 4 من رجال الشرطة في هجوم إرهابي على دورية أمنية شمال غربي باكستان بوابة الأهرام",
+          "published": "2026-08-29T17:04:00+00:00",
+          "source": "بوابة الأهرام",
+          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5UVklOeFN3aGc0dDdNUERlSzVqMS03Q2lmRVZGT1VTdFRLUjczNlphTW1KdjU1ZnNPdTR6ZHdubjM4VlRoNVRoRlVSMlk3YVhldC1tdFNn?oc=5"
+        },
+        {
+          "title": "الداخلية: قاتل العميد هشام محمد طلاع تم القبضُ عليه في دار شخصٍ مطلوبٍ وفق المادة (4) إرهاب",
+          "original_title": "الداخلية: قاتل العميد هشام محمد طلاع تم القبضُ عليه في دار شخصٍ مطلوبٍ وفق المادة (4) إرهاب",
+          "original_language": "ar",
+          "summary": "الداخلية: قاتل العميد هشام محمد طلاع تم القبضُ عليه في دار شخصٍ مطلوبٍ وفق المادة (4) إرهاب وكالة المرسى نيوز",
+          "published": "2026-08-29T19:02:01+00:00",
+          "source": "وكالة المرسى نيوز",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9MR2VGT2ZkajFINHViVUpVMnlIeGJfM1JDMjNoUXRXNE5Mdm5ONy1Xay1zWENBSC1EUVE3dkRacHhNYUtHQ2JZRE1FRUlDUEM2Unc?oc=5"
+        },
+        {
+          "title": "توقيف 4 أشخاص في ديار بكر التركية بتهمة تعليق ملصقات لعناصر تنظيم إرهابي",
+          "original_title": "توقيف 4 أشخاص في ديار بكر التركية بتهمة تعليق ملصقات لعناصر تنظيم إرهابي",
+          "original_language": "ar",
+          "summary": "توقيف 4 أشخاص في ديار بكر التركية بتهمة تعليق ملصقات لعناصر تنظيم إرهابي newturkpost.com",
+          "published": "2026-08-30T15:21:13+00:00",
+          "source": "newturkpost.com",
+          "url": "https://news.google.com/rss/articles/CBMitgRBVV95cUxPVjBnRmt2SkZvQlctTkliTU1hQjEwTEVsTnhndGszZUZ1c2RaS0p5SlJoVERvUzZ4TU5qa1dkLWRyZnBKN05JeHl2LWE3WHBMMl8xaDBHY1ZXaU5wV1JkRmJXUVltNHJvM3dvWmMyY0p5Q2dlYzBrVXQyMjIwTDYtMVZYZjdSTU4tYnFhRUlDeWlGUFIxbWZyeTd5YzBKR0ZyUmdCNGtIQzNzTEVDaHVIVTJ3ZENibE9kVmNHWHlSSmY5V1lUbWU2SFIyNHphdVZ5QUQ3OFljaVZkbUQ2N0pGU3FLWmJiWk1xTkhCWFBVMFl4b2dqanVna0xEb202VS0tbEZFRUtJLTkwNUMtLTVQSGdXQlh6QzJRQWdmdE85WWhyUGtURm9hZ3NWZjZOaE42Q09YTmhvSFktVGVVU0VsWVFmdDQ5bDdyLTBQazk2WXlkZ0NCT1hhT2lhcG9rT2d0OV9wZERZZUhNQXNkRVVkVjFjUm1KQk9Oc1NaNmZ1N3VQVDRybUZkU2F5RFNpS0xWYzdNaDhKRHY4a0xvRlFUcW50SzFQdGhnZG9YcERucm9TelNTN2w3S1RlcWxuN2hxVkNDZVE2dGNoN0pmNTRyc3NYUFlqM0VmLWZvLUhQcnExcHlGVUhLeE9JcUFVb2MtTF9leUpMZGpOWlU3c1U4OUhCN2psb2N4ODA4MTgyNnRTOFNydWhZWTZONmxLT2N5SnNuVmdua3dwOC1FZlJRRjIxNEljdw?oc=5"
+        },
+        {
+          "title": "4 إصابات بالرصاص الحي خلال هجوم للمستوطنين الإرهابيين على المغير",
+          "original_title": "4 إصابات بالرصاص الحي خلال هجوم للمستوطنين الإرهابيين على المغير",
+          "original_language": "ar",
+          "summary": "4 إصابات بالرصاص الحي خلال هجوم للمستوطنين الإرهابيين على المغير النجاح الإخباري",
+          "published": "2026-08-30T17:03:53+00:00",
+          "source": "النجاح الإخباري",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE41T1dETDc2MjVaNkxBMHBRRXVVQjZKbjdvR19hcGVHM2k5Vi1rR3FaRFkySTF1OUxtNVRTUDZUTkNvTTI0QWVIZ2NyRDBqdU9vVWtSa0I5SmVjZ0VMZDVJcWdpd0Q?oc=5"
+        }
+      ],
+      "article_count": 6,
+      "first_reported": "2026-08-28T13:01:14+00:00",
+      "last_reported": "2026-08-30T17:03:53+00:00",
+      "dedup_confidence": 0.99,
+      "dedup_methods": [
+        "same_normalized_title"
+      ],
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Multiple concrete counter-terrorism arrests and terrorist attacks in regional jurisdictions.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Arrests and attacks linked to terrorism in Iraq, Pakistan, and Turkey",
+      "title_variants": [
+        "Arrests and attacks linked to terrorism in Iraq, Pakistan, and Turkey"
+      ],
+      "location_confidence_score": 0.7,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Article 4 terrorism charges in Iraq, attack on police in Pakistan, arrests in Turkey"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Multiple countries mentioned, primary focus is on Iraq and regional terrorist incidents.",
+      "ai_geo_fingerprint": "cf7c5326b7c63b5e48b09b73374385ae39cec072c6d37e0fd685df126fe32187",
+      "ai_geo_inferred": true
+    },
+    {
       "id": "89f6039810af2991",
       "category": "Attacks",
       "categories": [
@@ -10618,124 +12485,6 @@
       "dedup_methods": [
         "same_url"
       ]
-    },
-    {
-      "id": "6fc4d2767d2ab4d6",
-      "category": "Attacks",
-      "categories": [
-        "Attacks"
-      ],
-      "title": "IDF eliminates October 7 infiltrator and a PIJ commander in Gaza",
-      "summary": "The Israel Defense Forces eliminated a terrorist who participated in the October 7 onslaught and a commander from the Palestinian Islamic Jihad (PIJ) in the Gaza Strip.",
-      "original_title": "צה\"ל חיסל מחבל שפשט ב-7 באוקטובר ומפקד בגא\"פ",
-      "original_summary": "צה\"ל חיסל מחבל שפשט ב-7 באוקטובר ומפקד בגא\"פ היום",
-      "original_language": "he",
-      "collection_language": "he",
-      "collection_language_name": "Hebrew",
-      "collection_locale": "IL:he",
-      "published": "2026-08-28T12:39:11+00:00",
-      "source": "היום",
-      "source_count": 6,
-      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE10YkV1V2V2TVYwMThPbzBBYl93VHJjOXdHY0thSFZ0VmthOG1FM204SC1FZVBreHJLQ1BZWnpqTEdpTjZ2cFR1S2lrdlViaUV6NkRjZ2VyY1UxOHJlMGloci1NVEUzeG_SAW9BVV95cUxQYkw2YURrNTJoWjcxLTBOTGMyUy1yekZzQ1hyZDVibFJYSHItSy14OF9YT1dSOVZiOVZ1cjZtRmdfY2l3eFlwMm15QXJCNm8taU5EQlZxNkV5TDZSZWF6RDBES0JtVlVDN2VqTUNialk?oc=5",
-      "collector": "Google News RSS",
-      "country": "Palestinian Territory",
-      "country_code": "PS",
-      "city": null,
-      "region": "Gaza Strip",
-      "latitude": 31.3547,
-      "longitude": 34.3088,
-      "location_precision": "region",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "היום",
-        "News1 מחלקה ראשונה",
-        "חדשות 04",
-        "ynet",
-        "בחדרי חרדים",
-        "ynet.co.il"
-      ],
-      "related_articles": [
-        {
-          "title": "החיסולים ברצועה נמשכים: צה\"ל חיסל מחבל נוסף שפשט לישראל ב-7 באוקטובר",
-          "original_title": "החיסולים ברצועה נמשכים: צה\"ל חיסל מחבל נוסף שפשט לישראל ב-7 באוקטובר",
-          "original_language": "he",
-          "summary": "החיסולים ברצועה נמשכים: צה\"ל חיסל מחבל נוסף שפשט לישראל ב-7 באוקטובר היום",
-          "published": "2026-08-28T13:11:10+00:00",
-          "source": "היום",
-          "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5lNHhhQjZaNUhxV2N3U0R2ZnpkRnVGX3lPWWtjVFFoa1A0NzZGZlQxRUxxRWgzN3VJeEs4MnB4aTR4T0NTWFdjNFVkTmVhMndrbHp4U3FmRlNvTkk5WjJMRTM3ZWpENWFSWkdDekRzV1BWSEHSAXNBVV95cUxOZTR4YUI2WjVIcVdjd1NEdmZ6ZEZ1Rl95T1lrY1RRaGtQNDc2RmZUMUVMcUVoMzd1SXhLODJweGk0eE9DU1hXYzRVZE5lYTJ3a2x6eFNxZkZTb05JOVoyTEUzN2VqRDVhUlpHQ3pEc1dQVkhB?oc=5"
-        },
-        {
-          "title": "צה\"ל חיסל מחבל שפשט לישראל ב-7 באוקטובר",
-          "original_title": "צה\"ל חיסל מחבל שפשט לישראל ב-7 באוקטובר",
-          "original_language": "he",
-          "summary": "צה\"ל חיסל מחבל שפשט לישראל ב-7 באוקטובר News1 מחלקה ראשונה",
-          "published": "2026-08-28T16:07:15+00:00",
-          "source": "News1 מחלקה ראשונה",
-          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1JOVFLSWpld2lLN3podHdZMjU5MXNJcG1WdDJta1BCcXRMbkMzbW5BYmNjeW5XSkY4eGl5MVdPOW9Va1IyZmo0MUJYdklZRDVGd2w0S2hnSWRJVFdUTkRSdGlKSk1UWklsMDRFSDJuTVc?oc=5"
-        },
-        {
-          "title": "IDF eliminates Hamas and Islamic Jihad commanders, including a terrorist who raided on October 7",
-          "original_title": "כוחותינו חיסלו מפקדים בחמאס ובג'יהאד האסלאמי, בהם מחבל שפשט ב-7 באוקטובר | צפו",
-          "original_language": "he",
-          "summary": "Israeli forces killed several commanders from Hamas and Islamic Jihad, including a terrorist who took part in the October 7 attacks.",
-          "published": "2026-08-28T13:49:37+00:00",
-          "source": "חדשות 04",
-          "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE9sWUpnaklRYkJKanVDcnNUTHRiejlQLTAyeXZZdXY0dHYybzBRRi1lRlhZTmF0VENMbXhBUlQ4NHQtSUJxeVJBZWp3?oc=5"
-        },
-        {
-          "title": "Hostage testimony from October 7 Hamas attack",
-          "original_title": "\"היה שיח בחמ\"ל שאנחנו לא נחטפות חיות בשום מצב, ואם צריך מתים ביחד. ובגלל שאין לנו נשק, נתקע עטים בעורק הראשי\"",
-          "original_language": "he",
-          "summary": "A survivor recounts discussions inside a command room during the October 7 Hamas attacks about resisting abduction.",
-          "published": "2026-08-29T06:17:41+00:00",
-          "source": "ynet",
-          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE9PRU1abldRN3dKZnBzdE1IMG5jM1ZZVzhmdHVUZDN1emJJZEhYUWJ3dUxvYWFMbXRxdVQwd1RUZjA1Nk5zNEV5cm9RT01VMWJSbG9hTDFUX0VmTUdITFE?oc=5"
-        },
-        {
-          "title": "IDF kills Nukhba commander who promoted terror plots and participated in Oct 7 massacre",
-          "original_title": "צה\"ל חיסל מפקד נוח'בה שקידם מתווי טרור והשתתף בטבח 7 באוקטובר",
-          "original_language": "he",
-          "summary": "The IDF announced the targeted elimination of a Hamas Nukhba commander involved in advancing terror plots and the October 7 attacks.",
-          "published": "2026-08-30T06:30:00+00:00",
-          "source": "בחדרי חרדים",
-          "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE83S210OENuVUtpb3R1MDI4TU91ZTZtbXF1TUMyd1hKUHI0aE82LTRVa2ZfVVdKR2pINC1rNEE2SVd2NWtvZmRmR3NKQQ?oc=5"
-        }
-      ],
-      "article_count": 6,
-      "first_reported": "2026-08-28T12:39:11+00:00",
-      "last_reported": "2026-08-30T06:30:00+00:00",
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "same_normalized_title",
-        "paraphrase_entity_context",
-        "entity_actor_event_signature",
-        "same_url"
-      ],
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 85,
-      "ai_relevance_reason": "Targeted military operation against named terrorist organization members (PIJ and October 7 perpetrators).",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "IDF targeted killing of October 7 attacker and PIJ commander in Gaza",
-      "title_variants": [
-        "IDF targeted killing of October 7 attacker and PIJ commander in Gaza"
-      ],
-      "location_confidence_score": 0.95,
-      "location_method": "ai_region_coordinates",
-      "location_evidence": [
-        "Gaza, Gaza Strip"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "The Israel Defense Forces eliminated a commander in the Gaza Strip.",
-      "ai_geo_fingerprint": "f16bceff8c222b1c612982986b2bac77fbd9f9cb6ccee41fa548d84edd8b9442",
-      "ai_geo_inferred": false
     },
     {
       "id": "b40083366697545f",
@@ -11388,6 +13137,67 @@
       ]
     },
     {
+      "id": "e6ce80dc3d6e4e45",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Online Radicalization / Cyberterrorism"
+      ],
+      "title": "Sexagenarian arrested for glorification of terrorism after posting machete video online",
+      "summary": "A man in his sixties was arrested for terrorist apologia after appearing on social networks armed with a machete.",
+      "original_title": "Armé d’une machette sur les réseaux, un sexagénaire interpellé pour apologie du terrorisme",
+      "original_summary": "Armé d’une machette sur les réseaux, un sexagénaire interpellé pour apologie du terrorisme L'info au quotidien -",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-28T11:46:31+00:00",
+      "source": "L'info au quotidien -",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxON01OWm9OR2JPakFJVVBOdHJhaVpBaDNmMHBxSGFvcGg1MFRMUU81MlNoXzBvOVpKSVYwaVByYmdMUWllUjEzUWVNS3gyOTUxMExnWGp0S3BOekxWOXIzOUROVWhaRERvMmlsRk4yRVlMeFo5RjloOUtxdTNRUkdNNC1PYk9CcHRYbkRXd0xlVWJrQU9IYnk3eEZkNXRKalhGc3JEaV8ycjJWajgtWUkzQTZCZzhiT3JFTVpTeHNSMTlMUVpvSjdRWDBWLWtJUQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "France",
+      "country_code": "FR",
+      "city": "Paris",
+      "region": null,
+      "latitude": 48.85341,
+      "longitude": 2.3488,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "L'info au quotidien -"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-28T11:46:31+00:00",
+      "last_reported": "2026-08-28T11:46:31+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Direct arrest for online terrorist glorification / apologia.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "arrest of sexagenarian for terrorist glorification online in France",
+      "title_variants": [
+        "arrest of sexagenarian for terrorist glorification online in France"
+      ],
+      "location_confidence_score": 0.8,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "French-language news source (L'info au quotidien) covering local arrest for terrorist glorification"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "French media reporting on domestic arrest for glorification of terrorism indicates France.",
+      "ai_geo_fingerprint": "d34a24ba43d98b2f94512404cea0c478d8841762250465ea31fabb78c39c9c63",
+      "ai_geo_inferred": true
+    },
+    {
       "id": "89f6039810af2991",
       "category": "Attacks",
       "categories": [
@@ -11617,6 +13427,66 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "c6d312330d50292e",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Combined Stabbing Attack at Gush Etzion Junction: Terrorists Neutralized, 4 Wounded, 1 Fatality",
+      "summary": "Terrorists exited a vehicle at the Gush Etzion junction and began stabbing people before being neutralized; four people were wounded and one critically injured person was pronounced dead.",
+      "original_title": "פיגוע משולב בצומת הגוש: מחבלים יצאו מהרכב, החלו לדקור - ונוטרלו; 4 נפצעו, נקבע מוות לפצוע אנוש",
+      "original_summary": "פיגוע משולב בצומת הגוש: מחבלים יצאו מהרכב, החלו לדקור - ונוטרלו; 4 נפצעו, נקבע מוות לפצוע אנוש כיכר השבת",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-08-28T10:56:20+00:00",
+      "source": "כיכר השבת",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9YR1FSUDBuN3VwSVRKMFA1TmM3OVhOQl80S0dOUmQxS0pSUlgzV1E1T1JsOG5zR1VlSUdsZTU2NTlCMU53eDgxaVNlZ1NhcFg4NUZKU19CVy1GX0YyQXFKVFhMRXBTT0NpbkU0MXFIWXk?oc=5",
+      "collector": "Google News RSS",
+      "country": "Israel",
+      "country_code": "IL",
+      "city": null,
+      "region": "West Bank",
+      "latitude": 31.659,
+      "longitude": 35.127,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "כיכר השבת"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-28T10:56:20+00:00",
+      "last_reported": "2026-08-28T10:56:20+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 95,
+      "ai_relevance_reason": "Active terrorist stabbing attack with multiple casualties and neutralized perpetrators.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Stabbing attack by terrorists at Gush Etzion junction resulting in casualties and neutralization of attackers",
+      "title_variants": [
+        "Stabbing attack by terrorists at Gush Etzion junction resulting in casualties and neutralization of attackers"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Combined Stabbing Attack at Gush Etzion Junction"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Gush Etzion junction is located in the West Bank / Israel region.",
+      "ai_geo_fingerprint": "b0159a54c724be9c1125c267253f198d76b51b050dd99d5bb3f16e943a5463e0",
+      "ai_geo_inferred": false
     },
     {
       "id": "42a5d4019cc1c94f",
@@ -12181,6 +14051,67 @@
       "ai_geo_inferred": false
     },
     {
+      "id": "6e76a1b5e88e74e1",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Arrests"
+      ],
+      "title": "Car ramming attack targeting pedestrians in Caen: terrorist motive ruled out",
+      "summary": "Following a ramming incident involving a car and pedestrians in Caen, authorities have ruled out a terrorist motive and are exploring other explanations.",
+      "original_title": "Voiture bélier qui percute des piétons à Caen : piste terroriste écartée, d’autres motivations du conducteur explorées",
+      "original_summary": "Voiture bélier qui percute des piétons à Caen : piste terroriste écartée, d’autres motivations du conducteur explorées Actu.fr",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-28T09:38:19+00:00",
+      "source": "Actu.fr",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxNVlJTRk5MM2YxVmZQNUJybDJiWXh3dkx2VFRDVURTTThNTTRXSDFXanVwN0JaZVladXlBd0xXODA0Y3JiM3N0c1I4dUw5Ukl2M3Raa19QbW1IcmFVd3ZNdlNKRGwyb2N0NC1JRWxVcFVGeFBsbGNUVHpVUjFLWW5WUEZ1M1lwYWs3REFLNE1NS0hlcFdLdXlzcDJOa2M1MmJrcGhlWHI0U0kxQTg3cG1FSlBWNjd2aXFnRVhybXZ5NnZ3WENERTZqMHZ0TVVQZFg1cmRjR2MzNTI5SjJaenFNQ29LRDBJMjYtV3h1RFhFazVVTDl5LURVMQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "France",
+      "country_code": "FR",
+      "city": "Caen",
+      "region": null,
+      "latitude": 49.18585,
+      "longitude": -0.35912,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Actu.fr"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-28T09:38:19+00:00",
+      "last_reported": "2026-08-28T09:38:19+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "An incident involving a vehicle ramming pedestrians, investigated initially as a potential terror attack, falls directly under CT awareness.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Car ramming incident targeting pedestrians in Caen",
+      "title_variants": [
+        "Car ramming incident targeting pedestrians in Caen"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Car ramming attack targeting pedestrians in Caen"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event explicitly took place in Caen, France.",
+      "ai_geo_fingerprint": "6a3f276725e3e0cfb69c8cc1009c373f1a187218f5152b8c49d59c380d89e9bb",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "9059075e22cd0602",
       "category": "Attacks",
       "categories": [
@@ -12558,7 +14489,7 @@
       "related_articles": [],
       "article_count": 1,
       "first_reported": "2026-08-28T08:14:08+00:00",
-      "last_reported": "2026-08-28T17:15:50+00:00",
+      "last_reported": "2026-08-30T15:06:15+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -12888,7 +14819,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-08-28T07:47:30+00:00",
       "source": "kommersant.ru",
-      "source_count": 2,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFB2QU1JLUF5dXBGaXJSTjhJZkZ5Q1E4UDc0ZEU5S0Y5LTN0TWxHLUZ3bUkxTXhJdXYyLU9XOUNUY3VydTQxdDVWbVMtTjZYdw?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -12904,7 +14835,9 @@
       "targeted_source_kind": "local_language_media",
       "sources": [
         "kommersant.ru",
-        "חדשות אפס שמונה"
+        "חדשות אפס שמונה",
+        "Самара 450",
+        "Радио Свобода"
       ],
       "related_articles": [
         {
@@ -12920,9 +14853,10 @@
       "article_count": 2,
       "first_reported": "2026-08-28T07:47:30+00:00",
       "last_reported": "2026-08-28T17:40:51+00:00",
-      "dedup_confidence": 0.99,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url"
       ],
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -13054,7 +14988,7 @@
       "collection_locale": null,
       "published": "2026-08-28T07:00:00+00:00",
       "source": "The Guardian Nigeria News",
-      "source_count": 13,
+      "source_count": 17,
       "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE9OcVh5SlBEbUxMTk5mdDR4YUZDWkpMbWNvQUMxNmVhZTZhS1paTkJSUVZZVTkwVk96WVhyT3pTR1RpQTlrT3FfVUZDeHFpMDRZUUJGRW1SMjlERWc4d3NDNjR4bkhSdlp4VDRVNGpXSlllcEE?oc=5",
       "collector": "Google News RSS",
       "country": "Nigeria",
@@ -13078,7 +15012,11 @@
         "FRCN HQ",
         "Channels Television",
         "الشرق الأوسط",
-        "شبكة تواصل الإخبارية"
+        "شبكة تواصل الإخبارية",
+        "Business News Nigeria",
+        "APAnews - Agence de Presse Africaine",
+        "صوت الإمارات",
+        "Info241.com"
       ],
       "related_articles": [
         {
@@ -14031,7 +15969,8 @@
       "id": "314bf4d9ebeb1567",
       "category": "Legal / Judicial",
       "categories": [
-        "Legal / Judicial"
+        "Legal / Judicial",
+        "Terrorist Financing"
       ],
       "title": "De la Espriella maintains peace negotiations while announcing leader extraditions",
       "summary": "Colombian peace talks continue alongside announcements regarding the extradition of armed group leaders.",
@@ -14060,8 +15999,18 @@
       "sources": [
         "EL PAÍS"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "De la Espriella maintains peace negotiation tables while announcing leader extraditions",
+          "original_title": "De la Espriella mantiene abiertas las mesas de negociación de la paz total mientras anuncia las extradiciones de sus líderes",
+          "original_language": "es",
+          "summary": "EL PAÍS report on peace negotiation strategies alongside announcements regarding the extradition of armed group/cartel leaders.",
+          "published": "2026-08-28T04:00:00+00:00",
+          "source": "EL PAÍS",
+          "url": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxNa1lZbFp3TXRpTW1lakVKNEpfM2JGaEwtZnpKVVVDSkJUNGswSF9ZODJ0TEh1ZmRNNTlMaWVqY0U0VWNuMHE4Tk4xcmUtMXhDRGpOeDBEVnFvWmFMTUxEazNnVGsyYTVIVzVBNFFnaHAwNmxjWlpqVmwxVGxPdWc2dFFLakRMM0s4LXNKdS1RWTNLaE5QVUVHcUFPZmFTcThRWG0tem1PVFRXRXZ4TktaY2V4WklrYkd4dGRmZ21RdHc0bmFsQmR3NDFDakdBV0FrcjRWRk42WTYzWFg2VUtibGgtVlB3d040eEc3bEplSFl4czBuay1MOTNCbw?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-28T04:00:00+00:00",
       "last_reported": "2026-08-28T04:00:00+00:00",
       "ai_selection_complete": true,
@@ -14090,8 +16039,142 @@
       "ai_geo_inferred": true,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "very_high_title_similarity"
       ]
+    },
+    {
+      "id": "6fc4d2767d2ab4d6",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Arrests"
+      ],
+      "title": "IDF eliminates October 7 infiltrator and a PIJ commander in Gaza",
+      "summary": "The Israel Defense Forces eliminated a terrorist who participated in the October 7 onslaught and a commander from the Palestinian Islamic Jihad (PIJ) in the Gaza Strip.",
+      "original_title": "צה\"ל חיסל מחבל שפשט ב-7 באוקטובר ומפקד בגא\"פ",
+      "original_summary": "צה\"ל חיסל מחבל שפשט ב-7 באוקטובר ומפקד בגא\"פ היום",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-08-28T03:00:00+00:00",
+      "source": "היום",
+      "source_count": 11,
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE10YkV1V2V2TVYwMThPbzBBYl93VHJjOXdHY0thSFZ0VmthOG1FM204SC1FZVBreHJLQ1BZWnpqTEdpTjZ2cFR1S2lrdlViaUV6NkRjZ2VyY1UxOHJlMGloci1NVEUzeG_SAW9BVV95cUxQYkw2YURrNTJoWjcxLTBOTGMyUy1yekZzQ1hyZDVibFJYSHItSy14OF9YT1dSOVZiOVZ1cjZtRmdfY2l3eFlwMm15QXJCNm8taU5EQlZxNkV5TDZSZWF6RDBES0JtVlVDN2VqTUNialk?oc=5",
+      "collector": "Google News RSS",
+      "country": "Palestinian Territory",
+      "country_code": "PS",
+      "city": null,
+      "region": "Gaza Strip",
+      "latitude": 31.3547,
+      "longitude": 34.3088,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "היום",
+        "News1 מחלקה ראשונה",
+        "חדשות 04",
+        "ynet",
+        "בחדרי חרדים",
+        "ynet.co.il",
+        "הארץ",
+        "C14",
+        "JDN",
+        "ערוץ 7",
+        "davar1.co.il"
+      ],
+      "related_articles": [
+        {
+          "title": "החיסולים ברצועה נמשכים: צה\"ל חיסל מחבל נוסף שפשט לישראל ב-7 באוקטובר",
+          "original_title": "החיסולים ברצועה נמשכים: צה\"ל חיסל מחבל נוסף שפשט לישראל ב-7 באוקטובר",
+          "original_language": "he",
+          "summary": "החיסולים ברצועה נמשכים: צה\"ל חיסל מחבל נוסף שפשט לישראל ב-7 באוקטובר היום",
+          "published": "2026-08-28T13:11:10+00:00",
+          "source": "היום",
+          "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5lNHhhQjZaNUhxV2N3U0R2ZnpkRnVGX3lPWWtjVFFoa1A0NzZGZlQxRUxxRWgzN3VJeEs4MnB4aTR4T0NTWFdjNFVkTmVhMndrbHp4U3FmRlNvTkk5WjJMRTM3ZWpENWFSWkdDekRzV1BWSEHSAXNBVV95cUxOZTR4YUI2WjVIcVdjd1NEdmZ6ZEZ1Rl95T1lrY1RRaGtQNDc2RmZUMUVMcUVoMzd1SXhLODJweGk0eE9DU1hXYzRVZE5lYTJ3a2x6eFNxZkZTb05JOVoyTEUzN2VqRDVhUlpHQ3pEc1dQVkhB?oc=5"
+        },
+        {
+          "title": "צה\"ל חיסל מחבל שפשט לישראל ב-7 באוקטובר",
+          "original_title": "צה\"ל חיסל מחבל שפשט לישראל ב-7 באוקטובר",
+          "original_language": "he",
+          "summary": "צה\"ל חיסל מחבל שפשט לישראל ב-7 באוקטובר News1 מחלקה ראשונה",
+          "published": "2026-08-28T16:07:15+00:00",
+          "source": "News1 מחלקה ראשונה",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1JOVFLSWpld2lLN3podHdZMjU5MXNJcG1WdDJta1BCcXRMbkMzbW5BYmNjeW5XSkY4eGl5MVdPOW9Va1IyZmo0MUJYdklZRDVGd2w0S2hnSWRJVFdUTkRSdGlKSk1UWklsMDRFSDJuTVc?oc=5"
+        },
+        {
+          "title": "IDF eliminates Hamas and Islamic Jihad commanders, including a terrorist who raided on October 7",
+          "original_title": "כוחותינו חיסלו מפקדים בחמאס ובג'יהאד האסלאמי, בהם מחבל שפשט ב-7 באוקטובר | צפו",
+          "original_language": "he",
+          "summary": "Israeli forces killed several commanders from Hamas and Islamic Jihad, including a terrorist who took part in the October 7 attacks.",
+          "published": "2026-08-28T13:49:37+00:00",
+          "source": "חדשות 04",
+          "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE9sWUpnaklRYkJKanVDcnNUTHRiejlQLTAyeXZZdXY0dHYybzBRRi1lRlhZTmF0VENMbXhBUlQ4NHQtSUJxeVJBZWp3?oc=5"
+        },
+        {
+          "title": "Hostage testimony from October 7 Hamas attack",
+          "original_title": "\"היה שיח בחמ\"ל שאנחנו לא נחטפות חיות בשום מצב, ואם צריך מתים ביחד. ובגלל שאין לנו נשק, נתקע עטים בעורק הראשי\"",
+          "original_language": "he",
+          "summary": "A survivor recounts discussions inside a command room during the October 7 Hamas attacks about resisting abduction.",
+          "published": "2026-08-29T06:17:41+00:00",
+          "source": "ynet",
+          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE9PRU1abldRN3dKZnBzdE1IMG5jM1ZZVzhmdHVUZDN1emJJZEhYUWJ3dUxvYWFMbXRxdVQwd1RUZjA1Nk5zNEV5cm9RT01VMWJSbG9hTDFUX0VmTUdITFE?oc=5"
+        },
+        {
+          "title": "IDF kills Nukhba commander who promoted terror plots and participated in Oct 7 massacre",
+          "original_title": "צה\"ל חיסל מפקד נוח'בה שקידם מתווי טרור והשתתף בטבח 7 באוקטובר",
+          "original_language": "he",
+          "summary": "The IDF announced the targeted elimination of a Hamas Nukhba commander involved in advancing terror plots and the October 7 attacks.",
+          "published": "2026-08-30T06:30:00+00:00",
+          "source": "בחדרי חרדים",
+          "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE83S210OENuVUtpb3R1MDI4TU91ZTZtbXF1TUMyd1hKUHI0aE82LTRVa2ZfVVdKR2pINC1rNEE2SVd2NWtvZmRmR3NKQQ?oc=5"
+        },
+        {
+          "title": "IDF eliminates Hamas commander and senior Jihad militant in operations",
+          "original_title": "סוכות, בן גביר, סמוטריץ' – האלטר אגו של נתניהו",
+          "original_language": "he",
+          "summary": "Israeli security forces targeted and eliminated a Hamas commander involved in massacres and a senior Palestinian Islamic Jihad militant in Jenin.",
+          "published": "2026-08-28T03:00:00+00:00",
+          "source": "הארץ",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQWl9USm80ZEhyQ29HZmExRjhtUFJzQWFCN0NxcVV4bEllQnFVbVViRWFLZVVINXNOM3NuenRrZ1oyMlp2SkFJMFdaanpnUllCeGRBVG1LdU5NNmtGSnNCSUlaLVlHQTA2VWp6cXFGTmNwNjBnWGpmb2hVbEprYlNaS2prVnNtTHlHZm1KM25fYkVzclhhWmFhRDM1WTdIM3FFTk9TQ2drM19KS1M2NlpZ?oc=5"
+        }
+      ],
+      "article_count": 7,
+      "first_reported": "2026-08-28T03:00:00+00:00",
+      "last_reported": "2026-08-30T06:30:00+00:00",
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_normalized_title",
+        "paraphrase_entity_context",
+        "entity_actor_event_signature",
+        "same_url"
+      ],
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Targeted military operation against named terrorist organization members (PIJ and October 7 perpetrators).",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "IDF targeted killing of October 7 attacker and PIJ commander in Gaza",
+      "title_variants": [
+        "IDF targeted killing of October 7 attacker and PIJ commander in Gaza"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Gaza, Gaza Strip"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The Israel Defense Forces eliminated a commander in the Gaza Strip.",
+      "ai_geo_fingerprint": "f16bceff8c222b1c612982986b2bac77fbd9f9cb6ccee41fa548d84edd8b9442",
+      "ai_geo_inferred": false
     },
     {
       "id": "1d15c787ef834bcb",
@@ -14294,6 +16377,67 @@
       "category": "Legal / Judicial",
       "categories": [
         "Legal / Judicial",
+        "Arrests"
+      ],
+      "title": "Amur resident appeals verdict for preparation of a terrorist act",
+      "summary": "An individual from the Amur region is unsatisfied with their prison sentence/verdict handed down for preparing a terrorist attack and is appealing.",
+      "original_title": "Амурчанина не устроил приговор за подготовку к теракту",
+      "original_summary": "Амурчанина не устроил приговор за подготовку к теракту amur.info",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-08-28T00:36:59+00:00",
+      "source": "amur.info",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQMDlrc3NoSnc0cmJvVjJvbFJfTXhadU5QV0pZZnhXdlZaMFpudEUxaU5DazIwTEt2TUdQS2VQRzFicDRFSHAxT1FlSHdBb3AzNnduc3NZYThuQ2RwVm1NcVZOMXRiODhyVl9NcG1QQjNXTnB3b0FFX2plSTJkcGJndDJ0RkZjY0R0NDZsRmR3?oc=5",
+      "collector": "Google News RSS",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": null,
+      "region": "Amur Oblast",
+      "latitude": 53.629,
+      "longitude": 127.53,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "amur.info"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-28T00:36:59+00:00",
+      "last_reported": "2026-08-28T00:36:59+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Judicial appeal and sentencing for a terrorism preparation plot constitutes a direct counter-terrorism legal event.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Amur resident appeals terrorist plot conviction in Russia",
+      "title_variants": [
+        "Amur resident appeals terrorist plot conviction in Russia"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Amur resident appeals verdict for preparation of a terrorist act"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The Amur region (Amur Oblast) is a federal subject of Russia.",
+      "ai_geo_fingerprint": "5853d1b36721c466f4d2eed8b63268bff44849af8c46f72f74054b972cfdbce6",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "89f6039810af2991",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial",
         "Attacks"
       ],
       "title": "Court Upholds Sentence for Amur Region Resident Preparing Terrorist Attacks",
@@ -14424,9 +16568,10 @@
       "ai_geo_reason": "An Iranian border guard was killed in a terrorist attack on the border.",
       "ai_geo_fingerprint": "f861999933b956c22f629d1990ef529529f9b880df4aeb28aa3277b138070221",
       "ai_geo_inferred": true,
-      "dedup_confidence": 0.614,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "paraphrase_entity_context"
+        "paraphrase_entity_context",
+        "same_url"
       ]
     },
     {
@@ -16013,10 +18158,20 @@
         "Кавказский Узел",
         "РИА Дагестан"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Military court sentences Dagestan resident for attempted terrorist attack and desecration of Russian flag",
+          "original_title": "Военный суд вынес приговор жителю Дагестана за попытку теракта и осквернение флага РФ",
+          "original_language": "ru",
+          "summary": "A military court in Russia sentenced a resident of Dagestan for an attempted terrorist attack and desecration of the Russian flag.",
+          "published": "2026-08-28T05:01:00+00:00",
+          "source": "РИА Дагестан",
+          "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOSjdDVlk0QWgtb3ozMG9zbzRQQURYSTdud1JTTWxGZlc1Yi1UM3BYMloxVGhRaEJXaTJBcFplUUNlaWFyZzZfaExmcVVkS1VWRllaajB3SURleERtQkFvYWJlU2NXN0E0QUJCemZSYWkwLVhhdnNrVTlaVGY1NHBDelNYelV0NFVQOEZBTGFQYm5HT2ZnZDVGU0lodDV3UWVOWENVdE5KdS1fdy1fWnRwVENRRmc0ZnhfX0NydzlkVzhUeVNtQl90ZDRxUjctYjQ?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-27T14:49:52+00:00",
-      "last_reported": "2026-08-27T14:49:52+00:00",
+      "last_reported": "2026-08-28T05:01:00+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -16043,7 +18198,8 @@
       "ai_geo_inferred": false,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "paraphrase_entity_context"
       ]
     },
     {
@@ -17085,7 +19241,7 @@
       "collection_locale": "IL:he",
       "published": "2026-08-27T13:05:26+00:00",
       "source": "i24NEWS",
-      "source_count": 12,
+      "source_count": 13,
       "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE94VnVoSHVqSlJOejlYa1FyMVZQNzZlNHktUmtvdXZabVVSckVBQW9rRGZ3QlUyUEw4eUREXzBmNWIzYU1QTkJSQ2h0Ym14cUpwcW92VTlQcnVaQmtPVzRnbnpFTVppWWtNQ3c?oc=5",
       "collector": "Google News RSS",
       "country": "Israel",
@@ -17111,7 +19267,8 @@
         "Новости Израиля | 7 КАНАЛ",
         "أمد للإعلام",
         "i24NEWS",
-        "ynet.co.il"
+        "ynet.co.il",
+        "Интерфакс"
       ],
       "related_articles": [
         {
@@ -19208,7 +21365,7 @@
       "collection_locale": "SA:ar",
       "published": "2026-08-27T10:06:39+00:00",
       "source": "i24NEWS",
-      "source_count": 24,
+      "source_count": 41,
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQLThmRlBsQmpSdU1VQ3pYUmh5dU5wV24tM0JEQzFNeDJfaUM4THRUMElGNFY1OHJ3ejBfeXdGR01JMTdHN013OWdWWUs3d0FfWFBDSGlRNXJvbjVZMWNrMjl3OEVqdDFkZTk2TWdDZ0E1V3FfMU81Y2F5WTJYVE5QaTZfSnNYYmV6MEt2X18xWEFHRWY3RmRObFUxc3l0WFZrNW1uNVFDNVZxODF5aTNKNllVdGtBaWlFTG5FV2FTV0ZZNGdmblFoY1I0NEI?oc=5",
       "collector": "Google News RSS",
       "country": "Canada",
@@ -19244,7 +21401,24 @@
         "Day.Az",
         "كل العرب",
         "Рамблер",
-        "ynet.co.il"
+        "ynet.co.il",
+        "Obzor.lt",
+        "The Hub | More Signal. Less Noise.",
+        "Українські Національні Новини (УНН)",
+        "Hungarian Conservative",
+        "Toronto Sun",
+        "National Post",
+        "Yahoo",
+        "La Presse",
+        "Yahoo News Canada",
+        "The Hill",
+        "tippahnews.com",
+        "Jean-Marc Morandini",
+        "Le Figaro",
+        "annahar.com",
+        "La patrie news",
+        "Общественная служба новостей",
+        "Amic.ru"
       ],
       "related_articles": [
         {
@@ -19723,7 +21897,7 @@
       ],
       "article_count": 5,
       "first_reported": "2026-08-27T09:36:51+00:00",
-      "last_reported": "2026-08-27T16:12:00+00:00",
+      "last_reported": "2026-08-28T07:39:20+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -19774,7 +21948,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-08-27T08:56:26+00:00",
       "source": "kommersant.ru",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE4taTF4bS1HZnR1SVJtbzVUTjhFUE5aR1lGekdlcG4yU05udGdhVF9FRWppUzJOMVNReGhQNmMxOTVMNE1xTXJFaS0zSHRZUQ?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -19789,7 +21963,8 @@
       "targeted_source": "kommersant.ru",
       "targeted_source_kind": "local_language_media",
       "sources": [
-        "kommersant.ru"
+        "kommersant.ru",
+        "Ваши новости"
       ],
       "related_articles": [
         {
@@ -19800,11 +21975,20 @@
           "published": "2026-08-28T08:23:33+00:00",
           "source": "kommersant.ru",
           "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFA4ZFhiNDZ1M3lpM1VkZ3ZEWnNlcm5hLWQzYkE0YmFJaE9MTnR0LUVnWkxMdVl6cHA4V1NtWnQ2TjJUZjR0NTg1dmw1S1YwUQ?oc=5"
+        },
+        {
+          "title": "24-year-old woman identified as suspect in St. Petersburg military officer bombing",
+          "original_title": "Подозреваемой в подрыве военного в Петербурге оказалась 24-летняя девушка",
+          "original_language": "ru",
+          "summary": "Investigators identified a 24-year-old woman as the suspect behind the bombing targeting a military serviceman in St. Petersburg.",
+          "published": "2026-08-28T14:35:23+00:00",
+          "source": "Ваши новости",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9TRWJHVVlxWkhTX2xqSHp4Q0hMdW9Tb1dOQjdPTzQ1UTI2WDdhXzdGamR1LWM2b2RZQjBSdWpCejdoNGdhTjJTOVJHUUNBek5KclBvMFJIbm5SUDdtcWt4TkRuOFV1dFE?oc=5"
         }
       ],
-      "article_count": 2,
+      "article_count": 3,
       "first_reported": "2026-08-27T08:56:26+00:00",
-      "last_reported": "2026-08-28T08:23:33+00:00",
+      "last_reported": "2026-08-28T14:35:23+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -19850,7 +22034,7 @@
       "collection_locale": "IL:he",
       "published": "2026-08-27T08:07:22+00:00",
       "source": "idf.il",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMizAdBVV95cUxPR1k4cFltcFFlZl9EQlRNdk1SZEdXV2RKY3RuNEZLTEVrblk2UlQtM2xZUjN0cmFEYW5pQmhEcnZ0a2Y4RjRXOUJTSWRkQklJSDIzZ0hzMWVNY3VTMEtZUHdyRDduUXNJQkhwbEEtQUtrMzJ1ak5Ic25OVFc1YzhMdGVPcDJKektKNjVNSnowYURqYUJxblRaa1RWeVZnZkZCNXBlUW5iaWdpM3lSdUxqLUNXVDQ2X0FKYXhEcHFlZDBKVHBFd3V4NjRjLTJvQ2FaV0x5d1ZQUGdzcjFURFdTOGZEOGN6dFJuWEkyRVhoQ2R4c1FtcF81cnFITElPS1BPY3VUd01OVjMydURhUVJkMlczTGw4dW5xcUJhNWlOQXkxajFxdFdIdTZJUXg0X194X0Fubk1SNE1Na3RzWHZveGpkOW5SX29ldzd2MDdaOVQtcldwYUFmbmpzZTRUcGJRekx0RHhxeG83Y0xWTGRhdl8zRURnVUJaWWJNOEZHRzRoZXd1N3VrNl9vNlMtTjVrY2JNbmxCRUxLYTFhMGFfVlItVXY3RGF6THR4cnpkYWNEbEhETDdHVE9qT28tdXJxRlhMaHQ2TjJtUVZ0UWZUREszcmFhOGk1cG5WVUwybjExZWdjZTNRQnhhRlVCazdlclc0cmFBc05VUW9JU2ZvTzc2SFpPckVlQmt4Mk5tUHp1ZDdIMWxjUHRVREF0bzZFN1lNUzRyVlhPVVNqNHZBSmtQbWtLdkdTMnBaeE1vT0VpLTdVdl91cno0aWk5TXc5djhYZDRBQ2l2X0YyUnFYVHZmUXZjNTRQSzBmSXpLQTZmYlk5RXhlTEtoeGx4V1NhYzR6YkNSbmMtNjhPRDNWNzM1bmdIZTNkR2dXenZNOG9Oa3BscW9sT044YktsNWxhcGFuYUpYUGpvdjRtUEx2ajd4N2oxanRiV0VfUTg3Wk5aeFlDanRvQThGQWF6czhCVkt5eTBTNDl6Sm1pbGpvbDUwWVJQMlhzTzh1R0ZDTTZQNXNPQXV1dThyeDh4QWEwaUpCZTl5akZPUEc3bVU4c0ZiWFd2a1JocnpWVEpBTWd0azlXbkFRMXFuVWdxS1RMalhfbl9qWEJOOV8yR3g0a0ttanpYbDVid1hwNWVUVmpzRUFxX1BmVGZvaFNOSzRVMUdSQXptYVgxdkJINUxVblNxY0FBb1hucHZzM1pYaUgwYklSamxNUk1aU0djcURZOFkxRmJ5cE1PUmVrWVlwM2UzNS05S1BKdHZvQWlDaXRmdjZBYWRKWlBYZlQ?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -19863,12 +22047,23 @@
       "location_confidence": "high",
       "acquisition_channel": "multilingual_discovery",
       "sources": [
-        "idf.il"
+        "idf.il",
+        "כיכר השבת"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Terrorist who invaded Israel on Oct 7 and promoted terror plots eliminated",
+          "original_title": "פשט לישראל ב-7 באוקטובר, קידם מתווה טרור - וחוסל | צפו בתי..",
+          "original_language": "he",
+          "summary": "A terrorist who took part in the October 7 invasion of Israel and advanced terror plots has been eliminated.",
+          "published": "2026-08-30T06:05:15+00:00",
+          "source": "כיכר השבת",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9MbUp2RzU3anpfVEo1bjdyZXVuTUdxLWI5ZENVTGVVQTVWR0JyWXB1M2d4MTVQSnJ6ZzFtVmxNcGM3clZUaUZwMXlXTDd6a0lvUkE?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-27T08:07:22+00:00",
-      "last_reported": "2026-08-27T08:07:22+00:00",
+      "last_reported": "2026-08-30T06:05:15+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -19892,7 +22087,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The strike took place in Khan Yunis, Gaza.",
       "ai_geo_fingerprint": "2e938f8ff333f3f4de39a3b63934198d274a3a74d28aaff3a12c67987a10dd78",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 0.714,
+      "dedup_methods": [
+        "title_plus_anchor"
+      ]
     },
     {
       "id": "b26ddf4503bf7e08",
@@ -21398,7 +23597,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-08-26T15:14:35+00:00",
       "source": "kommersant.ru",
-      "source_count": 1,
+      "source_count": 8,
       "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1ab182UXhIck56RklDajA3WnhfazlTQWFZdnNXRnd5emRlTE40Y2ZIOHdwQjZIQ3pWbzI0aWtVMFdoZWRTNmZkaWdYY01ZUQ?oc=5",
       "collector": "Google News RSS",
       "country": "Ukraine",
@@ -21413,12 +23612,29 @@
       "targeted_source": "kommersant.ru",
       "targeted_source_kind": "local_language_media",
       "sources": [
-        "kommersant.ru"
+        "kommersant.ru",
+        "sevastopol.su",
+        "Общественная служба новостей",
+        "Блокнот Ростов",
+        "NEWS.ru",
+        "Rostov Gazeta",
+        "Интерфакс",
+        "Life.ru"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Russia's Investigative Committee Opens Terrorist Case Following UAV Strike on Sevastopol",
+          "original_title": "Следком России возбудил дело о теракте после удара БПЛА по Севастополю",
+          "original_language": "ru",
+          "summary": "The Investigative Committee of Russia opened a criminal case under terrorism charges following a drone strike on Sevastopol.",
+          "published": "2026-08-28T10:06:03+00:00",
+          "source": "sevastopol.su",
+          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOX1dWYmNHenp0SjUyeFlOTEk2Q1RPM1lRR3BaV2RwOXNub2FfMGJmMUhyZFJ2M0ZGbmk2RmpoYmdKWmV4aWN4YkFxSVVaYlYtUk5hNWhZMnd1V1MyQzNuWmVhLVNad1dLSlg4SlRzVWdVRFkwaE94eU1leENxcGhiSVNHTk05X1V0LThicW5MWk1jRXFpOTJ1ank5eG5Ld3M?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-26T15:14:35+00:00",
-      "last_reported": "2026-08-26T15:14:35+00:00",
+      "last_reported": "2026-08-28T10:06:03+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -21442,7 +23658,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The attack occurred in the Luhansk region of Ukraine.",
       "ai_geo_fingerprint": "05ec0846b99bf3b652c5577a23a4bf4e58cbde80b71e6c9e79d39af6a43b09ef",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 0.833,
+      "dedup_methods": [
+        "title_plus_anchor"
+      ]
     },
     {
       "id": "77c300956be966fa",
@@ -27126,7 +29346,7 @@
           "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxPS01ROFlPVjlmaDM0UUU1QTgycDJaM05XUHN5YnBWRlFkbmFuTGQwTlJhRzJMM2hQZUowTVlHT0ppSkU4T2Ntd2R0Q2M0aHlXSkxGdDVSUEMwTjhwNGxrQVpEVUxId2RIeGZJSUhQSlNHaWdBWkJFNVk0RGh0WC1yRTU3NGc3bF9FZUtJVF9udU5Hd1BsZHpVa2I1cl9aVW9YMENFYkRnUkhfQXlDMHJheTB2M25RdU9WRzZtdTJBMVJxc2VpYUhrSV9lSjhrNjdHT1o0QzhiZnhaY3hrVEZQenZXNEV0RGZBR3NCZGlvSFRXRnR1U2JFSTR0MF9zRVFlbVIw?oc=5"
         }
       ],
-      "article_count": 28,
+      "article_count": 29,
       "first_reported": "2026-08-24T17:25:00+00:00",
       "last_reported": "2026-08-28T07:00:00+00:00",
       "dedup_confidence": 1.0,
@@ -103793,23 +106013,23 @@
     "primary_model": "gemini-3.5-flash-lite",
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
-    "cached_events": 1459,
-    "ai_processed_this_run": 13,
-    "ai_pending_at_start": 13,
-    "city": 651,
-    "region": 296,
-    "country_capital": 517,
-    "unlocated": 8,
-    "mapped_total": 1464,
-    "high_confidence": 1339,
-    "medium_confidence": 129,
-    "low_confidence": 4,
+    "cached_events": 1472,
+    "ai_processed_this_run": 29,
+    "ai_pending_at_start": 29,
+    "city": 661,
+    "region": 304,
+    "country_capital": 527,
+    "unlocated": 9,
+    "mapped_total": 1492,
+    "high_confidence": 1362,
+    "medium_confidence": 134,
+    "low_confidence": 5,
     "methods": {
-      "ai_country_capital": 517,
-      "ai_city_geonames": 633,
-      "ai_region_coordinates": 296,
-      "ai_city_coordinates": 18,
-      "ai_unlocated": 8
+      "ai_region_coordinates": 304,
+      "ai_country_capital": 527,
+      "ai_city_coordinates": 19,
+      "ai_city_geonames": 642,
+      "ai_unlocated": 9
     }
   }
 }
