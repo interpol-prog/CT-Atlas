@@ -1327,6 +1327,756 @@ body.locked #chronologyPanel {
     }
 }
 
+
+/* ============================================================
+   COMMAND CENTER UI — PROFESSIONAL OSINT / CT ANALYTICS
+   ============================================================ */
+
+:root {
+    --cc-bg: #071019;
+    --cc-panel: #0a1621;
+    --cc-panel-2: #0d1b27;
+    --cc-panel-3: #101f2c;
+    --cc-border: #213746;
+    --cc-border-soft: rgba(112, 151, 176, 0.18);
+    --cc-text: #e8f0f5;
+    --cc-muted: #7f98aa;
+    --cc-dim: #577183;
+    --cc-accent: #2a9fd6;
+    --cc-green: #35d08a;
+    --cc-red: #f04b4b;
+    --cc-orange: #f59e42;
+    --cc-yellow: #e7c94d;
+}
+
+html,
+body {
+    background: var(--cc-bg);
+    color: var(--cc-text);
+    font-family: Inter, "Segoe UI", Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+body::before {
+    content: "INTERPOL CT INTELLIGENCE MAP   •   OSINT ANALYTICAL ENVIRONMENT";
+    position: fixed;
+    left: 50%;
+    top: 54%;
+    transform: translate(-50%, -50%) rotate(-14deg);
+    color: rgba(126, 165, 190, 0.025);
+    font-size: clamp(22px, 3vw, 52px);
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#header {
+    height: 88px;
+    padding: 0 18px;
+    background:
+        linear-gradient(180deg, #08131d 0%, #07111a 100%);
+    border-bottom: 1px solid var(--cc-border);
+    box-shadow: 0 6px 30px rgba(0,0,0,0.22);
+    position: relative;
+    z-index: 1200;
+    gap: 18px;
+}
+
+#brand {
+    min-width: 340px;
+    gap: 13px;
+}
+
+#logo {
+    height: 58px;
+    filter: drop-shadow(0 0 8px rgba(183,214,233,0.12));
+}
+
+#title h1 {
+    font-size: 20px;
+    letter-spacing: 0.07em;
+    font-weight: 650;
+    text-transform: uppercase;
+}
+
+#title div {
+    color: #8ca5b6;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    margin-top: 6px;
+}
+
+#headerKpis {
+    flex: 1;
+    min-width: 0;
+    height: 58px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(94px, 1fr));
+    max-width: 560px;
+    border-left: 1px solid var(--cc-border-soft);
+    border-right: 1px solid var(--cc-border-soft);
+}
+
+#headerKpis .kpis {
+    display: contents !important;
+}
+
+#headerKpis .kpi {
+    min-width: 0;
+    padding: 3px 18px 0;
+    border-right: 1px solid var(--cc-border-soft);
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    text-align: left;
+}
+
+#headerKpis .kpi:last-child {
+    border-right: 0;
+}
+
+#headerKpis .kpi-number {
+    color: #f4f8fb;
+    font-size: 24px;
+    line-height: 1.08;
+    font-weight: 540;
+    font-variant-numeric: tabular-nums;
+}
+
+#headerKpis .kpi-label {
+    color: #758fa2;
+    font-size: 9px;
+    margin-top: 7px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+#commandMeta {
+    min-width: 290px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+}
+
+#liveBlock {
+    min-width: 62px;
+    color: #a8bbc8;
+    font-size: 10px;
+    line-height: 1.65;
+    letter-spacing: .06em;
+}
+
+#liveIndicator {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #bcefd9;
+    font-size: 10px;
+    letter-spacing: .12em;
+    font-weight: 700;
+}
+
+#liveIndicator::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cc-green);
+    box-shadow: 0 0 12px rgba(53,208,138,.75);
+}
+
+#updated {
+    min-width: 142px;
+    text-align: left;
+    padding-left: 14px;
+    border-left: 1px solid var(--cc-border-soft);
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+#counter {
+    margin-top: 2px;
+    font-size: 12px;
+    color: #d9e6ee;
+}
+
+#classificationBlock {
+    min-width: 165px;
+    padding-left: 14px;
+    border-left: 1px solid var(--cc-border-soft);
+    color: #7f98aa;
+    font-size: 9px;
+    line-height: 1.65;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+#situationStrip {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 18px;
+    background: #08131c;
+    border-bottom: 1px solid var(--cc-border);
+    color: #a8bac7;
+    position: relative;
+    z-index: 1190;
+    font-size: 10px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+#situationStrip .strip-label {
+    color: #d8e5ec;
+    font-weight: 650;
+    min-width: 148px;
+}
+
+#situationSummary {
+    display: flex;
+    gap: 18px;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#situationSummary span strong {
+    color: #f1f6f9;
+    font-weight: 650;
+}
+
+#coverageStrip {
+    margin-left: auto;
+    padding-left: 18px;
+    border-left: 1px solid var(--cc-border-soft);
+    white-space: nowrap;
+}
+
+#coverageStrip strong {
+    color: #edf5f8;
+    margin-left: 7px;
+}
+
+#main {
+    height: calc(100vh - 126px);
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr) 292px;
+    background: var(--cc-bg);
+    position: relative;
+    z-index: 10;
+}
+
+#sidebar {
+    width: auto;
+    min-width: 0;
+    height: 100%;
+    padding: 12px 12px 18px;
+    background:
+        linear-gradient(180deg, #0a1621 0%, #08131c 100%);
+    border-right: 1px solid var(--cc-border);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #274052 transparent;
+}
+
+#sidebar .kpis {
+    display: none;
+}
+
+#sidebar > .section-title:first-of-type {
+    display: none;
+}
+
+.section-title {
+    margin: 15px 0 8px;
+    padding: 0 2px 7px;
+    color: #93aaba;
+    border-bottom: 1px solid var(--cc-border-soft);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+#sidebar input[type="text"],
+#sidebar select,
+#chronologyPanel input,
+#chronologyPanel select {
+    background: #09141e;
+    color: #d7e4eb;
+    border: 1px solid #203645;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.01);
+}
+
+#searchInput {
+    min-height: 38px;
+    font-size: 11px;
+}
+
+.time-buttons,
+.layer-buttons {
+    gap: 5px;
+}
+
+.time-button,
+.layer-button,
+.action-button {
+    border-radius: 3px;
+    border: 1px solid #264052;
+    background: #0a1823;
+    color: #8fa8b8;
+    font-size: 9px;
+    letter-spacing: .05em;
+    transition: .15s ease;
+}
+
+.time-button:hover,
+.layer-button:hover,
+.action-button:hover {
+    background: #102434;
+    color: #e8f2f7;
+    border-color: #3d647c;
+}
+
+.time-button.active,
+.layer-button.active {
+    background: #123047;
+    border-color: #2f6e91;
+    color: #d9f1ff;
+    box-shadow: inset 2px 0 0 #3db1e6;
+}
+
+.category {
+    margin: 3px 0;
+    min-height: 31px;
+    padding: 5px 4px;
+    color: #b5c5d0;
+    font-size: 10px;
+    border-radius: 3px;
+}
+
+.category:hover {
+    background: rgba(45,81,104,.18);
+}
+
+.category-icon {
+    border-radius: 2px !important;
+    font-size: 8px !important;
+    font-weight: 800;
+}
+
+#database-info {
+    margin-top: 18px;
+    padding: 11px 9px;
+    background: rgba(3,10,15,.35);
+    border: 1px solid var(--cc-border-soft);
+    color: #587183;
+    font-size: 9px;
+    line-height: 1.65;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+#mapStage {
+    position: relative;
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #071019;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    background: #071019;
+}
+
+#analyticsRail {
+    width: auto;
+    min-width: 0;
+    height: 100%;
+    padding: 12px 12px 16px;
+    background:
+        linear-gradient(180deg, #091520 0%, #07131c 100%);
+    border-left: 1px solid var(--cc-border);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #274052 transparent;
+}
+
+.analytics-card {
+    margin-bottom: 11px;
+    padding: 11px;
+    background: rgba(10,25,37,.78);
+    border: 1px solid var(--cc-border-soft);
+    border-radius: 3px;
+    box-shadow: 0 6px 16px rgba(0,0,0,.11);
+}
+
+.analytics-card-title {
+    margin-bottom: 9px;
+    color: #a9bdca;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+}
+
+#analyticsRail .section-title {
+    margin: 0 0 8px;
+    padding-bottom: 7px;
+}
+
+.analytics-list {
+    padding: 0;
+    margin: 0;
+}
+
+.analytics-item {
+    min-height: 28px;
+    border-bottom: 1px solid rgba(110,145,166,.1);
+    font-size: 10px;
+}
+
+.analytics-name {
+    color: #b9cad4;
+}
+
+.analytics-value {
+    color: #edf5f8;
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+}
+
+.coverage-box {
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+.coverage-row {
+    min-height: 27px;
+    border-bottom: 1px solid rgba(110,145,166,.1);
+    font-size: 10px;
+}
+
+.coverage-label {
+    color: #91a6b5;
+}
+
+.coverage-value {
+    color: #edf5f8;
+    font-weight: 650;
+}
+
+#timelineDock {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 760;
+    height: 112px;
+    padding: 9px 11px 8px;
+    background: rgba(5,16,24,.92);
+    border: 1px solid rgba(73,107,128,.55);
+    border-radius: 3px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 28px rgba(0,0,0,.32);
+    pointer-events: auto;
+}
+
+#timelineHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+    color: #93a9b8;
+    font-size: 9px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+#timelineHeader strong {
+    color: #dce9ef;
+    font-size: 9px;
+}
+
+#timelineBars {
+    height: 65px;
+    display: grid;
+    grid-template-columns: repeat(30, minmax(3px, 1fr));
+    gap: 3px;
+    align-items: end;
+    border-top: 1px solid rgba(93,127,148,.12);
+    padding-top: 4px;
+}
+
+.timeline-bar {
+    min-height: 2px;
+    background: linear-gradient(180deg, #3e6481 0%, #1b3548 100%);
+    border-top: 1px solid rgba(97,164,205,.55);
+    position: relative;
+    border-radius: 1px 1px 0 0;
+}
+
+.timeline-bar.today {
+    background: linear-gradient(180deg, #f06257 0%, #8b2f30 100%);
+    border-top-color: #ff8b7e;
+}
+
+.timeline-bar:hover {
+    filter: brightness(1.4);
+}
+
+#timelineAxis {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    color: #526d7f;
+    font-size: 8px;
+}
+
+#commandSummaryCard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 7px;
+}
+
+.mini-metric {
+    padding: 8px;
+    background: #081720;
+    border: 1px solid rgba(91,126,148,.17);
+    border-radius: 2px;
+}
+
+.mini-metric .value {
+    color: #f0f6f9;
+    font-size: 17px;
+    font-weight: 550;
+}
+
+.mini-metric .label {
+    color: #718b9d;
+    font-size: 8px;
+    margin-top: 4px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+#categoryMiniBars {
+    display: grid;
+    gap: 6px;
+}
+
+.category-mini-row {
+    display: grid;
+    grid-template-columns: 88px 1fr 26px;
+    gap: 7px;
+    align-items: center;
+    color: #8ea5b5;
+    font-size: 8px;
+}
+
+.category-mini-track {
+    height: 5px;
+    background: #07121a;
+    border: 1px solid rgba(91,126,148,.12);
+}
+
+.category-mini-fill {
+    height: 100%;
+    background: #3e6f8e;
+}
+
+.category-mini-row strong {
+    color: #d8e4ea;
+    font-size: 9px;
+    text-align: right;
+}
+
+.leaflet-container {
+    background: #071019 !important;
+    font-family: Inter, "Segoe UI", Arial, sans-serif !important;
+}
+
+.leaflet-control-zoom a,
+.leaflet-control-attribution,
+.leaflet-control-layers {
+    background: rgba(7,18,27,.9) !important;
+    color: #9eb3c1 !important;
+    border-color: #274052 !important;
+}
+
+.leaflet-control-zoom a {
+    border-bottom-color: #274052 !important;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+    background: #08151f !important;
+    color: #d7e4eb !important;
+    border: 1px solid #294354;
+    box-shadow: 0 12px 34px rgba(0,0,0,.46) !important;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 3px !important;
+}
+
+.leaflet-popup-content {
+    margin: 13px 15px !important;
+    min-width: 280px;
+}
+
+.popup-title {
+    color: #f0f5f8 !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    letter-spacing: .02em;
+}
+
+.popup-category {
+    color: #ed765f !important;
+    font-size: 9px !important;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin: 7px 0;
+}
+
+.popup-location,
+.popup-source,
+.location-evidence {
+    color: #90a8b7 !important;
+    font-size: 10px !important;
+    line-height: 1.5;
+}
+
+.popup-source a {
+    color: #59b7e4 !important;
+}
+
+.location-badge {
+    border-radius: 2px !important;
+    font-size: 8px !important;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.ct-marker {
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,.28),
+        0 0 10px rgba(255,75,68,.18) !important;
+    border-width: 1px !important;
+}
+
+.marker-cluster div {
+    background: rgba(20,50,70,.92) !important;
+    color: #dceaf2 !important;
+    border: 1px solid #3c6f8c;
+    box-shadow: 0 0 16px rgba(46,115,151,.32);
+}
+
+#chronologyPanel {
+    background: rgba(2,8,13,.80) !important;
+    backdrop-filter: blur(8px);
+}
+
+.chronology-modal {
+    background: #08141e !important;
+    border: 1px solid #2a4354 !important;
+    border-radius: 4px !important;
+    box-shadow: 0 22px 70px rgba(0,0,0,.55) !important;
+}
+
+.chronology-header {
+    background: #0a1924 !important;
+    border-bottom: 1px solid #294151 !important;
+}
+
+.chronology-heading {
+    letter-spacing: .1em !important;
+}
+
+#access-screen {
+    background:
+        radial-gradient(circle at 50% 30%, rgba(24,61,82,.22), transparent 36%),
+        #050c12 !important;
+}
+
+#access-box {
+    background: #091620 !important;
+    border: 1px solid #294253 !important;
+    border-radius: 4px !important;
+    box-shadow: 0 26px 70px rgba(0,0,0,.55) !important;
+}
+
+#access-button {
+    border-radius: 3px !important;
+    background: #12334a !important;
+    border: 1px solid #356b8a !important;
+    letter-spacing: .11em;
+}
+
+#operationalDisclaimer {
+    position: fixed;
+    left: 250px;
+    right: 292px;
+    bottom: 0;
+    z-index: 750;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    color: rgba(129,151,165,.50);
+    font-size: 7px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+/* Responsive fallback */
+@media (max-width: 1180px) {
+    #main {
+        grid-template-columns: 230px minmax(0,1fr);
+    }
+
+    #analyticsRail {
+        display: none;
+    }
+
+    #operationalDisclaimer {
+        left: 230px;
+        right: 0;
+    }
+
+    #classificationBlock {
+        display: none;
+    }
+}
+
+@media (max-width: 860px) {
+    #headerKpis {
+        display: none;
+    }
+
+    #commandMeta {
+        min-width: auto;
+    }
+
+    #main {
+        grid-template-columns: 210px minmax(0,1fr);
+    }
+
+    #situationSummary {
+        gap: 9px;
+    }
+}
+
 </style>
 
 </head>
@@ -1409,9 +2159,33 @@ body.locked #chronologyPanel {
 
     </div>
 
+    <div id="headerKpis"></div>
+
+    <div id="commandMeta">
+        <div id="liveBlock">
+            <div id="liveIndicator">LIVE</div>
+            <div>OSINT MONITOR</div>
+        </div>
+
+        <div id="classificationBlock">
+            OSINT // ANALYTICAL PRODUCT<br>
+            INTERNAL ANALYTICAL VIEW
+        </div>
+    </div>
 
 </div>
 
+<div id="situationStrip">
+    <div class="strip-label">Situation summary · 24h</div>
+    <div id="situationSummary">
+        <span><strong id="summaryNewEvents">—</strong> events</span>
+        <span><strong id="summaryAttacks">—</strong> attacks</span>
+        <span><strong id="summaryArrests">—</strong> arrests</span>
+        <span><strong id="summaryJudicial">—</strong> judicial</span>
+        <span><strong id="summaryFinancing">—</strong> financing</span>
+    </div>
+    <div id="coverageStrip">Geolocation coverage <strong id="coverageStripValue">—</strong></div>
+</div>
 
 
 <div id="main">
@@ -1916,7 +2690,7 @@ Visible rate
 
 <div id="database-info">
 
-English-language open-source monitoring · contextual geolocation V6 · intelligent deduplication V4
+Multilingual open-source monitoring · Gemini AI relevance + translation · AI-first geolocation
 
 <br>
 
@@ -1928,7 +2702,7 @@ Default operational view: 6 months
 
 <br>
 
-Automated daily update
+Automated updates · 00:00 / 06:00 / 12:00 / 18:00 CET/CEST
 
 </div>
 
@@ -1937,7 +2711,64 @@ Automated daily update
 
 
 
-<div id="map"></div>
+<div id="mapStage">
+
+    <div id="map"></div>
+
+    <div id="timelineDock">
+        <div id="timelineHeader">
+            <span>Events over time · 30 days</span>
+            <strong id="timelineTodayLabel">Today —</strong>
+        </div>
+        <div id="timelineBars"></div>
+        <div id="timelineAxis">
+            <span id="timelineStartLabel">—</span>
+            <span>15 days</span>
+            <span>Today</span>
+        </div>
+    </div>
+
+</div>
+
+<div id="analyticsRail">
+
+    <div class="analytics-card">
+        <div class="analytics-card-title">Operational picture</div>
+        <div id="commandSummaryCard">
+            <div class="mini-metric">
+                <div class="value" id="rail24">—</div>
+                <div class="label">24h mapped</div>
+            </div>
+            <div class="mini-metric">
+                <div class="value" id="railCountries">—</div>
+                <div class="label">Countries</div>
+            </div>
+            <div class="mini-metric">
+                <div class="value">11</div>
+                <div class="label">Languages</div>
+            </div>
+            <div class="mini-metric">
+                <div class="value">119</div>
+                <div class="label">Queries</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="analytics-card">
+        <div class="analytics-card-title">Events by category · 24h</div>
+        <div id="categoryMiniBars"></div>
+    </div>
+
+    <div class="analytics-card" id="trendCard"></div>
+    <div class="analytics-card" id="countriesCard"></div>
+    <div class="analytics-card" id="hotspotsCard"></div>
+    <div class="analytics-card" id="coverageCard"></div>
+
+</div>
+
+<div id="operationalDisclaimer">
+    Open-source analytical environment · AI-assisted classification and geolocation · verify against primary sources before operational use
+</div>
 
 
 </div>
@@ -2237,7 +3068,7 @@ const map = L.map(
 const englishBaseLayer =
 L.tileLayer(
 
-    "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+    "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
 
     {
 
@@ -2257,7 +3088,7 @@ L.tileLayer(
 const englishReferenceLayer =
 L.tileLayer(
 
-    "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+    "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
 
     {
 
@@ -5990,6 +6821,626 @@ function exportChronologyExcel() {
 
 
 
+
+function initialiseCommandCenterLayout() {
+
+    const headerKpis =
+        document.getElementById(
+            "headerKpis"
+        );
+
+    const kpis =
+        document.querySelector(
+            "#sidebar .kpis"
+        );
+
+    if (
+        headerKpis
+        &&
+        kpis
+        &&
+        kpis.parentElement !== headerKpis
+    ) {
+        headerKpis.appendChild(
+            kpis
+        );
+    }
+
+
+    function moveAnalyticsBlock(
+        targetId,
+        contentId
+    ) {
+
+        const target =
+            document.getElementById(
+                targetId
+            );
+
+        const content =
+            document.getElementById(
+                contentId
+            );
+
+        if (
+            !target
+            ||
+            !content
+        ) {
+            return;
+        }
+
+        const title =
+            content.previousElementSibling;
+
+        if (
+            title
+            &&
+            title.classList
+            &&
+            title.classList.contains(
+                "section-title"
+            )
+        ) {
+            target.appendChild(
+                title
+            );
+        }
+
+        target.appendChild(
+            content
+        );
+
+    }
+
+
+    moveAnalyticsBlock(
+        "trendCard",
+        "trendList"
+    );
+
+    moveAnalyticsBlock(
+        "countriesCard",
+        "topCountries"
+    );
+
+    moveAnalyticsBlock(
+        "hotspotsCard",
+        "topHotspots"
+    );
+
+    const coverageCard =
+        document.getElementById(
+            "coverageCard"
+        );
+
+    const coverageBox =
+        document.querySelector(
+            ".coverage-box"
+        );
+
+    if (
+        coverageCard
+        &&
+        coverageBox
+        &&
+        coverageBox.parentElement !== coverageCard
+    ) {
+
+        const coverageTitle =
+            coverageBox.previousElementSibling;
+
+        if (
+            coverageTitle
+            &&
+            coverageTitle.classList
+            &&
+            coverageTitle.classList.contains(
+                "section-title"
+            )
+        ) {
+            coverageCard.insertBefore(
+                coverageTitle,
+                coverageCard.firstChild
+            );
+        }
+
+        coverageCard.appendChild(
+            coverageBox
+        );
+
+    }
+
+}
+
+
+function visibleEventsForPeriod(
+    days
+) {
+
+    const selected =
+        selectedCategories();
+
+    return allEvents.filter(
+        event => {
+
+            if (
+                event.excluded_from_map === true
+                ||
+                event.location_precision === "unlocated"
+                ||
+                event.latitude == null
+                ||
+                event.longitude == null
+            ) {
+                return false;
+            }
+
+            const categories =
+                eventCategories(
+                    event
+                );
+
+            return (
+                withinDays(
+                    event.published,
+                    days
+                )
+                &&
+                categories.some(
+                    category =>
+                        selected.includes(
+                            category
+                        )
+                )
+            );
+
+        }
+    );
+
+}
+
+
+function updateCommandCenterPanels() {
+
+    const events24 =
+        visibleEventsForPeriod(
+            1
+        );
+
+    const countries24 =
+        new Set(
+            events24
+            .map(
+                event =>
+                    event.country
+            )
+            .filter(
+                Boolean
+            )
+        );
+
+
+    const setText =
+        (
+            id,
+            value
+        ) => {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+            if (
+                element
+            ) {
+                element.textContent =
+                    value;
+            }
+
+        };
+
+
+    setText(
+        "rail24",
+        events24.length
+    );
+
+    setText(
+        "railCountries",
+        countries24.size
+    );
+
+    setText(
+        "summaryNewEvents",
+        events24.length
+    );
+
+
+    const categoryCounts =
+        {};
+
+    events24.forEach(
+        event => {
+
+            eventCategories(
+                event
+            ).forEach(
+                category => {
+
+                    categoryCounts[
+                        category
+                    ] =
+                        (
+                            categoryCounts[
+                                category
+                            ]
+                            ||
+                            0
+                        )
+                        +
+                        1;
+
+                }
+            );
+
+        }
+    );
+
+
+    setText(
+        "summaryAttacks",
+        categoryCounts[
+            "Attacks"
+        ]
+        ||
+        0
+    );
+
+    setText(
+        "summaryArrests",
+        categoryCounts[
+            "Arrests"
+        ]
+        ||
+        0
+    );
+
+    setText(
+        "summaryJudicial",
+        categoryCounts[
+            "Legal / Judicial"
+        ]
+        ||
+        0
+    );
+
+    setText(
+        "summaryFinancing",
+        categoryCounts[
+            "Terrorist Financing"
+        ]
+        ||
+        0
+    );
+
+
+    const mapped =
+        allEvents.filter(
+            event =>
+                event.excluded_from_map !== true
+                &&
+                event.location_precision !== "unlocated"
+                &&
+                event.latitude != null
+                &&
+                event.longitude != null
+        ).length;
+
+    const total =
+        allEvents.length;
+
+    const coverageRate =
+        total
+        ?
+        (
+            mapped
+            /
+            total
+            *
+            100
+        ).toFixed(
+            1
+        )
+        :
+        "0.0";
+
+    setText(
+        "coverageStripValue",
+        coverageRate
+        +
+        "%"
+    );
+
+
+    const categoryMiniBars =
+        document.getElementById(
+            "categoryMiniBars"
+        );
+
+    if (
+        categoryMiniBars
+    ) {
+
+        const order = [
+            ["Attacks", "ATTACK"],
+            ["Arrests", "ARREST"],
+            ["Legal / Judicial", "JUDICIAL"],
+            ["Terrorist Financing", "FINANCING"],
+            ["Weapons", "WEAPONS"],
+            ["Online Radicalization / Cyberterrorism", "ONLINE"],
+            ["CBRN", "CBRN"],
+            ["Disinformation / Emerging Technologies / AI", "AI / TECH"]
+        ];
+
+        const maxValue =
+            Math.max(
+                1,
+                ...order.map(
+                    item =>
+                        categoryCounts[
+                            item[
+                                0
+                            ]
+                        ]
+                        ||
+                        0
+                )
+            );
+
+        categoryMiniBars.innerHTML =
+            order
+            .slice(
+                0,
+                6
+            )
+            .map(
+                item => {
+
+                    const value =
+                        categoryCounts[
+                            item[
+                                0
+                            ]
+                        ]
+                        ||
+                        0;
+
+                    const width =
+                        (
+                            value
+                            /
+                            maxValue
+                            *
+                            100
+                        ).toFixed(
+                            1
+                        );
+
+                    return `
+                        <div class="category-mini-row">
+                            <span>${item[1]}</span>
+                            <div class="category-mini-track">
+                                <div
+                                    class="category-mini-fill"
+                                    style="width:${width}%"
+                                ></div>
+                            </div>
+                            <strong>${value}</strong>
+                        </div>
+                    `;
+
+                }
+            )
+            .join(
+                ""
+            );
+
+    }
+
+
+    const timelineBars =
+        document.getElementById(
+            "timelineBars"
+        );
+
+    if (
+        timelineBars
+    ) {
+
+        const now =
+            new Date();
+
+        const counts =
+            [];
+
+        for (
+            let offset = 29;
+            offset >= 0;
+            offset--
+        ) {
+
+            const dayStart =
+                new Date(
+                    now
+                );
+
+            dayStart.setHours(
+                0,
+                0,
+                0,
+                0
+            );
+
+            dayStart.setDate(
+                dayStart.getDate()
+                -
+                offset
+            );
+
+            const dayEnd =
+                new Date(
+                    dayStart
+                );
+
+            dayEnd.setDate(
+                dayEnd.getDate()
+                +
+                1
+            );
+
+            const count =
+                allEvents.filter(
+                    event => {
+
+                        if (
+                            !event.published
+                        ) {
+                            return false;
+                        }
+
+                        const published =
+                            new Date(
+                                event.published
+                            );
+
+                        return (
+                            published >= dayStart
+                            &&
+                            published < dayEnd
+                        );
+
+                    }
+                ).length;
+
+            counts.push({
+                count:
+                    count,
+                date:
+                    dayStart
+            });
+
+        }
+
+
+        const maxCount =
+            Math.max(
+                1,
+                ...counts.map(
+                    item =>
+                        item.count
+                )
+            );
+
+
+        timelineBars.innerHTML =
+            counts.map(
+                (
+                    item,
+                    index
+                ) => {
+
+                    const height =
+                        Math.max(
+                            4,
+                            Math.round(
+                                item.count
+                                /
+                                maxCount
+                                *
+                                58
+                            )
+                        );
+
+                    const todayClass =
+                        index
+                        ===
+                        counts.length
+                        -
+                        1
+                        ?
+                        " today"
+                        :
+                        "";
+
+                    const label =
+                        item.date.toLocaleDateString(
+                            "en-GB",
+                            {
+                                day:
+                                    "2-digit",
+                                month:
+                                    "short"
+                            }
+                        );
+
+                    return `
+                        <div
+                            class="timeline-bar${todayClass}"
+                            style="height:${height}px"
+                            title="${label}: ${item.count} events"
+                        ></div>
+                    `;
+
+                }
+            )
+            .join(
+                ""
+            );
+
+
+        const todayCount =
+            counts[
+                counts.length
+                -
+                1
+            ].count;
+
+        setText(
+            "timelineTodayLabel",
+            "Today "
+            +
+            todayCount
+        );
+
+        setText(
+            "timelineStartLabel",
+            counts[
+                0
+            ].date.toLocaleDateString(
+                "en-GB",
+                {
+                    day:
+                        "2-digit",
+                    month:
+                        "short"
+                }
+            )
+        );
+
+    }
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    initialiseCommandCenterLayout
+);
+
+
+
 function refreshDashboard() {
 
 
@@ -6002,6 +7453,8 @@ function refreshDashboard() {
     updateTopLocations();
 
     updateTrends();
+
+    updateCommandCenterPanels();
 
     renderChronology();
 
