@@ -4,6 +4,10 @@ on:
   schedule:
     - cron: "17 6 * * *"
       timezone: "Europe/Paris"
+    - cron: "47 8 * * *"
+      timezone: "Europe/Paris"
+    - cron: "17 11 * * *"
+      timezone: "Europe/Paris"
 
   workflow_dispatch:
     inputs:
@@ -35,6 +39,9 @@ jobs:
   update:
     runs-on: ubuntu-latest
 
+    outputs:
+      should_run: ${{ steps.daily_guard.outputs.should_run }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -42,17 +49,61 @@ jobs:
           ref: main
           fetch-depth: 0
 
+      - name: Decide whether scheduled daily update is needed
+        id: daily_guard
+        shell: bash
+        run: |
+          set -e
+
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "Manual run: update will execute."
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          TODAY_PARIS="$(TZ=Europe/Paris date +%F)"
+          LAST_SUCCESS=""
+
+          if [ -f daily_update_state.json ]; then
+            LAST_SUCCESS="$(python - <<'PY'
+import json
+from pathlib import Path
+
+path = Path("daily_update_state.json")
+try:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    print(data.get("last_success_local_date", ""))
+except Exception:
+    print("")
+PY
+)"
+          fi
+
+          echo "Today in Paris: ${TODAY_PARIS}"
+          echo "Last successful scheduled update: ${LAST_SUCCESS:-none}"
+
+          if [ "$LAST_SUCCESS" = "$TODAY_PARIS" ]; then
+            echo "A successful daily update already ran today. Skipping this fallback schedule."
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "No successful daily update recorded today. Running now."
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Set up Python
+        if: steps.daily_guard.outputs.should_run == 'true'
         uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
       - name: Install dependencies
+        if: steps.daily_guard.outputs.should_run == 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Collect multilingual and AI-select CT events
+        if: steps.daily_guard.outputs.should_run == 'true'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           AI_SELECTION_MODEL: "gemini-3.5-flash-lite"
@@ -74,7 +125,7 @@ jobs:
           fi
 
       - name: Persist AI article-selection cache safely
-        if: always()
+        if: always() && steps.daily_guard.outputs.should_run == 'true'
         run: |
           set -e
 
@@ -130,6 +181,7 @@ jobs:
           fi
 
       - name: Gemini AI-first resilient geolocation
+        if: steps.daily_guard.outputs.should_run == 'true'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_GEO_MODEL: "gemini-3.5-flash-lite"
@@ -150,17 +202,47 @@ jobs:
             python -u geolocate.py
           fi
 
+      - name: Record successful daily update
+        if: steps.daily_guard.outputs.should_run == 'true'
+        shell: bash
+        run: |
+          python - <<'PY'
+import json
+import os
+from datetime import datetime
+from pathlib import Path
+from zoneinfo import ZoneInfo
+
+now = datetime.now(ZoneInfo("Europe/Paris"))
+
+payload = {
+    "last_success_local_date": now.strftime("%Y-%m-%d"),
+    "last_success_local_time": now.isoformat(timespec="seconds"),
+    "trigger": os.environ.get("GITHUB_EVENT_NAME", ""),
+    "run_id": os.environ.get("GITHUB_RUN_ID", ""),
+    "run_number": os.environ.get("GITHUB_RUN_NUMBER", "")
+}
+
+Path("daily_update_state.json").write_text(
+    json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+    encoding="utf-8"
+)
+
+print(json.dumps(payload, indent=2))
+PY
+
       - name: Commit and push updated database
+        if: steps.daily_guard.outputs.should_run == 'true'
         run: |
           set -e
 
           git config user.name "CT Intelligence Map Bot"
           git config user.email "actions@github.com"
 
-          git add events.json
+          git add events.json daily_update_state.json
 
           if git diff --cached --quiet; then
-            echo "No database changes to commit."
+            echo "No database/state changes to commit."
             exit 0
           fi
 
@@ -177,7 +259,7 @@ jobs:
             fi
 
             if git push origin HEAD:main; then
-              echo "Database push succeeded."
+              echo "Database/state push succeeded."
               exit 0
             fi
 
@@ -190,6 +272,7 @@ jobs:
 
   deploy:
     needs: update
+    if: needs.update.outputs.should_run == 'true'
     runs-on: ubuntu-latest
 
     environment:
