@@ -80370,7 +80370,3423 @@
         "canonical_event": "knife attack and arrest during a dispute in Germany",
         "reason": "Ordinary domestic or street crime involving a knife, with no indicated nexus to terrorism."
       }
+    },
+    "7f6907d0c7f9fbc5be05cd4242566b4699314a717b907edc7a353d501c62708b": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157547+00:00",
+      "result": {
+        "event_id": "69152165a85a081a",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Charlie Hebdo",
+        "english_summary": "Archive or historical coverage regarding Charlie Hebdo.",
+        "canonical_event": "Historical coverage of Charlie Hebdo attack",
+        "reason": "This is a historical event/archive piece, not a current counter-terrorism intelligence event."
+      }
+    },
+    "31291b746e8dd38c72cf0b2ce65b2619bec8ad7a83cde5eec15de9c6edf31145": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157574+00:00",
+      "result": {
+        "event_id": "30289ed7b130eb3b",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "The Hague - Current News",
+        "english_summary": "General news index for The Hague.",
+        "canonical_event": "General news from The Hague",
+        "reason": "Generic location-based news archive or index page, not a specific CT event."
+      }
+    },
+    "f37fddeae1bbb66f4b8546646b80113205445ee2a98778d14d2157e124c386fe": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157578+00:00",
+      "result": {
+        "event_id": "3df7fcf6545e49aa",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "CSU Party Congress",
+        "english_summary": "Archive or general tag page concerning the CSU party conference.",
+        "canonical_event": "CSU party congress news",
+        "reason": "Domestic political party event with no counter-terrorism relevance."
+      }
+    },
+    "5dce28a71d76e10b783518480eddfe87d0b89c35141312d379a56c1e789cc767": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157581+00:00",
+      "result": {
+        "event_id": "a7ef83a8e5b985da",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Kherson",
+        "english_summary": "General news tag or archive for Kherson.",
+        "canonical_event": "General news regarding Kherson",
+        "reason": "General war/location reporting without specific counter-terrorism operational focus."
+      }
+    },
+    "96d55079d94c9111fdcae821b22cadf1625337158955f8cf7d04c6b8396f3c56": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157584+00:00",
+      "result": {
+        "event_id": "9038b678b4cc1161",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "September 11",
+        "english_summary": "Archive or retrospective tag for September 11.",
+        "canonical_event": "September 11 historical tag",
+        "reason": "Historical retrospective/anniversary tag, not a current operational CT event."
+      }
+    },
+    "f9360523f4500b3741f110370ec7bcfa5497cf8d4f275e40f856e76449a8948e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157586+00:00",
+      "result": {
+        "event_id": "72a219c881c8769c",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "Spain",
+        "english_summary": "General news section or tag for Spain in EL PAÍS.",
+        "canonical_event": "General news regarding Spain",
+        "reason": "General national news portal tag, not a specific CT event."
+      }
+    },
+    "6d1ef18422427117e1cb35fdde4e5b2ae0aebf849f04142687213da00a503c17": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157589+00:00",
+      "result": {
+        "event_id": "36dd3b99762c19ba",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Natural gas prices in Europe",
+        "english_summary": "Anadolu Ajansı report on European natural gas prices.",
+        "canonical_event": "Natural gas prices in Europe",
+        "reason": "Economic/energy market news with no terrorism nexus."
+      }
+    },
+    "11ce409df7c90ea4b35e2d73423fc3201804751c7796ab2dca8a3f97e223b12d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157592+00:00",
+      "result": {
+        "event_id": "0e557a70cc6246fb",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Flooding in Nepal",
+        "english_summary": "Anadolu Ajansı report on natural disaster/flooding in Nepal.",
+        "canonical_event": "Flood disaster in Nepal",
+        "reason": "Natural disaster report with no counter-terrorism nexus."
+      }
+    },
+    "b28689d56b99ff37b4a5067f76941e54544984cbdfd2eec59193dfe066023e3e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157593+00:00",
+      "result": {
+        "event_id": "be0d34a18ae5c89e",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Rockstar Games releases 27-minute GTA VI gameplay trailer",
+        "english_summary": "Kommersant report on the release of a gameplay trailer for GTA VI.",
+        "canonical_event": "Rockstar Games GTA VI trailer release",
+        "reason": "Video game entertainment news."
+      }
+    },
+    "34cbbfdbc053f3465b7fd173fde2ea143311fd6dc33ead673fe552a35ecf0c5c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157597+00:00",
+      "result": {
+        "event_id": "5c8cdade736a785e",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "The era of sad discos",
+        "english_summary": "Cultural or lifestyle commentary piece by la Repubblica.",
+        "canonical_event": "Cultural commentary on nightclubs",
+        "reason": "Lifestyle and cultural commentary article."
+      }
+    },
+    "8a03c4f0f1078f1f84f7ec8b575a3e323cf75d67b20e7508fcf79cd5a260abc1": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157600+00:00",
+      "result": {
+        "event_id": "80b19e82e00f13e8",
+        "relevance_score": 25,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Israeli Defense Minister Katz threatens attack on Gaza",
+        "english_summary": "Bundle report stating Israeli Defense Minister Katz issued a threat of attack on Gaza.",
+        "canonical_event": "Israeli Defense Minister Katz Gaza threat",
+        "reason": "State-level military conflict reporting rather than a specific counter-terrorism intelligence event."
+      }
+    },
+    "f4103de722c3b5dde5d5c9b1547fdf96571f5958ca09b5d0614259c8201eac81": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157602+00:00",
+      "result": {
+        "event_id": "aa61f05742a1a579",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "en",
+        "english_title": "Broadcaster tells staff not to call 9/11 a 'terrorist attack' in news coverage",
+        "english_summary": "Media policy story regarding guidelines on terminology for 9/11.",
+        "canonical_event": "Broadcaster editorial policy regarding 9/11 terminology",
+        "reason": "Media ethics/guidelines story, not an operational CT event."
+      }
+    },
+    "aa894824614a0fd821c43558196c464c4cd3d1fc5095a085b1c02e7f1d21230d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157605+00:00",
+      "result": {
+        "event_id": "89f6039810af2991-143",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial",
+          "Arrests"
+        ],
+        "original_language": "ru",
+        "english_title": "Amur resident appeals verdict for preparation of a terrorist act",
+        "english_summary": "An individual from the Amur region is unsatisfied with their prison sentence/verdict handed down for preparing a terrorist attack and is appealing.",
+        "canonical_event": "Amur resident appeals terrorist plot conviction in Russia",
+        "reason": "Judicial appeal and sentencing for a terrorism preparation plot constitutes a direct counter-terrorism legal event."
+      }
+    },
+    "f5876382b32e7d57dc87682522f142d2125769ef6b11421d98e0546ab5f1a6fb": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157607+00:00",
+      "result": {
+        "event_id": "98a1afc689d0ed2c",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "3 dead and 558 missing on Chinese side of border in Nepal flood disaster",
+        "english_summary": "Anadolu Ajansı update on casualties and missing persons from flooding.",
+        "canonical_event": "Flood casualties and missing persons in China-Nepal border region",
+        "reason": "Natural disaster report."
+      }
+    },
+    "eed2ec92cace4c504a9919e088ac82880f230565e923d83f3128072dcd9d3cdf": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157609+00:00",
+      "result": {
+        "event_id": "c7ab7757bce50e6f",
+        "relevance_score": 35,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "Syrian President appoints leader of dissolved Kurdish-Arab militias as advisor",
+        "english_summary": "Insular FM report on a political appointment in Syria involving a former militia leader.",
+        "canonical_event": "Syrian President appoints former Kurdish-Arab militia leader as advisor",
+        "reason": "Political and military restructuring in Syria, bordering on state-level developments rather than distinct CT operations."
+      }
+    },
+    "de9e52ffb4c0eddc33bbdac072234a6f14276673e06e4b2f6156afccf0ce1ad6": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157613+00:00",
+      "result": {
+        "event_id": "5e9e4bb35baedeb1",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "Fictional terrorist attack plot in TV soap opera 'Un si grand soleil'",
+        "english_summary": "Fictional television series plot details regarding an attack affecting characters Cécile and Élise in episode 1998.",
+        "canonical_event": "Fictional attack plot in TV series Un si grand soleil",
+        "reason": "This is a plot spoiler for a fictional television soap opera, not a real-world event."
+      }
+    },
+    "8b42215a25ca9d7eb9929a6bd3652f0f6ac154973a591b2e55fbbbfd84d5e374": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157615+00:00",
+      "result": {
+        "event_id": "fa6663ad38dd8b57",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Fenerbahçe's UEFA Champions League opponents announced",
+        "english_summary": "Anadolu Ajansı sports report on Fenerbahçe's Champions League draw.",
+        "canonical_event": "Fenerbahçe UEFA Champions League draw announcement",
+        "reason": "Sports/football news."
+      }
+    },
+    "84673d4a5a9ac0fee90c269d15b445af07c4acf5ebc5a2413a634447d4137100": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157617+00:00",
+      "result": {
+        "event_id": "46b256c7970bfd40",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Milei advisor arrested in Bolivia over alleged contract femicide",
+        "english_summary": "Amerika21 report on the arrest of an advisor to Javier Milei in Bolivia for an alleged contract femicide.",
+        "canonical_event": "Milei advisor arrested for alleged murder in Bolivia",
+        "reason": "Ordinary violent crime / targeted killing with no terrorism nexus."
+      }
+    },
+    "6844092403ff4d328ac983767a338578f7c45ebacf04b8a83eaa0200c3720b91": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157620+00:00",
+      "result": {
+        "event_id": "314bf4d9ebeb1567",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial",
+          "Terrorist Financing"
+        ],
+        "original_language": "es",
+        "english_title": "De la Espriella maintains peace negotiation tables while announcing leader extraditions",
+        "english_summary": "EL PAÍS report on peace negotiation strategies alongside announcements regarding the extradition of armed group/cartel leaders.",
+        "canonical_event": "De la Espriella maintains peace talks and announces leader extraditions in Colombia",
+        "reason": "Official state policy announcements regarding peace talks and extraditions of high-value insurgent/criminal leaders carry direct security relevance."
+      }
+    },
+    "10ebffa96fbc1df8f78945eacb37df5f87a3e5217a7bbf31d8e98d0d9c6f6393": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:26.157623+00:00",
+      "result": {
+        "event_id": "89f6039810af2991-178",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Pacific Fleet conducts coastal defense exercise in Primorye",
+        "english_summary": "Kommersant report on a routine military exercise by the Russian Pacific Fleet.",
+        "canonical_event": "Russian Pacific Fleet coastal defense exercise in Primorye",
+        "reason": "Routine conventional military exercise, not a counter-terrorism operation."
+      }
+    },
+    "67ac8609733b1b2de817d16adc7c79fe515e09f4b51c3245fe0f6c8ceaa2c2bf": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976280+00:00",
+      "result": {
+        "event_id": "ced3bda1a22a0d86",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Russia Warns UK: 'We Can Strike Military Facilities'",
+        "english_summary": "Russia issued a warning to the UK stating it could strike military facilities.",
+        "canonical_event": "Russia threatens to strike UK military facilities",
+        "reason": "General geopolitical state-to-state threat between Russia and the UK, not specific to terrorism."
+      }
+    },
+    "cadd53e6eea23771adc5b961d8b223e4cf81ed269b03fa786dc3d34620fdcbcf": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976296+00:00",
+      "result": {
+        "event_id": "81e9eb55902b3c58",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "en",
+        "english_title": "Canadian Broadcasting Corporation Tells Staff Not to Call 9/11 a ‘Terrorist Attack’",
+        "english_summary": "The Canadian Broadcasting Corporation issued internal guidance telling staff not to refer to 9/11 as a 'terrorist attack'.",
+        "canonical_event": "CBC issues internal guidance regarding terminology for 9/11",
+        "reason": "Internal media style guide/editorial policy dispute, not a current counter-terrorism event."
+      }
+    },
+    "72861fa07846dfca3719d7869c9f965826b07ef51f96a1aed4a9017eded906e0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976301+00:00",
+      "result": {
+        "event_id": "f65f10a9f9b9d9e7",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Two Northern Residents to Be Charged After Swearing Allegiance to ISIS and Planning Attacks",
+        "english_summary": "Two residents of northern Israel are to be indicted for swearing allegiance to ISIS and planning terrorist attacks at the Temple Mount and an IDF base.",
+        "canonical_event": "Two suspects charged with swearing allegiance to ISIS and planning attacks in Israel",
+        "reason": "Specific legal/arrest action against individuals plotting terrorist attacks on behalf of ISIS."
+      }
+    },
+    "d8466bf8bb02bb55106cfd2881f6d3b8536c366cca05ff9b14444ffbe0f69f21": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976304+00:00",
+      "result": {
+        "event_id": "224fdd1a93af8e94",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Toprak Razgatlıoğlu to Compete in Spain for 13th MotoGP Round",
+        "english_summary": "Turkish motorcycle racer Toprak Razgatlıoğlu will race in Spain for the 13th round of the MotoGP season.",
+        "canonical_event": "Toprak Razgatlıoğlu competes in MotoGP in Spain",
+        "reason": "Sports news, completely unrelated to terrorism."
+      }
+    },
+    "e7547b47bf07758d75e5ec86cfc45f4f414dfeb8fec1250f51b9554585eb7c6e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976307+00:00",
+      "result": {
+        "event_id": "89f6039810af2991-289",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "The Alienation of Critique",
+        "english_summary": "An opinion or cultural article discussing criticism and alienation.",
+        "canonical_event": "Opinion article on critique",
+        "reason": "Cultural/literary commentary, irrelevant to terrorism."
+      }
+    },
+    "a173bd53d95a602a21f18e37199d3db5f9f253262481cf32772df5de7cd06afb": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976310+00:00",
+      "result": {
+        "event_id": "89f6039810af2991-315",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial",
+          "Attacks"
+        ],
+        "original_language": "ru",
+        "english_title": "Russia's Investigative Committee Opens Terrorist Case Following UAV Strike on Sevastopol",
+        "english_summary": "The Investigative Committee of Russia opened a criminal case under terrorism charges following a drone strike on Sevastopol.",
+        "canonical_event": "Russian Investigative Committee opens terrorism case over drone strike in Sevastopol",
+        "reason": "Official legal/criminal investigation opened under terrorism charges following a drone attack."
+      }
+    },
+    "b9972abf7d752c5082d310cd7f043f3221c947b935e5ddf05e30b67a3f264175": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976312+00:00",
+      "result": {
+        "event_id": "0547e7de13a9d267",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Special Tickets and Special Trenord Trains for the Monza GP",
+        "english_summary": "Trenord announced special tickets and additional train services for the Monza Grand Prix.",
+        "canonical_event": "Trenord provides special transport for Monza GP",
+        "reason": "Public transport news for a sports event, unrelated to counter-terrorism."
+      }
+    },
+    "07bbee68d11b3f37a9c44454a4d0a7b157c7eba7f7fc7e876fe8255ebde52c1c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976316+00:00",
+      "result": {
+        "event_id": "c6d312330d50292e",
+        "relevance_score": 95,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Combined Stabbing Attack at Gush Etzion Junction: Terrorists Neutralized, 4 Wounded, 1 Fatality",
+        "english_summary": "Terrorists exited a vehicle at the Gush Etzion junction and began stabbing people before being neutralized; four people were wounded and one critically injured person was pronounced dead.",
+        "canonical_event": "Stabbing attack by terrorists at Gush Etzion junction resulting in casualties and neutralization of attackers",
+        "reason": "Active terrorist stabbing attack with multiple casualties and neutralized perpetrators."
+      }
+    },
+    "e98fc6fb3af0956f66f614bfbc86c273e48697868455d26593e8985f69306f79": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976318+00:00",
+      "result": {
+        "event_id": "9b637c9861a00e8b",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "en",
+        "english_title": "9/11 Not a 'Terrorist Attack'? Canadian Broadcaster Under Fire Over Secret Memo",
+        "english_summary": "Media coverage of the Canadian Broadcasting Corporation's internal memo instructing staff on 9/11 terminology.",
+        "canonical_event": "Media reporting on CBC memo regarding 9/11 terminology",
+        "reason": "Media reporting on an editorial style guideline dispute, not a counter-terrorism event."
+      }
+    },
+    "417c51568e8103d7cd68057403a3257a429947f67314ff108b844a290ae1bd03": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976321+00:00",
+      "result": {
+        "event_id": "89f6039810af2991-346",
+        "relevance_score": 25,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Tehran Urges Countries to Ignore US Anti-Iran Sanctions",
+        "english_summary": "Tehran has called on various nations to disregard unilateral U.S. sanctions against Iran.",
+        "canonical_event": "Tehran calls for ignoring US sanctions against Iran",
+        "reason": "Geopolitical sanctions dispute, not a targeted CT finance or operational terrorism event."
+      }
+    },
+    "635e62cb9c8b3b307c03c2e8a5ad1efce40fa8de7767fb610fac6b61df301016": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976324+00:00",
+      "result": {
+        "event_id": "2403b2276aec52c5",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Lebanon Loses 22 Percent of Agricultural Land in the South Due to Israeli Conflict",
+        "english_summary": "Reports indicate that Lebanon has lost 22% of its agricultural land in the southern region as a result of ongoing military conflict with Israel.",
+        "canonical_event": "Agricultural land loss in southern Lebanon due to conflict with Israel",
+        "reason": "Broader wartime agricultural impact report, tangential to specific counter-terrorism operations."
+      }
+    },
+    "a397d83263e08df26757e761d4937694f8a941d019037a1f6e930300343c9646": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976326+00:00",
+      "result": {
+        "event_id": "7fe2a5e74c1138c7",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "IDF: Another Hamas Terrorist Who Participated in Oct 7 Massacre Eliminated in Northern Gaza Strike",
+        "english_summary": "The IDF announced that another Hamas terrorist who took part in the October 7 massacre was killed in a strike in northern Gaza yesterday.",
+        "canonical_event": "IDF eliminates Hamas operative involved in October 7 attacks during strike in northern Gaza",
+        "reason": "Targeted military elimination of a named terrorist organization member involved in past attacks."
+      }
+    },
+    "d3a21687ef7a9439928144098aa62afcd836b7db994522737d85302dff3d6abf": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976329+00:00",
+      "result": {
+        "event_id": "c6d312330d50292e-414",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Multiple Arrests and Incidents Related to Terrorism in Iraq and Pakistan",
+        "english_summary": "Aggregated news items noting the arrest of a suspect linked to Article 4 terrorism charges in Iraq, a terrorist attack on a police patrol in northwestern Pakistan, and arrests in Turkey.",
+        "canonical_event": "Arrests and attacks linked to terrorism in Iraq, Pakistan, and Turkey",
+        "reason": "Multiple concrete counter-terrorism arrests and terrorist attacks in regional jurisdictions."
+      }
+    },
+    "b8f5c79abe362ad1fc90f8a580e12b8cb035bc2755f6a9d8884ae6e882649f8d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976331+00:00",
+      "result": {
+        "event_id": "b16306b4619f5a4b",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Mistreatment in a Kindergarten, Two Teachers Suspended in Aliano",
+        "english_summary": "Two kindergarten teachers in Aliano have been suspended following allegations of mistreatment.",
+        "canonical_event": "Suspension of two kindergarten teachers in Aliano for alleged mistreatment",
+        "reason": "Domestic child care abuse case, completely unrelated to terrorism."
+      }
+    },
+    "2373253555164065fa786be4dc19560ce1fb1d9ea97b5a689f879854df899e5d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976341+00:00",
+      "result": {
+        "event_id": "99190b58e6d81296",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "A Training 'Boutique' for the Acting Profession Opens in Turin",
+        "english_summary": "A new specialized training center for actors has opened in Turin.",
+        "canonical_event": "Opening of acting training center in Turin",
+        "reason": "Cultural and educational news, unrelated to terrorism."
+      }
+    },
+    "e45f129a60142cef2f426c32d8db523891f4ec918fb2dedb5de435e967d6ad98": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976344+00:00",
+      "result": {
+        "event_id": "1263eee6f3f16f53",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Arpacal: July and August Temperatures in Calabria Higher Than 1991-2020 Averages",
+        "english_summary": "Environmental agency Arpacal reports that summer temperatures in Calabria exceeded historical averages.",
+        "canonical_event": "Arpacal reports high summer temperatures in Calabria",
+        "reason": "Climate/weather report, irrelevant to terrorism."
+      }
+    },
+    "b47ae7eb50cac222bd4c1a686c3674711b456d1876684d8550c0606b12095c16": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976347+00:00",
+      "result": {
+        "event_id": "1d7d1f10132b1cf8",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "tr",
+        "english_title": "NSU Terrorist Organization Member Beate Zschäpe Files for Early Release in Germany",
+        "english_summary": "Beate Zschäpe, a member of the German neo-Nazi terrorist organization NSU, has petitioned for early release from prison.",
+        "canonical_event": "NSU terrorist organization member Beate Zschäpe requests early release in Germany",
+        "reason": "Legal development regarding the imprisoned member of a major terrorist organization."
+      }
+    },
+    "85fd9f405fb355b51c4ae6fd59b896b5b13ff998b48bb4470b709eb887f913f0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976349+00:00",
+      "result": {
+        "event_id": "3e37d9f20ed66cbc",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "688 AI Agents Coordinate Attack on Hugging Face",
+        "english_summary": "Report on automated artificial intelligence agents coordinating an automated action or benchmark attack on Hugging Face.",
+        "canonical_event": "AI agents coordinate automated action against Hugging Face",
+        "reason": "Technical tech/AI software event, not a terrorist cyberattack."
+      }
+    },
+    "2282ac6125d748ab583719787a1d7acf921ce80c640515177cac9573e13747b5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976352+00:00",
+      "result": {
+        "event_id": "5c8305f4032e4fc4",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Detained Manager Tolga Akış Arrested",
+        "english_summary": "Turkish music manager Tolga Akış was formally arrested following detention.",
+        "canonical_event": "Manager Tolga Akış arrested in Turkey",
+        "reason": "Domestic entertainment industry criminal/legal matter, not terrorism-related."
+      }
+    },
+    "718c3933a7b99da66d7e5dc11b871d63accca3628113685c8141566db75f8682": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:42.976355+00:00",
+      "result": {
+        "event_id": "7e1967f6ca472b4c",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Towards Pordenone 2027, Over 50 Events in City Museums",
+        "english_summary": "Preparations for Pordenone 2027 involve over 50 cultural events across city museums.",
+        "canonical_event": "Cultural events announced in Pordenone museums",
+        "reason": "Local cultural events announcement, unrelated to terrorism."
+      }
+    },
+    "ce04055da975d1b740da29b6d0a9a1d0256fe8fe6562394dbdd4b33cd493fc4a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622197+00:00",
+      "result": {
+        "event_id": "d63b450d835c55db",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Record heat in Sardinia, temperatures reach nearly 46 degrees in Jerzu",
+        "english_summary": "Record high temperatures were recorded in Sardinia, nearly reaching 46 degrees Celsius in Jerzu.",
+        "canonical_event": "weather event in Sardinia",
+        "reason": "Unrelated weather/climate news."
+      }
+    },
+    "7bdf05e75127a5db15ed9e50fe24cb85767ace5ca3ef4ff0d1aa8d376193c351": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622215+00:00",
+      "result": {
+        "event_id": "89f6039810af2991-505",
+        "relevance_score": 65,
+        "is_current_ct_event": true,
+        "categories": [
+          "Terrorist Financing"
+        ],
+        "original_language": "ar",
+        "english_title": "America expands sanctions against Iran and targets Bank of Egypt in the UAE",
+        "english_summary": "The United States is expanding its sanctions against Iran, directing measures toward targets including Bank of Egypt operations in the UAE.",
+        "canonical_event": "US expands sanctions against Iran targeting financial entities",
+        "reason": "Deals with international economic sanctions and terrorist financing controls related to Iran."
+      }
+    },
+    "42e03f5ba31b2baefcbbe644c5e79e4e5f9a0c546effb79f8665d8c61630f53d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622219+00:00",
+      "result": {
+        "event_id": "3070111ebb8d0c1b",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "September 11 attacks: Canadian public broadcaster bans the word 'terrorist'",
+        "english_summary": "The Canadian public broadcaster has reportedly decided to ban the use of the word 'terrorist' in relation to the September 11 attacks.",
+        "canonical_event": "media policy change regarding terminology for 9/11 attacks in Canada",
+        "reason": "Media style guide discussion; no current counter-terrorism event."
+      }
+    },
+    "807eb147d67bb4183d2ab19c396ee44487c84efc22f70e2db783abbd88de968a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622223+00:00",
+      "result": {
+        "event_id": "89f6039810af2991-529",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Expert explains the renewed western popularity of the Unabomber",
+        "english_summary": "A media commentary discusses the reasons behind the renewed popularity of the Unabomber in the West.",
+        "canonical_event": "commentary on historical terrorist figure popularity",
+        "reason": "Cultural/historical commentary on a past terrorist, not a current CT event."
+      }
+    },
+    "9641bdd38aad0e3159a727ab48401bd6ca5abb1218fa14e2e083ad1c2e86b0ef": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622226+00:00",
+      "result": {
+        "event_id": "302d82d35a90e37f",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Iran faces a fuel crisis with long queues in Tehran and a daily deficit",
+        "english_summary": "Iran is experiencing a severe domestic fuel crisis, leading to long queues in Tehran.",
+        "canonical_event": "fuel shortage and crisis in Iran",
+        "reason": "Domestic economic and resource issue, unrelated to counter-terrorism."
+      }
+    },
+    "64e90458c6c5c62500b401d9e8c889888b644367175fd95c7f8a1aa2d0492a6a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622228+00:00",
+      "result": {
+        "event_id": "0b30a64456251edd",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Campi Flegrei, five minor tremors today",
+        "english_summary": "Five minor seismic tremors were registered today in the Campi Flegrei area.",
+        "canonical_event": "seismic activity in Campi Flegrei",
+        "reason": "Natural seismic event."
+      }
+    },
+    "b5caca4874a7eede0b04602c1aeba24763e163860c437163a1b3f3d0f7a00b38": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622231+00:00",
+      "result": {
+        "event_id": "8792d3783373d004",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Terrorist Financing"
+        ],
+        "original_language": "de",
+        "english_title": "Iranians were chess players, now they play poker: US relies on sanctions, Tehran seeks alternatives",
+        "english_summary": "An analysis piece discusses US sanctions against Iran and Iranian economic workarounds.",
+        "canonical_event": "geopolitical analysis of US sanctions and Iran",
+        "reason": "General geopolitical commentary rather than a specific operational CT event."
+      }
+    },
+    "d7e804b811e96e9b2f95a47d6af1d8b7df1966e675fe8f8f704f1e256a757af8": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622234+00:00",
+      "result": {
+        "event_id": "b519fc2a4375287f",
+        "relevance_score": 55,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "fr",
+        "english_title": "In Niger, an important military base retaken with Russia's help following a mutiny",
+        "english_summary": "Following a military mutiny and attacks in Niamey, a key military base in Niger was secured with Russian assistance.",
+        "canonical_event": "retaking of military base after mutiny in Niger",
+        "reason": "Involves armed mutiny and military security operations in Niger, relevant to regional stability and armed conflict context."
+      }
+    },
+    "d2e8b6f9022c56f8e9fdfa98e11e058be10357e53e7a9d4fab7076f4bd783ea5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622236+00:00",
+      "result": {
+        "event_id": "b50cb9599da5c18b",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "ICE: From combating terrorism to pursuing migrants",
+        "english_summary": "An opinion or analytical article discusses the shift in focus of US Immigration and Customs Enforcement.",
+        "canonical_event": "critique of US ICE mandate shift",
+        "reason": "General political/policy critique."
+      }
+    },
+    "24cb8312153e1bf62b23fe9cbf62dbbf760bcdf5f0499af433b88095d41caef7": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622238+00:00",
+      "result": {
+        "event_id": "22c665cb20605b3c-632",
+        "relevance_score": 55,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Niger: Calm returns to the capital Niamey the day after a military mutiny is thwarted",
+        "english_summary": "Calm has been restored in Niamey, the capital of Niger, following the thwarting of a military mutiny.",
+        "canonical_event": "thwarted military mutiny and security stabilization in Niamey, Niger",
+        "reason": "Covers an armed rebellion/mutiny attempt and security operations in the capital."
+      }
+    },
+    "58f7a36faddb90032c47612dfac1ce3cfee98cce9cde10b54bf7b70f2a772b76": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622242+00:00",
+      "result": {
+        "event_id": "5d98d0fcd300cb59",
+        "relevance_score": 55,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "it",
+        "english_title": "Maximum alert in the Nigerien Army after a night of explosions and gunfire in Niamey",
+        "english_summary": "The Nigerien army is on high alert following nighttime explosions and gunfire in the capital Niamey.",
+        "canonical_event": "military alert and gunfire in Niamey, Niger",
+        "reason": "Relates to armed attacks and security crisis in Niger."
+      }
+    },
+    "50d4164e2059c240366c2af69d4654563557fc4097a42cef2b39ef69769f9506": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622245+00:00",
+      "result": {
+        "event_id": "0a4c77bc200e2ced",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Foggia wildfire, woods and pine forest flames extinguished after three days",
+        "english_summary": "A forest fire in the Foggia area has been successfully extinguished after three days.",
+        "canonical_event": "wildfire extinguished in Foggia",
+        "reason": "Natural disaster / wildfire."
+      }
+    },
+    "1ed7217c7ade5e2728f306e871e382843ed42bbef541b402c11a16d8faa64019": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622247+00:00",
+      "result": {
+        "event_id": "fb77012d93e73886",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "it",
+        "english_title": "Niger: Attack in the heart of Niamey targeting the airport, military base, and presidential palace area",
+        "english_summary": "An armed attack struck central Niamey, targeting the airport, a military base, and the vicinity of the presidential palace.",
+        "canonical_event": "armed attacks targeting airport and presidential palace in Niamey, Niger",
+        "reason": "Direct report of armed attacks on key state and military infrastructure."
+      }
+    },
+    "24a2c207a41de29b9ba300609bf1cb33941e9bcbf4dac19af86f164f210dbd14": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622250+00:00",
+      "result": {
+        "event_id": "a453292673a36fb2",
+        "relevance_score": 55,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "it",
+        "english_title": "Niger, gunfire at Niamey airport. Defense Ministry reports attempted military mutiny at a base",
+        "english_summary": "Gunfire was reported at Niamey airport, with the Defense Ministry confirming an attempted military mutiny at a base.",
+        "canonical_event": "attempted military mutiny and gunfire at Niamey base, Niger",
+        "reason": "Covers an armed mutiny and security incident at military facilities."
+      }
+    },
+    "60eb0ede74185497ef9dd10f2843e8596c47395b5f67a34600a696b1816e0575": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622252+00:00",
+      "result": {
+        "event_id": "31d6d03e906d4aca",
+        "relevance_score": 55,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "es",
+        "english_title": "The Nigerien Army contains a coup d'état attempt",
+        "english_summary": "The army in Niger has successfully contained a coup attempt following unrest in the capital.",
+        "canonical_event": "Nigerien army contains coup d'état attempt in Niamey",
+        "reason": "Reports on an armed coup attempt and military operations."
+      }
+    },
+    "ceb6670fa128b80a1649b37124e667ff78883b8be55b6d1bd67a4297794ddf89": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622254+00:00",
+      "result": {
+        "event_id": "3d08ce5aafe44c17",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Telemedicine at Brotzu to monitor patients post-transplant",
+        "english_summary": "Telemedicine services are introduced at Brotzu hospital for post-transplant patient monitoring.",
+        "canonical_event": "telemedicine implementation at Brotzu hospital",
+        "reason": "Healthcare news."
+      }
+    },
+    "030c60db6480f122616afdc191eea2a91061a951de9082b043697cfb5272882c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622257+00:00",
+      "result": {
+        "event_id": "8ca6f54e4d6c9b88",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Migrants, Red Cross to intervene in Alta Valle di Susa",
+        "english_summary": "The Red Cross will provide assistance regarding migrants in Alta Valle di Susa.",
+        "canonical_event": "Red Cross intervention for migrants in Alta Valle di Susa",
+        "reason": "Humanitarian / migration management news."
+      }
+    },
+    "fd221f56b3d9e40b52291997d80a3a80af3d5519c47ef03578f300e384f9ec9f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622259+00:00",
+      "result": {
+        "event_id": "dc5fdd2f5354bd49",
+        "relevance_score": 55,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "es",
+        "english_title": "Niger: Army on maximum alert after a night of explosions and gunfire in the capital",
+        "english_summary": "The Nigerien military is on high alert following overnight explosions and gunfire in Niamey.",
+        "canonical_event": "military high alert after explosions and gunfire in Niamey, Niger",
+        "reason": "Covers violent security incidents and armed unrest in Niger."
+      }
+    },
+    "4f90b5ed6b6b0d399d5bf039bdf62cb9a5307d922db4e8761811346cb8d7ae3b": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622263+00:00",
+      "result": {
+        "event_id": "396aeffaf19eb8e0",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "it",
+        "english_title": "Rebel soldiers attack airport and presidency in Niger's capital, according to sources",
+        "english_summary": "According to reports, rebel soldiers launched attacks on the airport and presidential area in Niamey, Niger.",
+        "canonical_event": "rebel soldiers attack airport and presidential area in Niamey, Niger",
+        "reason": "Direct operational report of rebel attacks on strategic state locations."
+      }
+    },
+    "eb0cb55ef18e75477af7b22daf54de1b05765b4f3789b9cdf87c2efcca5b84b0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:26:59.622265+00:00",
+      "result": {
+        "event_id": "12f230f4ed88d2af",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Tonight for the first time the Pope on a boat on Lake Albano",
+        "english_summary": "The Pope will take a boat ride on Lake Albano for the first time.",
+        "canonical_event": "Pope's boat procession on Lake Albano",
+        "reason": " Vatican / religious cultural event."
+      }
+    },
+    "77d8278eb7df8d06b76832f079dd321fb93e77502855b7efd64d768e7eb2244b": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845001+00:00",
+      "result": {
+        "event_id": "2459824c7878a089",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [
+          "Online Radicalization / Cyberterrorism"
+        ],
+        "original_language": "de",
+        "english_title": "Religions can pull the rug out from under terrorism, says theologian",
+        "english_summary": "A theological commentary discussing how religions can counteract terrorism.",
+        "canonical_event": "theological commentary on religion and terrorism",
+        "reason": "Generic theological commentary rather than a specific operational counter-terrorism event."
+      }
+    },
+    "6b41518bd1e518fbc69864c556acab1f1ad212c5aa7ef3728c42f0928d6a0188": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845018+00:00",
+      "result": {
+        "event_id": "c38b0f01e7e0e3e0",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "es",
+        "english_title": "Attempted coup d'état in Niger: Military junta declares situation under containment",
+        "english_summary": "The military junta in Niger reports that an attempted coup d'état in Niamey is being contained.",
+        "canonical_event": "attempted military coup in Niamey, Niger",
+        "reason": "This is a military coup attempt / mutiny rather than a terrorism event, though jihadist context exists in related articles."
+      }
+    },
+    "69fcabfd41d678cce34133274ca6d39cb7e6225777fba7336f55446b9687b8c0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845023+00:00",
+      "result": {
+        "event_id": "ab237bd211749f80",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Meta pays 18 billion dollars to settle child data case in America",
+        "english_summary": "Meta pays a large settlement regarding child data privacy in the US.",
+        "canonical_event": "Meta data privacy settlement in the US",
+        "reason": "Completely unrelated corporate/legal tech news."
+      }
+    },
+    "4524758cbae992e4cb6b60c4f12712b29c18c052defec2682254d2fe9372fb1d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845026+00:00",
+      "result": {
+        "event_id": "73229d0b07d34bda",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Masci meets police officers engaged in the Pescara quadrilateral for decorum and security",
+        "english_summary": "Local official meets police regarding urban decorum and general security in Pescara.",
+        "canonical_event": "local official meeting with police in Pescara",
+        "reason": "Routine local municipal policing and urban security, no terrorism nexus."
+      }
+    },
+    "f3c09510093eeb86d5139d4bc2679c8f34bcb77e9c8174ba53b7fb7fd8b85353": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845029+00:00",
+      "result": {
+        "event_id": "f3a44e3b4e2e0dff",
+        "relevance_score": 35,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "fr",
+        "english_title": "In Niger, life returns to normal in Niamey after foiled mutiny",
+        "english_summary": "Daily life resumes in Niamey, Niger, following a thwarted military mutiny/coup attempt.",
+        "canonical_event": "foiled military mutiny in Niamey, Niger",
+        "reason": "Deals with a military mutiny/coup attempt rather than a counter-terrorism operation, despite surrounding regional jihadist challenges."
+      }
+    },
+    "f765d79135eb72d21607d21484b5df304c131099304b6bebb27cc2f718fec1ea": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845031+00:00",
+      "result": {
+        "event_id": "db57be810232f7d7",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "$28,000 for a job whose form nobody knows yet... even universities are confused",
+        "english_summary": "An article discussing emerging unknown job markets and university confusion.",
+        "canonical_event": "discussion on future employment trends",
+        "reason": "Unrelated employment/economic commentary."
+      }
+    },
+    "213c5e0b4f2790f6604ce4d59ab8e48c8c4756e0786977daa6d6dee31479707d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845033+00:00",
+      "result": {
+        "event_id": "579eff6ac63e0bbc",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "'Restare', at Tenuta Ippocrate a day to stop and find oneself",
+        "english_summary": "A wellness and relaxation event held at Tenuta Ippocrate.",
+        "canonical_event": "wellness event at Tenuta Ippocrate",
+        "reason": "Lifestyle and wellness event."
+      }
+    },
+    "63ab6aeb5e0ae15bf6903ea847fef98a53e964b6acf0bee8c00072e8a92e340f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845036+00:00",
+      "result": {
+        "event_id": "b7e53e163f045727",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Online Radicalization / Cyberterrorism"
+        ],
+        "original_language": "de",
+        "english_title": "Call against radicalization and for increased cooperation",
+        "english_summary": "A public or institutional call emphasizing the need to combat radicalization and strengthen cooperation.",
+        "canonical_event": "call against radicalization and for increased cooperation",
+        "reason": "Directly addresses radicalization prevention and counter-radicalization cooperation."
+      }
+    },
+    "eeac71939eb2bee5ed50ef48cfa30601e2664622c25b97d3356929e2c071ebca": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845055+00:00",
+      "result": {
+        "event_id": "f9abb6c551d9224d",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Blackout on the GNV Spirit, towed into the port of Naples",
+        "english_summary": "A ferry suffered a blackout and was towed into the port of Naples.",
+        "canonical_event": "ferry blackout and towing in Naples port",
+        "reason": "Maritime mechanical incident, no terrorism involvement."
+      }
+    },
+    "5bea6f75f052becd6ce4d0ccf7570525be52d73c5c2f1db88d43eb001b1c95e5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845058+00:00",
+      "result": {
+        "event_id": "1938f04c1ba0157d",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Teatro San Carlo and Macciardi: 'Emotion for the premature passing of Fogliani'",
+        "english_summary": "Tributes following the death of conductor Fogliani.",
+        "canonical_event": "tributes to deceased conductor Fogliani",
+        "reason": "Cultural obituary/tribute."
+      }
+    },
+    "7408d082f2cf76bfacbb93827ac3faa9d32e75968e57149127d2e385fff70ffb": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845061+00:00",
+      "result": {
+        "event_id": "5d8ba528477ec4a4",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "Andros Lozano",
+        "english_summary": "An author or journalist profile page.",
+        "canonical_event": "journalist profile of Andros Lozano",
+        "reason": "Author profile page."
+      }
+    },
+    "eca35c8d98550ca1ae64928cc97c88d3ea43298a310fe09c7b91dd8ad389914a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845065+00:00",
+      "result": {
+        "event_id": "22c665cb20605b3c-826",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Terror at the top of the 'Moon Pyramid' in Mexico: Gunman opens fire on tourists and commits suicide",
+        "english_summary": "A gunman opened fire on tourists at the Pyramid of the Moon archaeological site in Mexico before killing himself.",
+        "canonical_event": "gunman shooting attack targeting tourists at Pyramid of the Moon in Mexico",
+        "reason": "Active shooter / violent attack targeting civilians/tourists at a historical site."
+      }
+    },
+    "f0f7e4d4dad9e07a12f4071905ff4c64b7604869a9812d4d1c8cf1f36150a589": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845070+00:00",
+      "result": {
+        "event_id": "23a79842355f8443",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "The Holy Door of the 732nd Perdonanza in L'Aquila is closed",
+        "english_summary": "Religious ceremony closing the Perdonanza event in L'Aquila.",
+        "canonical_event": "closing of Holy Door during Perdonanza in L'Aquila",
+        "reason": "Religious cultural festival closing."
+      }
+    },
+    "feabc368a9ede1ff19039895883694c6ab34b2ea40bad3263be7f65e468be3f0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845073+00:00",
+      "result": {
+        "event_id": "22c665cb20605b3c-838",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Tension in the Black Sea: Turkey summons Ukrainian ambassador and condemns targeting of its ships",
+        "english_summary": "Turkey summons the Ukrainian ambassador after Turkish-linked ships are targeted in the Black Sea.",
+        "canonical_event": "Turkey summons Ukrainian ambassador over targeted ships in Black Sea",
+        "reason": "Geopolitical state conflict / maritime incident in the Russia-Ukraine war, not terrorism."
+      }
+    },
+    "87794e85a2e721e4e368eed6f91e927ba1773a3307c65605a0b2ed499b8477fc": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845075+00:00",
+      "result": {
+        "event_id": "6f6aca0aa986fbec",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "Media",
+        "english_summary": "General media category or index page.",
+        "canonical_event": "general media section page",
+        "reason": "Generic navigation page."
+      }
+    },
+    "07b28906109bef0517cfc6063bedc837a938d07007dadcf4299069db6a31ed51": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845078+00:00",
+      "result": {
+        "event_id": "22c665cb20605b3c-867",
+        "relevance_score": 70,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Widespread settler escalation and condemnations from Netanyahu and Herzog: What is happening in the West Bank?",
+        "english_summary": "An escalation of settler violence and associated political reactions in the West Bank.",
+        "canonical_event": "settler violence escalation and political reactions in the West Bank",
+        "reason": "Violent operational incidents and political security developments in the West Bank."
+      }
+    },
+    "2cdf70569dbd5e355e59f5bb9e1b0facc92e833d6500d72fae49842dadfcdfea": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845081+00:00",
+      "result": {
+        "event_id": "22c665cb20605b3c-870",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Huge oil partnership between Washington and Caracas",
+        "english_summary": "An oil energy partnership agreement between the US and Venezuela.",
+        "canonical_event": "oil partnership agreement between Washington and Caracas",
+        "reason": "Bilateral energy and economic diplomacy."
+      }
+    },
+    "1d5434104027aa57844f9dfd2f54fa238aa3f35694bb19404ceb6b540b16dad3": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845086+00:00",
+      "result": {
+        "event_id": "9c68ff7e9826b539",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Weapons"
+        ],
+        "original_language": "fr",
+        "english_title": "Dismantling of a terrorist cell in Saravan",
+        "english_summary": "Security forces dismantled a terrorist team operating in Saravan, seizing weapons and equipment.",
+        "canonical_event": "dismantling of a terrorist cell and arrests in Saravan",
+        "reason": "Direct counter-terrorism operation resulting in the dismantling of a terrorist cell and arrests."
+      }
+    },
+    "dc95834acfb1b5d4ad40feeb39a12afed4ae8de8626a0eb861ac2642486f36d2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845088+00:00",
+      "result": {
+        "event_id": "22c665cb20605b3c-884",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Algerian President: I do not rule out criminal hands behind the fires",
+        "english_summary": "The Algerian President suggests potential arson/criminal intent behind recent forest fires.",
+        "canonical_event": "Algerian President statement on suspected arson behind wildfires",
+        "reason": "Suspected arson/wildfires investigation rather than a counter-terrorism security event."
+      }
+    },
+    "18a1963cfc5099d4daa19acbc181019097fee0ee215e667a4fca662c51b5307a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:15.845090+00:00",
+      "result": {
+        "event_id": "825bca37ee77dfba",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Apple changes sales schedule for iPhone 18 smartphones",
+        "english_summary": "Apple alters its release schedule for future iPhone models.",
+        "canonical_event": "Apple sales schedule change for iPhone 18",
+        "reason": "Commercial tech product news."
+      }
+    },
+    "6cadf8a1ecb8f58a444b6ad645ed5399bf54c56b6a5314005ff4490f98d02da9": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421224+00:00",
+      "result": {
+        "event_id": "979b9d106db57a9c",
+        "relevance_score": 45,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "it",
+        "english_title": "Switzerland: Shooting at a rave party near Zurich, Italian woman killed, terrorism not ruled out",
+        "english_summary": "An Italian woman was killed in a shooting at a rave party near Zurich, Switzerland, and authorities have not completely ruled out a terrorist motive.",
+        "canonical_event": "shooting at rave party near Zurich killing Italian woman",
+        "reason": "Although terrorism is mentioned as a remote possibility, it appears to be a criminal shooting or violent incident rather than a confirmed counter-terrorism event."
+      }
+    },
+    "a8ca737173a32337c8f2a79b3890b6d0ca8ba4245cf46638d76b9825e63f64a6": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421243+00:00",
+      "result": {
+        "event_id": "d2754d40cf9ca865",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Armah Sports shares close up 3.8% on first trading day in TASI",
+        "english_summary": "Shares of Armah Sports closed 3.8% higher on their first trading day on the Saudi Stock Exchange (TASI).",
+        "canonical_event": "stock market trading for Armah Sports in Saudi Arabia",
+        "reason": "Financial news regarding stock market performance with no connection to counter-terrorism."
+      }
+    },
+    "107a8d9db964e2ecefb2273b923631e4770c9f706162a732998b320c27e7825a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421247+00:00",
+      "result": {
+        "event_id": "b7bf3f862e5da530",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Terrorist who invaded Israel on Oct 7 and promoted terror plots eliminated",
+        "english_summary": "A terrorist who took part in the October 7 invasion of Israel and advanced terror plots has been eliminated.",
+        "canonical_event": "elimination of October 7 terrorist and plot promoter in Israel",
+        "reason": "Direct counter-terrorism operation resulting in the targeted killing/elimination of a known terrorist."
+      }
+    },
+    "e5252fc5518e1c32b045b78fbf93d62c0cfdad0aa98cfee80a261bf831ad9421": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421251+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-931",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Erdogan: ISIS involved in Ataturk Airport attack and we will not hesitate to fight terrorism",
+        "english_summary": "Turkish President Erdogan stated that ISIS was involved in the Ataturk Airport attack and reaffirmed commitment to fighting terrorism.",
+        "canonical_event": "Erdogan statements on ISIS involvement in Ataturk Airport attack",
+        "reason": "Historical/political commentary referencing a past attack rather than an ongoing or current CT operational event."
+      }
+    },
+    "3b0b6e6badcc421b2c0f2a92466711294ad703f793fdee5d0aa5ce4290bb7bc1": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421256+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-934",
+        "relevance_score": 50,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Washington warns of potential terrorist attacks at major events across Europe",
+        "english_summary": "Washington has issued a security warning regarding potential terrorist attacks targeting major events across Europe.",
+        "canonical_event": "US security warning on potential terrorist attacks in Europe",
+        "reason": "General official security warning/threat advisory regarding potential terrorist attacks in Europe."
+      }
+    },
+    "00aea0f833de72ac22266c1ae4f3f90d85feff28aa37d5807b347f4cfaabcea8": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421259+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-939",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Sheikh Muwafaq Tarif: Killing servants of God in mosques is a cowardly terrorist act",
+        "english_summary": "Sheikh Muwafaq Tarif condemned the killing of worshippers in mosques, describing it as a cowardly terrorist act.",
+        "canonical_event": "religious leader statement condemning mosque killings",
+        "reason": "General moral condemnation and political commentary without specific actionable CT event details."
+      }
+    },
+    "e3d70b184e7ecea7fa27aa39109204e53604e804b4c4c5b411ee7121c0d61dde": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421263+00:00",
+      "result": {
+        "event_id": "e55d457fe3126b68",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "Elena Iribas",
+        "english_summary": "Article or profile regarding Elena Iribas in El Mundo.",
+        "canonical_event": "profile or mention of Elena Iribas in El Mundo",
+        "reason": "Personal profile or general news article entirely unrelated to counter-terrorism."
+      }
+    },
+    "d3f37bf314cdf7a1ad1337393b68e73d43fbfe2ac7e6c37af9bf152b88e2f221": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421266+00:00",
+      "result": {
+        "event_id": "d2463a79e32e6e99",
+        "relevance_score": 45,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "fr",
+        "english_title": "Switzerland: Searches continue after fatal shootings at a rave party",
+        "english_summary": "Swiss authorities are continuing their search operations following fatal shootings during a rave party.",
+        "canonical_event": "police search operations after fatal shooting at rave party in Switzerland",
+        "reason": "Ongoing police investigation into a violent crime/shooting; terrorism nexus remains unconfirmed."
+      }
+    },
+    "9719f2f19ec097ecd2f5cdab8373cb391f522416bcda87c9ebc743a97cec20c5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421269+00:00",
+      "result": {
+        "event_id": "e4d075ea6ddd6be6",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "it",
+        "english_title": "Khamenei to Islamic states: Recognize the true enemy and counter its plan",
+        "english_summary": "Iranian Supreme Leader Khamenei urged Islamic states to recognize their true enemy and oppose its strategy.",
+        "canonical_event": "Khamenei speech calling on Islamic states to oppose enemies",
+        "reason": "Political and religious rhetoric by a state leader without a specific counter-terrorism event."
+      }
+    },
+    "86b3b9081528f07152237f8859e9ec26fecdb697d2a66f777583585d781aebb2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421272+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-966",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "MK Barakeh: Teitel is a new Jewish terrorist joining the list of mentally unstable individuals",
+        "english_summary": "Israeli Knesset member Barakeh commented on extremist Jack Teitel, labeling him a Jewish terrorist.",
+        "canonical_event": "political commentary on Jack Teitel in Israel",
+        "reason": "Political commentary regarding an individual criminal/extremist case, lacking current operational CT value."
+      }
+    },
+    "0075338bc6bcdeada4d4c951e238e37e04e5268fb49439a57b1750b21448df42": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421276+00:00",
+      "result": {
+        "event_id": "4af6b13d2d38d802",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "fr",
+        "english_title": "Revolutionary Guards announce dismantling of a terrorist cell in Saravan, southeastern Iran",
+        "english_summary": "Iran's Islamic Revolutionary Guard Corps announced the dismantling of an active terrorist cell operating in Saravan, southeastern Iran.",
+        "canonical_event": "Revolutionary Guards dismantle terrorist cell in Saravan, Iran",
+        "reason": "Successful security operation resulting in the dismantling of a terrorist cell."
+      }
+    },
+    "4b2abfbd4e67ceb398a6a6f544acd34f294552807cb18a67f62da7a9f4a277bc": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421280+00:00",
+      "result": {
+        "event_id": "d8c9a5b838298f5b",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Tech Visa Program brings 47 tech startups and projects to Turkey",
+        "english_summary": "Forty-seven technology startups and projects have relocated to Turkey under the Tech Visa Program.",
+        "canonical_event": "relocation of tech startups to Turkey via Tech Visa Program",
+        "reason": "Economic and technology immigration news unrelated to terrorism."
+      }
+    },
+    "da191d11cc24c383d9f0d7ed5fb1061030187fc82a74aaa0940ed3d6a9e3ba96": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421283+00:00",
+      "result": {
+        "event_id": "d73cefb32a58fe06",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Turkish Men's National Basketball Team to play its 1067th match",
+        "english_summary": "The Turkish National Basketball Team is set to play its 1067th match in sports history.",
+        "canonical_event": "Turkish national basketball team milestone match",
+        "reason": "Sports news regarding a basketball milestone."
+      }
+    },
+    "69bf43b010b1ff1f4ca6575bccfdfded554b45b5835ad6e6f7992633c3a64a6c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421286+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-999",
+        "relevance_score": 25,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "French President Francois Hollande: Terrorism has not ended and we will fight it with all our strength",
+        "english_summary": "Former French President Francois Hollande declared that terrorism is not over and will be fought with full force.",
+        "canonical_event": "statements by Francois Hollande on the ongoing threat of terrorism",
+        "reason": "Generic political rhetoric and statements on terrorism without a specific current event."
+      }
+    },
+    "e7cdc0a762615000c6ca67fa8b87340443874d5de9f5a9f07ad8db8f2b7fa17d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421289+00:00",
+      "result": {
+        "event_id": "22f2b7e395c6420a",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Ranucci: “I never told Presutti to go to Lavitola for work reasons”",
+        "english_summary": "Investigative journalist or public figure Ranucci clarifies statements regarding Presutti and Lavitola.",
+        "canonical_event": "statements by Ranucci regarding political/media discussions in Italy",
+        "reason": "Domestic political/media controversy with no relation to counter-terrorism."
+      }
+    },
+    "3be4a6d1b8a05eb54f76d24866194909e7e65c12c6673d79653a2aec6efbb9a5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421292+00:00",
+      "result": {
+        "event_id": "0102181a73a142df",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "President Erdogan celebrates Turkish Armed Forces Day",
+        "english_summary": "Turkish President Recep Tayyip Erdogan issued a congratulatory message marking Turkish Armed Forces Day.",
+        "canonical_event": "Erdogan message celebrating Turkish Armed Forces Day",
+        "reason": "Official national holiday greeting and military commemoration."
+      }
+    },
+    "9969ef5d1274a06675caf6c3537546ff9db5df02a38ff808986dfe615f90fce1": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421295+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1029",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Senate candidate Angie Nixon: The people are hungry for change and AIPAC money will not defeat them",
+        "english_summary": "Senate candidate Angie Nixon stated that the public wants change and cannot be defeated by AIPAC campaign funding.",
+        "canonical_event": "campaign statements by US Senate candidate Angie Nixon on AIPAC funding",
+        "reason": "US electoral politics and campaign financing news."
+      }
+    },
+    "0e2e201cb61a8558a565bf8ffba887ec2eb8889b6a44b6a72b2e7fa2ff7cb8a3": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421298+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1042",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Assad receives Iranian delegation: Tehran is our partner in victory over terrorists",
+        "english_summary": "Syrian President Bashar al-Assad received an Iranian delegation, stating that Tehran is a partner in defeating terrorists.",
+        "canonical_event": "Syrian President Assad meets Iranian delegation to discuss past counter-terrorism victory",
+        "reason": "Diplomatic meeting with retrospective political rhetoric regarding past conflict outcomes."
+      }
+    },
+    "30ca44a71d08d7f28eed9210cd332ed86f60b148841d050f79788239c2bf743e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421300+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1050",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Settlers storm Islamic shrines in Nablus",
+        "english_summary": "Israeli settlers raided and stormed Islamic religious sites in Nablus, West Bank.",
+        "canonical_event": "settler raid on Islamic shrines in Nablus",
+        "reason": "Reports of extremist settler violence/provocations in the West Bank relevant to security monitoring."
+      }
+    },
+    "4583b7f610171ff7d4d8c502ae2586a07412788692d58e197d9c35594db589e5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:32.421303+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1060",
+        "relevance_score": 45,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Your vote in exchange for their blood: How settler violence in the West Bank became electoral currency in Israel",
+        "english_summary": "An analytical article discussing how settler violence in the West Bank is utilized for electoral gains in Israeli politics.",
+        "canonical_event": "analytical report on West Bank settler violence and Israeli elections",
+        "reason": "An analytical opinion piece/media report rather than a concrete real-time operational security incident."
+      }
+    },
+    "6376d97f667e8dad1880625cda4b3b865fb0809abe172b7e2cf4ddefd8f3e9d7": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654855+00:00",
+      "result": {
+        "event_id": "9680f9286106103d",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "en",
+        "english_title": "Troops Repel Terrorist Attack in Kukawa and Kill Several Insurgents",
+        "english_summary": "Military troops successfully repelled a terrorist attack in Kukawa, neutralizing several attackers.",
+        "canonical_event": "Military repels terrorist attack and kills several attackers in Kukawa",
+        "reason": "Direct report of a terrorist attack and military counter-action resulting in casualties."
+      }
+    },
+    "4739a4caeca25758db24eed030370bcc7dcd4a0504cfd4c6eafa73437c0b8eb5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654872+00:00",
+      "result": {
+        "event_id": "361aeb270b6dda06",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [
+          "Arrests"
+        ],
+        "original_language": "de",
+        "english_title": "Arrest after xenophobic attack at Ostkreuz",
+        "english_summary": "An arrest was made following a xenophobic attack at the Ostkreuz station.",
+        "canonical_event": "Arrest following xenophobic assault in Berlin",
+        "reason": "Ordinary hate crime/assault without a demonstrated terrorist nexus."
+      }
+    },
+    "467457540e85c9175e778c9f9f93ad3ef99bd9ca42eddc8dd9dad434a6e9b4d8": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654876+00:00",
+      "result": {
+        "event_id": "ce0203fd667fa4d4",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [
+          "Arrests"
+        ],
+        "original_language": "es",
+        "english_title": "Four Moroccans Expelled for Injuring Civil Guards in Ceuta",
+        "english_summary": "Four Moroccan nationals have been expelled from Spain after injuring three Civil Guard officers in Ceuta.",
+        "canonical_event": "Expulsion of four Moroccan nationals for assaulting police officers in Ceuta",
+        "reason": "Border incident and assault on law enforcement, not a terrorist incident."
+      }
+    },
+    "fe8862d8df9f771ed28428a283a161e24ee7da580c828303186b062495615486": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654878+00:00",
+      "result": {
+        "event_id": "872e674f6bf8e9b0",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "es",
+        "english_title": "Barcelona news snippet",
+        "english_summary": "A brief, uninformative news stub regarding Barcelona.",
+        "canonical_event": "Unspecified news item in Barcelona",
+        "reason": "Incomplete fragment with no context or actionable intelligence."
+      }
+    },
+    "819862e70620c524283867600001ac2287b051c88f92ad75ffe5c26ddaabcf25": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654881+00:00",
+      "result": {
+        "event_id": "028511755b92ca00",
+        "relevance_score": 25,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "de",
+        "english_title": "Geopolitical commentary on potential Russian responsibility",
+        "english_summary": "An analytical article discussing potential consequences for Moscow if Russia were found responsible for an incident.",
+        "canonical_event": "Geopolitical commentary on potential consequences for Russia",
+        "reason": "General political analysis and commentary rather than a concrete CT event."
+      }
+    },
+    "9b39ea0c169aa7187c267313f820c6c283dce116d9701103bbd4ad499ea186bd": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654884+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1082",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Google changing account security rules from passwords to facial features",
+        "english_summary": "An explanatory article on how Google is modifying account security rules and authentication methods.",
+        "canonical_event": "Google updates account security and authentication rules",
+        "reason": "General cybersecurity/tech feature update, unrelated to counter-terrorism."
+      }
+    },
+    "3ff2e60f62b11af88f3e2df5878f5fb245f6a618c4bbc85babdd941b76edc9fe": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654886+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1087",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Saudi Arabia launches first national food composition database",
+        "english_summary": "Saudi Arabia has launched its first national database for food composition.",
+        "canonical_event": "Saudi Arabia launches national food composition database",
+        "reason": "Civilian administrative and nutritional news."
+      }
+    },
+    "eb06d320e2ec17ce94a33002b58f83935e2e4930c55bbfe256acc5a24c183526": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654888+00:00",
+      "result": {
+        "event_id": "3a4d0e75df3c337d",
+        "relevance_score": 35,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "it",
+        "english_title": "Three-year-old child killed in IDF raid in Gaza",
+        "english_summary": "According to media reports in Gaza, a three-year-old child was killed in an IDF raid.",
+        "canonical_event": "Child killed in IDF military raid in Gaza",
+        "reason": "Conventional military conflict reporting rather than counter-terrorism operations."
+      }
+    },
+    "44997fb77c356e5f8f5a6e33bdc17f0026c74046c2b07ef3c40322986aee3c9b": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654891+00:00",
+      "result": {
+        "event_id": "39cbad02043f178b",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [
+          "Arrests"
+        ],
+        "original_language": "de",
+        "english_title": "Burglaries in Paderborn; Arrest in Höxter",
+        "english_summary": "Following burglaries in 39 basements in Paderborn, an arrest was made in Höxter.",
+        "canonical_event": "Arrest following multiple burglaries in Paderborn",
+        "reason": "Ordinary property crime/burglary, no terrorism nexus."
+      }
+    },
+    "b299ee7a5aecf3595a98fa8646b05a6d3f74eff5d8f0298f3d9c6fff9628ed8a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654893+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1097",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Commentary on Netanyahu's statements regarding Israeli extremists",
+        "english_summary": "An opinion piece analyzing Israeli Prime Minister Netanyahu's statements against extremists as a dangerous scenario for the West Bank.",
+        "canonical_event": "Political analysis of Israeli statements regarding extremists in the West Bank",
+        "reason": "Political commentary and editorial analysis."
+      }
+    },
+    "afb97b7398e8762d2a1d9ddc00716d7b901fd02513598f5eec648de9e635c46a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654895+00:00",
+      "result": {
+        "event_id": "06fd8cd9210374c0",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Libya signs '4+4' agreement",
+        "english_summary": "Libya has signed a new security/political '4+4' agreement.",
+        "canonical_event": "Libyan factions sign '4+4' agreement",
+        "reason": "General political and security agreement in Libya, not a specific CT operation or event."
+      }
+    },
+    "ace985e76fe96b1d9a5e2ea5903ae2551df9bc74ec4b4f494264226fc7f58fe6": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654897+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1101",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Legal structure of the Egyptian Media Syndicate and transitional phase issues",
+        "english_summary": "An analytical legal piece on the establishment and foundational phase of the Egyptian Media Syndicate.",
+        "canonical_event": "Analysis of the legal structure of the Egyptian Media Syndicate",
+        "reason": "Domestic legal and professional association news."
+      }
+    },
+    "f9216b94dd3e5109ab30cf106423c7216e84fe61f27a7d93eb4a41e72efa3b3c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654899+00:00",
+      "result": {
+        "event_id": "4267849e6b207062",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Wildfire response underway in Antalya",
+        "english_summary": "Emergency services are responding to a forest fire that broke out in Antalya.",
+        "canonical_event": "Emergency response to forest fire in Antalya",
+        "reason": "Natural disaster / wildfire response."
+      }
+    },
+    "61ac1b4ece47053cc5b17afbada685118831f7985eca3d311cae72e24902d7ad": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654902+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1104",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Analysis of political vacuum in Libya",
+        "english_summary": "An analytical article exploring why the political vacuum in Libya is widening due to parliamentary paralysis and spending complexities.",
+        "canonical_event": "Political analysis of the widening governance vacuum in Libya",
+        "reason": "Political commentary on state governance."
+      }
+    },
+    "16bc11503037418f759c80e2311cc407e7c8879a944a4bb37235920d95300abf": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654906+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1105",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Terrorist Financing",
+          "Arrests"
+        ],
+        "original_language": "he",
+        "english_title": "Over 1 Million NIS Suspected Terror Funds Seized en Route to Jerusalem, Driver Arrested",
+        "english_summary": "Security forces intercepted a vehicle on the way to Jerusalem, seizing over one million NIS suspected of being terrorist financing funds and arresting the driver.",
+        "canonical_event": "Security forces seize over 1 million NIS in suspected terrorist funds and arrest driver en route to Jerusalem",
+        "reason": "Direct counter-terrorism operation involving terrorist financing seizure and arrest."
+      }
+    },
+    "ae94ed40ee20f2e67353f9805ab735a7797704afc6cba09982364461c883a9e3": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654908+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1106",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Online Radicalization / Cyberterrorism",
+          "Legal / Judicial"
+        ],
+        "original_language": "ru",
+        "english_title": "Russian Human Rights Council Head Proposes School Counter-Terrorism Awareness Campaigns",
+        "english_summary": "The head of the Russian Presidential Council for Civil Society and Human Rights proposed regularly informing schoolchildren about teenagers convicted of terrorism.",
+        "canonical_event": "Russian official proposes counter-terrorism awareness campaigns in schools regarding convicted youth",
+        "reason": "Policy proposal and public awareness initiative related to countering violent extremism and terrorism recruitment among youth."
+      }
+    },
+    "14f90691744abedc2a5fc301868c51603e5f49e64a62fa1154419796f3580a8b": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654911+00:00",
+      "result": {
+        "event_id": "6c08c50ec1dd59cd",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [
+          "Arrests"
+        ],
+        "original_language": "de",
+        "english_title": "Vienna: Arrest after robbery at subway station",
+        "english_summary": "An arrest was made in Vienna following a robbery at a subway station.",
+        "canonical_event": "Arrest following subway station robbery in Vienna",
+        "reason": "Ordinary street crime/robbery, no terrorism nexus."
+      }
+    },
+    "b4ff92b4cc07311f35cad5fc82f8220428a1a2fca4210e8adf438004a71bf0de": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654914+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1108",
+        "relevance_score": 25,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Palestinian Families Demand Information on Missing Persons in Gaza War",
+        "english_summary": "Palestinian families are calling for information regarding the fate of individuals missing amid the war in Gaza.",
+        "canonical_event": "Palestinian families demand information on missing persons in Gaza",
+        "reason": "Humanitarian appeal regarding missing persons in conflict zones, lacking direct CT operational relevance."
+      }
+    },
+    "e4f7db9eb23e60383f03fb742a1299b4ca988081d948fc6d6efd21cdd586635a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654916+00:00",
+      "result": {
+        "event_id": "ab327b460f842110",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [
+          "Weapons"
+        ],
+        "original_language": "tr",
+        "english_title": "President Erdoğan: We now compete only with ourselves in the defense industry",
+        "english_summary": "Turkish President Erdoğan stated that Turkey's defense industry has reached a point where it competes only with itself.",
+        "canonical_event": "Turkish President comments on advancements in the national defense industry",
+        "reason": "National defense industry development statement rather than a counter-terrorism event."
+      }
+    },
+    "a7ddf4fe70b8d9ecb02be57b010f6c4fb25a4b7e66ae2e25ff75f7e3689d5fa0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:27:49.654918+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1111",
+        "relevance_score": 65,
+        "is_current_ct_event": true,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Algerian President Tebboune Emphasizes Counter-Terrorism as African Priority",
+        "english_summary": "Algerian President Abdelmadjid Tebboune stated that combating terrorism must remain a top priority for joint African action.",
+        "canonical_event": "Algerian President calls for prioritizing counter-terrorism in joint African action",
+        "reason": "High-level governmental counter-terrorism policy statement."
+      }
+    },
+    "d9db9bdcf2752d48474c5d8bcef63dbc833512faf83eae7a9445f9d0b8d73b6d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825625+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1117",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President Tebboune: Counter-terrorism is a priority for joint African action",
+        "english_summary": "Algerian President Tebboune emphasized that combating terrorism remains a primary focus for joint African efforts.",
+        "canonical_event": "President Tebboune calls counter-terrorism a priority for African action",
+        "reason": "General political statement on counter-terrorism priorities without a specific current operational event."
+      }
+    },
+    "1f6cc2d365af627a698dd85b74146b0f4102994403296952aa3901e61ed91454": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825645+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1118",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President Tebboune calls to strengthen African efforts against terrorism",
+        "english_summary": "President Tebboune urged enhanced regional and continental cooperation to confront the threat of terrorism in Africa.",
+        "canonical_event": "President Tebboune calls to strengthen African efforts against terrorism",
+        "reason": "General political rhetoric about enhancing counter-terrorism cooperation."
+      }
+    },
+    "bae91b598819273659a6ae3b3ff480dbb744657683be7c7d69b22ffd8fee1ec9": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825650+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1121",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President Tebboune: The alarming expansion of terrorism in Africa threatens state existence",
+        "english_summary": "President Tebboune warned that the spread of terrorism across Africa poses an existential threat to states.",
+        "canonical_event": "President Tebboune warns of terrorism threating states in Africa",
+        "reason": "High-level political warning and commentary on terrorism trends rather than a specific operational event."
+      }
+    },
+    "b2943c3b2f7b579c3b98a0dc5f18c628133afdd9ab8102e11ce2d7802a87d295": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825653+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1122",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Tebboune calls for strengthening joint African action against terrorism",
+        "english_summary": "Algerian President Tebboune stressed the need for unified African action to counter terrorism.",
+        "canonical_event": "Tebboune calls for joint African action against terrorism",
+        "reason": "General policy statement on counter-terrorism cooperation."
+      }
+    },
+    "d82ab859965a676f95b5a8dda9e3b105345c2480c74c9e5bd6dfc01ee04cbbad": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825658+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1123",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "SCO with a big plus",
+        "english_summary": "An analytical or economic commentary concerning the Shanghai Cooperation Organisation.",
+        "canonical_event": "Commentary on the Shanghai Cooperation Organisation",
+        "reason": "Unrelated international relations and economic/political commentary."
+      }
+    },
+    "1f8cc563c6fcc6ca22a2138a357f32200c995e06aa6ba0ee09d7644cdc20ffe1": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825661+00:00",
+      "result": {
+        "event_id": "4ca357fa22a4ff6f",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "The Ministry of National Education prepared materials on the Turkic world",
+        "english_summary": "Turkey's Ministry of National Education has prepared educational materials focusing on the Turkic world.",
+        "canonical_event": "Ministry of National Education prepares educational materials in Turkey",
+        "reason": "Educational and cultural news with no terrorism nexus."
+      }
+    },
+    "0c7bb7d969b4df43c48071ff93a1dd3c74b7792deee63d1b17209fca355841a9": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825665+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1125",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Ignoring periodic medical checkups may threaten your life without you realizing it",
+        "english_summary": "A health awareness article discussing the importance of regular medical checkups.",
+        "canonical_event": "Health advice on medical checkups",
+        "reason": "General health advice article."
+      }
+    },
+    "c43cc414bbbebbb3e52213f128f1f4b49216c3dad65ea36aab29921e5204119a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825667+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1126",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "he",
+        "english_title": "US outraged: Canada ruled that the Twin Towers collapse was not a terrorist attack",
+        "english_summary": "Reports on diplomatic friction or controversies regarding legal/political classifications of historical events.",
+        "canonical_event": "Dispute over classification of September 11 attacks",
+        "reason": "Historical/political controversy rather than a current counter-terrorism operational event."
+      }
+    },
+    "98711ccd863a03a0e49ec541efe69f4416317491e6d8486e7d25bf3a4572564f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825670+00:00",
+      "result": {
+        "event_id": "aa84576873c270cf",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Switzerland: One dead, several injured after shots fired at rave party",
+        "english_summary": "One person was killed and several injured following a shooting incident at a rave party in Switzerland.",
+        "canonical_event": "Shooting at rave party in Switzerland",
+        "reason": "Ordinary violent crime / mass shooting with no reported terrorism nexus."
+      }
+    },
+    "38ebd3901a64af0d47df2b6703c14d29fbaa71b35061507dee7c93178a43c157": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825674+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1128",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Saudi Central Bank licenses 'Buy Now Pay Later' generation for BNPL activity",
+        "english_summary": "The Saudi Central Bank has granted a license to a financial firm to conduct Buy Now Pay Later activities.",
+        "canonical_event": "Saudi Central Bank licenses BNPL financial activity",
+        "reason": "Financial regulatory news unrelated to terrorist financing."
+      }
+    },
+    "2d38114ac754d6f959f80db20c576b64fcbbc7851c3ee696c6e2ec93a4332464": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825678+00:00",
+      "result": {
+        "event_id": "53c71d717ba95edb",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "The shooting at the Rave Festival in Aarau, Switzerland: a 22-year-old Italian killed",
+        "english_summary": "A 22-year-old Italian woman was killed in a shooting incident at a rave festival in Aarau, Switzerland.",
+        "canonical_event": "Shooting at rave festival in Aarau, Switzerland",
+        "reason": "Violent criminal shooting incident lacking any terrorism nexus."
+      }
+    },
+    "e3ec09d2f9115e1469e50b791ebff1159c532bc9e0f19815b1f6c6784e601071": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825682+00:00",
+      "result": {
+        "event_id": "d16389025958e6c7",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "President Tebboune: 'The fight against terrorism must remain at the heart of African action'",
+        "english_summary": "Algerian President Tebboune called for maintaining counter-terrorism as a top priority for African cooperation.",
+        "canonical_event": "President Tebboune emphasizes counter-terrorism in African action",
+        "reason": "Political statement on counter-terrorism priorities."
+      }
+    },
+    "126e055b993222d2363b9308403881e22e2a683b63023f59f75bd69ad605e26b": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825684+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1131",
+        "relevance_score": 35,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "AFU carried out missile strikes on Belgorod",
+        "english_summary": "The Armed Forces of Ukraine reportedly launched missile strikes targeting Belgorod.",
+        "canonical_event": "Missile strike on Belgorod by Ukrainian forces",
+        "reason": "Conventional inter-state military conflict reporting rather than terrorism."
+      }
+    },
+    "b3acfabae9fa4d5aed33c58cde016217931ad23fd785a5eef03ea115eb872052": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825687+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1132",
+        "relevance_score": 25,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Prize courts.. An abandoned law invoked by Washington to confiscate hostile vessels",
+        "english_summary": "An analytical piece discussing historical maritime laws used by Washington to seize vessels.",
+        "canonical_event": "Analysis of maritime prize law and vessel seizure by Washington",
+        "reason": "Legal/historical analysis of maritime sanctions and seizures, not directly a CT event."
+      }
+    },
+    "5e2d8cb2301a9dc002bb9ced50d6f0600997808f06e93fd9d2910405a5d41feb": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825689+00:00",
+      "result": {
+        "event_id": "f0c370877a612de4",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Attacks against NATO states: 'Putin escalates'",
+        "english_summary": "News analysis regarding escalations and security concerns involving NATO states and Russia.",
+        "canonical_event": "Analysis of escalation and security concerns involving NATO and Russia",
+        "reason": "Geopolitical and military tension reporting rather than terrorism."
+      }
+    },
+    "46dbef4c40172fc37b89eaa4ef267cdb3f60287a9e0b2a155f6363a51dd9e072": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825691+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1135",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President of the Republic: Africa's success in fighting terrorism is a success for the international community",
+        "english_summary": "Algerian President notes that combating terrorism in Africa benefits global security.",
+        "canonical_event": "Algerian President comments on African counter-terrorism success",
+        "reason": "Political commentary on counter-terrorism efforts."
+      }
+    },
+    "1172d6c4715e15d4a1a5fd04493de3f864a7cfa25d8d38a81f6b369956802fc2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825693+00:00",
+      "result": {
+        "event_id": "5681b37f7ab6fcff",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "Ebola outbreak in DRC leaves over 2,860 dead and confirmed cases approach 6,000",
+        "english_summary": "Public health update regarding the ongoing Ebola epidemic in the Democratic Republic of Congo.",
+        "canonical_event": "Ebola outbreak casualties in Democratic Republic of Congo",
+        "reason": "Public health crisis reporting."
+      }
+    },
+    "3506f845b18d79163717e39f230e74ae8e14b42ffa480a3d4f384c84560f414c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825696+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1137",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Online Radicalization / Cyberterrorism",
+          "Legal / Judicial"
+        ],
+        "original_language": "ru",
+        "english_title": "Head of Russian HRC suggests intimidating schoolchildren with stories about teenagers convicted of terrorism",
+        "english_summary": "The head of the Russian Presidential Council for Civil Society and Human Rights proposed deterring students by showing them examples of teenagers convicted of terrorism offenses.",
+        "canonical_event": "Russian HRC head proposes anti-terrorism deterrence campaign for schoolchildren involving convicted teens",
+        "reason": "Counter-terrorism preventative policy / radicalization deterrence proposal targeting youth."
+      }
+    },
+    "c5d8524808a92a8c18973112d480c6ad8b7c146ee2cd091380d9f47ed221fcf4": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825698+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1138",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President of the Republic: Counter-terrorism tops the priorities of African action",
+        "english_summary": "Algerian President reiterates that fighting terrorism remains the top priority for African joint action.",
+        "canonical_event": "Algerian President reaffirms counter-terrorism as African priority",
+        "reason": "Political declaration on counter-terrorism priorities."
+      }
+    },
+    "53dcf9a390ae28f722c5115ca87715d50c750674fdb229eca3c107da2da50c2a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:05.825701+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1139",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Launch of electronic permits for double-trailer trucks on Saudi roads",
+        "english_summary": "Saudi authorities have launched an electronic permit system for double-trailer trucks on highways.",
+        "canonical_event": "Launch of electronic permits for heavy trucks in Saudi Arabia",
+        "reason": "Transportation and logistics regulatory news."
+      }
+    },
+    "9d41af21a834ff0c6845e199bcb270fb32842fbf278aabdb3aab9cbe738510ed": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.444987+00:00",
+      "result": {
+        "event_id": "ba039e6980e67328",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial",
+          "Online Radicalization / Cyberterrorism"
+        ],
+        "original_language": "fr",
+        "english_title": "Young man convicted in Nantes for glorifying terrorism",
+        "english_summary": "A young man originally from Deux-Sèvres, who converted to Islam, was sentenced in Nantes for defending terrorism.",
+        "canonical_event": "conviction for glorification of terrorism in Nantes",
+        "reason": "Directly reports on a legal prosecution and conviction for terrorism apologia."
+      }
+    },
+    "0e587386a54c4abc21c7b5fd92c08ea1952b5204911bc8b68b7096ab5394c4f4": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445003+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1141",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial",
+          "Arrests"
+        ],
+        "original_language": "ru",
+        "english_title": "Criminal case opened against terrorism sympathizer in Kurgan region",
+        "english_summary": "In the Kurgan region, law enforcement has opened a criminal case against an individual accused of supporting terrorism.",
+        "canonical_event": "criminal case opened against terrorism supporter in Kurgan region",
+        "reason": "Involves an ongoing criminal investigation and legal action regarding terrorism support."
+      }
+    },
+    "d2d0b1a523a800ae39cd2a6af0b37273a1f59e367f2d664386bdad2eebeaacb4": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445007+00:00",
+      "result": {
+        "event_id": "f854a68daaba2ee6",
+        "relevance_score": 45,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "President of the Republic calls for strengthening African counter-terrorism mechanisms",
+        "english_summary": "The president has called for reinforcing African mechanisms dedicated to the fight against terrorism.",
+        "canonical_event": "presidential call to strengthen African counter-terrorism mechanisms",
+        "reason": "Generic political statement on counter-terrorism without a specific operational event."
+      }
+    },
+    "eb38ec1f26eb07c7e852cc6d92265019fcbacbe36b00866a0da34bb81d05a919": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445010+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1143",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Videos document attacks: Settler violence in the West Bank dominates digital scene",
+        "english_summary": "Footage documenting settler violence in the West Bank is widely circulating on digital platforms.",
+        "canonical_event": "documentation of settler violence in the West Bank",
+        "reason": "General geopolitical/settler conflict reporting rather than a specific counter-terrorism operational event."
+      }
+    },
+    "fb415c31b76ecbf2ed2d7af9de8d0a9e636d79fdbf63e07b919ca8c6f2e32b5a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445013+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1144",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "From the two-state solution to 'Greater Israel', how settlements bury the Palestinian state dream",
+        "english_summary": "An analytical piece discussing how settlement expansion impacts the prospect of a Palestinian state.",
+        "canonical_event": "opinion/analysis on settlement expansion and the two-state solution",
+        "reason": "Opinion and political analysis piece."
+      }
+    },
+    "5cba7a710e43c27306378310c200df522ad19432af3c734bb1a8fb393d4885d9": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445016+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1145",
+        "relevance_score": 45,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President Tebboune: Algeria continues to support joint African action against terrorism",
+        "english_summary": "Algerian President Tebboune reaffirmed the country's commitment to supporting joint African counter-terrorism efforts.",
+        "canonical_event": "Algerian president reiterates support for African counter-terrorism efforts",
+        "reason": "Diplomatic statement regarding counter-terrorism policy."
+      }
+    },
+    "4e043b6846808e2b01df1f7c71ee12c7c99c4422f53a76f5766f8df5c0c1f52c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445018+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1146",
+        "relevance_score": 45,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President Tebboune: Strengthening African Union capabilities is an urgent necessity to face terrorist threat",
+        "english_summary": "President Tebboune emphasized the urgent need to enhance the African Union's capabilities to counter terrorism.",
+        "canonical_event": "Algerian president calls for enhanced AU capabilities against terrorism",
+        "reason": "Diplomatic/political commentary on counter-terrorism capabilities."
+      }
+    },
+    "f228cfbac85b03a20a3a564580c133f056ba9b43f7a7aa2bf93c2f64c028f61d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445021+00:00",
+      "result": {
+        "event_id": "af673c676ab50229",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Weapons"
+        ],
+        "original_language": "de",
+        "english_title": "Leipzig drone attack: German government blames Russia's GRU",
+        "english_summary": "The German government has blamed Russia's GRU military intelligence agency for a drone attack incident in Leipzig.",
+        "canonical_event": "attribution of Leipzig drone attack to Russian GRU by German government",
+        "reason": "State-level attribution of a hostile drone attack/sabotage plot involving intelligence services."
+      }
+    },
+    "d3d5878665667be9d72463e00211dd9e26e35daacd16c0b703378cbebb932151": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445023+00:00",
+      "result": {
+        "event_id": "d54769a32ba38b90",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Younes in coma in Sharm, Italian doctors approve travel",
+        "english_summary": "A young patient in a coma in Sharm el-Sheikh is cleared for travel by Italian doctors to Turin.",
+        "canonical_event": "medical transfer of a comatose patient from Sharm el-Sheikh to Turin",
+        "reason": "Ordinary medical transport news with no terrorism nexus."
+      }
+    },
+    "18f5b9e144ef865db05e13a590161c2b4f70ec18512a7629faac30f1eba68055": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445025+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1149",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Al-Masari: Iraqi arms are a national decision and external timelines are rejected",
+        "english_summary": "Iraqi political figure Al-Masari comments on national arms and rejects external timelines.",
+        "canonical_event": "political statement by Iraqi figure regarding national arms",
+        "reason": "Domestic political discourse in Iraq."
+      }
+    },
+    "70e99f93d3dddfc150458e98d515c793bdcd6251e6c94648772c390fac3268eb": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445028+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1150",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Hamid Dabashi deconstructs Eurocentrism post-brutality: Gaza, genocide and the illusion of Western civilization",
+        "english_summary": "An intellectual opinion piece examining Western civilization and the situation in Gaza.",
+        "canonical_event": "opinion article on Eurocentrism and Gaza",
+        "reason": "Cultural and political opinion piece."
+      }
+    },
+    "307970ab8c046102ffea7e124231e2072c4dd8cc83f43d0428c31d79b661399d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445030+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1151",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Residents of Bryansk to commemorate victims of terrorist attacks in early September",
+        "english_summary": "Locals in Bryansk prepare to commemorate past victims of terrorist attacks during early September events.",
+        "canonical_event": "commemoration of past terrorism victims in Bryansk",
+        "reason": "Historical commemoration event rather than a current operational CT event."
+      }
+    },
+    "f91557ace691f3dea26fadf9ffca98ad039da38b40944945f15e1099de745c12": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445032+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1152",
+        "relevance_score": 35,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ru",
+        "english_title": "Russian Defense Ministry reports strike on Pirogov center near Kyiv",
+        "english_summary": "The Russian Ministry of Defense announced a military strike targeting a facility near Kyiv.",
+        "canonical_event": "Russian military strike near Kyiv reported by Defense Ministry",
+        "reason": "Conventional military strike within the Russia-Ukraine war; not a counter-terrorism event per se."
+      }
+    },
+    "395bc4afaca6843dca227057fde2af1de21259c59c2ae5ff95b9dbfaec0e68e8": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445034+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1153",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Joint Egyptian-Emirati statement regarding Bank Misr branches in UAE",
+        "english_summary": "Egypt and the UAE issued a joint statement concerning Bank Misr operations in the Emirates.",
+        "canonical_event": "joint financial statement by Egypt and UAE regarding Bank Misr",
+        "reason": "Bilateral financial/banking announcement."
+      }
+    },
+    "61c5f91efae699274d20fe1646fe20f9282c90a53647869e2127df63a416540f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445038+00:00",
+      "result": {
+        "event_id": "782f4adb3695de7e",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "de",
+        "english_title": "Switzerland: Police continue manhunt after shooting at techno party in Aarau",
+        "english_summary": "Swiss police are searching for one or more suspects following a shooting incident at a techno party in Aarau.",
+        "canonical_event": "manhunt following shooting at techno party in Aarau, Switzerland",
+        "reason": "Violent crime/shooting incident, but lacks a verified terrorism nexus."
+      }
+    },
+    "8d7ab362cade0e5555c8b430e3814fe996b57a58586fde8c1fb692187d9dfd0d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445055+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1156",
+        "relevance_score": 45,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President of the Republic: Countering terrorism must remain top priority of joint African action",
+        "english_summary": "The president stressed that counter-terrorism efforts must stay at the forefront of joint African initiatives.",
+        "canonical_event": "presidential statement on prioritizing counter-terrorism in Africa",
+        "reason": "Political declaration on counter-terrorism priorities."
+      }
+    },
+    "0a1f11e78f00469cbcd94dc3d1b68d1f7d777e4d7add84f37e93435d6c12b496": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445058+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1157",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "A week after moving in: Settlers displace Palestinian Christian from his home",
+        "english_summary": "Report on the displacement of a Palestinian Christian from his home by settlers in the West Bank.",
+        "canonical_event": "displacement of Palestinian resident by settlers in the West Bank",
+        "reason": "Local conflict and displacement incident without a direct counter-terrorism angle."
+      }
+    },
+    "dd7d6a9f6aebb00a1e127654d6a50752dead151130ff78e9e13b1d384ae6c4b5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445060+00:00",
+      "result": {
+        "event_id": "93b23ce4b153af79",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Foreign Minister Fidan met with his Pakistani counterpart Dar in Istanbul",
+        "english_summary": "Turkish Foreign Minister Hakan Fidan held a meeting with Pakistan's Foreign Minister Ishaq Dar in Istanbul.",
+        "canonical_event": "bilateral meeting between Turkish and Pakistani foreign ministers in Istanbul",
+        "reason": "Bilateral diplomatic meeting; lacks specific operational CT events."
+      }
+    },
+    "e478ec17e10db2fc7bc0d23180ddb513c4225ddc3ede95a660df102ddc34218f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445063+00:00",
+      "result": {
+        "event_id": "1e24b8e4e590d4d1",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "es",
+        "english_title": "Leader of Islamic State, world's most bloodthirsty terrorist group, reported dead",
+        "english_summary": "Reports indicate the death of a leader associated with the Islamic State terrorist organization.",
+        "canonical_event": "death of Islamic State leader reported",
+        "reason": "Significant leadership development involving a designated terrorist organization."
+      }
+    },
+    "80ae59a4483376c09e652822cdf6bb10aead8334d4b4c5c7f5c35caa4a2ae394": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:22.445066+00:00",
+      "result": {
+        "event_id": "4268163429d5aabc",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Motorcycle crash, two young people dead in Val di Susa",
+        "english_summary": "Two young individuals died following a fatal motorcycle accident in Val di Susa.",
+        "canonical_event": "fatal motorcycle crash in Val di Susa",
+        "reason": "Traffic accident with no terrorism nexus."
+      }
+    },
+    "8c5dde33aa4e0f786184e5312d1f028904a81b515ae9e9122eca1e93da99ba6f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748168+00:00",
+      "result": {
+        "event_id": "49642acfe06b1f8d",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "President Erdogan: Our army is experiencing its strongest period today",
+        "english_summary": "Turkish President Recep Tayyip Erdogan stated that the Turkish military is currently at its strongest point.",
+        "canonical_event": "Speech by President Erdogan regarding military strength in Turkey",
+        "reason": "General political and military commentary without a specific counter-terrorism nexus."
+      }
+    },
+    "c8dd4aa829b104a4438438d5347558294f1f8226020c149cec2e7ec25da7db7f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748186+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1162",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Erdogan: The Turkish army is living its strongest days",
+        "english_summary": "Turkish President Erdogan remarks on the strength of the Turkish military.",
+        "canonical_event": "Speech by President Erdogan regarding military strength in Turkey",
+        "reason": "Duplicate story regarding Turkish military strength; no direct counter-terrorism event."
+      }
+    },
+    "2d3cab0506877dffdafbec95d5f04d25de81523d3957c350e0eefb87e79cb4e2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748189+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1163",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "RIA Novosti: Erdogan to discuss Turkey's mediation on Ukraine with Putin",
+        "english_summary": "Reports indicate Turkish President Erdogan will discuss Turkey's role in mediating the Ukraine conflict with Russian President Putin.",
+        "canonical_event": "Diplomatic discussion between Erdogan and Putin regarding Ukraine",
+        "reason": "International diplomacy and conflict mediation story, not a CT intelligence event."
+      }
+    },
+    "6e5556a4af8281490f9861022481f216835b746e2fa2765cd2780073abf6a9bc": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748192+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1164",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Alex Karp: The philosopher of extermination who sold his soul to Trump and Israel",
+        "english_summary": "An opinion piece criticizing Palantir CEO Alex Karp and his ties to political figures and Israel.",
+        "canonical_event": "Opinion piece on Palantir CEO Alex Karp",
+        "reason": "Editorial commentary and criticism; lacks a concrete, current counter-terrorism event."
+      }
+    },
+    "46cb2791e07488fbe75ca29e615fd6db336b5a65949c7407d2bc1b3b52855d03": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748195+00:00",
+      "result": {
+        "event_id": "bde71c16a9da104c",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests"
+        ],
+        "original_language": "en",
+        "english_title": "Palestinian arrested in Greece for alleged Hamas membership",
+        "english_summary": "A Palestinian individual has been arrested in Greece based on allegations of membership in Hamas.",
+        "canonical_event": "Arrest of a Palestinian for alleged Hamas membership in Greece",
+        "reason": "Direct law enforcement counter-terrorism arrest of a suspected terrorist group member."
+      }
+    },
+    "113e2f537d60ed2662742dd5a089406a75470a68e565ccb71b75d4114fc98412": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748197+00:00",
+      "result": {
+        "event_id": "fb880c7897c1d8d4",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "Prince Harry reportedly threatened with death by a major terrorist organization",
+        "english_summary": "A celebrity news report discusses alleged death threats against Prince Harry by an unspecified terrorist organization.",
+        "canonical_event": "Reported threats against Prince Harry",
+        "reason": "Sensationalist celebrity news regarding an unconfirmed historical or vague threat."
+      }
+    },
+    "de30c70b5ee84e5db4e814f994f6a1035eebc5709accb31e6dba45664e8a1f94": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748201+00:00",
+      "result": {
+        "event_id": "7f8257a96996f73a",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Weapons"
+        ],
+        "original_language": "de",
+        "english_title": "Merz: Reaction to drone incident 'in the next days'",
+        "english_summary": "German politician Friedrich Merz announces a reaction to a recent drone incident will come in the coming days.",
+        "canonical_event": "Political response planned regarding drone incident in Germany",
+        "reason": "General political reporting on a security incident (drone sighting/incursion) without explicit terrorism attribution confirmed."
+      }
+    },
+    "2586bdb59cdbde1c786237bd88de0a90b9acb6d47121302c7be20532cf604b35": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748203+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1168",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "he",
+        "english_title": "Death penalty for terrorists will create martyrs, not deterrence",
+        "english_summary": "An op-ed discussing the policy implications of implementing the death penalty for convicted terrorists in Israel.",
+        "canonical_event": "Editorial debate on death penalty for terrorists in Israel",
+        "reason": "Political commentary and opinion on counter-terrorism legislation rather than a reporting of an event."
+      }
+    },
+    "d58aae7a052d06400263b663840aa0ca22f655192d04cfa52d03d3498ffa8d70": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748206+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1169",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Live ammunition injuries during an attack by extremist settlers on Al-Mughayyir",
+        "english_summary": "Several individuals sustained live ammunition injuries during an attack carried out by settlers in the village of Al-Mughayyir.",
+        "canonical_event": "Settler attack resulting in injuries in Al-Mughayyir",
+        "reason": "Reports of political/ideological violence and localized clashes resulting in injuries."
+      }
+    },
+    "bb09c44dd4c1c6a34b89b32de5f2fc748e30c68e85ea894a9e2718f10cf8fc77": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748209+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1170",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Extremist settlers attack citizens' homes in Beita",
+        "english_summary": "Settlers launched attacks targeting homes of local residents in the town of Beita.",
+        "canonical_event": "Settler attack on homes in Beita",
+        "reason": "Local security incident involving ideological violence against property."
+      }
+    },
+    "c6d8d9e032283fe8f045a472113a27dfcc8245831b78bc0420ebdf31c5169de2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748211+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1171",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Cracks in Trump's base: The economy pursues Republicans in the midterm elections",
+        "english_summary": "An analysis of US domestic politics focusing on the economy and midterm elections.",
+        "canonical_event": "Political analysis of US midterm elections and economic impact",
+        "reason": "General US political and economic commentary."
+      }
+    },
+    "d5eec9b03c15419a366c954f1f8ebcb7b915b62ed2a6fa5a922af33964fa2d22": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748214+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1172",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Called for deportation of immigrants and Muslims: US deports British activist for overstaying visa",
+        "english_summary": "United States authorities deport a British activist for visa violations.",
+        "canonical_event": "Deportation of a British activist from the US for visa overstay",
+        "reason": "Immigration enforcement action involving a political activist, lacking a direct counter-terrorism nexus."
+      }
+    },
+    "fd1266b2d3d3819a8142bd9fd21f815ab0038cd26c03d073cd3dad1f57a6fbcc": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748217+00:00",
+      "result": {
+        "event_id": "bcfe1404ca231b03",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Ramallah: 4 injuries during an attack by extremist settlers on Al-Mughayyir",
+        "english_summary": "Four people were injured during a settler attack in Al-Mughayyir near Ramallah.",
+        "canonical_event": "Settler attack resulting in four injuries in Al-Mughayyir",
+        "reason": "Covers the same violent incident of localized clashes and attacks in Al-Mughayyir."
+      }
+    },
+    "a7e5940e61000468d2d6cc56b48ab9e92a2550852a0a4ae9f65063f77082ab78": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748219+00:00",
+      "result": {
+        "event_id": "511ef17a328e1e44",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Saudi Central Bank assets rise to $517.56 billion in July",
+        "english_summary": "Financial report detailing the increase in assets of the Saudi Central Bank.",
+        "canonical_event": "Financial report on Saudi Central Bank asset growth",
+        "reason": "Macroeconomic and financial news with no counter-terrorism relevance."
+      }
+    },
+    "2ee005cab9aaef2d393e107f326570cd3a1f8dcdd50758a7a7da87af1348d6e2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748221+00:00",
+      "result": {
+        "event_id": "2e2c0eb1c3df8d71",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "The 60-second rule causes chaos and controversy in the Sociedad and Espanyol match",
+        "english_summary": "Sports reporting on a refereeing decision or rule controversy during a football match.",
+        "canonical_event": "Sports controversy during Real Sociedad vs Espanyol football match",
+        "reason": "Sports news article."
+      }
+    },
+    "312933266c2dba622f3349f5a3d70630597196e72a2c7186bd7bd401a129816e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748224+00:00",
+      "result": {
+        "event_id": "d59c58f23f3b586f",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Work continues on the overflowing stream due to torrential rain in Trabzon",
+        "english_summary": "Emergency response and cleanup operations continue in Trabzon following flooding from heavy rains.",
+        "canonical_event": "Flood response and recovery efforts in Trabzon",
+        "reason": "Natural disaster / weather reporting."
+      }
+    },
+    "f2d01969d436aff2d2faae845b124e5874ef5d34427344428fef760416445589": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748227+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1177",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Severe poisoning attack in Binyamin: Goats die, herders attacked with stones",
+        "english_summary": "An incident in the Binyamin region involving livestock poisoning and shepherds being attacked with stones.",
+        "canonical_event": "Attack on shepherds and livestock poisoning in Binyamin region",
+        "reason": "Local violent incident and ideological confrontation involving property destruction and assault."
+      }
+    },
+    "c92833ac5b13c783d9dcaf07c5428fd462e9684d51043131a37be60e1fc4967e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748229+00:00",
+      "result": {
+        "event_id": "04382358d91c219e",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Real Madrid defeats Malaga 4-0 in a match where Arda Güler scored",
+        "english_summary": "Football match result in which Real Madrid beat Malaga 4-0.",
+        "canonical_event": "Football match result: Real Madrid vs Malaga",
+        "reason": "Sports reporting."
+      }
+    },
+    "8b34bec212396e92b3981e2a2c5372515e03ed138c28e277a6d9863c3dd3b397": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748232+00:00",
+      "result": {
+        "event_id": "5fcc2c0cdbb4477e",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Besiktas parts ways with Amir Hadziahmetovic",
+        "english_summary": "Turkish football club Besiktas announces the departure of player Amir Hadziahmetovic.",
+        "canonical_event": "Football player transfer/departure from Besiktas",
+        "reason": "Sports transfer news."
+      }
+    },
+    "1cca4df22e0c2552d995b3e8cf4f834d5e3bbd0a9ab4a8a1ca9e2094488fce69": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:38.748234+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1180",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Not a restless minority... but the state of terrorism!!",
+        "english_summary": "An opinion piece or editorial using strong rhetoric regarding state actions.",
+        "canonical_event": "Editorial commentary on state policies",
+        "reason": "Opinion piece/commentary article without a specific breaking event."
+      }
+    },
+    "c5330c4b725cb4081353aeb76f7328d89691a8203d39d18cc178705c13b8a00c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667682+00:00",
+      "result": {
+        "event_id": "4f90fab668de7d1b",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "President Erdoğan: As terrorism chapters close, hopes will grow",
+        "english_summary": "Turkish President Erdoğan stated that as the chapters of terrorism are closed, hopes for the region will grow.",
+        "canonical_event": "Speech by President Erdoğan regarding terrorism in Turkey",
+        "reason": "Generic political statement/rhetoric regarding terrorism without a specific operational counter-terrorism event."
+      }
+    },
+    "73c943bea0c9d4180b34ab1e937a2132d66715e3294c2b952323a11cdad897d4": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667699+00:00",
+      "result": {
+        "event_id": "d85261af9f081c01",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Maria Spinelli, who was the victim of the shooting at a rave party in Switzerland",
+        "english_summary": "An article detailing the background of the victim of a rave party shooting in Switzerland.",
+        "canonical_event": "Victim profile of a shooting at a rave party in Switzerland",
+        "reason": "Ordinary violent crime (shooting at a rave party) with no terrorism nexus."
+      }
+    },
+    "32e45b0cb5396ba253aa03aadb256e675de90931bea4e6c00e7e40d90feb550a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667703+00:00",
+      "result": {
+        "event_id": "bb0f17912d55b5aa",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "President Erdoğan: We existed in these lands by believing in the power of our own wrists",
+        "english_summary": "Turkish President Erdoğan gave a speech emphasizing national strength and history.",
+        "canonical_event": "Speech by President Erdoğan in Turkey",
+        "reason": "General political speech, unrelated to counter-terrorism."
+      }
+    },
+    "41d30b4f6060cf2767f5b46883c583683f56b61d29be9073e143b523cce06281": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667706+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1184",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Revolutionary Guard warns against psychological warfare and vows to strike terrorist collaborators",
+        "english_summary": "The Iranian Revolutionary Guard issued a warning against psychological warfare and threatened to strike those cooperating with terrorists.",
+        "canonical_event": "Warning by Islamic Revolutionary Guard Corps regarding terrorism collaborators in Iraq/Iran",
+        "reason": "Threats and warnings by security forces, but lacking a concrete, specific operational CT event."
+      }
+    },
+    "4f5ba1107cb1b3726cee2953b5f1a771f181b9ac277c55dd8cd9a7e271671cdb": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667709+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1185",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Woman and child killed in AFU attack on Zaporizhzhia region",
+        "english_summary": "A woman and a child were killed as a result of an Armed Forces of Ukraine (AFU) attack in the Zaporizhzhia region.",
+        "canonical_event": "AFU attack resulting in civilian casualties in Zaporizhzhia region",
+        "reason": "Conventional military strike in an interstate war zone, not a terrorism event."
+      }
+    },
+    "dba5bc84246a94997048c71c9a53d0d41e90b60762e5798d1ad75505be665098": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667711+00:00",
+      "result": {
+        "event_id": "046c200e6d5035f3",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Women's National Volleyball Team defeats Italy to achieve championship",
+        "english_summary": "Turkey's Women's National Volleyball Team won the championship by defeating Italy.",
+        "canonical_event": "Sports championship win by Turkey women's volleyball team over Italy",
+        "reason": "Sports news, completely unrelated to counter-terrorism."
+      }
+    },
+    "5a566bbc502f91ccf86d2efdd3446bbaba722e89ec8c2de27d388fa17c4e5371": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667714+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1187",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "he",
+        "english_title": "Elisha Ben Kimon",
+        "english_summary": "An article by journalist Elisha Ben Kimon with minimal text.",
+        "canonical_event": "News report or author stub by Elisha Ben Kimon",
+        "reason": "Insufficient content or author stub, not a CT event."
+      }
+    },
+    "e1a74bfeb9191e21b26c8c1eb6fbe206d57898b177a4f8a41d63e52fc54aad8d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667716+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1188",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Banque Misr issues a second statement regarding its branches in the UAE",
+        "english_summary": "Banque Misr released a follow-up statement concerning its operations and branches in the United Arab Emirates.",
+        "canonical_event": "Banque Misr statement regarding UAE branches",
+        "reason": "Banking and corporate news, unrelated to counter-terrorism."
+      }
+    },
+    "25f9edb82330eb13727185af12a16ebec0383cec964719b8acf7742f98e360fa": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667719+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1189",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "The sea belongs to everyone: Italy reclaims its beaches from private concessions",
+        "english_summary": "Italy is taking back public access to its beaches from private concessions.",
+        "canonical_event": "Italy beach access and concessions policy change",
+        "reason": "Domestic tourism/public policy news in Italy, unrelated to terrorism."
+      }
+    },
+    "bfd694819be2e4d886906c7560e0fe2ef5d608b568c084bae5ca35b553ea3c47": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667721+00:00",
+      "result": {
+        "event_id": "42f74ea6ea8c8c75",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Heavy rain causes floods, water inundation, and landslides in Artvin",
+        "english_summary": "Heavy rainfall in Artvin led to flash floods, water damage, and landslides.",
+        "canonical_event": "Floods and landslides in Artvin, Turkey",
+        "reason": "Natural disaster/weather news, unrelated to counter-terrorism."
+      }
+    },
+    "b999912265a42dcb4d00167c1fcaaae9b8dba49ec136975339b5b099c588d213": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667723+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1192",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Why Iceland closed its door to Brussels",
+        "english_summary": "An analysis of why Iceland maintains its distance from European Union integration, focusing on fisheries.",
+        "canonical_event": "Geopolitical analysis of Iceland-EU relations",
+        "reason": "International relations and fisheries policy commentary, not a CT event."
+      }
+    },
+    "ec4f6ca93e0033adadb5e7528c68f6f7461c58fa2d2836510eeab54ff93f2768": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667725+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1193",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Public funds spent on terrorism...",
+        "english_summary": "A commentary report discussing allegations or concerns regarding public funds being spent or linked to terrorism in Iraq.",
+        "canonical_event": "Political commentary on public funds and terrorism in Iraq",
+        "reason": "Generic political/media commentary on corruption or funding issues rather than a concrete enforcement or security action."
+      }
+    },
+    "b8df93ae6adffe331c599fe0e26b0f1c7c5e75b21420d282ba99dc6bbc73e3aa": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667728+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1194",
+        "relevance_score": 45,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Cutting trees, stealing sheep, and preventing prayer: Settlers wreak havoc in the West Bank",
+        "english_summary": "Report on settler violence and disruptions including property damage and intimidation against Palestinians in the West Bank.",
+        "canonical_event": "Settler attacks and property vandalism in the West Bank",
+        "reason": "Reports on extremist settler violence/vandalism in the West Bank; borderline, but often treated as political/civil unrest or localized violence unless categorized strictly as domestic terrorism. Given context, keeping it just below threshold or at 45 as it lacks formal CT operations details."
+      }
+    },
+    "df43a47ee5689d205d602b431ab45d4c10e35efd4053802229d471c5ba45f180": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667731+00:00",
+      "result": {
+        "event_id": "da68b33a20e27a5c",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "The end of the chapters of terrorism will bring new hope to the region, says Turkish President",
+        "english_summary": "Turkish President Erdoğan stated in French-language media that ending terrorism will bring new hope to the region.",
+        "canonical_event": "Speech by President Erdoğan regarding terrorism in Turkey",
+        "reason": "French translation of Erdoğan's political speech on terrorism; no specific operational CT event."
+      }
+    },
+    "2f3ccac26e3a6553aad2907b5a59e42be2ab4743939ac068217b522006e3f209": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667734+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1196",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "President Erdoğan: Eradicating terrorism will bring new hopes to the region",
+        "english_summary": "Russian translation of Turkish President Erdoğan's remarks on eradicating terrorism.",
+        "canonical_event": "Speech by President Erdoğan regarding terrorism in Turkey",
+        "reason": "Russian translation of Erdoğan's political statements; no specific operational CT event."
+      }
+    },
+    "135b49659660bbc240f6cf69f0a69c050d9efeeb7ba581eaa65c6cbbd3ceef17": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667736+00:00",
+      "result": {
+        "event_id": "0695aca03a1e6145",
+        "relevance_score": 65,
+        "is_current_ct_event": true,
+        "categories": [
+          "Terrorist Financing"
+        ],
+        "original_language": "fr",
+        "english_title": "Terrorism: Ransoms, the lifeblood of jihadist groups' war",
+        "english_summary": "An analytical investigative piece examining how jihadist groups finance their operations through kidnapping for ransom.",
+        "canonical_event": "Analysis of ransom-based financing by jihadist groups",
+        "reason": "In-depth analytical reporting on terrorist financing mechanisms (ransoms) used by jihadist networks."
+      }
+    },
+    "19f7086ef24806223a36767cfde08bfbefbfa49ae2c564d56cc88fff499cd0a5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667740+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1198",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "IDF senior officials: Increased risk of armed Palestinians organizing to return fire at settlers",
+        "english_summary": "Senior Israeli military officials warn of a growing threat that armed Palestinian groups are organizing retaliatory attacks against settlers in the West Bank.",
+        "canonical_event": "IDF assessment on rising threat of armed Palestinian attacks against settlers in West Bank",
+        "reason": "Operational military intelligence assessment concerning imminent militant organization and potential attacks in the West Bank."
+      }
+    },
+    "a7d0bd7f709d7f5fd831773d16161f07b178a738a305c403c861b238aa1ac937": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667743+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1200",
+        "relevance_score": 35,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Deputy Speaker of the Iraqi Parliament: The future of foreign relations will depend on the file of restricting arms",
+        "english_summary": "The Iraqi parliament's deputy speaker stated that future foreign relations depend on state control of weapons.",
+        "canonical_event": "Statement by Iraqi parliament deputy speaker on state monopoly of arms",
+        "reason": "High-level political discourse regarding state arms control and militias in Iraq, lacking a specific CT operation."
+      }
+    },
+    "6dcf5568d30d65f50d639629d2e56cf32adc780ff16f7b978c6b707dc6ebc4b2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667746+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1202",
+        "relevance_score": 65,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Poisoning terror strikes again: Goat herd poisoned in Binyamin, shepherds rescued under a barrage of stones",
+        "english_summary": "A herd of goats was poisoned in the Binyamin region of the West Bank, and shepherds were attacked and rescued under stone-throwing.",
+        "canonical_event": "Poison attack on livestock and assault on shepherds in Binyamin, West Bank",
+        "reason": "Specific violent incident involving coordinated sabotage/poisoning of livestock and physical assault, treated as ideological/terror-related rural violence."
+      }
+    },
+    "b75195578df72463a250031dd1c9dfb8b583b1ad555f676a6f9688f126f685f0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:28:55.667747+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1203",
+        "relevance_score": 65,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Poisoning attack: Goats convulsed to death, severe documentation",
+        "english_summary": "Media coverage featuring footage of livestock dying after a poisoning attack in the West Bank.",
+        "canonical_event": "Poison attack on livestock in the West Bank",
+        "reason": "Direct follow-up report / footage of the livestock poisoning attack in the West Bank."
+      }
+    },
+    "f842c7b95b19ac602ecc512a59f2d716a3a1bdb8bde7beeed05e7a6721036d5e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027822+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1204",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Iraqi drones pursue terrorism remnants in Anbar desert",
+        "english_summary": "Iraqi drones are tracking remnants of terrorism in the Anbar desert toward the border strip.",
+        "canonical_event": "Iraqi drones pursue terrorist remnants in the Anbar desert near the border",
+        "reason": "Direct operational military/security counter-terrorism activity targeting terrorist remnants in Iraq."
+      }
+    },
+    "7c3725e87fb1233b780925768ebdc9ff82ea7abe06605442c70fd83f20d0fa37": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027838+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1206",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "ru",
+        "english_title": "Detention of Vladimir Z. and European response to terrorist attack",
+        "english_summary": "Discussion regarding the detention of Vladimir Z. and why Europe is slow to investigate a terrorist attack, addressed by Revenko.",
+        "canonical_event": "Commentary on detention and investigation regarding a terrorist attack involving Vladimir Z.",
+        "reason": "Mainly political commentary and statements rather than a direct current CT operation or arrest record."
+      }
+    },
+    "290226512e9865bb17c250e2f4c4c47578ecfb0d6249f41053d29ca08a42b95b": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027842+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1207",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "No Russians among victims of ferry shipwreck off Cyprus",
+        "english_summary": "No Russian citizens were among those injured or affected by a ferry shipwreck off the coast of Cyprus.",
+        "canonical_event": "Ferry shipwreck off the coast of Cyprus",
+        "reason": "Ordinary maritime accident with zero connection to terrorism."
+      }
+    },
+    "d9daa7cf3a138752bff770e6e0c3327924e3c3ae7f94f2e636f96549c416c39c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027846+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1208",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ru",
+        "english_title": "Swiss police state party shooting could be a terrorist attack",
+        "english_summary": "Swiss police have stated that a shooting incident at a party could potentially be a terrorist attack.",
+        "canonical_event": "Swiss police investigate shooting at a party as a potential terrorist attack in Switzerland",
+        "reason": "Ongoing investigation into a potential terrorist shooting incident."
+      }
+    },
+    "18a41fce2b98b558934c50b0b9d40010a06796a14ea5ed91ce56d15eb965c46f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027851+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1209",
+        "relevance_score": 50,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial",
+          "Attacks"
+        ],
+        "original_language": "ru",
+        "english_title": "Russian Investigative Committee opens terrorism case after Belgorod shelling",
+        "english_summary": "The Russian Investigative Committee has opened a criminal case under terrorism charges following Ukrainian shelling of Belgorod.",
+        "canonical_event": "Russian Investigative Committee opens terrorism case after Belgorod shelling",
+        "reason": "Legal/judicial counter-terrorism classification applied to an interstate armed conflict shelling incident."
+      }
+    },
+    "553e10c5aac0f9c3e631e7c3412f2a4a6de8f476863afd5a4062fb16e6919ba0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027854+00:00",
+      "result": {
+        "event_id": "80edb2c34482df33",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "he",
+        "english_title": "Daily News, August 30",
+        "english_summary": "General daily news summary published by Haaretz on August 30.",
+        "canonical_event": "General daily news roundup",
+        "reason": "General news roundup with no specific counter-terrorism event."
+      }
+    },
+    "4b8ac9756ad6bde3c332c71088048caa2be382d171f11d0a152962b7d323104e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027856+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1211",
+        "relevance_score": 50,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial",
+          "Attacks"
+        ],
+        "original_language": "ru",
+        "english_title": "Russian Investigative Committee opens terrorism case after strike on Belgorod",
+        "english_summary": "The Investigative Committee opened a terrorism case following a strike on Belgorod.",
+        "canonical_event": "Russian Investigative Committee opens terrorism case after strike on Belgorod",
+        "reason": "Legal/judicial counter-terrorism case opening regarding a strike."
+      }
+    },
+    "592622fb4bd6c4944d0dd02707e34e3b315de490acf88c291ff8ed3ba0d0ac33": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027859+00:00",
+      "result": {
+        "event_id": "91eb6d267a3ada9f",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [
+          "Arrests"
+        ],
+        "original_language": "de",
+        "english_title": "Man with arrest warrant turns himself in to federal police - Arrest",
+        "english_summary": "A man with an active arrest warrant voluntarily turned himself in to the federal police in Germany.",
+        "canonical_event": "Man with arrest warrant turns himself in to German federal police",
+        "reason": "Ordinary domestic arrest/surrender with no specified terrorism nexus."
+      }
+    },
+    "7b976b12a882f715f8973d76409f58ffd402128a646024ef43708d6bea08baa4": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027861+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1213",
+        "relevance_score": 50,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial",
+          "Attacks"
+        ],
+        "original_language": "ru",
+        "english_title": "SK opens terrorism case after AFU attacks on civil objects in Belgorod",
+        "english_summary": "The Russian Investigative Committee opened a terrorism case following attacks by the Armed Forces of Ukraine on civilian objects in Belgorod.",
+        "canonical_event": "Russian Investigative Committee opens terrorism case after attacks on Belgorod civil objects",
+        "reason": "Legal/judicial counter-terrorism classification of a conflict-related strike."
+      }
+    },
+    "62b79c30c4b2fd88421d871205d6356de2b45126dbba30a95a7e1577219f7757": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027863+00:00",
+      "result": {
+        "event_id": "bd3f07c8fb510e07",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Weapons"
+        ],
+        "original_language": "fr",
+        "english_title": "Nigeria: Army repels terrorist attack in Kukawa, at least 26 assailants neutralized",
+        "english_summary": "The Nigerian army successfully repelled a terrorist attack in Kukawa, resulting in the neutralization of at least 26 attackers.",
+        "canonical_event": "Nigerian army repels terrorist attack in Kukawa, neutralizing 26 assailants",
+        "reason": "Direct operational military engagement repelling a terrorist attack with neutralized combatants."
+      }
+    },
+    "ab24e6652920830f366ec0d1cde2c106cfe123424b78fb380989ede7d3d32ee2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027866+00:00",
+      "result": {
+        "event_id": "b4873276e13f70fb",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "AU Summit: Tebboune calls for strengthened African action against terrorism",
+        "english_summary": "During the African Union Summit, President Tebboune called for enhanced continental action to combat terrorism.",
+        "canonical_event": "President Tebboune calls for enhanced African action against terrorism at AU Summit",
+        "reason": "Political speech and diplomatic call to action rather than a specific operational CT event."
+      }
+    },
+    "c4b5bdc953f901f9d3524341091c242c936d2fb0152169b425ae26d615b31413": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027868+00:00",
+      "result": {
+        "event_id": "f63d81a7f13dd8a3",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "Lake Ontario becomes 'Lake of America' for Google Maps users in the US",
+        "english_summary": "Google Maps users in the United States observed Lake Ontario temporarily labeled as 'Lake of America'.",
+        "canonical_event": "Google Maps labeling issue regarding Lake Ontario in the US",
+        "reason": "Tech/mapping quirk with no relation to terrorism."
+      }
+    },
+    "4f145f66d92d7d288e7e4952253258e0a8e1318e9f48168ecc204718f41d3dbd": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027870+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1218",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Combating the phenomenon of terrorism must remain a top priority of African action",
+        "english_summary": "An editorial or statement emphasizing that countering terrorism should remain at the forefront of African joint action priorities.",
+        "canonical_event": "Official statements emphasizing counter-terrorism as a priority in Africa",
+        "reason": "General political commentary and policy emphasis on counter-terrorism."
+      }
+    },
+    "d8736243ec981ac1767b8cd81b88b04adde8a35f927c9dde4717033a31e9acf5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027872+00:00",
+      "result": {
+        "event_id": "45176310913cdc5a",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "en",
+        "english_title": "EDITORIAL: 9/11 Newspeak insults victims of terror attack",
+        "english_summary": "An opinion editorial discussing terminology surrounding historical 9/11 events.",
+        "canonical_event": "Editorial commentary on historical 9/11 terminology",
+        "reason": "Historical commentary and opinion piece about 9/11 terminology, not a current CT event."
+      }
+    },
+    "62b93acbe5fe56a8b559d48414cd88e7a9b954586ca78883d1e06145b12d6a08": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027876+00:00",
+      "result": {
+        "event_id": "a2739073478e618f",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "it",
+        "english_title": "Iranian media report two dead in Larak raid; IRGC vows to punish aggressor",
+        "english_summary": "Iranian media report two deaths following a raid on Larak, with the Islamic Revolutionary Guard Corps vowing retaliation.",
+        "canonical_event": "Raid on Larak reported by Iranian media with IRGC response",
+        "reason": "State-level military strike/incident in Iran rather than a counter-terrorism event."
+      }
+    },
+    "27f19c751e21cb0de160ee93bdeec48dbbce0777067b10ac487ece536cb63f78": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-30T20:29:11.027878+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1221",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "FBI announces thwarting of a terrorist attack in Ohio on Independence Day",
+        "english_summary": "The FBI announced the disruption and foiling of a planned terrorist attack in the state of Ohio during Independence Day celebrations.",
+        "canonical_event": "FBI thwarts terrorist attack plot in Ohio",
+        "reason": "Disrupted terrorist plot and counter-terrorism operation by law enforcement."
+      }
     }
   },
-  "last_updated": "2026-08-30T14:38:48.175442+00:00"
+  "last_updated": "2026-08-30T20:29:11.136482+00:00"
 }
