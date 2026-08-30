@@ -16,7 +16,7 @@ import requests
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# GEMINI AI-FIRST GEOLOCATION V5 — RESILIENT BATCHING + CHECKPOINTS
+# GEMINI AI-FIRST GEOLOCATION V5.1 — NEW EVENTS ONLY + RESILIENT BATCHING
 #
 # Principle:
 #   - Gemini decides the event location for EVERY event.
@@ -523,6 +523,17 @@ def is_cached(
     event,
     fingerprint
 ):
+    """
+    Automatic runs are NEW-EVENTS-ONLY.
+
+    Once Gemini has completed geolocation for an event, that decision is
+    frozen for all normal scheduled/daily runs. A later merge, translated
+    title change, added source, category change, or fingerprint change does
+    NOT send that historical event back to Gemini.
+
+    The only exception is an explicit manual run with AI_GEO_FORCE=1.
+    """
+
     if FORCE_AI:
         return False
 
@@ -531,22 +542,6 @@ def is_cached(
             "ai_geo_complete"
         )
         is True
-
-        and
-
-        event.get(
-            "ai_geo_version"
-        )
-        ==
-        AI_GEO_VERSION
-
-        and
-
-        event.get(
-            "ai_geo_fingerprint"
-        )
-        ==
-        fingerprint
     )
 
 
@@ -2023,6 +2018,13 @@ def main():
     )
     print(
         f"Force refresh: {FORCE_AI}"
+    )
+
+    print(
+        "Automatic mode: NEW EVENTS ONLY"
+        if not FORCE_AI
+        else
+        "Automatic mode overridden: FULL MANUAL AI REFRESH"
     )
     print(
         "Primary thinking: minimal"
