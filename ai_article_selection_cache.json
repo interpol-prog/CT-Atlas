@@ -90795,7 +90795,336 @@
         "canonical_event": "Police arrest suspect following public tip in Seewen, Switzerland",
         "reason": "Routine local police arrest based on a tip, with no indication of terrorism."
       }
+    },
+    "bcefadab6188d74cc4427448c506b39edf2f15fa7ad29d24dd479b8ee540ae56": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195311+00:00",
+      "result": {
+        "event_id": "6c3bf63ddd4bdca5",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Berlin news archive entry",
+        "english_summary": "A generic archive news entry regarding Berlin from tagesschau.de.",
+        "canonical_event": "generic archive entry Berlin",
+        "reason": "Outdated archive stub with no current counter-terrorism relevance."
+      }
+    },
+    "3367746d7463a1c18edf19f1564d452b09b2e351b800f03d2165c2076e41b645": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195337+00:00",
+      "result": {
+        "event_id": "e73da9ff057b4fc5",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Tagesschau Podcast",
+        "english_summary": "A generic podcast episode link from tagesschau.de.",
+        "canonical_event": "podcast episode tagesschau",
+        "reason": "Generic podcast link with no specific counter-terrorism event."
+      }
+    },
+    "320921c46a0b8512e9c083971a87a0afb8c2bdba1e1793e2e821a38a974dbbe4": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195341+00:00",
+      "result": {
+        "event_id": "a7ffe9e41ba06429",
+        "relevance_score": 65,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests"
+        ],
+        "original_language": "de",
+        "english_title": "Mannheim Police: Arrest of an internationally wanted criminal",
+        "english_summary": "Police in Mannheim report the arrest of an internationally wanted offender.",
+        "canonical_event": "arrest of internationally wanted fugitive in Mannheim",
+        "reason": "Plausible law enforcement arrest of a wanted suspect, though terrorism nexus is not explicitly detailed, it meets threshold as a law enforcement action."
+      }
+    },
+    "f71aee00232514b4a6ac07916d73bb4b113b667bd1a58db22ffe398924762d56": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195344+00:00",
+      "result": {
+        "event_id": "22c665cb20605b3c-400",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Terrorist Financing"
+        ],
+        "original_language": "ar",
+        "english_title": "Germany states it possesses evidence of Assad regime involvement in buying oil from ISIS",
+        "english_summary": "Germany claims to have documents and evidence proving the involvement of the Assad regime in purchasing oil from ISIS.",
+        "canonical_event": "Germany alleges Assad regime purchased oil from ISIS with documentary evidence",
+        "reason": "Directly involves terrorist financing allegations and named terrorist group (ISIS) with state actors."
+      }
+    },
+    "a864257543d5c2a69fd19a864b4085765bfbc4786278f15ba243af4ce55c9ea0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195346+00:00",
+      "result": {
+        "event_id": "c744ac240dfdc14f",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Dispute with pepper spray in a disco injures 24",
+        "english_summary": "An altercation involving pepper spray at a disco left 24 people with minor injuries.",
+        "canonical_event": "pepper spray dispute in disco injuring 24 people in Germany",
+        "reason": "Ordinary violent crime / local dispute with no terrorism nexus."
+      }
+    },
+    "28f633951ed27c92be22fc54f96af70b20aef49763246b5c7c89c8f8cd66328a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195348+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-907",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "President: Counter-terrorism must remain a top priority for joint African action",
+        "english_summary": "A head of state stresses that counter-terrorism should remain at the forefront of joint African priorities during a speech or statement.",
+        "canonical_event": "presidential statement on counter-terrorism priorities in Africa",
+        "reason": "High-level political rhetoric and policy statement rather than a specific operational counter-terrorism event."
+      }
+    },
+    "1030bc64f8c420d116bb4b6a3ee793b8ca5228d17b4c315a6672f36ed530dfb3": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195352+00:00",
+      "result": {
+        "event_id": "eaa59199a5d9f613",
+        "relevance_score": 45,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Turkey links the conclusion of the fight against terrorism to regional changes",
+        "english_summary": "TRT Russian reports on Turkish official statements connecting regional developments to the end of counter-terrorism operations.",
+        "canonical_event": "Turkish official comments on regional changes and counter-terrorism",
+        "reason": "Broad geopolitical commentary and foreign policy statements rather than a specific tactical CT event."
+      }
+    },
+    "d0472080caf3a30972d21019c0ccb16014ffc54a2f85013ea5a69db3e6eca389": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195354+00:00",
+      "result": {
+        "event_id": "d3ddea40b38de858",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "Article on land confiscation in the West Bank",
+        "english_summary": "An opinion piece or commentary regarding land confiscation in the West Bank.",
+        "canonical_event": "commentary on land confiscation in the West Bank",
+        "reason": "Political commentary and editorial content concerning territorial disputes, not a specific CT event."
+      }
+    },
+    "5e24a1b46fe45149f10788c2f713568480976070b9e614214c99ed3acf06b28b": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195358+00:00",
+      "result": {
+        "event_id": "a2739073478e618f",
+        "relevance_score": 45,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Iran media reports two dead in Larak raid; IRGC vows retaliation",
+        "english_summary": "Iranian media report two deaths following a raid on Larak, prompting the Islamic Revolutionary Guard Corps to threaten retaliation.",
+        "canonical_event": "reported raid on Larak resulting in deaths and IRGC retaliation threat",
+        "reason": "Inter-state military tension and potential kinetic strikes between nations, falling under state conflict rather than terrorism."
+      }
+    },
+    "2655235de54c19bc6f61cd750b7a7702261e2b10be4f0f45f1d1d6b6f7d39d0a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195361+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1034",
+        "relevance_score": 50,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Israeli concern over West Bank escalation: Settler violence threatens armed uprising",
+        "english_summary": "Reports discuss rising tensions in the West Bank and concerns that settler violence could trigger a broader armed uprising.",
+        "canonical_event": "analysis of West Bank tensions and settler violence threats",
+        "reason": "Addresses militant/settler violence and security escalation risks in the West Bank."
+      }
+    },
+    "41aea1de553a8fd3e98fc23a47c39a760c2e5c948b442fc4f0c35d60615f95d5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195363+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1076",
+        "relevance_score": 55,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Diplomatic spat: Syrian ambassador accuses Lebanon of facilitating terrorists and weapons; Mikati responds",
+        "english_summary": "The Syrian ambassador claims Lebanon facilitates the transit of terrorists and weapons, prompting Lebanese Prime Minister Najib Mikati to deny the claims and emphasize border monitoring.",
+        "canonical_event": "diplomatic exchange between Syria and Lebanon over alleged terrorist transit and border security",
+        "reason": "Directly addresses allegations of cross-border terrorist transit and weapons smuggling."
+      }
+    },
+    "f7f41e263b7ced7376c0de42b5a30fe2edcb2023adbb5993416ce15226b616be": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195367+00:00",
+      "result": {
+        "event_id": "b45c8830b5b8e48e",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Weapons"
+        ],
+        "original_language": "it",
+        "english_title": "Paper bombs and social media challenges: gang war in Casilino",
+        "english_summary": "La Repubblica reports on explosive device use ('paper bombs') and gang warfare dynamics in the Casilino district of Rome.",
+        "canonical_event": "gang violence involving explosive devices in Casilino Rome",
+        "reason": "Involves the use of improvised explosive devices ('bombe carta') in criminal turf wars, maintaining relevance due to explosives usage."
+      }
+    },
+    "97430caebc0cf390a57ac93c005e556805f5330e5419b63a0fc5dbee50f95460": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195369+00:00",
+      "result": {
+        "event_id": "ace31bcf6b9f7610",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "Gaza Strip coverage",
+        "english_summary": "General news page or dossier covering the Gaza Strip by Le Monde.",
+        "canonical_event": "general news coverage Gaza Strip",
+        "reason": "Broad broadsheet news tag/portal rather than a specific operational event."
+      }
+    },
+    "45aef3eedf401bfad42a4e3e6060c9a7de05d3f9bfdb8583855406561ffb6531": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195373+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1159",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "he",
+        "english_title": "Opinion piece: Seven clichés about Israel",
+        "english_summary": "An opinion article addressing common tropes and narratives concerning Israel.",
+        "canonical_event": "opinion article on narratives regarding Israel",
+        "reason": "Opinion piece/commentary unrelated to counter-terrorism operations."
+      }
+    },
+    "d997ef14d46af135f993becb190980e546fdc485482ea376c6507756463e0a1e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195375+00:00",
+      "result": {
+        "event_id": "5db749c45152c0a4",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Meloni confirms Schengen border controls suspension with Madrid for another 15 days",
+        "english_summary": "Italian Prime Minister Giorgia Meloni extends the temporary suspension of the Schengen agreement with Madrid.",
+        "canonical_event": "extension of Schengen border controls between Italy and Spain",
+        "reason": "Routine border control and immigration policy administrative measure."
+      }
+    },
+    "4c3fcf872c7526fe88ffc8bf9a3ce4888a8a687e2d01f0666c820b3d3d1f5b10": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195379+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1186",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Embassy in Turkey: Russian citizen dies in ferry wreck in Northern Cyprus",
+        "english_summary": "The Russian embassy confirms the death of a Russian female citizen during a ferry accident off Northern Cyprus.",
+        "canonical_event": "ferry shipwreck accident in Northern Cyprus resulting in fatalities",
+        "reason": "Accidental maritime disaster, no terrorism nexus."
+      }
+    },
+    "55a3549eb4db6f113b444594e88dde8e9528e8882187513cf65b997db1c8f3b3": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195382+00:00",
+      "result": {
+        "event_id": "32af4dd69e6ff7cb",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Ben Gvir taunts Palestinian detainees reporting poor hygiene conditions",
+        "english_summary": "Israeli Minister Itamar Ben Gvir dismisses complaints from Palestinian detainees regarding minimum sanitary conditions.",
+        "canonical_event": "political controversy over prison conditions for Palestinian detainees in Israel",
+        "reason": "Prison conditions controversy and political commentary involving detainees, lacking a specific CT operational nexus."
+      }
+    },
+    "513850a92f8f0f2bb371877c1e05bd9530908490f29a4e4b77fc6780e934ccd2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195384+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1190",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Media analysis article on media success metrics",
+        "english_summary": "An analytical piece discussing how media institution success is measured by direction rather than profits.",
+        "canonical_event": "article on media industry metrics",
+        "reason": "Media industry critique and analysis, completely unrelated to counter-terrorism."
+      }
+    },
+    "99d302684caabd7d227e03145f84d6bad08690052d341bf67dbe3d79fb7a8a8e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195386+00:00",
+      "result": {
+        "event_id": "3dbb7a453ca92aab",
+        "relevance_score": 25,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Shanghai Cooperation Organization summit begins in Kyrgyzstan",
+        "english_summary": "The SCO summit of Eurasian leaders kicks off in Kyrgyzstan.",
+        "canonical_event": "Shanghai Cooperation Organization summit in Kyrgyzstan",
+        "reason": "International diplomatic summit reporting, not a direct counter-terrorism event."
+      }
+    },
+    "ef62c17d0187ef29944a483a7e849430ac3b92178f0c24e011ce04c7b697791c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:41.195388+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1192",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Iran claims attacks on US bases in the region; UAE denies targeting of Al Minhad",
+        "english_summary": "Iran claims responsibility for strikes on regional US bases, while UAE authorities deny that Al Minhad air base was targeted.",
+        "canonical_event": "Iranian claims of strikes on US regional bases and UAE denial",
+        "reason": "State-level military conflict and cross-border missile/drone claims between states rather than terrorism."
+      }
+    },
+    "8438f8fb67c769f114426cf33f46c6ae042e2b91b5b039520045d1903a79dbfb": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T09:56:50.499092+00:00",
+      "result": {
+        "event_id": "0dc2eb3b7291a06b",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Legal / Judicial"
+        ],
+        "original_language": "es",
+        "english_title": "Polish Student Charged with Planning Jihadi Attack on Christmas Market",
+        "english_summary": "A Polish student has been formally charged with planning a jihadist terrorist attack targeting a Christmas market.",
+        "canonical_event": "Charged with planning terrorist attack on Christmas market by student in Poland",
+        "reason": "Direct counter-terrorism legal development involving a charged suspect planning a jihadist terrorist attack."
+      }
     }
   },
-  "last_updated": "2026-08-31T09:37:57.012399+00:00"
+  "last_updated": "2026-08-31T09:56:50.620587+00:00"
 }
