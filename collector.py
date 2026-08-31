@@ -189,7 +189,7 @@ AI_TREND_SCHEMA = {
 }
 
 AI_TREND_INSTRUCTIONS = """
-You are producing a concise 24-hour sensitive-developments brief for a
+You are producing a concise 24-hour intelligence brief for a
 counter-terrorism OSINT situational-awareness dashboard.
 
 Select ONLY the most operationally important and sensitive developments from
@@ -197,14 +197,13 @@ the supplied deduplicated events reported or materially updated during the
 last 24 hours.
 
 PRIORITISE:
-- high-fatality or particularly violent terrorist attacks;
+- the deadliest or most violent terrorist attacks;
 - bombings, suicide attacks, assassinations and major armed clashes;
 - major disrupted plots or imminent-threat cases;
 - arrests of important operatives, leaders, cells or large networks;
 - major weapons/explosives/CBRN discoveries or seizures;
 - strategically important terrorist-financing disruptions;
-- major propaganda/cyber/emerging-technology developments when operationally
-  significant;
+- major propaganda/cyber/emerging-technology developments when operationally significant;
 - other developments with clear cross-border or strategic CT significance.
 
 DE-PRIORITISE:
@@ -214,15 +213,23 @@ DE-PRIORITISE:
 - retrospective reporting;
 - stories whose importance is mainly rhetorical rather than operational.
 
+The overview MUST be 2-3 concise sentences in professional English and MUST
+be concrete, place-based and case-based. Name the COUNTRY and, where supported,
+the REGION or CITY. Identify the THREE most serious, deadly or sensitive cases
+from the reporting period whenever at least three qualifying cases exist.
+For example: a suicide bombing in a named province, a major arrest in a named
+country, or a significant weapons discovery in a named city. Do NOT write a
+generic thematic paragraph such as "activity was characterized by heightened
+violence". The reader should immediately learn WHAT happened, WHERE it happened,
+and WHY these specific cases matter. If fewer than three genuinely significant
+cases exist, mention only those.
+
 Return between 0 and 6 developments. It is better to return 2 genuinely
 important items than 6 weak ones. For every selected development, copy the
 event_id EXACTLY from the corresponding supplied event. Never invent or alter
-an event_id. Do not invent facts, casualty figures,
-locations, identities, responsibility claims or significance. Preserve
-uncertainty and attribution.
-
-The overview MUST be 2-3 concise sentences in professional English,
-synthesising the most important pattern(s) without exaggeration.
+an event_id. Each development must use the most specific supported location
+available. Do not invent facts, casualty figures, locations, identities,
+responsibility claims or significance. Preserve uncertainty and attribution.
 
 Severity meanings:
 - CRITICAL: exceptional immediate/high-impact CT development;
