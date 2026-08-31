@@ -91271,7 +91271,207 @@
         "canonical_event": "car bomb attack near police station in Mexico resulting in injuries",
         "reason": "This is a kinetic terrorist/militant attack involving an explosive device (car bomb) causing casualties."
       }
+    },
+    "c9c12aa7c93e5722cfb520d650bd4988dce526813910eb4e7262ebb7fcd8ad6e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390685+00:00",
+      "result": {
+        "event_id": "1a1e8ec922889876",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "Spain",
+        "english_summary": "Generic stub article from EL PAÍS about Spain.",
+        "canonical_event": "generic mention of Spain",
+        "reason": "The text lacks any specific content or counter-terrorism event."
+      }
+    },
+    "3429cef756663bd587396dcdce5f65f4b08a6c38ca49c70f350454d4092170af": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390769+00:00",
+      "result": {
+        "event_id": "1d4877367bf77749",
+        "relevance_score": 35,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "How Al-Qaeda ignited the Niger battle",
+        "english_summary": "An analytical article or media piece discussing Al-Qaeda's involvement in a battle in Niger.",
+        "canonical_event": "Al-Qaeda conflict analysis in Niger by Al-Arabiya",
+        "reason": "It is a media or historical/analytical overview rather than a distinct, newly reported operational CT incident."
+      }
+    },
+    "4370dd15ad37824cb85a7a028b0104d42f6edec61eb44772c4ab25d44e62f69c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390794+00:00",
+      "result": {
+        "event_id": "ecc2267d35305500",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests"
+        ],
+        "original_language": "ru",
+        "english_title": "Former 'Lion's Den' fighter detained in Nablus",
+        "english_summary": "Israeli or security forces detained a former militant of the 'Lion's Den' group in Nablus (Shchem).",
+        "canonical_event": "arrest of former Lion's Den militant in Nablus",
+        "reason": "Specific operational arrest of a named militant group member planning attacks."
+      }
+    },
+    "1b2dfb64f394f5c9fad20dd71e6db3e2c2bb70381df0e55034aff9bede49f14a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390800+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1084",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Attempted attacks: Wanted 'Lion's Den' terrorist captured in Nablus",
+        "english_summary": "Security forces arrested a wanted terrorist from the 'Lion's Den' group in Nablus who was attempting to carry out attacks.",
+        "canonical_event": "arrest of wanted Lion's Den terrorist in Nablus",
+        "reason": "Direct operational report of an arrest of a terrorist planning attacks."
+      }
+    },
+    "731ef992fa7b51858c4e9f209a5146bb109d70d3dba7c7e7ee07c41e23703c41": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390804+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1100",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Online Radicalization / Cyberterrorism"
+        ],
+        "original_language": "ru",
+        "english_title": "Increase in recruitment cases of citizens including teenagers for arsons and terrorist acts",
+        "english_summary": "A local warning report noting recent increases in the recruitment of citizens and teenagers for arsons and terrorist acts.",
+        "canonical_event": "warning regarding citizen recruitment for terrorism in Russia",
+        "reason": "General public warning statement rather than a specific operational event or arrest."
+      }
+    },
+    "0a455b6e7daa9235ac33e44e36de7e8c36358364f28afeaf7bf4c763f971cdcc": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390807+00:00",
+      "result": {
+        "event_id": "0fa31f3dc6fa5711",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "A 3.8 magnitude earthquake hits Iran",
+        "english_summary": "An earthquake of magnitude 3.8 hit Iran, recalling the nightmare of a Tehran earthquake.",
+        "canonical_event": "earthquake in Iran",
+        "reason": "Natural disaster report with zero terrorism nexus."
+      }
+    },
+    "b237672502110fdeda9e881ac783fc8c5ac67ec72b856d9d89e7830e35590a70": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390811+00:00",
+      "result": {
+        "event_id": "8c9a2e8398a9258f",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks",
+          "Weapons"
+        ],
+        "original_language": "de",
+        "english_title": "Swiss Rave shooting: Perpetrators fired assault rifles indiscriminately into the crowd",
+        "english_summary": "Report on a shooting incident at a Swiss rave involving assault rifles.",
+        "canonical_event": "mass shooting at rave in Switzerland",
+        "reason": "Appears to be a violent crime or mass shooting without a confirmed terrorist nexus specified in the snippet."
+      }
+    },
+    "ec6d30e35b77c31b6e10eb5529eab026c40ad68ff6414a68b98c9813b672dcfb": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390814+00:00",
+      "result": {
+        "event_id": "2da78b33f40d409f",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Oman oil price jumps to $87.84 per barrel in October",
+        "english_summary": "Financial market update reporting the rise of Oman's crude oil price.",
+        "canonical_event": "Oman oil price increase",
+        "reason": "Economic and financial news, unrelated to counter-terrorism."
+      }
+    },
+    "6892c191812369e564048864e09710b353ffa6a2f15fba48bc11001b47b2f6e5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390817+00:00",
+      "result": {
+        "event_id": "ea0425fb023ee156",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Al-Tam Development profits drop by about 80% in the first half",
+        "english_summary": "Financial report on the earnings drop of Al-Tam Development company.",
+        "canonical_event": "corporate profit drop for Al-Tam Development",
+        "reason": "Financial earnings report, unrelated to counter-terrorism."
+      }
+    },
+    "5c85fd9269599a3a4d796fe91e7ea11225861fb69803210c9f007bfd20d40527": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390845+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1179",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Why did tech companies abandon removable batteries?",
+        "english_summary": "A technology article discussing design choices regarding smartphone removable batteries.",
+        "canonical_event": "tech article on removable batteries",
+        "reason": "Technology commentary, unrelated to counter-terrorism."
+      }
+    },
+    "7910035dff06476cc8ecac8863fd834ecb07b99ee39e73ae23973d91d57eaa71": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390870+00:00",
+      "result": {
+        "event_id": "0f4d2ca54da858de",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Weapons",
+          "Legal / Judicial"
+        ],
+        "original_language": "es",
+        "english_title": "Polish student accused of planning jihadist explosive attack on Christmas market",
+        "english_summary": "A Polish student has been formally accused of planning a jihadist terrorist attack using explosives at a Christmas market.",
+        "canonical_event": "prosecution of Polish student for planning explosive jihadist attack on Christmas market",
+        "reason": "Concrete disrupted terrorist plot, formal legal accusation involving explosives and jihadist intent."
+      }
+    },
+    "ea67630abed3f8ebf7c2bb2cb05e6578b740c7f0847189be2e2bfa3fdcd6504d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:23:51.390873+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1185",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Weapons",
+          "Attacks"
+        ],
+        "original_language": "ru",
+        "english_title": "Russian couple created bomb caches in Crimea for terrorist attacks and confessed after FSB arrest",
+        "english_summary": "FSB officers arrested a Russian couple in Crimea who were preparing terrorist attacks by hiding explosive caches, and they subsequently confessed.",
+        "canonical_event": "FSB arrest of Russian couple hiding explosives for terrorist attacks in Crimea",
+        "reason": "Operational counter-terrorism arrest, seizure/caching of bombs, and confession."
+      }
     }
   },
-  "last_updated": "2026-08-31T10:09:16.406314+00:00"
+  "last_updated": "2026-08-31T10:23:51.505040+00:00"
 }
