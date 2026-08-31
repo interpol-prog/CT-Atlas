@@ -71,9 +71,70 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-08-31T07:31:53.542948+00:00",
-  "number_of_events": 1552,
+  "last_updated": "2026-08-31T07:38:26.377241+00:00",
+  "number_of_events": 1554,
   "events": [
+    {
+      "id": "9ba4c9423cc6ad90",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Arrests"
+      ],
+      "title": "Nizhny Novgorod resident carries out terrorist attack near police department",
+      "summary": "A resident of Nizhny Novgorod carried out an attack classified as terrorism near a police department, with video footage emerging.",
+      "original_title": "Нижегородец устроил теракт возле отдела полиции: видео",
+      "original_summary": "Нижегородец устроил теракт возле отдела полиции: видео Newsnn.ru",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-08-31T07:26:45+00:00",
+      "source": "Newsnn.ru",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNVTNmbnpnRUpQTnFBM19OTmJMTHR2dm5PeUJrMzQxOVEydnZzREdpaDZSM05idTNIRjBxVVVwMmFXSXMtb2hlZUlWX25PX19XNm92cGNHalNIbjdFLXlTeVg4YTRXYjVUWU1oUmg3eGV0RUpZcS1WVHhXWTdQdHVVSUM0cm0xNk1YbEdRb0RkRXIzTVZKa2FKUGJiYUotRjg?oc=5",
+      "collector": "Google News RSS",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": "Nizhniy Novgorod",
+      "region": null,
+      "latitude": 56.32867,
+      "longitude": 44.00205,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Newsnn.ru"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T07:26:45+00:00",
+      "last_reported": "2026-08-31T07:26:45+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "A direct terrorist attack/incident directed at law enforcement infrastructure, qualifying as a current CT event.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "terrorist attack carried out near police department in Nizhny Novgorod",
+      "title_variants": [
+        "terrorist attack carried out near police department in Nizhny Novgorod"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Nizhny Novgorod resident carries out terrorist attack near police department"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event occurred in Nizhny Novgorod, Russia, as explicitly stated in the news text involving a local resident and police department.",
+      "ai_geo_fingerprint": "2b77c1d85d840ddc8f58188e8c4cd79cef10a96dda2bf56ca90c1ef75ee6edd2",
+      "ai_geo_inferred": false
+    },
     {
       "id": "9ba4c9423cc6ad90",
       "category": "Online Radicalization / Cyberterrorism",
@@ -132,7 +193,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The article discusses Egyptian state and Muslim Brotherhood rhetoric; defaulted to country capital as no specific city was mentioned.",
       "ai_geo_fingerprint": "ec968ba641d9fd935c71ee1d65e50cc6290d566ea51660e48237ab1f9f107a84",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -195,9 +260,10 @@
       "title_variants": [
         "two residents detained in Crimea for passing military data"
       ],
-      "dedup_confidence": 0.629,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "paraphrase_entity_context"
+        "paraphrase_entity_context",
+        "same_url"
       ],
       "location_confidence_score": 0.85,
       "location_method": "ai_region_coordinates",
@@ -270,9 +336,10 @@
       "title_variants": [
         "former Lion's Den operative arrested in covert Nablus operation"
       ],
-      "dedup_confidence": 0.714,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "title_plus_anchor"
+        "title_plus_anchor",
+        "same_url"
       ],
       "location_confidence_score": 0.95,
       "location_method": "ai_city_geonames",
@@ -333,9 +400,10 @@
       "article_count": 2,
       "first_reported": "2026-08-31T06:12:55+00:00",
       "last_reported": "2026-08-31T06:25:09+00:00",
-      "dedup_confidence": 0.99,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url"
       ],
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -420,9 +488,10 @@
       "title_variants": [
         "YAMAM forces arrest Lion's Den terrorist in Nablus"
       ],
-      "dedup_confidence": 0.875,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "same_url"
       ],
       "location_confidence_score": 0.95,
       "location_method": "ai_city_geonames",
@@ -495,7 +564,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicitly states the bombing occurred in Pandeglang, Banten.",
       "ai_geo_fingerprint": "f16a9e5034d4e28d68f2dd1e16d4a36c46f09800338bc66d211826713bcf4d34",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "def4fd818eba1a86",
@@ -558,7 +631,8 @@
       ],
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "same_url"
       ],
       "location_confidence_score": 0.9,
       "location_method": "ai_region_coordinates",
@@ -632,7 +706,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Reported by Israeli media in shekels; jurisdiction implied as Israel.",
       "ai_geo_fingerprint": "f99f6259eabf8de86ae605f9dd9f713f74320c5c3f00820a86a1a00a6cb723dc",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "e8e2ef4776a5d283",
@@ -755,7 +833,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Offense occurred in Tyumen Oblast, Russia.",
       "ai_geo_fingerprint": "3fe1366d45bac9fe3f600911e1bd498cfff6cf84e5b5adf923ba55b89d7a3625",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -816,7 +898,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicitly mentions Yalutorovsk district, Russia.",
       "ai_geo_fingerprint": "e2263f81717f34af0cf5efd1840d5d0728e59a45d9740cad9b6e8e8650155c1a",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -877,7 +963,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Mashta Nur is associated with Kobani/Northern Syria regarding ISIS activities.",
       "ai_geo_fingerprint": "f1683b41b4e279d6bcc18e9b77145377571ff192be0db8454b2069d62b3d368a",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -939,7 +1029,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Involves a Russian citizen under investigation; default to country capital.",
       "ai_geo_fingerprint": "d42b0710c5217af8051eff3d24e43e27fdc6707975c049ba93a322db4e7b2f7c",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "5920589ba73d3e09",
@@ -999,7 +1093,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicitly occurred in the West Bank.",
       "ai_geo_fingerprint": "b64cd755e95f5a0bba87946e2f4cbf2527901d57afdb761a9c3a221f96e38dac",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "bd0be2534d830ca5",
@@ -1059,7 +1157,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Mshale reports local civic and police incidents primarily serving the African diaspora community in Minnesota/US.",
       "ai_geo_fingerprint": "04a55ae0c8033261bd2aaec85b2d2f2df2ec07983364ad7835c22967b4aa8962",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "7bc4045c1b921781",
@@ -1121,7 +1223,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Mentions strikes in Jordan.",
       "ai_geo_fingerprint": "19e009a804e2ba6d6936fa86f24da49c8fc04f4afc5408e23f8d1ec86262716a",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "6c752f62ce53b0cc",
@@ -1181,7 +1287,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Covers operations in Gaza, Lebanon, and West Bank (Judea and Samaria).",
       "ai_geo_fingerprint": "5fe6022e201f8f248a5d1501cf100f1c9f1facb6fb8391e0e8e615bbf1f243f8",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -1241,7 +1351,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Occurred in Kamchatka, Russia.",
       "ai_geo_fingerprint": "37791960f395bcf09993392a43d7d9dd0ad8f1a0e1bef1a5d11e59f8e5a2da93",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a737f081b16d9d19",
@@ -1415,7 +1529,8 @@
       "last_reported": "2026-08-31T07:15:25+00:00",
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "same_url"
       ],
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -1502,7 +1617,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Refers to the same rave shooting incident in Aarau, Switzerland.",
       "ai_geo_fingerprint": "fa8cd8af808b29c59dd282e5583ffa6c46e8a7fbe95ef1305d69ad7e95e43e17",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "15514d559607855a",
@@ -1764,6 +1883,81 @@
       ]
     },
     {
+      "id": "e7852fde39b71434",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Revolutionary Guards: US Larak Attack will bring retaliation and punishment",
+      "summary": "The Iranian Revolutionary Guards stated that the US attack on Larak will be met with retaliation.",
+      "original_title": "Devrim Muhafızları: ABD'nin Larek Saldırısı, Saldırganın Karşılık Görmesini ve Cezalandırılmasını Beraberinde Getirecek",
+      "original_summary": "Devrim Muhafızları: ABD'nin Larek Saldırısı, Saldırganın Karşılık Görmesini ve Cezalandırılmasını Beraberinde Getirecek تسنیم",
+      "original_language": "tr",
+      "collection_language": "tr",
+      "collection_language_name": "Turkish",
+      "collection_locale": "TR:tr",
+      "published": "2026-08-30T21:54:19+00:00",
+      "source": "تسنیم",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMi4wJBVV95cUxQdkNVRzEtaVZ4Q0sxTVpvWXVXTHlpNFVPMHk1bGpEZ3NnZ3R0ZzJRNGZpMVhSeVk2bGJiTXN4YmZrRG1TNDktOUZVQ3k3OFRxWTNrQ1Z3TVpmN1VFMHN3X3hyYUJieXJCZDhhOW5sNmhYSV9UTnUwSC02Q1hxRjhENnpTRDd4VW11UThXT2lBaXM1azg1VWFHUTB6S1FkbXRRZDA3R2hBTUxGZGV6N2h3eDQ0MTUtdWlsZ0VhTWREbmJqejVzbFE4U05QbDNVVmtJNldheHNLNFRtWEF4cWpnNk9zdjdFSVRVSjlRYTc4MU5TZE5GMGROQmQ3Z1NFQUM1OTRtY3lvVlAyQU5BRDl0TDFNckxSbTNOTjI1ZmZMSGFHbE5ZOXg0NWljVDZWLXF4ajNiMjROVk1yQnRnWTUwU2lEMkd6WjZuSjlpV2t2UU5XaGhrQUpGVV9fMUxSZ2NIdnE40gHoAkFVX3lxTE9fM01YRC01TW5KMWhZZE9keWllTkpGM3hiR3dkc0l0bmlvdU5nblprN1VuQnRCZXEzNF80dXBKOHNTcXBaN3dETTE1WnJlcTlmOWtoN1lNT0Z5YV90dC1XZDBYYjlpYWljUUYwUldfZ3lQRjBrZ190eS1pN2dwZ0N5enZmaGp5Yk5OZkpRdW9vWE40SlRXZlBjNGp2UHZEbktLOERFLWtfZlBXRlJHdGFNVjE2c2pLTGd6RlZmaE5vZk0zMHJHWDZ4Vzc0NE9CMzcxTHNnNHM1SFZ4UkVzbHhFSFR5YUlURjEwc1psb2JsN0g2cVd4Q2thdnBGd0tUOHNLUEJJaUw4NUwwLWo3dnJxcVpwMEYwOVpZdVpTR2prXzYtXzFxcUZYZXFNQUlSWWFIcng3X3MyMDRIa0txM1Bhb01JOXN6X2htT2xpSG1KcXBXYXRwSmJoTGFlVExHb2Z4OVdaaW5sVA?oc=5",
+      "collector": "Google News RSS",
+      "country": "Iran",
+      "country_code": "IR",
+      "city": "Larak",
+      "region": null,
+      "latitude": 26.8533,
+      "longitude": 56.3533,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "تسنیم",
+        "خبرگزاری مهر"
+      ],
+      "related_articles": [
+        {
+          "title": "Revolutionary Guards Spokesman warns US of retaliation",
+          "original_title": "Devrim Muhafızları Sözcüsü'nden ABD'ye misilleme uyarısı",
+          "original_language": "tr",
+          "summary": "An official spokesperson for Iran's Islamic Revolutionary Guard Corps issues a warning of retaliation against the US following regional attacks.",
+          "published": "2026-08-31T04:02:56+00:00",
+          "source": "خبرگزاری مهر",
+          "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQdlJfaHJSUXlHYkpETnlKVUk2dEF1QzVSaU9lQkdaT3hVekc5Yjl0Q2xSNFdlZjlkQ2NCOVkyRW9QN3A2T3djY2N3M2hkSk1vVmktRl91VmZJZjVGUDZJNVlnVWRzOG5TQ01aT0l4UnRoRmJHU2FJRmJzQXZ6QWRmN0ZhcDVOaTJPWXFlVGNSS0twS3owUGlQN0RxUkMzVnViZHBSdHFwVTFUZllqSXNfSEkyOTEtbEsxeG1BR1JmakRVZWk0bXJJ?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-30T21:54:19+00:00",
+      "last_reported": "2026-08-31T04:02:56+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "State military escalation reporting similar to other items on the Larak Island strike.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "IRGC reaction and threats regarding US strike on Larak Island",
+      "title_variants": [
+        "IRGC reaction and threats regarding US strike on Larak Island"
+      ],
+      "dedup_confidence": 0.55,
+      "dedup_methods": [
+        "entity_actor_event_signature"
+      ],
+      "location_confidence_score": 0.85,
+      "location_method": "ai_city_coordinates",
+      "location_evidence": [
+        "US Larak Attack will bring retaliation and punishment; Iranian Revolutionary Guards stated"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The attack took place on Larak (Larak Island in the Persian Gulf, Iran), and the reaction was stated by the Iranian Revolutionary Guards.",
+      "ai_geo_fingerprint": "578582b2bffc241a6711e285f8728d5f7b7fc14b6bc3266b76e3016dedf7cc71",
+      "ai_geo_inferred": true
+    },
+    {
       "id": "27979e061bc6874c",
       "category": "Terrorist Financing",
       "categories": [
@@ -1821,7 +2015,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The network operates across Europe; no single European city is specified.",
       "ai_geo_fingerprint": "de7a5856ac28f2e6505556fc4eca2b960a6767f396a1743018a548bc03600562",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "f1754e3a4fe9dfc2",
@@ -1869,9 +2067,10 @@
       "article_count": 2,
       "first_reported": "2026-08-30T21:01:00+00:00",
       "last_reported": "2026-08-31T04:00:35+00:00",
-      "dedup_confidence": 0.99,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url"
       ],
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -2204,11 +2403,20 @@
           "published": "2026-08-30T21:34:37+00:00",
           "source": "نورنیوز",
           "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNdlR5Q1NkbmFUZkZaN3d3azZoRG5DM1hVbDVLWVJfYXFmSnhvZ0RQWEtSMGVCM1p4VTI4UUhBT1BidXkyTml3ZFZZRmkzY0JNdWUzWVRsc0hDLXVzTUF3dDZEaXMxUm5tRGpRNnZjSmlpVTYzZ0NZUk9sWk44MkRlQS1mUEl1SEZMLW5yTjBXazN1MGNxdDl4bl96S3JDNHM3UEpSTnJseHZyTTJsVDBPWVNTbklzSy1aTVE?oc=5"
+        },
+        {
+          "title": "Oil jumps 2% following US attack on Iranian Larak Island",
+          "original_title": "النفط يقفز 2% عقب هجوم أميركي على جزيرة لارك الإيرانية",
+          "original_language": "ar",
+          "summary": "Oil prices spike following a US military attack targeting Iran's Larak Island.",
+          "published": "2026-08-31T04:15:00+00:00",
+          "source": "العربية",
+          "url": "https://news.google.com/rss/articles/CBMi0ANBVV95cUxPOXFkalhILU00bHhyRUo1SGhVLVhrXzlyZTdPamFyTG9YUlkycTBBZ1h1MzlCTnJCQ3FlRGc4UWpYNmQyM3ZOUUdDLWZUT3JXcXdnMFE5YjNXOGdxbXBhMmpnV1hGMG9XaHZOX0ZmTzI1UmxQLVJGRGJmUUtKb05DMUlyeERLVmEwRjJ6d2NJOFd1cHUtUEhhRFNqNXJDTm1zRDNiZ1ViNDViTElLclozMWh3NlVHTl9ablNoc3BuVlhSTXF2c2VucloxaFBXOW45cm5JSWJnN3l0TndTdFJkM3MwSFdUc2k5ZmJZeGUteUU1c0g3VGNwbEZXZVFGampQNkswOXozNUZ6VTFVVm82aUlENnU4VjAwdC1NUlViUlZ3VUY0WURPU2NDY0tyNkNMd0w1VXVNcDhHWk41Q1kyeVpXNVJ6cHpXdWdUYzcyZHRrU0pWYktRalRPUGx2UUE4U1ZEV0dTME5DVGtqLTBBWjFWZXUtX25yRWpGMkV2TmFnZE1qVkxnanFaVVhoclNWNTlWUHhCc0JlOWpvR2FvbmF0anhBejJvRUxfUUlYX2dWX1ZXZzltT2xQeFhiODRjZTNPOTRWbjRfOTUyaE1uT9IB0ANBVV95cUxPOXFkalhILU00bHhyRUo1SGhVLVhrXzlyZTdPamFyTG9YUlkycTBBZ1h1MzlCTnJCQ3FlRGc4UWpYNmQyM3ZOUUdDLWZUT3JXcXdnMFE5YjNXOGdxbXBhMmpnV1hGMG9XaHZOX0ZmTzI1UmxQLVJGRGJmUUtKb05DMUlyeERLVmEwRjJ6d2NJOFd1cHUtUEhhRFNqNXJDTm1zRDNiZ1ViNDViTElLclozMWh3NlVHTl9ablNoc3BuVlhSTXF2c2VucloxaFBXOW45cm5JSWJnN3l0TndTdFJkM3MwSFdUc2k5ZmJZeGUteUU1c0g3VGNwbEZXZVFGampQNkswOXozNUZ6VTFVVm82aUlENnU4VjAwdC1NUlViUlZ3VUY0WURPU2NDY0tyNkNMd0w1VXVNcDhHWk41Q1kyeVpXNVJ6cHpXdWdUYzcyZHRrU0pWYktRalRPUGx2UUE4U1ZEV0dTME5DVGtqLTBBWjFWZXUtX25yRWpGMkV2TmFnZE1qVkxnanFaVVhoclNWNTlWUHhCc0JlOWpvR2FvbmF0anhBejJvRUxfUUlYX2dWX1ZXZzltT2xQeFhiODRjZTNPOTRWbjRfOTUyaE1uTw?oc=5"
         }
       ],
-      "article_count": 2,
+      "article_count": 3,
       "first_reported": "2026-08-30T19:33:00+00:00",
-      "last_reported": "2026-08-30T21:52:31+00:00",
+      "last_reported": "2026-08-31T04:15:00+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -2233,9 +2441,11 @@
       "ai_geo_reason": "The event explicitly describes an attack/incident involving the IRGC on Larak Island in Iran.",
       "ai_geo_fingerprint": "726258ff1bfa4592e7faa1ca3b8ef08c965a4e6e16bd25df33d5f63526791dd2",
       "ai_geo_inferred": false,
-      "dedup_confidence": 0.99,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url",
+        "paraphrase_entity_context"
       ]
     },
     {
@@ -2298,7 +2508,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Arrest took place in Como, Italy.",
       "ai_geo_fingerprint": "496e1247d0c9c8f02c348eaa7a6a2df5d3937fc9fd6e31373f3af7ae0258163b",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -2699,7 +2913,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The thwarted terrorist plot targeted infrastructure in Kuwait.",
       "ai_geo_fingerprint": "da329f0384ef360ac2c25678f745390e286866b23a793ad6469cc6c77652c03a",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "f00a07948b4f8680",
@@ -2759,7 +2977,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Initiated by the President of Algeria regarding continental Africa.",
       "ai_geo_fingerprint": "c755aac3894d094ec7000025b3c05a9967c6eb6bfd9128fac55aec76131fe8be",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -2948,7 +3170,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Abu Bakr al-Baghdadi led ISIS/ISIL primarily operating out of Iraq and Syria; Iraq is the primary geographic historical context associated with his leadership status.",
       "ai_geo_fingerprint": "29e63efad73b8ea3ab4c6e1ecaafcf971629df75483d1d6e3b31e40a21f8b89d",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -3421,7 +3647,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Diplomatic pressure originating from the United States.",
       "ai_geo_fingerprint": "0f374d13d1f5343c721daddbbb03cbc29c0d34e59e0ba5e0dc0796ef3c8680c1",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -8033,7 +8263,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Event takes place nationwide in Niger.",
       "ai_geo_fingerprint": "85a153e88b36ffb252fe72f4a8372c24de59f5b407b1889e133c5782618273c2",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "53148bd12e1f4e8c",
@@ -8151,10 +8385,11 @@
       "article_count": 8,
       "first_reported": "2026-08-29T17:26:03+00:00",
       "last_reported": "2026-08-31T04:00:00+00:00",
-      "dedup_confidence": 0.833,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
         "title_plus_anchor",
-        "paraphrase_entity_context"
+        "paraphrase_entity_context",
+        "same_url"
       ],
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -8239,7 +8474,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The attack occurred in Leipzig, Germany.",
       "ai_geo_fingerprint": "7ce472ce7cd4e0ed03dcb54e8014b1c033b6430a53c75bb0f2c3d8ec6d9eacd7",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "22c665cb20605b3c",
@@ -11166,7 +11405,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Refers to the terrorist attack in Sri Lanka.",
       "ai_geo_fingerprint": "b8c16e6f52d7809ef6ee355636b66a8ebc8e08792dadc67b35078207449e2ec3",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "22c665cb20605b3c",
@@ -16716,7 +16959,8 @@
       ],
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "same_url"
       ],
       "location_confidence_score": 1.0,
       "location_method": "ai_region_coordinates",
@@ -28001,7 +28245,8 @@
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "very_high_title_similarity",
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url"
       ],
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -33051,7 +33296,7 @@
           "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxPS01ROFlPVjlmaDM0UUU1QTgycDJaM05XUHN5YnBWRlFkbmFuTGQwTlJhRzJMM2hQZUowTVlHT0ppSkU4T2Ntd2R0Q2M0aHlXSkxGdDVSUEMwTjhwNGxrQVpEVUxId2RIeGZJSUhQSlNHaWdBWkJFNVk0RGh0WC1yRTU3NGc3bF9FZUtJVF9udU5Hd1BsZHpVa2I1cl9aVW9YMENFYkRnUkhfQXlDMHJheTB2M25RdU9WRzZtdTJBMVJxc2VpYUhrSV9lSjhrNjdHT1o0QzhiZnhaY3hrVEZQenZXNEV0RGZBR3NCZGlvSFRXRnR1U2JFSTR0MF9zRVFlbVIw?oc=5"
         }
       ],
-      "article_count": 32,
+      "article_count": 33,
       "first_reported": "2026-08-24T17:25:00+00:00",
       "last_reported": "2026-08-28T17:17:32+00:00",
       "dedup_confidence": 1.0,
@@ -109734,22 +109979,22 @@
     "primary_model": "gemini-3.5-flash-lite",
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
-    "cached_events": 1519,
-    "ai_processed_this_run": 33,
-    "ai_pending_at_start": 33,
-    "city": 681,
+    "cached_events": 1552,
+    "ai_processed_this_run": 2,
+    "ai_pending_at_start": 2,
+    "city": 683,
     "region": 316,
     "country_capital": 545,
     "unlocated": 10,
-    "mapped_total": 1542,
-    "high_confidence": 1400,
+    "mapped_total": 1544,
+    "high_confidence": 1402,
     "medium_confidence": 147,
     "low_confidence": 5,
     "methods": {
+      "ai_city_geonames": 661,
       "ai_country_capital": 545,
       "ai_region_coordinates": 316,
-      "ai_city_geonames": 660,
-      "ai_city_coordinates": 21,
+      "ai_city_coordinates": 22,
       "ai_unlocated": 10
     }
   }
