@@ -2902,6 +2902,59 @@ body {
     }
 }
 
+
+/* V11.3 — strict 2x2 controls and explicit brief CTA */
+.layer-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(2, 34px) !important;
+    gap: 5px !important;
+    width: 100% !important;
+}
+.layer-buttons .layer-button {
+    width: 100% !important;
+    height: 34px !important;
+    min-width: 0 !important;
+    min-height: 34px !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 5px 4px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    font-size: 8.2px !important;
+    line-height: 1 !important;
+}
+#keyDevelopmentsButton {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 27px !important;
+    padding: 5px 11px !important;
+    border: 1px solid #5c91ae !important;
+    border-radius: 3px !important;
+    background: linear-gradient(180deg,#1b4157 0%,#102c3c 100%) !important;
+    color: #e5f5fc !important;
+    font-size: 7.6px !important;
+    font-weight: 800 !important;
+    letter-spacing: .07em !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.06),0 0 8px rgba(58,126,164,.12) !important;
+    cursor: pointer !important;
+}
+#keyDevelopmentsButton:hover {
+    background: linear-gradient(180deg,#285972 0%,#173b50 100%) !important;
+    border-color: #83b7d1 !important;
+    color: #fff !important;
+}
+#headerSituationText {
+    font-size: 11.3px !important;
+    line-height: 1.43 !important;
+    color: #d8e7ee !important;
+}
+
 </style>
 
 </head>
@@ -2983,7 +3036,7 @@ body {
     <div id="headerSituationBrief">
         <div id="headerSituationTopline">
             <span>SITUATION · LAST 24 HOURS</span>
-            <button id="keyDevelopmentsButton" type="button">KEY DEVELOPMENTS</button>
+            <button id="keyDevelopmentsButton" type="button">VIEW KEY DEVELOPMENTS ›</button>
         </div>
         <div id="headerSituationText">
             Loading the latest 24-hour intelligence brief…
@@ -3154,33 +3207,10 @@ Map layers
 
 <div class="layer-buttons">
 
-<button
-    class="layer-button active"
-    id="markersToggle"
->
-EVENTS
-</button>
-
-<button
-    class="layer-button"
-    id="heatToggle"
->
-HEAT ZONES
-</button>
-
-<button
-    class="layer-button"
-    id="chronologyToggle"
->
-LIST / EXPORT
-</button>
-
-<button
-    class="layer-button active"
-    id="officesToggle"
->
-INTERPOL OFFICES
-</button>
+<button class="layer-button active" id="markersToggle">EVENTS</button>
+<button class="layer-button" id="heatToggle">HEAT ZONES</button>
+<button class="layer-button" id="chronologyToggle">LIST / EXPORT</button>
+<button class="layer-button active" id="officesToggle">INTERPOL OFFICES</button>
 
 </div>
 
