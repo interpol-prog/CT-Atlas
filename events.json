@@ -21,48 +21,61 @@
   "collector": "Google News RSS V9 multilingual + Gemini selection/translation",
   "relevance_filter": "Deterministic CT candidate filter + Gemini semantic final selection",
   "trend_summary": {
-    "overview": "Recent counter-terrorism developments highlight significant kinetic operations and major disruptions against militant networks globally, including successful military engagements against ISWAP in Nigeria and significant counter-terrorist financing seizures in Israel. Authorities also disrupted domestic terrorist plots and arrested key operatives in Russia, Italy, and Iran, while ongoing investigations focus on cross-border terror finance and state-linked attacks.",
+    "overview": "Recent 24-hour counter-terrorism developments feature major operational disruptions, including the neutralization of dozens of insurgents by Nigerian forces and significant arrests of terrorism suspects and financiers across Europe, the Middle East, and Russia. Authorities also uncovered sophisticated international financing and smuggling networks, alongside targeted domestic counter-extremism operations.",
     "developments": [
       {
-        "severity": "HIGH",
+        "event_id": "53148bd12e1f4e8c",
+        "severity": "CRITICAL",
         "category": "Attacks",
-        "headline": "Nigerian Military Foils ISWAP Attack, Neutralizing 27 Terrorists",
-        "detail": "Nigerian military forces successfully foiled an ISWAP terrorist attack across Borno and Sokoto states, neutralizing 27 terrorists during the operations.",
+        "headline": "Nigerian troops foil ISWAP attack in Borno and Sokoto, neutralizing 27 terrorists",
+        "detail": "Nigerian military forces successfully foiled an ISWAP terrorist attack across Borno and Sokoto states, neutralizing 27 terrorists.",
         "location": "Borno and Sokoto, Nigeria"
       },
       {
-        "severity": "HIGH",
-        "category": "Terrorist Financing",
-        "headline": "Israeli Security Forces Seize Millions in Suspected Terrorist Funds",
-        "detail": "Security forces intercepted a vehicle and discovered over 1.4 million shekels concealed within a double wall, leading to arrests for suspected terrorist financing.",
-        "location": "Jerusalem, Israel"
-      },
-      {
+        "event_id": "078217ad8cc9a323",
         "severity": "HIGH",
         "category": "Arrests",
-        "headline": "Italian Authorities Arrest 16-Year-Old Over ISIS Propaganda and Bomb-Making Guides",
-        "detail": "Italian law enforcement arrested a 16-year-old in Como who was found distributing ISIS propaganda and possessing instructional guides for building explosive devices.",
+        "headline": "Turkish special services detain 40 suspects linked to ISIS",
+        "detail": "Turkish security forces have detained 40 individuals suspected of having ties to the ISIS terrorist organization.",
+        "location": "Ankara, Turkey"
+      },
+      {
+        "event_id": "f77ad085e8d2bdbb",
+        "severity": "HIGH",
+        "category": "Arrests",
+        "headline": "16-year-old arrested in Como for ISIS propaganda and bomb-making tutorials",
+        "detail": "Italian authorities arrested a 16-year-old in Como who was spreading ISIS propaganda and possessed instructional guides for building bombs.",
         "location": "Como, Italy"
       },
       {
+        "event_id": "27979e061bc6874c",
         "severity": "HIGH",
-        "category": "Arrests",
-        "headline": "IRGC Dismantles US/Israel-Affiliated Terrorist Cell in Southeastern Iran",
-        "detail": "Iran's Islamic Revolutionary Guard Corps dismantled a covert terrorist cell in Saravan allegedly linked to the United States and Israel.",
-        "location": "Sarāvān, Iran"
+        "category": "Terrorist Financing",
+        "headline": "BBC uncovers ISIS money laundering network in Europe",
+        "detail": "The BBC revealed a money laundering network operating across Europe on behalf of ISIS and other terrorist organizations, which laundered hundreds of millions of euros.",
+        "location": "Europe"
       },
       {
+        "event_id": "b26ddf4503bf7e08",
+        "severity": "SIGNIFICANT",
+        "category": "Terrorist Financing",
+        "headline": "Suspected terrorist funds seized in vehicle double-wall in Israel",
+        "detail": "Security forces intercepted individuals attempting to conceal millions of shekels suspected of being terrorist funds inside a double wall of their vehicle, resulting in arrests.",
+        "location": "Jerusalem, Israel"
+      },
+      {
+        "event_id": "a7c1755336dc9916",
         "severity": "SIGNIFICANT",
         "category": "Arrests",
-        "headline": "Turkish Security Forces Detain 40 Suspects Linked to ISIS",
-        "detail": "Turkish security forces detained 40 individuals during operations targeting suspects with ties to the ISIS terrorist organization.",
-        "location": "Ankara, Turkey"
+        "headline": "FSB detains Maykop resident for preparing terrorist attack at Defense Ministry facility",
+        "detail": "Russia's FSB detained a resident of Maykop who was allegedly preparing a terrorist attack against a Ministry of Defense facility.",
+        "location": "Maykop, Russia"
       }
     ],
     "status": "ok",
     "model": "gemini-3.5-flash-lite",
     "window_hours": 24,
-    "generated_at": "2026-08-31T08:29:23.252906+00:00",
+    "generated_at": "2026-08-31T09:39:18.553831+00:00",
     "candidate_events": 80
   },
   "ai_article_selection": {
@@ -116,9 +129,131 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-08-31T08:29:25.675521+00:00",
-  "number_of_events": 1560,
+  "last_updated": "2026-08-31T09:39:21.447613+00:00",
+  "number_of_events": 1566,
   "events": [
+    {
+      "id": "9ba4c9423cc6ad90",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Attacks"
+      ],
+      "title": "Young man passed coordinates of objects in Stavropol region to terrorists",
+      "summary": "A young man was transferring coordinates of facilities in the Stavropol region to terrorists.",
+      "original_title": "Молодой человек передавал террористам координаты объектов на Ставрополье",
+      "original_summary": "Молодой человек передавал террористам координаты объектов на Ставрополье Своё ТВ",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-08-31T08:51:01+00:00",
+      "source": "Своё ТВ",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNWlZROFZEdTJIMEVFVXIyMXIyWFBvSE9PaUFmMElZejlFTU82cGVoMFhIeXpMOXBFamFGWmNLODdPMV9mbWYzRER4bi16di04ekQtUnRnUUJWWGJfSDVDSkw0dFplOHdEbGJiZ2hNTnZzYjU5NUxBTkVYRzktRjlfR0xORHVLSUEydVVrRUN3STA3bm5ydUFZV0NTY0pDUQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": null,
+      "region": "Stavropol Krai",
+      "latitude": 45.0428,
+      "longitude": 41.9734,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Своё ТВ"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T08:51:01+00:00",
+      "last_reported": "2026-08-31T08:51:01+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Direct counter-terrorism intelligence involving aid to terrorists and operational targeting in Russia.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "A young man passed coordinates of objects to terrorists in Stavropol region, Russia",
+      "title_variants": [
+        "A young man passed coordinates of objects to terrorists in Stavropol region, Russia"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Stavropol region"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The text explicitly mentions the Stavropol region in Russia where coordinates were passed to terrorists.",
+      "ai_geo_fingerprint": "81874703072f97221b327ad0bfc467942cb80ca79f4cd5e8152bd0209e78adc2",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "08e0b8e5a9bf50d9",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Weapons"
+      ],
+      "title": "A car bomb attack near a police station in Mexico caused several injuries.",
+      "summary": "A car bomb exploded near a police station in Mexico, leaving multiple people injured.",
+      "original_title": "Un attentat à la voiture piégée près d'un poste de police au Mexique a fait plusieurs blessés.",
+      "original_summary": "Un attentat à la voiture piégée près d'un poste de police au Mexique a fait plusieurs blessés. Vietnam.vn",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-31T08:35:51+00:00",
+      "source": "Vietnam.vn",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNaVFOdkNJZ3cyR1M0TEFhTl9BT1FSR1dpTVhIOTc4Q2lsZ0V3b3BXYy1NYlBpVHMtS2VacE9RZnhwczRyMTJ2d3ZWRENwSXJ3NC1CNDFFX1NKYTlwYVhxVFFJdzVmc2xZTzhyM212RllBN01ZSjJsV0ExMVBBeVE2V1pLV0s4T2tlRllHMFg0V3o?oc=5",
+      "collector": "Google News RSS",
+      "country": "Mexico",
+      "country_code": "MX",
+      "city": "Mexico City",
+      "region": null,
+      "latitude": 19.42847,
+      "longitude": -99.12766,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Vietnam.vn"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T08:35:51+00:00",
+      "last_reported": "2026-08-31T08:35:51+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 80,
+      "ai_relevance_reason": "Terrorist-style bombing attack targeting law enforcement infrastructure.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "car bomb attack near police station in Mexico",
+      "title_variants": [
+        "car bomb attack near police station in Mexico"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "police station in Mexico"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event is a car bomb attack described as taking place in Mexico.",
+      "ai_geo_fingerprint": "5b79792f07995a2c7341da58f4a3879688df299b0fa691c5ae4683af31aa22a3",
+      "ai_geo_inferred": false
+    },
     {
       "id": "1e1f90d34d47a953",
       "category": "Legal / Judicial",
@@ -508,6 +643,66 @@
       ]
     },
     {
+      "id": "aac70d8b024cc0b3",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Shooting in Aarau: Shooter, motive, victims, an update on the tragedy",
+      "summary": "Media coverage and updates regarding a shooting incident in Aarau, Switzerland, detailing the shooter, motive, and victims.",
+      "original_title": "Fusillade à Aarau: Tireur, mobile, victimes, le point sur le drame",
+      "original_summary": "Fusillade à Aarau: Tireur, mobile, victimes, le point sur le drame Le Matin",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-31T07:16:26+00:00",
+      "source": "Le Matin",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQc0ZBUHk1cjUyN2tjRkRxTkVSMjVfR25EbTM2bGp3SmhSaU9MQkFNbWMxMFdfRklHUzJxVkEwaWhRMGkxeUlIb2drbFlZeU92TVQ0dE1lR29wSUhxOHZVQ25WVjdNX0FETjVIdEdwZy01ekdXQ3h5M0ZHX0l4QWNTQlFfUVlqU3N2dGRKMVh2V0dOV3JaenFjWHd2VFdXTmZ6TjBj?oc=5",
+      "collector": "Google News RSS",
+      "country": "Switzerland",
+      "country_code": "CH",
+      "city": "Aarau",
+      "region": null,
+      "latitude": 47.39254,
+      "longitude": 8.04422,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Le Matin"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T07:16:26+00:00",
+      "last_reported": "2026-08-31T07:16:26+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Reports on an active shooting incident/mass casualty attack, maintaining relevance under violent attacks.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "shooting attack in Aarau",
+      "title_variants": [
+        "shooting attack in Aarau"
+      ],
+      "location_confidence_score": 0.98,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "shooting in Aarau, Switzerland"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The shooting incident explicitly occurred in the city of Aarau, Switzerland.",
+      "ai_geo_fingerprint": "febf9293601695941979b175bd6a59bec50bcf5e9060aca5f07dea3eb5f70504",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "9ba4c9423cc6ad90",
       "category": "Online Radicalization / Cyberterrorism",
       "categories": [
@@ -653,7 +848,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-08-31T06:52:57+00:00",
       "source": "kommersant.ru",
-      "source_count": 3,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5oaEgzTHhNajNEejlpVVQwOGJ1eVRwbG4xTlpXS1dUT2NxTGJNVFAwdkJPSnZCaEsyMnczWkJ2eEwzRkFFZjhCeE9SUG9rZw?oc=5",
       "collector": "Google News RSS",
       "country": "Ukraine",
@@ -670,7 +865,8 @@
       "sources": [
         "kommersant.ru",
         "Общественная служба новостей",
-        "Новые Известия"
+        "Новые Известия",
+        "Интернет-журнал \"Чеснок\""
       ],
       "related_articles": [
         {
@@ -717,6 +913,69 @@
       "ai_geo_inferred": true
     },
     {
+      "id": "9ba4c9423cc6ad90",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Weapons"
+      ],
+      "title": "UAE Defense: Air forces intercepted a drone coming from Iran",
+      "summary": "The UAE Ministry of Defense announced that its air forces intercepted and dealt with a drone coming from Iran.",
+      "original_title": "الدفاع الإماراتية: قواتنا الجوية تعاملت مع مسيّرة قادمة من إيران",
+      "original_summary": "الدفاع الإماراتية: قواتنا الجوية تعاملت مع مسيّرة قادمة من إيران العربية",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-31T06:31:00+00:00",
+      "source": "العربية",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMingRBVV95cUxPNUVUSVJwbUpBYkVKa1dlRFpaNTljUWRhZ0VhTDIxVURiY1Y0cEZXXzVKR25RTFNUWjNQZmhWRHJ4elhCZ2pzdDluai1CZi1yYS1SM3NIQlhoYWZVdG9HbVdPbTdpdEJ2TEh0R3R6VEFnREVpT0Z6YU05ZWJhVWN2Um9LWDZCN2VHRV9uQlhXa0ozRk10clpYcWVlNGc3SDgyUElqanBYbXp6S29RWDdWYTVKVFJreWt1SW1OVFVVSU5SdU5Ob1E5NGZJUlRIc0gyYTQwZXdDZnRUaGNQYVpmcGxRTVBGZS1DTU1Dc0Fkc01kczdOc3JWZW5JZC1Yb00tT0hJNW01aGplRWJCYWNXMGpsbWNvV0N6VnEwZE9lOFMxYlVlOThTVzBtaGxsM2VDM1RpSWotdXRvdjRxNTRSdjNUZzZBUHcyMUhMb3JwUHBOMnVucGtXbmZ6Mk13aWowRjFsRWhmeVdzYmlXb0cyV200bW5WQVFsREYyVmpsbUtteTlqaGpvbC10SHhZclBvY1lYYTc3NHJTdFJudjE1Sm9PWDJSY3dVaURyVkhKV1pldDRlcHJEYUJVZnFlY0ZLVnFHZ2VSdmxBNjhtRXBhM05FdEFQMnJheWw3V094WWlSSEhPaWhGMjFIRHQ2cHNqdDVYNi0tWVViVXFkMDQ4WXlYY2hBeGJsVE8xbzhGQ2pVTXU1THRHZ0F1bm1xQdIBowRBVV95cUxQMGpMTFItTGVvOV92SGZUZXlLclFkVFdSSkZydVloczVuN2JramRzWGxYNXdrOGFrWWRXZTZVQ0ZSeDRBT1JNczVRMVVoeWtEMGVNTjNNYVVlQXJBM2pnVXBTS2g0clJleUhZeVEzUGR4UVEwNjFQeVV0NXpFeHRsNU1yYi1DN3NaU0s0THZaQXEyZE8teHZBOXNmMFFsMmprMzdnbm5BbHUzVWF6T3lhbW1ZMTF0UTZ1VkR5WFFfOUdiMU85SFUwZWJ1TE9kYWRWOTlrVWxEd1lkN0ZCOG9IYkJxZkRISjZhTDh3MXZmS2lTaURrZGYzcjRLT3ZENWhEV0s3ZlI3ZWlRRWJJd3JXX0Y2WTZhdFNuR1ZRcmRzWXB5bjhzbDdDMFdCUE9yUzR2UDBqN3pBZmZwT1hHMnlBR0VpTzBnWHA1UW9zaGVtM09nY2tfaUJpTTJoakxBUTV5NzNkRk40V2ZhM0s0RjVkc0JIQXZOODJGZ09PQ0VXUzFvSlRIWDJrdFJXZGItc1M1eGZnZy0zVFV6ZEN1WS1DNXZyZVdsSE1LZEZzNWhENVJnTllSVFh1WUFXczc5RFNOX0VqV3Rfcmk3aE9XNWNtUzZvUnRHN20zZzA2RzRudlVKZVJuaUtMU0o5Vmc4dXA4ZWlVSTZNTXlkV1FTaEJtUERhbHhNeWhoaEFRVWxVMGZJUWhKMDRMdVhtbFZSYUZ6NXdJ?oc=5",
+      "collector": "Google News RSS",
+      "country": "United Arab Emirates",
+      "country_code": "AE",
+      "city": "Abu Dhabi",
+      "region": null,
+      "latitude": 24.45118,
+      "longitude": 54.39696,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "alarabiya.net",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "العربية"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T06:31:00+00:00",
+      "last_reported": "2026-08-31T06:31:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Involves an incoming drone attack/intercepted aerial threat attributed to a state actor, relevant to regional security and counter-terrorism/drone defense monitoring.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "interception of drone from Iran by UAE air forces in UAE",
+      "title_variants": [
+        "interception of drone from Iran by UAE air forces in UAE"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "UAE Defense: Air forces intercepted a drone"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The UAE Ministry of Defense intercepted a drone coming from Iran, meaning the defensive operation/event occurred in the UAE airspace or territory.",
+      "ai_geo_fingerprint": "ac9419a5ad5cc06d3fe4e9402decce9f4c4b8d4859bb63cd38d1387ab7ef55de",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "b11741e7da2655d6",
       "category": "Attacks",
       "categories": [
@@ -732,7 +991,7 @@
       "collection_locale": "DE:de",
       "published": "2026-08-31T06:12:55+00:00",
       "source": "SZ.de",
-      "source_count": 2,
+      "source_count": 3,
       "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPQTN5T3o3Mkc2YUNyZ19US2RCMWJ4eXFBYU0wc1JmNWpBTFc5RTdBVUc1X3ZqQ1c0YVB0MnQ1R0xWaW5jejJjVjJHRk5QSEVlZWxyWlhBRHhyc25mWlAxMEYxM3RPelo5UWoweFlmVTdZWmhuRlFUcXVZVzZPck9JQ2JfaU14X05zcDBtZHFYeUkzYjRBbS1kZGdnOFhOS081TXh2TEdJZmNOZmswd1JRU2c3WVUwRUk?oc=5",
       "collector": "Google News RSS",
       "country": "Switzerland",
@@ -746,7 +1005,8 @@
       "acquisition_channel": "multilingual_discovery",
       "sources": [
         "SZ.de",
-        "MarketScreener Schweiz"
+        "MarketScreener Schweiz",
+        "FAZ"
       ],
       "related_articles": [
         {
@@ -808,7 +1068,7 @@
       "collection_locale": "IL:he",
       "published": "2026-08-31T06:11:00+00:00",
       "source": "כיפה",
-      "source_count": 2,
+      "source_count": 3,
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNSlhiRnl0WmI5Zjk2MmlzTDBoeE13VExpTEs1b3dfWElGU0RaTGxPRG9IczBFcE0xaDdWdGgzbGg2d2xhZnphb0lGanRFM0t4aWdjWjJSdUtOU2pOWHdZZEtQNzkxWDluXzROTnJMNXFUdF9SSGkyY1hFRXNERHp1czNVRW80WlJ2M2d2UDh4dENUSk9mWnJybGZFNldGdnc2Wmdv0gGrAUFVX3lxTE41SThmMmZ5SDF5TF81YVEzaUJObzctUFp0djhhb3FyT2VGNU5oNTFtbkhPZUFUQjN6elR3NExvSUtQVmRoZ2QxUGV3Nm5WOVBlWnpOaGk1dGlmWXFKRE52NF9yRlpQZ0Vwa01zaEt6cjRvc0d3T1ZEQzZjaHlIcDBNRHQ5RGg1OUlNZWFfdGViWjM0T1pEZ2VRd3UyQ2JnQXRaSzNaQlJ5NFRuMA?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -822,7 +1082,8 @@
       "acquisition_channel": "multilingual_discovery",
       "sources": [
         "כיפה",
-        "כיכר השבת"
+        "כיכר השבת",
+        "היום"
       ],
       "related_articles": [
         {
@@ -1134,7 +1395,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicitly names Zacatecas, Mexico.",
       "ai_geo_fingerprint": "ea159a3ff33d0e98b79e59bac910fcd81fcbf0ba2763b64ab76673b046c8f757",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -1236,7 +1501,7 @@
       "related_articles": [],
       "article_count": 1,
       "first_reported": "2026-08-31T05:00:33+00:00",
-      "last_reported": "2026-08-31T05:00:33+00:00",
+      "last_reported": "2026-08-31T06:15:34+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -2610,8 +2875,18 @@
       "sources": [
         "noi.md"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Trial in the 9/11 terrorist attacks case to take place in 2028, judge rules",
+          "original_title": "Суд по делу о терактах 11 сентября пройдет в 2028 году. Что решил судья?",
+          "original_language": "ru",
+          "summary": "A court ruling sets the trial date for the September 11 terrorist attacks legal proceedings for the year 2028.",
+          "published": "2026-08-30T21:00:02+00:00",
+          "source": "noi.md",
+          "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxOc2hfZmg0ZFZBZGhEVXZSQkxmMVJSNFltUlBvZmRsOTRqUnZKZDM0ZUNnbzBrTDdDN2doV0hhVDFvRV9HcWZiYm84UWtVdUhhYTdkMzVzbzZsZW54S096ZjhrZUg2d2JqUl83SVdDU0l5YkpVaXhmTmJSMzFjcWdVRTRQb0cxbV9NdmdPQ0ZFdGl1TTlrNFV0cWNPOVB3ZjFCSnltSGJDTjhkMnluVWl1U2FHWG9TaW1vTDQ3ZzVoWE9qY3RTcVBOaGpnb1RNcTUwMDVYQXF1bE5WWkR4UGo3S3pzaHNhaXhyRTl2YQ?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-30T21:00:02+00:00",
       "last_reported": "2026-08-30T21:00:02+00:00",
       "ai_selection_complete": true,
@@ -2640,7 +2915,8 @@
       "ai_geo_inferred": true,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "very_high_title_similarity"
       ]
     },
     {
@@ -3962,7 +4238,7 @@
       "collection_locale": "DE:de",
       "published": "2026-08-30T15:42:08+00:00",
       "source": "AD HOC NEWS",
-      "source_count": 3,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPd1BvaHp3V0pDc2kxWEI4bEpqN0dHTFg3bDlBel8yRmxUNlNfbE5VQ3lmcF9xUFV4MlZiSTBjYjd5X08wYWdkQnliSHhVOWl4cUVoV0RhWW4yczMzbGFGWHJEbTNrbHZhQnFjdURTMkdnczVpeVUxcnVrWXh4WTM4LVlkUXN4MU5QOGUwWTc2aWpYbVdvbFNmU2FKbUozcVBiQUthOXJ6RTJ1bnR2R2xDRm03eXJkUQ?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -3977,7 +4253,8 @@
       "sources": [
         "AD HOC NEWS",
         "BILD",
-        "Tagesspiegel"
+        "Tagesspiegel",
+        "Watson"
       ],
       "related_articles": [
         {
@@ -4014,10 +4291,11 @@
       "title_variants": [
         "attribution of Leipzig drone attack to Russian GRU by German government"
       ],
-      "dedup_confidence": 0.572,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
         "entity_actor_event_signature",
-        "paraphrase_entity_context"
+        "paraphrase_entity_context",
+        "same_url"
       ],
       "location_confidence_score": 0.95,
       "location_method": "ai_city_geonames",
@@ -6218,6 +6496,68 @@
       ]
     },
     {
+      "id": "d5123b2529f9fc9e",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial"
+      ],
+      "title": "Minister Ciftci: 'No tolerance will be shown to those who create obstacles for the terrorist-free Turkey process'",
+      "summary": "A Turkish government official warns that opposition or obstruction toward ongoing state counter-terrorism initiatives ('terror-free Turkey process') will not be tolerated.",
+      "original_title": "Bakan Çiftçi:\"Terörsüz Türkiye sürecine engel çıkaranlara müsamaha gösterilmeyecek",
+      "original_summary": "Bakan Çiftçi:\"Terörsüz Türkiye sürecine engel çıkaranlara müsamaha gösterilmeyecek TRT Haber",
+      "original_language": "tr",
+      "collection_language": "tr",
+      "collection_language_name": "Turkish",
+      "collection_locale": "TR:tr",
+      "published": "2026-08-30T09:44:00+00:00",
+      "source": "TRT Haber",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOVDFvbTUxVC1BNWhHem16TTBPVDZxX0t3d3MzRXMxbzdJdG83UXRQV2RmZUFWcFdLYlRiVkF2NXBkZkVGekNqWS1YNWpLOVRlcFN3QWRzWk9XWnlMMVJaaHJOaDM1SG81SGxITF83Sllnb3hLNzJ0dVpXWWxkY252TjN0TTY2MzU4ajhfbDJGYnB6RVlfbkw3ZEpwT05iNzlhMmY1RjJEVEYtdmFhdFYxX3l3Q215SFI1NEZGdXJRWF9WZEh1Zk5fN1N3?oc=5",
+      "collector": "Google News RSS",
+      "country": "Turkey",
+      "country_code": "TR",
+      "city": "Ankara",
+      "region": null,
+      "latitude": 39.91987,
+      "longitude": 32.85427,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "trthaber.com",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "TRT Haber"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T09:44:00+00:00",
+      "last_reported": "2026-08-30T09:44:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Directly addresses state counter-terrorism policy and operational security measures in Turkey.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Turkish official statement warning against obstructing counter-terrorism process",
+      "title_variants": [
+        "Turkish official statement warning against obstructing counter-terrorism process"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "terrorist-free Turkey process, Minister Ciftci"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The statement regarding counter-terrorism and state policy was made by a Turkish government minister concerning Turkey.",
+      "ai_geo_fingerprint": "45ec96e9fd06f9d3ce72b722603352fb8913fb4d07b75a72479d1a18565d998a",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "a7c1755336dc9916",
       "category": "Arrests",
       "categories": [
@@ -7055,7 +7395,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-08-30T06:17:56+00:00",
       "source": "Живая Кубань",
-      "source_count": 3,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQN2YxcWxNTWNXai1HampmOFRPTnRneER4bGFrakF0MUJOb1M1RklDOUdDYllCc3pXN0g0WVNBeEdzamFQTEM3MUZNc1NuTmlzaEUxYkNtQzJfUkhCaWJqQTJuZ1huUjZjTWptd05UVjRJam5lSDM2bnA1VXctcE9IV05xNjJvS3hIaHNhaEFtZ2tCR3puWk9YNWIxbXM3QTQ4Y2QxRGJHYzVISGR3VjlLQWhpNUJFR3FicDVV?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -7070,7 +7410,8 @@
       "sources": [
         "Живая Кубань",
         "Рамблер",
-        "Национальная Служба Новостей"
+        "Национальная Служба Новостей",
+        "Readovka.news"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -7244,7 +7585,8 @@
       "id": "a7c1755336dc9916",
       "category": "Attacks",
       "categories": [
-        "Attacks"
+        "Attacks",
+        "Arrests"
       ],
       "title": "Settlers storm Islamic shrines in Nablus",
       "summary": "Settlers stormed Islamic shrines in Nablus according to local reports.",
@@ -7256,7 +7598,7 @@
       "collection_locale": "SA:ar",
       "published": "2026-08-30T06:07:17+00:00",
       "source": "خبرني",
-      "source_count": 9,
+      "source_count": 10,
       "url": "https://news.google.com/rss/articles/CBMirgNBVV95cUxOTFByVkNFR0dKTVprYnQ4U3pyUERnT0pfN2VBMG1BMkJZdVVqNkNtUWgtektyaHZmX3pJaEtnMXp2WmhEakthZzhucmtfNmxpYkhtVzB1X2tSVGkzeXlqV1FpNS1TODhFWUozWWp1SW51cmRsN0liSUJGaWw1T0poT2FPQnVoS1JDbDN2eE0ySzVJSm1IN3ZmN0VQY01hY3lrenlESnpuajZyY2VrOG1FLXpiU1ZHSVFocl9yZFFyM1lvNFNlbnRTUjkyZ2FIQ1J1RERPQjN3bjZ1cERoN0xuQWJGb1BTNUZjN2pTRmktdkdCQTRJMWdWWkdVaVd3SWdsY2g0bl9kWGNEZmQ1SUhSRVc2UnhLbmV0V2hVVGRyV3U1WXJRZnhPMlJXTVNlNlJoaUFYdXNSeUt4ejcyc0l0Z0Qwc09CRnpqZlhwZmlmQzM1dWZnNmtiWUVWWS1MQmk5Mk1wMFhXS1BFblBpUGR4Y0tlNGp6dE91ODRqeENZZGppazE0SVczOWs4MWFzSkV5YVJwdThMemxxOGJlS1BQQWhLU0VXZkhxY1pxbU13?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -7277,7 +7619,8 @@
         "تلفزيون فلسطين",
         "بوابة روز اليوسف",
         "تطبيق نبض",
-        "صحيفة الرأي"
+        "صحيفة الرأي",
+        "RadioJ"
       ],
       "related_articles": [
         {
@@ -9999,7 +10342,7 @@
       "collection_locale": "DE:de",
       "published": "2026-08-29T14:23:00+00:00",
       "source": "DIE ZEIT",
-      "source_count": 6,
+      "source_count": 7,
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOb2NpcjNQM0hXZEJrbXdydnpSWEdaOHZyUEU2Z0FiMzRLUi1KcjRHVWh1Z29aS0Vhb0NwLUliWkFqNTVDN2NYVjBOSXR3azctdkYzczI5N0FJcHZUaXRlVnlFR2s3QmhaYW9PTDZTX3pNX203Y1lZMHFTWE9MbWdLdGF0bVNfSUhyVXVoS0VQR2pPdk1CTGdlNlBIRFowaWk5OVRKSVdaVldnYWxjUDJ3T19GZw?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -10017,7 +10360,8 @@
         "Национальная Служба Новостей",
         "STERN.de",
         "AD HOC NEWS",
-        "BILD"
+        "BILD",
+        "DerWesten"
       ],
       "related_articles": [
         {
@@ -17767,96 +18111,6 @@
       ]
     },
     {
-      "id": "89f6039810af2991",
-      "category": "Attacks",
-      "categories": [
-        "Attacks",
-        "Arrests"
-      ],
-      "title": "Iran and Hamas Step Up West Bank Attack Plots, Israel Warns",
-      "summary": "Israeli intelligence warns that Iran and Hamas are actively escalating and directing attack plots targeting the West Bank.",
-      "original_title": "Iran And Hamas Step Up West Bank Attack Plots, Israel Warns",
-      "original_summary": "Iran And Hamas Step Up West Bank Attack Plots, Israel Warns i24NEWS",
-      "original_language": "en",
-      "collection_language": "en",
-      "collection_language_name": "English",
-      "collection_locale": null,
-      "published": "2026-08-28T11:37:34+00:00",
-      "source": "i24NEWS",
-      "source_count": 6,
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNRkNnY0N4bkZkZmRRR3RKaDlVOTUzMGxNWVhHdU02NV95Q1Y5ejNBNTI2bi1wWFBpVzVtX2xBZ0ZRbUNzdnBZUHpFcGRVNmNVR2RrMjRwZU9RRWFwVVVzS1hwNDJsMFBHenNHOVJ1Z09KemtybVJSWS1CX0lDeE9URGF2YlZlXzhwbkc0ZTU0NUY5dHhGd1F4MFpYTklGaUw1RTFGTUhQZXd2b1R4Wnc?oc=5",
-      "collector": "Google News RSS",
-      "country": "Palestinian Territory",
-      "country_code": "PS",
-      "city": null,
-      "region": "West Bank",
-      "latitude": 31.9522,
-      "longitude": 35.2332,
-      "location_precision": "region",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "Jewish.Ru",
-        "Aurora Israel",
-        "El Mundo",
-        "i24NEWS",
-        "STMEGI",
-        "israelnoticias.com"
-      ],
-      "related_articles": [
-        {
-          "title": "Iran and Hamas Step Up West Bank Attack Plots, Israel Warns",
-          "original_title": "Iran And Hamas Step Up West Bank Attack Plots, Israel Warns",
-          "original_language": "en",
-          "summary": "Israeli intelligence warns that Iran and Hamas are actively escalating and directing attack plots targeting the West Bank.",
-          "published": "2026-08-28T13:46:22+00:00",
-          "source": "i24NEWS",
-          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNRkNnY0N4bkZkZmRRR3RKaDlVOTUzMGxNWVhHdU02NV95Q1Y5ejNBNTI2bi1wWFBpVzVtX2xBZ0ZRbUNzdnBZUHpFcGRVNmNVR2RrMjRwZU9RRWFwVVVzS1hwNDJsMFBHenNHOVJ1Z09KemtybVJSWS1CX0lDeE9URGF2YlZlXzhwbkc0ZTU0NUY5dHhGd1F4MFpYTklGaUw1RTFGTUhQZXd2b1R4Wnc?oc=5"
-        },
-        {
-          "title": "Russia and Israel discuss terrorism threats",
-          "original_title": "Россия и Израиль обсудили угрозы терроризма",
-          "original_language": "ru",
-          "summary": "Representatives from Russia and Israel held discussions focusing on ongoing terrorism threats.",
-          "published": "2026-08-28T11:37:34+00:00",
-          "source": "Jewish.Ru",
-          "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1jUHFwcWZFNnNMMVhybHJUWkRDRDFfclhlUlFKNGRUM2NrLVNYM0VtMExPUHAtZEUwdnNHQ3BXcFllTzNSVlhQTnhsRzY4MHhmYVhCUA?oc=5"
-        }
-      ],
-      "article_count": 2,
-      "first_reported": "2026-08-28T11:37:34+00:00",
-      "last_reported": "2026-08-28T13:46:22+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 50,
-      "ai_relevance_reason": "Bilateral security/diplomatic discussions specifically dedicated to counter-terrorism coordination and threat assessment.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": false,
-      "ai_canonical_event": "intelligence warning regarding escalated attack plots by Iran and Hamas in the West Bank",
-      "title_variants": [
-        "Bilateral talks between Russia and Israel on terrorism threats"
-      ],
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "very_high_title_similarity",
-        "same_url"
-      ],
-      "location_confidence_score": 1.0,
-      "location_method": "ai_region_coordinates",
-      "location_evidence": [
-        "attack plots targeting the West Bank"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Target region of the attack plots is the West Bank.",
-      "ai_geo_fingerprint": "da99d1bb5e0a95faa54f91c81eca734fcd42e3aae1588850c3ce934d60f2e6dc",
-      "ai_geo_inferred": false
-    },
-    {
       "id": "982fcb21d6ab9ec1",
       "category": "Legal / Judicial",
       "categories": [
@@ -17954,6 +18208,97 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Seven individuals in Scotland were charged with terrorism links after vandalizing Donald Trump's golf course.",
       "ai_geo_fingerprint": "a452cb9e7cbb620306a924e3a2a5e547655d851782643c8707bb51ae6821e3d1",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "89f6039810af2991",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Arrests"
+      ],
+      "title": "Iran and Hamas Step Up West Bank Attack Plots, Israel Warns",
+      "summary": "Israeli intelligence warns that Iran and Hamas are actively escalating and directing attack plots targeting the West Bank.",
+      "original_title": "Iran And Hamas Step Up West Bank Attack Plots, Israel Warns",
+      "original_summary": "Iran And Hamas Step Up West Bank Attack Plots, Israel Warns i24NEWS",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English",
+      "collection_locale": null,
+      "published": "2026-08-28T11:05:41+00:00",
+      "source": "i24NEWS",
+      "source_count": 7,
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNRkNnY0N4bkZkZmRRR3RKaDlVOTUzMGxNWVhHdU02NV95Q1Y5ejNBNTI2bi1wWFBpVzVtX2xBZ0ZRbUNzdnBZUHpFcGRVNmNVR2RrMjRwZU9RRWFwVVVzS1hwNDJsMFBHenNHOVJ1Z09KemtybVJSWS1CX0lDeE9URGF2YlZlXzhwbkc0ZTU0NUY5dHhGd1F4MFpYTklGaUw1RTFGTUhQZXd2b1R4Wnc?oc=5",
+      "collector": "Google News RSS",
+      "country": "Palestinian Territory",
+      "country_code": "PS",
+      "city": null,
+      "region": "West Bank",
+      "latitude": 31.9522,
+      "longitude": 35.2332,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Jewish.Ru",
+        "Aurora Israel",
+        "El Mundo",
+        "i24NEWS",
+        "STMEGI",
+        "israelnoticias.com",
+        "Enlace Judío"
+      ],
+      "related_articles": [
+        {
+          "title": "Iran and Hamas Step Up West Bank Attack Plots, Israel Warns",
+          "original_title": "Iran And Hamas Step Up West Bank Attack Plots, Israel Warns",
+          "original_language": "en",
+          "summary": "Israeli intelligence warns that Iran and Hamas are actively escalating and directing attack plots targeting the West Bank.",
+          "published": "2026-08-28T13:46:22+00:00",
+          "source": "i24NEWS",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNRkNnY0N4bkZkZmRRR3RKaDlVOTUzMGxNWVhHdU02NV95Q1Y5ejNBNTI2bi1wWFBpVzVtX2xBZ0ZRbUNzdnBZUHpFcGRVNmNVR2RrMjRwZU9RRWFwVVVzS1hwNDJsMFBHenNHOVJ1Z09KemtybVJSWS1CX0lDeE9URGF2YlZlXzhwbkc0ZTU0NUY5dHhGd1F4MFpYTklGaUw1RTFGTUhQZXd2b1R4Wnc?oc=5"
+        },
+        {
+          "title": "Russia and Israel discuss terrorism threats",
+          "original_title": "Россия и Израиль обсудили угрозы терроризма",
+          "original_language": "ru",
+          "summary": "Representatives from Russia and Israel held discussions focusing on ongoing terrorism threats.",
+          "published": "2026-08-28T11:37:34+00:00",
+          "source": "Jewish.Ru",
+          "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1jUHFwcWZFNnNMMVhybHJUWkRDRDFfclhlUlFKNGRUM2NrLVNYM0VtMExPUHAtZEUwdnNHQ3BXcFllTzNSVlhQTnhsRzY4MHhmYVhCUA?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-28T11:05:41+00:00",
+      "last_reported": "2026-08-28T13:46:22+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 50,
+      "ai_relevance_reason": "Bilateral security/diplomatic discussions specifically dedicated to counter-terrorism coordination and threat assessment.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "intelligence warning regarding escalated attack plots by Iran and Hamas in the West Bank",
+      "title_variants": [
+        "Bilateral talks between Russia and Israel on terrorism threats"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "very_high_title_similarity",
+        "same_url"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "attack plots targeting the West Bank"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Target region of the attack plots is the West Bank.",
+      "ai_geo_fingerprint": "da99d1bb5e0a95faa54f91c81eca734fcd42e3aae1588850c3ce934d60f2e6dc",
       "ai_geo_inferred": false
     },
     {
@@ -18147,6 +18492,67 @@
       "ai_geo_reason": "The source 'כיכר השבת' is a Hebrew-language news outlet covering Israeli legal proceedings and security events.",
       "ai_geo_fingerprint": "e778932edff8b14c592bbce9c9f5297e7d30477480d66a3187b6fd4a0592d716",
       "ai_geo_inferred": true
+    },
+    {
+      "id": "029e1d5c846574ce",
+      "category": "Terrorist Financing",
+      "categories": [
+        "Terrorist Financing",
+        "Legal / Judicial"
+      ],
+      "title": "Tax money for Islamists? Karner must fully investigate DERAD scandal",
+      "summary": "An Austrian political party calls for a full investigation into alleged state funding provided to Islamist extremism de-radicalization programs (DERAD).",
+      "original_title": "Steuergeld für Islamisten? Karner muss DERAD-Skandal lückenlos aufklären",
+      "original_summary": "Steuergeld für Islamisten? Karner muss DERAD-Skandal lückenlos aufklären fpoe.at",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-08-28T10:31:52+00:00",
+      "source": "fpoe.at",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNbHdyM1pCWk1sQjhibmo3Qm1iNHJKRWg3V1c0Z1ZILTA5YkRXTDc2MjRZT19ISndBdHlIaUFUQjE2R2JqRU1VVGU5S0R6bVNlYXpoeFg5Tm5JcWNBVWU0YVNRcThLY0dvcWpDNUJPLUVfX0RLd2stWm5qYWpiTGRPYzlSN2htNkI4TEZzTkpWN0RBT3ctd1BXVWUyN2szZ1liZnBYNUc3U2puQXJPc004T0g3aXkyWkh6RGNoTDdMRElzUQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Austria",
+      "country_code": "AT",
+      "city": "Vienna",
+      "region": null,
+      "latitude": 48.20849,
+      "longitude": 16.37208,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "fpoe.at"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-28T10:31:52+00:00",
+      "last_reported": "2026-08-28T10:31:52+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 65,
+      "ai_relevance_reason": "Relates to counter-extremism funding oversight and political scrutiny of Islamist de-radicalization programs.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Political call for investigation into funding for Islamists in Austria",
+      "title_variants": [
+        "Political call for investigation into funding for Islamists in Austria"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Karner must fully investigate DERAD scandal, fpoe.at"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The political controversy and call for investigation involves Austrian domestic politics (Minister Gerhard Karner and the Freedom Party of Austria - FPÖ).",
+      "ai_geo_fingerprint": "f3683c527a6d56907325f41c3aa080f10cf1b1c46b5c9e579ca00acd295e12db",
+      "ai_geo_inferred": false
     },
     {
       "id": "42a5d4019cc1c94f",
@@ -34335,7 +34741,7 @@
           "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxPS01ROFlPVjlmaDM0UUU1QTgycDJaM05XUHN5YnBWRlFkbmFuTGQwTlJhRzJMM2hQZUowTVlHT0ppSkU4T2Ntd2R0Q2M0aHlXSkxGdDVSUEMwTjhwNGxrQVpEVUxId2RIeGZJSUhQSlNHaWdBWkJFNVk0RGh0WC1yRTU3NGc3bF9FZUtJVF9udU5Hd1BsZHpVa2I1cl9aVW9YMENFYkRnUkhfQXlDMHJheTB2M25RdU9WRzZtdTJBMVJxc2VpYUhrSV9lSjhrNjdHT1o0QzhiZnhaY3hrVEZQenZXNEV0RGZBR3NCZGlvSFRXRnR1U2JFSTR0MF9zRVFlbVIw?oc=5"
         }
       ],
-      "article_count": 35,
+      "article_count": 36,
       "first_reported": "2026-08-24T17:25:00+00:00",
       "last_reported": "2026-08-28T17:17:32+00:00",
       "dedup_confidence": 1.0,
@@ -110567,21 +110973,21 @@
     "primary_model": "gemini-3.5-flash-lite",
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
-    "cached_events": 1557,
-    "ai_processed_this_run": 3,
-    "ai_pending_at_start": 3,
-    "city": 688,
-    "region": 319,
-    "country_capital": 543,
+    "cached_events": 1560,
+    "ai_processed_this_run": 6,
+    "ai_pending_at_start": 6,
+    "city": 689,
+    "region": 320,
+    "country_capital": 547,
     "unlocated": 10,
-    "mapped_total": 1550,
-    "high_confidence": 1408,
+    "mapped_total": 1556,
+    "high_confidence": 1414,
     "medium_confidence": 147,
     "low_confidence": 5,
     "methods": {
-      "ai_country_capital": 543,
-      "ai_city_geonames": 666,
-      "ai_region_coordinates": 319,
+      "ai_region_coordinates": 320,
+      "ai_country_capital": 547,
+      "ai_city_geonames": 667,
       "ai_city_coordinates": 22,
       "ai_unlocated": 10
     }
