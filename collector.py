@@ -147,6 +147,9 @@ AI_TREND_SCHEMA = {
             "items": {
                 "type": "object",
                 "properties": {
+                    "event_id": {
+                        "type": "string"
+                    },
                     "severity": {
                         "type": "string",
                         "enum": [
@@ -169,6 +172,7 @@ AI_TREND_SCHEMA = {
                     },
                 },
                 "required": [
+                    "event_id",
                     "severity",
                     "category",
                     "headline",
@@ -211,11 +215,13 @@ DE-PRIORITISE:
 - stories whose importance is mainly rhetorical rather than operational.
 
 Return between 0 and 6 developments. It is better to return 2 genuinely
-important items than 6 weak ones. Do not invent facts, casualty figures,
+important items than 6 weak ones. For every selected development, copy the
+event_id EXACTLY from the corresponding supplied event. Never invent or alter
+an event_id. Do not invent facts, casualty figures,
 locations, identities, responsibility claims or significance. Preserve
 uncertainty and attribution.
 
-The overview should be 2-4 concise sentences in professional English,
+The overview MUST be 2-3 concise sentences in professional English,
 synthesising the most important pattern(s) without exaggeration.
 
 Severity meanings:
@@ -6792,6 +6798,13 @@ def _trend_fallback(candidates, generated_at, reason=""):
 
         developments.append(
             {
+                "event_id": str(
+                    event.get("id")
+                    or
+                    event.get("_mapKey")
+                    or
+                    ""
+                ),
                 "severity": severity,
                 "category": (
                     categories[0]
