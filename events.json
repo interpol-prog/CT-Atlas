@@ -21,48 +21,48 @@
   "collector": "Google News RSS V9 multilingual + Gemini selection/translation",
   "relevance_filter": "Deterministic CT candidate filter + Gemini semantic final selection",
   "trend_summary": {
-    "overview": "The past 24 hours feature significant kinetic counter-terrorism operations, including Nigerian forces neutralizing 27 ISWAP insurgents, Iranian authorities dismantling a foreign-linked cell, and Turkish security forces detaining 40 ISIS suspects. Concurrently, law enforcement agencies advanced major financial disruptions, exposing an extensive WhatsApp-based terrorist financing network operating across Europe.",
+    "overview": "Recent counter-terrorism developments highlight significant kinetic operations and major disruptions against militant networks globally, including successful military engagements against ISWAP in Nigeria and significant counter-terrorist financing seizures in Israel. Authorities also disrupted domestic terrorist plots and arrested key operatives in Russia, Italy, and Iran, while ongoing investigations focus on cross-border terror finance and state-linked attacks.",
     "developments": [
       {
         "severity": "HIGH",
-        "category": "Attacks & Counter-Terrorism Operations",
-        "headline": "Nigerian Military Foils ISWAP Attacks and Neutralizes 27 Terrorists",
-        "detail": "Nigerian military forces successfully repelled an ISWAP terrorist attack across Borno and Sokoto states, neutralizing 27 insurgents during the engagements.",
+        "category": "Attacks",
+        "headline": "Nigerian Military Foils ISWAP Attack, Neutralizing 27 Terrorists",
+        "detail": "Nigerian military forces successfully foiled an ISWAP terrorist attack across Borno and Sokoto states, neutralizing 27 terrorists during the operations.",
         "location": "Borno and Sokoto, Nigeria"
       },
       {
         "severity": "HIGH",
-        "category": "Arrests & Cell Disruptions",
-        "headline": "Turkish Special Services Detain 40 Suspects Linked to ISIS",
-        "detail": "Turkish security forces conducted large-scale operations resulting in the detention of 40 individuals suspected of maintaining ties to the ISIS terrorist organization.",
-        "location": "Ankara, Turkey"
+        "category": "Terrorist Financing",
+        "headline": "Israeli Security Forces Seize Millions in Suspected Terrorist Funds",
+        "detail": "Security forces intercepted a vehicle and discovered over 1.4 million shekels concealed within a double wall, leading to arrests for suspected terrorist financing.",
+        "location": "Jerusalem, Israel"
       },
       {
         "severity": "HIGH",
-        "category": "Terrorist Financing",
-        "headline": "International Investigation Exposes Major ISIS Money Laundering and Financing Network",
-        "detail": "Investigations revealed an extensive money laundering and terrorist financing network utilizing European trade channels and encrypted messaging apps, moving hundreds of millions of euros for ISIS.",
-        "location": "Europe"
+        "category": "Arrests",
+        "headline": "Italian Authorities Arrest 16-Year-Old Over ISIS Propaganda and Bomb-Making Guides",
+        "detail": "Italian law enforcement arrested a 16-year-old in Como who was found distributing ISIS propaganda and possessing instructional guides for building explosive devices.",
+        "location": "Como, Italy"
       },
       {
-        "severity": "SIGNIFICANT",
-        "category": "Arrests & Plot Disruptions",
-        "headline": "IRGC Dismantles Anti-State Terrorist Cell in Southeastern Iran",
-        "detail": "Iran's Islamic Revolutionary Guard Corps dismantled a covert terrorist cell in Saravan allegedly affiliated with external actors including the US and Israel.",
+        "severity": "HIGH",
+        "category": "Arrests",
+        "headline": "IRGC Dismantles US/Israel-Affiliated Terrorist Cell in Southeastern Iran",
+        "detail": "Iran's Islamic Revolutionary Guard Corps dismantled a covert terrorist cell in Saravan allegedly linked to the United States and Israel.",
         "location": "Sarāvān, Iran"
       },
       {
         "severity": "SIGNIFICANT",
-        "category": "Arrests & Propaganda",
-        "headline": "Italian Authorities Arrest 16-Year-Old Over ISIS Propaganda and Bomb-Making Tutorials",
-        "detail": "Law enforcement arrested a 16-year-old minor in Como who was actively spreading ISIS propaganda and possessing instructional guides for constructing explosive devices.",
-        "location": "Como, Italy"
+        "category": "Arrests",
+        "headline": "Turkish Security Forces Detain 40 Suspects Linked to ISIS",
+        "detail": "Turkish security forces detained 40 individuals during operations targeting suspects with ties to the ISIS terrorist organization.",
+        "location": "Ankara, Turkey"
       }
     ],
     "status": "ok",
     "model": "gemini-3.5-flash-lite",
     "window_hours": 24,
-    "generated_at": "2026-08-31T08:13:18.851102+00:00",
+    "generated_at": "2026-08-31T08:29:23.252906+00:00",
     "candidate_events": 80
   },
   "ai_article_selection": {
@@ -116,8 +116,8 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-08-31T08:13:21.442329+00:00",
-  "number_of_events": 1557,
+  "last_updated": "2026-08-31T08:29:25.675521+00:00",
+  "number_of_events": 1560,
   "events": [
     {
       "id": "1e1f90d34d47a953",
@@ -176,7 +176,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The event involves the government of Mozambique stripping immunity for a trial in the country; defaulting to capital/country level.",
       "ai_geo_fingerprint": "446ada23cd0d24e7e4c83113746a14754ab5ab8d1f7e38965aa0d9250e5aff5b",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -237,7 +241,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicit mention of Dzerzhinsk as the location of the arrest and terrorist act.",
       "ai_geo_fingerprint": "bd8c58ca0e888870281673d8d88a79994824fcc854f6a6b20914a95914d5e109",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "14cb63ee3721badf",
@@ -297,7 +305,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicit mention of the Franconia region in Germany.",
       "ai_geo_fingerprint": "0a23b8a192ded502bb5fa5fb959f1ea7d82597f55a9fa533aa2647487b91bf6a",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -358,7 +370,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicit mention of Crimea as the region of the suspects and context of the operation.",
       "ai_geo_fingerprint": "df7c5c9d3b7c9568e936d559d346671d77f8e93c1da15688cf99ff8d836854dc",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -485,7 +501,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicit mention of Dzerzhinsk court and arrest.",
       "ai_geo_fingerprint": "c68b82c437335ecc25f89a81e32fc320c3ef3c624d64cd4d9876d1d42f3b7edd",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -610,7 +630,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicit mention of Dzerzhinsk.",
       "ai_geo_fingerprint": "4bc2c536a01354345994851503351c8a7d83c9255be345e59d5c15f9dd0c1036",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -1814,6 +1838,66 @@
       "ai_geo_reason": "The text explicitly states the attack occurred in Switzerland.",
       "ai_geo_fingerprint": "78c34727cb4ed892f0ca927ba8365f720fb1a852a3c0da51b306026fc96c7541",
       "ai_geo_inferred": false
+    },
+    {
+      "id": "9ba4c9423cc6ad90",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Italy announces the thwarting of a terrorist plot",
+      "summary": "Italian authorities have announced the disruption and thwarting of a terrorist plot.",
+      "original_title": "ايطاليا تعلن احباط مخطط ارهابي",
+      "original_summary": "ايطاليا تعلن احباط مخطط ارهابي كل العرب",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-31T00:03:05+00:00",
+      "source": "كل العرب",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMipwNBVV95cUxQeVVRWHUtckNxVmZBOGY0TEZrYTlEbmNYNnk3RXlGNjBkM19RQkRkX2FrbHFiYndYTVNFcktwZ2EwaG1ZYmd2QlRud181Q2RNc3QzbGg2eFU2QUp5ZmFuNk5XTm5uMnZGTVdTY3RTS25KUXVUOTFuNmlTeUt6aUFBMlhiOG15ZFVQWDJEejh4UmRDeDBVR2trTFRHNmF3TXJTblUwY3ljUmFFdms5V3c3Z3IteWRpam9sXzNYbEFSQTB1SE9lclFkRGRVWTYzMHkxaFZ6azRTRVFUNTI0OUFjcjhWdzBCd1UzQ05qR0gtWmp0dy1uN19tN3dmel83LUZDLVFVVmlFMnZBSDVTc0xSYW85Rm52TFhOSkZUdWJjRnhzTE5TTUZvaDBxWjVFc0ZkQ00wRnMzU3pQUUxZQTF3Vm1kZzB1SGYxdDZBamc4TTBoMXF6a01GYnN5dFpMQ0RtUXFFbUpNRVRxUXkxZUtScTVrQjZjeEpTTGxsWVZoQmVXV0FDWDdYbEE5bTFOYzNoeFppVmdkLTVnX0ZhS3ZIRmtOZ1FNQ2PSAUpBVV95cUxQcEFuVUNzVGtKOTZtYm85RTdTTmVZUWpQdmZLc3daako5OTFnSmt1aEFsX0ZQTFNhMWl2bmxUU19LWHB1WUhaYXItdw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Italy",
+      "country_code": "IT",
+      "city": "Rome",
+      "region": null,
+      "latitude": 41.89193,
+      "longitude": 12.51133,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "كل العرب"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T00:03:05+00:00",
+      "last_reported": "2026-08-31T00:03:05+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Disrupted terrorist plot reported by security authorities.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "thwarting of a terrorist plot in Italy",
+      "title_variants": [
+        "thwarting of a terrorist plot in Italy"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Italian authorities have announced the disruption and thwarting of a terrorist plot."
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event involves Italian authorities thwarting a terrorist plot in Italy.",
+      "ai_geo_fingerprint": "46a76f98882204ca9e99ae49181be5cd21a76c0ae82d112dd2ff3430e834d9e2",
+      "ai_geo_inferred": true
     },
     {
       "id": "a7c1755336dc9916",
@@ -3878,7 +3962,7 @@
       "collection_locale": "DE:de",
       "published": "2026-08-30T15:42:08+00:00",
       "source": "AD HOC NEWS",
-      "source_count": 2,
+      "source_count": 3,
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPd1BvaHp3V0pDc2kxWEI4bEpqN0dHTFg3bDlBel8yRmxUNlNfbE5VQ3lmcF9xUFV4MlZiSTBjYjd5X08wYWdkQnliSHhVOWl4cUVoV0RhWW4yczMzbGFGWHJEbTNrbHZhQnFjdURTMkdnczVpeVUxcnVrWXh4WTM4LVlkUXN4MU5QOGUwWTc2aWpYbVdvbFNmU2FKbUozcVBiQUthOXJ6RTJ1bnR2R2xDRm03eXJkUQ?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -3892,7 +3976,8 @@
       "acquisition_channel": "multilingual_discovery",
       "sources": [
         "AD HOC NEWS",
-        "BILD"
+        "BILD",
+        "Tagesspiegel"
       ],
       "related_articles": [
         {
@@ -3903,11 +3988,20 @@
           "published": "2026-08-31T05:38:00+00:00",
           "source": "BILD",
           "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPUHJQTlJjazVxNGpfMFpVNktXVkJvcmFoNFdhWW9MdXNucElqTVNZdHhIRkR4VGRSejZXSXFBNjhCSHhTMDlOTDdPUXRrelZ4bnZnMi0zSnBsTm1GeEZxal9pZ1ROMWNxYTViUkFvR051a3JoVUY4cHNLNkJvVmtpcnAxOUdnbkY5aEZhRXl1c253aVZsLVhfY2dhcmlkN2FxQWVxWXR3M2Z0VDhnVWxVa2M2eFRGNjdxSDh2MEZXd0EwUVdyd3c?oc=5"
+        },
+        {
+          "title": "Retaliation for alleged Russian attack on Leipzig airport: How can and may Germany react?",
+          "original_title": "Vergeltung für mutmaßlich russischen Anschlag auf Leipziger Flughafen Wie kann und darf Deutschland reagieren?",
+          "original_language": "de",
+          "summary": "Analysis and discussion regarding potential German responses and retaliation following an alleged Russian sabotage or attack on Leipzig airport.",
+          "published": "2026-08-31T07:27:13+00:00",
+          "source": "Tagesspiegel",
+          "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPU2VQNG5pSUcxdmZydlY3WVMwbU0xZ2Z1eDZGamVlTC1yZWRvQzN3UXBvMnRuZF9FVXJ0YlRmcG1xczNWRVBha2NBeHJlTnJBWm1sR3lWaHQydnhKdVBCU2ZSTW0zejRadm1Eazl1Tmd3RGhxY0FGc1FuZ3EyZFdBa245eTdBQkxBOTk2ekJvdHNmTjRyX01KUzZqQ1N6M2JIMkY0Z2t3RGY2dEJSbUtNVmRwNG1YQ1ZuZVV5LVlIcFZFcjZWYnFURV9USnk4WVpfaVoxVkFYQUJEZWktN1ZNdGZKNUY?oc=5"
         }
       ],
-      "article_count": 2,
+      "article_count": 3,
       "first_reported": "2026-08-30T15:42:08+00:00",
-      "last_reported": "2026-08-31T05:38:00+00:00",
+      "last_reported": "2026-08-31T07:27:13+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -3920,9 +4014,10 @@
       "title_variants": [
         "attribution of Leipzig drone attack to Russian GRU by German government"
       ],
-      "dedup_confidence": 0.506,
+      "dedup_confidence": 0.572,
       "dedup_methods": [
-        "entity_actor_event_signature"
+        "entity_actor_event_signature",
+        "paraphrase_entity_context"
       ],
       "location_confidence_score": 0.95,
       "location_method": "ai_city_geonames",
@@ -4195,7 +4290,8 @@
       "id": "a7c1755336dc9916",
       "category": "Attacks",
       "categories": [
-        "Attacks"
+        "Attacks",
+        "Legal / Judicial"
       ],
       "title": "Counter-terrorism must remain at the top of joint African action priorities",
       "summary": "Statements emphasizing that countering terrorism should remain the primary focus of joint African efforts.",
@@ -4207,7 +4303,7 @@
       "collection_locale": "SA:ar",
       "published": "2026-08-30T14:17:02+00:00",
       "source": "سبق برس",
-      "source_count": 5,
+      "source_count": 6,
       "url": "https://news.google.com/rss/articles/CBMiwAJBVV95cUxQRlp1S0dFZ1dZMEdaSnpjT0kzSVpSWFFGbVpOVE96YUlSakptdVlnLUV6dXNiY3JqUHNmT2toQTBQVGFLV3RSQXVwbjc0eTVReVdhTzlaSVJTeDdiZVJwcW16c19oVW0tT21fcFdVZHJWdVUza1NQaTBtZEdQdFhORzRsWE52TDFuUnp2MEdselpxVDVfMk9Jc0c0WUdLSWh3ZncwV2lKN0c1UEphNHhwZnBNalMzamJiaVZ2Z2hIWmhUZDV2V2VfazVld2hQYi1qWVQ0YjNVT0Zvb1FDLXgxSUpjb0ZkRldValpMNHR2alJqSmlGTmI4Uk9oV2NjeHkzRm1wdkxJYUtiWWVtekw4dUdEMEZ1X1lHVnF4VVRNU3JLWk93aUY0OFlkUzdQMlE1ZUJCOHV4b1d1ek9paHFnSQ?oc=5",
       "collector": "Google News RSS",
       "country": "Algeria",
@@ -4224,7 +4320,8 @@
         "أخبار دزاير",
         "خبر برس",
         "الجنوب الكبير",
-        "دزاير توب"
+        "دزاير توب",
+        "بركة نيوز"
       ],
       "related_articles": [
         {
@@ -4630,7 +4727,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The arrest event itself took place in France.",
       "ai_geo_fingerprint": "f2723f70a954600cdec99f84a015af99ef78d25db87af3d8ce15147ba265ef9a",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "d5a543d418a336d0",
@@ -6954,7 +7055,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-08-30T06:17:56+00:00",
       "source": "Живая Кубань",
-      "source_count": 2,
+      "source_count": 3,
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQN2YxcWxNTWNXai1HampmOFRPTnRneER4bGFrakF0MUJOb1M1RklDOUdDYllCc3pXN0g0WVNBeEdzamFQTEM3MUZNc1NuTmlzaEUxYkNtQzJfUkhCaWJqQTJuZ1huUjZjTWptd05UVjRJam5lSDM2bnA1VXctcE9IV05xNjJvS3hIaHNhaEFtZ2tCR3puWk9YNWIxbXM3QTQ4Y2QxRGJHYzVISGR3VjlLQWhpNUJFR3FicDVV?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -6968,7 +7069,8 @@
       "acquisition_channel": "multilingual_discovery",
       "sources": [
         "Живая Кубань",
-        "Рамблер"
+        "Рамблер",
+        "Национальная Служба Новостей"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -9895,9 +9997,9 @@
       "collection_language": "de",
       "collection_language_name": "German",
       "collection_locale": "DE:de",
-      "published": "2026-08-29T14:25:29+00:00",
+      "published": "2026-08-29T14:23:00+00:00",
       "source": "DIE ZEIT",
-      "source_count": 3,
+      "source_count": 6,
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOb2NpcjNQM0hXZEJrbXdydnpSWEdaOHZyUEU2Z0FiMzRLUi1KcjRHVWh1Z29aS0Vhb0NwLUliWkFqNTVDN2NYVjBOSXR3azctdkYzczI5N0FJcHZUaXRlVnlFR2s3QmhaYW9PTDZTX3pNX203Y1lZMHFTWE9MbWdLdGF0bVNfSUhyVXVoS0VQR2pPdk1CTGdlNlBIRFowaWk5OVRKSVdaVldnYWxjUDJ3T19GZw?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -9912,7 +10014,10 @@
       "sources": [
         "DIE ZEIT",
         "Русская служба The Moscow Times",
-        "Национальная Служба Новостей"
+        "Национальная Служба Новостей",
+        "STERN.de",
+        "AD HOC NEWS",
+        "BILD"
       ],
       "related_articles": [
         {
@@ -9932,10 +10037,19 @@
           "published": "2026-08-30T00:31:51+00:00",
           "source": "Национальная Служба Новостей",
           "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOc28xbkI3cXVVeEZSMjFYMUpWM0VpSDFVbF94QTdUZXNlNW5FQWdTWkNoRFE3a1ptalJsOEJpRGVPX3VhNlVyMWF6RC1mTkJkTHhrd2tENkNlcTNDRy1Id1NHYno3VU9oWVhDWDFKZ3FsaDl0dEdZRGpJdVRnRmF3LU00NGdFRFlYUjQtc0d3VTI3MVNSbVFDVW1hUzRMMkNZZGJjZ2NJQ3RUdDVqeVo0STA4Z9IBuAFBVV95cUxNTW1qS3hOWnhLNHRSZ0E3UWdMRDIxeU9kSHVxTFBKM0NfaWtFb0p4Q0tmQVdWeHJPQ1FtZi1Wd1I3Nm9YQjZjRkYtQXo2S2diMl8yV3pNcTBRVDVYdFd3LWgydnJjN091eXJMSHBzTk8wZHdzYWQ0Q05uVGNVcGNaZEZFVFhEU0pYZGNKM2dCYjlPMUNtWXNHaFFtOXdXT3o0NG9lY0NoblctRkhLY01GM1o2OU5TVGVN?oc=5"
+        },
+        {
+          "title": "Reports: Berlin holds Russia responsible for drone attack in Leipzig",
+          "original_title": "Berichte: Berlin macht Russland für Drohnen-Anschlag in Leipzig verantwortlich",
+          "original_language": "de",
+          "summary": "According to reports, the German government attributes a recent drone attack in Leipzig to Russia.",
+          "published": "2026-08-29T14:23:00+00:00",
+          "source": "STERN.de",
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNbmpoUmZZSFVqS0pUV2FwR3VUbFBrZjliMmZPRG9BcnJBblhBVENCVDE1SGNxSHRUVm5qY2otVWlKWTVzRmh6V3dRdHlFUXA4RlRCM2Iwcy1zSU1mLWM3REFKSkJwbWkxNVpncHA4X2psU1VtaHRLbEtVWGtJalBPVExYeHhTQUh4YlV1MVpsaUpoejVPTjhsOVNENG5ZdmY1UEtYODF2a296MWxuSTdYTFptZkRuTWQyY2F3Ug?oc=5"
         }
       ],
-      "article_count": 3,
-      "first_reported": "2026-08-29T14:25:29+00:00",
+      "article_count": 4,
+      "first_reported": "2026-08-29T14:23:00+00:00",
       "last_reported": "2026-08-30T00:31:51+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -9949,10 +10063,11 @@
       "title_variants": [
         "German government links Russia to Leipzig drone incident"
       ],
-      "dedup_confidence": 0.814,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
         "entity_actor_event_signature",
-        "title_plus_anchor"
+        "title_plus_anchor",
+        "same_url"
       ],
       "location_confidence_score": 0.95,
       "location_method": "ai_city_geonames",
@@ -12130,10 +12245,20 @@
       "sources": [
         "كل العرب"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Following its claim of the Sri Lanka terrorist attack: ISIS publishes photos and names of the seven operation perpetrators",
+          "original_title": "بعد تبنّيه هجوم سريلانكا الارهابي: داعش ينشر صورة وأسماء منفّذي العمليات السبعة",
+          "original_language": "ar",
+          "summary": "ISIS published the names and photographs of the seven operatives who carried out the Sri Lanka terrorist attacks, following its formal claim of responsibility.",
+          "published": "2026-08-29T21:26:15+00:00",
+          "source": "كل العرب",
+          "url": "https://news.google.com/rss/articles/CBMi4ARBVV95cUxQZ2ZBTEphTzBsREFYS0tzeVBiVlBOZkJWeWpoN0VlRzhXM0Y0QThyT2hpYk5CbHQ3M0tFSDlFWW9lci1vSEg4bDNXY3UwajF1SlJhN3JZWkgxbl9EOXg0VklOQ21RaGNWM2JqYUs5d3QxbW1wX3dEZ1daUy15cmxaNEU4R0h5MnR2SVprZmFYOHg4b3hnTTN4UGNtLW1SUElydnhyS05SN1pVQ1NLV0xQOHJRa2dGOE9nTl9SSFlJS2ZZSDRkZWsydk1qbHlBX0EyMnpEcDdXUnhxdUFteVNMbnhIT0hTMTdzUjNmR2dTVWVsdWxEUm9JMzdCR2xrOHBCMzl1NjFVVks5MFA2MkFGTXQ2ZFpmVnAzM05aeTdTXzZEa1JlLWVQZnlRTmR5RHAweVY0RHdyQm04VHRVdTJXLUpsOFhrWWJMbUhHcmVFM0hCM3hQY2lFUUhKQVkxWjduZl9RLVBoaExTbXQwWVNvVkJLXzV5TUs0Y3NPMkltSnFMZjNBckJhUV9fSHUyU2psY01XZ2ZPVlVOQ0tfdEZJWnpFMkVCMFBtajlxa2JWZmkxS0hyaHZOSGlDZ1JUOENDMi0xUmx6aHB0Vy1mQ0tCV09ENl92cmJrZndlaE5QcnBxb3dZeFFlVkJYRTZ4elVGY2xUMHFCQkRTaWo0N2JsZk1QcDVsWlpLUGJRY1E1SVFWSDh2U1lNMGxLMURaT2J4cjNoRnQyYU54bWxFeDRDMjF3SXl1TWwtRDRJYlF0YW9KekY2TlBRUEFFZWxSYTlxUWFWUEpmWDJtLXJud2RWTNIBTkFVX3lxTE13UDdWdFFIcWZTazBSejFVN2g4SjhfR01YWkU2cTFxSUdPVzNKM3JOenlkY092Zm43dkI0YXdWd2NJZzFNVmJPdU9vRGR5UQ?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-29T07:00:00+00:00",
-      "last_reported": "2026-08-29T07:00:00+00:00",
+      "last_reported": "2026-08-29T21:26:15+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -12160,7 +12285,8 @@
       "ai_geo_inferred": false,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "very_high_title_similarity"
       ]
     },
     {
@@ -17644,7 +17770,8 @@
       "id": "89f6039810af2991",
       "category": "Attacks",
       "categories": [
-        "Attacks"
+        "Attacks",
+        "Arrests"
       ],
       "title": "Iran and Hamas Step Up West Bank Attack Plots, Israel Warns",
       "summary": "Israeli intelligence warns that Iran and Hamas are actively escalating and directing attack plots targeting the West Bank.",
@@ -17656,7 +17783,7 @@
       "collection_locale": null,
       "published": "2026-08-28T11:37:34+00:00",
       "source": "i24NEWS",
-      "source_count": 4,
+      "source_count": 6,
       "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNRkNnY0N4bkZkZmRRR3RKaDlVOTUzMGxNWVhHdU02NV95Q1Y5ejNBNTI2bi1wWFBpVzVtX2xBZ0ZRbUNzdnBZUHpFcGRVNmNVR2RrMjRwZU9RRWFwVVVzS1hwNDJsMFBHenNHOVJ1Z09KemtybVJSWS1CX0lDeE9URGF2YlZlXzhwbkc0ZTU0NUY5dHhGd1F4MFpYTklGaUw1RTFGTUhQZXd2b1R4Wnc?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -17672,7 +17799,9 @@
         "Jewish.Ru",
         "Aurora Israel",
         "El Mundo",
-        "i24NEWS"
+        "i24NEWS",
+        "STMEGI",
+        "israelnoticias.com"
       ],
       "related_articles": [
         {
@@ -17957,6 +18086,67 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "89f6039810af2991",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial",
+        "Attacks"
+      ],
+      "title": "Indictment filed against terrorist who stabbed twice and fled",
+      "summary": "An indictment has been filed against a terrorist who carried out a stabbing attack twice and fled.",
+      "original_title": "כתב אישום נגד מחבל שדקר פעמיים ונמלט",
+      "original_summary": "כתב אישום נגד מחבל שדקר פעמיים ונמלט כיכר השבת",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-08-28T10:56:20+00:00",
+      "source": "כיכר השבת",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFA2TjVZWklicXJ4dDA3QU5GeTE5UW1LNEtyd0pDeExlNXhta1lONkpFYnJtX2JWQk9KSl9FaC1XZml4c3J3VTlDdmRxc19OLVNwTFgydg?oc=5",
+      "collector": "Google News RSS",
+      "country": "Israel",
+      "country_code": "IL",
+      "city": "Jerusalem",
+      "region": null,
+      "latitude": 31.76904,
+      "longitude": 35.21633,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "כיכר השבת"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-28T10:56:20+00:00",
+      "last_reported": "2026-08-28T10:56:20+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 80,
+      "ai_relevance_reason": "Legal proceedings (indictment) regarding a terrorist stabbing attack.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "indictment of a terrorist for a stabbing attack",
+      "title_variants": [
+        "indictment of a terrorist for a stabbing attack"
+      ],
+      "location_confidence_score": 0.8,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Indictment filed against terrorist who stabbed twice and fled (source: כיכר השבת)"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The source 'כיכר השבת' is a Hebrew-language news outlet covering Israeli legal proceedings and security events.",
+      "ai_geo_fingerprint": "e778932edff8b14c592bbce9c9f5297e7d30477480d66a3187b6fd4a0592d716",
+      "ai_geo_inferred": true
     },
     {
       "id": "42a5d4019cc1c94f",
@@ -18801,6 +18991,82 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicitly mentions the city of Tula.",
       "ai_geo_fingerprint": "dc7fd812f43c8cb49ae01e31eb655fe9b5960c6531cf0d27daad5059f0768772",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "f8a6154b8a7c4975",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial",
+        "Online Radicalization / Cyberterrorism"
+      ],
+      "title": "Vladimir Region resident sentenced to 5 years for justifying terrorism",
+      "summary": "A resident of the Vladimir Region was sentenced to 5 years in prison for justifying terrorism.",
+      "original_title": "За оправдание терроризма жительница Владимирской области осуждена на 5 лет",
+      "original_summary": "За оправдание терроризма жительница Владимирской области осуждена на 5 лет vedom.ru",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-08-28T08:40:00+00:00",
+      "source": "vedom.ru",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQRVFiVzQ3WWNfQWp6Z2JZT3FxQWhDWEt3UGZyY2tKTWdZYXhVd0J2VUZiRTIzdml4SENER241X19SSlRvcHh4Mk5xdE9ZRVBlUFlWY1VrOWdHajJTTlF3NmM4bXBYSzZQb1MtWWpka1dsUFZtbTd2NVJPWFlwYllOQ1hPTW9taW1wVDJ4MjJpcGQxWFVXWEkzYXR4TVlLMVpXdGVsQXpWT3Y?oc=5",
+      "collector": "Google News RSS",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": null,
+      "region": "Vladimir Region",
+      "latitude": 56.129,
+      "longitude": 40.4066,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "vedom.ru",
+        "الجزيرة نت"
+      ],
+      "related_articles": [
+        {
+          "title": "عملية أمنية لملاحقة المهاجم.. قتيل و5 مصابين بإطلاق نار خلال حفلة رقص في سويسرا",
+          "original_title": "عملية أمنية لملاحقة المهاجم.. قتيل و5 مصابين بإطلاق نار خلال حفلة رقص في سويسرا",
+          "original_language": "ar",
+          "summary": "عملية أمنية لملاحقة المهاجم.. قتيل و5 مصابين بإطلاق نار خلال حفلة رقص في سويسرا الجزيرة نت",
+          "published": "2026-08-30T10:37:43+00:00",
+          "source": "الجزيرة نت",
+          "url": "https://news.google.com/rss/articles/CBMi1gJBVV95cUxON3JBSzE5MllCbXV3U1B0UnRXdjNJcnBLdmNPQ0tVVjViWk0xMnFBVURKOURCd2NCRlFxcEs1T0QtM0lrMUg1cDN4VXBJWmt3NGk1S0VBVE9mLTZqbU1iMUF3RHpYRDJyX0MyeGI5UXJ5VThoR3RZSnFsTW9OVjMzQ2tqX2dfSUlYUWo4dkFLQVZsUjM1M1IybXZmWV94N2tQVW5IZkNYd3pRRkE3TFBEYjNYc2tMZzNPNGVJY3EtdHFiaVNhaFBURXhLcEVIdHpTRWRjeFVtejc5a0hXUEdTX2xzN0NFR0ViT0FhVWhUNHFQZHRxaWh1S2FrQ1ZNcXRBeHpScGJXTU1PN2hGR1RoWmEzQlRJb0Jma2s1REQ2aG9STmJCaFk5ZU42cERjdFYtX245UHpNdlRyRERHQUJBUzVZeUhVTUtDSk91d2NUNXZUS21RVVHSAdsCQVVfeXFMTUhRYWlLU0lPVGNFb28xaDV4U1ZNdnZMSDJ1NlBmQWd4UWMyemVFVHRfZUR5TENVZ2JnYUhROGdIZUxRdHVVQ0RxVXJmcjdYWXpoSGFxZkY1VXVha3ctYjlsT0lSdC01UlFKVnlTaDJxeUpxMnlQdVlkZGZFdmpXMWFnSDBvbmFsMHF2ZWVPMEFpU2ZielFVTklGaXJaS2FHaDV5TzZrdTI1Sl90d3J5dWlkaUV2dlRBanZ5UW9ETWpGOVBHVUJxbnFsR0ttX1RIdlFYcmhIQTNCaVhzR0hRZm83ZzhXRWdXbjBUNVVhU2NIY242M3J6RnJ0ME4wZWJCOWxGUF9hMFVNcFZFWGI1NHVVcFI3dkRxQTAtV1BtbmlsQzBJVVJUZjJQOWJTaHd1dU5FUzJ5NUs4c2xiTnZxMmdSbE9uaFpEX2swUy16WUR6ZmxyeUdwUzdwYk0?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-28T08:40:00+00:00",
+      "last_reported": "2026-08-30T10:37:43+00:00",
+      "dedup_confidence": 0.99,
+      "dedup_methods": [
+        "same_normalized_title"
+      ],
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "A court conviction and sentencing for terrorism justification is a direct counter-terrorism legal event.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "sentencing of a resident for justifying terrorism in Vladimir Region",
+      "title_variants": [
+        "sentencing of a resident for justifying terrorism in Vladimir Region"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "A resident of the Vladimir Region was sentenced to 5 years in prison for justifying terrorism."
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event explicitly specifies the Vladimir Region in Russia where the sentencing took place.",
+      "ai_geo_fingerprint": "a24804ad097e9ad887ea77b6d6407c549401d7dfc40f5a973bcd84b4a8ef14df",
       "ai_geo_inferred": false
     },
     {
@@ -20210,11 +20476,20 @@
           "published": "2026-08-28T08:23:24+00:00",
           "source": "i24NEWS",
           "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE45SlF1RU4zajRCNVdUSHdJNWJKeWVwN0h2WWdqeEk4bU9maG5Da0UwclprNTRJdlQwSjVKUVBQWDRoQkpSV3gtZmdoQ2dyc21JNlNkbVpoNEhtUkJaMTg1bV94dWJXNDVTUzIxSmNHZVYyXy0wQWNnNl9uaEVqUQ?oc=5"
+        },
+        {
+          "title": "19-year-old Haifa resident arrested for pledging allegiance to ISIS and planning attack",
+          "original_title": "אויב מבית: תושב חיפה בן 19 נשבע אמונים לדאעש ותכנן פיגוע בבסיס צה\"ל בצפון",
+          "original_language": "he",
+          "summary": "A 19-year-old resident of Haifa was arrested after pledging allegiance to ISIS and planning a terrorist attack against an IDF base in northern Israel.",
+          "published": "2026-08-28T08:46:31+00:00",
+          "source": "NWS חדשות חיפה והסביבה",
+          "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE1LT25zaHNoZ2NKdmRFc2Y1ZlJJQ19DZHgtX0MwTW13NXZTNXEyaktnaVFQa29zMVpLRlh3Tl9mcW1GRWYya0E?oc=5"
         }
       ],
-      "article_count": 5,
+      "article_count": 6,
       "first_reported": "2026-08-28T06:33:00+00:00",
-      "last_reported": "2026-08-28T08:23:24+00:00",
+      "last_reported": "2026-08-28T08:50:35+00:00",
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "very_high_title_similarity",
@@ -34060,7 +34335,7 @@
           "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxPS01ROFlPVjlmaDM0UUU1QTgycDJaM05XUHN5YnBWRlFkbmFuTGQwTlJhRzJMM2hQZUowTVlHT0ppSkU4T2Ntd2R0Q2M0aHlXSkxGdDVSUEMwTjhwNGxrQVpEVUxId2RIeGZJSUhQSlNHaWdBWkJFNVk0RGh0WC1yRTU3NGc3bF9FZUtJVF9udU5Hd1BsZHpVa2I1cl9aVW9YMENFYkRnUkhfQXlDMHJheTB2M25RdU9WRzZtdTJBMVJxc2VpYUhrSV9lSjhrNjdHT1o0QzhiZnhaY3hrVEZQenZXNEV0RGZBR3NCZGlvSFRXRnR1U2JFSTR0MF9zRVFlbVIw?oc=5"
         }
       ],
-      "article_count": 34,
+      "article_count": 35,
       "first_reported": "2026-08-24T17:25:00+00:00",
       "last_reported": "2026-08-28T17:17:32+00:00",
       "dedup_confidence": 1.0,
@@ -110292,21 +110567,21 @@
     "primary_model": "gemini-3.5-flash-lite",
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
-    "cached_events": 1547,
-    "ai_processed_this_run": 10,
-    "ai_pending_at_start": 10,
+    "cached_events": 1557,
+    "ai_processed_this_run": 3,
+    "ai_pending_at_start": 3,
     "city": 688,
-    "region": 318,
-    "country_capital": 541,
+    "region": 319,
+    "country_capital": 543,
     "unlocated": 10,
-    "mapped_total": 1547,
-    "high_confidence": 1406,
-    "medium_confidence": 146,
+    "mapped_total": 1550,
+    "high_confidence": 1408,
+    "medium_confidence": 147,
     "low_confidence": 5,
     "methods": {
-      "ai_country_capital": 541,
+      "ai_country_capital": 543,
       "ai_city_geonames": 666,
-      "ai_region_coordinates": 318,
+      "ai_region_coordinates": 319,
       "ai_city_coordinates": 22,
       "ai_unlocated": 10
     }
