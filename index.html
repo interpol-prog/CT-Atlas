@@ -2089,6 +2089,233 @@ body::before {
 #disclaimerBody p{margin:0 0 12px}
 #disclaimerBody p:last-child{margin-bottom:0}
 
+
+/* ============================================================
+   DYNAMIC FACET COUNTS
+   ============================================================ */
+.time-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 7px;
+}
+
+.time-count,
+.category-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 18px;
+    padding: 0 5px;
+    border: 1px solid rgba(105, 143, 166, .24);
+    border-radius: 9px;
+    background: rgba(4, 15, 23, .48);
+    color: #a9bdca;
+    font-size: 8px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+}
+
+.time-button.active .time-count {
+    color: #dff3ff;
+    border-color: rgba(72, 156, 201, .48);
+    background: rgba(35, 102, 138, .30);
+}
+
+.category {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.category-count {
+    margin-left: auto;
+    flex: 0 0 auto;
+}
+
+/* ============================================================
+   24H SENSITIVE TREND SUMMARY
+   ============================================================ */
+#trendSummaryPanel {
+    position: fixed;
+    inset: 0;
+    z-index: 3120;
+    display: none;
+    pointer-events: none;
+}
+
+#trendSummaryPanel.open {
+    display: block;
+}
+
+#trendSummaryWindow {
+    position: absolute;
+    left: 270px;
+    top: 150px;
+    width: 560px;
+    max-height: calc(100vh - 190px);
+    overflow: hidden;
+    background: rgba(7, 20, 30, .98);
+    border: 1px solid #2a4658;
+    border-radius: 4px;
+    box-shadow: 0 22px 70px rgba(0,0,0,.60);
+    backdrop-filter: blur(10px);
+    pointer-events: auto;
+}
+
+#trendSummaryHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 14px 11px;
+    background: #0a1924;
+    border-bottom: 1px solid #294151;
+}
+
+#trendSummaryTitle {
+    color: #edf4f8;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: .11em;
+}
+
+#trendSummarySubtitle {
+    margin-top: 4px;
+    color: #70899b;
+    font-size: 8px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+#trendSummaryClose {
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 1px solid #294455;
+    border-radius: 3px;
+    background: #0a1721;
+    color: #9bb0be;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#trendSummaryBody {
+    max-height: calc(100vh - 255px);
+    overflow-y: auto;
+    padding: 13px;
+    scrollbar-width: thin;
+    scrollbar-color: #294659 transparent;
+}
+
+#trendSummaryMeta {
+    margin-bottom: 10px;
+    color: #718a9b;
+    font-size: 8px;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+#trendSummaryOverview {
+    margin-bottom: 12px;
+    padding: 11px 12px;
+    background: #081720;
+    border-left: 2px solid #3f7594;
+    color: #c3d2db;
+    font-size: 10px;
+    line-height: 1.62;
+}
+
+.trend-development {
+    margin-bottom: 8px;
+    padding: 10px 11px;
+    background: rgba(8, 23, 33, .72);
+    border: 1px solid rgba(96, 132, 154, .18);
+    border-radius: 3px;
+}
+
+.trend-development-head {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 7px;
+}
+
+.trend-severity {
+    display: inline-block;
+    padding: 3px 6px;
+    border-radius: 2px;
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: .08em;
+}
+
+.trend-severity.critical {
+    color: #ffd9d6;
+    background: rgba(180, 45, 45, .33);
+    border: 1px solid rgba(238, 85, 74, .45);
+}
+
+.trend-severity.high {
+    color: #ffe1c2;
+    background: rgba(180, 93, 35, .28);
+    border: 1px solid rgba(229, 135, 67, .40);
+}
+
+.trend-severity.significant {
+    color: #d9ecf7;
+    background: rgba(44, 101, 137, .30);
+    border: 1px solid rgba(72, 139, 179, .38);
+}
+
+.trend-category {
+    color: #7894a6;
+    font-size: 8px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.trend-headline {
+    color: #edf4f7;
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.4;
+}
+
+.trend-location {
+    margin-top: 4px;
+    color: #7892a4;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.trend-detail {
+    margin-top: 7px;
+    color: #aabcc7;
+    font-size: 9px;
+    line-height: 1.55;
+}
+
+#trendSummaryMethodNote {
+    margin-top: 12px;
+    padding: 9px 10px;
+    color: #617b8c;
+    background: rgba(3, 11, 17, .38);
+    border-left: 2px solid #29485b;
+    font-size: 8px;
+    line-height: 1.55;
+}
+
+@media (max-width: 950px) {
+    #trendSummaryWindow {
+        left: 225px;
+        right: 12px;
+        width: auto;
+    }
+}
+
 </style>
 
 </head>
@@ -2364,6 +2591,13 @@ EVENTS
     id="heatToggle"
 >
 HEAT ZONES
+</button>
+
+<button
+    class="layer-button"
+    id="trendSummaryToggle"
+>
+24H TREND
 </button>
 
 <button
@@ -2848,6 +3082,29 @@ Visible rate
 </div>
 
 
+
+<div id="trendSummaryPanel" aria-hidden="true">
+  <div id="trendSummaryWindow">
+    <div id="trendSummaryHeader">
+      <div>
+        <div id="trendSummaryTitle">24H SENSITIVE DEVELOPMENTS</div>
+        <div id="trendSummarySubtitle">AI-assisted CT trend synthesis</div>
+      </div>
+      <button id="trendSummaryClose" type="button" aria-label="Close">×</button>
+    </div>
+
+    <div id="trendSummaryBody">
+      <div id="trendSummaryMeta">Loading latest trend synthesis…</div>
+      <div id="trendSummaryOverview"></div>
+      <div id="trendSummaryDevelopments"></div>
+      <div id="trendSummaryMethodNote">
+        Based only on deduplicated CT events reported or materially updated during the previous 24 hours. The brief prioritises major attacks, bombings, assassinations, serious clashes, important arrests or plot disruptions, and other operationally significant CT developments. Verify against primary sources before operational use.
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div
     id="chronologyPanel"
     aria-hidden="true"
@@ -2972,7 +3229,7 @@ Visible rate
 
 <script>
 (function () {
-    const PASSWORD = "panda";
+    const PASSWORD_HASH = "40aa105d0e5454da4c10906f0ede2c729157d4315e8e7e2b0fbb11ea4db95ad2";
     const SESSION_KEY = "ct_map_authorized";
 
     function unlock() {
@@ -2989,17 +3246,33 @@ Visible rate
         }, 50);
     }
 
-    function tryAccess() {
+    async function sha256Hex(value) {
+        const data = new TextEncoder().encode(value);
+        const digest = await crypto.subtle.digest("SHA-256", data);
+        return Array.from(new Uint8Array(digest))
+            .map(byte => byte.toString(16).padStart(2, "0"))
+            .join("");
+    }
+
+    async function tryAccess() {
         const input = document.getElementById("access-password");
         const error = document.getElementById("access-error");
 
-        if (input.value === PASSWORD) {
-            error.textContent = "";
-            unlock();
-        } else {
-            error.textContent = "Incorrect password.";
-            input.value = "";
-            input.focus();
+        try {
+            const candidateHash = await sha256Hex(input.value);
+
+            if (candidateHash === PASSWORD_HASH) {
+                error.textContent = "";
+                input.value = "";
+                unlock();
+            } else {
+                error.textContent = "Incorrect password.";
+                input.value = "";
+                input.focus();
+            }
+        } catch (hashError) {
+            console.error(hashError);
+            error.textContent = "Password verification unavailable in this browser.";
         }
     }
 
@@ -3555,6 +3828,10 @@ let allEvents =
     [];
 
 
+let trendSummaryData =
+    null;
+
+
 let selectedDays =
     180;
 
@@ -3761,6 +4038,12 @@ fetch(
             data.events
             ||
             [];
+
+
+        trendSummaryData =
+            data.trend_summary
+            ||
+            null;
 
 
         allEvents.forEach(
@@ -7857,10 +8140,525 @@ document.addEventListener("DOMContentLoaded",()=>{
   document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDisclaimer();});
 });
 
+
+function initialiseFacetCountBadges() {
+
+    document.querySelectorAll(
+        ".time-button"
+    ).forEach(
+        button => {
+
+            if (
+                button.querySelector(
+                    ".time-count"
+                )
+            ) {
+                return;
+            }
+
+            const label =
+                button.textContent
+                .trim()
+                .replace(/\s+/g, " ");
+
+            button.textContent = "";
+
+            const labelSpan =
+                document.createElement(
+                    "span"
+                );
+
+            labelSpan.textContent =
+                label;
+
+            const countSpan =
+                document.createElement(
+                    "span"
+                );
+
+            countSpan.className =
+                "time-count";
+
+            countSpan.textContent =
+                "—";
+
+            button.appendChild(
+                labelSpan
+            );
+
+            button.appendChild(
+                countSpan
+            );
+
+        }
+    );
+
+
+    document.querySelectorAll(
+        ".category"
+    ).forEach(
+        label => {
+
+            if (
+                label.querySelector(
+                    ".category-count"
+                )
+            ) {
+                return;
+            }
+
+            const badge =
+                document.createElement(
+                    "span"
+                );
+
+            badge.className =
+                "category-count";
+
+            badge.textContent =
+                "—";
+
+            label.appendChild(
+                badge
+            );
+
+        }
+    );
+
+}
+
+
+function facetMappedEvent(event) {
+    return (
+        event.excluded_from_map !== true
+        &&
+        event.location_precision !== "unlocated"
+        &&
+        event.latitude != null
+        &&
+        event.longitude != null
+    );
+}
+
+
+function updateFacetCounts() {
+
+    initialiseFacetCountBadges();
+
+    const selected =
+        selectedCategories();
+
+
+    document.querySelectorAll(
+        ".time-button"
+    ).forEach(
+        button => {
+
+            const days =
+                Number(
+                    button.dataset.days
+                );
+
+            const count =
+                allEvents.filter(
+                    event => {
+
+                        if (
+                            !facetMappedEvent(
+                                event
+                            )
+                            ||
+                            !withinDays(
+                                event.published,
+                                days
+                            )
+                            ||
+                            !searchMatches(
+                                event
+                            )
+                        ) {
+                            return false;
+                        }
+
+                        const categories =
+                            eventCategories(
+                                event
+                            );
+
+                        return categories.some(
+                            category =>
+                                selected.includes(
+                                    category
+                                )
+                        );
+
+                    }
+                ).length;
+
+            const badge =
+                button.querySelector(
+                    ".time-count"
+                );
+
+            if (
+                badge
+            ) {
+                badge.textContent =
+                    count.toLocaleString(
+                        "en-GB"
+                    );
+            }
+
+        }
+    );
+
+
+    document.querySelectorAll(
+        ".category-filter"
+    ).forEach(
+        checkbox => {
+
+            const category =
+                checkbox.value;
+
+            const count =
+                allEvents.filter(
+                    event =>
+                        facetMappedEvent(
+                            event
+                        )
+                        &&
+                        withinDays(
+                            event.published,
+                            selectedDays
+                        )
+                        &&
+                        searchMatches(
+                            event
+                        )
+                        &&
+                        eventCategories(
+                            event
+                        ).includes(
+                            category
+                        )
+                ).length;
+
+            const label =
+                checkbox.closest(
+                    ".category"
+                );
+
+            const badge =
+                label
+                ?
+                label.querySelector(
+                    ".category-count"
+                )
+                :
+                null;
+
+            if (
+                badge
+            ) {
+                badge.textContent =
+                    count.toLocaleString(
+                        "en-GB"
+                    );
+            }
+
+        }
+    );
+
+}
+
+
+function formatTrendGeneratedAt(value) {
+
+    if (
+        !value
+    ) {
+        return "Latest update";
+    }
+
+    const date =
+        new Date(
+            value
+        );
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+        return "Latest update";
+    }
+
+    return date.toLocaleString(
+        "en-GB",
+        {
+            timeZone: "Europe/Paris",
+            day: "2-digit",
+            month: "short",
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+}
+
+
+function renderTrendSummaryPanel() {
+
+    const meta =
+        document.getElementById(
+            "trendSummaryMeta"
+        );
+
+    const overview =
+        document.getElementById(
+            "trendSummaryOverview"
+        );
+
+    const developments =
+        document.getElementById(
+            "trendSummaryDevelopments"
+        );
+
+    if (
+        !meta
+        ||
+        !overview
+        ||
+        !developments
+    ) {
+        return;
+    }
+
+
+    if (
+        !trendSummaryData
+    ) {
+        meta.textContent =
+            "No trend summary stored in the current database";
+
+        overview.textContent =
+            "The 24-hour trend summary will become available after the next collector update using the new collector version.";
+
+        developments.innerHTML =
+            "";
+
+        return;
+    }
+
+
+    const status =
+        trendSummaryData.status
+        ||
+        "unknown";
+
+    const model =
+        trendSummaryData.model
+        ||
+        "Gemini";
+
+    const candidates =
+        Number(
+            trendSummaryData.candidate_events
+            ||
+            0
+        );
+
+    meta.textContent =
+        "Generated "
+        +
+        formatTrendGeneratedAt(
+            trendSummaryData.generated_at
+        )
+        +
+        " · "
+        +
+        model
+        +
+        " · "
+        +
+        candidates
+        +
+        " recent candidate events"
+        +
+        (
+            status === "fallback"
+            ?
+            " · FALLBACK MODE"
+            :
+            ""
+        );
+
+
+    overview.textContent =
+        trendSummaryData.overview
+        ||
+        "No significant CT trend synthesis was generated for this update.";
+
+
+    const items =
+        Array.isArray(
+            trendSummaryData.developments
+        )
+        ?
+        trendSummaryData.developments
+        :
+        [];
+
+
+    if (
+        items.length === 0
+    ) {
+        developments.innerHTML =
+            '<div class="trend-development"><div class="trend-detail">No development met the threshold for inclusion in the sensitive 24-hour brief.</div></div>';
+        return;
+    }
+
+
+    developments.innerHTML =
+        items.map(
+            item => {
+
+                const severity =
+                    String(
+                        item.severity
+                        ||
+                        "SIGNIFICANT"
+                    ).toUpperCase();
+
+                const severityClass =
+                    severity === "CRITICAL"
+                    ?
+                    "critical"
+                    :
+                    severity === "HIGH"
+                    ?
+                    "high"
+                    :
+                    "significant";
+
+                return `
+                    <div class="trend-development">
+                        <div class="trend-development-head">
+                            <span class="trend-severity ${severityClass}">${escapeHtml(severity)}</span>
+                            <span class="trend-category">${escapeHtml(item.category || "CT Development")}</span>
+                        </div>
+                        <div class="trend-headline">${escapeHtml(item.headline || "")}</div>
+                        ${item.location ? `<div class="trend-location">${escapeHtml(item.location)}</div>` : ""}
+                        <div class="trend-detail">${escapeHtml(item.detail || "")}</div>
+                    </div>
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+function openTrendSummary() {
+
+    renderTrendSummaryPanel();
+
+    const panel =
+        document.getElementById(
+            "trendSummaryPanel"
+        );
+
+    if (
+        panel
+    ) {
+        panel.classList.add(
+            "open"
+        );
+        panel.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+    }
+
+}
+
+
+function closeTrendSummary() {
+
+    const panel =
+        document.getElementById(
+            "trendSummaryPanel"
+        );
+
+    if (
+        panel
+    ) {
+        panel.classList.remove(
+            "open"
+        );
+        panel.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+    }
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        initialiseFacetCountBadges();
+
+        document.getElementById(
+            "trendSummaryToggle"
+        )?.addEventListener(
+            "click",
+            openTrendSummary
+        );
+
+        document.getElementById(
+            "trendSummaryClose"
+        )?.addEventListener(
+            "click",
+            closeTrendSummary
+        );
+
+        document.getElementById(
+            "trendSummaryPanel"
+        )?.addEventListener(
+            "click",
+            event => {
+                if (
+                    event.target.id === "trendSummaryPanel"
+                ) {
+                    closeTrendSummary();
+                }
+            }
+        );
+
+        document.addEventListener(
+            "keydown",
+            event => {
+                if (
+                    event.key === "Escape"
+                ) {
+                    closeTrendSummary();
+                }
+            }
+        );
+
+    }
+);
+
+
 function refreshDashboard() {
 
 
     updateKPIs();
+
+    updateFacetCounts();
 
     renderEvents();
 
