@@ -21,61 +21,61 @@
   "collector": "Google News RSS V9 multilingual + Gemini selection/translation",
   "relevance_filter": "Deterministic CT candidate filter + Gemini semantic final selection",
   "trend_summary": {
-    "overview": "Recent 24-hour counter-terrorism developments feature major operational disruptions, including the neutralization of dozens of insurgents by Nigerian forces and significant arrests of terrorism suspects and financiers across Europe, the Middle East, and Russia. Authorities also uncovered sophisticated international financing and smuggling networks, alongside targeted domestic counter-extremism operations.",
+    "overview": "Recent 24-hour counter-terrorism developments reflect significant operational activity, including multiple major arrests, foiled plots, and counter-insurgency operations across Africa, Europe, and the Middle East. Security forces have successfully disrupted terrorist financing networks, neutralized high-level operatives, and thwarted imminent attacks targeting critical infrastructure.",
     "developments": [
       {
         "event_id": "53148bd12e1f4e8c",
         "severity": "CRITICAL",
         "category": "Attacks",
         "headline": "Nigerian troops foil ISWAP attack in Borno and Sokoto, neutralizing 27 terrorists",
-        "detail": "Nigerian military forces successfully foiled an ISWAP terrorist attack across Borno and Sokoto states, neutralizing 27 terrorists.",
+        "detail": "Nigerian military forces successfully foiled an ISWAP terrorist attack in Borno and Sokoto states, neutralizing 27 terrorists during the engagement.",
         "location": "Borno and Sokoto, Nigeria"
       },
       {
-        "event_id": "078217ad8cc9a323",
-        "severity": "HIGH",
-        "category": "Arrests",
-        "headline": "Turkish special services detain 40 suspects linked to ISIS",
-        "detail": "Turkish security forces have detained 40 individuals suspected of having ties to the ISIS terrorist organization.",
-        "location": "Ankara, Turkey"
+        "event_id": "0dc2eb3b7291a06b",
+        "severity": "CRITICAL",
+        "category": "Attacks",
+        "headline": "Polish Student Charged with Planning Jihadi Attack on Christmas Market",
+        "detail": "A Polish student has been formally charged with planning a jihadist terrorist attack targeting a Christmas market.",
+        "location": ""
       },
       {
         "event_id": "f77ad085e8d2bdbb",
         "severity": "HIGH",
         "category": "Arrests",
         "headline": "16-year-old arrested in Como for ISIS propaganda and bomb-making tutorials",
-        "detail": "Italian authorities arrested a 16-year-old in Como who was spreading ISIS propaganda and possessed instructional guides for building bombs.",
+        "detail": "Italian authorities arrested a 16-year-old individual in Como who was actively spreading ISIS propaganda and in possession of instructional guides for building bombs.",
         "location": "Como, Italy"
+      },
+      {
+        "event_id": "078217ad8cc9a323",
+        "severity": "HIGH",
+        "category": "Arrests",
+        "headline": "Turkish special services detain 40 suspects linked to ISIS",
+        "detail": "Turkish security forces detained 40 individuals suspected of maintaining ties to the ISIS terrorist organization.",
+        "location": "Ankara, Turkey"
       },
       {
         "event_id": "27979e061bc6874c",
         "severity": "HIGH",
         "category": "Terrorist Financing",
         "headline": "BBC uncovers ISIS money laundering network in Europe",
-        "detail": "The BBC revealed a money laundering network operating across Europe on behalf of ISIS and other terrorist organizations, which laundered hundreds of millions of euros.",
-        "location": "Europe"
+        "detail": "An investigative report revealed a money laundering network operating across Europe on behalf of ISIS and other terrorist organizations, which successfully laundered hundreds of millions of euros.",
+        "location": ""
       },
       {
-        "event_id": "b26ddf4503bf7e08",
+        "event_id": "026799e0715c9b14",
         "severity": "SIGNIFICANT",
         "category": "Terrorist Financing",
-        "headline": "Suspected terrorist funds seized in vehicle double-wall in Israel",
-        "detail": "Security forces intercepted individuals attempting to conceal millions of shekels suspected of being terrorist funds inside a double wall of their vehicle, resulting in arrests.",
+        "headline": "Terrorist financing: 1.4 million shekels seized in a car at a checkpoint entering Jerusalem",
+        "detail": "Security forces at a checkpoint near Jerusalem seized 1.4 million shekels intended for terrorist financing that were concealed inside a vehicle.",
         "location": "Jerusalem, Israel"
-      },
-      {
-        "event_id": "a7c1755336dc9916",
-        "severity": "SIGNIFICANT",
-        "category": "Arrests",
-        "headline": "FSB detains Maykop resident for preparing terrorist attack at Defense Ministry facility",
-        "detail": "Russia's FSB detained a resident of Maykop who was allegedly preparing a terrorist attack against a Ministry of Defense facility.",
-        "location": "Maykop, Russia"
       }
     ],
     "status": "ok",
     "model": "gemini-3.5-flash-lite",
     "window_hours": 24,
-    "generated_at": "2026-08-31T09:39:18.553831+00:00",
+    "generated_at": "2026-08-31T09:58:12.383183+00:00",
     "candidate_events": 80
   },
   "ai_article_selection": {
@@ -129,9 +129,70 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-08-31T09:39:21.447613+00:00",
-  "number_of_events": 1566,
+  "last_updated": "2026-08-31T09:58:15.153344+00:00",
+  "number_of_events": 1571,
   "events": [
+    {
+      "id": "0dc2eb3b7291a06b",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Legal / Judicial"
+      ],
+      "title": "Polish Student Charged with Planning Jihadi Attack on Christmas Market",
+      "summary": "A Polish student has been formally charged with planning a jihadist terrorist attack targeting a Christmas market.",
+      "original_title": "Estudiante polaco acusado de planear atentado yihadista en un mercadillo navideño",
+      "original_summary": "Estudiante polaco acusado de planear atentado yihadista en un mercadillo navideño Cadena Láser",
+      "original_language": "es",
+      "collection_language": "es",
+      "collection_language_name": "Spanish",
+      "collection_locale": "ES:es",
+      "published": "2026-08-31T09:53:25+00:00",
+      "source": "Cadena Láser",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOaDJXcGpyejhDcWV5UXU1Y1pPUDc2cHhHVHJvbUxDWlZnR25Ka1pWdV9LRWNqTXZjbmxTaFFLengxOVVLRGVEUE11VFFVV0VLNVlGTGxoMGtaT0NTTFdFQUtnUHlMMnVoZTktOEJrQ19IS2thS01ENTZfbjJkWDBNX2l6WkQtQWJ2QnRDVm5ST2FMYWM5T09LelNVQlZocmlxLWJLcXdoLUdISERSQnJZV1FKMnA?oc=5",
+      "collector": "Google News RSS",
+      "country": "Poland",
+      "country_code": "PL",
+      "city": "Warsaw",
+      "region": null,
+      "latitude": 52.22977,
+      "longitude": 21.01178,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Cadena Láser"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T09:53:25+00:00",
+      "last_reported": "2026-08-31T09:53:25+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 90,
+      "ai_relevance_reason": "Direct counter-terrorism legal development involving a charged suspect planning a jihadist terrorist attack.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Charged with planning terrorist attack on Christmas market by student in Poland",
+      "title_variants": [
+        "Charged with planning terrorist attack on Christmas market by student in Poland"
+      ],
+      "location_confidence_score": 0.8,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Polish student"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "A Polish student is charged with planning a jihadi attack; context points to Poland or Polish jurisdiction, with no specific city mentioned.",
+      "ai_geo_fingerprint": "4d8283e9639f2d0870066c0a0df48e9e92176f34f222e963265a32926668af4f",
+      "ai_geo_inferred": true
+    },
     {
       "id": "9ba4c9423cc6ad90",
       "category": "Arrests",
@@ -191,7 +252,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The text explicitly mentions the Stavropol region in Russia where coordinates were passed to terrorists.",
       "ai_geo_fingerprint": "81874703072f97221b327ad0bfc467942cb80ca79f4cd5e8152bd0209e78adc2",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "08e0b8e5a9bf50d9",
@@ -252,7 +317,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The event is a car bomb attack described as taking place in Mexico.",
       "ai_geo_fingerprint": "5b79792f07995a2c7341da58f4a3879688df299b0fa691c5ae4683af31aa22a3",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "1e1f90d34d47a953",
@@ -643,6 +712,69 @@
       ]
     },
     {
+      "id": "b45c8830b5b8e48e",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Weapons"
+      ],
+      "title": "Paper bombs and social media challenges: gang war in Casilino",
+      "summary": "La Repubblica reports on explosive device use ('paper bombs') and gang warfare dynamics in the Casilino district of Rome.",
+      "original_title": "Bombe carta e sfide sui social: è guerra di mala al Casilino",
+      "original_summary": "Bombe carta e sfide sui social: è guerra di mala al Casilino la Repubblica",
+      "original_language": "it",
+      "collection_language": "it",
+      "collection_language_name": "Italian",
+      "collection_locale": "IT:it",
+      "published": "2026-08-31T07:16:59+00:00",
+      "source": "la Repubblica",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPYTVKQ3F0WVFNc3ZzTGdGX2MzWFkwQzB6TXFLbEdvZmZXM09xQWxvZ3RZRVhYS2NLWVRDU0tVYTJuR2Rxa3Z0em1aMEx4YU9jZEJybk1mMXlQaVFja1ZMT2ZnLVozNkl0YWFsR2xSSW9mZjBLa05LMWZNRkQtdURBUnJyLXpZTEIxRVQtUFlSVU5TM2M1dnpiMUIyQXpfNnNOZnVwTndMMFdlaldVOXpDaGc3M3dIUlBzUGpKTHBobGpiaENYQmlEd3d5WdIBywFBVV95cUxPYTVKQ3F0WVFNc3ZzTGdGX2MzWFkwQzB6TXFLbEdvZmZXM09xQWxvZ3RZRVhYS2NLWVRDU0tVYTJuR2Rxa3Z0em1aMEx4YU9jZEJybk1mMXlQaVFja1ZMT2ZnLVozNkl0YWFsR2xSSW9mZjBLa05LMWZNRkQtdURBUnJyLXpZTEIxRVQtUFlSVU5TM2M1dnpiMUIyQXpfNnNOZnVwTndMMFdlaldVOXpDaGc3M3dIUlBzUGpKTHBobGpiaENYQmlEd3d5WQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Italy",
+      "country_code": "IT",
+      "city": "Rome",
+      "region": null,
+      "latitude": 41.89193,
+      "longitude": 12.51133,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "repubblica.it",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "la Repubblica"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T07:16:59+00:00",
+      "last_reported": "2026-08-31T07:16:59+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Involves the use of improvised explosive devices ('bombe carta') in criminal turf wars, maintaining relevance due to explosives usage.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "gang violence involving explosive devices in Casilino Rome",
+      "title_variants": [
+        "gang violence involving explosive devices in Casilino Rome"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Casilino district of Rome"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The article explicitly describes gang warfare dynamics and explosive devices in the Casilino district of Rome, Italy.",
+      "ai_geo_fingerprint": "048d955f62efd9432b936214261128a2a754e8a502da205e5de6c297dbe9f2d1",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "aac70d8b024cc0b3",
       "category": "Attacks",
       "categories": [
@@ -700,7 +832,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The shooting incident explicitly occurred in the city of Aarau, Switzerland.",
       "ai_geo_fingerprint": "febf9293601695941979b175bd6a59bec50bcf5e9060aca5f07dea3eb5f70504",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -973,7 +1109,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The UAE Ministry of Defense intercepted a drone coming from Iran, meaning the defensive operation/event occurred in the UAE airspace or territory.",
       "ai_geo_fingerprint": "ac9419a5ad5cc06d3fe4e9402decce9f4c4b8d4859bb63cd38d1387ab7ef55de",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "b11741e7da2655d6",
@@ -1068,7 +1208,7 @@
       "collection_locale": "IL:he",
       "published": "2026-08-31T06:11:00+00:00",
       "source": "כיפה",
-      "source_count": 3,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNSlhiRnl0WmI5Zjk2MmlzTDBoeE13VExpTEs1b3dfWElGU0RaTGxPRG9IczBFcE0xaDdWdGgzbGg2d2xhZnphb0lGanRFM0t4aWdjWjJSdUtOU2pOWHdZZEtQNzkxWDluXzROTnJMNXFUdF9SSGkyY1hFRXNERHp1czNVRW80WlJ2M2d2UDh4dENUSk9mWnJybGZFNldGdnc2Wmdv0gGrAUFVX3lxTE41SThmMmZ5SDF5TF81YVEzaUJObzctUFp0djhhb3FyT2VGNU5oNTFtbkhPZUFUQjN6elR3NExvSUtQVmRoZ2QxUGV3Nm5WOVBlWnpOaGk1dGlmWXFKRE52NF9yRlpQZ0Vwa01zaEt6cjRvc0d3T1ZEQzZjaHlIcDBNRHQ5RGg1OUlNZWFfdGViWjM0T1pEZ2VRd3UyQ2JnQXRaSzNaQlJ5NFRuMA?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -1083,7 +1223,8 @@
       "sources": [
         "כיפה",
         "כיכר השבת",
-        "היום"
+        "היום",
+        "ynet.co.il"
       ],
       "related_articles": [
         {
@@ -1602,6 +1743,66 @@
       "categories": [
         "Attacks"
       ],
+      "title": "Diplomatic spat: Syrian ambassador accuses Lebanon of facilitating terrorists and weapons; Mikati responds",
+      "summary": "The Syrian ambassador claims Lebanon facilitates the transit of terrorists and weapons, prompting Lebanese Prime Minister Najib Mikati to deny the claims and emphasize border monitoring.",
+      "original_title": "سفير سوريا: لبنان يسهل مرور الإرهابيين والأسلحة.. ميقاتي يرد: نكافح الإرهاب ونراقب الحدود",
+      "original_summary": "سفير سوريا: لبنان يسهل مرور الإرهابيين والأسلحة.. ميقاتي يرد: نكافح الإرهاب ونراقب الحدود كل العرب",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-31T04:50:35+00:00",
+      "source": "كل العرب",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMizAVBVV95cUxQTFpfUFZCR3l5Um5xR1pYN3BLR0tHODhuRlFaTUNlZVJXcEFDcHp3OTNQNzhWR19Kc2drMlJqUFNEWHVURDJmSlh4YkVrVE15emtCYThsX1pObDNTR0VWZDlFYTEzeXZGSEpnZVZIUkpFWEZVYzRPejN5RGk0b3M3cjQ1a3VEbGY4RzlDWlVqemFFYXhjNVVCWjlxWnBDVC1NeWVmcmhJWTNFY2xNb0xGUlljYkFoYy1acDN3NVNBVDRXMkYxQnVwVUdxYXdNemp2aExQSkJQNjZ4Zzdha2RkeWpTaUU4ZUk1dVc5U1lOaGhrUEJ2NjBFWmQyRXBsZjNlN090aWk0NE8xcmdBS1hCZ0F1d0h2bEJaQmM3TDk0dVdETlkyZHYzRVVnNlU5Smt5R2lPSE5BSTc3M2ZwaFBUblZ4Tjg4QkNGSXVUSjBXM2I2RklORVRSM1pubkE5aURibVJpQnktMnlpampjR2lpQ0I4TzNCQl9CMFQxY1p4TVpzMFpKWmdSdXVpMDFfbUVTN3o0VDJEdHNnZjdGVmxmcGtudlVJMUE0Z0ZycWo5alpJaVdDS1RJNTNhR1l3OHY4LTZQUk5HMTVKNEVGUVlobzJSaEtNaTBCVkpuWEU4cktFczNZNXRCQUlRZzlmX0hHRDk5SHpvYUhUdWdfc0NZdjBiZ0UzNUdfZEZfWGZiNnBrLWFmNGxqNDVoOEZPV3JzM202ZWdfdHE3UURYeksyZHV2T1BVclNFUS05VnhNNWhkWjQxX2xkb2k4aEkxQ0VsbTU4bXdRbWJrcXZRQ2dBM01ub3hSNTJBeUtpOGhzWTJQSURVOF9EMmFON1ZiTklVU1FqcVhZelJoSnhwOVkweG52a1VyT25EVWtnR0s0eVJwXzFmRVZRektfQThib21pT2JyS3BTV0J2czZfS2lVWUtYQkRRM0ZvWFJmNtIBTkFVX3lxTFBGeklnckQtR2RvcUY4b001TXJQS0VpZjhRV1JkcHZoYkZrdG1DN2FxRFl5RXB1UXVmYURwMzl1bXlMUHRkNXdFOUVjT1RUZw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Lebanon",
+      "country_code": "LB",
+      "city": "Beirut",
+      "region": null,
+      "latitude": 33.89332,
+      "longitude": 35.50157,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "كل العرب"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T04:50:35+00:00",
+      "last_reported": "2026-08-31T04:50:35+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 55,
+      "ai_relevance_reason": "Directly addresses allegations of cross-border terrorist transit and weapons smuggling.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "diplomatic exchange between Syria and Lebanon over alleged terrorist transit and border security",
+      "title_variants": [
+        "diplomatic exchange between Syria and Lebanon over alleged terrorist transit and border security"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Syrian ambassador accuses Lebanon... Lebanese Prime Minister Najib Mikati responds"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Diplomatic exchange and border security discussion between Syria and Lebanon, centered around Lebanese government response (Najib Mikati).",
+      "ai_geo_fingerprint": "b8713bd4bc9a152b616a31ec57cc79ed9d87c714414d1f0421824e4a0627303b",
+      "ai_geo_inferred": true
+    },
+    {
+      "id": "9ba4c9423cc6ad90",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
       "title": "Extremist terrorist behind Damascus bombing",
       "summary": "Authorities identify an extremist terrorist behind a recent bombing incident in Damascus.",
       "original_title": "إرهابي تفكيري وراء تفجير دمشق",
@@ -1654,7 +1855,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Explicit mention of Damascus as the bombing location.",
       "ai_geo_fingerprint": "5c67b4a668f470ee7509d8820b2886594203dfbc0860624692b8d86181247ff3",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -3768,70 +3973,6 @@
       ]
     },
     {
-      "id": "f00a07948b4f8680",
-      "category": "Legal / Judicial",
-      "categories": [
-        "Legal / Judicial"
-      ],
-      "title": "Tebboune calls for an urgent continental response to terrorism in Africa",
-      "summary": "Algerian President Tebboune has called for an immediate and coordinated continental counter-terrorism response in Africa.",
-      "original_title": "Lutte antiterroriste en Afrique : Tebboune appelle à une riposte continentale d’urgence",
-      "original_summary": "Lutte antiterroriste en Afrique : Tebboune appelle à une riposte continentale d’urgence Le Jeune Indépendant",
-      "original_language": "fr",
-      "collection_language": "fr",
-      "collection_language_name": "French",
-      "collection_locale": "FR:fr",
-      "published": "2026-08-30T18:32:25+00:00",
-      "source": "Le Jeune Indépendant",
-      "source_count": 1,
-      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNREIxdTl0d25mZXR0YzRHSV9lMHM4WlppRDA5RUNLd3VCVWdBcUNvVW5ZU09OQWFvc1JWX1VxNjFxWGlWLUVLNUNabDVUQU15bE85WHZGMmJYMEMyM3Q1ZzVOMVJUUlpFTzBKQTdaQS1qZjRXaURXcUhFWlN3RjlQY0REX1NIZ2N5M25YU0R3SnloSS0yTnZQai16OU5hR1pGb1VSeGZaQmZWdUw1MUUzSGJYQ1NLOHI2VjkzX1FQdw?oc=5",
-      "collector": "Google News RSS",
-      "country": "Algeria",
-      "country_code": "DZ",
-      "city": null,
-      "region": "Africa",
-      "latitude": 28.0339,
-      "longitude": 1.6596,
-      "location_precision": "region",
-      "location_confidence": "medium",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "Le Jeune Indépendant"
-      ],
-      "related_articles": [],
-      "article_count": 1,
-      "first_reported": "2026-08-30T18:32:25+00:00",
-      "last_reported": "2026-08-30T18:32:25+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 60,
-      "ai_relevance_reason": "Official state call for coordinated counter-terrorism strategy and security cooperation.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "President Tebboune calls for African continental counter-terrorism response",
-      "title_variants": [
-        "President Tebboune calls for African continental counter-terrorism response"
-      ],
-      "location_confidence_score": 0.8,
-      "location_method": "ai_region_coordinates",
-      "location_evidence": [
-        "Algerian President Tebboune has called for an immediate and coordinated continental counter-terrorism response in Africa"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Initiated by the President of Algeria regarding continental Africa.",
-      "ai_geo_fingerprint": "c755aac3894d094ec7000025b3c05a9967c6eb6bfd9128fac55aec76131fe8be",
-      "ai_geo_inferred": true,
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "same_url"
-      ]
-    },
-    {
       "id": "a7c1755336dc9916",
       "category": "Terrorist Financing",
       "categories": [
@@ -4505,6 +4646,83 @@
       ]
     },
     {
+      "id": "f00a07948b4f8680",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial",
+        "Attacks"
+      ],
+      "title": "Tebboune calls for an urgent continental response to terrorism in Africa",
+      "summary": "Algerian President Tebboune has called for an immediate and coordinated continental counter-terrorism response in Africa.",
+      "original_title": "Lutte antiterroriste en Afrique : Tebboune appelle à une riposte continentale d’urgence",
+      "original_summary": "Lutte antiterroriste en Afrique : Tebboune appelle à une riposte continentale d’urgence Le Jeune Indépendant",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-30T14:22:39+00:00",
+      "source": "Le Jeune Indépendant",
+      "source_count": 3,
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNREIxdTl0d25mZXR0YzRHSV9lMHM4WlppRDA5RUNLd3VCVWdBcUNvVW5ZU09OQWFvc1JWX1VxNjFxWGlWLUVLNUNabDVUQU15bE85WHZGMmJYMEMyM3Q1ZzVOMVJUUlpFTzBKQTdaQS1qZjRXaURXcUhFWlN3RjlQY0REX1NIZ2N5M25YU0R3SnloSS0yTnZQai16OU5hR1pGb1VSeGZaQmZWdUw1MUUzSGJYQ1NLOHI2VjkzX1FQdw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Algeria",
+      "country_code": "DZ",
+      "city": null,
+      "region": "Africa",
+      "latitude": 28.0339,
+      "longitude": 1.6596,
+      "location_precision": "region",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Le Jeune Indépendant",
+        "دزاير توب",
+        "سبق برس"
+      ],
+      "related_articles": [
+        {
+          "title": "President Tebboune: Counter-terrorism must remain at the top of joint African priorities",
+          "original_title": "الرئيس تبون: التصدي للإرهاب يجب أن يبقى على رأس أولويات العمل الإفريقي المشترك",
+          "original_language": "ar",
+          "summary": "President Tebboune stresses that addressing terrorism is paramount for joint African cooperation.",
+          "published": "2026-08-30T14:22:39+00:00",
+          "source": "دزاير توب",
+          "url": "https://news.google.com/rss/articles/CBMiyAJBVV95cUxObmhHdV9qanNIajFEREhtZllIQzdMY1hTMUVhSkJRVXdIYjRRODZ5SUxvUHZSYlZ1NTRWdG9Hb290ZlRacjBGYlphWUlpdlRhanQyRWt0bVk3YVlocjlSRDVkOGxTSjBvTGxzQ2ZNeVVLam9oRGZnMlN2M25mckt1MlJWWUhZbmRYWDh2U29wX0F1dDVQMlZLYkp2YmhpT2ZFS1R6S2d2QVk4eVoyV0ZJRGhUN1g4cUxrUmZ4Z1pLRU11cXNQZUcyLUNrWGtsNl91R2dhZnE3VmF2eU9adWJja3pMYkN2akFLUG1UelFiWnExUWhDSUczekNDWFhLVnJKTG8ycXNIcm0yRjZzd1kySllZLUI1dDFLam02MEVVUzZBdFRieWk0eFZuUzl0UzItVXJiM0JyWUU1c0Zxc2QwWkZyY1gweE1p?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-30T14:22:39+00:00",
+      "last_reported": "2026-08-30T18:32:25+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Official state call for coordinated counter-terrorism strategy and security cooperation.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "President Tebboune calls for African continental counter-terrorism response",
+      "title_variants": [
+        "President Tebboune calls for African continental counter-terrorism response"
+      ],
+      "location_confidence_score": 0.8,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Algerian President Tebboune has called for an immediate and coordinated continental counter-terrorism response in Africa"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Initiated by the President of Algeria regarding continental Africa.",
+      "ai_geo_fingerprint": "c755aac3894d094ec7000025b3c05a9967c6eb6bfd9128fac55aec76131fe8be",
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
       "id": "a7c1755336dc9916",
       "category": "Attacks",
       "categories": [
@@ -4562,7 +4780,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "President Tebboune is the President of Algeria; statements on international/African counter-terrorism reflect Algerian state policy.",
       "ai_geo_fingerprint": "a7d303f38b5a4053118fc9672ea0a059c235a627aca643fe2aa52b6e3710868c",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -6555,7 +6777,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The statement regarding counter-terrorism and state policy was made by a Turkish government minister concerning Turkey.",
       "ai_geo_fingerprint": "45ec96e9fd06f9d3ce72b722603352fb8913fb4d07b75a72479d1a18565d998a",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -10875,7 +11101,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The attack by settlers occurred in the Palestinian town of Qusra.",
       "ai_geo_fingerprint": "22504581e21de73dc6b015aecedb052048662d1d4d50578c2fabb1107487355c",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "22c665cb20605b3c",
@@ -12632,6 +12862,66 @@
         "same_url",
         "very_high_title_similarity"
       ]
+    },
+    {
+      "id": "22c665cb20605b3c",
+      "category": "Terrorist Financing",
+      "categories": [
+        "Terrorist Financing"
+      ],
+      "title": "Germany states it possesses evidence of Assad regime involvement in buying oil from ISIS",
+      "summary": "Germany claims to have documents and evidence proving the involvement of the Assad regime in purchasing oil from ISIS.",
+      "original_title": "ألمانيا: نملك أدلة ووثائق تؤكد تورط نظام الاسد بشراء النفط من داعش",
+      "original_summary": "ألمانيا: نملك أدلة ووثائق تؤكد تورط نظام الاسد بشراء النفط من داعش كل العرب",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-29T07:00:00+00:00",
+      "source": "كل العرب",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi2wRBVV95cUxORWx4b2lBZFo2WmVKcnJFYmxzTVY0akVHYzFaVmRwSjc4WFp3UUFhOHl1T3BCSEQyZU80V2p3cEdwX0FPc1ZFUkZ6T0MxQUVoekpzaVdqMWhxb0pKWjdpUDZMVlVUcXIxaWxOS0s0MHdaS1NVT2JGOHRzYWktaEdPVDZZNnlnRVMycXh2MTM5aE83SS1weHA4dlV4Qm5HRFBBT1NOSk5iYTV4OXRyY1MzQzgzeUIyVzBzTXh2YlJJRXZ0ZHZXbjg5WXAtZXZwdVk3bDh4RDlxbmU3bndQckdOU0pOYzVQbldWcUJJNFlSTjROemJubW80VmQ5blNiMEZQa25Sb1I3aWRuMmxrNk5QOHZSNmZNTU02RWc1MldJa1FsMjlfSXNBMmFNdl9ZMUR1V05oUi1HUlJXZllTOGxPWjRiTk4waVMyQkFPbHZiYjg4T05BY1V0ZGNjSlFQUWtIXzFnbXRfNG1BZDBQekVHUEN2SXhBdnQ3aXNzY2NjQnNhRUZDTDBRNmxqTUFJWUwtaXRpNGRHVTN1VllqdC1FWXRXUWNKNlpMNl9qUTBXSzY1c1VscnhfZlMzS1lGQ3d4aHZhUkdYQmpGTEdvUVNZUHEyMmZsMHFzMEF4d0hsaTR3dXd6MjZDalJ2UUhScjNDUDRvNkpkalVLTnM3TnZacE1mNlJNQWZlRjZSZVhWMnNlc2FobUNmQ1NTbVlTY0w1VUFzNUVFcDhFMk9veWFrOFpQem9WUEY3VkpWY0dtbEVRVkZ2dlhsU2E5TTV2QkdvYWFudHJDY1RkNVnSAU5BVV95cUxQVHh3eGoyak1hQWU3eWs1OWloZDM1S2JEVnN3QmNpanZfNVRBN1laOVF2VllVY01GYkxEcGFncnU5ZGtnemhLMkcwZDFyaEE?oc=5",
+      "collector": "Google News RSS",
+      "country": "Syria",
+      "country_code": "SY",
+      "city": "Damascus",
+      "region": null,
+      "latitude": 33.5102,
+      "longitude": 36.29128,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "كل العرب"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-29T07:00:00+00:00",
+      "last_reported": "2026-08-29T07:00:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Directly involves terrorist financing allegations and named terrorist group (ISIS) with state actors.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Germany alleges Assad regime purchased oil from ISIS with documentary evidence",
+      "title_variants": [
+        "Germany alleges Assad regime purchased oil from ISIS with documentary evidence"
+      ],
+      "location_confidence_score": 0.8,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Assad regime involvement in buying oil from ISIS"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event concerns the activities of the Assad regime (Syria) and ISIS, placing the geographic focus of the allegations inside Syria.",
+      "ai_geo_fingerprint": "19048d8a4e1998bd0ef5584b46c017d0c6374476c40b8c1bac5b9d03767fd2d6",
+      "ai_geo_inferred": true
     },
     {
       "id": "22c665cb20605b3c",
@@ -14707,7 +14997,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-08-28T16:29:42+00:00",
       "source": "kn51.ru",
-      "source_count": 5,
+      "source_count": 6,
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNUGZMb2owSHl2OTZtazJTNmJZdno2akpZNllmbmVaQ1FjMnRoWUlUNG45MzRsaHQ5WWdYVkRwV3Ffd01SSE9jeGxfbnhFLVJ1WkhiODJJZGdtaDZJcUxPQV9TcldzWnBoaU1vemNMU05ja1YycExtQldRWUhNWTQ5bDlDY1dKWkU3OVh5cDh3V2pvS3daYkI4dHlSSV9JSGV1?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -14724,7 +15014,8 @@
         "Астрахань 24",
         "VladNews",
         "Вестник Сургутского района",
-        "Интерфакс"
+        "Интерфакс",
+        "הארץ"
       ],
       "related_articles": [
         {
@@ -18552,7 +18843,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The political controversy and call for investigation involves Austrian domestic politics (Minister Gerhard Karner and the Freedom Party of Austria - FPÖ).",
       "ai_geo_fingerprint": "f3683c527a6d56907325f41c3aa080f10cf1b1c46b5c9e579ca00acd295e12db",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "42a5d4019cc1c94f",
@@ -18617,6 +18912,66 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "a7ffe9e41ba06429",
+      "category": "Arrests",
+      "categories": [
+        "Arrests"
+      ],
+      "title": "Mannheim Police: Arrest of an internationally wanted criminal",
+      "summary": "Police in Mannheim report the arrest of an internationally wanted offender.",
+      "original_title": "Polizei-News Mannheim, 28.08.26: Festnahme eines international gesuchten Straftäters",
+      "original_summary": "Polizei-News Mannheim, 28.08.26: Festnahme eines international gesuchten Straftäters News.de",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-08-28T10:19:03+00:00",
+      "source": "News.de",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQRGMwbXhyd0R6SWVJTW1ucUZRTDRPZm12RUM1cHg0ZUtPUllYSWNncFNZbmkxb25iWHd5T2RicHg5M2RybDI5MjlxZ2hXUUVBcmN2MVY4STI3NFdaREMzREh3U0NCbjV6UTJiN3RyMmluN3J5ZThabWhSd1V4LWFjQWFqX3hfS0FMZXFjNUlrR0hMYWVHLVFEUXNfU09aZEdibUNhVlJyT0t4c0c0U3NwZzIwRlVKWUFJQVRGbmlyWlBXbTJYUlVYMjFZZkpDRXpGRVJvOG9kX2poNThhRlhfcVlGMA?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": "Mannheim",
+      "region": null,
+      "latitude": 49.4891,
+      "longitude": 8.46694,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "News.de"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-28T10:19:03+00:00",
+      "last_reported": "2026-08-28T10:19:03+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 65,
+      "ai_relevance_reason": "Plausible law enforcement arrest of a wanted suspect, though terrorism nexus is not explicitly detailed, it meets threshold as a law enforcement action.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "arrest of internationally wanted fugitive in Mannheim",
+      "title_variants": [
+        "arrest of internationally wanted fugitive in Mannheim"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Mannheim Police: Arrest of an internationally wanted criminal"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Police in Mannheim explicitly conducted an arrest.",
+      "ai_geo_fingerprint": "d304860707b41ab1a2946b39dce8508b7589e7c03146afb3c48c6ff69193164d",
+      "ai_geo_inferred": false
     },
     {
       "id": "89f6039810af2991",
@@ -20895,7 +21250,7 @@
       ],
       "article_count": 6,
       "first_reported": "2026-08-28T06:33:00+00:00",
-      "last_reported": "2026-08-28T08:50:35+00:00",
+      "last_reported": "2026-08-28T11:05:41+00:00",
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "very_high_title_similarity",
@@ -24574,7 +24929,7 @@
       "collection_locale": "IL:he",
       "published": "2026-08-27T13:05:26+00:00",
       "source": "i24NEWS",
-      "source_count": 14,
+      "source_count": 15,
       "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE94VnVoSHVqSlJOejlYa1FyMVZQNzZlNHktUmtvdXZabVVSckVBQW9rRGZ3QlUyUEw4eUREXzBmNWIzYU1QTkJSQ2h0Ym14cUpwcW92VTlQcnVaQmtPVzRnbnpFTVppWWtNQ3c?oc=5",
       "collector": "Google News RSS",
       "country": "Israel",
@@ -24602,7 +24957,8 @@
         "i24NEWS",
         "ynet.co.il",
         "Интерфакс",
-        "الجزيرة نت"
+        "الجزيرة نت",
+        "RZN.info"
       ],
       "related_articles": [
         {
@@ -25316,7 +25672,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-08-27T11:53:56+00:00",
       "source": "Газета «Калужская неделя»",
-      "source_count": 5,
+      "source_count": 6,
       "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPYThGLUxpQTI1UmdHYkM0YkhjdDRGbVd0VkplUlFSaXliMUlZSWthbThhUEo1N1ZhdGp0TUE1RV9VOW9BWm1nb0xoWkNXdXZNUGJobmdXWkZUZGRINWtrTDExUzlDYUFWMzlpUTREa2xxRWJMU2V5UE5RbGRZRExMMW5SUnNVbWhPNEdhMzNSS1JDbmM?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -25333,7 +25689,8 @@
         "Obninsk.name",
         "Ковров Сегодня",
         "Область 45",
-        "Газета Курган и курганцы"
+        "Газета Курган и курганцы",
+        "Obninsk.Name"
       ],
       "related_articles": [
         {
@@ -25353,9 +25710,18 @@
           "published": "2026-08-28T06:48:53+00:00",
           "source": "Ковров Сегодня",
           "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNZHA1dG5qYnpzN1dDQkpWQVFYUUp4Zzl4R3FjYTZDSldDTHZfOWZ0SEdLTk1fdnN4SEZfOXJaNnlXNGhMYTRZZzlpYjlOalZkbWxCWTdOU3Z2TzE3R0JlNVhJOTNoQzNTdVRLTjlOc1pqNTdXN2FNSG5Sb0I5UUtBN2YweUR2dERwbGFROFZPNkNYbFZmb0h2clRjaFYzMTVEd3oyU2dwb0hKWHg3VHdhT0xFUWJYWWpaS1h3VjFYZHpaeGkxaE1wQ2VQd2NfSlk?oc=5"
+        },
+        {
+          "title": "FSB detains man in Kurgan region for justifying terrorism",
+          "original_title": "В Курганской области ФСБ задержала мужчину за оправдание терроризма",
+          "original_language": "ru",
+          "summary": "Russia's FSB security service detained a man in the Kurgan region on charges of justifying terrorism.",
+          "published": "2026-08-28T10:02:03+00:00",
+          "source": "Область 45",
+          "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1Ic1V0SjdIdkpTcVM5YmRELTZtd08xc2pTaHdMbm52dmtScm44dkUyclFzbDVrZHBqc1pTMVZsT1hJWkVncDFhRFU4TlFvZw?oc=5"
         }
       ],
-      "article_count": 3,
+      "article_count": 4,
       "first_reported": "2026-08-27T11:53:56+00:00",
       "last_reported": "2026-08-28T16:16:59+00:00",
       "ai_selection_complete": true,
@@ -34741,7 +35107,7 @@
           "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxPS01ROFlPVjlmaDM0UUU1QTgycDJaM05XUHN5YnBWRlFkbmFuTGQwTlJhRzJMM2hQZUowTVlHT0ppSkU4T2Ntd2R0Q2M0aHlXSkxGdDVSUEMwTjhwNGxrQVpEVUxId2RIeGZJSUhQSlNHaWdBWkJFNVk0RGh0WC1yRTU3NGc3bF9FZUtJVF9udU5Hd1BsZHpVa2I1cl9aVW9YMENFYkRnUkhfQXlDMHJheTB2M25RdU9WRzZtdTJBMVJxc2VpYUhrSV9lSjhrNjdHT1o0QzhiZnhaY3hrVEZQenZXNEV0RGZBR3NCZGlvSFRXRnR1U2JFSTR0MF9zRVFlbVIw?oc=5"
         }
       ],
-      "article_count": 36,
+      "article_count": 37,
       "first_reported": "2026-08-24T17:25:00+00:00",
       "last_reported": "2026-08-28T17:17:32+00:00",
       "dedup_confidence": 1.0,
@@ -110973,21 +111339,21 @@
     "primary_model": "gemini-3.5-flash-lite",
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
-    "cached_events": 1560,
-    "ai_processed_this_run": 6,
-    "ai_pending_at_start": 6,
-    "city": 689,
+    "cached_events": 1566,
+    "ai_processed_this_run": 5,
+    "ai_pending_at_start": 5,
+    "city": 691,
     "region": 320,
-    "country_capital": 547,
+    "country_capital": 550,
     "unlocated": 10,
-    "mapped_total": 1556,
-    "high_confidence": 1414,
-    "medium_confidence": 147,
+    "mapped_total": 1561,
+    "high_confidence": 1417,
+    "medium_confidence": 149,
     "low_confidence": 5,
     "methods": {
+      "ai_country_capital": 550,
       "ai_region_coordinates": 320,
-      "ai_country_capital": 547,
-      "ai_city_geonames": 667,
+      "ai_city_geonames": 669,
       "ai_city_coordinates": 22,
       "ai_unlocated": 10
     }
