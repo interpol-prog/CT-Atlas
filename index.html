@@ -2531,6 +2531,159 @@ body::before {
     font-size: 7px !important;
 }
 
+
+/* ============================================================
+   V11 — PERMANENT 24H INTELLIGENCE BRIEF
+   ============================================================ */
+
+#header {
+    height: 88px !important;
+}
+
+#main {
+    height: calc(100vh - 88px) !important;
+}
+
+#updated {
+    min-width: 132px !important;
+    max-width: 148px;
+}
+
+#counter {
+    display: none !important;
+}
+
+#headerSituationBrief {
+    flex: 1 1 auto;
+    min-width: 300px;
+    max-width: 760px;
+    height: 62px;
+    margin-left: 4px;
+    padding: 8px 11px 7px;
+    background: rgba(7, 20, 30, .58);
+    border-left: 1px solid rgba(92, 132, 156, .25);
+    border-right: 1px solid rgba(92, 132, 156, .18);
+    overflow: hidden;
+}
+
+#headerSituationTopline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 5px;
+    color: #8ea7b7;
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+#headerSituationText {
+    color: #c5d4dd;
+    font-size: 9.2px;
+    line-height: 1.42;
+    letter-spacing: .01em;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#keyDevelopmentsButton {
+    flex: 0 0 auto;
+    padding: 4px 7px;
+    background: #0a1b27;
+    color: #8eb2c7;
+    border: 1px solid #28485b;
+    border-radius: 2px;
+    font-size: 7px;
+    font-weight: 750;
+    letter-spacing: .08em;
+    cursor: pointer;
+}
+
+#keyDevelopmentsButton:hover {
+    color: #e8f4fa;
+    border-color: #47738d;
+    background: #102838;
+}
+
+.coverage-section-hidden,
+#sidebar .coverage-box {
+    display: none !important;
+}
+
+/* The modal now carries only the detailed developments; the permanent
+   Situation paragraph already displays the overview. */
+#trendSummaryOverview {
+    display: none !important;
+}
+
+.trend-development-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.trend-view-event {
+    padding: 4px 7px;
+    background: #0b1d29;
+    color: #8fb9d0;
+    border: 1px solid #294b5f;
+    border-radius: 2px;
+    font-size: 7px;
+    font-weight: 750;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.trend-view-event:hover {
+    color: white;
+    background: #123248;
+    border-color: #42738e;
+}
+
+@media (max-width: 1180px) {
+    #headerSituationBrief {
+        max-width: none;
+    }
+}
+
+@media (max-width: 900px) {
+    #headerSituationBrief {
+        display: none;
+    }
+}
+
+
+/* ============================================================
+   V11.1 — EQUAL 2x2 OPERATIONAL BUTTON GRID
+   ============================================================ */
+
+.layer-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+    width: 100% !important;
+}
+
+.layer-buttons .layer-button {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 34px !important;
+    margin: 0 !important;
+    padding: 6px 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    font-size: 8.3px !important;
+    line-height: 1.05 !important;
+}
+
 </style>
 
 </head>
@@ -2604,16 +2757,20 @@ body::before {
         </div>
 
 
-        <div id="counter">
-
-            —
-
-        </div>
+        <div id="counter" style="display:none" aria-hidden="true">—</div>
 
 
     </div>
 
-    <div id="headerKpis"></div>
+    <div id="headerSituationBrief">
+        <div id="headerSituationTopline">
+            <span>SITUATION · LAST 24 HOURS</span>
+            <button id="keyDevelopmentsButton" type="button">KEY DEVELOPMENTS</button>
+        </div>
+        <div id="headerSituationText">
+            Loading the latest 24-hour intelligence brief…
+        </div>
+    </div>
 
     <div id="commandMeta">
         <div id="classificationBlock">
@@ -2622,19 +2779,6 @@ body::before {
         </div>
     </div>
 
-</div>
-
-<div id="situationStrip">
-    <div class="strip-label">Situation summary · 24h</div>
-    <div id="situationSummary">
-        <span><strong id="summaryNewEvents">—</strong> events</span>
-        <span><strong id="summaryAttacks">—</strong> attacks</span>
-        <span title="Deaths explicitly reported from attacks that occurred within the last 24 hours; publication date alone is not sufficient."><strong id="summaryDeaths">—</strong> deaths in 24h</span>
-        <span><strong id="summaryArrests">—</strong> arrests</span>
-        <span><strong id="summaryJudicial">—</strong> judicial</span>
-        <span><strong id="summaryFinancing">—</strong> financing</span>
-    </div>
-    <div id="coverageStrip">Geolocation coverage <strong id="coverageStripValue">—</strong></div>
 </div>
 
 
@@ -2792,14 +2936,12 @@ Map layers
 
 <div class="layer-buttons">
 
-
 <button
     class="layer-button active"
     id="markersToggle"
 >
 EVENTS
 </button>
-
 
 <button
     class="layer-button"
@@ -2810,9 +2952,9 @@ HEAT ZONES
 
 <button
     class="layer-button"
-    id="trendSummaryToggle"
+    id="chronologyToggle"
 >
-24H TREND
+LIST / EXPORT
 </button>
 
 <button
@@ -2821,14 +2963,6 @@ HEAT ZONES
 >
 INTERPOL OFFICES
 </button>
-
-<button
-    class="layer-button"
-    id="chronologyToggle"
->
-EVENT LIST
-</button>
-
 
 </div>
 
@@ -3053,7 +3187,7 @@ Top hotspots
 
 
 
-<div class="section-title">
+<div class="section-title coverage-section-hidden">
 Geolocation coverage
 </div>
 
@@ -3206,7 +3340,6 @@ Visible rate
     <div class="analytics-card" id="trendCard"></div>
     <div class="analytics-card" id="countriesCard"></div>
     <div class="analytics-card" id="hotspotsCard"></div>
-    <div class="analytics-card" id="coverageCard"></div>
 
 </div>
 
@@ -3233,7 +3366,6 @@ Visible rate
         <div class="health-metric"><div class="health-label">System status</div><div class="health-value health-ok">Operational</div></div>
         <div class="health-metric"><div class="health-label">Database events</div><div class="health-value" id="healthEventCount">—</div></div>
         <div class="health-metric"><div class="health-label">Mapped events</div><div class="health-value" id="healthMappedCount">—</div></div>
-        <div class="health-metric"><div class="health-label">Geolocation coverage</div><div class="health-value" id="healthGeoCoverage">—</div></div>
       </div>
 
       <div class="health-section">
@@ -3302,8 +3434,8 @@ Visible rate
   <div id="trendSummaryWindow">
     <div id="trendSummaryHeader">
       <div>
-        <div id="trendSummaryTitle">24H SENSITIVE DEVELOPMENTS</div>
-        <div id="trendSummarySubtitle">AI-assisted CT trend synthesis</div>
+        <div id="trendSummaryTitle">KEY DEVELOPMENTS · LAST 24 HOURS</div>
+        <div id="trendSummarySubtitle">Priority developments behind the situation brief</div>
       </div>
       <button id="trendSummaryClose" type="button" aria-label="Close">×</button>
     </div>
@@ -7396,29 +7528,6 @@ function exportChronologyExcel() {
 
 function initialiseCommandCenterLayout() {
 
-    const headerKpis =
-        document.getElementById(
-            "headerKpis"
-        );
-
-    const kpis =
-        document.querySelector(
-            "#sidebar .kpis"
-        );
-
-    if (
-        headerKpis
-        &&
-        kpis
-        &&
-        kpis.parentElement !== headerKpis
-    ) {
-        headerKpis.appendChild(
-            kpis
-        );
-    }
-
-
     function moveAnalyticsBlock(
         targetId,
         contentId
@@ -7480,48 +7589,6 @@ function initialiseCommandCenterLayout() {
         "hotspotsCard",
         "topHotspots"
     );
-
-    const coverageCard =
-        document.getElementById(
-            "coverageCard"
-        );
-
-    const coverageBox =
-        document.querySelector(
-            ".coverage-box"
-        );
-
-    if (
-        coverageCard
-        &&
-        coverageBox
-        &&
-        coverageBox.parentElement !== coverageCard
-    ) {
-
-        const coverageTitle =
-            coverageBox.previousElementSibling;
-
-        if (
-            coverageTitle
-            &&
-            coverageTitle.classList
-            &&
-            coverageTitle.classList.contains(
-                "section-title"
-            )
-        ) {
-            coverageCard.insertBefore(
-                coverageTitle,
-                coverageCard.firstChild
-            );
-        }
-
-        coverageCard.appendChild(
-            coverageBox
-        );
-
-    }
 
 }
 
@@ -8327,8 +8394,7 @@ function updateHealthStatusPanel(){
   const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
   set("healthEventCount",total.toLocaleString("en-GB"));
   set("healthMappedCount",mapped.toLocaleString("en-GB"));
-  set("healthGeoCoverage",total?((mapped/total)*100).toFixed(1)+"%":"0.0%");
-  set("healthNextUpdate",calculateNextScheduledUpdate());
+set("healthNextUpdate",calculateNextScheduledUpdate());
 }
 function openHealthStatus(){updateHealthStatusPanel();const p=document.getElementById("healthStatusPanel");if(p){p.classList.add("open");p.setAttribute("aria-hidden","false");}}
 function closeHealthStatus(){const p=document.getElementById("healthStatusPanel");if(p){p.classList.remove("open");p.setAttribute("aria-hidden","true");}}
@@ -8622,6 +8688,71 @@ function formatTrendGeneratedAt(value) {
 }
 
 
+
+function renderHeaderSituationBrief() {
+
+    const text =
+        document.getElementById(
+            "headerSituationText"
+        );
+
+    if (!text) {
+        return;
+    }
+
+    if (
+        !trendSummaryData
+        ||
+        !trendSummaryData.overview
+    ) {
+        text.textContent =
+            "No 24-hour intelligence brief is stored in the current database. "
+            +
+            "The situation assessment will be generated during the next successful collection update.";
+        return;
+    }
+
+    text.textContent =
+        trendSummaryData.overview;
+}
+
+
+function openTrendDevelopmentEvent(
+    eventId
+) {
+
+    if (!eventId) {
+        return;
+    }
+
+    const event =
+        allEvents.find(
+            candidate =>
+                String(
+                    candidate.id
+                    ||
+                    candidate._mapKey
+                    ||
+                    ""
+                )
+                ===
+                String(
+                    eventId
+                )
+        );
+
+    if (!event) {
+        return;
+    }
+
+    closeTrendSummary();
+
+    focusChronologyEvent(
+        event._mapKey
+    );
+}
+
+
 function renderTrendSummaryPanel() {
 
     const meta =
@@ -8765,11 +8896,34 @@ function renderTrendSummaryPanel() {
                         <div class="trend-headline">${escapeHtml(item.headline || "")}</div>
                         ${item.location ? `<div class="trend-location">${escapeHtml(item.location)}</div>` : ""}
                         <div class="trend-detail">${escapeHtml(item.detail || "")}</div>
+                        ${
+                            item.event_id
+                            ?
+                            `<div class="trend-development-footer"><button class="trend-view-event" type="button" data-event-id="${escapeHtml(item.event_id)}">VIEW EVENT</button></div>`
+                            :
+                            ""
+                        }
                     </div>
                 `;
 
             }
         ).join("");
+
+    developments
+        .querySelectorAll(
+            ".trend-view-event"
+        )
+        .forEach(
+            button => {
+                button.addEventListener(
+                    "click",
+                    () =>
+                        openTrendDevelopmentEvent(
+                            button.dataset.eventId
+                        )
+                );
+            }
+        );
 
 }
 
@@ -8827,13 +8981,13 @@ document.addEventListener(
         initialiseFacetCountBadges();
 
         document.getElementById(
-            "trendSummaryToggle"
+            "keyDevelopmentsButton"
         )?.addEventListener(
             "click",
             openTrendSummary
         );
 
-        document.getElementById(
+document.getElementById(
             "trendSummaryClose"
         )?.addEventListener(
             "click",
@@ -8886,6 +9040,8 @@ function refreshDashboard() {
     updateCommandCenterPanels();
 
     updateHealthStatusPanel();
+
+    renderHeaderSituationBrief();
 
     renderChronology();
 
