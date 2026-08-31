@@ -91471,7 +91471,267 @@
         "canonical_event": "FSB arrest of Russian couple hiding explosives for terrorist attacks in Crimea",
         "reason": "Operational counter-terrorism arrest, seizure/caching of bombs, and confession."
       }
+    },
+    "dc9ed4c30a583733af09e74677632ce5e02d8f5fc6cdf68e947265a77ad36088": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400658+00:00",
+      "result": {
+        "event_id": "e7c35ac66d25214c",
+        "relevance_score": 35,
+        "is_current_ct_event": false,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "ru",
+        "english_title": "Melitopol resident sentenced to 24 years in prison for high treason",
+        "english_summary": "A court sentenced a resident of Melitopol to 24 years in a penal colony on charges of high treason.",
+        "canonical_event": "sentencing of individual for high treason in Melitopol",
+        "reason": "This is a prosecution for high treason rather than a counter-terrorism event."
+      }
+    },
+    "45447dfac5fced3bf7e72fe5a7096e4146a2c45734533def4e5caeb47066c639": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400689+00:00",
+      "result": {
+        "event_id": "53bdef8f71860345",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Ranucci leaves Report: 'They wanted to send me to Cairo, maybe they hope I end up like Regeni'",
+        "english_summary": "Italian journalist Sigfrido Ranucci commented on job assignment discussions, referencing the case of Giulio Regeni.",
+        "canonical_event": "journalistic commentary regarding safety assignment in Cairo",
+        "reason": "General media commentary and personal safety concerns, not a counter-terrorism event."
+      }
+    },
+    "a449648ac8618eb105a5c7f38d40707e4de7b11b7965a904ca8a637c181650dc": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400693+00:00",
+      "result": {
+        "event_id": "34fc2d1e242024b8",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "FBI issues ultimatum to Canada over two words about 9/11 terrorist attack",
+        "english_summary": "A news report discusses a historical dispute regarding terminology used about the 9/11 attacks.",
+        "canonical_event": "dispute regarding terminology on 9/11 terrorist attack involving FBI and Canada",
+        "reason": "Historical dispute and media commentary on terminology, not a current counter-terrorism event."
+      }
+    },
+    "30fcb8cce2984f109293a3f5b3580003b4bc0748ff53877714cbcd3bbdf58d64": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400696+00:00",
+      "result": {
+        "event_id": "ef2164c25ce862ee",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Presutti and Piervincenzi for Report. Three offers to Ranucci, amid controversy",
+        "english_summary": "Media reporting on internal broadcasting changes and job offers at the television program Report.",
+        "canonical_event": "broadcasting staff changes and controversy at Report",
+        "reason": "Internal media industry news unrelated to counter-terrorism."
+      }
+    },
+    "c1d038b5e09063403f89463646c3cb821a3551218da0189effe0c52029e84661": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400699+00:00",
+      "result": {
+        "event_id": "59535a61f5c0ad20",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "The eastern village where the two Germanys turn their backs on each other",
+        "english_summary": "A sociological and historical feature article about a village on the former border between East and West Germany.",
+        "canonical_event": "feature article about a village on the former German border",
+        "reason": "General historical and human interest feature article."
+      }
+    },
+    "ae93133d35e302ef2261788cd208095117b7cb977022da61e62bc112b8505da2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400702+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1060",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests"
+        ],
+        "original_language": "he",
+        "english_title": "Former 'Lion's Den' operative arrested at home in a covert night operation",
+        "english_summary": "Israeli security forces covertly arrested a former operative of the Lion's Den militant group during a night raid at his home.",
+        "canonical_event": "arrest of former Lion's Den militant group operative by security forces",
+        "reason": "Direct counter-terrorism arrest operation targeting a named militant group member."
+      }
+    },
+    "dc8871421f817f587ae1d25ada649d1312f6ad6bc9b46820ad32b542b73849a0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400705+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1096",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "How do we multiply people like you?",
+        "english_summary": "An opinion piece or general cultural commentary column.",
+        "canonical_event": "general cultural or opinion commentary",
+        "reason": "Irrelevant general commentary piece."
+      }
+    },
+    "947f28181dfc17937cb5aac8b6af991952f981dd21ee88c84f36034092a87647": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400708+00:00",
+      "result": {
+        "event_id": "c57d58c4abbb7788",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Weapons"
+        ],
+        "original_language": "de",
+        "english_title": "Attempted drone attack in Leipzig: Merz threatens Russia with consequences",
+        "english_summary": "Following an attempted drone attack in Leipzig, German politician Friedrich Merz warned Russia of potential consequences.",
+        "canonical_event": "political reaction to attempted drone attack in Leipzig",
+        "reason": "Operational incident involving an attempted drone attack and subsequent high-level political fallout."
+      }
+    },
+    "07882c94f4fda5bfb6f8710e097a7973cc25e2df8ea1a6df39e733b6013915e8": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400710+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1137",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Disinformation / Emerging Technologies / AI"
+        ],
+        "original_language": "ar",
+        "english_title": "'We promised and delivered': Ben Gvir turns prisoner starvation into AI-generated propaganda",
+        "english_summary": "An Arabic-language report criticizes Israeli official Itamar Ben Gvir for using AI-generated content regarding prisoners.",
+        "canonical_event": "criticism of political propaganda involving artificial intelligence",
+        "reason": "Political criticism and media analysis regarding political rhetoric and AI, lacking a distinct counter-terrorism operational nexus."
+      }
+    },
+    "1bf7b237631a78182a6db6d61951308578af19712265eec625b8250d11d14d71": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400713+00:00",
+      "result": {
+        "event_id": "ea0425fb023ee156",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Al-Tam Development profits drop by about 80% in the first half",
+        "english_summary": "Financial reporting on the profit decline of a corporate entity named Al-Tam Development.",
+        "canonical_event": "corporate financial earnings report for Al-Tam Development",
+        "reason": "Corporate finance and business news."
+      }
+    },
+    "64c32c2bcd4b590f9d1f92176c407885e5065ab02e7a739a096e7b59a1af53a8": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400717+00:00",
+      "result": {
+        "event_id": "dc5439e1feaba5ba",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "en",
+        "english_title": "CBC News under fire for refusing to call 9/11 a 'terrorist attack'",
+        "english_summary": "CBC News faces public criticism and editorial debate over its terminology choice regarding the 9/11 attacks.",
+        "canonical_event": "editorial controversy over news terminology regarding 9/11",
+        "reason": "Media ethics and editorial controversy, not a current counter-terrorism operational event."
+      }
+    },
+    "9fa6b857df8423a60b53a10902c29f4516ded0e9185364a7b0e4f7e28563c325": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400719+00:00",
+      "result": {
+        "event_id": "f87bd90a7f5f4491",
+        "relevance_score": 70,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "de",
+        "english_title": "Dead woman at rave in Switzerland: Police suspect terrorist act or rampage",
+        "english_summary": "Swiss police are investigating the death of a woman at a rave event, examining potential hypotheses including a terrorist act or rampage.",
+        "canonical_event": "police investigation into woman's death examining possible terrorist act in Switzerland",
+        "reason": "Active police investigation considering a potential terrorist attack or violent rampage."
+      }
+    },
+    "7f642ae437adfa3c12bc2e3add59ffb5f4b4d47772ced7d15ccbf9c14f0be4b1": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400721+00:00",
+      "result": {
+        "event_id": "0af7f4258597df09",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "de",
+        "english_title": "Arrest at Bremen Central Station: 41-year-old detained for attempted murder",
+        "english_summary": "German police arrested a 41-year-old man at the Bremen main train station on suspicion of attempted murder.",
+        "canonical_event": "arrest of suspect for attempted murder at Bremen Central Station",
+        "reason": "Law enforcement arrest for a violent crime/attempted murder incident at a major transport hub."
+      }
+    },
+    "874997e0d42d34888ff097b258a127c796ad57c06acc5186d5d330b9f46c9013": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400723+00:00",
+      "result": {
+        "event_id": "15bcc392e85858cf",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "tr",
+        "english_title": "YÖK issues 'Terror-Free Turkey' call to universities",
+        "english_summary": "The Council of Higher Education (YÖK) in Turkey issued a public call to universities regarding a 'Terror-Free Turkey' initiative.",
+        "canonical_event": "institutional call by YÖK to universities regarding terrorism policy in Turkey",
+        "reason": "Government/educational administrative initiative and public relations campaign rather than a tactical counter-terrorism event."
+      }
+    },
+    "cd7aa8a5e681c05d082df1ee5c18718f6125afdfa62f1532ba5a33a3a8595f8f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400727+00:00",
+      "result": {
+        "event_id": "1fdabaa04a4065e6",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Weapons"
+        ],
+        "original_language": "fr",
+        "english_title": "Monaco attack: Vadim Ermolaev implicates a Ukrainian intelligence lieutenant-colonel and mentions a 'very rare' liquid explosive",
+        "english_summary": "In connection with an attack in Monaco, Vadim Ermolaev has accused a Ukrainian intelligence officer and referenced the use of a rare liquid explosive.",
+        "canonical_event": "investigative developments and accusations involving liquid explosives in the Monaco attack",
+        "reason": "Specific operational details and accusations regarding an attack utilizing explosives."
+      }
+    },
+    "67864eef8493b3db9f593715242a724e967127dbf1eecf927917005690d9c93b": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:53:49.400729+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1162",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "ru",
+        "english_title": "Arson act: Young Dzerzhinsk resident detained for terrorism",
+        "english_summary": "Law enforcement in Dzerzhinsk detained a young resident on terrorism-related charges following an arson attack.",
+        "canonical_event": "detention of resident for terrorism and arson in Dzerzhinsk",
+        "reason": "Direct counter-terrorism arrest for an arson attack."
+      }
     }
   },
-  "last_updated": "2026-08-31T10:23:51.505040+00:00"
+  "last_updated": "2026-08-31T10:53:49.521283+00:00"
 }
