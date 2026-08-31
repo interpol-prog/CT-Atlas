@@ -2050,6 +2050,29 @@ body::before {
     }
 }
 
+
+#healthStatusLauncher{margin-top:17px;padding-top:11px;border-top:1px solid var(--cc-border-soft)}
+#healthStatusButton{width:100%;min-height:31px;padding:6px 9px;background:rgba(8,24,35,.72);color:#8fa8b8;border:1px solid #223b4c;border-radius:3px;font-size:9px;font-weight:650;letter-spacing:.10em;text-transform:uppercase;cursor:pointer}
+#healthStatusButton:hover{color:#dceaf2;border-color:#3a627b;background:#102433}
+#healthStatusPanel{position:fixed;inset:0;z-index:3100;display:none;pointer-events:none}
+#healthStatusPanel.open{display:block}
+#healthStatusWindow{position:absolute;left:270px;bottom:28px;width:420px;max-height:calc(100vh - 150px);overflow:hidden;background:rgba(7,20,30,.97);border:1px solid #2a4658;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.55);backdrop-filter:blur(10px);pointer-events:auto}
+#healthStatusHeader{display:flex;align-items:center;justify-content:space-between;padding:13px 14px 11px;background:#0a1924;border-bottom:1px solid #294151}
+#healthStatusTitle{color:#edf4f8;font-size:11px;font-weight:750;letter-spacing:.11em}
+#healthStatusSubtitle{margin-top:4px;color:#70899b;font-size:8px;letter-spacing:.06em;text-transform:uppercase}
+#healthStatusClose{width:26px;height:26px;padding:0;border:1px solid #294455;border-radius:3px;background:#0a1721;color:#9bb0be;font-size:18px;cursor:pointer}
+#healthStatusBody{max-height:calc(100vh - 225px);overflow-y:auto;padding:12px}
+.health-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:11px}
+.health-metric,.health-section{background:#081720;border:1px solid rgba(96,132,154,.18);border-radius:3px}
+.health-metric{padding:9px}.health-section{margin-top:10px;padding:10px}
+.health-label,.health-section-title{color:#70899a;font-size:8px;text-transform:uppercase;letter-spacing:.07em}
+.health-section-title{margin-bottom:8px;color:#9eb4c2;font-weight:750;letter-spacing:.12em}
+.health-value{margin-top:5px;color:#e6f0f5;font-size:14px;font-weight:600}
+.health-row{display:flex;justify-content:space-between;gap:14px;min-height:26px;padding:5px 0;border-bottom:1px solid rgba(107,142,162,.09);color:#8299a8;font-size:9px;line-height:1.4}
+.health-row:last-child{border-bottom:0}.health-row strong{color:#dce8ef;font-weight:600;text-align:right}
+.health-ok{color:#66d9a7!important}.health-caution{color:#e8c45f!important}
+#healthStatusNote{margin-top:11px;padding:9px 10px;color:#647d8e;background:rgba(3,11,17,.38);border-left:2px solid #29485b;font-size:8px;line-height:1.55}
+
 </style>
 
 </head>
@@ -2657,23 +2680,7 @@ Visible rate
 
 
 
-<div id="database-info">
-
-Multilingual open-source monitoring · Gemini AI relevance + translation · AI-first geolocation
-
-<br>
-
-Rolling database: 180 days
-
-<br>
-
-Default operational view: 6 months
-
-<br>
-
-Automated updates · 00:17 / 06:17 / 12:17 / 18:17 Europe/Paris
-
-</div>
+<div id="healthStatusLauncher"><button id="healthStatusButton" type="button">Health Status</button></div>
 
 
 </div>
@@ -2740,6 +2747,61 @@ Automated updates · 00:17 / 06:17 / 12:17 / 18:17 Europe/Paris
 </div>
 
 
+</div>
+
+
+
+<div id="healthStatusPanel" aria-hidden="true">
+  <div id="healthStatusWindow">
+    <div id="healthStatusHeader">
+      <div>
+        <div id="healthStatusTitle">SYSTEM HEALTH STATUS</div>
+        <div id="healthStatusSubtitle">CT Intelligence Map infrastructure</div>
+      </div>
+      <button id="healthStatusClose" type="button" aria-label="Close">×</button>
+    </div>
+    <div id="healthStatusBody">
+      <div class="health-grid">
+        <div class="health-metric"><div class="health-label">System status</div><div class="health-value health-ok">Operational</div></div>
+        <div class="health-metric"><div class="health-label">Database events</div><div class="health-value" id="healthEventCount">—</div></div>
+        <div class="health-metric"><div class="health-label">Mapped events</div><div class="health-value" id="healthMappedCount">—</div></div>
+        <div class="health-metric"><div class="health-label">Geolocation coverage</div><div class="health-value" id="healthGeoCoverage">—</div></div>
+      </div>
+
+      <div class="health-section">
+        <div class="health-section-title">UPDATE SCHEDULE</div>
+        <div class="health-row"><span>Automated updates</span><strong>00:17 · 06:17 · 12:17 · 18:17</strong></div>
+        <div class="health-row"><span>Timezone</span><strong>Europe/Paris</strong></div>
+        <div class="health-row"><span>Next scheduled update</span><strong id="healthNextUpdate">—</strong></div>
+      </div>
+
+      <div class="health-section">
+        <div class="health-section-title">AI PIPELINE</div>
+        <div class="health-row"><span>Article selection</span><strong class="health-ok">Gemini 3.5 Flash-Lite</strong></div>
+        <div class="health-row"><span>Relevance threshold</span><strong>≥ 50 / 100</strong></div>
+        <div class="health-row"><span>Geolocation primary</span><strong class="health-ok">Gemini 3.5 Flash-Lite</strong></div>
+        <div class="health-row"><span>Geolocation rescue</span><strong>Gemini 3.6 Flash</strong></div>
+        <div class="health-row"><span>AI geolocation policy</span><strong>New events only</strong></div>
+      </div>
+
+      <div class="health-section">
+        <div class="health-section-title">COLLECTION</div>
+        <div class="health-row"><span>Collection languages</span><strong>11 total</strong></div>
+        <div class="health-row"><span>Translated languages</span><strong>10 → English</strong></div>
+        <div class="health-row"><span>Search queries</span><strong>119</strong></div>
+        <div class="health-row"><span>Retention window</span><strong>180 days</strong></div>
+      </div>
+
+      <div class="health-section">
+        <div class="health-section-title">INFRASTRUCTURE</div>
+        <div class="health-row"><span>GitHub Actions</span><strong class="health-ok">Enabled</strong></div>
+        <div class="health-row"><span>GitHub Pages</span><strong class="health-ok">Enabled</strong></div>
+        <div class="health-row"><span>Gemini dependency</span><strong class="health-caution">External service</strong></div>
+      </div>
+
+      <div id="healthStatusNote">Status reflects the current application configuration and the database loaded by this page. External services such as Gemini and GitHub may experience delays, quota changes or service changes.</div>
+    </div>
+  </div>
 </div>
 
 
@@ -7707,6 +7769,35 @@ document.addEventListener(
 
 
 
+
+function calculateNextScheduledUpdate(){
+  const now=new Date();
+  const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Paris",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(now).reduce((a,p)=>{a[p.type]=p.value;return a},{});
+  const current=Number(parts.hour)*60+Number(parts.minute);
+  const schedule=[17,377,737,1097];
+  let next=schedule.find(v=>v>current),tomorrow=false;
+  if(next==null){next=schedule[0];tomorrow=true;}
+  const h=Math.floor(next/60),m=next%60,label=String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
+  return (tomorrow?"Tomorrow ":"Today ")+label;
+}
+function updateHealthStatusPanel(){
+  const mapped=allEvents.filter(e=>e.excluded_from_map!==true&&e.location_precision!=="unlocated"&&e.latitude!=null&&e.longitude!=null).length;
+  const total=allEvents.length;
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  set("healthEventCount",total.toLocaleString("en-GB"));
+  set("healthMappedCount",mapped.toLocaleString("en-GB"));
+  set("healthGeoCoverage",total?((mapped/total)*100).toFixed(1)+"%":"0.0%");
+  set("healthNextUpdate",calculateNextScheduledUpdate());
+}
+function openHealthStatus(){updateHealthStatusPanel();const p=document.getElementById("healthStatusPanel");if(p){p.classList.add("open");p.setAttribute("aria-hidden","false");}}
+function closeHealthStatus(){const p=document.getElementById("healthStatusPanel");if(p){p.classList.remove("open");p.setAttribute("aria-hidden","true");}}
+document.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById("healthStatusButton")?.addEventListener("click",openHealthStatus);
+  document.getElementById("healthStatusClose")?.addEventListener("click",closeHealthStatus);
+  document.getElementById("healthStatusPanel")?.addEventListener("click",e=>{if(e.target.id==="healthStatusPanel")closeHealthStatus();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeHealthStatus();});
+});
+
 function refreshDashboard() {
 
 
@@ -7721,6 +7812,8 @@ function refreshDashboard() {
     updateTrends();
 
     updateCommandCenterPanels();
+
+    updateHealthStatusPanel();
 
     renderChronology();
 
