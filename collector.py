@@ -38,7 +38,7 @@ except Exception:
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V9.1 — MULTILINGUAL GEMINI + FAST INDEXED DEDUP
+# OSINT COLLECTOR V10 — MULTILINGUAL GEMINI + FAST DEDUP + 24H TREND
 #
 # Expanded coverage + stricter event relevance.
 #
@@ -116,6 +116,117 @@ AI_SELECTION_CACHE_FILE = "ai_article_selection_cache.json"
 AI_SELECTION_ATTEMPTS = 5
 AI_SELECTION_TIMEOUT = 240
 AI_SELECTION_PAUSE_SECONDS = 8.0
+
+
+# ============================================================
+# GEMINI 24H SENSITIVE TREND SUMMARY
+#
+# One lightweight synthesis per completed collection run. It never blocks
+# database publication: if Gemini is unavailable, a deterministic fallback
+# is stored instead.
+# ============================================================
+
+AI_TREND_MODEL = os.getenv(
+    "AI_TREND_MODEL",
+    AI_SELECTION_MODEL,
+)
+
+AI_TREND_ATTEMPTS = 3
+AI_TREND_TIMEOUT = 180
+AI_TREND_MAX_CANDIDATES = 80
+
+AI_TREND_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "overview": {
+            "type": "string"
+        },
+        "developments": {
+            "type": "array",
+            "maxItems": 6,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "severity": {
+                        "type": "string",
+                        "enum": [
+                            "CRITICAL",
+                            "HIGH",
+                            "SIGNIFICANT",
+                        ],
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "headline": {
+                        "type": "string"
+                    },
+                    "detail": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                },
+                "required": [
+                    "severity",
+                    "category",
+                    "headline",
+                    "detail",
+                    "location",
+                ],
+            },
+        },
+    },
+    "required": [
+        "overview",
+        "developments",
+    ],
+}
+
+AI_TREND_INSTRUCTIONS = """
+You are producing a concise 24-hour sensitive-developments brief for a
+counter-terrorism OSINT situational-awareness dashboard.
+
+Select ONLY the most operationally important and sensitive developments from
+the supplied deduplicated events reported or materially updated during the
+last 24 hours.
+
+PRIORITISE:
+- high-fatality or particularly violent terrorist attacks;
+- bombings, suicide attacks, assassinations and major armed clashes;
+- major disrupted plots or imminent-threat cases;
+- arrests of important operatives, leaders, cells or large networks;
+- major weapons/explosives/CBRN discoveries or seizures;
+- strategically important terrorist-financing disruptions;
+- major propaganda/cyber/emerging-technology developments when operationally
+  significant;
+- other developments with clear cross-border or strategic CT significance.
+
+DE-PRIORITISE:
+- routine arrests or sentencing;
+- minor incidents;
+- generic political statements;
+- retrospective reporting;
+- stories whose importance is mainly rhetorical rather than operational.
+
+Return between 0 and 6 developments. It is better to return 2 genuinely
+important items than 6 weak ones. Do not invent facts, casualty figures,
+locations, identities, responsibility claims or significance. Preserve
+uncertainty and attribution.
+
+The overview should be 2-4 concise sentences in professional English,
+synthesising the most important pattern(s) without exaggeration.
+
+Severity meanings:
+- CRITICAL: exceptional immediate/high-impact CT development;
+- HIGH: major operationally significant CT development;
+- SIGNIFICANT: notable enough to belong in a short senior-level 24h brief.
+
+The supplied timestamps indicate reporting/update recency. Do not state that
+an incident itself occurred within the last 24 hours unless the event text
+supports that conclusion.
+"""
 
 
 CATEGORIES = {
@@ -6475,7 +6586,469 @@ def prune_old(events):
     return result
 
 
-def save_database(events):
+
+def _parse_iso_utc(value):
+    if not value:
+        return None
+
+    try:
+        dt = datetime.fromisoformat(
+            str(value).replace(
+                "Z",
+                "+00:00",
+            )
+        )
+
+        if dt.tzinfo is None:
+            dt = dt.replace(
+                tzinfo=timezone.utc
+            )
+
+        return dt.astimezone(
+            timezone.utc
+        )
+
+    except Exception:
+        return None
+
+
+def _trend_recency(event):
+    return (
+        _parse_iso_utc(
+            event.get(
+                "last_reported"
+            )
+        )
+        or
+        _parse_iso_utc(
+            event.get(
+                "published"
+            )
+        )
+    )
+
+
+def _trend_priority(event):
+    score = float(
+        event.get(
+            "ai_relevance_score",
+            50,
+        )
+        or
+        50
+    )
+
+    categories = set(
+        event.get(
+            "categories"
+        )
+        or
+        ([event.get("category")] if event.get("category") else [])
+    )
+
+    if "Attacks" in categories:
+        score += 18
+    if "Weapons" in categories:
+        score += 7
+    if "CBRN" in categories:
+        score += 10
+    if "Arrests" in categories:
+        score += 5
+    if "Terrorist Financing" in categories:
+        score += 5
+
+    score += min(
+        15,
+        max(
+            0,
+            int(
+                event.get(
+                    "source_count",
+                    1,
+                )
+                or
+                1
+            )
+            -
+            1
+        )
+        *
+        3,
+    )
+
+    return score
+
+
+def _trend_payload(event, index):
+    return {
+        "event_id":
+            str(
+                event.get("id")
+                or
+                f"trend-{index}"
+            ),
+        "title":
+            selection_compact_text(
+                event.get("title"),
+                450,
+            ),
+        "summary":
+            selection_compact_text(
+                event.get("summary"),
+                850,
+            ),
+        "categories":
+            list(
+                event.get("categories")
+                or
+                ([event.get("category")] if event.get("category") else [])
+            ),
+        "country":
+            clean_text(
+                event.get("country", "")
+            ),
+        "region":
+            clean_text(
+                event.get("region", "")
+            ),
+        "city":
+            clean_text(
+                event.get("city", "")
+            ),
+        "first_reported":
+            str(
+                event.get("first_reported")
+                or
+                event.get("published")
+                or
+                ""
+            ),
+        "last_reported":
+            str(
+                event.get("last_reported")
+                or
+                event.get("published")
+                or
+                ""
+            ),
+        "ai_relevance_score":
+            int(
+                event.get("ai_relevance_score", 0)
+                or
+                0
+            ),
+        "source_count":
+            int(
+                event.get("source_count", 1)
+                or
+                1
+            ),
+        "article_count":
+            int(
+                event.get("article_count", 1)
+                or
+                1
+            ),
+        "primary_source":
+            clean_text(
+                event.get("source", "")
+            ),
+    }
+
+
+def _trend_fallback(candidates, generated_at, reason=""):
+    developments = []
+
+    for event in candidates[:5]:
+        relevance = int(
+            event.get(
+                "ai_relevance_score",
+                0,
+            )
+            or
+            0
+        )
+
+        if relevance >= 90:
+            severity = "HIGH"
+        else:
+            severity = "SIGNIFICANT"
+
+        categories = list(
+            event.get("categories")
+            or
+            ([event.get("category")] if event.get("category") else [])
+        )
+
+        location = ", ".join(
+            value
+            for value in [
+                clean_text(event.get("city", "")),
+                clean_text(event.get("region", "")),
+                clean_text(event.get("country", "")),
+            ]
+            if value
+        )
+
+        developments.append(
+            {
+                "severity": severity,
+                "category": (
+                    categories[0]
+                    if categories
+                    else
+                    "CT Development"
+                ),
+                "headline": selection_compact_text(
+                    event.get("title"),
+                    220,
+                ),
+                "detail": selection_compact_text(
+                    event.get("summary"),
+                    420,
+                ),
+                "location": location,
+            }
+        )
+
+    return {
+        "status": "fallback",
+        "model": AI_TREND_MODEL,
+        "window_hours": 24,
+        "generated_at": generated_at,
+        "candidate_events": len(candidates),
+        "overview": (
+            "AI trend synthesis was unavailable for this update. "
+            "The highest-relevance CT events reported or updated in the last "
+            "24 hours are shown below without additional analytical synthesis."
+        ),
+        "developments": developments,
+        "warning": reason,
+    }
+
+
+def generate_24h_trend_summary(events):
+    generated_at = datetime.now(
+        timezone.utc
+    ).isoformat()
+
+    cutoff = datetime.now(
+        timezone.utc
+    ) - timedelta(
+        hours=24
+    )
+
+    recent = []
+
+    for event in events:
+        recency = _trend_recency(
+            event
+        )
+
+        if (
+            recency is not None
+            and
+            recency >= cutoff
+        ):
+            recent.append(
+                event
+            )
+
+    recent.sort(
+        key=_trend_priority,
+        reverse=True,
+    )
+
+    recent = recent[
+        :AI_TREND_MAX_CANDIDATES
+    ]
+
+    print()
+    print("=" * 70)
+    print("GEMINI 24H SENSITIVE TREND SUMMARY")
+    print("=" * 70)
+    print(
+        f"Recent candidate events: {len(recent)}"
+    )
+    print(
+        f"Trend model: {AI_TREND_MODEL}"
+    )
+
+    if not recent:
+        print(
+            "No CT events reported/updated in the last 24 hours."
+        )
+
+        return {
+            "status": "ok",
+            "model": AI_TREND_MODEL,
+            "window_hours": 24,
+            "generated_at": generated_at,
+            "candidate_events": 0,
+            "overview": (
+                "No significant CT developments were available for the "
+                "24-hour trend brief at the time of this update."
+            ),
+            "developments": [],
+        }
+
+    api_key = os.getenv(
+        "GEMINI_API_KEY"
+    )
+
+    if not api_key:
+        print(
+            "Trend summary fallback: GEMINI_API_KEY unavailable."
+        )
+        return _trend_fallback(
+            recent,
+            generated_at,
+            "GEMINI_API_KEY unavailable",
+        )
+
+    batch = [
+        _trend_payload(
+            event,
+            index,
+        )
+        for index, event in enumerate(
+            recent
+        )
+    ]
+
+    body = {
+        "model": AI_TREND_MODEL,
+        "input": (
+            "Produce the 24-hour sensitive CT developments brief from the "
+            "deduplicated events below. Use only these records.\n\n"
+            +
+            json.dumps(
+                {"events": batch},
+                ensure_ascii=False,
+            )
+        ),
+        "system_instruction": AI_TREND_INSTRUCTIONS,
+        "store": False,
+        "response_format": {
+            "type": "text",
+            "mime_type": "application/json",
+            "schema": AI_TREND_SCHEMA,
+        },
+        "generation_config": {
+            "max_output_tokens": 8000,
+            "thinking_level": "minimal",
+        },
+    }
+
+    headers = {
+        "x-goog-api-key": api_key,
+        "Content-Type": "application/json",
+    }
+
+    last_error = None
+
+    for attempt in range(
+        1,
+        AI_TREND_ATTEMPTS + 1,
+    ):
+        try:
+            response = requests.post(
+                GEMINI_INTERACTIONS_URL,
+                headers=headers,
+                json=body,
+                timeout=AI_TREND_TIMEOUT,
+            )
+
+            if response.status_code == 429:
+                last_error = "Gemini trend quota exceeded (429)"
+                print(
+                    f"   Trend attempt {attempt}/{AI_TREND_ATTEMPTS}: 429"
+                )
+                time.sleep(
+                    attempt * 5
+                )
+                continue
+
+            if response.status_code >= 500:
+                last_error = (
+                    "Gemini trend temporary error "
+                    f"{response.status_code}"
+                )
+                print(
+                    f"   Trend attempt {attempt}/{AI_TREND_ATTEMPTS}: "
+                    f"HTTP {response.status_code}"
+                )
+                time.sleep(
+                    attempt * 4
+                )
+                continue
+
+            response.raise_for_status()
+
+            output_text = extract_interaction_text(
+                response.json()
+            )
+
+            result = json.loads(
+                output_text
+            )
+
+            developments = result.get(
+                "developments",
+                []
+            )
+
+            if not isinstance(
+                developments,
+                list,
+            ):
+                developments = []
+
+            result[
+                "developments"
+            ] = developments[:6]
+
+            result.update(
+                {
+                    "status": "ok",
+                    "model": AI_TREND_MODEL,
+                    "window_hours": 24,
+                    "generated_at": generated_at,
+                    "candidate_events": len(recent),
+                }
+            )
+
+            print(
+                f"Trend summary generated: {len(result['developments'])} "
+                "priority developments."
+            )
+
+            return result
+
+        except Exception as error:
+            last_error = str(
+                error
+            )
+            print(
+                f"   Trend attempt {attempt}/{AI_TREND_ATTEMPTS} failed: "
+                f"{error}"
+            )
+            time.sleep(
+                attempt * 3
+            )
+
+    print(
+        "Trend summary AI unavailable; using safe fallback."
+    )
+
+    return _trend_fallback(
+        recent,
+        generated_at,
+        last_error or "Unknown Gemini trend error",
+    )
+
+
+def save_database(events, trend_summary=None):
     output = {
         "project":
             "INTERPOL CT Intelligence Map",
@@ -6498,6 +7071,11 @@ def save_database(events):
             "Google News RSS V9 multilingual + Gemini selection/translation",
         "relevance_filter":
             "Deterministic CT candidate filter + Gemini semantic final selection",
+
+        "trend_summary":
+            trend_summary
+            or
+            {},
 
         "ai_article_selection": {
             "enabled":
@@ -6751,10 +7329,14 @@ def main():
         reverse=True,
     )
 
-    save_database(
+    trend_summary = generate_24h_trend_summary(
         events
     )
 
+    save_database(
+        events,
+        trend_summary=trend_summary,
+    )
     print()
     print("=" * 70)
     print("COLLECTION COMPLETE")
