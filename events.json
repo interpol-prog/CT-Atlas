@@ -21,37 +21,37 @@
   "collector": "Google News RSS V9 multilingual + Gemini selection/translation",
   "relevance_filter": "Deterministic CT candidate filter + Gemini semantic final selection",
   "trend_summary": {
-    "overview": "Recent counter-terrorism reporting highlights significant operations, including the neutralisation of 27 ISWAP terrorists across Borno and Sokoto states in Nigeria, the arrest of 40 ISIS-linked suspects by Turkish security forces in Ankara, and the arrest of a 16-year-old spreading ISIS propaganda and bomb-making tutorials in Como, Italy.",
+    "overview": "Recent counter-terrorism operations include Nigerian military forces neutralizing 27 ISWAP terrorists in Borno and Sokoto states, Israeli security forces intercepting 1.4 million shekels in terrorist financing hidden inside a vehicle in Jerusalem, and Russian FSB operatives detaining a resident in Maykop preparing an attack against a Ministry of Defense facility.",
     "developments": [
       {
         "event_id": "53148bd12e1f4e8c",
         "severity": "CRITICAL",
         "category": "Attacks",
         "headline": "Nigerian troops foil ISWAP attack in Borno and Sokoto, neutralizing 27 terrorists",
-        "detail": "Nigerian military forces successfully foiled an ISWAP terrorist attack in Borno and Sokoto states, neutralizing 27 terrorists during operations.",
+        "detail": "Nigerian military forces successfully foiled an ISWAP terrorist attack across Borno and Sokoto states, neutralizing 27 terrorists during the engagements.",
         "location": "Nigeria, Borno and Sokoto"
       },
       {
-        "event_id": "078217ad8cc9a323",
+        "event_id": "026799e0715c9b14",
         "severity": "HIGH",
-        "category": "Arrests",
-        "headline": "Turkish special services detain 40 suspects linked to ISIS",
-        "detail": "Turkish security forces detained 40 individuals in Ankara suspected of having ties to the ISIS terrorist organization.",
-        "location": "Turkey, Ankara"
+        "category": "Terrorist Financing",
+        "headline": "Terrorist financing: 1.4 million shekels seized in a car at a checkpoint entering Jerusalem",
+        "detail": "Security forces seized 1.4 million shekels intended for terrorist financing concealed inside a vehicle at a checkpoint near Jerusalem, resulting in arrests.",
+        "location": "Israel, Jerusalem"
       },
       {
-        "event_id": "f77ad085e8d2bdbb",
+        "event_id": "a7c1755336dc9916",
         "severity": "HIGH",
         "category": "Arrests",
-        "headline": "16-year-old arrested in Como for ISIS propaganda and bomb-making tutorials",
-        "detail": "Italian authorities arrested a 16-year-old in Como who was spreading ISIS propaganda and possessed instructional guides for building bombs.",
-        "location": "Italy, Como"
+        "headline": "FSB detains Maykop resident for preparing terrorist attack at Defense Ministry facility",
+        "detail": "Russia's FSB detained a resident of Maykop who was allegedly preparing a terrorist attack targeting a Ministry of Defense facility.",
+        "location": "Russia, Maykop"
       }
     ],
     "status": "ok",
     "model": "gemini-3.5-flash-lite",
     "window_hours": 24,
-    "generated_at": "2026-08-31T10:10:27.012844+00:00",
+    "generated_at": "2026-08-31T10:24:55.178185+00:00",
     "candidate_events": 80
   },
   "ai_article_selection": {
@@ -105,9 +105,71 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-08-31T10:10:29.130434+00:00",
-  "number_of_events": 1571,
+  "last_updated": "2026-08-31T10:24:57.216000+00:00",
+  "number_of_events": 1572,
   "events": [
+    {
+      "id": "9ba4c9423cc6ad90",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Weapons",
+        "Attacks"
+      ],
+      "title": "Russian couple created bomb caches in Crimea for terrorist attacks and confessed after FSB arrest",
+      "summary": "FSB officers arrested a Russian couple in Crimea who were preparing terrorist attacks by hiding explosive caches, and they subsequently confessed.",
+      "original_title": "Пара россиян делала тайники с бомбами в Крыму для подготовки терактов. В содеянном пришлось сознаться, когда их схватили сотрудники ФСБ",
+      "original_summary": "Пара россиян делала тайники с бомбами в Крыму для подготовки терактов. В содеянном пришлось сознаться, когда их схватили сотрудники ФСБ Живая Кубань",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-08-31T10:12:38+00:00",
+      "source": "Живая Кубань",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxNZVRra0pYRlJfOW5TR2N1b2pvQWswUk5WYlp0SHB3M3pNZFM4RnAzdFh3TFNJSURoLUFxTGNTUGctQVRyWmpIOUEyLU1CRjk0M3VFb3hwWnphcjlxN0swQ19YTHNrbE5BVWtBdWxqQUJzWFViV2Y3ZGxGcHBPYW1mWk9oR25GRVVxMWY0elpmb2lROC1LLTVwa2Z5UEVIeWtDMXdJYnN2czdqSVRXaFlfZF9BVDVDelQwamMyWGk3QVdMZHN5SUZ1ZkJ5Y2hZd2lEaV9DZ1BmTmEtVUVaU01ibzAyNEZlUnhPS0ttUlZUZ0NfOC15VUQzMUtFelBraFRjSmgxU0thY3BoakRa?oc=5",
+      "collector": "Google News RSS",
+      "country": "Ukraine",
+      "country_code": "UA",
+      "city": null,
+      "region": "Crimea",
+      "latitude": 45.3,
+      "longitude": 34.3,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Живая Кубань"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T10:12:38+00:00",
+      "last_reported": "2026-08-31T10:12:38+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 90,
+      "ai_relevance_reason": "Operational counter-terrorism arrest, seizure/caching of bombs, and confession.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "FSB arrest of Russian couple hiding explosives for terrorist attacks in Crimea",
+      "title_variants": [
+        "FSB arrest of Russian couple hiding explosives for terrorist attacks in Crimea"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Crimea, FSB arrest"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event explicitly describes an arrest by the FSB and the creation of bomb caches in Crimea.",
+      "ai_geo_fingerprint": "8e73ff1a0d0a3028454c610c335fc20ba7e8805b75e39657dd2803e88f8516b3",
+      "ai_geo_inferred": false
+    },
     {
       "id": "0dc2eb3b7291a06b",
       "category": "Attacks",
@@ -115,7 +177,8 @@
         "Attacks",
         "Legal / Judicial",
         "Arrests",
-        "Online Radicalization / Cyberterrorism"
+        "Online Radicalization / Cyberterrorism",
+        "Weapons"
       ],
       "title": "Polish Student Charged with Planning Jihadi Attack on Christmas Market",
       "summary": "A Polish student has been formally charged with planning a jihadist terrorist attack targeting a Christmas market.",
@@ -127,7 +190,7 @@
       "collection_locale": "ES:es",
       "published": "2026-08-31T09:53:25+00:00",
       "source": "Cadena Láser",
-      "source_count": 2,
+      "source_count": 3,
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOaDJXcGpyejhDcWV5UXU1Y1pPUDc2cHhHVHJvbUxDWlZnR25Ka1pWdV9LRWNqTXZjbmxTaFFLengxOVVLRGVEUE11VFFVV0VLNVlGTGxoMGtaT0NTTFdFQUtnUHlMMnVoZTktOEJrQ19IS2thS01ENTZfbjJkWDBNX2l6WkQtQWJ2QnRDVm5ST2FMYWM5T09LelNVQlZocmlxLWJLcXdoLUdISERSQnJZV1FKMnA?oc=5",
       "collector": "Google News RSS",
       "country": "Poland",
@@ -141,7 +204,8 @@
       "acquisition_channel": "multilingual_discovery",
       "sources": [
         "Cadena Láser",
-        "Infobae"
+        "Infobae",
+        "El Debate"
       ],
       "related_articles": [
         {
@@ -152,11 +216,20 @@
           "published": "2026-08-31T09:55:48+00:00",
           "source": "Infobae",
           "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPSllWa1dtTEJibGxKVkRqX0plTXo2OERKYkc5U21aMjdYcFMteGQ5bzFPZ3FtSnRYN2ZoOTB6Tzg5N1FHVzk0cVBtUFRyMTUzOWNMS2tNdnhRS1liNTVjUlE2QXl1cDlENi1fbk5pdjA3ZFhkU0JsY2ZVWF9MSDRXNm54cEFFS2xudF8zUl9LczNDVnd0ZHktZ2h1SDdBVm5tSjJjbUtIY21MM0QzQURsRW1WUm5XTFVjTElhampmN3dNT3REUUJpMG1uczdpUEnSAeoBQVVfeXFMT3hNN1NmNjk4ZE5STXhiNHU3clI3NXd3M2h3RXlmNkY2dVNCM0tmMjhuUkZBZDZUZlBGTDBuT0szdTZMbFk1UFVIYWdpM1hEVTBRRXNvUkQxTGxTaEtZMHVfNUM3N2hiZWNaVzZBWmhud2dWVW8yMXVJMTlGQ1ZtNzhyNXFkRHZZbEtaVElpR0JqQnlrX2ZsOUVmZ2FuYm4tUE5zeHg3T2lxN01MSl9pQXA2Y1BzMDFMeUFLMFJwOU5sekNaek8xUEVxUGszTUFpYlMyYTk1TTRkNm92ZVl2cEtXQjl4UTZyWjVB?oc=5"
+        },
+        {
+          "title": "Polish student accused of planning jihadist explosive attack on Christmas market",
+          "original_title": "Acusan a un estudiante polaco de planear un atentado yihadista con explosivos en un mercadillo navideño",
+          "original_language": "es",
+          "summary": "A Polish student has been formally accused of planning a jihadist terrorist attack using explosives at a Christmas market.",
+          "published": "2026-08-31T10:09:05+00:00",
+          "source": "El Debate",
+          "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxObWRHNFh1bHZoTzFsaThqeWVGNEdTNThGRlV4TFJpTlNTZDBpZFpPNXpRVnNhTWh4S1RaSzhqRzhYcjdzRHNLNUpvcHAzWnlmXzBJNUhRUG1UNG5YbVliWDhDbl9nOTNDcV9hOFFjVVhud095OHN0VEduUDYyLVhkVDA4Y2VCbXVMUks3RXp2Wm10VXRpZEh0SGhRTWNvWXdfMG8zeWhkSWxXejBuNlBLM1lVWGRhb3lLWDVRaHVLNTZzbTVFN1FyRVNvX01kd1JOUVRPVHlycVVxZ9IB3wFBVV95cUxPZDBRdFNxVTNMZW9oZ0Yzakh5QUVKa1lGaWQzblFVLUhMREg3TlZYZjl4cEYtUGQ3M09mS00yLUpfX3ZBLVFQeXVheWRBblZYOHUxbXZkMmtvMWVrUzd6ZFEtY0FtN3FsbzRKWWNyNkwxS0I1ajh2Vm5SU3BCNDljbi1SdGo3cVRCOGQ0eGZUNUR1WjRoaVprSDM1TV8tTXk0bFVkVUkyN1pvNzV1UjNUSHFYS3E1Snp3cFVSRzRXbEN0ZWNZWkxEaUZhdmlvUWE2RUVDWmg2MVh0MVJOcWVB?oc=5"
         }
       ],
-      "article_count": 2,
+      "article_count": 3,
       "first_reported": "2026-08-31T09:53:25+00:00",
-      "last_reported": "2026-08-31T09:55:48+00:00",
+      "last_reported": "2026-08-31T10:09:05+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -183,7 +256,8 @@
       "ai_geo_inferred": true,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "title_plus_anchor"
       ]
     },
     {
@@ -1204,9 +1278,9 @@
       "collection_language": "he",
       "collection_language_name": "Hebrew",
       "collection_locale": "IL:he",
-      "published": "2026-08-31T06:11:00+00:00",
+      "published": "2026-08-31T06:03:16+00:00",
       "source": "כיפה",
-      "source_count": 5,
+      "source_count": 9,
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNSlhiRnl0WmI5Zjk2MmlzTDBoeE13VExpTEs1b3dfWElGU0RaTGxPRG9IczBFcE0xaDdWdGgzbGg2d2xhZnphb0lGanRFM0t4aWdjWjJSdUtOU2pOWHdZZEtQNzkxWDluXzROTnJMNXFUdF9SSGkyY1hFRXNERHp1czNVRW80WlJ2M2d2UDh4dENUSk9mWnJybGZFNldGdnc2Wmdv0gGrAUFVX3lxTE41SThmMmZ5SDF5TF81YVEzaUJObzctUFp0djhhb3FyT2VGNU5oNTFtbkhPZUFUQjN6elR3NExvSUtQVmRoZ2QxUGV3Nm5WOVBlWnpOaGk1dGlmWXFKRE52NF9yRlpQZ0Vwa01zaEt6cjRvc0d3T1ZEQzZjaHlIcDBNRHQ5RGg1OUlNZWFfdGViWjM0T1pEZ2VRd3UyQ2JnQXRaSzNaQlJ5NFRuMA?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -1223,7 +1297,11 @@
         "כיכר השבת",
         "היום",
         "ynet.co.il",
-        "חדשות 04"
+        "חדשות 04",
+        "NEWSru.co.il",
+        "בחדרי חרדים",
+        "מעריב",
+        "ynet"
       ],
       "related_articles": [
         {
@@ -1234,10 +1312,19 @@
           "published": "2026-08-31T06:18:40+00:00",
           "source": "כיכר השבת",
           "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNcUdRU3c2eklJTGFaUnJqVFNKV0ROMTQtM0s5N1FBWExJQjlPUmktVWx1N2ZZRzFPUk41V3E3QTBGTVdHYUg5dU9pN0I5clRrV3c0MVdXdUx6ejVQbncwbmRiejJJLTM0YnFacmQ4c01DWG1ZUURVcUM2bHVWUVlNNXh5MA?oc=5"
+        },
+        {
+          "title": "Former 'Lion's Den' fighter detained in Nablus",
+          "original_title": "В Шхеме задержан бывший боевик группировки \"Львиное логово\" - NEWSru.co.il",
+          "original_language": "ru",
+          "summary": "Israeli or security forces detained a former militant of the 'Lion's Den' group in Nablus (Shchem).",
+          "published": "2026-08-31T06:03:16+00:00",
+          "source": "NEWSru.co.il",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBRZ25wLXY1eTRISUowbHlURTYwYmtkMEk5OHp2Q2prMzVGdW94SDNiTUxLS09nb3UyQXBvS3NKYnhGelNrckJlaEZ2YXB3YkMyZWZDaWxwRUpxQUdwejNEOVdRUdIBakFVX3lxTE12a2w2a1o3YXBNdzlocmJENW96WC1lRVZMWHZFUWQwZ3RETGxhMmo3cmduS3JfYWhQZ1Y5OEpXem1sRjByMUsxcFluSjFibDJucDQwbnVpcDlHbnRZdHFiY0hYaGFyc2M2b1E?oc=5"
         }
       ],
-      "article_count": 2,
-      "first_reported": "2026-08-31T06:11:00+00:00",
+      "article_count": 3,
+      "first_reported": "2026-08-31T06:03:16+00:00",
       "last_reported": "2026-08-31T06:18:40+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -24932,7 +25019,8 @@
       "category": "Terrorist Financing",
       "categories": [
         "Terrorist Financing",
-        "Arrests"
+        "Arrests",
+        "Attacks"
       ],
       "title": "Suspected terrorist funds seized in vehicle double-wall in Israel",
       "summary": "Security forces intercepted individuals attempting to conceal millions of shekels suspected of being terrorist funds inside a double wall of their vehicle, resulting in arrests.",
@@ -24944,7 +25032,7 @@
       "collection_locale": "IL:he",
       "published": "2026-08-27T13:05:26+00:00",
       "source": "i24NEWS",
-      "source_count": 15,
+      "source_count": 17,
       "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE94VnVoSHVqSlJOejlYa1FyMVZQNzZlNHktUmtvdXZabVVSckVBQW9rRGZ3QlUyUEw4eUREXzBmNWIzYU1QTkJSQ2h0Ym14cUpwcW92VTlQcnVaQmtPVzRnbnpFTVppWWtNQ3c?oc=5",
       "collector": "Google News RSS",
       "country": "Israel",
@@ -24973,7 +25061,9 @@
         "ynet.co.il",
         "Интерфакс",
         "الجزيرة نت",
-        "RZN.info"
+        "RZN.info",
+        "Aurora Israel",
+        "El Mundo"
       ],
       "related_articles": [
         {
@@ -35122,7 +35212,7 @@
           "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxPS01ROFlPVjlmaDM0UUU1QTgycDJaM05XUHN5YnBWRlFkbmFuTGQwTlJhRzJMM2hQZUowTVlHT0ppSkU4T2Ntd2R0Q2M0aHlXSkxGdDVSUEMwTjhwNGxrQVpEVUxId2RIeGZJSUhQSlNHaWdBWkJFNVk0RGh0WC1yRTU3NGc3bF9FZUtJVF9udU5Hd1BsZHpVa2I1cl9aVW9YMENFYkRnUkhfQXlDMHJheTB2M25RdU9WRzZtdTJBMVJxc2VpYUhrSV9lSjhrNjdHT1o0QzhiZnhaY3hrVEZQenZXNEV0RGZBR3NCZGlvSFRXRnR1U2JFSTR0MF9zRVFlbVIw?oc=5"
         }
       ],
-      "article_count": 38,
+      "article_count": 39,
       "first_reported": "2026-08-24T17:25:00+00:00",
       "last_reported": "2026-08-28T17:17:32+00:00",
       "dedup_confidence": 1.0,
@@ -111355,19 +111445,19 @@
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
     "cached_events": 1571,
-    "ai_processed_this_run": 0,
-    "ai_pending_at_start": 0,
+    "ai_processed_this_run": 1,
+    "ai_pending_at_start": 1,
     "city": 691,
-    "region": 320,
+    "region": 321,
     "country_capital": 550,
     "unlocated": 10,
-    "mapped_total": 1561,
-    "high_confidence": 1417,
+    "mapped_total": 1562,
+    "high_confidence": 1418,
     "medium_confidence": 149,
     "low_confidence": 5,
     "methods": {
+      "ai_region_coordinates": 321,
       "ai_country_capital": 550,
-      "ai_region_coordinates": 320,
       "ai_city_geonames": 669,
       "ai_city_coordinates": 22,
       "ai_unlocated": 10
