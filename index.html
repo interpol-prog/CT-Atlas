@@ -2316,6 +2316,221 @@ body::before {
     }
 }
 
+
+/* ============================================================
+   COMPACT TIME PERIOD SEGMENTED CONTROL
+   ============================================================ */
+
+.time-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 0 !important;
+    margin-bottom: 13px !important;
+    overflow: hidden;
+    border: 1px solid #294353;
+    border-radius: 3px;
+    background: #07131c;
+}
+
+.time-button {
+    position: relative;
+    min-width: 0;
+    min-height: 45px;
+    padding: 6px 2px 5px !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    border: 0 !important;
+    border-right: 1px solid rgba(101, 139, 162, .18) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #829aaa !important;
+    font-size: 8.5px !important;
+    font-weight: 700;
+    letter-spacing: .06em;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: none !important;
+}
+
+.time-button:last-child {
+    border-right: 0 !important;
+}
+
+.time-button:hover {
+    background: rgba(31, 67, 88, .24) !important;
+    color: #d8e7ef !important;
+}
+
+.time-button.active {
+    background: rgba(25, 62, 84, .42) !important;
+    color: #e9f5fb !important;
+}
+
+.time-button.active::after {
+    content: "";
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 0;
+    height: 2px;
+    background: #3ea5d4;
+    box-shadow: 0 0 6px rgba(62, 165, 212, .36);
+}
+
+.time-count {
+    min-width: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #607b8d !important;
+    font-size: 8px !important;
+    font-weight: 650 !important;
+    line-height: 1 !important;
+}
+
+.time-button.active .time-count {
+    color: #9fc9df !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+/* Keep map-layer controls unchanged as two-column buttons. */
+.layer-buttons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 5px !important;
+}
+
+
+/* ============================================================
+   COMPACT TIME PERIOD + SLIM 30-DAY ACTIVITY STRIP
+   ============================================================ */
+
+.time-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 0 !important;
+    margin-bottom: 11px !important;
+    overflow: hidden;
+    border: 1px solid #294353;
+    border-radius: 3px;
+    background: #07131c;
+}
+
+.time-button {
+    position: relative;
+    min-width: 0;
+    min-height: 40px !important;
+    padding: 5px 2px 4px !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    border: 0 !important;
+    border-right: 1px solid rgba(101, 139, 162, .18) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #829aaa !important;
+    font-size: 8.5px !important;
+    font-weight: 700;
+    letter-spacing: .05em;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: none !important;
+}
+
+.time-button:last-child {
+    border-right: 0 !important;
+}
+
+.time-button:hover {
+    background: rgba(31, 67, 88, .24) !important;
+    color: #d8e7ef !important;
+}
+
+.time-button.active {
+    background: rgba(25, 62, 84, .42) !important;
+    color: #e9f5fb !important;
+}
+
+.time-button.active::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    right: 7px;
+    bottom: 0;
+    height: 2px;
+    background: #3ea5d4;
+    box-shadow: 0 0 5px rgba(62, 165, 212, .34);
+}
+
+.time-count {
+    min-width: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #607b8d !important;
+    font-size: 7.5px !important;
+    font-weight: 650 !important;
+    line-height: 1 !important;
+}
+
+.time-button.active .time-count {
+    color: #9fc9df !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+/* Keep operational/map buttons as 2 columns. */
+.layer-buttons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 5px !important;
+}
+
+/* Slimmer lower activity timeline — preserves data, returns map space. */
+#timelineDock {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 10px !important;
+    height: 70px !important;
+    padding: 6px 9px 5px !important;
+}
+
+#timelineHeader {
+    margin-bottom: 3px !important;
+    font-size: 8px !important;
+}
+
+#timelineHeader strong {
+    font-size: 8px !important;
+}
+
+#timelineBars {
+    height: 38px !important;
+    gap: 2px !important;
+    padding-top: 2px !important;
+}
+
+.timeline-bar {
+    min-height: 1px !important;
+}
+
+#timelineAxis {
+    margin-top: 2px !important;
+    font-size: 7px !important;
+}
+
 </style>
 
 </head>
@@ -2530,7 +2745,7 @@ Time period
     class="time-button"
     data-days="1"
 >
-24 HOURS
+24H
 </button>
 
 
@@ -2538,7 +2753,7 @@ Time period
     class="time-button"
     data-days="7"
 >
-7 DAYS
+7D
 </button>
 
 
@@ -2546,7 +2761,7 @@ Time period
     class="time-button"
     data-days="30"
 >
-30 DAYS
+30D
 </button>
 
 
@@ -2554,7 +2769,7 @@ Time period
     class="time-button"
     data-days="90"
 >
-90 DAYS
+90D
 </button>
 
 
@@ -2562,7 +2777,7 @@ Time period
     class="time-button active"
     data-days="180"
 >
-6 MONTHS
+6M
 </button>
 
 
@@ -8013,7 +8228,7 @@ function updateCommandCenterPanels() {
                                 /
                                 maxCount
                                 *
-                                58
+                                34
                             )
                         );
 
