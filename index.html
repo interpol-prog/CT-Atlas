@@ -2684,6 +2684,224 @@ body::before {
     line-height: 1.05 !important;
 }
 
+
+/* ============================================================
+   V11.2 — EXPANDED, FULLY READABLE 24H SITUATION BRIEF
+   ============================================================ */
+
+/* Let the header adapt to the actual brief length instead of clipping it. */
+html,
+body {
+    height: 100% !important;
+}
+
+body {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+#header {
+    flex: 0 0 auto !important;
+    width: 100%;
+    height: auto !important;
+    min-height: 92px !important;
+    box-sizing: border-box;
+    padding: 8px 14px !important;
+    gap: 10px !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+}
+
+/* Keep the title prominent, but stop it consuming unnecessary horizontal space. */
+#brand {
+    flex: 0 0 300px !important;
+    min-width: 0 !important;
+    gap: 10px !important;
+    align-items: center !important;
+}
+
+#logo {
+    height: 44px !important;
+}
+
+#title {
+    min-width: 0 !important;
+}
+
+#title h1 {
+    font-size: 18px !important;
+    line-height: 1.12 !important;
+    letter-spacing: .25px !important;
+    white-space: normal !important;
+}
+
+#title div {
+    margin-top: 4px !important;
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+    letter-spacing: .07em !important;
+}
+
+/* Compact update information while keeping it clearly readable. */
+#updated {
+    flex: 0 0 108px !important;
+    min-width: 108px !important;
+    max-width: 108px !important;
+    box-sizing: border-box;
+    padding: 7px 0 0 10px !important;
+    border-left: 1px solid var(--cc-border-soft) !important;
+    text-align: left !important;
+    font-size: 9px !important;
+    line-height: 1.35 !important;
+}
+
+#lastUpdated {
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+}
+
+/* Give the intelligence summary virtually all remaining header width. */
+#headerSituationBrief {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 72px !important;
+    margin: 0 !important;
+    padding: 8px 11px 9px !important;
+    box-sizing: border-box;
+    overflow: visible !important;
+    background: rgba(7, 20, 30, .68) !important;
+}
+
+#headerSituationTopline {
+    margin-bottom: 6px !important;
+    gap: 8px !important;
+    font-size: 8.5px !important;
+    line-height: 1 !important;
+}
+
+/* No line clamp, no ellipsis, no hidden text. */
+#headerSituationText {
+    display: block !important;
+    overflow: visible !important;
+    max-height: none !important;
+    -webkit-line-clamp: unset !important;
+    -webkit-box-orient: initial !important;
+    color: #d3e0e7 !important;
+    font-size: 11px !important;
+    line-height: 1.38 !important;
+    letter-spacing: .005em !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Keep Key Developments intentionally small. */
+#keyDevelopmentsButton {
+    flex: 0 0 auto !important;
+    padding: 4px 7px !important;
+    font-size: 7px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+/* Compact the analytical-product label on the far right. */
+#commandMeta {
+    flex: 0 0 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+    gap: 0 !important;
+    align-items: center !important;
+}
+
+#classificationBlock {
+    min-width: 0 !important;
+    padding-left: 10px !important;
+    font-size: 8px !important;
+    line-height: 1.45 !important;
+    letter-spacing: .06em !important;
+}
+
+/* The map automatically takes whatever height remains below the readable header. */
+#main {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+/* Preserve the brief on narrower desktop windows rather than hiding it. */
+@media (max-width: 1250px) {
+    #brand {
+        flex-basis: 250px !important;
+    }
+
+    #title h1 {
+        font-size: 17px !important;
+    }
+
+    #updated {
+        flex-basis: 96px !important;
+        min-width: 96px !important;
+        max-width: 96px !important;
+    }
+
+    #commandMeta {
+        flex-basis: 120px !important;
+        min-width: 120px !important;
+        max-width: 120px !important;
+    }
+
+    #classificationBlock {
+        font-size: 7.5px !important;
+    }
+}
+
+@media (max-width: 1000px) {
+    #headerSituationBrief {
+        display: block !important;
+    }
+
+    #brand {
+        flex-basis: 220px !important;
+    }
+
+    #title div {
+        display: none !important;
+    }
+
+    #commandMeta {
+        display: none !important;
+    }
+}
+
+@media (max-width: 820px) {
+    #updated {
+        display: none !important;
+    }
+
+    #header {
+        min-height: 96px !important;
+    }
+
+    #brand {
+        flex-basis: 180px !important;
+    }
+
+    #logo {
+        height: 38px !important;
+    }
+
+    #title h1 {
+        font-size: 15px !important;
+    }
+
+    #headerSituationText {
+        font-size: 10px !important;
+    }
+}
+
 </style>
 
 </head>
