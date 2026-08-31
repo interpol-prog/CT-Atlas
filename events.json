@@ -21,7 +21,7 @@
   "collector": "Google News RSS V9 multilingual + Gemini selection/translation",
   "relevance_filter": "Deterministic CT candidate filter + Gemini semantic final selection",
   "trend_summary": {
-    "overview": "Recent counter-terrorism operations include Nigerian military forces neutralizing 27 ISWAP terrorists in Borno and Sokoto states, Israeli security forces intercepting 1.4 million shekels in terrorist financing hidden inside a vehicle in Jerusalem, and Russian FSB operatives detaining a resident in Maykop preparing an attack against a Ministry of Defense facility.",
+    "overview": "Recent developments include a foiled multi-state ISWAP attack in Borno and Sokoto, Nigeria resulting in 27 neutralized terrorists, the interception of 1.4 million shekels in terrorist financing hidden inside a vehicle in Jerusalem, Israel, and the arrest of a 16-year-old in Como, Italy for possessing bomb-making tutorials and spreading ISIS propaganda.",
     "developments": [
       {
         "event_id": "53148bd12e1f4e8c",
@@ -35,23 +35,23 @@
         "event_id": "026799e0715c9b14",
         "severity": "HIGH",
         "category": "Terrorist Financing",
-        "headline": "Terrorist financing: 1.4 million shekels seized in a car at a checkpoint entering Jerusalem",
-        "detail": "Security forces seized 1.4 million shekels intended for terrorist financing concealed inside a vehicle at a checkpoint near Jerusalem, resulting in arrests.",
+        "headline": "Terrorist financing funds seized in Jerusalem checkpoint",
+        "detail": "Security forces seized 1.4 million shekels intended for terrorist financing that was concealed inside a vehicle at a checkpoint entering Jerusalem.",
         "location": "Israel, Jerusalem"
       },
       {
-        "event_id": "a7c1755336dc9916",
+        "event_id": "f77ad085e8d2bdbb",
         "severity": "HIGH",
         "category": "Arrests",
-        "headline": "FSB detains Maykop resident for preparing terrorist attack at Defense Ministry facility",
-        "detail": "Russia's FSB detained a resident of Maykop who was allegedly preparing a terrorist attack targeting a Ministry of Defense facility.",
-        "location": "Russia, Maykop"
+        "headline": "16-year-old arrested in Como for ISIS propaganda and bomb-making tutorials",
+        "detail": "Italian authorities arrested a 16-year-old in Como who was actively spreading ISIS propaganda and possessed instructional guides for building explosive devices.",
+        "location": "Italy, Como"
       }
     ],
     "status": "ok",
     "model": "gemini-3.5-flash-lite",
     "window_hours": 24,
-    "generated_at": "2026-08-31T10:24:55.178185+00:00",
+    "generated_at": "2026-08-31T10:55:03.197190+00:00",
     "candidate_events": 80
   },
   "ai_article_selection": {
@@ -105,69 +105,190 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-08-31T10:24:57.216000+00:00",
-  "number_of_events": 1572,
+  "last_updated": "2026-08-31T10:55:05.379970+00:00",
+  "number_of_events": 1577,
   "events": [
     {
       "id": "9ba4c9423cc6ad90",
       "category": "Arrests",
       "categories": [
         "Arrests",
-        "Weapons",
         "Attacks"
       ],
-      "title": "Russian couple created bomb caches in Crimea for terrorist attacks and confessed after FSB arrest",
-      "summary": "FSB officers arrested a Russian couple in Crimea who were preparing terrorist attacks by hiding explosive caches, and they subsequently confessed.",
-      "original_title": "Пара россиян делала тайники с бомбами в Крыму для подготовки терактов. В содеянном пришлось сознаться, когда их схватили сотрудники ФСБ",
-      "original_summary": "Пара россиян делала тайники с бомбами в Крыму для подготовки терактов. В содеянном пришлось сознаться, когда их схватили сотрудники ФСБ Живая Кубань",
+      "title": "Arson act: Young Dzerzhinsk resident detained for terrorism",
+      "summary": "Law enforcement in Dzerzhinsk detained a young resident on terrorism-related charges following an arson attack.",
+      "original_title": "Акт с поджогом: за терроризм задержан молодой дзержинец",
+      "original_summary": "Акт с поджогом: за терроризм задержан молодой дзержинец Дзержинское Телевидение",
       "original_language": "ru",
       "collection_language": "ru",
       "collection_language_name": "Russian",
       "collection_locale": "RU:ru",
-      "published": "2026-08-31T10:12:38+00:00",
-      "source": "Живая Кубань",
+      "published": "2026-08-31T10:40:49+00:00",
+      "source": "Дзержинское Телевидение",
       "source_count": 1,
-      "url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxNZVRra0pYRlJfOW5TR2N1b2pvQWswUk5WYlp0SHB3M3pNZFM4RnAzdFh3TFNJSURoLUFxTGNTUGctQVRyWmpIOUEyLU1CRjk0M3VFb3hwWnphcjlxN0swQ19YTHNrbE5BVWtBdWxqQUJzWFViV2Y3ZGxGcHBPYW1mWk9oR25GRVVxMWY0elpmb2lROC1LLTVwa2Z5UEVIeWtDMXdJYnN2czdqSVRXaFlfZF9BVDVDelQwamMyWGk3QVdMZHN5SUZ1ZkJ5Y2hZd2lEaV9DZ1BmTmEtVUVaU01ibzAyNEZlUnhPS0ttUlZUZ0NfOC15VUQzMUtFelBraFRjSmgxU0thY3BoakRa?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPblNIaVVmdnpvYTBFOTM5Q1hWYTFSYkFxTlktSkNlNTJ2WlRYYXFlSVhnVGJNVjZXRmhvMnAtVnUxSFJ4blc0T2RTc2ZWcFlxeFBUUHM5aUVyUHVtMjZFTVBraWU4c2wzdWc0MWVyeVNiYV9DSGFocml0aDU4OEZ2YVFZQQ?oc=5",
       "collector": "Google News RSS",
-      "country": "Ukraine",
-      "country_code": "UA",
-      "city": null,
-      "region": "Crimea",
-      "latitude": 45.3,
-      "longitude": 34.3,
-      "location_precision": "region",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": "Dzerzhinsk",
+      "region": null,
+      "latitude": 56.24422,
+      "longitude": 43.45543,
+      "location_precision": "city",
       "location_confidence": "high",
       "acquisition_channel": "multilingual_discovery",
       "sources": [
-        "Живая Кубань"
+        "Дзержинское Телевидение"
       ],
       "related_articles": [],
       "article_count": 1,
-      "first_reported": "2026-08-31T10:12:38+00:00",
-      "last_reported": "2026-08-31T10:12:38+00:00",
+      "first_reported": "2026-08-31T10:40:49+00:00",
+      "last_reported": "2026-08-31T10:40:49+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 90,
-      "ai_relevance_reason": "Operational counter-terrorism arrest, seizure/caching of bombs, and confession.",
+      "ai_relevance_score": 80,
+      "ai_relevance_reason": "Direct counter-terrorism arrest for an arson attack.",
       "ai_current_ct_event": true,
       "ai_selected": true,
       "translated_to_english": true,
-      "ai_canonical_event": "FSB arrest of Russian couple hiding explosives for terrorist attacks in Crimea",
+      "ai_canonical_event": "detention of resident for terrorism and arson in Dzerzhinsk",
       "title_variants": [
-        "FSB arrest of Russian couple hiding explosives for terrorist attacks in Crimea"
+        "detention of resident for terrorism and arson in Dzerzhinsk"
       ],
       "location_confidence_score": 0.9,
-      "location_method": "ai_region_coordinates",
+      "location_method": "ai_city_geonames",
       "location_evidence": [
-        "Crimea, FSB arrest"
+        "Law enforcement in Dzerzhinsk detained a young resident on terrorism-related charges following an arson attack."
       ],
       "excluded_from_map": false,
       "ai_geo_complete": true,
       "ai_geo_version": "gemini-ai-first-v5-resilient",
       "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "The event explicitly describes an arrest by the FSB and the creation of bomb caches in Crimea.",
-      "ai_geo_fingerprint": "8e73ff1a0d0a3028454c610c335fc20ba7e8805b75e39657dd2803e88f8516b3",
+      "ai_geo_reason": "The event explicitly took place in Dzerzhinsk, Russia, as reported by local media.",
+      "ai_geo_fingerprint": "df462e314c9f4484e2f5f0bfda2fb709f986a9167bc14157789efc5862f731cd",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "1fdabaa04a4065e6",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Weapons"
+      ],
+      "title": "Monaco attack: Vadim Ermolaev implicates a Ukrainian intelligence lieutenant-colonel and mentions a 'very rare' liquid explosive",
+      "summary": "In connection with an attack in Monaco, Vadim Ermolaev has accused a Ukrainian intelligence officer and referenced the use of a rare liquid explosive.",
+      "original_title": "Attentat de Monaco: Vadim Ermolaev met en cause un lieutenant-colonel du renseignement ukrainien et évoque un explosif liquide «très rare» – Monde",
+      "original_summary": "Attentat de Monaco: Vadim Ermolaev met en cause un lieutenant-colonel du renseignement ukrainien et évoque un explosif liquide «très rare» – Monde ENTREVUE.FR",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-31T10:34:59+00:00",
+      "source": "ENTREVUE.FR",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxQMC1rU2Zja2cyYWxNWUppQ1VnTGJXVkM2Z3hOenlQcnFldUxNNVB6bVJ1RmwzS1dic21MOEVTc2Z3RWRQSHcwY2Q4V1NNLTgwQ2dQWDVtTXhZN3ltVVI0RVlyR01uUmdKTFFJRU5DNlFRRUpmUk5DYm9YdzRDRWV1cEVvbWVsWW40NTdtdm1URXA0Sm5ZV1Mtby10Wm1NRkFXMEpDMHR3VTdkbm9ER0cwS1BFY2llX1hBSW9QZ3lDZ2ZKSUlWYmhqRzBfTldaTzRFMGdIa1JYQ1dHMkotSHNWekpVbHZFMWRBV1RJa3FrNmladnh0d2c?oc=5",
+      "collector": "Google News RSS",
+      "country": "Monaco",
+      "country_code": "MC",
+      "city": "Monaco",
+      "region": null,
+      "latitude": 43.73718,
+      "longitude": 7.42145,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "ENTREVUE.FR"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T10:34:59+00:00",
+      "last_reported": "2026-08-31T10:34:59+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 80,
+      "ai_relevance_reason": "Specific operational details and accusations regarding an attack utilizing explosives.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "investigative developments and accusations involving liquid explosives in the Monaco attack",
+      "title_variants": [
+        "investigative developments and accusations involving liquid explosives in the Monaco attack"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "In connection with an attack in Monaco, Vadim Ermolaev has accused..."
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The attack explicitly occurred in Monaco.",
+      "ai_geo_fingerprint": "de74875ef9aa7b500d4cced2d63b8484d85a5e5aa624fc2b9ae64a557922a4be",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "0af7f4258597df09",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Attacks"
+      ],
+      "title": "Arrest at Bremen Central Station: 41-year-old detained for attempted murder",
+      "summary": "German police arrested a 41-year-old man at the Bremen main train station on suspicion of attempted murder.",
+      "original_title": "Festnahme am Bremer Hauptbahnhof: 41-Jähriger wegen versuchten Mordes in Haft",
+      "original_summary": "Festnahme am Bremer Hauptbahnhof: 41-Jähriger wegen versuchten Mordes in Haft OZ online",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-08-31T10:31:00+00:00",
+      "source": "OZ online",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOQklZSm9SZVNLV3BIRjNUMHdDOGtXTzhTUWN6WTNMRXpVX1d3R1pRNmpJY09DbldqSUNiVUF5VHI1ak85bGoyZDBaZjlZRW1YazBLeGtzVUZXMHdGb2Q2OWdBQzMzRkcxY1dNRFhrSG9JNk9KV3NTLXR6bnJCd3AtSUVqa3VUMm11VUx2MVdFbS1qa0YydzVlYWNWMDQ1TFBQdVd3U19IbGxNWXNFdEVoNXpHbjhnMU9adFE?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": "Bremen",
+      "region": null,
+      "latitude": 53.07582,
+      "longitude": 8.80717,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "OZ online"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T10:31:00+00:00",
+      "last_reported": "2026-08-31T10:31:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Law enforcement arrest for a violent crime/attempted murder incident at a major transport hub.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "arrest of suspect for attempted murder at Bremen Central Station",
+      "title_variants": [
+        "arrest of suspect for attempted murder at Bremen Central Station"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "German police arrested a 41-year-old man at the Bremen main train station..."
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The arrest and attack occurred at Bremen Central Station in Bremen, Germany.",
+      "ai_geo_fingerprint": "d6e299a971a0d7694be69e2d1cd20dceeea5fe0f2b760b4c20977bf17f0ec8e5",
       "ai_geo_inferred": false
     },
     {
@@ -257,8 +378,69 @@
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "very_high_title_similarity",
-        "title_plus_anchor"
+        "title_plus_anchor",
+        "same_url"
       ]
+    },
+    {
+      "id": "f87bd90a7f5f4491",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Dead woman at rave in Switzerland: Police suspect terrorist act or rampage",
+      "summary": "Swiss police are investigating the death of a woman at a rave event, examining potential hypotheses including a terrorist act or rampage.",
+      "original_title": "Tote Frau bei Rave - Schweiz: Polizei vermutet Terrorakt oder Amoklauf",
+      "original_summary": "Tote Frau bei Rave - Schweiz: Polizei vermutet Terrorakt oder Amoklauf Kronen Zeitung",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-08-31T09:48:00+00:00",
+      "source": "Kronen Zeitung",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE9yNUk2enR5ZUw4UWpNYjNua1pyZTgyS2FTWE5JTEhlZm1HSHZTSXVqZmdvZTBWMFBBb2RqWHY4dVJTQQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Switzerland",
+      "country_code": "CH",
+      "city": "Bern",
+      "region": null,
+      "latitude": 46.94809,
+      "longitude": 7.44744,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Kronen Zeitung"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T09:48:00+00:00",
+      "last_reported": "2026-08-31T09:48:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 70,
+      "ai_relevance_reason": "Active police investigation considering a potential terrorist attack or violent rampage.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "police investigation into woman's death examining possible terrorist act in Switzerland",
+      "title_variants": [
+        "police investigation into woman's death examining possible terrorist act in Switzerland"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Swiss police are investigating the death of a woman at a rave event in Switzerland..."
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The article specifies Swiss police investigating an incident in Switzerland, but does not name the exact city.",
+      "ai_geo_fingerprint": "59b34980c4dc78c8fd1a31b2345e0181380fe9444a74b148819a87c25a731901",
+      "ai_geo_inferred": true
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -1121,6 +1303,86 @@
     },
     {
       "id": "9ba4c9423cc6ad90",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Weapons",
+        "Attacks"
+      ],
+      "title": "Russian couple created bomb caches in Crimea for terrorist attacks and confessed after FSB arrest",
+      "summary": "FSB officers arrested a Russian couple in Crimea who were preparing terrorist attacks by hiding explosive caches, and they subsequently confessed.",
+      "original_title": "Пара россиян делала тайники с бомбами в Крыму для подготовки терактов. В содеянном пришлось сознаться, когда их схватили сотрудники ФСБ",
+      "original_summary": "Пара россиян делала тайники с бомбами в Крыму для подготовки терактов. В содеянном пришлось сознаться, когда их схватили сотрудники ФСБ Живая Кубань",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-08-31T06:49:17+00:00",
+      "source": "Живая Кубань",
+      "source_count": 5,
+      "url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxNZVRra0pYRlJfOW5TR2N1b2pvQWswUk5WYlp0SHB3M3pNZFM4RnAzdFh3TFNJSURoLUFxTGNTUGctQVRyWmpIOUEyLU1CRjk0M3VFb3hwWnphcjlxN0swQ19YTHNrbE5BVWtBdWxqQUJzWFViV2Y3ZGxGcHBPYW1mWk9oR25GRVVxMWY0elpmb2lROC1LLTVwa2Z5UEVIeWtDMXdJYnN2czdqSVRXaFlfZF9BVDVDelQwamMyWGk3QVdMZHN5SUZ1ZkJ5Y2hZd2lEaV9DZ1BmTmEtVUVaU01ibzAyNEZlUnhPS0ttUlZUZ0NfOC15VUQzMUtFelBraFRjSmgxU0thY3BoakRa?oc=5",
+      "collector": "Google News RSS",
+      "country": "Ukraine",
+      "country_code": "UA",
+      "city": null,
+      "region": "Crimea",
+      "latitude": 45.3,
+      "longitude": 34.3,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Живая Кубань",
+        "Рамблер",
+        "Национальная Служба Новостей",
+        "Интернет-журнал \"Чеснок\"",
+        "Readovka.news"
+      ],
+      "related_articles": [
+        {
+          "title": "Individuals preparing terrorist attacks and passing data to Kyiv detained in Crimea",
+          "original_title": "В Крыму задержаны передававшие Киеву данные о ВС России и готовившие теракты",
+          "original_language": "ru",
+          "summary": "Law enforcement detained individuals in Crimea who were allegedly gathering data on Russian armed forces and preparing terrorist attacks.",
+          "published": "2026-08-31T06:49:17+00:00",
+          "source": "Рамблер",
+          "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOYXpyQmRNZVIzcmZ1QjlNU2ZUYVhDOExiY3VraW9VNUh6MkhJWi1RMGQyNUVMOG14TW1OMlBIQkdPeDIxWDBuWmJhR2hlSXlGVDgyTThjZWg2cE1VbFd6TldqelQ5dDYzQWVwQmFJQ2tsRXJ3aHhsb0FFTWdHN0FXd2Y3cEhfUDFtQ3FnQU54blg5YzItUGdhbzdZNjlHUlNNWVlwZ1pIZnUwZkVoRWdtQTdRcHJKRWZ0RXY3VXZMd0LSAcYBQVVfeXFMUF9maDlXeFFlalNtTGp5M1FlUVVob0lOWXF3QjVtbzlIQmJwMlRsTWxFd05CeG9acWNHM0pKTTladW5jWmpGUy1xWGhuMlNmYldpREV0ZVV6OGMyU293dzF6RDNoYkxjMnpUaWJqamVPTXVzdFRJX0c2eGR5SWNqV190bmlEdlpsN2p1YUdLQVUxb3Y2SXRsbEN5R3NwVFNBRkE3eFZxRzg5YUloSzVzYmh1V0hWMUJQcDBGamR1R3RpbnRONTFn?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-31T06:49:17+00:00",
+      "last_reported": "2026-08-31T10:12:38+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 90,
+      "ai_relevance_reason": "Operational counter-terrorism arrest, seizure/caching of bombs, and confession.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "FSB arrest of Russian couple hiding explosives for terrorist attacks in Crimea",
+      "title_variants": [
+        "FSB arrest of Russian couple hiding explosives for terrorist attacks in Crimea"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Crimea, FSB arrest"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event explicitly describes an arrest by the FSB and the creation of bomb caches in Crimea.",
+      "ai_geo_fingerprint": "8e73ff1a0d0a3028454c610c335fc20ba7e8805b75e39657dd2803e88f8516b3",
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "9ba4c9423cc6ad90",
       "category": "Attacks",
       "categories": [
         "Attacks",
@@ -1280,7 +1542,7 @@
       "collection_locale": "IL:he",
       "published": "2026-08-31T06:03:16+00:00",
       "source": "כיפה",
-      "source_count": 9,
+      "source_count": 10,
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNSlhiRnl0WmI5Zjk2MmlzTDBoeE13VExpTEs1b3dfWElGU0RaTGxPRG9IczBFcE0xaDdWdGgzbGg2d2xhZnphb0lGanRFM0t4aWdjWjJSdUtOU2pOWHdZZEtQNzkxWDluXzROTnJMNXFUdF9SSGkyY1hFRXNERHp1czNVRW80WlJ2M2d2UDh4dENUSk9mWnJybGZFNldGdnc2Wmdv0gGrAUFVX3lxTE41SThmMmZ5SDF5TF81YVEzaUJObzctUFp0djhhb3FyT2VGNU5oNTFtbkhPZUFUQjN6elR3NExvSUtQVmRoZ2QxUGV3Nm5WOVBlWnpOaGk1dGlmWXFKRE52NF9yRlpQZ0Vwa01zaEt6cjRvc0d3T1ZEQzZjaHlIcDBNRHQ5RGg1OUlNZWFfdGViWjM0T1pEZ2VRd3UyQ2JnQXRaSzNaQlJ5NFRuMA?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -1301,7 +1563,8 @@
         "NEWSru.co.il",
         "בחדרי חרדים",
         "מעריב",
-        "ynet"
+        "ynet",
+        "RadioJ"
       ],
       "related_articles": [
         {
@@ -1321,9 +1584,18 @@
           "published": "2026-08-31T06:03:16+00:00",
           "source": "NEWSru.co.il",
           "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBRZ25wLXY1eTRISUowbHlURTYwYmtkMEk5OHp2Q2prMzVGdW94SDNiTUxLS09nb3UyQXBvS3NKYnhGelNrckJlaEZ2YXB3YkMyZWZDaWxwRUpxQUdwejNEOVdRUdIBakFVX3lxTE12a2w2a1o3YXBNdzlocmJENW96WC1lRVZMWHZFUWQwZ3RETGxhMmo3cmduS3JfYWhQZ1Y5OEpXem1sRjByMUsxcFluSjFibDJucDQwbnVpcDlHbnRZdHFiY0hYaGFyc2M2b1E?oc=5"
+        },
+        {
+          "title": "Attempted attacks: Wanted 'Lion's Den' terrorist captured in Nablus",
+          "original_title": "ניסה להוציא פיגועים: מחבל מבוקש מ׳גוב האריות׳ נלכד בשכם",
+          "original_language": "he",
+          "summary": "Security forces arrested a wanted terrorist from the 'Lion's Den' group in Nablus who was attempting to carry out attacks.",
+          "published": "2026-08-31T06:12:00+00:00",
+          "source": "בחדרי חרדים",
+          "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE03SC1UcUhhTTJsZXFIOF9fbkhXeGV2cWNySXNNeHJOZFRTeXhLSklleWVGM1RTNVVhOFFWN0ltM1RmZlFYRng5cmQtbw?oc=5"
         }
       ],
-      "article_count": 3,
+      "article_count": 4,
       "first_reported": "2026-08-31T06:03:16+00:00",
       "last_reported": "2026-08-31T06:18:40+00:00",
       "ai_selection_complete": true,
@@ -1881,7 +2153,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Diplomatic exchange and border security discussion between Syria and Lebanon, centered around Lebanese government response (Najib Mikati).",
       "ai_geo_fingerprint": "b8713bd4bc9a152b616a31ec57cc79ed9d87c714414d1f0421824e4a0627303b",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -4447,95 +4723,6 @@
       "dedup_methods": [
         "same_url"
       ]
-    },
-    {
-      "id": "af673c676ab50229",
-      "category": "Attacks",
-      "categories": [
-        "Attacks",
-        "Weapons"
-      ],
-      "title": "Leipzig drone attack: German government blames Russia's GRU",
-      "summary": "The German government has blamed Russia's GRU military intelligence agency for a drone attack incident in Leipzig.",
-      "original_title": "Drohnen-Anschlag Leipzig: Bundesregierung beschuldigt Russlands GRU",
-      "original_summary": "Drohnen-Anschlag Leipzig: Bundesregierung beschuldigt Russlands GRU AD HOC NEWS",
-      "original_language": "de",
-      "collection_language": "de",
-      "collection_language_name": "German",
-      "collection_locale": "DE:de",
-      "published": "2026-08-30T15:42:08+00:00",
-      "source": "AD HOC NEWS",
-      "source_count": 4,
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPd1BvaHp3V0pDc2kxWEI4bEpqN0dHTFg3bDlBel8yRmxUNlNfbE5VQ3lmcF9xUFV4MlZiSTBjYjd5X08wYWdkQnliSHhVOWl4cUVoV0RhWW4yczMzbGFGWHJEbTNrbHZhQnFjdURTMkdnczVpeVUxcnVrWXh4WTM4LVlkUXN4MU5QOGUwWTc2aWpYbVdvbFNmU2FKbUozcVBiQUthOXJ6RTJ1bnR2R2xDRm03eXJkUQ?oc=5",
-      "collector": "Google News RSS",
-      "country": "Germany",
-      "country_code": "DE",
-      "city": "Leipzig",
-      "region": null,
-      "latitude": 51.33962,
-      "longitude": 12.37129,
-      "location_precision": "city",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "AD HOC NEWS",
-        "BILD",
-        "Tagesspiegel",
-        "Watson"
-      ],
-      "related_articles": [
-        {
-          "title": "Switzerland: Germans injured in rave massacre",
-          "original_title": "Schweiz: Deutsche bei Rave-Massaker verletzt",
-          "original_language": "de",
-          "summary": "Reports indicate German nationals were among the victims injured in the rave massacre attack.",
-          "published": "2026-08-31T05:38:00+00:00",
-          "source": "BILD",
-          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPUHJQTlJjazVxNGpfMFpVNktXVkJvcmFoNFdhWW9MdXNucElqTVNZdHhIRkR4VGRSejZXSXFBNjhCSHhTMDlOTDdPUXRrelZ4bnZnMi0zSnBsTm1GeEZxal9pZ1ROMWNxYTViUkFvR051a3JoVUY4cHNLNkJvVmtpcnAxOUdnbkY5aEZhRXl1c253aVZsLVhfY2dhcmlkN2FxQWVxWXR3M2Z0VDhnVWxVa2M2eFRGNjdxSDh2MEZXd0EwUVdyd3c?oc=5"
-        },
-        {
-          "title": "Retaliation for alleged Russian attack on Leipzig airport: How can and may Germany react?",
-          "original_title": "Vergeltung für mutmaßlich russischen Anschlag auf Leipziger Flughafen Wie kann und darf Deutschland reagieren?",
-          "original_language": "de",
-          "summary": "Analysis and discussion regarding potential German responses and retaliation following an alleged Russian sabotage or attack on Leipzig airport.",
-          "published": "2026-08-31T07:27:13+00:00",
-          "source": "Tagesspiegel",
-          "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPU2VQNG5pSUcxdmZydlY3WVMwbU0xZ2Z1eDZGamVlTC1yZWRvQzN3UXBvMnRuZF9FVXJ0YlRmcG1xczNWRVBha2NBeHJlTnJBWm1sR3lWaHQydnhKdVBCU2ZSTW0zejRadm1Eazl1Tmd3RGhxY0FGc1FuZ3EyZFdBa245eTdBQkxBOTk2ekJvdHNmTjRyX01KUzZqQ1N6M2JIMkY0Z2t3RGY2dEJSbUtNVmRwNG1YQ1ZuZVV5LVlIcFZFcjZWYnFURV9USnk4WVpfaVoxVkFYQUJEZWktN1ZNdGZKNUY?oc=5"
-        }
-      ],
-      "article_count": 3,
-      "first_reported": "2026-08-30T15:42:08+00:00",
-      "last_reported": "2026-08-31T07:27:13+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 85,
-      "ai_relevance_reason": "State-level attribution of a hostile drone attack/sabotage plot involving intelligence services.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "attribution of Leipzig drone attack to Russian GRU by German government",
-      "title_variants": [
-        "attribution of Leipzig drone attack to Russian GRU by German government"
-      ],
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "entity_actor_event_signature",
-        "paraphrase_entity_context",
-        "same_url"
-      ],
-      "location_confidence_score": 0.95,
-      "location_method": "ai_city_geonames",
-      "location_evidence": [
-        "Leipzig drone attack: German government blames Russia's GRU"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Explicit mention of Leipzig where the drone attack occurred.",
-      "ai_geo_fingerprint": "dcd1c861c60d77cb1363ea744da3bdbd73b0d9bf15730db7cc6abf6b4b2d904e",
-      "ai_geo_inferred": false
     },
     {
       "id": "a7c1755336dc9916",
@@ -7272,6 +7459,66 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Shin Bet chief warns: Hamas intends to carry out attacks during the upcoming Passover holiday",
+      "summary": "The head of the Shin Bet has issued a warning that Hamas is planning terrorist attacks during the upcoming Passover holiday.",
+      "original_title": "ראש השב\"כ מזהיר: חמאס מתכוון לבצע פיגועים בחג פסח הקרוב",
+      "original_summary": "ראש השב\"כ מזהיר: חמאס מתכוון לבצע פיגועים בחג פסח הקרוב כיכר השבת",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-08-30T08:25:43+00:00",
+      "source": "כיכר השבת",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE5KVzZYMU8wMWdvbXV2V0FCR3pjN2ZXX1IwNFhqOXhfSThiMm5vWi1HZWZkYlVQdTB5V190V3RYTDMzc2libW04elk2c1hmdGRiaXVScA?oc=5",
+      "collector": "Google News RSS",
+      "country": "Israel",
+      "country_code": "IL",
+      "city": "Jerusalem",
+      "region": null,
+      "latitude": 31.76904,
+      "longitude": 35.21633,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "כיכר השבת"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T08:25:43+00:00",
+      "last_reported": "2026-08-30T08:25:43+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "High-level intelligence warning regarding planned terrorist attacks by Hamas.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Shin Bet chief warns of planned Hamas attacks during Passover",
+      "title_variants": [
+        "Shin Bet chief warns of planned Hamas attacks during Passover"
+      ],
+      "location_confidence_score": 0.85,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Shin Bet chief warns: Hamas intends to carry out attacks during the upcoming Passover holiday"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Shin Bet is the internal security agency of Israel, and threats discussed by its chief pertain to Israel.",
+      "ai_geo_fingerprint": "1e06b095effdaf17793855c63ee5e0b33fbdceaf30886f72ebd1c7a5b316ce64",
+      "ai_geo_inferred": true
     },
     {
       "id": "119852f4c5c6de07",
@@ -10647,6 +10894,111 @@
       ]
     },
     {
+      "id": "af673c676ab50229",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Weapons",
+        "Legal / Judicial",
+        "Terrorist Financing"
+      ],
+      "title": "Leipzig drone attack: German government blames Russia's GRU",
+      "summary": "The German government has blamed Russia's GRU military intelligence agency for a drone attack incident in Leipzig.",
+      "original_title": "Drohnen-Anschlag Leipzig: Bundesregierung beschuldigt Russlands GRU",
+      "original_summary": "Drohnen-Anschlag Leipzig: Bundesregierung beschuldigt Russlands GRU AD HOC NEWS",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-08-29T14:23:00+00:00",
+      "source": "AD HOC NEWS",
+      "source_count": 9,
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPd1BvaHp3V0pDc2kxWEI4bEpqN0dHTFg3bDlBel8yRmxUNlNfbE5VQ3lmcF9xUFV4MlZiSTBjYjd5X08wYWdkQnliSHhVOWl4cUVoV0RhWW4yczMzbGFGWHJEbTNrbHZhQnFjdURTMkdnczVpeVUxcnVrWXh4WTM4LVlkUXN4MU5QOGUwWTc2aWpYbVdvbFNmU2FKbUozcVBiQUthOXJ6RTJ1bnR2R2xDRm03eXJkUQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": "Leipzig",
+      "region": null,
+      "latitude": 51.33962,
+      "longitude": 12.37129,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "AD HOC NEWS",
+        "BILD",
+        "Tagesspiegel",
+        "Watson",
+        "STERN.de",
+        "DIE ZEIT",
+        "Русская служба The Moscow Times",
+        "Национальная Служба Новостей",
+        "DerWesten"
+      ],
+      "related_articles": [
+        {
+          "title": "Switzerland: Germans injured in rave massacre",
+          "original_title": "Schweiz: Deutsche bei Rave-Massaker verletzt",
+          "original_language": "de",
+          "summary": "Reports indicate German nationals were among the victims injured in the rave massacre attack.",
+          "published": "2026-08-31T05:38:00+00:00",
+          "source": "BILD",
+          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPUHJQTlJjazVxNGpfMFpVNktXVkJvcmFoNFdhWW9MdXNucElqTVNZdHhIRkR4VGRSejZXSXFBNjhCSHhTMDlOTDdPUXRrelZ4bnZnMi0zSnBsTm1GeEZxal9pZ1ROMWNxYTViUkFvR051a3JoVUY4cHNLNkJvVmtpcnAxOUdnbkY5aEZhRXl1c253aVZsLVhfY2dhcmlkN2FxQWVxWXR3M2Z0VDhnVWxVa2M2eFRGNjdxSDh2MEZXd0EwUVdyd3c?oc=5"
+        },
+        {
+          "title": "Retaliation for alleged Russian attack on Leipzig airport: How can and may Germany react?",
+          "original_title": "Vergeltung für mutmaßlich russischen Anschlag auf Leipziger Flughafen Wie kann und darf Deutschland reagieren?",
+          "original_language": "de",
+          "summary": "Analysis and discussion regarding potential German responses and retaliation following an alleged Russian sabotage or attack on Leipzig airport.",
+          "published": "2026-08-31T07:27:13+00:00",
+          "source": "Tagesspiegel",
+          "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPU2VQNG5pSUcxdmZydlY3WVMwbU0xZ2Z1eDZGamVlTC1yZWRvQzN3UXBvMnRuZF9FVXJ0YlRmcG1xczNWRVBha2NBeHJlTnJBWm1sR3lWaHQydnhKdVBCU2ZSTW0zejRadm1Eazl1Tmd3RGhxY0FGc1FuZ3EyZFdBa245eTdBQkxBOTk2ekJvdHNmTjRyX01KUzZqQ1N6M2JIMkY0Z2t3RGY2dEJSbUtNVmRwNG1YQ1ZuZVV5LVlIcFZFcjZWYnFURV9USnk4WVpfaVoxVkFYQUJEZWktN1ZNdGZKNUY?oc=5"
+        },
+        {
+          "title": "Reports: Berlin holds Russia responsible for drone attack in Leipzig",
+          "original_title": "Berichte: Berlin macht Russland für Drohnen-Anschlag in Leipzig verantwortlich",
+          "original_language": "de",
+          "summary": "According to reports, the German government attributes a recent drone attack in Leipzig to Russia.",
+          "published": "2026-08-29T14:23:00+00:00",
+          "source": "STERN.de",
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNbmpoUmZZSFVqS0pUV2FwR3VUbFBrZjliMmZPRG9BcnJBblhBVENCVDE1SGNxSHRUVm5qY2otVWlKWTVzRmh6V3dRdHlFUXA4RlRCM2Iwcy1zSU1mLWM3REFKSkJwbWkxNVpncHA4X2psU1VtaHRLbEtVWGtJalBPVExYeHhTQUh4YlV1MVpsaUpoejVPTjhsOVNENG5ZdmY1UEtYODF2a296MWxuSTdYTFptZkRuTWQyY2F3Ug?oc=5"
+        }
+      ],
+      "article_count": 4,
+      "first_reported": "2026-08-29T14:23:00+00:00",
+      "last_reported": "2026-08-31T07:27:13+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "State-level attribution of a hostile drone attack/sabotage plot involving intelligence services.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "attribution of Leipzig drone attack to Russian GRU by German government",
+      "title_variants": [
+        "attribution of Leipzig drone attack to Russian GRU by German government"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "entity_actor_event_signature",
+        "paraphrase_entity_context",
+        "same_url"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Leipzig drone attack: German government blames Russia's GRU"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Explicit mention of Leipzig where the drone attack occurred.",
+      "ai_geo_fingerprint": "dcd1c861c60d77cb1363ea744da3bdbd73b0d9bf15730db7cc6abf6b4b2d904e",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "0df0451062b32344",
       "category": "Attacks",
       "categories": [
@@ -11300,7 +11652,7 @@
       "collection_locale": "DE:de",
       "published": "2026-08-29T12:26:01+00:00",
       "source": "Euronews",
-      "source_count": 10,
+      "source_count": 11,
       "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNLTJxWU1BS0dIUllxTEtDYmxpZWthWlU2WFZ2eE5LLWlSU0hCMktqdjNBb1V2VnpJM0VkTkEwN3RJWUNEbmF1TFJoQVI3bnBCYXhaM1VURE00VVkyeU5RZUpGdGI1Q0UtSHJGajZ5Si1pNjJ2aW9GUXlpaDBvSXU5QnBaWFNWcXhJU2RVM24yVmxLU3U2REtiSGVn?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -11322,7 +11674,8 @@
         "العربية",
         "Euronews.com",
         "AD HOC NEWS",
-        "BILD"
+        "BILD",
+        "Frankfurter Rundschau"
       ],
       "related_articles": [
         {
@@ -13018,7 +13371,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The event concerns the activities of the Assad regime (Syria) and ISIS, placing the geographic focus of the allegations inside Syria.",
       "ai_geo_fingerprint": "19048d8a4e1998bd0ef5584b46c017d0c6374476c40b8c1bac5b9d03767fd2d6",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "22c665cb20605b3c",
@@ -15094,7 +15451,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-08-28T16:29:42+00:00",
       "source": "kn51.ru",
-      "source_count": 6,
+      "source_count": 7,
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNUGZMb2owSHl2OTZtazJTNmJZdno2akpZNllmbmVaQ1FjMnRoWUlUNG45MzRsaHQ5WWdYVkRwV3Ffd01SSE9jeGxfbnhFLVJ1WkhiODJJZGdtaDZJcUxPQV9TcldzWnBoaU1vemNMU05ja1YycExtQldRWUhNWTQ5bDlDY1dKWkU3OVh5cDh3V2pvS3daYkI4dHlSSV9JSGV1?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -15112,7 +15469,8 @@
         "VladNews",
         "Вестник Сургутского района",
         "Интерфакс",
-        "הארץ"
+        "הארץ",
+        "Новгородские ведомости"
       ],
       "related_articles": [
         {
@@ -18879,7 +19237,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The source 'כיכר השבת' is a Hebrew-language news outlet covering Israeli legal proceedings and security events.",
       "ai_geo_fingerprint": "e778932edff8b14c592bbce9c9f5297e7d30477480d66a3187b6fd4a0592d716",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "029e1d5c846574ce",
@@ -35212,7 +35574,7 @@
           "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxPS01ROFlPVjlmaDM0UUU1QTgycDJaM05XUHN5YnBWRlFkbmFuTGQwTlJhRzJMM2hQZUowTVlHT0ppSkU4T2Ntd2R0Q2M0aHlXSkxGdDVSUEMwTjhwNGxrQVpEVUxId2RIeGZJSUhQSlNHaWdBWkJFNVk0RGh0WC1yRTU3NGc3bF9FZUtJVF9udU5Hd1BsZHpVa2I1cl9aVW9YMENFYkRnUkhfQXlDMHJheTB2M25RdU9WRzZtdTJBMVJxc2VpYUhrSV9lSjhrNjdHT1o0QzhiZnhaY3hrVEZQenZXNEV0RGZBR3NCZGlvSFRXRnR1U2JFSTR0MF9zRVFlbVIw?oc=5"
         }
       ],
-      "article_count": 39,
+      "article_count": 40,
       "first_reported": "2026-08-24T17:25:00+00:00",
       "last_reported": "2026-08-28T17:17:32+00:00",
       "dedup_confidence": 1.0,
@@ -111444,21 +111806,21 @@
     "primary_model": "gemini-3.5-flash-lite",
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
-    "cached_events": 1571,
-    "ai_processed_this_run": 1,
-    "ai_pending_at_start": 1,
-    "city": 691,
+    "cached_events": 1572,
+    "ai_processed_this_run": 5,
+    "ai_pending_at_start": 5,
+    "city": 694,
     "region": 321,
-    "country_capital": 550,
+    "country_capital": 552,
     "unlocated": 10,
-    "mapped_total": 1562,
-    "high_confidence": 1418,
+    "mapped_total": 1567,
+    "high_confidence": 1423,
     "medium_confidence": 149,
     "low_confidence": 5,
     "methods": {
+      "ai_city_geonames": 672,
+      "ai_country_capital": 552,
       "ai_region_coordinates": 321,
-      "ai_country_capital": 550,
-      "ai_city_geonames": 669,
       "ai_city_coordinates": 22,
       "ai_unlocated": 10
     }
