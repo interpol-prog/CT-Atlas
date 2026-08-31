@@ -91124,7 +91124,154 @@
         "canonical_event": "Charged with planning terrorist attack on Christmas market by student in Poland",
         "reason": "Direct counter-terrorism legal development involving a charged suspect planning a jihadist terrorist attack."
       }
+    },
+    "564781f5e4ace876901350ad84e2e98b71abb27ce11d740f00a42eaa7e2adc79": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:09:16.299094+00:00",
+      "result": {
+        "event_id": "43fa0cc1af5509d1",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Luigi D'Arienzo, composer, conductor and pianist",
+        "english_summary": "A brief biographical or cultural mention of Luigi D'Arienzo, composer, conductor and pianist.",
+        "canonical_event": "cultural biographical notice of Luigi D'Arienzo",
+        "reason": "This is an arts and culture news article with no relationship to counter-terrorism."
+      }
+    },
+    "426ef0f588875482d654b1ad90a9850201d0b784b19d207f025a345f1e8e5765": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:09:16.299125+00:00",
+      "result": {
+        "event_id": "4ede7386f35cf02b",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "UEFA Champions League 2026-2027 Schedule",
+        "english_summary": "Schedule of matches for the 2026-2027 UEFA Champions League, featuring Barcelona and Real Madrid.",
+        "canonical_event": "sports schedule for UEFA Champions League 2026-2027",
+        "reason": "This is a sports scheduling article with no counter-terrorism relevance."
+      }
+    },
+    "fbb3b49d2379835db937525fe280d4b65ceb5beb7aa180e10abe33f40a761c0f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:09:16.299130+00:00",
+      "result": {
+        "event_id": "13e22fc1d49673d0",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "ru",
+        "english_title": "9/11 Terrorist Attacks Trial Scheduled for 2028",
+        "english_summary": "A judge has ruled that the trial concerning the September 11 terrorist attacks will take place in 2028.",
+        "canonical_event": "judicial scheduling of 9/11 trial for 2028",
+        "reason": "This refers to the historical 9/11 attacks and a distant legal scheduling update, lacking a current operational CT event focus."
+      }
+    },
+    "2aa9de1be5b59b4720a0fe4c453ee851a3e1da96c4fdb41c2981ee4e55ac3b2c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:09:16.299133+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1110",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "The Strike in Lark and Trump 'Virtually' Destroys Khark",
+        "english_summary": "An opinion or geopolitical commentary piece regarding military strikes and virtual simulations.",
+        "canonical_event": "geopolitical commentary on military strikes",
+        "reason": "This is general geopolitical commentary rather than a concrete current counter-terrorism event."
+      }
+    },
+    "a777629f33f27b50bceda706e2e0e020ac61678113da7b9f03f57d55933c20b3": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:09:16.299135+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1151",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "YAMAM Arrests Wanted 'Lions' Den' Terrorist in Nablus",
+        "english_summary": "Overnight in Nablus, Israeli counter-terrorism forces (YAMAM) arrested a wanted terrorist from the 'Lions' Den' group who was advancing terror attacks against Israel.",
+        "canonical_event": "arrest of wanted Lions Den terrorist by YAMAM in Nablus",
+        "reason": "This is a direct, current counter-terrorism raid and arrest of a named terrorist cell member actively planning attacks."
+      }
+    },
+    "24fc9949764327947efaf388355ec4fa5d84e387c8c7a966a3d4ef77b14f2440": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:09:16.299139+00:00",
+      "result": {
+        "event_id": "82e267c894b9d3c2",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Seewen SZ: Arrest Following Vehicle Thefts",
+        "english_summary": "Police in Seewen made an arrest following a series of thefts from vehicles.",
+        "canonical_event": "arrest for petty theft from vehicles in Seewen",
+        "reason": "This is an ordinary property crime with no nexus to terrorism."
+      }
+    },
+    "e72992c5301fe134a57390621311f87c0be343fdb3a6a285f68528b4b875d048": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:09:16.299143+00:00",
+      "result": {
+        "event_id": "0dc2eb3b7291a06b",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks",
+          "Online Radicalization / Cyberterrorism"
+        ],
+        "original_language": "es",
+        "english_title": "Polish Student Charged with Planning Jihadi Christmas Market Attack",
+        "english_summary": "A Polish student has been formally accused and charged with planning a jihadi-inspired terrorist attack on a Christmas market.",
+        "canonical_event": "charging of Polish student for planning jihadi terrorist attack on Christmas market",
+        "reason": "This is a concrete terrorism charge and disrupted terror plot involving a jihadist attack plan."
+      }
+    },
+    "542485a73b983da33929c5aa3163224f7ba683da1dc6bb0f3832774f728b9b22": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:09:16.299145+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1191",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "'Austria Model': From Monitoring Political Islam Networks to Treating Them as an Open Security File",
+        "english_summary": "An analytical article discussing Austria's policy shift regarding political Islam networks and security monitoring.",
+        "canonical_event": "analysis of Austria security policy regarding political Islam networks",
+        "reason": "This is an analytical policy piece/commentary rather than a specific operational counter-terrorism event."
+      }
+    },
+    "50a48763a85bf78c8aca8ebab6936609c8eecb6d24f743f9aac229b6aeb5fbb5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T10:09:16.299147+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1192",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Weapons"
+        ],
+        "original_language": "ru",
+        "english_title": "Car Bomb Attack Near Police Station in Mexico Causes Injuries",
+        "english_summary": "A car bomb terrorist attack occurred near a police station in Mexico, resulting in multiple injuries.",
+        "canonical_event": "car bomb attack near police station in Mexico resulting in injuries",
+        "reason": "This is a kinetic terrorist/militant attack involving an explosive device (car bomb) causing casualties."
+      }
     }
   },
-  "last_updated": "2026-08-31T09:56:50.620587+00:00"
+  "last_updated": "2026-08-31T10:09:16.406314+00:00"
 }
