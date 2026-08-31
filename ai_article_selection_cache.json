@@ -89627,7 +89627,310 @@
         "canonical_event": "Commemorative events for Day of Solidarity in Fight Against Terrorism in Murmansk region",
         "reason": "Historical commemoration and public awareness day, not a current operational CT event."
       }
+    },
+    "696c43790575e4d3175a7b66dc5c6c2f44675d46e839f2c370b05319fa756d80": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329212+00:00",
+      "result": {
+        "event_id": "f8a6154b8a7c4975",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial",
+          "Online Radicalization / Cyberterrorism"
+        ],
+        "original_language": "ru",
+        "english_title": "Vladimir Region resident sentenced to 5 years for justifying terrorism",
+        "english_summary": "A resident of the Vladimir Region was sentenced to 5 years in prison for justifying terrorism.",
+        "canonical_event": "sentencing of a resident for justifying terrorism in Vladimir Region",
+        "reason": "A court conviction and sentencing for terrorism justification is a direct counter-terrorism legal event."
+      }
+    },
+    "f1b725da37679f98db34525191946d7f0294809ee5141508e6d99e18cebda26a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329241+00:00",
+      "result": {
+        "event_id": "cf25f3ac9e957c3c",
+        "relevance_score": 95,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Indictments filed against two northern residents who swore allegiance to ISIS and planned an attack on an IDF base",
+        "english_summary": "Indictments were filed against a 16-year-old from the Galilee and a 19-year-old from Haifa who swore allegiance to ISIS and planned a terrorist attack on an IDF base.",
+        "canonical_event": "indictment of two individuals for swearing allegiance to ISIS and plotting an attack on an IDF base in Israel",
+        "reason": "Direct counter-terrorism arrest and indictment of individuals plotting an ISIS-inspired terrorist attack."
+      }
+    },
+    "df7db070bd879669d5d586ba9f11c87cbafc165365c32aac7a8d882a2fc000b3": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329245+00:00",
+      "result": {
+        "event_id": "89f6039810af2991-152",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial",
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Indictment filed against terrorist who stabbed twice and fled",
+        "english_summary": "An indictment has been filed against a terrorist who carried out a stabbing attack twice and fled.",
+        "canonical_event": "indictment of a terrorist for a stabbing attack",
+        "reason": "Legal proceedings (indictment) regarding a terrorist stabbing attack."
+      }
+    },
+    "3884d8e9f5c6d6b330ef6feeebbdb0a78db04010cab55aa3e91ceb72f3db02ac": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329249+00:00",
+      "result": {
+        "event_id": "6c1682b796f8a933",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Searches suspended for missing cyclist in Biellese torrent",
+        "english_summary": "Search operations have been suspended for a cyclist reported missing in a torrent in the Biellese area.",
+        "canonical_event": "search suspended for a missing cyclist in Biellese",
+        "reason": "Ordinary missing person / search and rescue incident with no terrorism nexus."
+      }
+    },
+    "2f784906af7c10de55581e11437cfc79eff0d7fee8835d64b0f44e8e48895e7f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329252+00:00",
+      "result": {
+        "event_id": "ef2164c25ce862ee",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Presutti and Piervincenzi for Report. Three offers to Ranucci, but controversy erupts",
+        "english_summary": "Media controversy involving television journalists and offers made to Sigfrido Ranucci.",
+        "canonical_event": "media controversy involving television journalists in Italy",
+        "reason": "Domestic media reporting dispute with no counter-terrorism relevance."
+      }
+    },
+    "0312c5f4eceb03a004988a2baea3b590cbb287bc5a310ac7f13df4a5cc0c5f35": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329256+00:00",
+      "result": {
+        "event_id": "810f5936b20a562d",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Two stranded tourists from Brescia return to Italy from Nepal",
+        "english_summary": "Two tourists from Brescia who were stranded in Nepal have safely returned to Italy.",
+        "canonical_event": "return of stranded tourists from Nepal to Italy",
+        "reason": "Travel news regarding stranded tourists, completely unrelated to terrorism."
+      }
+    },
+    "3acbb4b14e5744682046f5cfe96c0a86c5e1da7a3158c62023de6a55f71f8319": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329259+00:00",
+      "result": {
+        "event_id": "22c665cb20605b3c-685",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Following its claim of the Sri Lanka terrorist attack: ISIS publishes photos and names of the seven operation perpetrators",
+        "english_summary": "ISIS published the names and photographs of the seven operatives who carried out the Sri Lanka terrorist attacks, following its formal claim of responsibility.",
+        "canonical_event": "ISIS publishes photos and names of perpetrators of the Sri Lanka terrorist attack",
+        "reason": "Terrorist propaganda and operational disclosure regarding a major historical terrorist attack by a named group."
+      }
+    },
+    "0735ef9e95e6b7025579358927b00de19c7fe1b0edaf19862cae5f59808de659": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329263+00:00",
+      "result": {
+        "event_id": "ef44847e8e4947bf",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Anonymous letters full of threats and insults against an Arzachena municipal employee: Arrest",
+        "english_summary": "An individual was arrested for sending anonymous threatening and insulting letters to a municipal employee in Arzachena.",
+        "canonical_event": "arrest for sending threatening letters to a municipal employee in Arzachena",
+        "reason": "Local criminal harassment / threats against a municipal employee, not terrorism."
+      }
+    },
+    "0cc28b52ea9d55bc991d9b93607b7324835cd6ad2890b5d0ea9c5abab10ff970": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329267+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-801",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Lavrov: We did not agree on Assad's fate and we do not want terrorists to come to power in Syria",
+        "english_summary": "Russian Foreign Minister Sergey Lavrov stated that there was no agreement on the fate of Bashar al-Assad and that Russia opposes terrorists coming to power in Syria.",
+        "canonical_event": "Lavrov comments on Syria and opposition to terrorists coming to power",
+        "reason": "General geopolitical commentary and diplomatic statements mentioning terrorism broadly, not a specific CT event."
+      }
+    },
+    "be5a8893a59c8cd8f0620bcbbc8aaa30e49eff0e7c97c8f8b8f861188e1bfc27": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329270+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-837",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Saleh Al-Armouti to Al Jazeera Net: We oppose policies, not the state, and our compass is the citizen",
+        "english_summary": "Jordanian politician Saleh Al-Armouti discusses political opposition and state policies in an interview.",
+        "canonical_event": "interview with Jordanian politician Saleh Al-Armouti",
+        "reason": "Domestic political commentary in Jordan, unrelated to terrorism."
+      }
+    },
+    "454e83355ca55e17d38550f2e5108e7bace7bb41e8519686c21c7e9bd6fe644c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329273+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-1014",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Cameras in cells: How Ben Gvir uses the mistreatment of female prisoners in his election campaign",
+        "english_summary": "An opinion piece or critical report discussing Israeli Minister Itamar Ben Gvir's policies regarding prison conditions.",
+        "canonical_event": "political criticism of Itamar Ben Gvir regarding prison conditions for female prisoners",
+        "reason": "Political commentary on prison administration and electoral tactics, not a counter-terrorism event."
+      }
+    },
+    "3a4da755a192b6fe06c742b68213219aa2a323888f4e7282ff9fa4886fa5abca": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329275+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1071",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Italy announces the thwarting of a terrorist plot",
+        "english_summary": "Italian authorities have announced the disruption and thwarting of a terrorist plot.",
+        "canonical_event": "thwarting of a terrorist plot in Italy",
+        "reason": "Disrupted terrorist plot reported by security authorities."
+      }
+    },
+    "009c04d12653ec5c6d5a95c9b682b985b8e6e324c358cd9c9e9734ff3ac226ff": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329278+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1084",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Large-scale surprise police drill simulating a terrorist attack in the country",
+        "english_summary": "Police conducted a large-scale surprise drill to simulate responding to a terrorist attack.",
+        "canonical_event": "police counter-terrorism simulation exercise",
+        "reason": "Routine counter-terrorism preparedness drill rather than an actual operational CT event or incident."
+      }
+    },
+    "0bdf2c31f81415703b41dfc7e15b8d6a4ea356763c506107d64373025d7a43e7": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329362+00:00",
+      "result": {
+        "event_id": "aafde6d77995ef1a",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "Paper AI profits add $160 billion to tech giants' earnings",
+        "english_summary": "Financial report on the earnings and stock performance of major technology companies driven by artificial intelligence.",
+        "canonical_event": "financial report on AI profits of tech companies",
+        "reason": "Economic / financial news about technology stocks, not related to terrorist misuse of AI or cyberterrorism."
+      }
+    },
+    "05ffd0e41c58593a0561fdfef32b5de20737394b5dcc1fe31ef8bdaf3c0df21c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329367+00:00",
+      "result": {
+        "event_id": "783851146224cfa8",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "de",
+        "english_title": "Newsblog: Fatal shots at a rave in Aarau im Schachen",
+        "english_summary": "Live ticker reporting on fatal shooting incident at a music rave in Aarau, Switzerland.",
+        "canonical_event": "fatal shooting at a rave in Aarau, Switzerland",
+        "reason": "Violent crime / shooting incident at a public event, but currently no confirmed terrorism nexus (appears to be a criminal shooting or rampage)."
+      }
+    },
+    "8d051ae2ea7947b6f926213ea2f356483902ccd7b508127312061bbdc7249502": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329370+00:00",
+      "result": {
+        "event_id": "504e8d40a415b2eb",
+        "relevance_score": 70,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "de",
+        "english_title": "Retaliation for alleged Russian attack on Leipzig airport: How can and may Germany react?",
+        "english_summary": "Analysis and discussion regarding potential German responses and retaliation following an alleged Russian sabotage or attack on Leipzig airport.",
+        "canonical_event": "discussion on potential German retaliation for alleged Russian attack on Leipzig airport",
+        "reason": "State-sponsored sabotage / attack incident involving critical infrastructure with security implications."
+      }
+    },
+    "8bcf8287cfe4be4a7c071cdd1fafbe5cec9478c9596e073a8ef4e7d05e451f25": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329373+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1181",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "European stocks drop as oil rises following US-Iran exchange of strikes",
+        "english_summary": "Financial market report on European stocks and oil prices following military strikes between the US and Iran.",
+        "canonical_event": "financial market reaction to US-Iran military strikes",
+        "reason": "Macroeconomic and financial market reporting on geopolitical military conflicts, not a counter-terrorism event."
+      }
+    },
+    "f189588d55b73be4ff0ebb371fbc855a09109059408878ebc4bab34f9f54f070": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329376+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1186",
+        "relevance_score": 90,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "ru",
+        "english_title": "Two agents of Kiev preparing terrorist attacks arrested in Crimea",
+        "english_summary": "Russian security services arrested two individuals in Crimea who were allegedly preparing terrorist attacks directed by Ukraine.",
+        "canonical_event": "arrest of two individuals preparing terrorist attacks in Crimea",
+        "reason": "Direct counter-terrorism arrest operation targeting individuals accused of preparing terrorist attacks."
+      }
+    },
+    "847ce2f8705e39b6c28387d636b79c67855280a7105008e160d03073a6bcf7b8": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T08:28:05.329379+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1187",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "he",
+        "english_title": "\"If animals were poisoned for Arabs, the whole country would cry out\": Animal poisoning terror continues",
+        "english_summary": "Opinion/activist piece complaining about animal poisoning incidents in the West Bank or Israel, using the rhetoric of 'poisoning terror'.",
+        "canonical_event": "complaints and commentary regarding animal poisoning incidents",
+        "reason": "Rhetorical use of the word 'terror' regarding animal poisoning/vandalism, not an actual terrorism incident."
+      }
     }
   },
-  "last_updated": "2026-08-31T08:12:01.779805+00:00"
+  "last_updated": "2026-08-31T08:28:05.448376+00:00"
 }
