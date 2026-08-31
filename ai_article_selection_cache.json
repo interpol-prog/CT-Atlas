@@ -88640,7 +88640,199 @@
         "canonical_event": "FSB detained two residents in Crimea for terrorism preparation and espionage",
         "reason": "Direct operational report detailing the arrest of individuals plotting terrorist attacks."
       }
+    },
+    "b9cb2e9f6593be92e6a4a2be32999ddf66364885e9861949a7f8eaf5f1609412": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.882985+00:00",
+      "result": {
+        "event_id": "b31f3ca4e9277202",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Commemoration of Libero Grassi, entrepreneur killed by the Mafia 35 years ago",
+        "english_summary": "Palermo commemorates Libero Grassi, an entrepreneur killed by the mafia 35 years ago.",
+        "canonical_event": "historical commemoration of Mafia victim Libero Grassi in Palermo",
+        "reason": "This is a historical anniversary/commemoration of a mafia crime, not a current counter-terrorism event."
+      }
+    },
+    "76497fbbb2abf0442811828cd232a0e0ddd5acc44b97a44b98495eed02f1d85a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.883014+00:00",
+      "result": {
+        "event_id": "897dbcedd9ec2f74",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "7 golden rules to verify information provided by artificial intelligence",
+        "english_summary": "An article outlining seven rules for checking AI-generated information.",
+        "canonical_event": "general guide on verifying AI information",
+        "reason": "General technology/AI advice article with no connection to counter-terrorism."
+      }
+    },
+    "47dff41f1a96110fbcf9b2a58920c2f3bc51a681044d9247261927103db1eb7c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.883019+00:00",
+      "result": {
+        "event_id": "a7c1755336dc9916-940",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "The 'Asset Swap' earthquake: Why did Cairo reject swapping the Suez Canal for debt?",
+        "english_summary": "An economic analysis discussing why Cairo rejected a debt-for-asset swap involving the Suez Canal.",
+        "canonical_event": "economic analysis on Egypt rejecting Suez Canal debt swap",
+        "reason": "Macroeconomic and political news article unrelated to terrorism."
+      }
+    },
+    "da54da731a186f7cca645d1f6b9922e69c7d526af3789ae300e74b648f7a0581": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.883022+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1107",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "he",
+        "english_title": "A singer threw a keffiyeh to the crowd and sparked a storm",
+        "english_summary": "A singer sparked controversy after throwing a keffiyeh into the audience.",
+        "canonical_event": "cultural controversy over a singer throwing a keffiyeh in Israel",
+        "reason": "Cultural/social controversy with no direct terrorism nexus."
+      }
+    },
+    "e04f0d7bf45cafcff070781386219b8e6ac0d09d4de11cba5341b7ab02059f21": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.883024+00:00",
+      "result": {
+        "event_id": "e8e2ef4776a5d283",
+        "relevance_score": 45,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "es",
+        "english_title": "At least seven injured in car bomb attack on police station in Zacatecas",
+        "english_summary": "At least seven people were injured following a car bomb attack targeting a police station in Zacatecas.",
+        "canonical_event": "car bomb attack targeting a police station in Zacatecas",
+        "reason": "While it is a serious violent attack involving a car bomb, it reflects cartel/organized crime violence in Mexico rather than designated terrorist activity, though it borders on operational utility."
+      }
+    },
+    "9d10bd3df2ce4185eb7f71e33e073e365a9201e9d450ff6fc7684dfd720fc35e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.883027+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1145",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Iran denounces new US strikes and vows to respond to any new aggression",
+        "english_summary": "Iran condemned recent US airstrikes and warned that it would respond to any further attacks.",
+        "canonical_event": "Iran denounces US strikes and threatens retaliation",
+        "reason": "State-level military/geopolitical tensions between Iran and the US rather than a specific CT event."
+      }
+    },
+    "944fb925c4598fdcda95a7c3033b6a6cfe875be99dc3d455cc5f46f348cf4e39": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.883031+00:00",
+      "result": {
+        "event_id": "3147b86d73e558f0",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "it",
+        "english_title": "Judge suspends three prison guards over torture at Casal del Marmo prison",
+        "english_summary": "A judge has suspended three prison officers accused of torture at Rome's Casal del Marmo juvenile prison.",
+        "canonical_event": "judicial suspension of prison guards for alleged torture at Casal del Marmo prison in Rome",
+        "reason": "Domestic law enforcement misconduct/abuse case, not terrorism."
+      }
+    },
+    "955489252d1ee2df18dcef9405539de3da2a6bb953f5c4cf993b06db70a8ed9e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.883033+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1177",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ar",
+        "english_title": "From hydration to skin renewal: The role of hyaluronic acid and retinol",
+        "english_summary": "A lifestyle and skincare article discussing the benefits of hyaluronic acid and retinol.",
+        "canonical_event": "skincare article on hyaluronic acid and retinol",
+        "reason": "Lifestyle and beauty article."
+      }
+    },
+    "4c447e6216dfb8b0d730e4941adb14052da82b7c88a7ac5cfaabb3968fe3f9f8": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.883036+00:00",
+      "result": {
+        "event_id": "b45c8830b5b8e48e",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks",
+          "Weapons"
+        ],
+        "original_language": "it",
+        "english_title": "Firecrackers and social media challenges: Underworld war in Casilino",
+        "english_summary": "Criminal gangs in the Casilino district are using firecrackers and social media challenges in a local turf war.",
+        "canonical_event": "gang turf war involving firecrackers in Casilino",
+        "reason": "Local organized crime/gang turf war involving rudimentary explosives (firecrackers), but lacks a clear terrorist nexus."
+      }
+    },
+    "4aa67be328b9b776ea556d089c4fc2fcb1bcaa793a3b8188f1275ec60ce6396e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.883039+00:00",
+      "result": {
+        "event_id": "9ba4c9423cc6ad90-1186",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Arrests"
+        ],
+        "original_language": "ru",
+        "english_title": "Nizhny Novgorod resident carries out terrorist attack near police department",
+        "english_summary": "A resident of Nizhny Novgorod carried out an attack classified as terrorism near a police department, with video footage emerging.",
+        "canonical_event": "terrorist attack carried out near police department in Nizhny Novgorod",
+        "reason": "A direct terrorist attack/incident directed at law enforcement infrastructure, qualifying as a current CT event."
+      }
+    },
+    "516ef694f664f2f0b0959150761710ab11988ed04fd5361ac85473480ea88425": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.883041+00:00",
+      "result": {
+        "event_id": "16e1befce427d76d",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "Arrests"
+        ],
+        "original_language": "de",
+        "english_title": "Drug deals in plain sight of police: Quick arrest thanks to video surveillance",
+        "english_summary": "Police quickly arrested suspects engaging in drug deals after observing them via video surveillance.",
+        "canonical_event": "police arrest drug dealers caught on video surveillance",
+        "reason": "Ordinary narcotics crime with no connection to terrorism."
+      }
+    },
+    "4d3c4456d7a660b37c1dd20a5b9abb3a839a4aecea6a93af8b99f10293ef4e59": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-08-31T07:37:27.883043+00:00",
+      "result": {
+        "event_id": "61dda1296b777227",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "fr",
+        "english_title": "Images of the flash flood in Grand Canyon National Park, Arizona",
+        "english_summary": "Photographs and footage show the sudden flash flood that occurred in Arizona's Grand Canyon park.",
+        "canonical_event": "flash flood in Grand Canyon National Park, Arizona",
+        "reason": "Natural disaster/weather news story."
+      }
     }
   },
-  "last_updated": "2026-08-31T07:30:56.164567+00:00"
+  "last_updated": "2026-08-31T07:37:27.982406+00:00"
 }
