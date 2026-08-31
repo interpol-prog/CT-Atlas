@@ -21,61 +21,37 @@
   "collector": "Google News RSS V9 multilingual + Gemini selection/translation",
   "relevance_filter": "Deterministic CT candidate filter + Gemini semantic final selection",
   "trend_summary": {
-    "overview": "Recent 24-hour counter-terrorism developments reflect significant operational activity, including multiple major arrests, foiled plots, and counter-insurgency operations across Africa, Europe, and the Middle East. Security forces have successfully disrupted terrorist financing networks, neutralized high-level operatives, and thwarted imminent attacks targeting critical infrastructure.",
+    "overview": "Recent counter-terrorism reporting highlights significant operations, including the neutralisation of 27 ISWAP terrorists across Borno and Sokoto states in Nigeria, the arrest of 40 ISIS-linked suspects by Turkish security forces in Ankara, and the arrest of a 16-year-old spreading ISIS propaganda and bomb-making tutorials in Como, Italy.",
     "developments": [
       {
         "event_id": "53148bd12e1f4e8c",
         "severity": "CRITICAL",
         "category": "Attacks",
         "headline": "Nigerian troops foil ISWAP attack in Borno and Sokoto, neutralizing 27 terrorists",
-        "detail": "Nigerian military forces successfully foiled an ISWAP terrorist attack in Borno and Sokoto states, neutralizing 27 terrorists during the engagement.",
-        "location": "Borno and Sokoto, Nigeria"
-      },
-      {
-        "event_id": "0dc2eb3b7291a06b",
-        "severity": "CRITICAL",
-        "category": "Attacks",
-        "headline": "Polish Student Charged with Planning Jihadi Attack on Christmas Market",
-        "detail": "A Polish student has been formally charged with planning a jihadist terrorist attack targeting a Christmas market.",
-        "location": ""
-      },
-      {
-        "event_id": "f77ad085e8d2bdbb",
-        "severity": "HIGH",
-        "category": "Arrests",
-        "headline": "16-year-old arrested in Como for ISIS propaganda and bomb-making tutorials",
-        "detail": "Italian authorities arrested a 16-year-old individual in Como who was actively spreading ISIS propaganda and in possession of instructional guides for building bombs.",
-        "location": "Como, Italy"
+        "detail": "Nigerian military forces successfully foiled an ISWAP terrorist attack in Borno and Sokoto states, neutralizing 27 terrorists during operations.",
+        "location": "Nigeria, Borno and Sokoto"
       },
       {
         "event_id": "078217ad8cc9a323",
         "severity": "HIGH",
         "category": "Arrests",
         "headline": "Turkish special services detain 40 suspects linked to ISIS",
-        "detail": "Turkish security forces detained 40 individuals suspected of maintaining ties to the ISIS terrorist organization.",
-        "location": "Ankara, Turkey"
+        "detail": "Turkish security forces detained 40 individuals in Ankara suspected of having ties to the ISIS terrorist organization.",
+        "location": "Turkey, Ankara"
       },
       {
-        "event_id": "27979e061bc6874c",
+        "event_id": "f77ad085e8d2bdbb",
         "severity": "HIGH",
-        "category": "Terrorist Financing",
-        "headline": "BBC uncovers ISIS money laundering network in Europe",
-        "detail": "An investigative report revealed a money laundering network operating across Europe on behalf of ISIS and other terrorist organizations, which successfully laundered hundreds of millions of euros.",
-        "location": ""
-      },
-      {
-        "event_id": "026799e0715c9b14",
-        "severity": "SIGNIFICANT",
-        "category": "Terrorist Financing",
-        "headline": "Terrorist financing: 1.4 million shekels seized in a car at a checkpoint entering Jerusalem",
-        "detail": "Security forces at a checkpoint near Jerusalem seized 1.4 million shekels intended for terrorist financing that were concealed inside a vehicle.",
-        "location": "Jerusalem, Israel"
+        "category": "Arrests",
+        "headline": "16-year-old arrested in Como for ISIS propaganda and bomb-making tutorials",
+        "detail": "Italian authorities arrested a 16-year-old in Como who was spreading ISIS propaganda and possessed instructional guides for building bombs.",
+        "location": "Italy, Como"
       }
     ],
     "status": "ok",
     "model": "gemini-3.5-flash-lite",
     "window_hours": 24,
-    "generated_at": "2026-08-31T09:58:12.383183+00:00",
+    "generated_at": "2026-08-31T10:10:27.012844+00:00",
     "candidate_events": 80
   },
   "ai_article_selection": {
@@ -129,7 +105,7 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-08-31T09:58:15.153344+00:00",
+  "last_updated": "2026-08-31T10:10:29.130434+00:00",
   "number_of_events": 1571,
   "events": [
     {
@@ -137,7 +113,9 @@
       "category": "Attacks",
       "categories": [
         "Attacks",
-        "Legal / Judicial"
+        "Legal / Judicial",
+        "Arrests",
+        "Online Radicalization / Cyberterrorism"
       ],
       "title": "Polish Student Charged with Planning Jihadi Attack on Christmas Market",
       "summary": "A Polish student has been formally charged with planning a jihadist terrorist attack targeting a Christmas market.",
@@ -149,7 +127,7 @@
       "collection_locale": "ES:es",
       "published": "2026-08-31T09:53:25+00:00",
       "source": "Cadena Láser",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOaDJXcGpyejhDcWV5UXU1Y1pPUDc2cHhHVHJvbUxDWlZnR25Ka1pWdV9LRWNqTXZjbmxTaFFLengxOVVLRGVEUE11VFFVV0VLNVlGTGxoMGtaT0NTTFdFQUtnUHlMMnVoZTktOEJrQ19IS2thS01ENTZfbjJkWDBNX2l6WkQtQWJ2QnRDVm5ST2FMYWM5T09LelNVQlZocmlxLWJLcXdoLUdISERSQnJZV1FKMnA?oc=5",
       "collector": "Google News RSS",
       "country": "Poland",
@@ -162,12 +140,23 @@
       "location_confidence": "medium",
       "acquisition_channel": "multilingual_discovery",
       "sources": [
-        "Cadena Láser"
+        "Cadena Láser",
+        "Infobae"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Polish Student Charged with Planning Jihadi Christmas Market Attack",
+          "original_title": "Estudiante polaco acusado de planear atentado yihadista en un mercadillo navideño",
+          "original_language": "es",
+          "summary": "A Polish student has been formally accused and charged with planning a jihadi-inspired terrorist attack on a Christmas market.",
+          "published": "2026-08-31T09:55:48+00:00",
+          "source": "Infobae",
+          "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPSllWa1dtTEJibGxKVkRqX0plTXo2OERKYkc5U21aMjdYcFMteGQ5bzFPZ3FtSnRYN2ZoOTB6Tzg5N1FHVzk0cVBtUFRyMTUzOWNMS2tNdnhRS1liNTVjUlE2QXl1cDlENi1fbk5pdjA3ZFhkU0JsY2ZVWF9MSDRXNm54cEFFS2xudF8zUl9LczNDVnd0ZHktZ2h1SDdBVm5tSjJjbUtIY21MM0QzQURsRW1WUm5XTFVjTElhampmN3dNT3REUUJpMG1uczdpUEnSAeoBQVVfeXFMT3hNN1NmNjk4ZE5STXhiNHU3clI3NXd3M2h3RXlmNkY2dVNCM0tmMjhuUkZBZDZUZlBGTDBuT0szdTZMbFk1UFVIYWdpM1hEVTBRRXNvUkQxTGxTaEtZMHVfNUM3N2hiZWNaVzZBWmhud2dWVW8yMXVJMTlGQ1ZtNzhyNXFkRHZZbEtaVElpR0JqQnlrX2ZsOUVmZ2FuYm4tUE5zeHg3T2lxN01MSl9pQXA2Y1BzMDFMeUFLMFJwOU5sekNaek8xUEVxUGszTUFpYlMyYTk1TTRkNm92ZVl2cEtXQjl4UTZyWjVB?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-31T09:53:25+00:00",
-      "last_reported": "2026-08-31T09:53:25+00:00",
+      "last_reported": "2026-08-31T09:55:48+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -191,7 +180,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "A Polish student is charged with planning a jihadi attack; context points to Poland or Polish jurisdiction, with no specific city mentioned.",
       "ai_geo_fingerprint": "4d8283e9639f2d0870066c0a0df48e9e92176f34f222e963265a32926668af4f",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "very_high_title_similarity"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -772,7 +765,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The article explicitly describes gang warfare dynamics and explosive devices in the Casilino district of Rome, Italy.",
       "ai_geo_fingerprint": "048d955f62efd9432b936214261128a2a754e8a502da205e5de6c297dbe9f2d1",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "aac70d8b024cc0b3",
@@ -1196,7 +1193,8 @@
       "id": "9ba4c9423cc6ad90",
       "category": "Arrests",
       "categories": [
-        "Arrests"
+        "Arrests",
+        "Attacks"
       ],
       "title": "Nablus operation: YAMAM fighters arrest a terrorist from the 'Lion's Den' organization",
       "summary": "Israeli security forces (YAMAM) arrested a terrorist belonging to the 'Lion's Den' organization in Nablus.",
@@ -1208,7 +1206,7 @@
       "collection_locale": "IL:he",
       "published": "2026-08-31T06:11:00+00:00",
       "source": "כיפה",
-      "source_count": 4,
+      "source_count": 5,
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNSlhiRnl0WmI5Zjk2MmlzTDBoeE13VExpTEs1b3dfWElGU0RaTGxPRG9IczBFcE0xaDdWdGgzbGg2d2xhZnphb0lGanRFM0t4aWdjWjJSdUtOU2pOWHdZZEtQNzkxWDluXzROTnJMNXFUdF9SSGkyY1hFRXNERHp1czNVRW80WlJ2M2d2UDh4dENUSk9mWnJybGZFNldGdnc2Wmdv0gGrAUFVX3lxTE41SThmMmZ5SDF5TF81YVEzaUJObzctUFp0djhhb3FyT2VGNU5oNTFtbkhPZUFUQjN6elR3NExvSUtQVmRoZ2QxUGV3Nm5WOVBlWnpOaGk1dGlmWXFKRE52NF9yRlpQZ0Vwa01zaEt6cjRvc0d3T1ZEQzZjaHlIcDBNRHQ5RGg1OUlNZWFfdGViWjM0T1pEZ2VRd3UyQ2JnQXRaSzNaQlJ5NFRuMA?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -1224,7 +1222,8 @@
         "כיפה",
         "כיכר השבת",
         "היום",
-        "ynet.co.il"
+        "ynet.co.il",
+        "חדשות 04"
       ],
       "related_articles": [
         {
@@ -4928,10 +4927,20 @@
         "الحياة",
         "بركة نيوز"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Algerian President emphasizes counter-terrorism as an African priority",
+          "original_title": "رئيس الجمهورية: مكافحة الإرهاب يجب أن تظل في صدارة أولويات العمل الإفريقي المشترك",
+          "original_language": "ar",
+          "summary": "The President of the Republic states that counter-terrorism must remain at the top of joint African action priorities.",
+          "published": "2026-08-30T15:38:31+00:00",
+          "source": "بركة نيوز",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZUZTTmpkN2JjcExNNFpCWXpOcm1vRUtnMmh2UzNmS0JCQzR6eXlNejJ1dVRaVFlDZEczQVFQR01VM1lacmhBYi1PTW5xQXZKMFpueGxYZndsNzhhZTBENWIyUjhBZmdLNk5HVGtTRUFsMFRsakF0bG5iZjhyY1lnQkRfbEp4Unh6dzJ0QkYxbkdxUFUtbmxyQWFnVmg2b0MyWWZqLVBmOWRlV1l2RjdOR1ZB?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-30T14:12:46+00:00",
-      "last_reported": "2026-08-30T14:12:46+00:00",
+      "last_reported": "2026-08-30T15:38:31+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -4958,7 +4967,8 @@
       "ai_geo_inferred": false,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "very_high_title_similarity"
       ]
     },
     {
@@ -18971,7 +18981,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Police in Mannheim explicitly conducted an arrest.",
       "ai_geo_fingerprint": "d304860707b41ab1a2946b39dce8508b7589e7c03146afb3c48c6ff69193164d",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "89f6039810af2991",
@@ -24103,7 +24117,7 @@
       "collection_locale": "FR:fr",
       "published": "2026-08-27T14:16:47+00:00",
       "source": "i24NEWS",
-      "source_count": 22,
+      "source_count": 23,
       "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxOYnR5UFVvSHBHc3VlNUNCWWlLazdjdVlDdmRkelpSTVg3WWRYNGMwbGNONXdEczljQWM1X2xiaWx4M0VXQm5fcTEtMzZrNGh2RmpkT0x2WndJNl94UzhXZTU3YmVPbUNzazlMRjk3SHlSVVhiSEVCYUI2TTREZVJCV1A1LVBrVEV0eWQyVEgxeVdEQ0VBbXBtbnNucWtMY2c0WThSbWxIVDZ2d1I3aVdKNUhBRDY2M3p1T1hnX0psdjdmTG42R1FQZnBoMGZwbDhYV3ZQc2E2VQ?oc=5",
       "collector": "Google News RSS",
       "country": "Canada",
@@ -24136,7 +24150,8 @@
         "Sudinfo",
         "The Hub | More Signal. Less Noise.",
         "Amic.ru",
-        "ynet.co.il"
+        "ynet.co.il",
+        "news24.com.au"
       ],
       "related_articles": [
         {
@@ -35107,7 +35122,7 @@
           "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxPS01ROFlPVjlmaDM0UUU1QTgycDJaM05XUHN5YnBWRlFkbmFuTGQwTlJhRzJMM2hQZUowTVlHT0ppSkU4T2Ntd2R0Q2M0aHlXSkxGdDVSUEMwTjhwNGxrQVpEVUxId2RIeGZJSUhQSlNHaWdBWkJFNVk0RGh0WC1yRTU3NGc3bF9FZUtJVF9udU5Hd1BsZHpVa2I1cl9aVW9YMENFYkRnUkhfQXlDMHJheTB2M25RdU9WRzZtdTJBMVJxc2VpYUhrSV9lSjhrNjdHT1o0QzhiZnhaY3hrVEZQenZXNEV0RGZBR3NCZGlvSFRXRnR1U2JFSTR0MF9zRVFlbVIw?oc=5"
         }
       ],
-      "article_count": 37,
+      "article_count": 38,
       "first_reported": "2026-08-24T17:25:00+00:00",
       "last_reported": "2026-08-28T17:17:32+00:00",
       "dedup_confidence": 1.0,
@@ -111339,9 +111354,9 @@
     "primary_model": "gemini-3.5-flash-lite",
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
-    "cached_events": 1566,
-    "ai_processed_this_run": 5,
-    "ai_pending_at_start": 5,
+    "cached_events": 1571,
+    "ai_processed_this_run": 0,
+    "ai_pending_at_start": 0,
     "city": 691,
     "region": 320,
     "country_capital": 550,
