@@ -21,38 +21,77 @@
   "collector": "Google News RSS V9 multilingual + Gemini selection/translation",
   "relevance_filter": "Deterministic CT candidate filter + Gemini semantic final selection",
   "trend_summary": {
-    "overview": "Recent high-impact counter-terrorism developments include multiple casualties and clashes following a terrorist attack on a customs house in Balochistan, Pakistan, a major sabotage attack involving explosive devices targeting the Jänschwalde electrical substation and power grid in Brandenburg, Germany, and the arrest of a TikTok-radicalized teenager in Sydney, Australia, who plotted a mass-casualty bombing targeting the Sydney Opera House and marathon.",
+    "overview": "Recent counter-terrorism developments feature significant infrastructure sabotage and armed attacks, including an explosive attack on a power grid substation in Jänschwalde, Germany, a major customs house assault and ensuing military operations in Balochistan, Pakistan, and the neutralization of an ISIS leader in Sanaa, Yemen.",
     "developments": [
+      {
+        "event_id": "8c7ab3870e8beec2",
+        "severity": "CRITICAL",
+        "category": "Attacks",
+        "headline": "Explosive attack and sabotage targeting electrical substation near Jänschwalde",
+        "detail": "An explosive device detonated at an electrical substation near Jänschwalde in Brandenburg, Germany, causing an automatic shutdown of a power block and triggering a major counter-terrorism and sabotage investigation.",
+        "location": "Germany, Brandenburg, Jänschwalde"
+      },
       {
         "event_id": "9f71d00bc41494cf",
         "severity": "CRITICAL",
         "category": "Attacks",
-        "headline": "6 personnel killed in Balochistan Customs House attack and 21 terrorists neutralized",
-        "detail": "The Pakistani military's ISPR reported that 6 personnel were killed in an attack on a customs house in Balochistan, while 21 terrorists were killed across the province in subsequent security operations.",
+        "headline": "Militant assault on Balochistan Customs House leaves six personnel dead and 21 terrorists killed",
+        "detail": "Six security personnel were killed during an attack on a customs house in Balochistan, Pakistan, with military forces subsequently killing 21 terrorists across the province in counter-operations.",
         "location": "Pakistan, Balochistan"
       },
       {
-        "event_id": "60a01a57ef16d8c5",
+        "event_id": "eeb14adf0c9e6fde",
         "severity": "HIGH",
-        "category": "Weapons",
-        "headline": "Sabotage attack and explosive devices discovered near Jänschwalde power plant in Brandenburg",
-        "detail": "Authorities reported an attempted attack utilizing explosive-laden or rocket-propelled devices targeting Brandenburg's largest power installation and an electrical substation near Jänschwalde, causing short-circuiting and automatic shutdowns.",
-        "location": "Germany, Jänschwalde, Brandenburg"
+        "category": "Attacks",
+        "headline": "State security neutralizes high-ranking ISIS leader in Sanaa",
+        "detail": "State security forces in Sanaa, Yemen, neutralized a high-ranking and dangerous ISIS leader, identified as Abu Hudhayfah al-Ansari (Mithaq al-Radfani), during a targeted operation involving an explosive belt.",
+        "location": "Yemen, Sanaa"
       },
       {
         "event_id": "4424e727df41eda2",
         "severity": "HIGH",
-        "category": "Legal / Judicial",
+        "category": "Arrests",
         "headline": "Teenager pleads guilty to planning terrorist bombing targeting Sydney Opera House and marathon",
-        "detail": "A 16-year-old radicalized via TikTok pleaded guilty in court to charges of planning a mass-casualty terrorist bombing targeting the Sydney Opera House and the Sydney marathon.",
+        "detail": "A 16-year-old radicalized via TikTok pleaded guilty in Sydney, Australia, to planning a mass-casualty terrorist bombing targeting the Sydney Opera House and the Sydney marathon.",
         "location": "Australia, Sydney"
+      },
+      {
+        "event_id": "3c1ff765b7aa8d5a",
+        "severity": "HIGH",
+        "category": "Attacks",
+        "headline": "Terrorism investigation opened following fire at drone factory in Warsaw",
+        "detail": "Polish prosecutors opened a formal terrorism and sabotage investigation following a suspicious fire at the WB Electronics drone manufacturing plant in Warsaw.",
+        "location": "Poland, Warsaw"
+      },
+      {
+        "event_id": "a210367da44be257",
+        "severity": "SIGNIFICANT",
+        "category": "Attacks",
+        "headline": "Military airstrike kills 20 FARC dissidents in Colombia",
+        "detail": "A military bombing operation targeting FARC dissidents in Colombia resulted in the deaths of 20 guerrillas.",
+        "location": "Colombia, Bogotá"
       }
     ],
     "status": "ok",
     "model": "gemini-3.5-flash-lite",
     "window_hours": 24,
-    "generated_at": "2026-09-01T20:35:34.030111+00:00",
+    "generated_at": "2026-09-01T21:09:25.216020+00:00",
     "candidate_events": 80
+  },
+  "weekly_analysis": {
+    "status": "ok",
+    "model": "gemini-3.5-flash-lite",
+    "generated_at": "2026-09-01T21:09:28.237776+00:00",
+    "sunday_key": "",
+    "trigger": "first_report",
+    "title": "Weekly Counter-Terrorism and Criminal Analysis Brief",
+    "analysis": "EXECUTIVE ASSESSMENT During the current 7-day period (August 25 – September 1, 2026), open-source event reporting volume increased significantly, rising from 121 recorded events in the comparison period to 695 events. This surge is driven largely by intensified reporting across Attacks (417), Legal/Judicial (232), Arrests (208), and Weapons (110) categories. While reporting volume grew nearly six-fold, the core operational landscape reflects an escalation in state-backed hybrid warfare dynamics in Europe—particularly involving suspected Russian intelligence-linked sabotage infrastructure—alongside persistent militant activity in the Middle East and Sub-Saharan Africa. Counter-terrorism interventions, preemptive arrests, and targeted kinetic strikes remained active globally, notably in Germany, Russia, Israel, and Nigeria. KEY CHANGES The most prominent tactical shift between the two periods is the concrete attribution and public escalation regarding suspected Russian state-sponsored sabotage operations in Western Europe. While the comparison period involved early discoveries of weapons caches and drones near Berlin and Leipzig airports, the current period saw the German government formally blame Russia's GRU military intelligence agency for the Leipzig drone attack. Concurrently, investigative reporting and state reactions expanded to cover thwarted attacks on critical infrastructure, including an explosive device found at an electrical substation in Brandenburg. Reporting on online radicalization and terrorist financing also expanded sharply (rising from 7 to 102 events, and 12 to 81 events respectively), reflecting heightened law enforcement focus on digital recruitment pathways—such as TikTok-based radicalization plots uncovered in Australia and Israel—and cross-border material support investigations. GEOGRAPHIC / OPERATIONAL SHIFTS Russia and Germany emerged as the top reporting countries in the current period, recording 99 and 87 events respectively, marking a distinct geographic shift northward from the previous period's distribution (where Germany recorded 16 and Russia 14). Brandenburg became a primary European hotspot due to suspected infrastructure attacks on power grids and substations. In the Middle East, activity concentrated heavily within the Gaza Strip (15 events) and the West Bank, alongside high-impact counter-terrorism operations in Yemen involving the neutralization of senior ISIS leadership (Abu Hudhayfah al-Ansari). In South Asia, Pakistan’s Balochistan province surfaced as a key operational zone following a deadly attack on a customs house and subsequent military operations resulting in high militant casualties. SIGNIFICANT DEVELOPMENTS 1. European Infrastructure Sabotage & Attribution: German authorities intensified investigations into suspected Russian sabotage, linking the GRU to drone and explosive deployment at Leipzig/Halle Airport and investigating an attempted attack on Brandenburg’s largest power plant using explosive devices. 2. Senior Leadership Casualties: State security and military operations resulted in the elimination of high-profile terrorist figures, including ISIS leader Abu Hudhayfah al-Ansari in Yemen, and the targeted airstrike neutralization of a terrorist cell head in Jenin by the IDF. 3. Preemptive CT Disasters Averted: Law enforcement agencies successfully intercepted multiple advanced plots, including a Polish student charged with planning a jihadist attack on a Christmas market, a teenager pleading guilty to planning a bombing targeting the Sydney Opera House and marathon, and multiple arrests in Israel concerning TikTok-coordinated attacks against security infrastructure. 4. Cross-Border Militant Alliances: Open-source reporting highlighted emerging cooperative ties, such as a documented alliance involving weapons and training between the Houthis and Somalia's Al-Shabaab. OUTLOOK / WATCHPOINTS - Monitor potential diplomatic and economic retaliatory measures by Germany and European Union partners against Russia following the official attribution of the Leipzig drone attack to the GRU. - Track critical infrastructure security in Eastern and Central Europe, particularly regarding recurring threats directed at drone manufacturing plants (as seen in recent incidents across Poland, Slovakia, and Germany). - Observe ongoing counter-insurgency and kinetic operations in the West Bank and Gaza Strip, alongside security force postures in northern Nigeria and Balochistan amid sustained militant engagements.",
+    "current_period_start": "2026-08-25T21:09:28.237776+00:00",
+    "current_period_end": "2026-09-01T21:09:28.237776+00:00",
+    "comparison_period_start": "2026-08-18T21:09:28.237776+00:00",
+    "comparison_period_end": "2026-08-25T21:09:28.237776+00:00",
+    "current_event_count": 695,
+    "comparison_event_count": 121
   },
   "ai_article_selection": {
     "enabled": true,
@@ -105,8 +144,8 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-09-01T20:35:36.279622+00:00",
-  "number_of_events": 1810,
+  "last_updated": "2026-09-01T21:09:32.497221+00:00",
+  "number_of_events": 1816,
   "events": [
     {
       "id": "25df99ee80eaf7d4",
@@ -230,7 +269,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Drones found in Leipzig.",
       "ai_geo_fingerprint": "af45c2012fe08c15ee0625396491ffe4e59ed4f23c034090eb85ba94ba5bc575",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "de438335835237a0",
@@ -423,6 +466,72 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "A resident of Dagestan, Russia, was fined for terrorism-related offenses.",
       "ai_geo_fingerprint": "3d207f52fd2beb1abb63fa38e48563a9c39189a1acd092cb3e9af0fd4c53c459",
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "627edb309a0cd0ba",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Hamburg Interior Senator Grote: \"You don't get anywhere with Russia if you show weakness.\"",
+      "summary": "Hamburg Interior Senator comments on the security situation regarding Russia following recent hostile actions.",
+      "original_title": "Hamburgs Innensenator Grote: \"Man kommt gegenüber Russland nicht weiter, wenn man Schwäche zeigt.\"",
+      "original_summary": "Hamburgs Innensenator Grote: \"Man kommt gegenüber Russland nicht weiter, wenn man Schwäche zeigt.\" tagesschau.de",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-09-01T18:46:00+00:00",
+      "source": "tagesschau.de",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNMEJxbEJsQUNQWVVFTkpHX2o4TVRSaXg3MTgtUFRta0dFOXBTY3pzVVlLZ3NuVFBhQUw5ZTFDZ2hfZWM3Sk1IYXR2cW4xM1J4WDUwMDdHMVdtR05QTmI0RFBjMlNIRjNpSzZwN0hCaWxBRnJxc3BEUXR4VUItRWw0Zm1XZDZQNV92TjcwUHF5ZDJac3U4R3lhLUxQQ2hoODNCM1BGUTJfVXh3ellkTWpJdWUwRXlBSDZ2N2lGb2YtYk1SV0RMdGk4?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": "Hamburg",
+      "region": null,
+      "latitude": 53.55073,
+      "longitude": 9.99302,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "tagesschau.de",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "tagesschau.de"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T18:46:00+00:00",
+      "last_reported": "2026-09-01T18:46:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Political/security reaction to state-sponsored sabotage/attacks.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Hamburg Interior Senator comments on security posture toward Russia",
+      "title_variants": [
+        "Hamburg Interior Senator comments on security posture toward Russia"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Hamburg Interior Senator Grote"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The statement was made by the Interior Senator of Hamburg, Germany regarding security policy.",
+      "ai_geo_fingerprint": "bca556efe569081c3811ea85a7cdac47691a2ffd1b5d831f5a1c2f88b6ec2c19",
       "ai_geo_inferred": false
     },
     {
@@ -829,6 +938,68 @@
       "ai_geo_inferred": false
     },
     {
+      "id": "0c58f9dc2610a435",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "The Pasdaran threaten the US, 'they will regret the new attacks'",
+      "summary": "Iran's Islamic Revolutionary Guard Corps (IRGC/Pasdaran) issued threats against the United States over recent attacks.",
+      "original_title": "I Pasdaran minacciano gli Usa, 'si pentiranno dei nuovi attacchi'",
+      "original_summary": "I Pasdaran minacciano gli Usa, 'si pentiranno dei nuovi attacchi' ANSA",
+      "original_language": "it",
+      "collection_language": "it",
+      "collection_language_name": "Italian",
+      "collection_locale": "IT:it",
+      "published": "2026-09-01T17:47:00+00:00",
+      "source": "ANSA",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPRjd3VE5wd0tzN2k2Mkh3bFpuX0ptMm12eU01U3pobWpUMWdhb01sa2dzUld4UDJfeWpMdm02YUkxZThqYmZ2VEotMTd6V1d2NDVibUVxS1BQUllWWktGQlc3YXlNak1LMFlqcndELTZnalFWbzQ0OHZ6Y3h6blBaUWRjc0lQVXlPUW1BemVmaEVjaUl3Y3FibDFnVzA0RFE5bWVVM085eWZFMV9Ya3RHYzFBSjh1b1JlQ2Z1dTlycTdLT1BTck1kekZzM3JxdDdPZ002YzJ6dnExQWZNREpCQjI3czd5S3V0UUZKTg?oc=5",
+      "collector": "Google News RSS",
+      "country": "Iran",
+      "country_code": "IR",
+      "city": "Tehran",
+      "region": null,
+      "latitude": 35.69439,
+      "longitude": 51.42151,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "ansa.it",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "ANSA"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T17:47:00+00:00",
+      "last_reported": "2026-09-01T17:47:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Threats from a designated terrorist organization/state actor involved in militant activity.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "IRGC threatens US over new attacks",
+      "title_variants": [
+        "IRGC threatens US over new attacks"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "The Pasdaran threaten the US"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The Pasdaran (Islamic Revolutionary Guard Corps) operate out of Iran, issuing threats from there.",
+      "ai_geo_fingerprint": "59ebfe7509efd844b10631174e3202f803ac19a7101dda08ead1693a7aed2c3c",
+      "ai_geo_inferred": true
+    },
+    {
       "id": "67f517c5db3ab0d5",
       "category": "Attacks",
       "categories": [
@@ -1031,7 +1202,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Sabotage attack on a power substation in Brandenburg, Germany.",
       "ai_geo_fingerprint": "b1f23fa27f5383893c925a00eb9fdebc1206c884894c032f90b5b8579888d5d6",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "221489476937df6d",
@@ -1229,6 +1404,66 @@
       ]
     },
     {
+      "id": "68789b0c8ba64dc0",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Sabotage at the Jänschwalde power plant",
+      "summary": "Local reporting detailing sabotage incidents at the Jänschwalde power plant.",
+      "original_title": "Sabotage am Kraftwerk Jänschwalde",
+      "original_summary": "Sabotage am Kraftwerk Jänschwalde rbb24.de",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-09-01T16:01:44+00:00",
+      "source": "rbb24.de",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQMC1mYkFuQ29lczJHM3pVSlZlc0pGemNzUmt6UHdmTVNjU25IN1JsVmZiSmJwVEZqbEYzMjA3SThjWmtxQnVOeXludFk3YlZpb1p1Z0QtblJvMTNCSEJzMlZPUlVULUh0dDMxQ2JBRnBDbUZxS3B5YmRrR29SOXpPRVdLdTEzLUpENW9n?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": "Jänschwalde",
+      "region": null,
+      "latitude": 51.86066,
+      "longitude": 14.49813,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "rbb24.de"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T16:01:44+00:00",
+      "last_reported": "2026-09-01T16:01:44+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Critical infrastructure sabotage incident.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "sabotage at Jänschwalde power plant",
+      "title_variants": [
+        "sabotage at Jänschwalde power plant"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Sabotage at the Jänschwalde power plant"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Jänschwalde power plant is located in Jänschwalde, Brandenburg, Germany.",
+      "ai_geo_fingerprint": "1bcb5f4513da7a4385f19f1dbbc4f05e07a88134d475328f54d977f3b1594fca",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "5428c2870e63c286",
       "category": "Attacks",
       "categories": [
@@ -1299,10 +1534,74 @@
       "ai_geo_reason": "Interior minister discussing acts of sabotage involving short circuits at the Brandenburg/Jänschwalde power plant.",
       "ai_geo_fingerprint": "ca3d3a947c7047038a592e400059228f798e736606ca7dd34af836a0f454bb92",
       "ai_geo_inferred": true,
-      "dedup_confidence": 0.99,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url"
       ]
+    },
+    {
+      "id": "eeb14adf0c9e6fde",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Attacks"
+      ],
+      "title": "Shin Bet carried out arrest in the heart of Gaza: Documentation from the operation",
+      "summary": "The Israel Security Agency (Shin Bet) released footage documenting a targeted arrest operation carried out in the heart of Gaza.",
+      "original_title": "שב\"כ ביצע את המעצר בלב עזה: תיעוד מהמבצע",
+      "original_summary": "שב\"כ ביצע את המעצר בלב עזה: תיעוד מהמבצע ynet",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-09-01T15:55:06+00:00",
+      "source": "ynet",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFB0MWZrQXNLRk1udFFxbkVPRE5zaVI2ZHBsbHEzelQwWjZxdVJaaUQ5aDVBeXJ1UUpUYzJwY1JLd1RYZHkwVUh3QjZqR3M4MlNSNUZuSDg2bFlhUms?oc=5",
+      "collector": "Google News RSS",
+      "country": "Palestinian Territory",
+      "country_code": "PS",
+      "city": null,
+      "region": "Gaza Strip",
+      "latitude": 31.3547,
+      "longitude": 34.3088,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "ynet.co.il",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "ynet"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T15:55:06+00:00",
+      "last_reported": "2026-09-01T15:55:06+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Active counter-terrorism arrest operation conducted by security services in a conflict zone.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Shin Bet conducts arrest operation in Gaza",
+      "title_variants": [
+        "Shin Bet conducts arrest operation in Gaza"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Shin Bet carried out arrest in the heart of Gaza"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The arrest operation by Shin Bet took place in Gaza.",
+      "ai_geo_fingerprint": "f2a8a65d993853ce614beb878b24d0e555b6114af23a57f9b7eb460b04979463",
+      "ai_geo_inferred": false
     },
     {
       "id": "ec44c6f360f63f56",
@@ -1502,9 +1801,10 @@
       "title_variants": [
         "Sabotage attack involving an explosion and homemade flying objects at an electrical substation in Germany"
       ],
-      "dedup_confidence": 0.549,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "entity_actor_event_signature"
+        "entity_actor_event_signature",
+        "same_url"
       ],
       "location_confidence_score": 0.9,
       "location_method": "ai_city_geonames",
@@ -1805,7 +2105,7 @@
       "collection_locale": "DE:de",
       "published": "2026-09-01T14:39:30+00:00",
       "source": "stuttgarter-nachrichten.de",
-      "source_count": 3,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPaFFXWHk0WWxRanJHNVJDbDZDeUtYRVhBX1FzTkllVjhSdzBDOWd2R1hoQ1ZGRXE0TXpUUWxzaGVwVjJCVmNzdHZ3aWtSNWFPS1kyU1E2MXZ4clM1ZTRGbmI3WEZZS2VMWWZqejRQU1lyUFhLUzdnMzNSNVVGS3V6cGZlbVRwVENWUlhTRkxZNXY5UWg5eW50WDVuNnlURFE1LW5OM0RwNU8xTlBOaDBsa1JHQzZub0dLSmR3eEhhYV9lb3RhektfdzM3cnRVUQ?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -1820,7 +2120,8 @@
       "sources": [
         "stuttgarter-nachrichten.de",
         "BILD",
-        "weltwoche.ch"
+        "weltwoche.ch",
+        "swp.de"
       ],
       "related_articles": [
         {
@@ -1840,9 +2141,18 @@
           "published": "2026-09-01T18:52:04+00:00",
           "source": "weltwoche.ch",
           "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQbEVZR0ptT0FBLU92MDg1NDFENDhtYXpQTkVLMXZvUUEyLTY2RTNOSHI1OXFHVEtNSGJLR1VmTlgtWHI0VmVCY25vZTI0d1k5M3p0VW93WnpKNV9pbDk4QTZVbU85ajA5N0tOUnRUUHNiclNEX3VKUEhzemoyakZFd3pIeFFIUWQwNVZEM3VDajJXeGc4YTBhRkJtWGtrSVc2TVlVQU5nRXZ2TzNMc0hCZlA1bGZxZw?oc=5"
+        },
+        {
+          "title": "Police operation in Brandenburg: Apparent attack on power plant carried out – homemade projectiles found",
+          "original_title": "Polizeieinsatz in Brandenburg: Offenbar Anschlag auf Kraftwerk verübt – Selbstgebastelte Flugkörper gefunden",
+          "original_language": "de",
+          "summary": "A police operation in Brandenburg was launched after homemade projectiles were found, indicating an apparent attack on a power facility.",
+          "published": "2026-09-01T14:39:30+00:00",
+          "source": "swp.de",
+          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOaHpNdzdfSUxpcFRTbUsyREFvUmkxekFrdG4xM2R5WlpCTUFqNHJ1a3pXVkFqaTFlX3d6TlVrMnc5OEFQYkdwQjlXV3pzVXJOckE3V1M2bGNwZkZpN3ZTRFlXTkJmUC1GUnRJNWd6MkttcEJJcmFyZmZpZko2VVdNWi1OcTVGd0d0S29JV1lzcjh5NmQ4eHoyaEs1OEJRS28xc3ZhWGJqbmhWZzYtT0haWVZGNA?oc=5"
         }
       ],
-      "article_count": 3,
+      "article_count": 4,
       "first_reported": "2026-09-01T14:39:30+00:00",
       "last_reported": "2026-09-01T18:52:04+00:00",
       "ai_selection_complete": true,
@@ -1857,9 +2167,10 @@
       "title_variants": [
         "Police investigate apparent attack and find homemade projectiles at a power facility in Brandenburg"
       ],
-      "dedup_confidence": 0.8,
+      "dedup_confidence": 0.99,
       "dedup_methods": [
-        "title_plus_anchor"
+        "title_plus_anchor",
+        "same_normalized_title"
       ],
       "location_confidence_score": 0.9,
       "location_method": "ai_city_geonames",
@@ -2281,81 +2592,6 @@
       ]
     },
     {
-      "id": "16815afd2febadbc",
-      "category": "Attacks",
-      "categories": [
-        "Attacks"
-      ],
-      "title": "Woidke condemns suspected attack",
-      "summary": "Brandenburg Minister-President Dietmar Woidke condemned the suspected attack on the power grid.",
-      "original_title": "Woidke verurteilt mutmaßlichen Anschlag Von dpa-AFX",
-      "original_summary": "Woidke verurteilt mutmaßlichen Anschlag Von dpa-AFX Investing.com Deutsch",
-      "original_language": "de",
-      "collection_language": "de",
-      "collection_language_name": "German",
-      "collection_locale": "DE:de",
-      "published": "2026-09-01T13:58:00+00:00",
-      "source": "Investing.com Deutsch",
-      "source_count": 2,
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOa0VyNWE3MF9mYTlqcU95cVA0V3ZmZm5CREw3cWNoQmlzaFJzcUZCQVluakJORDdKdlQwOXpPbnV5X3dYNUtlUC1aUnVCV0FRYkdmMkJGelJPUHBYejR3cmdGSlpGU21naGtpclpaa2dSSEE3Z19oOHAzMzcwRWlva2ZFTExfWW1XR3pHRWt3YnRTS0twTGdkek10aw?oc=5",
-      "collector": "Google News RSS",
-      "country": "Germany",
-      "country_code": "DE",
-      "city": null,
-      "region": "Brandenburg",
-      "latitude": 52.4125,
-      "longitude": 12.5316,
-      "location_precision": "region",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "Investing.com Deutsch",
-        "WELT"
-      ],
-      "related_articles": [
-        {
-          "title": "Woidke verurteilt mutmaßlichen Anschlag",
-          "original_title": "Woidke verurteilt mutmaßlichen Anschlag",
-          "original_language": "de",
-          "summary": "Woidke verurteilt mutmaßlichen Anschlag WELT",
-          "published": "2026-09-01T13:59:32+00:00",
-          "source": "WELT",
-          "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxONWZPZHlrakw5dVNNbWIzdVVzaE5QcldTbS13Sk1XYzBkcXZ4WHE3ZFFMckZvdVprcHQyY2d3MGN2bTRMbWxFQV85UmJvaGMwaGlBcVZSZ1ZaQnNGcVp0bkVvNTJnVkVDcUlPeElzQkdrdHhkcDdvTVBxd2NUelpMNy1kM0JQdHB6WnVIdUM1NUVuWXBWY1FzTlpUMjRQUFVEU2tzUEUycmdwbzZ1c2VxTERCdW5odw?oc=5"
-        }
-      ],
-      "article_count": 2,
-      "first_reported": "2026-09-01T13:58:00+00:00",
-      "last_reported": "2026-09-01T13:59:32+00:00",
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "very_high_title_similarity"
-      ],
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 80,
-      "ai_relevance_reason": "Official reaction to the current critical infrastructure attack in Brandenburg.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "political condemnation of suspected attack on Brandenburg power grid",
-      "title_variants": [
-        "political condemnation of suspected attack on Brandenburg power grid"
-      ],
-      "location_confidence_score": 1.0,
-      "location_method": "ai_region_coordinates",
-      "location_evidence": [
-        "Brandenburg Minister-President Dietmar Woidke condemned the suspected attack"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "The attack and official statements concern the state of Brandenburg, Germany.",
-      "ai_geo_fingerprint": "bebf1cba3d190cb62be21505413d7d314eb32a283f4bce90f46fdf1362982d80",
-      "ai_geo_inferred": false
-    },
-    {
       "id": "edda3211bea18d41",
       "category": "Attacks",
       "categories": [
@@ -2485,6 +2721,93 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "16815afd2febadbc",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Woidke condemns suspected attack",
+      "summary": "Brandenburg Minister-President Dietmar Woidke condemned the suspected attack on the power grid.",
+      "original_title": "Woidke verurteilt mutmaßlichen Anschlag Von dpa-AFX",
+      "original_summary": "Woidke verurteilt mutmaßlichen Anschlag Von dpa-AFX Investing.com Deutsch",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-09-01T13:52:00+00:00",
+      "source": "Investing.com Deutsch",
+      "source_count": 4,
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOa0VyNWE3MF9mYTlqcU95cVA0V3ZmZm5CREw3cWNoQmlzaFJzcUZCQVluakJORDdKdlQwOXpPbnV5X3dYNUtlUC1aUnVCV0FRYkdmMkJGelJPUHBYejR3cmdGSlpGU21naGtpclpaa2dSSEE3Z19oOHAzMzcwRWlva2ZFTExfWW1XR3pHRWt3YnRTS0twTGdkek10aw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": null,
+      "region": "Brandenburg",
+      "latitude": 52.4125,
+      "longitude": 12.5316,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Investing.com Deutsch",
+        "WELT",
+        "Die Sachsen News",
+        "boerse.de"
+      ],
+      "related_articles": [
+        {
+          "title": "Woidke verurteilt mutmaßlichen Anschlag",
+          "original_title": "Woidke verurteilt mutmaßlichen Anschlag",
+          "original_language": "de",
+          "summary": "Woidke verurteilt mutmaßlichen Anschlag WELT",
+          "published": "2026-09-01T13:59:32+00:00",
+          "source": "WELT",
+          "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxONWZPZHlrakw5dVNNbWIzdVVzaE5QcldTbS13Sk1XYzBkcXZ4WHE3ZFFMckZvdVprcHQyY2d3MGN2bTRMbWxFQV85UmJvaGMwaGlBcVZSZ1ZaQnNGcVp0bkVvNTJnVkVDcUlPeElzQkdrdHhkcDdvTVBxd2NUelpMNy1kM0JQdHB6WnVIdUM1NUVuWXBWY1FzTlpUMjRQUFVEU2tzUEUycmdwbzZ1c2VxTERCdW5odw?oc=5"
+        },
+        {
+          "title": "Woidke condemns suspected attack",
+          "original_title": "Woidke verurteilt mutmaßlichen Anschlag",
+          "original_language": "de",
+          "summary": "Brandenburg Minister-President Dietmar Woidke publicly condemns the suspected sabotage attack on the electrical infrastructure.",
+          "published": "2026-09-01T13:52:00+00:00",
+          "source": "Die Sachsen News",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNTVZCaERBNVZ3dVlMTS1KenZjNm9Gem5TSjh5UGRLTzFFYkpScWQ2SjNVelpmWlk4QjNPTjAzcE5HaGd1UzZMWG4wMEdTSUhqcUJCaFdqV1VEVDFpeVB3TVV0YkhUek5tdWVPbVpsUmpmNF9HLXltTTc0UVRUY052N3pzVUtEaDVs?oc=5"
+        }
+      ],
+      "article_count": 3,
+      "first_reported": "2026-09-01T13:52:00+00:00",
+      "last_reported": "2026-09-01T13:59:32+00:00",
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "very_high_title_similarity",
+        "same_normalized_title"
+      ],
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 80,
+      "ai_relevance_reason": "Official reaction to the current critical infrastructure attack in Brandenburg.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "political condemnation of suspected attack on Brandenburg power grid",
+      "title_variants": [
+        "political condemnation of suspected attack on Brandenburg power grid"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Brandenburg Minister-President Dietmar Woidke condemned the suspected attack"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The attack and official statements concern the state of Brandenburg, Germany.",
+      "ai_geo_fingerprint": "bebf1cba3d190cb62be21505413d7d314eb32a283f4bce90f46fdf1362982d80",
+      "ai_geo_inferred": false
     },
     {
       "id": "9eb36eb8ed6d8aec",
@@ -2808,7 +3131,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Attack on a substation in Brandenburg, Germany.",
       "ai_geo_fingerprint": "2cf6be08ccd2e9ee4351e970e13d40d449925e9ea4f1fc550d1fdc23542c306b",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "caee5c814b90edea",
@@ -3194,7 +3521,7 @@
       "collection_locale": "DE:de",
       "published": "2026-09-01T12:32:13+00:00",
       "source": "siegessaeule.de",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQTTlsckN3LTJZSWcwZmFYSkp5UUlTbU5LUS16NXI3SkF2UVVyOVRseEZMazlCNThFMkVTT0pZUThvWDFJcWFlUHRlZzVYMjg0dzc5N25seWQ0SWxOSDJxcWE1YlZfZjByckJSRU5zcGVLa1pldGVWZ3V1d2kxVS0wX0Voa2pOR3NyUXBuOUdKSVNTcFNON2NoaUpQaE8?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -3207,7 +3534,8 @@
       "location_confidence": "high",
       "acquisition_channel": "multilingual_discovery",
       "sources": [
-        "siegessaeule.de"
+        "siegessaeule.de",
+        "WELT"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -3236,7 +3564,73 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "CSD (Christopher Street Day) attack typically refers to events in Berlin, as indicated by the local niche source.",
       "ai_geo_fingerprint": "3349a37af314631a01d9af7d3435f93e113bbaae5c48f2482857848d2ddc2174",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "eeb14adf0c9e6fde",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Wave of false bomb threats sweeps across Russian regions",
+      "summary": "A wave of hoax bomb threats (false mining reports) has hit several regions across Russia.",
+      "original_title": "В регионах России прошла волна лжеминирований",
+      "original_summary": "В регионах России прошла волна лжеминирований kommersant.ru",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-09-01T12:30:35+00:00",
+      "source": "kommersant.ru",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1hS2RDRWhuWTFrTHZ2YzVhM1ZDdGVMUzA4UnBSMDZvcjhESlNyX2ZpM1VWcEdmSnZIN1dIcXhMalBMVmh3Ump4ZkNBM2piQQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": "Moscow",
+      "region": null,
+      "latitude": 55.75204,
+      "longitude": 37.61781,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "kommersant.ru",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "kommersant.ru"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T12:30:35+00:00",
+      "last_reported": "2026-09-01T12:30:35+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Mass false bomb threats constitute a security/disruption incident relevant to emergency response and threat mapping.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Wave of false bomb threats across Russian regions",
+      "title_variants": [
+        "Wave of false bomb threats across Russian regions"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Wave of false bomb threats sweeps across Russian regions"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The wave of bomb threats occurred across multiple regions in Russia.",
+      "ai_geo_fingerprint": "7349c05b371cccddac8506732860e26f5ea6c86b35b15655018f6af12edd576b",
+      "ai_geo_inferred": false
     },
     {
       "id": "eeb14adf0c9e6fde",
@@ -5031,7 +5425,7 @@
       "collection_locale": "FR:fr",
       "published": "2026-09-01T10:29:00+00:00",
       "source": "France 24",
-      "source_count": 36,
+      "source_count": 41,
       "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxPbWJtckVHbUNzSUo1ZmRTU3pnWWdkY0E1SGhGdVppZGNmclhQa0xWWkt0cWZZVmVXc3hQMzNsTkhoczR6Qk11WUxGQmpPb3pnLWlFZkNJS0Zqd3BDLTQyb1JQQ0I3b04yUlZGcnBzMFpOLXpmM2JrMzI4Q2pmSFRMVmRESUlFSE5FRmYyRllPRXBVZ3Z5aGh4TEFVVUtOQnhaSVRHSENHTFd4ay1SR0Y4eHc5VmtwcnJtdnZ2cTVpb2kwOERpYnNIQXVDbjZJc3dtYnFaQmZUMXlJTTJCQlB5b3gyNDBfVFhtdVFqSklEQTU1ejdJUFpjM1VTbDJKa2RjLUQwdw?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -5081,7 +5475,12 @@
         "TF1 Info",
         "20 Minutes",
         "Watson",
-        "היום"
+        "היום",
+        "sueddeutsche.de",
+        "Le Matin",
+        "novayagazeta.ru",
+        "RTL Lëtzebuerg",
+        "fr.de"
       ],
       "related_articles": [
         {
@@ -5110,9 +5509,18 @@
           "published": "2026-09-01T11:49:21+00:00",
           "source": "Blick",
           "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQaHRZV0F2REE2b085WldSUnU2NV9BcVJFenFCTTVUTDJJdDdLekFZLUQxM0NLQWRGekFqSkdyZlRxY0pMX0xqdXpEUGU2NFJ0anhmekFrWjlUOV9XZW5scEtBLVpFc3dZNVFBd0JGMVhxN0cycVZ1a3RaTktXU1ZvclFwMW9kVHVjT0FwLWFlRlRqZzl4TC05MDM4UHFyallmR0YyR3VxemFyNmo2eHFNdmZnWDIxcXVwVWpQckN0SGhmdTg?oc=5"
+        },
+        {
+          "title": "Germany: Bomb attack near a thermal power plant",
+          "original_title": "Allemagne : Attentat à la bombe près d'une centrale thermique",
+          "original_language": "fr",
+          "summary": "A bomb attack/explosion has damaged an electrical substation near a thermal power plant in Germany, prompting investigations into infrastructure sabotage.",
+          "published": "2026-09-01T11:49:21+00:00",
+          "source": "RTL Lëtzebuerg",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPWW5aR3AzQldyQVJfZXVBTFVVZDMwOU82S3pMOGN1NktVXzJQZTFCTzU3Y2R0WTZCS1lGcHdXNFdhYVJWMHczeEtwNXFiXzk0NnFVcjl2UUZKM1NESnRIenJTdXlDYUZPVEc4dFhuWHJUNVpxb2pNTVR5ckZzXzkwMVo4aFh4RGY0?oc=5"
         }
       ],
-      "article_count": 3,
+      "article_count": 4,
       "first_reported": "2026-09-01T10:29:00+00:00",
       "last_reported": "2026-09-01T11:51:03+00:00",
       "ai_selection_complete": true,
@@ -6516,7 +6924,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "A Belarusian citizen/scholar added to the state terrorists list in Belarus.",
       "ai_geo_fingerprint": "fc741bb435ecd4795bf1db3c7bfb6c2114a9a6d11e88ef9c8471dbf89c329289",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "eeb14adf0c9e6fde",
@@ -6784,7 +7196,84 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Trial concerning the Muslim Brotherhood cell takes place in Egypt.",
       "ai_geo_fingerprint": "769c57cac003effac5d0921fc904dc4e5b9b082affaabfbf620de1bd1dd9fcdc",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "fb3c63caae94e5f2",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Manchester synagogue holds memorial for Yom Kippur terror attack victims",
+      "summary": "A synagogue in Manchester marks the anniversary / holds a memorial service for victims of the Yom Kippur terrorist attack.",
+      "original_title": "Manchester synagogue holds memorial for Yom Kippur terror attack victims",
+      "original_summary": "Manchester synagogue holds memorial for Yom Kippur terror attack victims timesofisrael.com",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English",
+      "collection_locale": null,
+      "published": "2026-09-01T07:17:25+00:00",
+      "source": "timesofisrael.com",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPR0JjOUFNcEV1UnRUXzAwWnVJaURld0gxcVVybTl5QmJiRlJEeW1EOVlNVTlvRnVzN05fV1pja0ZMekFxZVlsZFgxeDN5dGFUYUJGWEJRbUNLekkza0ZGNURNMGdWOWNMcU5iN2YzbnVUUUpCclg2T0JHQUxfTi1uWkFZYV9pcDd6SHo1SlJ5LTAyN3NKa19WeXFNQUV3U01wNThSV3lrWGppTDdWT1lfMkRTc1BBMnVfanc?oc=5",
+      "collector": "Google News RSS",
+      "country": "United Kingdom",
+      "country_code": "GB",
+      "city": "Manchester",
+      "region": null,
+      "latitude": 53.48095,
+      "longitude": -2.23743,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "sources": [
+        "timesofisrael.com"
+      ],
+      "related_articles": [
+        {
+          "title": "Manchester synagogue marks one year since deadly Yom Kippur terror attack",
+          "original_title": "Manchester synagogue marks one year since deadly Yom Kippur terror attack",
+          "original_language": "en",
+          "summary": "Manchester synagogue marks one year since deadly Yom Kippur terror attack timesofisrael.com",
+          "published": "2026-09-01T12:32:21+00:00",
+          "source": "timesofisrael.com",
+          "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQVUJDaDQ2SG9lal85UXhvNHl6TDZpa1JZNTJiTWJjSkFVZm5qOTMyem1nU2Z3R25jNmpYdTA1OWl2SU9qcnBET2pPOWFCZm82NG5rckhiY2tIdncwNkt4SkV2bFRULUluNk1zLW9EOThEM1gtN24zUi1RYnJHTEt2LURtVmVBMFNfcEpTMzY0cFZaOXRTX00yVjMtM2dCZjU1d3MwUC1ONGdMNnU40gGsAUFVX3lxTFBVQkNoNDZIb2VqXzlReG80eXpMNmlrUlk1MmJNYmNKQVVmbmo5MzJ6bWdTZndHbmM2alh1MDU5aXZJT2pycERPak85YUJmbzY0bmtySGJja0h2dzA2S3hKRXZsVFQtSW42TXMtb0Q5OEQzWC03bjNSLVFickdMS3YtRG1WZUEwU19wSlMzNjRwVlo5dFNfTTJWMy0zZ0JmNTV3czBQLU40Z0w2dTg?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-09-01T07:17:25+00:00",
+      "last_reported": "2026-09-01T12:32:21+00:00",
+      "dedup_confidence": 0.703,
+      "dedup_methods": [
+        "title_plus_anchor"
+      ],
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 70,
+      "ai_relevance_reason": "Commemoration and security-related community event tied directly to a past terrorist attack.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "Manchester synagogue memorial service for Yom Kippur terror attack victims",
+      "title_variants": [
+        "Manchester synagogue memorial service for Yom Kippur terror attack victims"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Manchester synagogue holds memorial"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The memorial event took place at a synagogue in Manchester, UK.",
+      "ai_geo_fingerprint": "86afe602c836d0da8223a34273ba18d9fad662618ffdef7d844270a30d09a892",
+      "ai_geo_inferred": false
     },
     {
       "id": "eeb14adf0c9e6fde",
@@ -7336,7 +7825,7 @@
       "collection_locale": "IL:he",
       "published": "2026-09-01T06:13:17+00:00",
       "source": "Vietnam.vn",
-      "source_count": 3,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1CNG1WeHF6N0k4WHU0eTB3bG5VU0p6aFE3cFIyVVRNUnFVaGFMT1dsUnJlb0NFbEdKUE5CcHJjVUlCbUdNODVYcWlKbmVWeEVhaVRqZmY4Mnd4U1pld3hHbHBWalloUjIxUVJCUktSVQ?oc=5",
       "collector": "Google News RSS",
       "country": "United States",
@@ -7351,7 +7840,8 @@
       "sources": [
         "Vietnam.vn",
         "sondakika.com",
-        "Yeni Bakış Gazetesi İzmir"
+        "Yeni Bakış Gazetesi İzmir",
+        "yenibakishaber.com"
       ],
       "related_articles": [
         {
@@ -8322,7 +8812,7 @@
       "collection_locale": "DE:de",
       "published": "2026-09-01T03:46:00+00:00",
       "source": "ZFK – Zeitung für kommunale Wirtschaft",
-      "source_count": 23,
+      "source_count": 32,
       "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOUlhTdEFMbHJ2YWpBd1lGbVYxNDF6WGVTMjYyQ09RaU9QbFFOZWpycXJYSDF4QXdXV0ZGQkZUVUswNGV4R2dGeHhBNHhBSnVsY2Yzc3BTSWIwejRRY0pQNXBsblhfbGlJcVFzRXdUNS1XOWZvaWd6TnlNcTlYMTBGNDBSSXp0TGc?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -8357,7 +8847,16 @@
         "tagesschau.de",
         "rtl.de",
         "SZ.de",
-        "Radio Emscher Lippe"
+        "Radio Emscher Lippe",
+        "web.de",
+        "RTL.de",
+        "SRF",
+        "BZ Berlin",
+        "sueddeutsche.de",
+        "Spiegel",
+        "Manager Magazin",
+        "ZDFheute",
+        "Deutschlandfunk"
       ],
       "related_articles": [
         {
@@ -8548,7 +9047,7 @@
       "collection_locale": "DE:de",
       "published": "2026-09-01T03:46:00+00:00",
       "source": "de.euronews.com",
-      "source_count": 31,
+      "source_count": 32,
       "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPMEpzbFM5dzFoa0lyN0pla1dpNnRiOHpWVzlxZUVHeGRNRzFBSEZBTVlYOFVweU5STGNuSlB1d2EwZmZmZmZEM3BWdzY1TzhEUVcxSWFTNzQ2dTdTY2xnRzJnemNMQ0pURkVGUkhJaGpDb0x6QnpsUXlYTU1qclpjNldtaVlQcUJIcXBybEhkRWtpaHpZcUxwVA?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -8591,7 +9090,8 @@
         "BZ Berlin",
         "SZ.de",
         "Radio Emscher Lippe",
-        "BILD"
+        "BILD",
+        "RP Online"
       ],
       "related_articles": [
         {
@@ -9142,7 +9642,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "An Italian judge ruled on detained suspects, indicating judicial proceedings in Italy.",
       "ai_geo_fingerprint": "1f582af32791cc19dfd222bdc3b10f1f45bb1101692b125eda542943c44ccc24",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "6b86e0f0840a8686",
@@ -9973,7 +10477,7 @@
       "collection_locale": "FR:fr",
       "published": "2026-08-31T17:36:40+00:00",
       "source": "Le Parisien",
-      "source_count": 8,
+      "source_count": 9,
       "url": "https://news.google.com/rss/articles/CBMikgJBVV95cUxOOXYxaG0xb09iZm9uR2FVQzFvUFkzaEROMTFUdURvVWxEbmZtRTZ1WF9GYmI1WGMxajJwVHpQa3FrZkpMcWY5WV9QSWdDcFh3VDBxTE1NTlBMQ1VjUWtXNm1oRkZqaWJJRnRPTGw0OWxlZklkazRfeTNqejlxcm15UTQtaVJOcFU1aFdDLXVFcUttY21ucWw2ZXRkZjg1bnR5bExEMS1IaXZDQnVHWWQtd1lUZk1ZZnROWE1EUUJYMkZiTmhCUHNTSXlnSlhtVjlpSkZOSDBSN2NHcFRnc1BBX09kdTVWdDlLWHEtdUx5WGYycHVfa19GWklDalljejh0Q2FudmVOei01VkEyRTcwMmFR?oc=5",
       "collector": "Google News RSS",
       "country": "Poland",
@@ -9993,12 +10497,23 @@
         "Deutschlandfunk",
         "Pester Lloyd",
         "Informat.ro",
-        "Рамблер"
+        "Рамблер",
+        "leparisien.fr"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Warsaw: Terrorism Investigation Opened Following Fire at Polish Drone Factory",
+          "original_title": "Warschau - Terrorismus-Ermittlungen nach Brand in polnischer Drohnenfabrik",
+          "original_language": "de",
+          "summary": "Authorities in Warsaw have launched a formal terrorism investigation following a suspicious fire at a Polish drone manufacturing facility.",
+          "published": "2026-09-01T09:47:18+00:00",
+          "source": "Deutschlandfunk",
+          "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNS2gzUjNZRUlENlBnTVRuZC1leWRzZ2RnVENfcDdjNzE3NHMyUnlBUXNsQWphV1pwMnhpclJ3SHhxZExTMXZwaVhFalRva0ozUmk5Mnh2SXdma2RNb3IzcmhLd3R6RjJEcmlXdGxvY2ZzZG9FMU5CbllKa1V2Qk1XcUhWT0NtVGM2eFVNNWJQTnJ1OUdOX1RfYVR4Q3pRSkxOVDluRHhB?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-31T17:36:40+00:00",
-      "last_reported": "2026-08-31T17:36:40+00:00",
+      "last_reported": "2026-09-01T09:47:18+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -10025,7 +10540,8 @@
       "ai_geo_inferred": true,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "very_high_title_similarity"
       ]
     },
     {
@@ -10521,9 +11037,10 @@
       "title_variants": [
         "Armed attack killing 11 farmers in Nigeria"
       ],
-      "dedup_confidence": 0.8,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "title_plus_anchor"
+        "title_plus_anchor",
+        "same_url"
       ],
       "location_confidence_score": 0.99,
       "location_method": "ai_country_capital",
@@ -13229,7 +13746,7 @@
       "collection_locale": "IT:it",
       "published": "2026-08-31T10:02:00+00:00",
       "source": "ANSA",
-      "source_count": 11,
+      "source_count": 12,
       "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxNTjFvYUZibkJYSU1xTWd3VVhkU041M1JLT1FuVWRyUm43ZlNZSUtZS0JzbEN4WWE4cGNiOGRmQlRaeVVDNm9adWFkTks4QjR0TnZuM0NsbG1CR29KMkwxcTE1RV9ZdllxNWltdTBnR2xIeVlfVl80ODBZc3dyN2I4bmR5aExQN3Q4c1d1OTJmVUIwVVNrc1UxMDVNckxrN2l5MGhGQ3h1VVJMcThUbmxMbzZaaUN2Mnp0WVB0VFlmcXl6enoyM1ByZ0xuUm9DNjE1bmZvZTNaU0ZhUk5vQVBqTVAtMXB1TlpadlFTdWZ3UVVPdmxyUlgzVnJBWEpvUEE?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -13254,7 +13771,8 @@
         "KrasnodarMedia",
         "Живая Кубань",
         "24Krasnodar.ru",
-        "utyug.info"
+        "utyug.info",
+        "ТСН 24"
       ],
       "related_articles": [
         {
@@ -13870,7 +14388,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Arrest of a terrorist in the West Bank city of Nablus.",
       "ai_geo_fingerprint": "f061b30ef83bdf6095a64b315966023046de43a1118b518f5e022fe2f608705d",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -13993,7 +14515,7 @@
       "collection_locale": "FR:fr",
       "published": "2026-08-31T08:35:51+00:00",
       "source": "Vietnam.vn",
-      "source_count": 2,
+      "source_count": 3,
       "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNaVFOdkNJZ3cyR1M0TEFhTl9BT1FSR1dpTVhIOTc4Q2lsZ0V3b3BXYy1NYlBpVHMtS2VacE9RZnhwczRyMTJ2d3ZWRENwSXJ3NC1CNDFFX1NKYTlwYVhxVFFJdzVmc2xZTzhyM212RllBN01ZSjJsV0ExMVBBeVE2V1pLV0s4T2tlRllHMFg0V3o?oc=5",
       "collector": "Google News RSS",
       "country": "Mexico",
@@ -14007,7 +14529,8 @@
       "acquisition_channel": "multilingual_discovery",
       "sources": [
         "Vietnam.vn",
-        "La Presse"
+        "La Presse",
+        "DHnet"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -14122,7 +14645,7 @@
       "collection_locale": "DE:de",
       "published": "2026-08-31T08:24:37+00:00",
       "source": "Frankfurter Rundschau",
-      "source_count": 18,
+      "source_count": 20,
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNWmo2NEdSZHpjeC1iWVdpemNPZUc1WkR3c25weklrYnI0U0VVUm9zVmdRRHF3cDdBQXo0cGN0dlhpdUFEWF9CMV8zc2xVaExFNEZlOW8tZC00b01GdVZ6Rl9YYkdscFhPbDdSeTFod0V3VU9BVkl2QXdQMV9SWkZyWUdpRXBYM1Fwc0JhSFdlbjlPSF9HOUVWRHl0VjhkUDFLcDdoaXpwSkhBTzBVLVZCbmlydXNmcWNyOXc?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -14154,7 +14677,9 @@
         "FAZ",
         "RP Online",
         "Цензор.НЕТ",
-        "BZ Berlin"
+        "BZ Berlin",
+        "sueddeutsche.de",
+        "STERN.de"
       ],
       "related_articles": [
         {
@@ -19544,7 +20069,7 @@
       "collection_locale": "TR:tr",
       "published": "2026-08-30T17:55:40+00:00",
       "source": "soL Haber",
-      "source_count": 9,
+      "source_count": 10,
       "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOS3lCNHhRZ0gwVlVYUExMbnIyQjUwSlVqeS1XUGVOb2xadUJpeTBUd3RnT1EyR3pGWFpqSFJrZUxNQXNSTDF1SWpYTmZudHFidHhXT3Y5c01rd1FabUFKYnpROC1PeTZuTjBsZGVoRGNzbXhERzZBbk1YdzZJaUZuaDl3OHNNQXNMZkF5dDNVRWZJeUkwZUE?oc=5",
       "collector": "Google News RSS",
       "country": "Iran",
@@ -19565,7 +20090,8 @@
         "STAR - Haberler",
         "N Gazete",
         "habervitrini.com",
-        "F5Haber"
+        "F5Haber",
+        "star.com.tr"
       ],
       "related_articles": [
         {
@@ -19770,7 +20296,7 @@
       "collection_locale": null,
       "published": "2026-08-30T17:08:45+00:00",
       "source": "i24NEWS",
-      "source_count": 30,
+      "source_count": 31,
       "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxPeEdHNVFFSWJIRGpvZnR2Z2lnNXdjc21SY09VOC1lVEJ2SFpvZk5TWHI0U3BxR2MwYldOLVN3a3NTNVI1NHZ2V04zdXg3TzluSENFaW10ZFRZZnQxVDN2Ukpzbml0NWxGRXk2RzJ3SFVLQ3FDeVZFSGNtbGNVd1luYVBkOW9BeFhwSTFFUHBtWlVTR0tMY2JUcnRIU0RULVd2LW5vd2hkem9DZEQzSFU3NHY4LU9pVnVKYWZCaldGczFhY3FtbUV4TzQ5SlBUOEtQZUE4UDdDM1FpSXdE?oc=5",
       "collector": "Google News RSS",
       "country": "Yemen",
@@ -19814,7 +20340,8 @@
         "نشوان نيوز",
         "elciudadanoweb.com",
         "شبكة تواصل الإخبارية",
-        "ye-media.net"
+        "ye-media.net",
+        "cratar.net"
       ],
       "related_articles": [
         {
@@ -23450,7 +23977,7 @@
       "collection_locale": "ES:es",
       "published": "2026-08-30T09:04:40+00:00",
       "source": "El Mundo",
-      "source_count": 3,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5ZbWs3RXpRR3FBU1Q4enJvdUNiUVItWFBvLWFPa3NjNjlPYWpWR1Z5WTBiN2Q0SG5fTERJWFdRVTFqbXJNXzFqMUFJWVZIdWdiTm53RUtn?oc=5",
       "collector": "Google News RSS",
       "country": "Switzerland",
@@ -23467,7 +23994,8 @@
       "sources": [
         "El Mundo",
         "la Repubblica",
-        "repubblica.it"
+        "repubblica.it",
+        "ANSA"
       ],
       "related_articles": [
         {
@@ -25253,7 +25781,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Shooting at a rave party near Zurich, Switzerland.",
       "ai_geo_fingerprint": "c6147c8ce88702a95f185cfdaf15b1754b2aa82dfb4a90b77d1a25ef7b971b83",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -26454,7 +26986,8 @@
       "id": "22c665cb20605b3c",
       "category": "Attacks",
       "categories": [
-        "Attacks"
+        "Attacks",
+        "Legal / Judicial"
       ],
       "title": "Widespread settler escalation and condemnations from Netanyahu and Herzog: What is happening in the West Bank?",
       "summary": "An analysis of widespread settler violence and official condemnations in the West Bank.",
@@ -29048,9 +29581,18 @@
           "published": "2026-08-29T13:20:32+00:00",
           "source": "قناة العالم",
           "url": "https://news.google.com/rss/articles/CBMigwRBVV95cUxNS3RFMnRTR1h0STJKMEFZakI4cFVBek9oMmlpWU4tVVpVempQUlJ5ajNRVE5tNXQ2TWlUMlhnRnl4WTJWWkNwTUczNEZ3WUJRak9PalFOR0VoVmZQLVpGN0JzMVZmLTRDSnlRcjcxRnNoODA0Z2thV0t6cnZjMFB4U01CbXJfd1htOW1YcE5hLW1oeDR5eVFjNy1MZHBMbWpsOFZUU2ZCWmFlYnduWnBpTmV5WWpYNkFtVUx5cGtkQzdsNVNock8zTUZlekhBbWpDbWM2Vk1nMnk2LVVNaGljUHVrSC1udWwxd3d0MVVvRkFnQm9feS16VXVLbE5uR3hQbkQyRXFmZHVvWm05VE5EVy1HZ21ULWdrSDJDZFBRelE4SXlMWmd3SmdCZXBIRzF3cy1tR2RlRktiamRtZGI5WER0VEE3SUEyM1RRbllhT21uWkJCWUlMWFdMeHdRSzh1c3VuRlBsUVlzdXJYWkdzZEtudHZ2VndnTTNQR1NZVlpkMWRuZkpvUU8wTVhJSWF3Tm1YZzNxNWdPeXNIeXJjUjZjck9PVy1jR0VXbDdEdGlPOGZydUVxYkdrWmZJeS1iSXZRRUFoLXFiZTU1QlpEOXZfUFhudzFFNHZqVV90bWVUcEYxTEQ3OWpWU3BUM3k5NzJGdGdJeGNxcENXQ1NNeXVOTQ?oc=5"
+        },
+        {
+          "title": "Revolutionary Guards announce dismantling of a terrorist cell in Saravan, southeastern Iran",
+          "original_title": "Les Gardiens de la révolution annoncent le démantèlement d'une cellule terroriste à Saravan, dans le sud-est de l'Iran",
+          "original_language": "fr",
+          "summary": "Iran's Islamic Revolutionary Guard Corps announced the dismantling of an active terrorist cell operating in Saravan, southeastern Iran.",
+          "published": "2026-08-30T08:12:22+00:00",
+          "source": "وكالة سبأ",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE00SWNWWG8wLUZScTUtVVUtRFMtZzZCUFhQZWd4SUlyOXBUVlpFalFQNFRxVEhUYnptaWZBcENfMVJIMUNQWkZWc0s3NGJPWmZLOEV5Smw5X3J0eVU?oc=5"
         }
       ],
-      "article_count": 6,
+      "article_count": 7,
       "first_reported": "2026-08-29T13:20:32+00:00",
       "last_reported": "2026-08-30T08:45:51+00:00",
       "ai_selection_complete": true,
@@ -29069,7 +29611,8 @@
       "dedup_methods": [
         "title_plus_anchor",
         "same_url",
-        "entity_actor_event_signature"
+        "entity_actor_event_signature",
+        "very_high_title_similarity"
       ],
       "location_confidence_score": 0.95,
       "location_method": "ai_city_geonames",
@@ -40760,9 +41303,18 @@
           "published": "2026-08-28T03:00:00+00:00",
           "source": "הארץ",
           "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQWl9USm80ZEhyQ29HZmExRjhtUFJzQWFCN0NxcVV4bEllQnFVbVViRWFLZVVINXNOM3NuenRrZ1oyMlp2SkFJMFdaanpnUllCeGRBVG1LdU5NNmtGSnNCSUlaLVlHQTA2VWp6cXFGTmNwNjBnWGpmb2hVbEprYlNaS2prVnNtTHlHZm1KM25fYkVzclhhWmFhRDM1WTdIM3FFTk9TQ2drM19KS1M2NlpZ?oc=5"
+        },
+        {
+          "title": "IDF eliminates two Hamas terrorists, including Oct 7 participant",
+          "original_title": "צה\"ל: חיסלנו אתמול 2 מחבלי חמאס, אחד מהם פשט לישראל ב-7/10",
+          "original_language": "he",
+          "summary": "The IDF announced the elimination of two Hamas militants, one of whom participated in the October 7 attacks.",
+          "published": "2026-08-30T06:08:18+00:00",
+          "source": "ynet",
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFByQ1JjQTFNeDBISHhzWEp0cXhTdnVCc0JxTWZ3UjZSY0pfSFZYSFJEQlZ0dG5pRU04NjNTOGtZdmw1ZkZOZTVIWWR2TThOeWtnY2FGQmNBQk9Cdw?oc=5"
         }
       ],
-      "article_count": 7,
+      "article_count": 8,
       "first_reported": "2026-08-28T03:00:00+00:00",
       "last_reported": "2026-08-30T06:30:00+00:00",
       "dedup_confidence": 1.0,
@@ -45544,7 +46096,8 @@
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "title_plus_anchor",
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "same_url"
       ]
     },
     {
@@ -129965,21 +130518,21 @@
     "primary_model": "gemini-3.5-flash-lite",
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
-    "cached_events": 1797,
-    "ai_processed_this_run": 13,
-    "ai_pending_at_start": 13,
-    "city": 777,
-    "region": 370,
-    "country_capital": 650,
+    "cached_events": 1810,
+    "ai_processed_this_run": 6,
+    "ai_pending_at_start": 6,
+    "city": 780,
+    "region": 371,
+    "country_capital": 652,
     "unlocated": 13,
-    "mapped_total": 1797,
-    "high_confidence": 1633,
+    "mapped_total": 1803,
+    "high_confidence": 1639,
     "medium_confidence": 171,
     "low_confidence": 6,
     "methods": {
-      "ai_city_geonames": 750,
-      "ai_region_coordinates": 370,
-      "ai_country_capital": 650,
+      "ai_city_geonames": 753,
+      "ai_region_coordinates": 371,
+      "ai_country_capital": 652,
       "ai_unlocated": 13,
       "ai_city_coordinates": 27
     }
