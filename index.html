@@ -3409,6 +3409,160 @@ html, body {
     }
 }
 
+
+/* ============================================================
+   WEEKLY ANALYSIS
+   ============================================================ */
+
+#headerSituationActions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+}
+
+#weeklyAnalysisButton {
+    min-height: 27px;
+    padding: 5px 10px;
+    border: 1px solid #385d72;
+    border-radius: 3px;
+    background: #0b202d;
+    color: #a9c8d9;
+    font-size: 7.3px;
+    font-weight: 800;
+    letter-spacing: .07em;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+#weeklyAnalysisButton:hover {
+    color: #ffffff;
+    border-color: #6c9bb4;
+    background: #153447;
+}
+
+#weeklyAnalysisPanel {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    background: rgba(1, 7, 11, .76);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+#weeklyAnalysisPanel.open {
+    display: block;
+}
+
+#weeklyAnalysisWindow {
+    position: absolute;
+    top: 7vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(820px, calc(100vw - 40px));
+    max-height: 86vh;
+    overflow: hidden;
+    background: #07131c;
+    border: 1px solid #34566a;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, .55);
+}
+
+#weeklyAnalysisHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 13px 16px 11px;
+    border-bottom: 1px solid #233d4d;
+    background: #091923;
+}
+
+#weeklyAnalysisTitle {
+    color: #e7f2f7;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .07em;
+}
+
+#weeklyAnalysisSubtitle {
+    margin-top: 4px;
+    color: #718d9d;
+    font-size: 8px;
+    letter-spacing: .035em;
+}
+
+#weeklyAnalysisClose {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #34566a;
+    background: #0a1d29;
+    color: #9db7c6;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+#weeklyAnalysisBody {
+    max-height: calc(86vh - 58px);
+    overflow-y: auto;
+    padding: 16px 19px 18px;
+}
+
+#weeklyAnalysisMeta {
+    margin-bottom: 14px;
+    color: #718b9a;
+    font-size: 8px;
+    line-height: 1.45;
+    letter-spacing: .035em;
+}
+
+#weeklyAnalysisReport {
+    color: #d1dee5;
+    font-size: 11px;
+    line-height: 1.62;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+#weeklyAnalysisMethodNote {
+    margin-top: 18px;
+    padding: 9px 11px;
+    border-left: 2px solid #315369;
+    background: rgba(3, 11, 17, .45);
+    color: #6f8999;
+    font-size: 8px;
+    line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+    #headerSituationActions {
+        gap: 4px;
+    }
+
+    #weeklyAnalysisButton {
+        min-height: 22px;
+        padding: 3px 6px;
+        font-size: 6.1px;
+        letter-spacing: .03em;
+    }
+
+    #weeklyAnalysisWindow {
+        top: 40px;
+        width: calc(100vw - 16px);
+        max-height: calc(100dvh - 80px);
+    }
+
+    #weeklyAnalysisBody {
+        max-height: calc(100dvh - 145px);
+        padding: 12px 13px 15px;
+    }
+
+    #weeklyAnalysisReport {
+        font-size: 10px;
+        line-height: 1.52;
+    }
+}
+
 </style>
 
 </head>
@@ -3500,7 +3654,10 @@ html, body {
     <div id="headerSituationBrief">
         <div id="headerSituationTopline">
             <span>SITUATION · LAST 24 HOURS</span>
-            <button id="keyDevelopmentsButton" type="button">VIEW KEY DEVELOPMENTS ›</button>
+            <div id="headerSituationActions">
+                <button id="weeklyAnalysisButton" type="button">WEEKLY ANALYSIS</button>
+                <button id="keyDevelopmentsButton" type="button">VIEW KEY DEVELOPMENTS ›</button>
+            </div>
         </div>
         <div id="headerSituationText">
             Loading the latest 24-hour intelligence brief…
@@ -4153,6 +4310,29 @@ Visible rate
       <div id="trendSummaryDevelopments"></div>
       <div id="trendSummaryMethodNote">
         Based only on deduplicated CT events reported or materially updated during the previous 24 hours. The brief prioritises major attacks, bombings, assassinations, serious clashes, important arrests or plot disruptions, and other operationally significant CT developments. Verify against primary sources before operational use.
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div id="weeklyAnalysisPanel" aria-hidden="true">
+  <div id="weeklyAnalysisWindow" role="dialog" aria-modal="true" aria-labelledby="weeklyAnalysisTitle">
+    <div id="weeklyAnalysisHeader">
+      <div>
+        <div id="weeklyAnalysisTitle">WEEKLY ANALYSIS</div>
+        <div id="weeklyAnalysisSubtitle">Comparative CT criminal analysis · latest 7 days vs preceding 7 days</div>
+      </div>
+      <button id="weeklyAnalysisClose" type="button" aria-label="Close weekly analysis">×</button>
+    </div>
+
+    <div id="weeklyAnalysisBody">
+      <div id="weeklyAnalysisMeta">Loading weekly analysis…</div>
+      <div id="weeklyAnalysisReport"></div>
+      <div id="weeklyAnalysisMethodNote">
+        AI-assisted comparative analysis based only on deduplicated open-source CT events in the map database. The report compares the most recent seven days with the immediately preceding seven days. It is not verified intelligence and should be independently validated before operational or decision-making use.
       </div>
     </div>
   </div>
@@ -4886,6 +5066,10 @@ let trendSummaryData =
     null;
 
 
+let weeklyAnalysisData =
+    null;
+
+
 let selectedDays =
     180;
 
@@ -5096,6 +5280,12 @@ fetch(
 
         trendSummaryData =
             data.trend_summary
+            ||
+            null;
+
+
+        weeklyAnalysisData =
+            data.weekly_analysis
             ||
             null;
 
@@ -10475,6 +10665,171 @@ function renderTrendSummaryPanel() {
 }
 
 
+
+function formatWeeklyDate(
+    value
+) {
+
+    const date =
+        new Date(
+            value
+        );
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+        return "—";
+    }
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            timeZone:
+                "Europe/Paris",
+            day:
+                "2-digit",
+            month:
+                "short",
+            year:
+                "numeric"
+        }
+    );
+}
+
+
+function renderWeeklyAnalysisPanel() {
+
+    const title =
+        document.getElementById(
+            "weeklyAnalysisTitle"
+        );
+
+    const meta =
+        document.getElementById(
+            "weeklyAnalysisMeta"
+        );
+
+    const report =
+        document.getElementById(
+            "weeklyAnalysisReport"
+        );
+
+    if (
+        !title
+        ||
+        !meta
+        ||
+        !report
+    ) {
+        return;
+    }
+
+    if (
+        !weeklyAnalysisData
+        ||
+        !weeklyAnalysisData.analysis
+    ) {
+        title.textContent =
+            "WEEKLY ANALYSIS";
+
+        meta.textContent =
+            "No weekly report has been generated yet.";
+
+        report.textContent =
+            "The first weekly comparative analysis will be generated during the next successful collector run. Thereafter, a new report is scheduled for Sunday from the 06:17 Europe/Paris update, with retry opportunities at 12:17 and 18:17 if necessary.";
+
+        return;
+    }
+
+    title.textContent =
+        weeklyAnalysisData.title
+        ||
+        "WEEKLY CT CRIMINAL ANALYSIS";
+
+    meta.textContent =
+        "Current period "
+        +
+        formatWeeklyDate(
+            weeklyAnalysisData.current_period_start
+        )
+        +
+        " → "
+        +
+        formatWeeklyDate(
+            weeklyAnalysisData.current_period_end
+        )
+        +
+        " · compared with "
+        +
+        formatWeeklyDate(
+            weeklyAnalysisData.comparison_period_start
+        )
+        +
+        " → "
+        +
+        formatWeeklyDate(
+            weeklyAnalysisData.comparison_period_end
+        )
+        +
+        " · generated "
+        +
+        formatTrendGeneratedAt(
+            weeklyAnalysisData.generated_at
+        );
+
+    report.textContent =
+        weeklyAnalysisData.analysis;
+}
+
+
+function openWeeklyAnalysis() {
+
+    renderWeeklyAnalysisPanel();
+
+    const panel =
+        document.getElementById(
+            "weeklyAnalysisPanel"
+        );
+
+    if (
+        panel
+    ) {
+        panel.classList.add(
+            "open"
+        );
+
+        panel.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+    }
+}
+
+
+function closeWeeklyAnalysis() {
+
+    const panel =
+        document.getElementById(
+            "weeklyAnalysisPanel"
+        );
+
+    if (
+        panel
+    ) {
+        panel.classList.remove(
+            "open"
+        );
+
+        panel.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+    }
+}
+
+
 function openTrendSummary() {
 
     renderTrendSummaryPanel();
@@ -10528,11 +10883,41 @@ document.addEventListener(
         initialiseFacetCountBadges();
 
         document.getElementById(
+            "weeklyAnalysisButton"
+        )?.addEventListener(
+            "click",
+            openWeeklyAnalysis
+        );
+
+        document.getElementById(
             "keyDevelopmentsButton"
         )?.addEventListener(
             "click",
             openTrendSummary
         );
+
+        document.getElementById(
+            "weeklyAnalysisClose"
+        )?.addEventListener(
+            "click",
+            closeWeeklyAnalysis
+        );
+
+        document.getElementById(
+            "weeklyAnalysisPanel"
+        )?.addEventListener(
+            "click",
+            event => {
+                if (
+                    event.target.id
+                    ===
+                    "weeklyAnalysisPanel"
+                ) {
+                    closeWeeklyAnalysis();
+                }
+            }
+        );
+
 
 document.getElementById(
             "trendSummaryClose"
@@ -10561,6 +10946,7 @@ document.getElementById(
                     event.key === "Escape"
                 ) {
                     closeTrendSummary();
+                    closeWeeklyAnalysis();
                 }
             }
         );
