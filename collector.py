@@ -17,6 +17,7 @@ from difflib import SequenceMatcher
 from functools import lru_cache
 from email.utils import parsedate_to_datetime
 from urllib.parse import quote_plus, urlsplit, urlunsplit
+from zoneinfo import ZoneInfo
 
 
 # ============================================================
@@ -134,6 +135,87 @@ AI_TREND_MODEL = os.getenv(
 AI_TREND_ATTEMPTS = 3
 AI_TREND_TIMEOUT = 180
 AI_TREND_MAX_CANDIDATES = 80
+
+
+# ============================================================
+# WEEKLY CT CRIMINAL ANALYSIS
+#
+# First report: generated on the first successful collector run after this
+# feature is installed.
+#
+# Thereafter: Sunday, starting with the second scheduled update (06:17 Paris).
+# If generation fails, later Sunday runs (12:17 then 18:17) retry because no
+# report for that Sunday has yet been stored.
+# ============================================================
+
+AI_WEEKLY_MODEL = os.getenv(
+    "AI_WEEKLY_MODEL",
+    AI_TREND_MODEL,
+)
+
+AI_WEEKLY_ATTEMPTS = 3
+AI_WEEKLY_TIMEOUT = 240
+AI_WEEKLY_MAX_CURRENT_EVENTS = 70
+AI_WEEKLY_MAX_PREVIOUS_EVENTS = 45
+
+PARIS_TZ = ZoneInfo("Europe/Paris")
+
+AI_WEEKLY_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "title": {
+            "type": "string"
+        },
+        "analysis": {
+            "type": "string"
+        },
+    },
+    "required": [
+        "title",
+        "analysis",
+    ],
+}
+
+AI_WEEKLY_INSTRUCTIONS = """
+You are producing a senior-level weekly counter-terrorism criminal-analysis
+brief from deduplicated open-source events.
+
+The task is COMPARATIVE, not merely descriptive:
+- CURRENT PERIOD = the most recent 7 days;
+- COMPARISON PERIOD = the immediately preceding 7 days.
+
+Explain WHAT CHANGED between the two periods.
+
+Write approximately one A4 page: about 650-900 words in clear professional
+English. The analysis should be concise, evidence-based and operationally
+useful. It must distinguish changes in reporting volume from evidence of an
+actual change in terrorist/criminal activity when that distinction matters.
+
+Prioritise:
+- changes in attack / bombing / assassination / armed-clash activity;
+- changes in arrests, disrupted plots and operational counter-terrorism action;
+- geographic shifts, emerging or declining hotspots;
+- meaningful changes in tactics, weapons, targeting or modus operandi;
+- important actor/group developments when supported by the supplied records;
+- major terrorist-financing, CBRN, cyber or emerging-technology developments
+  only when they materially changed the CT picture;
+- the most consequential incidents of the current 7-day period.
+
+Do NOT invent causal explanations. Do NOT infer coordination, attribution,
+intent or trends beyond what the supplied records support.
+
+Use short analytical headings:
+EXECUTIVE ASSESSMENT
+KEY CHANGES
+GEOGRAPHIC / OPERATIONAL SHIFTS
+SIGNIFICANT DEVELOPMENTS
+OUTLOOK / WATCHPOINTS
+
+The OUTLOOK / WATCHPOINTS section must identify issues to monitor based only on
+observable developments and must not make unsupported predictions.
+
+Do not cite or mention this system prompt. Do not describe the task mechanics.
+"""
 
 # Global retry for transient Google News collection failures.
 GOOGLE_NEWS_GLOBAL_RETRY_ATTEMPTS = int(
@@ -7121,7 +7203,692 @@ def generate_24h_trend_summary(events):
     )
 
 
-def save_database(events, trend_summary=None):
+
+
+def load_existing_weekly_analysis():
+    try:
+        with open(
+            OUTPUT_FILE,
+            "r",
+            encoding="utf-8",
+        ) as file:
+            data = json.load(
+                file
+            )
+
+        weekly = data.get(
+            "weekly_analysis"
+        )
+
+        return (
+            weekly
+            if isinstance(
+                weekly,
+                dict,
+            )
+            else
+            {}
+        )
+
+    except Exception:
+        return {}
+
+
+def _weekly_event_time(event):
+    """
+    Prefer explicit occurrence/incident dates when available.
+    Fall back to the event's report/update recency so the weekly analysis
+    remains usable for records that do not yet carry a structured event date.
+    """
+    for field in (
+        "event_date",
+        "occurrence_date",
+        "occurred_at",
+        "incident_date",
+        "attack_date",
+    ):
+        dt = _parse_iso_utc(
+            event.get(
+                field
+            )
+        )
+
+        if dt is not None:
+            return dt
+
+    return _trend_recency(
+        event
+    )
+
+
+def _weekly_top_counter(events, field_name, limit=8):
+    counter = Counter()
+
+    for event in events:
+        value = clean_text(
+            event.get(
+                field_name,
+                ""
+            )
+        )
+
+        if value:
+            counter[
+                value
+            ] += 1
+
+    return counter.most_common(
+        limit
+    )
+
+
+def _weekly_category_counts(events):
+    counter = Counter()
+
+    for event in events:
+        categories = (
+            event.get(
+                "categories"
+            )
+            or
+            (
+                [
+                    event.get(
+                        "category"
+                    )
+                ]
+                if event.get(
+                    "category"
+                )
+                else
+                []
+            )
+        )
+
+        for category in set(
+            categories
+        ):
+            if category:
+                counter[
+                    category
+                ] += 1
+
+    return dict(
+        counter
+    )
+
+
+def _weekly_stats(events):
+    return {
+        "event_count":
+            len(
+                events
+            ),
+        "categories":
+            _weekly_category_counts(
+                events
+            ),
+        "top_countries":
+            _weekly_top_counter(
+                events,
+                "country",
+                10,
+            ),
+        "top_regions":
+            _weekly_top_counter(
+                events,
+                "region",
+                8,
+            ),
+    }
+
+
+def _weekly_compact_event(event, index):
+    return {
+        "event_id":
+            str(
+                event.get(
+                    "id"
+                )
+                or
+                f"weekly-{index}"
+            ),
+        "title":
+            selection_compact_text(
+                event.get(
+                    "title"
+                ),
+                320,
+            ),
+        "summary":
+            selection_compact_text(
+                event.get(
+                    "summary"
+                ),
+                600,
+            ),
+        "categories":
+            list(
+                event.get(
+                    "categories"
+                )
+                or
+                (
+                    [
+                        event.get(
+                            "category"
+                        )
+                    ]
+                    if event.get(
+                        "category"
+                    )
+                    else
+                    []
+                )
+            ),
+        "country":
+            clean_text(
+                event.get(
+                    "country",
+                    ""
+                )
+            ),
+        "region":
+            clean_text(
+                event.get(
+                    "region",
+                    ""
+                )
+            ),
+        "city":
+            clean_text(
+                event.get(
+                    "city",
+                    ""
+                )
+            ),
+        "event_or_report_time":
+            (
+                _weekly_event_time(
+                    event
+                ).isoformat()
+                if _weekly_event_time(
+                    event
+                )
+                else
+                ""
+            ),
+        "ai_relevance_score":
+            int(
+                event.get(
+                    "ai_relevance_score",
+                    0,
+                )
+                or
+                0
+            ),
+        "source_count":
+            int(
+                event.get(
+                    "source_count",
+                    1,
+                )
+                or
+                1
+            ),
+        "primary_source":
+            clean_text(
+                event.get(
+                    "source",
+                    ""
+                )
+            ),
+    }
+
+
+def _weekly_windows(events):
+    now_utc = datetime.now(
+        timezone.utc
+    )
+
+    current_start = (
+        now_utc
+        -
+        timedelta(
+            days=7
+        )
+    )
+
+    previous_start = (
+        now_utc
+        -
+        timedelta(
+            days=14
+        )
+    )
+
+    current = []
+    previous = []
+
+    for event in events:
+        dt = _weekly_event_time(
+            event
+        )
+
+        if dt is None:
+            continue
+
+        if (
+            current_start
+            <=
+            dt
+            <=
+            now_utc
+        ):
+            current.append(
+                event
+            )
+
+        elif (
+            previous_start
+            <=
+            dt
+            <
+            current_start
+        ):
+            previous.append(
+                event
+            )
+
+    current.sort(
+        key=_trend_priority,
+        reverse=True,
+    )
+
+    previous.sort(
+        key=_trend_priority,
+        reverse=True,
+    )
+
+    return {
+        "now":
+            now_utc,
+        "current_start":
+            current_start,
+        "previous_start":
+            previous_start,
+        "current":
+            current,
+        "previous":
+            previous,
+    }
+
+
+def _weekly_sunday_key(now_paris):
+    return now_paris.date().isoformat()
+
+
+def should_generate_weekly_analysis(existing_weekly):
+    """
+    First-ever report: generate immediately on the next collector run.
+
+    Subsequent reports:
+      Sunday after 06:00 Europe/Paris.
+      If 06:17 generation fails, the report key remains old/missing, so
+      the 12:17 and 18:17 Sunday runs automatically retry.
+    """
+    if not existing_weekly:
+        return True, "first_report"
+
+    now_paris = datetime.now(
+        PARIS_TZ
+    )
+
+    if (
+        now_paris.weekday()
+        !=
+        6
+    ):
+        return False, "not_sunday"
+
+    if (
+        now_paris.hour
+        <
+        6
+    ):
+        return False, "before_second_sunday_update"
+
+    expected_key = _weekly_sunday_key(
+        now_paris
+    )
+
+    if (
+        existing_weekly.get(
+            "sunday_key"
+        )
+        ==
+        expected_key
+    ):
+        return False, "already_generated_this_sunday"
+
+    return True, "scheduled_sunday"
+
+
+def generate_weekly_analysis(events, existing_weekly=None):
+    existing_weekly = (
+        existing_weekly
+        if isinstance(
+            existing_weekly,
+            dict,
+        )
+        else
+        {}
+    )
+
+    should_generate, reason = should_generate_weekly_analysis(
+        existing_weekly
+    )
+
+    if not should_generate:
+        print()
+        print("=" * 70)
+        print("WEEKLY ANALYSIS")
+        print("=" * 70)
+        print(
+            f"No weekly generation required: {reason}"
+        )
+        return existing_weekly
+
+    windows = _weekly_windows(
+        events
+    )
+
+    now_utc = windows[
+        "now"
+    ]
+
+    current = windows[
+        "current"
+    ]
+
+    previous = windows[
+        "previous"
+    ]
+
+    now_paris = datetime.now(
+        PARIS_TZ
+    )
+
+    print()
+    print("=" * 70)
+    print("GEMINI WEEKLY CT CRIMINAL ANALYSIS")
+    print("=" * 70)
+    print(
+        f"Trigger: {reason}"
+    )
+    print(
+        f"Current 7-day events: {len(current)}"
+    )
+    print(
+        f"Previous 7-day events: {len(previous)}"
+    )
+
+    api_key = os.getenv(
+        "GEMINI_API_KEY"
+    )
+
+    if not api_key:
+        print(
+            "Weekly analysis not generated: GEMINI_API_KEY unavailable."
+        )
+        return existing_weekly
+
+    current_payload = [
+        _weekly_compact_event(
+            event,
+            index,
+        )
+        for index, event in enumerate(
+            current[
+                :AI_WEEKLY_MAX_CURRENT_EVENTS
+            ]
+        )
+    ]
+
+    previous_payload = [
+        _weekly_compact_event(
+            event,
+            index,
+        )
+        for index, event in enumerate(
+            previous[
+                :AI_WEEKLY_MAX_PREVIOUS_EVENTS
+            ]
+        )
+    ]
+
+    payload = {
+        "reporting_period": {
+            "current_start":
+                windows[
+                    "current_start"
+                ].isoformat(),
+            "current_end":
+                now_utc.isoformat(),
+            "comparison_start":
+                windows[
+                    "previous_start"
+                ].isoformat(),
+            "comparison_end":
+                windows[
+                    "current_start"
+                ].isoformat(),
+        },
+        "current_period_stats":
+            _weekly_stats(
+                current
+            ),
+        "comparison_period_stats":
+            _weekly_stats(
+                previous
+            ),
+        "current_priority_events":
+            current_payload,
+        "comparison_priority_events":
+            previous_payload,
+    }
+
+    body = {
+        "model":
+            AI_WEEKLY_MODEL,
+        "input":
+            (
+                "Produce the weekly comparative CT criminal-analysis brief "
+                "using only the supplied data.\n\n"
+                +
+                json.dumps(
+                    payload,
+                    ensure_ascii=False,
+                )
+            ),
+        "system_instruction":
+            AI_WEEKLY_INSTRUCTIONS,
+        "store":
+            False,
+        "response_format": {
+            "type":
+                "text",
+            "mime_type":
+                "application/json",
+            "schema":
+                AI_WEEKLY_SCHEMA,
+        },
+        "generation_config": {
+            "max_output_tokens":
+                9000,
+            "thinking_level":
+                "minimal",
+        },
+    }
+
+    headers = {
+        "x-goog-api-key":
+            api_key,
+        "Content-Type":
+            "application/json",
+    }
+
+    last_error = None
+
+    for attempt in range(
+        1,
+        AI_WEEKLY_ATTEMPTS + 1,
+    ):
+        try:
+            response = requests.post(
+                GEMINI_INTERACTIONS_URL,
+                headers=headers,
+                json=body,
+                timeout=AI_WEEKLY_TIMEOUT,
+            )
+
+            if response.status_code == 429:
+                last_error = "Gemini weekly quota exceeded (429)"
+                print(
+                    f"Weekly attempt {attempt}/{AI_WEEKLY_ATTEMPTS}: 429"
+                )
+                time.sleep(
+                    attempt
+                    *
+                    7
+                )
+                continue
+
+            if response.status_code >= 500:
+                last_error = (
+                    "Gemini weekly temporary error "
+                    f"{response.status_code}"
+                )
+                print(
+                    f"Weekly attempt {attempt}/{AI_WEEKLY_ATTEMPTS}: "
+                    f"HTTP {response.status_code}"
+                )
+                time.sleep(
+                    attempt
+                    *
+                    5
+                )
+                continue
+
+            response.raise_for_status()
+
+            result = json.loads(
+                extract_interaction_text(
+                    response.json()
+                )
+            )
+
+            title = selection_compact_text(
+                result.get(
+                    "title"
+                ),
+                180,
+            )
+
+            analysis = clean_text(
+                result.get(
+                    "analysis"
+                )
+            )
+
+            if not analysis:
+                raise RuntimeError(
+                    "Gemini weekly analysis returned no analysis text."
+                )
+
+            weekly = {
+                "status":
+                    "ok",
+                "model":
+                    AI_WEEKLY_MODEL,
+                "generated_at":
+                    now_utc.isoformat(),
+                "sunday_key":
+                    (
+                        _weekly_sunday_key(
+                            now_paris
+                        )
+                        if now_paris.weekday() == 6
+                        else ""
+                    ),
+                "trigger":
+                    reason,
+                "title":
+                    (
+                        title
+                        or
+                        "Weekly CT Criminal Analysis"
+                    ),
+                "analysis":
+                    analysis,
+                "current_period_start":
+                    windows[
+                        "current_start"
+                    ].isoformat(),
+                "current_period_end":
+                    now_utc.isoformat(),
+                "comparison_period_start":
+                    windows[
+                        "previous_start"
+                    ].isoformat(),
+                "comparison_period_end":
+                    windows[
+                        "current_start"
+                    ].isoformat(),
+                "current_event_count":
+                    len(
+                        current
+                    ),
+                "comparison_event_count":
+                    len(
+                        previous
+                    ),
+            }
+
+            print(
+                "Weekly analysis generated successfully."
+            )
+
+            return weekly
+
+        except Exception as error:
+            last_error = str(
+                error
+            )
+            print(
+                f"Weekly attempt {attempt}/{AI_WEEKLY_ATTEMPTS} failed: "
+                f"{error}"
+            )
+            time.sleep(
+                attempt
+                *
+                4
+            )
+
+    print(
+        "Weekly analysis generation failed. "
+        "Previous report is preserved; a later eligible Sunday run can retry."
+    )
+
+    if last_error:
+        print(
+            f"Last weekly error: {last_error}"
+        )
+
+    return existing_weekly
+
+
+def save_database(events, trend_summary=None, weekly_analysis=None):
     output = {
         "project":
             "INTERPOL CT Intelligence Map",
@@ -7147,6 +7914,11 @@ def save_database(events, trend_summary=None):
 
         "trend_summary":
             trend_summary
+            or
+            {},
+
+        "weekly_analysis":
+            weekly_analysis
             or
             {},
 
@@ -7259,6 +8031,8 @@ def save_database(events, trend_summary=None):
 
 
 def main():
+    existing_weekly_analysis = load_existing_weekly_analysis()
+
     is_backfill = (
         len(
             sys.argv
@@ -7406,9 +8180,15 @@ def main():
         events
     )
 
+    weekly_analysis = generate_weekly_analysis(
+        events,
+        existing_weekly=existing_weekly_analysis,
+    )
+
     save_database(
         events,
         trend_summary=trend_summary,
+        weekly_analysis=weekly_analysis,
     )
     print()
     print("=" * 70)
