@@ -3672,7 +3672,7 @@ Map layers
 <div class="layer-buttons">
 
 <button class="layer-button active" id="markersToggle">EVENTS</button>
-<button class="layer-button" id="heatToggle">HEAT ZONES</button>
+<button class="layer-button" id="heatToggle" title="Heat based only on attacks, arrests and armed clashes/combat">HEAT ZONES</button>
 <button class="layer-button" id="chronologyToggle">LIST / EXPORT</button>
 <button class="layer-button active" id="officesToggle">INTERPOL OFFICES</button>
 
@@ -5858,6 +5858,51 @@ function createMarker(
 }
 
 
+
+function isHeatEligibleEvent(event) {
+
+    const categories =
+        eventCategories(
+            event
+        );
+
+    /*
+       Heat zones are intentionally limited to operational CT activity:
+       - attacks / terrorist attacks
+       - arrests
+       - armed clashes / combat / firefights
+       Everything else is excluded.
+    */
+    if (
+        categories.includes(
+            "Attacks"
+        )
+        ||
+        categories.includes(
+            "Arrests"
+        )
+    ) {
+        return true;
+    }
+
+    const text =
+        (
+            (event.title || "")
+            + " "
+            + (event.summary || "")
+            + " "
+            + (event.original_title || "")
+            + " "
+            + (event.original_summary || "")
+        )
+        .toLowerCase();
+
+    return /\b(?:armed\s+clashes?|clashes?|combat|fighting|firefights?|gunfights?|gun\s+battles?|armed\s+confrontations?|exchange(?:s)?\s+of\s+fire)\b/i.test(
+        text
+    );
+}
+
+
 function renderEvents() {
 
 
@@ -5959,8 +6004,30 @@ function renderEvents() {
 
 
         const heatPoints = visible
-            .filter(event => event.location_precision === "city")
-            .map(event => [Number(event.latitude), Number(event.longitude), 1]);
+            .filter(
+                event =>
+                    isHeatEligibleEvent(
+                        event
+                    )
+            )
+            .filter(
+                event =>
+                    event.location_precision
+                    ===
+                    "city"
+            )
+            .map(
+                event =>
+                    [
+                        Number(
+                            event.latitude
+                        ),
+                        Number(
+                            event.longitude
+                        ),
+                        1
+                    ]
+            );
 
         heatLayer =
         L.heatLayer(
