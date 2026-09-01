@@ -3481,7 +3481,7 @@ html, body {
 
         </div>
 
-        <div id="headerCasualties24" title="Based on event occurrence date, not article publication date. Events without a usable occurrence date are not counted.">
+        <div id="headerCasualties24" title="Casualties from attacks and armed clashes in the last 24h / current Paris day. Event date is preferred; recent article date is used when no occurrence date is available. Includes attackers/terrorists killed or wounded.">
             <div class="header-casualty">
                 <span class="header-casualty-label">24H DEATHS</span>
                 <strong id="headerDeaths24">—</strong>
@@ -8586,21 +8586,186 @@ function isAttackActuallyWithinLast24Hours(event) {
 
 
 
-function isEventOccurrenceWithinLast24HoursStrict(event) {
 
-    const occurrenceDate =
-        parseEventOccurrenceDate(
-            event
+function parisNowParts() {
+
+    const parts =
+        new Intl.DateTimeFormat(
+            "en-CA",
+            {
+                timeZone:
+                    "Europe/Paris",
+                year:
+                    "numeric",
+                month:
+                    "2-digit",
+                day:
+                    "2-digit",
+                hour:
+                    "2-digit",
+                minute:
+                    "2-digit",
+                second:
+                    "2-digit",
+                hour12:
+                    false
+            }
+        )
+        .formatToParts(
+            new Date()
         );
 
-    /*
-       Header casualty figures deliberately require a real structured
-       occurrence date. Publication date is never used as a substitute.
-       This favors precision over recall.
-    */
-    if (!occurrenceDate) {
-        return false;
+    const obj = {};
+
+    parts.forEach(
+        part => {
+            if (
+                part.type
+                !==
+                "literal"
+            ) {
+                obj[
+                    part.type
+                ] =
+                    part.value;
+            }
+        }
+    );
+
+    return obj;
+}
+
+
+function parisCalendarDateString(
+    date
+) {
+
+    if (
+        !(date instanceof Date)
+        ||
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+        return "";
     }
+
+    const parts =
+        new Intl.DateTimeFormat(
+            "en-CA",
+            {
+                timeZone:
+                    "Europe/Paris",
+                year:
+                    "numeric",
+                month:
+                    "2-digit",
+                day:
+                    "2-digit"
+            }
+        )
+        .formatToParts(
+            date
+        );
+
+    const obj = {};
+
+    parts.forEach(
+        part => {
+            if (
+                part.type
+                !==
+                "literal"
+            ) {
+                obj[
+                    part.type
+                ] =
+                    part.value;
+            }
+        }
+    );
+
+    return (
+        obj.year
+        + "-"
+        + obj.month
+        + "-"
+        + obj.day
+    );
+}
+
+
+function parseArticlePublicationDateForCasualties(
+    event
+) {
+
+    const fields = [
+        "published_at",
+        "publication_date",
+        "published",
+        "pub_date",
+        "article_date",
+        "date",
+        "timestamp",
+        "created_at",
+        "updated_at"
+    ];
+
+    for (
+        const field
+        of
+        fields
+    ) {
+
+        const raw =
+            event[
+                field
+            ];
+
+        if (!raw) {
+            continue;
+        }
+
+        const date =
+            new Date(
+                raw
+            );
+
+        if (
+            !Number.isNaN(
+                date.getTime()
+            )
+        ) {
+            return date;
+        }
+    }
+
+    return null;
+}
+
+
+function casualtyRecencyText(
+    event
+) {
+
+    return (
+        (event.title || "")
+        + " "
+        + (event.summary || "")
+        + " "
+        + (event.original_title || "")
+        + " "
+        + (event.original_summary || "")
+    )
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+
+function isCurrentCasualtyEvent(
+    event
+) {
 
     const now =
         new Date();
@@ -8618,11 +8783,98 @@ function isEventOccurrenceWithinLast24HoursStrict(event) {
             1000
         );
 
-    return (
-        occurrenceDate >= cutoff
+    /*
+       1) Prefer the real occurrence date whenever the event has one.
+       Count it when it falls in the rolling last 24 hours OR on today's
+       Paris calendar date.
+    */
+    const occurrenceDate =
+        parseEventOccurrenceDate(
+            event
+        );
+
+    if (
+        occurrenceDate
         &&
-        occurrenceDate <= now
-    );
+        !Number.isNaN(
+            occurrenceDate.getTime()
+        )
+    ) {
+
+        const todayParis =
+            parisCalendarDateString(
+                now
+            );
+
+        const eventParisDay =
+            parisCalendarDateString(
+                occurrenceDate
+            );
+
+        return (
+            (
+                occurrenceDate
+                >=
+                cutoff
+                &&
+                occurrenceDate
+                <=
+                now
+            )
+            ||
+            (
+                eventParisDay
+                &&
+                eventParisDay
+                ===
+                todayParis
+            )
+        );
+    }
+
+    /*
+       2) If no structured occurrence date exists, allow a recent article
+       as a fallback so genuinely current attacks are not lost from the
+       casualty counters. Exclude obvious retrospective/historical wording.
+    */
+    const publicationDate =
+        parseArticlePublicationDateForCasualties(
+            event
+        );
+
+    if (
+        !publicationDate
+        ||
+        publicationDate < cutoff
+        ||
+        publicationDate > now
+    ) {
+        return false;
+    }
+
+    const text =
+        casualtyRecencyText(
+            event
+        );
+
+    const historicalSignals =
+        /\b(?:last\s+week|last\s+month|last\s+year|weeks?\s+ago|months?\s+ago|years?\s+ago|anniversary|previously|earlier\s+this\s+year|in\s+20\d{2}|death\s+toll\s+(?:rose|had\s+risen)\s+after)\b/i;
+
+    if (
+        historicalSignals.test(
+            text
+        )
+    ) {
+        return false;
+    }
+
+    /*
+       Recent publication + no clear historical signal is accepted.
+       This is intentionally broader than the previous strict rule because
+       the dashboard brief and source feed may know an event is current even
+       when the collector did not populate event_date.
+    */
+    return true;
 }
 
 
@@ -8700,32 +8952,38 @@ function explicitStructuredCasualtyValue(
 }
 
 
-function extractStrict24hDeathCount(event) {
+
+function extractStrict24hDeathCount(
+    event
+) {
 
     if (
-        !isEventOccurrenceWithinLast24HoursStrict(
+        !isCurrentCasualtyEvent(
             event
         )
     ) {
         return 0;
     }
 
-    const structured =
+    /*
+       Structured totals remain authoritative when available.
+    */
+    const structuredTotal =
         explicitStructuredCasualtyValue(
             event,
             [
                 "fatalities",
                 "deaths",
                 "death_count",
-                "killed",
-                "killed_count"
+                "total_deaths",
+                "total_killed"
             ]
         );
 
     if (
-        structured !== null
+        structuredTotal !== null
     ) {
-        return structured;
+        return structuredTotal;
     }
 
     const text =
@@ -8737,14 +8995,20 @@ function extractStrict24hDeathCount(event) {
         return 0;
     }
 
+    /*
+       Capture explicit killed/dead/fatality statements. We keep unique
+       matched phrases so duplicated source wording is not counted twice.
+       Different groups in the same incident CAN be added together:
+       e.g. "6 security personnel killed" + "21 militants killed" = 27.
+    */
     const patterns = [
-        /\bdeath toll(?:\s+(?:has\s+)?(?:risen|rose|rises|climbed|stands|reached|reaches|at))?\s*(?:to|at|:)?\s*(\d{1,5})\b/gi,
-        /\b(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|officers\s+|police\s+|victims\s+)?(?:were\s+)?(?:killed|dead|died|fatalities|deaths)\b/gi,
-        /\b(?:killed|left dead|leaves dead|leaving dead|dead|deaths|fatalities)\s*[:\-]?\s*(\d{1,5})\b/gi,
-        /\b(\d{1,5})\s+fatal\b/gi
+        /\b(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|troops\s+|officers\s+|police\s+|security\s+personnel\s+|security\s+forces\s+|militants\s+|terrorists\s+|attackers\s+|assailants\s+|fighters\s+|suspects\s+|victims\s+)?(?:were\s+)?(?:killed|dead|died)\b/gi,
+        /\b(?:killed|dead|fatalities|deaths)\s*[:\-]?\s*(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\b/gi,
+        /\bdeath\s+toll(?:\s+(?:has\s+)?(?:risen|rose|rises|climbed|stands|reached|reaches|at))?\s*(?:to|at|:)?\s*(\d{1,5})\b/gi,
+        /\b(\d{1,5})\s+fatalities\b/gi
     ];
 
-    const values = [];
+    const matches = [];
 
     patterns.forEach(
         pattern => {
@@ -8770,63 +9034,138 @@ function extractStrict24hDeathCount(event) {
                     );
 
                 if (
-                    Number.isFinite(
+                    !Number.isFinite(
                         value
                     )
-                    &&
-                    value >= 0
-                    &&
-                    value <= 10000
+                    ||
+                    value < 0
+                    ||
+                    value > 100000
                 ) {
-                    values.push(
-                        value
-                    );
+                    continue;
                 }
+
+                const phrase =
+                    match[
+                        0
+                    ]
+                    .toLowerCase()
+                    .replace(
+                        /\s+/g,
+                        " "
+                    )
+                    .trim();
+
+                matches.push(
+                    {
+                        value,
+                        phrase
+                    }
+                );
 
             }
 
         }
     );
 
+    if (!matches.length) {
+        return 0;
+    }
+
     /*
-       One deduplicated event may contain the same figure in several
-       linked-source summaries. Count the largest explicit figure once.
+       If a death-toll / total-fatalities statement exists, use the largest
+       explicit total because it normally already includes all groups.
     */
-    return values.length
-        ?
-        Math.max(
-            ...values
-        )
-        :
-        0;
+    const totalLike =
+        matches.filter(
+            item =>
+                /death\s+toll|fatalities|deaths\s*[:\-]/i.test(
+                    item.phrase
+                )
+        );
+
+    if (
+        totalLike.length
+    ) {
+        return Math.max(
+            ...totalLike.map(
+                item =>
+                    item.value
+            )
+        );
+    }
+
+    /*
+       Otherwise sum distinct casualty statements, but only once per
+       normalized phrase. This allows attackers/terrorists killed in the
+       same battle to be included without multiplying identical reporting.
+    */
+    const unique =
+        new Map();
+
+    matches.forEach(
+        item => {
+
+            if (
+                !unique.has(
+                    item.phrase
+                )
+            ) {
+                unique.set(
+                    item.phrase,
+                    item.value
+                );
+            }
+
+        }
+    );
+
+    return Array.from(
+        unique.values()
+    )
+    .reduce(
+        (
+            sum,
+            value
+        ) =>
+            sum
+            +
+            value,
+        0
+    );
 }
 
 
-function extractStrict24hWoundedCount(event) {
+
+function extractStrict24hWoundedCount(
+    event
+) {
 
     if (
-        !isEventOccurrenceWithinLast24HoursStrict(
+        !isCurrentCasualtyEvent(
             event
         )
     ) {
         return 0;
     }
 
-    const structured =
+    const structuredTotal =
         explicitStructuredCasualtyValue(
             event,
             [
                 "wounded",
                 "wounded_count",
                 "injured",
-                "injured_count"
+                "injured_count",
+                "total_wounded",
+                "total_injured"
             ]
         );
 
     if (
-        structured !== null
+        structuredTotal !== null
     ) {
-        return structured;
+        return structuredTotal;
     }
 
     const text =
@@ -8839,12 +9178,11 @@ function extractStrict24hWoundedCount(event) {
     }
 
     const patterns = [
-        /\b(?:at least\s+|more than\s+|over\s+)?(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|officers\s+|police\s+|victims\s+)?(?:were\s+)?(?:wounded|injured|hurt)\b/gi,
-        /\b(?:wounded|injured|hurt)\s*[:\-]?\s*(?:at least\s+|more than\s+|over\s+)?(\d{1,5})\b/gi,
-        /\b(?:left|leaving)\s+(?:at least\s+|more than\s+|over\s+)?(\d{1,5})\s+(?:people\s+|persons\s+)?(?:wounded|injured)\b/gi
+        /\b(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|troops\s+|officers\s+|police\s+|security\s+personnel\s+|security\s+forces\s+|militants\s+|terrorists\s+|attackers\s+|assailants\s+|fighters\s+|victims\s+)?(?:were\s+)?(?:wounded|injured|hurt)\b/gi,
+        /\b(?:wounded|injured|hurt)\s*[:\-]?\s*(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\b/gi
     ];
 
-    const values = [];
+    const matches = [];
 
     patterns.forEach(
         pattern => {
@@ -8870,31 +9208,73 @@ function extractStrict24hWoundedCount(event) {
                     );
 
                 if (
-                    Number.isFinite(
+                    !Number.isFinite(
                         value
                     )
-                    &&
-                    value >= 0
-                    &&
-                    value <= 100000
+                    ||
+                    value < 0
+                    ||
+                    value > 100000
                 ) {
-                    values.push(
-                        value
-                    );
+                    continue;
                 }
+
+                const phrase =
+                    match[
+                        0
+                    ]
+                    .toLowerCase()
+                    .replace(
+                        /\s+/g,
+                        " "
+                    )
+                    .trim();
+
+                matches.push(
+                    {
+                        value,
+                        phrase
+                    }
+                );
 
             }
 
         }
     );
 
-    return values.length
-        ?
-        Math.max(
-            ...values
-        )
-        :
-        0;
+    const unique =
+        new Map();
+
+    matches.forEach(
+        item => {
+
+            if (
+                !unique.has(
+                    item.phrase
+                )
+            ) {
+                unique.set(
+                    item.phrase,
+                    item.value
+                );
+            }
+
+        }
+    );
+
+    return Array.from(
+        unique.values()
+    )
+    .reduce(
+        (
+            sum,
+            value
+        ) =>
+            sum
+            +
+            value,
+        0
+    );
 }
 
 
@@ -8909,7 +9289,7 @@ function updateHeaderCasualties24() {
                     "Attacks"
                 )
                 &&
-                isEventOccurrenceWithinLast24HoursStrict(
+                isCurrentCasualtyEvent(
                     event
                 )
         );
@@ -9182,7 +9562,7 @@ function updateCommandCenterPanels() {
                     "Attacks"
                 )
                 &&
-                isEventOccurrenceWithinLast24HoursStrict(
+                isCurrentCasualtyEvent(
                     event
                 )
         )
