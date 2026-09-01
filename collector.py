@@ -135,6 +135,15 @@ AI_TREND_ATTEMPTS = 3
 AI_TREND_TIMEOUT = 180
 AI_TREND_MAX_CANDIDATES = 80
 
+# Global retry for transient Google News collection failures.
+GOOGLE_NEWS_GLOBAL_RETRY_ATTEMPTS = int(
+    os.getenv("GOOGLE_NEWS_GLOBAL_RETRY_ATTEMPTS", "2")
+)
+GOOGLE_NEWS_GLOBAL_RETRY_DELAY_SECONDS = float(
+    os.getenv("GOOGLE_NEWS_GLOBAL_RETRY_DELAY_SECONDS", "45")
+)
+
+
 AI_TREND_SCHEMA = {
     "type": "object",
     "properties": {
@@ -2196,7 +2205,7 @@ def collect_multilingual(days):
     return records
 
 
-def collect_all(days):
+def _collect_all_once(days):
     print()
     print("=" * 70)
     print("INTERPOL CT Intelligence Map")
@@ -2637,6 +2646,50 @@ class AISelectionQuotaError(RuntimeError):
 
 class AISelectionTransientError(RuntimeError):
     pass
+
+
+
+def collect_all(*args, **kwargs):
+    """Retry the entire collection once if Google News broadly fails."""
+    attempts = max(1, GOOGLE_NEWS_GLOBAL_RETRY_ATTEMPTS)
+    last_error = None
+
+    for attempt in range(1, attempts + 1):
+        try:
+            if attempt > 1:
+                print(
+                    f"[google-news] Global collection retry "
+                    f"{attempt}/{attempts} starting..."
+                )
+            return _collect_all_once(*args, **kwargs)
+
+        except RuntimeError as exc:
+            message = str(exc)
+            last_error = exc
+
+            # Retry ONLY the existing broad Google News failure condition.
+            if "Too many Google News queries failed" not in message:
+                raise
+
+            if attempt >= attempts:
+                print(
+                    "[google-news] Global retry exhausted. "
+                    "Aborting safely; existing database will not be replaced."
+                )
+                raise
+
+            delay = GOOGLE_NEWS_GLOBAL_RETRY_DELAY_SECONDS
+            print(
+                f"[google-news] Abnormal Google News failure detected: {message}"
+            )
+            print(
+                f"[google-news] Waiting {delay:.0f}s before retrying "
+                "the entire collection wave..."
+            )
+            time.sleep(delay)
+
+    if last_error is not None:
+        raise last_error
 
 
 def selection_compact_text(
