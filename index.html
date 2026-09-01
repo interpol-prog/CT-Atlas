@@ -7,10 +7,7 @@
 <meta name="bingbot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>
 INTERPOL CT Intelligence Map
@@ -3005,6 +3002,321 @@ body {
     justify-content: center !important;
     text-align: center !important;
     white-space: nowrap !important;
+}
+
+
+/* ============================================================
+   V11.6 — MOBILE / IPHONE RESPONSIVE
+   ============================================================ */
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden !important;
+}
+
+@media (max-width: 900px) {
+    #header {
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 7px 9px !important;
+        gap: 7px !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+    }
+
+    #brand {
+        flex: 1 1 210px !important;
+        min-width: 0 !important;
+    }
+
+    #logo {
+        height: 38px !important;
+        width: auto !important;
+    }
+
+    #title h1 {
+        font-size: 15px !important;
+        line-height: 1.1 !important;
+    }
+
+    #title div,
+    #commandMeta {
+        display: none !important;
+    }
+
+    #updated {
+        flex: 0 0 105px !important;
+        min-width: 105px !important;
+        max-width: 105px !important;
+        font-size: 8px !important;
+        padding-left: 8px !important;
+    }
+
+    #headerSituationBrief {
+        order: 10;
+        flex: 1 0 100% !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 7px 9px !important;
+    }
+
+    #headerSituationText {
+        display: block !important;
+        overflow: visible !important;
+        -webkit-line-clamp: unset !important;
+        font-size: 10px !important;
+        line-height: 1.35 !important;
+    }
+
+    #main {
+        flex: 1 1 auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        height: 100dvh !important;
+        min-height: 100dvh !important;
+        padding-left: env(safe-area-inset-left, 0px);
+        padding-right: env(safe-area-inset-right, 0px);
+    }
+
+    #header {
+        padding:
+            calc(6px + env(safe-area-inset-top, 0px))
+            7px
+            6px !important;
+        gap: 5px !important;
+    }
+
+    #brand {
+        flex: 1 1 auto !important;
+        gap: 6px !important;
+    }
+
+    #logo {
+        height: 31px !important;
+        max-width: 45px !important;
+        object-fit: contain !important;
+    }
+
+    #title h1 {
+        font-size: 12.5px !important;
+        line-height: 1.08 !important;
+        letter-spacing: 0 !important;
+    }
+
+    #updated {
+        flex: 0 0 78px !important;
+        min-width: 78px !important;
+        max-width: 78px !important;
+        padding: 2px 0 0 6px !important;
+        font-size: 6.8px !important;
+        line-height: 1.25 !important;
+    }
+
+    #headerSituationBrief {
+        padding: 6px 7px 7px !important;
+    }
+
+    #headerSituationTopline {
+        margin-bottom: 4px !important;
+        font-size: 7px !important;
+        gap: 5px !important;
+    }
+
+    #headerSituationText {
+        font-size: 9.2px !important;
+        line-height: 1.32 !important;
+    }
+
+    #keyDevelopmentsButton {
+        min-height: 22px !important;
+        padding: 3px 6px !important;
+        font-size: 6.3px !important;
+    }
+
+    #main {
+        position: relative !important;
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+    }
+
+    #map {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    /* Left controls float above map rather than consuming half the viewport. */
+    #sidebar {
+        position: absolute !important;
+        z-index: 1000 !important;
+        left: 7px !important;
+        top: 7px !important;
+        width: min(48vw, 190px) !important;
+        max-height: calc(100% - 66px) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        padding: 7px !important;
+        box-sizing: border-box !important;
+        background: rgba(5,16,24,.94) !important;
+        backdrop-filter: blur(7px);
+        -webkit-backdrop-filter: blur(7px);
+    }
+
+    #sidebar .section-title {
+        margin: 7px 0 4px !important;
+        font-size: 7px !important;
+    }
+
+    .time-buttons {
+        margin-bottom: 7px !important;
+    }
+
+    .time-button {
+        min-height: 31px !important;
+        padding: 3px 1px !important;
+        font-size: 6.5px !important;
+    }
+
+    .time-count {
+        font-size: 6px !important;
+    }
+
+    /* Keep the requested true 2x2 operational block. */
+    .layer-buttons {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+        grid-template-rows: repeat(2,28px) !important;
+        gap: 4px !important;
+    }
+
+    #markersToggle { grid-column: 1 !important; grid-row: 1 !important; }
+    #heatToggle { grid-column: 2 !important; grid-row: 1 !important; }
+    #chronologyToggle { grid-column: 1 !important; grid-row: 2 !important; }
+    #officesToggle { grid-column: 2 !important; grid-row: 2 !important; }
+
+    .layer-buttons .layer-button {
+        width: 100% !important;
+        height: 28px !important;
+        min-height: 28px !important;
+        padding: 3px 2px !important;
+        margin: 0 !important;
+        font-size: 6.4px !important;
+        line-height: 1.05 !important;
+        white-space: normal !important;
+    }
+
+    /* Right-side analytics become a small overlay. */
+    #analyticsRail {
+        position: absolute !important;
+        z-index: 990 !important;
+        top: 7px !important;
+        right: 7px !important;
+        width: min(38vw, 150px) !important;
+        max-height: 38% !important;
+        overflow-y: auto !important;
+        background: rgba(5,16,24,.91) !important;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+    }
+
+    .analytics-card {
+        padding: 5px !important;
+        margin-bottom: 4px !important;
+        font-size: 7px !important;
+    }
+
+    /* Timeline is deliberately thin on phones. */
+    #timelineDock {
+        left: 7px !important;
+        right: 7px !important;
+        bottom: calc(7px + env(safe-area-inset-bottom, 0px)) !important;
+        height: 48px !important;
+        padding: 4px 6px 3px !important;
+        z-index: 980 !important;
+    }
+
+    #timelineHeader {
+        margin-bottom: 2px !important;
+        font-size: 6.5px !important;
+    }
+
+    #timelineBars {
+        height: 24px !important;
+        gap: 1px !important;
+    }
+
+    #timelineAxis {
+        margin-top: 1px !important;
+        font-size: 5.5px !important;
+    }
+
+    .leaflet-control-zoom a {
+        width: 30px !important;
+        height: 30px !important;
+        line-height: 30px !important;
+        font-size: 17px !important;
+    }
+
+    .leaflet-popup-content-wrapper {
+        max-width: 88vw !important;
+    }
+
+    .leaflet-popup-content {
+        width: auto !important;
+        max-width: 82vw !important;
+        margin: 9px 10px !important;
+        font-size: 9px !important;
+    }
+
+    /* Large panels fit completely inside iPhone screen. */
+    #chronologyPanel,
+    #trendSummaryPanel,
+    #healthPanel,
+    #disclaimerPanel {
+        width: calc(100vw - 16px) !important;
+        max-width: calc(100vw - 16px) !important;
+        max-height: calc(100dvh - 80px) !important;
+        left: 8px !important;
+        right: 8px !important;
+        top: 40px !important;
+        box-sizing: border-box !important;
+        overflow: auto !important;
+    }
+}
+
+@media (max-width: 390px) {
+    #title h1 {
+        font-size: 11.5px !important;
+    }
+
+    #updated {
+        flex-basis: 72px !important;
+        min-width: 72px !important;
+        max-width: 72px !important;
+        font-size: 6.2px !important;
+    }
+
+    #headerSituationText {
+        font-size: 8.8px !important;
+    }
+
+    #sidebar {
+        width: 49vw !important;
+    }
+
+    #analyticsRail {
+        width: 37vw !important;
+    }
 }
 
 </style>
