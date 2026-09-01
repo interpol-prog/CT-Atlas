@@ -3319,6 +3319,96 @@ html, body {
     }
 }
 
+
+/* ============================================================
+   V11.7 — HEADER 24H CASUALTY METRICS
+   Strict event-occurrence date; never article publication date.
+   ============================================================ */
+
+#updated {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+#headerCasualties24 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.header-casualty {
+    min-width: 0;
+    padding-top: 4px;
+    border-top: 1px solid rgba(103, 145, 168, .22);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.header-casualty-label {
+    color: #6f8999;
+    font-size: 6.4px;
+    font-weight: 750;
+    letter-spacing: .055em;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.header-casualty strong {
+    color: #d9e9f1;
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+#headerDeaths24 {
+    color: #e0e8ec;
+}
+
+#headerWounded24 {
+    color: #c8dbe5;
+}
+
+@media (max-width: 900px) {
+    #headerCasualties24 {
+        gap: 3px;
+        margin-top: 4px;
+    }
+
+    .header-casualty-label {
+        font-size: 5.7px;
+        letter-spacing: .035em;
+    }
+
+    .header-casualty strong {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 640px) {
+    #headerCasualties24 {
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+    }
+
+    .header-casualty {
+        padding-top: 3px;
+    }
+
+    .header-casualty-label {
+        font-size: 5.1px;
+        letter-spacing: .015em;
+    }
+
+    .header-casualty strong {
+        font-size: 9px;
+    }
+}
+
 </style>
 
 </head>
@@ -3391,6 +3481,16 @@ html, body {
 
         </div>
 
+        <div id="headerCasualties24" title="Based on event occurrence date, not article publication date. Events without a usable occurrence date are not counted.">
+            <div class="header-casualty">
+                <span class="header-casualty-label">24H DEATHS</span>
+                <strong id="headerDeaths24">—</strong>
+            </div>
+            <div class="header-casualty">
+                <span class="header-casualty-label">24H WOUNDED</span>
+                <strong id="headerWounded24">—</strong>
+            </div>
+        </div>
 
         <div id="counter" style="display:none" aria-hidden="true">—</div>
 
@@ -8418,6 +8518,393 @@ function isAttackActuallyWithinLast24Hours(event) {
 }
 
 
+
+function isEventOccurrenceWithinLast24HoursStrict(event) {
+
+    const occurrenceDate =
+        parseEventOccurrenceDate(
+            event
+        );
+
+    /*
+       Header casualty figures deliberately require a real structured
+       occurrence date. Publication date is never used as a substitute.
+       This favors precision over recall.
+    */
+    if (!occurrenceDate) {
+        return false;
+    }
+
+    const now =
+        new Date();
+
+    const cutoff =
+        new Date(
+            now.getTime()
+            -
+            24
+            *
+            60
+            *
+            60
+            *
+            1000
+        );
+
+    return (
+        occurrenceDate >= cutoff
+        &&
+        occurrenceDate <= now
+    );
+}
+
+
+function casualtyTextForEvent(event) {
+
+    return (
+        (event.title || "")
+        + " "
+        + (event.summary || "")
+        + " "
+        + (event.original_title || "")
+        + " "
+        + (event.original_summary || "")
+    )
+    .replace(/,/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+
+function explicitStructuredCasualtyValue(
+    event,
+    fields
+) {
+
+    const values = [];
+
+    fields.forEach(
+        field => {
+
+            const raw =
+                event[
+                    field
+                ];
+
+            if (
+                raw === null
+                ||
+                raw === undefined
+                ||
+                raw === ""
+            ) {
+                return;
+            }
+
+            const value =
+                Number(
+                    raw
+                );
+
+            if (
+                Number.isFinite(
+                    value
+                )
+                &&
+                value >= 0
+                &&
+                value <= 100000
+            ) {
+                values.push(
+                    value
+                );
+            }
+
+        }
+    );
+
+    return values.length
+        ?
+        Math.max(
+            ...values
+        )
+        :
+        null;
+}
+
+
+function extractStrict24hDeathCount(event) {
+
+    if (
+        !isEventOccurrenceWithinLast24HoursStrict(
+            event
+        )
+    ) {
+        return 0;
+    }
+
+    const structured =
+        explicitStructuredCasualtyValue(
+            event,
+            [
+                "fatalities",
+                "deaths",
+                "death_count",
+                "killed",
+                "killed_count"
+            ]
+        );
+
+    if (
+        structured !== null
+    ) {
+        return structured;
+    }
+
+    const text =
+        casualtyTextForEvent(
+            event
+        );
+
+    if (!text) {
+        return 0;
+    }
+
+    const patterns = [
+        /\bdeath toll(?:\s+(?:has\s+)?(?:risen|rose|rises|climbed|stands|reached|reaches|at))?\s*(?:to|at|:)?\s*(\d{1,5})\b/gi,
+        /\b(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|officers\s+|police\s+|victims\s+)?(?:were\s+)?(?:killed|dead|died|fatalities|deaths)\b/gi,
+        /\b(?:killed|left dead|leaves dead|leaving dead|dead|deaths|fatalities)\s*[:\-]?\s*(\d{1,5})\b/gi,
+        /\b(\d{1,5})\s+fatal\b/gi
+    ];
+
+    const values = [];
+
+    patterns.forEach(
+        pattern => {
+
+            let match;
+
+            while (
+                (
+                    match =
+                        pattern.exec(
+                            text
+                        )
+                )
+                !==
+                null
+            ) {
+
+                const value =
+                    Number(
+                        match[
+                            1
+                        ]
+                    );
+
+                if (
+                    Number.isFinite(
+                        value
+                    )
+                    &&
+                    value >= 0
+                    &&
+                    value <= 10000
+                ) {
+                    values.push(
+                        value
+                    );
+                }
+
+            }
+
+        }
+    );
+
+    /*
+       One deduplicated event may contain the same figure in several
+       linked-source summaries. Count the largest explicit figure once.
+    */
+    return values.length
+        ?
+        Math.max(
+            ...values
+        )
+        :
+        0;
+}
+
+
+function extractStrict24hWoundedCount(event) {
+
+    if (
+        !isEventOccurrenceWithinLast24HoursStrict(
+            event
+        )
+    ) {
+        return 0;
+    }
+
+    const structured =
+        explicitStructuredCasualtyValue(
+            event,
+            [
+                "wounded",
+                "wounded_count",
+                "injured",
+                "injured_count"
+            ]
+        );
+
+    if (
+        structured !== null
+    ) {
+        return structured;
+    }
+
+    const text =
+        casualtyTextForEvent(
+            event
+        );
+
+    if (!text) {
+        return 0;
+    }
+
+    const patterns = [
+        /\b(?:at least\s+|more than\s+|over\s+)?(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|officers\s+|police\s+|victims\s+)?(?:were\s+)?(?:wounded|injured|hurt)\b/gi,
+        /\b(?:wounded|injured|hurt)\s*[:\-]?\s*(?:at least\s+|more than\s+|over\s+)?(\d{1,5})\b/gi,
+        /\b(?:left|leaving)\s+(?:at least\s+|more than\s+|over\s+)?(\d{1,5})\s+(?:people\s+|persons\s+)?(?:wounded|injured)\b/gi
+    ];
+
+    const values = [];
+
+    patterns.forEach(
+        pattern => {
+
+            let match;
+
+            while (
+                (
+                    match =
+                        pattern.exec(
+                            text
+                        )
+                )
+                !==
+                null
+            ) {
+
+                const value =
+                    Number(
+                        match[
+                            1
+                        ]
+                    );
+
+                if (
+                    Number.isFinite(
+                        value
+                    )
+                    &&
+                    value >= 0
+                    &&
+                    value <= 100000
+                ) {
+                    values.push(
+                        value
+                    );
+                }
+
+            }
+
+        }
+    );
+
+    return values.length
+        ?
+        Math.max(
+            ...values
+        )
+        :
+        0;
+}
+
+
+function updateHeaderCasualties24() {
+
+    const attackEvents =
+        allEvents.filter(
+            event =>
+                eventCategories(
+                    event
+                ).includes(
+                    "Attacks"
+                )
+                &&
+                isEventOccurrenceWithinLast24HoursStrict(
+                    event
+                )
+        );
+
+    const deaths =
+        attackEvents.reduce(
+            (
+                total,
+                event
+            ) =>
+                total
+                +
+                extractStrict24hDeathCount(
+                    event
+                ),
+            0
+        );
+
+    const wounded =
+        attackEvents.reduce(
+            (
+                total,
+                event
+            ) =>
+                total
+                +
+                extractStrict24hWoundedCount(
+                    event
+                ),
+            0
+        );
+
+    const deathsNode =
+        document.getElementById(
+            "headerDeaths24"
+        );
+
+    const woundedNode =
+        document.getElementById(
+            "headerWounded24"
+        );
+
+    if (
+        deathsNode
+    ) {
+        deathsNode.textContent =
+            deaths.toLocaleString(
+                "en-US"
+            );
+    }
+
+    if (
+        woundedNode
+    ) {
+        woundedNode.textContent =
+            wounded.toLocaleString(
+                "en-US"
+            );
+    }
+}
+
+
 function extractAttackDeathCount(event) {
 
     if (
@@ -8520,6 +9007,8 @@ function extractAttackDeathCount(event) {
 
 function updateCommandCenterPanels() {
 
+    updateHeaderCasualties24();
+
     const events24 =
         visibleEventsForPeriod(
             1
@@ -8617,7 +9106,7 @@ function updateCommandCenterPanels() {
 
 
     const deaths24 =
-        events24
+        allEvents
         .filter(
             event =>
                 eventCategories(
@@ -8625,12 +9114,16 @@ function updateCommandCenterPanels() {
                 ).includes(
                     "Attacks"
                 )
+                &&
+                isEventOccurrenceWithinLast24HoursStrict(
+                    event
+                )
         )
         .reduce(
             (total, event) =>
                 total
                 +
-                extractAttackDeathCount(
+                extractStrict24hDeathCount(
                     event
                 ),
             0
