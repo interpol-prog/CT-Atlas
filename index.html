@@ -11200,6 +11200,18 @@ function reportGeneratorConfigured() {
 }
 
 
+const REPORT_ANALYTICAL_REGIONS = [
+    ["REGION:SUB_SAHARAN_AFRICA", "Sub-Saharan Africa"],
+    ["REGION:MENA", "Middle East & North Africa"],
+    ["REGION:EUROPE", "Europe"],
+    ["REGION:CAUCASUS_CENTRAL_ASIA", "Caucasus & Central Asia"],
+    ["REGION:SOUTH_ASIA", "South Asia"],
+    ["REGION:EAST_SOUTHEAST_ASIA", "East & Southeast Asia"],
+    ["REGION:AMERICAS_CARIBBEAN", "Americas & Caribbean"],
+    ["REGION:OCEANIA", "Oceania"]
+];
+
+
 function populateReportRegions() {
 
     const select =
@@ -11211,7 +11223,7 @@ function populateReportRegions() {
         return;
     }
 
-    const values =
+    const countries =
         new Set();
 
     allEvents.forEach(
@@ -11225,7 +11237,7 @@ function populateReportRegions() {
                 ).trim();
 
             if (country) {
-                values.add(
+                countries.add(
                     country
                 );
             }
@@ -11233,9 +11245,9 @@ function populateReportRegions() {
         }
     );
 
-    const sorted =
+    const sortedCountries =
         Array.from(
-            values
+            countries
         ).sort(
             (
                 a,
@@ -11246,13 +11258,41 @@ function populateReportRegions() {
                 )
         );
 
+    const regionsHtml =
+        REPORT_ANALYTICAL_REGIONS
+        .map(
+            (
+                [
+                    value,
+                    label
+                ]
+            ) =>
+                `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`
+        )
+        .join("");
+
+    const countriesHtml =
+        sortedCountries
+        .map(
+            value =>
+                `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`
+        )
+        .join("");
+
     select.innerHTML =
         '<option value="GLOBAL">Global</option>'
         +
-        sorted.map(
-            value =>
-                `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`
-        ).join("");
+        '<optgroup label="REGIONS">'
+        +
+        regionsHtml
+        +
+        '</optgroup>'
+        +
+        '<optgroup label="COUNTRIES">'
+        +
+        countriesHtml
+        +
+        '</optgroup>';
 }
 
 
