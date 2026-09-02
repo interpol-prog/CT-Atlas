@@ -799,6 +799,7 @@ body {
     letter-spacing: 1px;
 }
 
+#access-username,
 #access-password {
     width: 100%;
     padding: 12px;
@@ -810,6 +811,7 @@ body {
     font-size: 14px;
 }
 
+#access-username:focus,
 #access-password:focus {
     border-color: #8aa7bd;
 }
@@ -3620,6 +3622,279 @@ html, body {
     }
 }
 
+
+/* ============================================================
+   REPORT GENERATOR
+   ============================================================ */
+
+#reportGeneratorButton {
+    width: 100%;
+    min-height: 31px;
+    margin-top: 5px;
+    border: 1px solid #355b70;
+    border-radius: 2px;
+    background: #0a1d29;
+    color: #a9c9da;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .075em;
+    cursor: pointer;
+}
+
+#reportGeneratorButton:hover {
+    color: #fff;
+    border-color: #6597b2;
+    background: #123044;
+}
+
+#reportGeneratorPanel {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 5200;
+    background: rgba(1,7,11,.78);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+#reportGeneratorPanel.open {
+    display: block;
+}
+
+#reportGeneratorWindow {
+    position: absolute;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(900px, calc(100vw - 36px));
+    max-height: 90vh;
+    overflow: hidden;
+    background: #07131c;
+    border: 1px solid #365d73;
+    box-shadow: 0 22px 70px rgba(0,0,0,.62);
+}
+
+#reportGeneratorHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 13px 16px 11px;
+    border-bottom: 1px solid #233f50;
+    background: #091a25;
+}
+
+#reportGeneratorTitle {
+    color: #e8f4f9;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: .075em;
+}
+
+#reportGeneratorSubtitle {
+    margin-top: 4px;
+    color: #718e9f;
+    font-size: 8px;
+}
+
+#reportGeneratorClose {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #34566a;
+    background: #0a1d29;
+    color: #9db7c6;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+#reportGeneratorBody {
+    max-height: calc(90vh - 58px);
+    overflow-y: auto;
+    padding: 15px 18px 18px;
+}
+
+#reportGeneratorControls {
+    display: grid;
+    grid-template-columns: 1.1fr 1.1fr .8fr;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(5,15,22,.58);
+    border: 1px solid #203b4a;
+}
+
+.report-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.report-field > span,
+.report-compare > span {
+    color: #7896a7;
+    font-size: 7px;
+    font-weight: 750;
+    letter-spacing: .07em;
+}
+
+.report-field select {
+    height: 31px;
+    padding: 0 8px;
+    border: 1px solid #2b4b5e;
+    background: #081923;
+    color: #d3e2e9;
+    font-size: 9px;
+}
+
+.report-compare {
+    grid-column: 1 / span 2;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 30px;
+}
+
+#reportGenerateButton {
+    min-height: 32px;
+    border: 1px solid #4f86a4;
+    border-radius: 2px;
+    background: linear-gradient(180deg,#194159 0%,#102c3c 100%);
+    color: #e7f5fb;
+    font-size: 8px;
+    font-weight: 850;
+    letter-spacing: .065em;
+    cursor: pointer;
+}
+
+#reportGenerateButton:disabled {
+    opacity: .55;
+    cursor: wait;
+}
+
+#reportGeneratorStatus {
+    grid-column: 1 / -1;
+    min-height: 14px;
+    font-size: 8px;
+    line-height: 1.35;
+}
+
+.report-status.working { color: #a8ccde; }
+.report-status.success { color: #9bcbb4; }
+.report-status.warning { color: #d4b976; }
+.report-status.error { color: #e6a3a3; }
+
+#reportGeneratorResult {
+    margin-top: 15px;
+    border: 1px solid #263f4d;
+    background: rgba(4,13,19,.45);
+}
+
+#reportResultTopline {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 13px;
+    border-bottom: 1px solid #223b4a;
+}
+
+#reportResultTitle {
+    color: #e1eff5;
+    font-size: 12px;
+    font-weight: 850;
+}
+
+#reportResultMeta {
+    margin-top: 4px;
+    color: #718c9b;
+    font-size: 8px;
+}
+
+#reportResultActions {
+    display: flex;
+    gap: 5px;
+}
+
+#reportResultActions button {
+    padding: 5px 7px;
+    border: 1px solid #315265;
+    background: #0a1d29;
+    color: #9bb9c9;
+    font-size: 7px;
+    font-weight: 750;
+    cursor: pointer;
+}
+
+#reportResultContent {
+    padding: 15px 17px 18px;
+    color: #d2dfe6;
+    font-size: 11px;
+    line-height: 1.64;
+}
+
+.generated-report-section {
+    margin: 21px 0 8px;
+    padding-bottom: 5px;
+    color: #8fd3f4;
+    font-size: 13px;
+    font-weight: 850;
+    letter-spacing: .05em;
+    border-bottom: 1px solid rgba(103,182,220,.24);
+}
+
+.generated-report-section:first-child {
+    margin-top: 0;
+}
+
+.generated-report-break {
+    height: 12px;
+}
+
+#reportGeneratorDisclaimer {
+    margin: 0 17px 16px;
+    padding: 8px 10px;
+    border-left: 2px solid #315369;
+    background: rgba(3,11,17,.45);
+    color: #718b9b;
+    font-size: 8px;
+    line-height: 1.45;
+}
+
+@media (max-width: 640px) {
+    #reportGeneratorWindow {
+        top: 35px;
+        width: calc(100vw - 14px);
+        max-height: calc(100dvh - 70px);
+    }
+
+    #reportGeneratorBody {
+        max-height: calc(100dvh - 130px);
+        padding: 10px;
+    }
+
+    #reportGeneratorControls {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 9px;
+    }
+
+    .report-compare {
+        grid-column: 1;
+    }
+
+    #reportGeneratorStatus {
+        grid-column: 1;
+    }
+
+    #reportResultTopline {
+        flex-direction: column;
+    }
+
+    #reportResultContent {
+        font-size: 10px;
+        line-height: 1.52;
+    }
+}
+
 </style>
 
 </head>
@@ -3632,6 +3907,13 @@ html, body {
         <img id="access-logo" src="interpol-logo.png" alt="INTERPOL">
         <h1>INTERPOL CT Intelligence Map</h1>
         <div id="access-subtitle">Restricted access</div>
+
+        <input
+            id="access-username"
+            type="text"
+            placeholder="Username"
+            autocomplete="username"
+        >
 
         <input
             id="access-password"
@@ -3891,6 +4173,14 @@ Map layers
 <button class="layer-button active" id="officesToggle">INTERPOL OFFICES</button>
 
 </div>
+
+<button
+    id="reportGeneratorButton"
+    type="button"
+>
+REPORT GENERATOR
+</button>
+
 
 
 
@@ -4375,6 +4665,82 @@ Visible rate
 
 
 
+
+<div id="reportGeneratorPanel" aria-hidden="true">
+  <div id="reportGeneratorWindow" role="dialog" aria-modal="true" aria-labelledby="reportGeneratorTitle">
+    <div id="reportGeneratorHeader">
+      <div>
+        <div id="reportGeneratorTitle">REPORT GENERATOR</div>
+        <div id="reportGeneratorSubtitle">On-demand comparative CT analysis</div>
+      </div>
+      <button id="reportGeneratorClose" type="button" aria-label="Close report generator">×</button>
+    </div>
+
+    <div id="reportGeneratorBody">
+      <div id="reportGeneratorControls">
+        <label class="report-field">
+          <span>REGION / COUNTRY</span>
+          <select id="reportRegion">
+            <option value="GLOBAL">Global</option>
+          </select>
+        </label>
+
+        <label class="report-field">
+          <span>TOPIC</span>
+          <select id="reportTopic">
+            <option value="ALL">All CT activity</option>
+            <option value="Attacks">Attacks</option>
+            <option value="Arrests">Arrests</option>
+            <option value="Terrorist Financing">Terrorist Financing</option>
+            <option value="Weapons">Weapons</option>
+            <option value="CBRN">CBRN</option>
+            <option value="Online Radicalization / Cyberterrorism">Online / Cyber</option>
+            <option value="Legal / Judicial">Legal / Judicial</option>
+            <option value="Disinformation / Emerging Technologies / AI">AI / Emerging Tech</option>
+          </select>
+        </label>
+
+        <label class="report-field">
+          <span>PERIOD</span>
+          <select id="reportPeriod">
+            <option value="7">Last 7 days</option>
+            <option value="30" selected>Last 30 days</option>
+            <option value="90">Last 90 days</option>
+            <option value="180">Last 6 months</option>
+          </select>
+        </label>
+
+        <label class="report-compare">
+          <input id="reportCompare" type="checkbox" checked>
+          <span>Compare with previous equivalent period</span>
+        </label>
+
+        <button id="reportGenerateButton" type="button">GENERATE ANALYTICAL REPORT</button>
+
+        <div id="reportGeneratorStatus"></div>
+      </div>
+
+      <div id="reportGeneratorResult" hidden>
+        <div id="reportResultTopline">
+          <div>
+            <div id="reportResultTitle">ANALYTICAL REPORT</div>
+            <div id="reportResultMeta"></div>
+          </div>
+          <div id="reportResultActions">
+            <button id="reportCopyButton" type="button">COPY</button>
+            <button id="reportPrintButton" type="button">PRINT / PDF</button>
+          </div>
+        </div>
+        <div id="reportResultContent"></div>
+        <div id="reportGeneratorDisclaimer">
+          AI-assisted analysis based on deduplicated open-source events held in the map database. It does not constitute verified intelligence and must be independently validated before operational or decision-making use.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div id="weeklyAnalysisPanel" aria-hidden="true">
   <div id="weeklyAnalysisWindow" role="dialog" aria-modal="true" aria-labelledby="weeklyAnalysisTitle">
     <div id="weeklyAnalysisHeader">
@@ -4520,11 +4886,22 @@ Visible rate
 
 <script>
 (function () {
-    const PASSWORD_HASH = "40aa105d0e5454da4c10906f0ede2c729157d4315e8e7e2b0fbb11ea4db95ad2";
-    const SESSION_KEY = "ct_map_authorized";
+    const USERS = {
+        "testers": "d4cc63dfe1815a0b323c3d8471eae21ebf00499e8f6b7a8cc26e7bd4fde7646c",
+        "admin": "a7cdf5d0586b392473dd0cd08c9ba833240006a8a7310bf9bc8bf1aefdfaeadb"
+    };
 
-    function unlock() {
+    const SESSION_KEY = "ct_map_authorized";
+    const SESSION_USER_KEY = "ct_map_username";
+    const LOGIN_AUDIT_URL = "https://ct-report-generator.fairpeace.workers.dev/login";
+
+    function unlock(username) {
         sessionStorage.setItem(SESSION_KEY, "yes");
+
+        if (username) {
+            sessionStorage.setItem(SESSION_USER_KEY, username);
+        }
+
         document.body.classList.remove("locked");
 
         const screen = document.getElementById("access-screen");
@@ -4545,21 +4922,54 @@ Visible rate
             .join("");
     }
 
+    async function recordLogin(username) {
+        try {
+            await fetch(LOGIN_AUDIT_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    client_time: new Date().toISOString(),
+                    user_agent: navigator.userAgent
+                })
+            });
+        } catch (error) {
+            console.warn("Login audit unavailable:", error);
+        }
+    }
+
     async function tryAccess() {
-        const input = document.getElementById("access-password");
+        const usernameInput = document.getElementById("access-username");
+        const passwordInput = document.getElementById("access-password");
         const error = document.getElementById("access-error");
 
-        try {
-            const candidateHash = await sha256Hex(input.value);
+        const username = String(usernameInput.value || "")
+            .trim()
+            .toLowerCase();
 
-            if (candidateHash === PASSWORD_HASH) {
+        const expectedHash = USERS[username];
+
+        if (!expectedHash) {
+            error.textContent = "Incorrect username or password.";
+            passwordInput.value = "";
+            passwordInput.focus();
+            return;
+        }
+
+        try {
+            const candidateHash = await sha256Hex(passwordInput.value);
+
+            if (candidateHash === expectedHash) {
                 error.textContent = "";
-                input.value = "";
-                unlock();
+                passwordInput.value = "";
+                recordLogin(username);
+                unlock(username);
             } else {
-                error.textContent = "Incorrect password.";
-                input.value = "";
-                input.focus();
+                error.textContent = "Incorrect username or password.";
+                passwordInput.value = "";
+                passwordInput.focus();
             }
         } catch (hashError) {
             console.error(hashError);
@@ -4575,13 +4985,18 @@ Visible rate
         }
     });
 
+    document.getElementById("access-username").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            document.getElementById("access-password").focus();
+        }
+    });
+
     if (sessionStorage.getItem(SESSION_KEY) === "yes") {
-        unlock();
+        unlock(sessionStorage.getItem(SESSION_USER_KEY));
     } else {
-        document.getElementById("access-password").focus();
+        document.getElementById("access-username").focus();
     }
 })();
-
 
 document.getElementById(
     "officesToggle"
@@ -10723,6 +11138,524 @@ function renderTrendSummaryPanel() {
 
 
 
+
+/* ============================================================
+   REPORT GENERATOR CLIENT
+   ============================================================ */
+
+/*
+   After deploying the Cloudflare Worker, replace this placeholder with:
+   https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev/report
+*/
+const REPORT_GENERATOR_API_URL =
+    "https://ct-report-generator.fairpeace.workers.dev/report";
+
+
+function reportGeneratorUserId() {
+
+    const key =
+        "ct_report_generator_user_id";
+
+    let value =
+        localStorage.getItem(
+            key
+        );
+
+    if (!value) {
+
+        value =
+            (
+                crypto.randomUUID
+                ?
+                crypto.randomUUID()
+                :
+                (
+                    Date.now().toString(36)
+                    +
+                    "-"
+                    +
+                    Math.random().toString(36).slice(2)
+                )
+            );
+
+        localStorage.setItem(
+            key,
+            value
+        );
+    }
+
+    return value;
+}
+
+
+function reportGeneratorConfigured() {
+
+    return (
+        REPORT_GENERATOR_API_URL
+        &&
+        !REPORT_GENERATOR_API_URL.includes(
+            "REPLACE-WITH-YOUR-WORKER"
+        )
+    );
+}
+
+
+function populateReportRegions() {
+
+    const select =
+        document.getElementById(
+            "reportRegion"
+        );
+
+    if (!select) {
+        return;
+    }
+
+    const values =
+        new Set();
+
+    allEvents.forEach(
+        event => {
+
+            const country =
+                String(
+                    event.country
+                    ||
+                    ""
+                ).trim();
+
+            if (country) {
+                values.add(
+                    country
+                );
+            }
+
+        }
+    );
+
+    const sorted =
+        Array.from(
+            values
+        ).sort(
+            (
+                a,
+                b
+            ) =>
+                a.localeCompare(
+                    b
+                )
+        );
+
+    select.innerHTML =
+        '<option value="GLOBAL">Global</option>'
+        +
+        sorted.map(
+            value =>
+                `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`
+        ).join("");
+}
+
+
+function openReportGenerator() {
+
+    populateReportRegions();
+
+    const panel =
+        document.getElementById(
+            "reportGeneratorPanel"
+        );
+
+    const status =
+        document.getElementById(
+            "reportGeneratorStatus"
+        );
+
+    if (
+        status
+        &&
+        !reportGeneratorConfigured()
+    ) {
+        status.textContent =
+            "Backend setup required: deploy the supplied Cloudflare Worker and paste its /report URL into REPORT_GENERATOR_API_URL in index.html.";
+
+        status.className =
+            "report-status warning";
+    }
+
+    panel?.classList.add(
+        "open"
+    );
+
+    panel?.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+}
+
+
+function closeReportGenerator() {
+
+    const panel =
+        document.getElementById(
+            "reportGeneratorPanel"
+        );
+
+    panel?.classList.remove(
+        "open"
+    );
+
+    panel?.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+}
+
+
+function reportSectionHtml(
+    raw
+) {
+
+    const sectionNames = [
+        "EXECUTIVE ASSESSMENT",
+        "KEY DEVELOPMENTS",
+        "GEOGRAPHIC PATTERNS",
+        "TACTICS / MODUS OPERANDI",
+        "COUNTER-TERRORISM RESPONSE",
+        "SIGNIFICANT CHANGES",
+        "OUTLOOK / WATCHPOINTS"
+    ];
+
+    let formatted =
+        escapeHtml(
+            raw
+            ||
+            ""
+        );
+
+    sectionNames.forEach(
+        section => {
+
+            const escaped =
+                section.replace(
+                    /[.*+?^${}()|[\]\\]/g,
+                    "\\$&"
+                );
+
+            formatted =
+                formatted.replace(
+                    new RegExp(
+                        "(^|\\\\n)\\\\s*"
+                        +
+                        escaped
+                        +
+                        "\\\\s*(?:\\\\n|:)?",
+                        "g"
+                    ),
+                    (
+                        match,
+                        prefix
+                    ) =>
+                        (
+                            prefix
+                            ?
+                            "\n"
+                            :
+                            ""
+                        )
+                        +
+                        `<div class="generated-report-section">${section}</div>`
+                );
+        }
+    );
+
+    return formatted
+        .replace(
+            /\n{3,}/g,
+            "\n\n"
+        )
+        .replace(
+            /\n\n/g,
+            '<div class="generated-report-break"></div>'
+        )
+        .replace(
+            /\n/g,
+            "<br>"
+        );
+}
+
+
+async function generateCustomReport() {
+
+    const button =
+        document.getElementById(
+            "reportGenerateButton"
+        );
+
+    const status =
+        document.getElementById(
+            "reportGeneratorStatus"
+        );
+
+    const result =
+        document.getElementById(
+            "reportGeneratorResult"
+        );
+
+    if (
+        !reportGeneratorConfigured()
+    ) {
+        status.textContent =
+            "Report Generator backend is not configured yet.";
+
+        status.className =
+            "report-status error";
+
+        return;
+    }
+
+    const region =
+        document.getElementById(
+            "reportRegion"
+        ).value;
+
+    const topic =
+        document.getElementById(
+            "reportTopic"
+        ).value;
+
+    const periodDays =
+        Number(
+            document.getElementById(
+                "reportPeriod"
+            ).value
+        );
+
+    const compare =
+        document.getElementById(
+            "reportCompare"
+        ).checked;
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "GENERATING…";
+
+    status.textContent =
+        "Filtering the current database and generating the analytical report…";
+
+    status.className =
+        "report-status working";
+
+    try {
+
+        const response =
+            await fetch(
+                REPORT_GENERATOR_API_URL,
+                {
+                    method:
+                        "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+                    body:
+                        JSON.stringify(
+                            {
+                                region,
+                                topic,
+                                period_days:
+                                    periodDays,
+                                compare,
+                                user_id:
+                                    reportGeneratorUserId()
+                            }
+                        )
+                }
+            );
+
+        const payload =
+            await response.json();
+
+        if (!response.ok) {
+
+            const detail =
+                payload.error
+                ||
+                "Report generation failed.";
+
+            throw new Error(
+                detail
+            );
+        }
+
+        document.getElementById(
+            "reportResultTitle"
+        ).textContent =
+            payload.title
+            ||
+            "ANALYTICAL REPORT";
+
+        document.getElementById(
+            "reportResultMeta"
+        ).textContent =
+            (
+                payload.meta
+                ||
+                ""
+            )
+            +
+            (
+                payload.cached
+                ?
+                " · cached result"
+                :
+                ""
+            );
+
+        document.getElementById(
+            "reportResultContent"
+        ).innerHTML =
+            reportSectionHtml(
+                payload.analysis
+            );
+
+        result.hidden =
+            false;
+
+        status.textContent =
+            payload.cached
+            ?
+            "Existing report reused from cache."
+            :
+            "Report generated successfully.";
+
+        status.className =
+            "report-status success";
+
+    } catch (error) {
+
+        status.textContent =
+            error.message
+            ||
+            "Report generation failed.";
+
+        status.className =
+            "report-status error";
+
+    } finally {
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "GENERATE ANALYTICAL REPORT";
+    }
+}
+
+
+function copyGeneratedReport() {
+
+    const title =
+        document.getElementById(
+            "reportResultTitle"
+        )?.textContent
+        ||
+        "";
+
+    const meta =
+        document.getElementById(
+            "reportResultMeta"
+        )?.textContent
+        ||
+        "";
+
+    const content =
+        document.getElementById(
+            "reportResultContent"
+        )?.innerText
+        ||
+        "";
+
+    navigator.clipboard?.writeText(
+        title
+        +
+        "\n"
+        +
+        meta
+        +
+        "\n\n"
+        +
+        content
+    );
+}
+
+
+function printGeneratedReport() {
+
+    const title =
+        document.getElementById(
+            "reportResultTitle"
+        )?.textContent
+        ||
+        "Analytical Report";
+
+    const meta =
+        document.getElementById(
+            "reportResultMeta"
+        )?.textContent
+        ||
+        "";
+
+    const body =
+        document.getElementById(
+            "reportResultContent"
+        )?.innerHTML
+        ||
+        "";
+
+    const printWindow =
+        window.open(
+            "",
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+    if (!printWindow) {
+        return;
+    }
+
+    printWindow.document.write(
+        `
+        <!doctype html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <title>${escapeHtml(title)}</title>
+          <style>
+            body{font-family:Arial,sans-serif;margin:36px;color:#111;line-height:1.55}
+            h1{font-size:20px;margin-bottom:6px}
+            .meta{font-size:11px;color:#555;margin-bottom:20px}
+            .generated-report-section{font-weight:800;font-size:15px;color:#176082;margin:20px 0 8px;border-bottom:1px solid #b8d8e7;padding-bottom:5px}
+            .generated-report-break{height:12px}
+            .disclaimer{margin-top:28px;font-size:9px;color:#666;border-top:1px solid #ddd;padding-top:10px}
+          </style>
+        </head>
+        <body>
+          <h1>${escapeHtml(title)}</h1>
+          <div class="meta">${escapeHtml(meta)}</div>
+          <div>${body}</div>
+          <div class="disclaimer">AI-assisted analysis based on deduplicated open-source events. It does not constitute verified intelligence and must be independently validated before operational or decision-making use.</div>
+          <script>window.onload=()=>window.print();<\/script>
+        </body>
+        </html>
+        `
+    );
+
+    printWindow.document.close();
+}
+
+
 function formatWeeklyDate(
     value
 ) {
@@ -11016,6 +11949,56 @@ document.addEventListener(
         initialiseFacetCountBadges();
 
         document.getElementById(
+            "reportGeneratorButton"
+        )?.addEventListener(
+            "click",
+            openReportGenerator
+        );
+
+        document.getElementById(
+            "reportGeneratorClose"
+        )?.addEventListener(
+            "click",
+            closeReportGenerator
+        );
+
+        document.getElementById(
+            "reportGenerateButton"
+        )?.addEventListener(
+            "click",
+            generateCustomReport
+        );
+
+        document.getElementById(
+            "reportCopyButton"
+        )?.addEventListener(
+            "click",
+            copyGeneratedReport
+        );
+
+        document.getElementById(
+            "reportPrintButton"
+        )?.addEventListener(
+            "click",
+            printGeneratedReport
+        );
+
+        document.getElementById(
+            "reportGeneratorPanel"
+        )?.addEventListener(
+            "click",
+            event => {
+                if (
+                    event.target.id
+                    ===
+                    "reportGeneratorPanel"
+                ) {
+                    closeReportGenerator();
+                }
+            }
+        );
+
+        document.getElementById(
             "weeklyAnalysisButton"
         )?.addEventListener(
             "click",
@@ -11047,6 +12030,7 @@ document.addEventListener(
                     "weeklyAnalysisPanel"
                 ) {
                     closeWeeklyAnalysis();
+                    closeReportGenerator();
                 }
             }
         );
