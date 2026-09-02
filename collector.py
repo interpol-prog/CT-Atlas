@@ -199,6 +199,7 @@ Prioritise:
 - important actor/group developments when supported by the supplied records;
 - major terrorist-financing, CBRN, cyber or emerging-technology developments
   only when they materially changed the CT picture;
+- significant maritime-piracy / armed-robbery-at-sea developments when present;
 - the most consequential incidents of the current 7-day period.
 
 Do NOT invent causal explanations. Do NOT infer coordination, attribution,
@@ -441,6 +442,20 @@ CATEGORIES = {
         '"extremist recruitment online"',
     ],
 
+    "Maritime Piracy": [
+        '"maritime piracy"',
+        '"pirate attack" ship',
+        '"pirate attacks" vessel',
+        '"armed robbery at sea"',
+        'pirates hijacked vessel',
+        'pirates hijacked ship',
+        'pirates boarded vessel',
+        'pirates kidnapped crew',
+        'piracy merchant vessel',
+        'piracy tanker',
+        'piracy cargo ship',
+    ],
+
     "Attacks": [
         '"terrorist attack"',
         '"terror attacks"',
@@ -599,6 +614,15 @@ CORE_SEARCH_QUERIES = {
         '"terrorist encrypted messaging"',
         '"cyberterrorism"',
         '"terrorist hacking"',
+    ],
+
+    "Maritime Piracy": [
+        '"maritime piracy"',
+        '"armed robbery at sea"',
+        '"pirate attack" ship',
+        'pirates hijacked vessel',
+        'pirates boarded vessel',
+        'pirates kidnapped crew',
     ],
 
     "Attacks": [
@@ -972,6 +996,10 @@ TARGETED_MEDIA_CATEGORY_TERMS = {
         'OR radicalisation OR cyber OR hacking OR Telegram OR encrypted '
         'OR social-media)',
 
+    "Maritime Piracy":
+        '("maritime piracy" OR piracy OR pirates OR "armed robbery at sea") '
+        '(ship OR vessel OR tanker OR crew OR maritime OR hijacked OR boarded)',
+
     "Attacks":
         '(terrorist OR terrorism OR ISIS OR ISIL OR Daesh OR "Islamic State" '
         'OR jihadist OR extremist OR "al-Qaeda" OR "al-Shabaab" '
@@ -1028,7 +1056,7 @@ def targeted_source_query(
 #
 # Official sources: one broad CT query per domain.
 # Targeted media: one query per source, with a second theme only for
-# high-volume sources. Results are classified locally into the 8 categories.
+# high-volume sources. Results are classified locally into the 9 categories.
 # ============================================================
 
 OFFICIAL_BROAD_QUERIES = [
@@ -1060,7 +1088,7 @@ OFFICIAL_BROAD_QUERIES = [
 
 SOURCE_QUERY_THEME_PRIMARY = (
     '(terrorism OR terrorist OR ISIS OR ISIL OR Daesh OR "Islamic State" '
-    'OR "al-Qaeda")'
+    'OR "al-Qaeda" OR "maritime piracy" OR "armed robbery at sea" OR pirates)'
 )
 
 SOURCE_QUERY_THEME_SECONDARY = (
@@ -1313,6 +1341,12 @@ CATEGORY_RELEVANCE = {
         "forum",
     },
 
+    "Maritime Piracy": {
+        "maritime piracy","piracy","pirate","pirates","armed robbery at sea",
+        "ship","ships","vessel","vessels","tanker","crew","seafarer",
+        "maritime","hijack","hijacked","boarded",
+    },
+
     "Attacks": {
         "attack","attacks","attacked","bomb","bombing","blast","explosion",
         "shooting","stabbing","ramming","assassination","ambush","kidnapping",
@@ -1376,6 +1410,10 @@ ACTION_TERMS = {
     "Online Radicalization / Cyberterrorism": {
         "arrested","charged","convicted","recruited","radicalized","radicalised",
         "propaganda","attack","campaign","network","disrupted","removed",
+    },
+    "Maritime Piracy": {
+        "attack","attacked","hijack","hijacked","boarded","seized",
+        "kidnapped","abducted","robbed","hostage","rescued","intercepted",
     },
     "Attacks": {
         "attack","attacked","bombing","blast","explosion","shooting","stabbing",
@@ -1469,6 +1507,37 @@ def is_relevant_article(
         contains_term(combined, anchor)
         for anchor in CT_ANCHORS
     )
+
+    # Maritime piracy is explicitly in scope even when no terrorism nexus is
+    # reported. Require strong maritime-piracy + action evidence instead.
+    if category == "Maritime Piracy":
+        category_terms = CATEGORY_RELEVANCE.get(category, set())
+        action_terms = ACTION_TERMS.get(category, set())
+        category_hits = [
+            term for term in category_terms if contains_term(combined, term)
+        ]
+        action_hits = [
+            term for term in action_terms if contains_term(combined, term)
+        ]
+        piracy_anchor = any(
+            contains_term(combined, term)
+            for term in (
+                "maritime piracy", "piracy", "pirate", "pirates",
+                "armed robbery at sea"
+            )
+        )
+        maritime_anchor = any(
+            contains_term(combined, term)
+            for term in (
+                "ship", "ships", "vessel", "vessels", "tanker",
+                "crew", "seafarer", "maritime", "at sea"
+            )
+        )
+        if not (piracy_anchor and maritime_anchor and action_hits):
+            return False
+        if has_non_event_pattern(combined):
+            return False
+        return True
 
     if not has_anchor:
         return False
@@ -2605,6 +2674,7 @@ AI_SELECTION_SCHEMA = {
                             "enum": [
                                 "Terrorist Financing",
                                 "Weapons",
+                                "Maritime Piracy",
                                 "CBRN",
                                 "Online Radicalization / Cyberterrorism",
                                 "Attacks",
@@ -2655,7 +2725,12 @@ You are the final editorial relevance filter for an operational
 counter-terrorism situational-awareness map.
 
 For EVERY candidate event, judge whether it is genuinely useful as a CURRENT
-counter-terrorism intelligence event.
+counter-terrorism intelligence event, OR a current maritime-piracy / armed-robbery-at-sea event.
+
+Maritime Piracy is explicitly in scope even when no terrorist nexus is stated.
+Exclude ordinary maritime accidents, smuggling, fishing disputes and digital/media
+piracy unless the event is actual piracy, pirate attack, vessel hijacking/boarding,
+crew kidnapping or armed robbery at sea.
 
 Score relevance from 0 to 100.
 
@@ -2712,7 +2787,9 @@ Do not add facts that are absent from the source material. Translation must pres
 uncertainty, allegations and attribution.
 
 Also return the most appropriate category or categories from the supplied
-taxonomy. Multiple categories are allowed.
+taxonomy. Multiple categories are allowed. Use "Maritime Piracy" for actual
+piracy, pirate attacks, vessel hijacking/boarding, crew kidnapping or armed
+robbery at sea.
 
 Keep the reason concise and specific.
 """
