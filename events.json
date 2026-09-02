@@ -21,61 +21,37 @@
   "collector": "Google News RSS V9 multilingual + Gemini selection/translation",
   "relevance_filter": "Deterministic CT candidate filter + Gemini semantic final selection",
   "trend_summary": {
-    "overview": "Recent counter-terrorism developments feature significant infrastructure sabotage and armed attacks, including an explosive attack on a power grid substation in Jänschwalde, Germany, a major customs house assault and ensuing military operations in Balochistan, Pakistan, and the neutralization of an ISIS leader in Sanaa, Yemen.",
+    "overview": "Recent high-priority counter-terrorism developments include multiple casualties and counter-insurgency operations in Balochistan, Pakistan, a foiled mass-casualty terrorist bomb plot targeting the Sydney Marathon in Australia, and critical infrastructure sabotage attempts involving explosive devices near a power plant in Brandenburg, Germany.",
     "developments": [
-      {
-        "event_id": "8c7ab3870e8beec2",
-        "severity": "CRITICAL",
-        "category": "Attacks",
-        "headline": "Explosive attack and sabotage targeting electrical substation near Jänschwalde",
-        "detail": "An explosive device detonated at an electrical substation near Jänschwalde in Brandenburg, Germany, causing an automatic shutdown of a power block and triggering a major counter-terrorism and sabotage investigation.",
-        "location": "Germany, Brandenburg, Jänschwalde"
-      },
       {
         "event_id": "9f71d00bc41494cf",
         "severity": "CRITICAL",
         "category": "Attacks",
-        "headline": "Militant assault on Balochistan Customs House leaves six personnel dead and 21 terrorists killed",
-        "detail": "Six security personnel were killed during an attack on a customs house in Balochistan, Pakistan, with military forces subsequently killing 21 terrorists across the province in counter-operations.",
+        "headline": "Balochistan Customs House Attack and Counter-Operations",
+        "detail": "An attack on a customs house in Balochistan resulted in the deaths of six personnel, while subsequent provincial security operations led to the killing of 21 terrorists.",
         "location": "Pakistan, Balochistan"
       },
       {
-        "event_id": "eeb14adf0c9e6fde",
-        "severity": "HIGH",
-        "category": "Attacks",
-        "headline": "State security neutralizes high-ranking ISIS leader in Sanaa",
-        "detail": "State security forces in Sanaa, Yemen, neutralized a high-ranking and dangerous ISIS leader, identified as Abu Hudhayfah al-Ansari (Mithaq al-Radfani), during a targeted operation involving an explosive belt.",
-        "location": "Yemen, Sanaa"
-      },
-      {
         "event_id": "4424e727df41eda2",
-        "severity": "HIGH",
+        "severity": "CRITICAL",
         "category": "Arrests",
-        "headline": "Teenager pleads guilty to planning terrorist bombing targeting Sydney Opera House and marathon",
-        "detail": "A 16-year-old radicalized via TikTok pleaded guilty in Sydney, Australia, to planning a mass-casualty terrorist bombing targeting the Sydney Opera House and the Sydney marathon.",
+        "headline": "Teenager Pleads Guilty to Sydney Marathon Terror Bombing Plot",
+        "detail": "A teenager pleaded guilty in court to charges related to planning a terrorist bombing targeting the Sydney Opera House and the Sydney Marathon.",
         "location": "Australia, Sydney"
       },
       {
-        "event_id": "3c1ff765b7aa8d5a",
+        "event_id": "60a01a57ef16d8c5",
         "severity": "HIGH",
-        "category": "Attacks",
-        "headline": "Terrorism investigation opened following fire at drone factory in Warsaw",
-        "detail": "Polish prosecutors opened a formal terrorism and sabotage investigation following a suspicious fire at the WB Electronics drone manufacturing plant in Warsaw.",
-        "location": "Poland, Warsaw"
-      },
-      {
-        "event_id": "a210367da44be257",
-        "severity": "SIGNIFICANT",
-        "category": "Attacks",
-        "headline": "Military airstrike kills 20 FARC dissidents in Colombia",
-        "detail": "A military bombing operation targeting FARC dissidents in Colombia resulted in the deaths of 20 guerrillas.",
-        "location": "Colombia, Bogotá"
+        "category": "Weapons",
+        "headline": "Substation Sabotage and Thwarted Attack on Brandenburg Power Plant",
+        "detail": "Authorities reported that an attempted attack utilizing explosive or rocket-propelled devices was thwarted near Brandenburg's largest coal-fired power plant after explosive devices were found at an electrical substation.",
+        "location": "Germany, Brandenburg"
       }
     ],
     "status": "ok",
     "model": "gemini-3.5-flash-lite",
     "window_hours": 24,
-    "generated_at": "2026-09-01T21:09:25.216020+00:00",
+    "generated_at": "2026-09-02T00:24:26.241550+00:00",
     "candidate_events": 80
   },
   "weekly_analysis": {
@@ -144,9 +120,339 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-09-01T21:09:32.497221+00:00",
-  "number_of_events": 1816,
+  "last_updated": "2026-09-02T00:24:28.363775+00:00",
+  "number_of_events": 1832,
   "events": [
+    {
+      "id": "317a8fec5cde768a",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Weapons"
+      ],
+      "title": "Zelensky warns Ukrainian drones will make Russian skies dangerous, labeled \"terrorism\" by Putin",
+      "summary": "President Zelensky warns that Ukrainian drone operations will make Russian skies hazardous, while Moscow characterizes the actions as terrorism.",
+      "original_title": "Zelensky prévient que les drones ukrainiens vont rendre \"dangereux\" le ciel russe, du \"terrorisme\" selon Poutine",
+      "original_summary": "Zelensky prévient que les drones ukrainiens vont rendre \"dangereux\" le ciel russe, du \"terrorisme\" selon Poutine France 24",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-09-01T23:36:57+00:00",
+      "source": "France 24",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxNTFQ4VkJfVG1YWFBoV1ByY1JQdlY0VWswMXM3WlhoRkQtbldrcnp1SjFZdGc2S3RESlpTQ1hpc0JzY3pENzdWb0Z6bzBtMnNFd1haekRYY0JJSEhGM3REYUt4cG1LakkzSUpTSGUyODNucWJxUEtYeTdQZFBBZGZwWmh1WlpaRmVMX1gzOC1vRUVFQVY0d3Q3Mm5Oa3VXR3VZUFl4eVhJenY4WlotcnJUODgxZkswdkRwTFBiSGhJZnFFV3ExbFVmdGVKNmRYSm9temZ4X2g1WEswaG96dHVmSlNieXB1SGFuZEY5cHhYV1JRWTI5Smd1VQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": "Moscow",
+      "region": null,
+      "latitude": 55.75204,
+      "longitude": 37.61781,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "corsematin.com",
+        "France 24"
+      ],
+      "related_articles": [
+        {
+          "title": "Zelensky prévient que les drones ukrainiens vont rendre \"dangereux\" le ciel russe, du \"terrorisme\" selon Poutine",
+          "original_title": "Zelensky prévient que les drones ukrainiens vont rendre \"dangereux\" le ciel russe, du \"terrorisme\" selon Poutine",
+          "original_language": "fr",
+          "summary": "Zelensky prévient que les drones ukrainiens vont rendre \"dangereux\" le ciel russe, du \"terrorisme\" selon Poutine France 24",
+          "published": "2026-09-01T23:37:00+00:00",
+          "source": "France 24",
+          "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxNTFQ4VkJfVG1YWFBoV1ByY1JQdlY0VWswMXM3WlhoRkQtbldrcnp1SjFZdGc2S3RESlpTQ1hpc0JzY3pENzdWb0Z6bzBtMnNFd1haekRYY0JJSEhGM3REYUt4cG1LakkzSUpTSGUyODNucWJxUEtYeTdQZFBBZGZwWmh1WlpaRmVMX1gzOC1vRUVFQVY0d3Q3Mm5Oa3VXR3VZUFl4eVhJenY4WlotcnJUODgxZkswdkRwTFBiSGhJZnFFV3ExbFVmdGVKNmRYSm9temZ4X2g1WEswaG96dHVmSlNieXB1SGFuZEY5cHhYV1JRWTI5Smd1VQ?oc=5"
+        },
+        {
+          "title": "Zelensky prévient que les drones ukrainiens vont rendre \"dangereux\" le ciel russe, du \"terrorisme\" selon Poutine",
+          "original_title": "Zelensky prévient que les drones ukrainiens vont rendre \"dangereux\" le ciel russe, du \"terrorisme\" selon Poutine",
+          "original_language": "fr",
+          "summary": "Zelensky prévient que les drones ukrainiens vont rendre \"dangereux\" le ciel russe, du \"terrorisme\" selon Poutine corsematin.com",
+          "published": "2026-09-01T23:36:57+00:00",
+          "source": "corsematin.com",
+          "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxQVTU5ejNwOFl2dUgzM3lIT3A2b2Eyc0N1ZGktRlNDcnUwNEhzY01ldDZJcU9QVWlTTFc2UV9SZ1E1QWppVWplU3NLTm94REZvSUgyMFhpbG9HU3lfQWM0TFdPTW5SSUg1M0t0RHJxRVhTam5XcGtQei1lSlM3RDVhZmFvVWtMcTJPOUZsTEx4Q25IdWJYeVFlaVlIMm96aUk1NW5nZkxZTThjUkU2VmJ1X3pCcFBxNEtxdnlNbVo4MmVDV3k5SXdKeFFBdlh3Sm95ZDBFLWY0YklkSWU1UDhQVlVMTnUwa3g5U2JuRGNtZ1Y2YmZ2ODhUVjJuN1NKcEpo?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-09-01T23:36:57+00:00",
+      "last_reported": "2026-09-01T23:37:00+00:00",
+      "dedup_confidence": 0.99,
+      "dedup_methods": [
+        "same_normalized_title"
+      ],
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Involves cross-border drone warfare and explicit official allegations of terrorism, meeting the threshold for inclusion.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Zelensky warns of expanding Ukrainian drone strikes in Russian airspace, termed terrorism by Putin",
+      "title_variants": [
+        "Zelensky warns of expanding Ukrainian drone strikes in Russian airspace, termed terrorism by Putin"
+      ],
+      "location_confidence_score": 0.8,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Russian skies, Putin"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Event centers on Ukrainian drone operations targeting Russia, as commented by Russian leadership.",
+      "ai_geo_fingerprint": "2bd5301b3ec8819fdaf789dc26a47d8f2f5ce7d60e0e86d52156a7ec69cda10f",
+      "ai_geo_inferred": true
+    },
+    {
+      "id": "eeb14adf0c9e6fde",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial",
+        "Arrests"
+      ],
+      "title": "Court in Chita delivers verdict against terrorist accomplice",
+      "summary": "A court in Chita, Russia, has issued a criminal sentence against an individual convicted of aiding terrorists.",
+      "original_title": "Суд в Чите вынес приговор пособнику террористов",
+      "original_summary": "Суд в Чите вынес приговор пособнику террористов news.rambler.ua",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-09-01T23:01:00+00:00",
+      "source": "news.rambler.ua",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNVHNKOWdtbkVCcjAyVklJYWZCRGFna05Rc01wcUtfbkQxUHdDUGF4bnloNVV6TFY3a0JkYzVYVDVRQ2wwOWpOUW82NnhhRW5hRjVVanRweGJxUmI5T1hjdXhsR2NpbUtLS2J4cGFsdThVVzhhd1NyQlAwazlNanRoMGRLMHRFb2ZWcEt6MGw0OUdkSUszYjJR0gGcAUFVX3lxTFBTVnZXdllNSk1kcDJISlF2Uy1Td1lacGRZaUxmZ3pIajFUbzZOYlctUVF5dlhrdXZnMmRDNXB0TjRteDZXbnp1YlNiQ1BBWWpRaUx5VXkxWTNIemNsS2tsWF8yanV5QUl2Wlp3bGlNQmNzS1o4RVlvUUEteDQ5bVV4eGtKS1ktREU3NUVYUm5zZVVaVmFJQmFWUFBuRA?oc=5",
+      "collector": "Google News RSS",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": "Chita",
+      "region": null,
+      "latitude": 52.04311,
+      "longitude": 113.49171,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "news.rambler.ua"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T23:01:00+00:00",
+      "last_reported": "2026-09-01T23:01:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "A direct judicial sentencing and prosecution of a terrorist accomplice constitutes a strong counter-terrorism event.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Court sentences terrorist accomplice in Chita, Russia",
+      "title_variants": [
+        "Court sentences terrorist accomplice in Chita, Russia"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Court in Chita delivers verdict"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Explicitly states the trial took place in Chita, Russia.",
+      "ai_geo_fingerprint": "260dfcd57e642445cac5a4206f6518417ed48ef6ae7e555c6016e6967e91c075",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "dc76b46a28ad56e8",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Witnesses sought after substation attack in Turnow-Preilack",
+      "summary": "Police in Germany are appealing for witnesses following an attack on an electrical substation in Turnow-Preilack.",
+      "original_title": "Zeugen nach Anschlag auf Umspannwerk in Turnow-Preilack gesucht",
+      "original_summary": "Zeugen nach Anschlag auf Umspannwerk in Turnow-Preilack gesucht NIEDERLAUSITZ aktuell",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-09-01T21:28:17+00:00",
+      "source": "NIEDERLAUSITZ aktuell",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxOT1VtZWJBaDI1cnpXWHdTdFhOcHFUVW5qUU0wZEJRQ212d3FwNGZ5bGtvVGVYdHlJZDlUczg4dDVMQ2xFbVJtLWxReGlaX1pic1RoZEtvNEZ5aHVGR21SVExUVGJfeThIOTBiSjM1RC1LZzN0cHF3ZWRHTnI3YTdKR285bVFMa1NDbnZJTlpKY2s0OE5pQU90dTRrRlZtVGdVcWlqcDlLdkJrTWd3UjNvM1BUeU1yRUxQWEVRZk9TSlc4Q2ktNVBMcEh0ay0wZkVxeTdmMUh6U1RpdFhQT2JvMW56aTM0OFJ2TDVkaEE0UWZoTnBwaVVobjRjSUQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": "Turnow-Preilack",
+      "region": null,
+      "latitude": 51.9167,
+      "longitude": 14.4333,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "NIEDERLAUSITZ aktuell"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T21:28:17+00:00",
+      "last_reported": "2026-09-01T21:28:17+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 65,
+      "ai_relevance_reason": "Direct coverage of an infrastructure sabotage attack which falls under domestic security threats.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Police seek witnesses after attack on electrical substation in Turnow-Preilack",
+      "title_variants": [
+        "Police seek witnesses after attack on electrical substation in Turnow-Preilack"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_coordinates",
+      "location_evidence": [
+        "substation attack in Turnow-Preilack"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Explicitly mentions the substation attack and police appeal in Turnow-Preilack, Germany.",
+      "ai_geo_fingerprint": "ceb0d1b070fcfac19dd6f9596ec2e5505d5ade4b456806a9a7314122f21cabc2",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "a60a680f5bd0bb6b",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Arrests"
+      ],
+      "title": "Teenager planned terrorist bombing in Sydney",
+      "summary": "Law enforcement uncovered a terrorism plot after a teenager planned a bomb attack in Sydney, Australia.",
+      "original_title": "Teen planned Sydney terrorist bombing",
+      "original_summary": "Teen planned Sydney terrorist bombing The Saturday Paper",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English",
+      "collection_locale": null,
+      "published": "2026-09-01T21:24:25+00:00",
+      "source": "The Saturday Paper",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOV0xXZURhWE5FUEN6UENUWHdpUnRsb0pEYTRBOXk4NHJxbkp3NlFKdUN1ejREbFpOd3B0UDJET0R0X2dzZERPdTVDMEpIX3JmWG50NV9WVVZURThFUGRkNkZ5Q2owVmFrbkhFWUtmb053WVJfR1BkdHlOQWVHUHBaVlkyazg?oc=5",
+      "collector": "Google News RSS",
+      "country": "Australia",
+      "country_code": "AU",
+      "city": "Sydney",
+      "region": null,
+      "latitude": -33.86785,
+      "longitude": 151.20732,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "sources": [
+        "The Saturday Paper"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T21:24:25+00:00",
+      "last_reported": "2026-09-01T21:24:25+00:00",
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ],
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 90,
+      "ai_relevance_reason": "Direct reporting on a disrupted terrorist bomb plot and associated law enforcement action involving a minor.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "Teenager plots terrorist bombing attack in Sydney, Australia",
+      "title_variants": [
+        "Teenager plots terrorist bombing attack in Sydney, Australia"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "terrorist bombing in Sydney"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Explicitly states the terror plot took place in Sydney, Australia.",
+      "ai_geo_fingerprint": "9317f19e79d89adc463971e5ea16cb51571f6dc1a978d45eadb55eb823b63ea0",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "eeb14adf0c9e6fde",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Simultaneous military and security operations against ISIS and Houthi groups",
+      "summary": "Daily roundup details simultaneous military and security operations conducted against the terrorist organizations ISIS and the Houthis.",
+      "original_title": "عمليات عسكرية وأمنية متزامنة ضد تنظيمي \"داعش والحوثي\" الإرهابيين (حصاد اليوم)",
+      "original_summary": "عمليات عسكرية وأمنية متزامنة ضد تنظيمي \"داعش والحوثي\" الإرهابيين (حصاد اليوم) الصحوة نت",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-09-01T21:05:50+00:00",
+      "source": "الصحوة نت",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE80ODZUUW9lSFhQaFJ1S2tkUXVtRnNCZWVIY20tMDJNODl1aDJjVHlxeTdReENULWhqMWdDbk1JUG1mWnczNUQ0RjZDS2NiUQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Yemen",
+      "country_code": "YE",
+      "city": "Sanaa",
+      "region": null,
+      "latitude": 15.35452,
+      "longitude": 44.20646,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "الصحوة نت"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T21:05:50+00:00",
+      "last_reported": "2026-09-01T21:05:50+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Reports on concrete counter-terrorism security and military operations against designated terrorist groups.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Security and military operations against ISIS and Houthi groups",
+      "title_variants": [
+        "Security and military operations against ISIS and Houthi groups"
+      ],
+      "location_confidence_score": 0.85,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "ISIS and Houthi groups"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Operations against Houthis and ISIS strongly point to Yemen as the primary country context.",
+      "ai_geo_fingerprint": "f3fc1c3e7f3ca7db140d678697d27fa8b004261dad73ab51a1f77ae7450199bb",
+      "ai_geo_inferred": true
+    },
     {
       "id": "25df99ee80eaf7d4",
       "category": "Attacks",
@@ -532,7 +838,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The statement was made by the Interior Senator of Hamburg, Germany regarding security policy.",
       "ai_geo_fingerprint": "bca556efe569081c3811ea85a7cdac47691a2ffd1b5d831f5a1c2f88b6ec2c19",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "422410b78c62c975",
@@ -809,72 +1119,6 @@
       "ai_geo_inferred": false
     },
     {
-      "id": "c4bc73de5430281f",
-      "category": "CBRN",
-      "categories": [
-        "CBRN"
-      ],
-      "title": "Syria: Infrastructure discovered in Deir ez-Zor consistent with nuclear reactor, says IAEA",
-      "summary": "The IAEA stated that infrastructure discovered in Deir ez-Zor, Syria, is consistent with that of a nuclear reactor.",
-      "original_title": "Syrie : les infrastructures découvertes à Deir ez-Zor sont « conformes à celles d’un réacteur nucléaire », selon l’AIEA",
-      "original_summary": "Syrie : les infrastructures découvertes à Deir ez-Zor sont « conformes à celles d’un réacteur nucléaire », selon l’AIEA Le Monde.fr",
-      "original_language": "fr",
-      "collection_language": "fr",
-      "collection_language_name": "French",
-      "collection_locale": "FR:fr",
-      "published": "2026-09-01T17:51:43+00:00",
-      "source": "Le Monde.fr",
-      "source_count": 1,
-      "url": "https://news.google.com/rss/articles/CBMiigJBVV95cUxQaEtoLUViUzBrZ1BPTUNCN2U0dTZGejcyZndrdVJTbDVFLTd4NDIyUlBfSGRsQkJGSi1NTlhIbVhlTXFNRE0wX05vaE9DNU9HbFE4NTZTc1RGZFFja1FPajZrQWJwV1pleWs2QjEtSWI1RV95OUVlNENFbDBBMEkxNnkxbmFSNUlKNFVTck5ScDJyUHVXRWxadlJsMzZ1aDhyWHI1QlBKLUNUb3ZJVGdMdGw3akI1S3BaWkR2dkRxbmQ3T1lNVDMxc1ROOTJMaXpUVHliVGJod0I5V1RqY3RlcVRGY0cwT3VFbEtvWl9PNHp0anJnc1d5RzJQc19sZ2JtcjEtUkx6d0dUQQ?oc=5",
-      "collector": "Google News RSS",
-      "country": "Syria",
-      "country_code": "SY",
-      "city": "Deir ez-Zor",
-      "region": null,
-      "latitude": 35.33588,
-      "longitude": 40.14084,
-      "location_precision": "city",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_targeted_source",
-      "targeted_source": "lemonde.fr",
-      "targeted_source_kind": "local_language_media",
-      "sources": [
-        "Le Monde.fr"
-      ],
-      "related_articles": [],
-      "article_count": 1,
-      "first_reported": "2026-09-01T17:51:43+00:00",
-      "last_reported": "2026-09-01T17:51:43+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 75,
-      "ai_relevance_reason": "Deals with proliferation and CBRN-relevant state infrastructure discovery, falling under security/CBRN monitoring.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "IAEA assessment of nuclear-related infrastructure in Deir ez-Zor, Syria",
-      "title_variants": [
-        "IAEA assessment of nuclear-related infrastructure in Deir ez-Zor, Syria"
-      ],
-      "location_confidence_score": 1.0,
-      "location_method": "ai_city_geonames",
-      "location_evidence": [
-        "Deir ez-Zor, Syria"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Explicitly names Deir ez-Zor, Syria regarding nuclear infrastructure.",
-      "ai_geo_fingerprint": "f9718a570de8c65fdb98fc3604ff77032c13cf9d2730031651c99f7c2875bf99",
-      "ai_geo_inferred": false,
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "same_url"
-      ]
-    },
-    {
       "id": "3e8ea5cd9a34945d",
       "category": "Attacks",
       "categories": [
@@ -935,7 +1179,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Attack at Leipzig Airport in Germany.",
       "ai_geo_fingerprint": "85a24417805107a45f45e9e097dce344e3e06c99ada9702922aa2b56f578b8a3",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "0c58f9dc2610a435",
@@ -1275,6 +1523,69 @@
       ]
     },
     {
+      "id": "c7d65b10aca17acd",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Attacks"
+      ],
+      "title": "One person arrested for the attack on a police command in Zacatecas",
+      "summary": "Authorities arrested one individual in connection with an attack on a police command post in Zacatecas.",
+      "original_title": "Detenida una persona por el ataque a una comandancia en Zacatecas",
+      "original_summary": "Detenida una persona por el ataque a una comandancia en Zacatecas EL PAÍS",
+      "original_language": "es",
+      "collection_language": "es",
+      "collection_language_name": "Spanish",
+      "collection_locale": "ES:es",
+      "published": "2026-09-01T16:45:59+00:00",
+      "source": "EL PAÍS",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQQXp5aW4tQWJsM3pmUUFOM21qMDlYc0IwaUtUck14c3VSR0dfVktMbUxhM3FuLUNGTi1vbEZmb3pmWUFWY0VBdFhPYlNVM0djUGNvQTBOdWNBWXNqNkRWcHNjR04zMHRBY183SUZuNHRrbElGaVRqNzEwSUR1akNwal9MSEhMdmI0NHdhNV9JbXBwUUVBTk1BZW1VUjJuemg5eHlIa3J0dW1ramPSAb8BQVVfeXFMUE9qOGVDWEVBeFVWdXFZdEI0czVKUWhTQjFqWl9NSjhiMUNFV2FnUk4yTDNobUN5NTlOOE1aZ0FhSXlZSzNZRzdNX2t0Z0pjMmp0R0YwcG1oMlVkWEx1NWtZUGc4ZjhxMnJmRjlYcVVTRlRHT2dZc2V3RVYyT1ZYcHVLYkdleGNHUkhIaVRPeGYzU29ZYUJXamxSXzZENlpRSFZqLUpfbzNQWkxzLTczcHprcEQxZkp2ek54Mkozc1U?oc=5",
+      "collector": "Google News RSS",
+      "country": "Mexico",
+      "country_code": "MX",
+      "city": "Zacatecas",
+      "region": null,
+      "latitude": 22.76843,
+      "longitude": -102.58141,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "elpais.com",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "EL PAÍS"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T16:45:59+00:00",
+      "last_reported": "2026-09-01T16:45:59+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Law enforcement arrest following a violent attack on a security installation.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Arrest of suspect for attack on police command in Zacatecas",
+      "title_variants": [
+        "Arrest of suspect for attack on police command in Zacatecas"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "attack on a police command in Zacatecas"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Explicitly mentions the attack and arrest occurred in Zacatecas.",
+      "ai_geo_fingerprint": "65de98c78e9c1f9d7e47f71ce50cdd7c3758bdcc24887eeb3f10db215dbdae64",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "66a0c4181d3627b0",
       "category": "Attacks",
       "categories": [
@@ -1402,6 +1713,128 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "796232e7ef613df5",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Attacks"
+      ],
+      "title": "At just 14 years old, he wanted to carry out an attack during the Sydney Marathon",
+      "summary": "A 14-year-old minor was intercepted and prevented from carrying out a terrorist attack during the Sydney Marathon.",
+      "original_title": "A soli 14 anni voleva compiere un attentato durante la Maratona di Sydney",
+      "original_summary": "A soli 14 anni voleva compiere un attentato durante la Maratona di Sydney Runner's World",
+      "original_language": "it",
+      "collection_language": "it",
+      "collection_language_name": "Italian",
+      "collection_locale": "IT:it",
+      "published": "2026-09-01T16:04:32+00:00",
+      "source": "Runner's World",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE43Sk05MWxUVGFBZnIzVE9LRmZxTElCZS13Tmh0UU51cUlBTXN0MzZkR0VWWExiNk55TkY4LTZiS0lqdEg5NkcyaGdYU1l1UHNPUWxSQUFUNk1TVFYtemstZmhLb0t0a3pxSXpmdlFrWWJwcG4tUWRwRzI4eEd5UQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Australia",
+      "country_code": "AU",
+      "city": "Sydney",
+      "region": null,
+      "latitude": -33.86785,
+      "longitude": 151.20732,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Runner's World"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T16:04:32+00:00",
+      "last_reported": "2026-09-01T16:04:32+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 90,
+      "ai_relevance_reason": "Counter-terrorism intervention against a planned attack by a minor.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "14-year-old foiled or arrested over planned attack during Sydney Marathon",
+      "title_variants": [
+        "14-year-old foiled or arrested over planned attack during Sydney Marathon"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "attack during the Sydney Marathon"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Explicitly names Sydney Marathon in Australia as the intended attack location.",
+      "ai_geo_fingerprint": "d082287ecd3c56df2bb6606434ae195bb5d6fa1753a103f81807a73e6a356695",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "34a2653178e66379",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Attacks"
+      ],
+      "title": "FBI arrests a woman for alleged plot to bomb the New York State Capitol",
+      "summary": "The FBI has arrested a woman in connection with an alleged terrorist plot to bomb the New York State Capitol.",
+      "original_title": "El FBI arresta a una mujer por supuesto complot para bombardear el Capitolio del Estado de Nueva York",
+      "original_summary": "El FBI arresta a una mujer por supuesto complot para bombardear el Capitolio del Estado de Nueva York hablandoclaro.com.ar",
+      "original_language": "es",
+      "collection_language": "es",
+      "collection_language_name": "Spanish",
+      "collection_locale": "ES:es",
+      "published": "2026-09-01T16:02:43+00:00",
+      "source": "hablandoclaro.com.ar",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPblB3d3pjdVh5cEdqajJRcXZoZGFOUGJHUE9FaGdFQ3hKZVZNWG9wdXlUenlsVVdmaXEwenN4bjBZc2M3MHFqb2JseURScGJBbFY2RnB6UkhZY0VrNnJzWjZlZ2tTeDlPeHMxVmotSldRR2dvNmZjd1RTRU1jejVKb2R6Slk0UHdISjF2NGJUSWNfYXJhUlNORDBLMFI4bkhBdFB4Sk9MMURUdENrWDNhcnBQQk1nYVBha0M2NTJscmpJRHZVVmxPa3VOakxsNVRq?oc=5",
+      "collector": "Google News RSS",
+      "country": "United States",
+      "country_code": "US",
+      "city": "Albany",
+      "region": null,
+      "latitude": 42.65258,
+      "longitude": -73.75623,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "hablandoclaro.com.ar"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T16:02:43+00:00",
+      "last_reported": "2026-09-01T16:02:43+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 90,
+      "ai_relevance_reason": "Disrupted terrorist plot and subsequent FBI arrest.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "FBI arrests woman for alleged bomb plot targeting New York State Capitol",
+      "title_variants": [
+        "FBI arrests woman for alleged bomb plot targeting New York State Capitol"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "New York State Capitol, FBI arrests"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "FBI arrested a woman plotting to bomb the New York State Capitol in Albany, USA.",
+      "ai_geo_fingerprint": "f87e3d35b0ea4e0dba9166ff6e53cdf6bdbed935b5ee6a2f77e12ec168d408fd",
+      "ai_geo_inferred": true
     },
     {
       "id": "68789b0c8ba64dc0",
@@ -1635,8 +2068,18 @@
         "eluniverso.com",
         "El Universo"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "New York accuses Donald Trump of freezing 40% of funds to prevent another 9/11",
+          "original_title": "Nueva York acusa a Donald Trump de congelar 40 % de fondos para evitar otro 11-S",
+          "original_language": "es",
+          "summary": "New York officials accuse Donald Trump of freezing a significant percentage of security funds intended to prevent terrorism.",
+          "published": "2026-09-01T15:39:00+00:00",
+          "source": "eluniverso.com",
+          "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQdU55OGIxYThlbnZEaDd5RTJZSE1aT19KVjE3YVh2YWJ2V204dV9tZHZIWmh1OUMtc3E2M0p5MVFXc096aEp1YzdlTFJZcW5RRnZ2TTVVOXAyNGRMQzB6cV9WUDFQTEo0TzEzRWxYWVBZTzJxUWxPVU5TNnF3cC13M3Z4UkhITWNZSDBQWGxpQl9HcTBKelJzeVphM0xDNUd4LUxzdFpUN1pnUUF0VnRLRjJjNUFPNEpuZVZraEMzX3MwRkpmTl8xaWo3N0RTU0tSelZmczFxek1oa2JqVXlGRmVkc9IB4wFBVV95cUxQdU55OGIxYThlbnZEaDd5RTJZSE1aT19KVjE3YVh2YWJ2V204dV9tZHZIWmh1OUMtc3E2M0p5MVFXc096aEp1YzdlTFJZcW5RRnZ2TTVVOXAyNGRMQzB6cV9WUDFQTEo0TzEzRWxYWVBZTzJxUWxPVU5TNnF3cC13M3Z4UkhITWNZSDBQWGxpQl9HcTBKelJzeVphM0xDNUd4LUxzdFpUN1pnUUF0VnRLRjJjNUFPNEpuZVZraEMzX3MwRkpmTl8xaWo3N0RTU0tSelZmczFxek1oa2JqVXlGRmVkcw?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-09-01T15:39:00+00:00",
       "last_reported": "2026-09-01T15:39:00+00:00",
       "ai_selection_complete": true,
@@ -1665,7 +2108,8 @@
       "ai_geo_inferred": true,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "same_normalized_title"
       ]
     },
     {
@@ -1741,82 +2185,6 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Power supply attack targeting infrastructure in Germany.",
       "ai_geo_fingerprint": "79f3623eecf71a9ebc3b38a7b13d2edb46daadf298d5674ef2ee08dadc2258f1",
-      "ai_geo_inferred": true
-    },
-    {
-      "id": "87a0dac4414c88b4",
-      "category": "Weapons",
-      "categories": [
-        "Weapons",
-        "Attacks"
-      ],
-      "title": "Explosion at substation – Government declares target of 'sabotage' – Homemade flying objects found",
-      "summary": "Following an explosion at an electrical substation, the German government has classified the incident as sabotage, noting the discovery of homemade airborne devices.",
-      "original_title": "Explosion an Umspannwerk – Regierung erklärt Ziel der „Sabotage“ – Selbstgebaute Flugkörper gefunden",
-      "original_summary": "Explosion an Umspannwerk – Regierung erklärt Ziel der „Sabotage“ – Selbstgebaute Flugkörper gefunden WELT",
-      "original_language": "de",
-      "collection_language": "de",
-      "collection_language_name": "German",
-      "collection_locale": "DE:de",
-      "published": "2026-09-01T15:23:51+00:00",
-      "source": "WELT",
-      "source_count": 1,
-      "url": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxNVzl4VC1nd1lUYUdiZzlhNExfS0YwUEFtdHBOWGdTSV8ya3NLenJSQzlNU1htTVZGVmwzSjNmaUx6NjBXX1JZV0tpODNoUlhJbHo0dENaRXZEUVJrMFBYdDBxdXVpNWpmb3ZBU2dmTk9yWkxiRmpaYWdONTVJbnROVExmUlExN0hJNk94NkVSdkMySVZndXNic1VhelVQaFRYVnFtaUlXaDFDdEJlbGd3VUhWSjJJa1licE5oWEFjN2hNY2RDTGRWcDBBc1F6N2RrNVlVU0lsVEJxNzd4SHA0Rjhrb18yZUVNTms2dVQyYVFuOFluYmhyelRWcjhTaGhyVGhGN0lneVR2N0d4ZzV1ektCam80LUxDWGhsdE5peUZZVVl2bXhSeA?oc=5",
-      "collector": "Google News RSS",
-      "country": "Germany",
-      "country_code": "DE",
-      "city": "Jänschwalde",
-      "region": null,
-      "latitude": 51.86066,
-      "longitude": 14.49813,
-      "location_precision": "city",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "WELT"
-      ],
-      "related_articles": [
-        {
-          "title": "'The vulnerability of critical infrastructure is very large in certain parts'",
-          "original_title": "„Die Verletzlichkeit der kritischen Infrastruktur ist in bestimmten Teilen sehr groß“",
-          "original_language": "de",
-          "summary": "Security commentary discussing the high vulnerability of critical infrastructure following recent sabotage and attack attempts.",
-          "published": "2026-09-01T17:24:50+00:00",
-          "source": "WELT",
-          "url": "https://news.google.com/rss/articles/CBMikgJBVV95cUxPZDFMZFJfMWp0bHN6TzFzY283elRFSXVMc3prejIwX0ViNEI2MTBPWXd3czJpR2tEcEVRVjlnQi1NZEkwenFfZTVFanhWM0ptSkEyXzhjUjFmY2dSbUs1YTJra3hRZkY5ODFfdTdBT2FFYXQ4aXNFUGVndFc4cVJLQlRtd1BYSXhGS21GcnI2TU5rTEllenBERVFMRlh6LVlTZVZ4TG1fbDJXaXZoU3NKMHlzd3U4NjFSYVoxMDJzVkZPTkV6OUdjWjFkaGNjTnlndkowZlcxamVGMXgyUW5aMl82RFNOQmZpMFBnM0dCY2dFR01HalZLY3I0ZE81Q2ZQT3VYbHAtMEdQYWxqWFhFSUdn?oc=5"
-        }
-      ],
-      "article_count": 2,
-      "first_reported": "2026-09-01T15:23:51+00:00",
-      "last_reported": "2026-09-01T17:24:50+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 85,
-      "ai_relevance_reason": "Operational critical infrastructure attack/sabotage involving explosive devices and airborne weapons.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "Sabotage attack involving an explosion and homemade flying objects at an electrical substation in Germany",
-      "title_variants": [
-        "Sabotage attack involving an explosion and homemade flying objects at an electrical substation in Germany"
-      ],
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "entity_actor_event_signature",
-        "same_url"
-      ],
-      "location_confidence_score": 0.9,
-      "location_method": "ai_city_geonames",
-      "location_evidence": [
-        "Explosion at substation – Government declares target of 'sabotage'"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Refers to the substation explosion and sabotage event in Brandenburg/Jänschwalde.",
-      "ai_geo_fingerprint": "5389d09d13f2685df02b3f4400c14733a474a941415a557b09a32ef3067862db",
       "ai_geo_inferred": true
     },
     {
@@ -2025,6 +2393,68 @@
       "ai_geo_inferred": true
     },
     {
+      "id": "eeb14adf0c9e6fde",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Weapons",
+        "Attacks"
+      ],
+      "title": "Joint operation in Seiyoun ends with the death of ISIS spokesman and seizure of explosive belt and electronic devices",
+      "summary": "A joint security operation in Seiyoun resulted in the killing of an ISIS spokesman, along with the seizure of an explosive belt and electronic equipment.",
+      "original_title": "عملية مشتركة في سيئون تنتهي بمقتل متحدث داعش وضبط حزام ناسف وأجهزة إلكترونية",
+      "original_summary": "عملية مشتركة في سيئون تنتهي بمقتل متحدث داعش وضبط حزام ناسف وأجهزة إلكترونية وكالة خبر للأنباء",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-09-01T14:56:14+00:00",
+      "source": "وكالة خبر للأنباء",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBjcUdYajlKemw4R0pYQWlsQ1o3YTRERVE1UkJqUjhYYkE3NTVmdENWcEtOVFlMbDVEWkpkSTEzNlp5TThsd2Q2NmNWck4zazJPRXY1UmRVMA?oc=5",
+      "collector": "Google News RSS",
+      "country": "Yemen",
+      "country_code": "YE",
+      "city": "Seiyoun",
+      "region": null,
+      "latitude": 15.9431,
+      "longitude": 48.7856,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "وكالة خبر للأنباء"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T14:56:14+00:00",
+      "last_reported": "2026-09-01T14:56:14+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 90,
+      "ai_relevance_reason": "Major counter-terrorism raid against a named terrorist group leader involving weapons and explosives.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Joint security raid in Seiyoun resulting in the death of an ISIS spokesman and seizure of explosives",
+      "title_variants": [
+        "Joint security raid in Seiyoun resulting in the death of an ISIS spokesman and seizure of explosives"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_coordinates",
+      "location_evidence": [
+        "Joint operation in Seiyoun"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Explicitly mentions Seiyoun as the location of the security operation against ISIS.",
+      "ai_geo_fingerprint": "edfad4104691b74d238dad8025cd0a0473e91c29289d8fe141e9e51f821a9ca2",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "30d3b4198433ecac",
       "category": "Attacks",
       "categories": [
@@ -2089,6 +2519,66 @@
       ]
     },
     {
+      "id": "eeb14adf0c9e6fde",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial"
+      ],
+      "title": "Ashkelon prison guard charged with beating a prisoner/terrorist to death",
+      "summary": "A prison guard from Ashkelon has been criminally charged with beating a detainee/terrorist to death, resulting in broken ribs and heart ruptures.",
+      "original_title": "סוהר מאשקלון נאשם כי היכה למוות מחבל: שברים בצלעות וקרעים בלב",
+      "original_summary": "סוהר מאשקלון נאשם כי היכה למוות מחבל: שברים בצלעות וקרעים בלב כאן דרום - אשקלון",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-09-01T14:40:00+00:00",
+      "source": "כאן דרום - אשקלון",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE53V2QwYUFsN2Y1Yi1hRVNIN1pYY2twM29BemFIY3ZETEdWNzdpbHhUcWUwNUozbDM4ZkhSYkRmcW5hVEtjTkVCT25BeHhnVkdWeXRF?oc=5",
+      "collector": "Google News RSS",
+      "country": "Israel",
+      "country_code": "IL",
+      "city": "Ashkelon",
+      "region": null,
+      "latitude": 31.66926,
+      "longitude": 34.57149,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "כאן דרום - אשקלון"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T14:40:00+00:00",
+      "last_reported": "2026-09-01T14:40:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Legal/judicial prosecution stemming from the detention and handling of terrorism-related suspects.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Prison guard charged in Israel for fatal beating of a militant/prisoner",
+      "title_variants": [
+        "Prison guard charged in Israel for fatal beating of a militant/prisoner"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Ashkelon prison guard charged"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Explicitly states the prison guard is from Ashkelon, Israel.",
+      "ai_geo_fingerprint": "b02acd177cfa62f2ed65a33b48158e967e419f05e689b1d536825cbbd15eef0b",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "f0c27e3067626ce8",
       "category": "Attacks",
       "categories": [
@@ -2105,7 +2595,7 @@
       "collection_locale": "DE:de",
       "published": "2026-09-01T14:39:30+00:00",
       "source": "stuttgarter-nachrichten.de",
-      "source_count": 4,
+      "source_count": 6,
       "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPaFFXWHk0WWxRanJHNVJDbDZDeUtYRVhBX1FzTkllVjhSdzBDOWd2R1hoQ1ZGRXE0TXpUUWxzaGVwVjJCVmNzdHZ3aWtSNWFPS1kyU1E2MXZ4clM1ZTRGbmI3WEZZS2VMWWZqejRQU1lyUFhLUzdnMzNSNVVGS3V6cGZlbVRwVENWUlhTRkxZNXY5UWg5eW50WDVuNnlURFE1LW5OM0RwNU8xTlBOaDBsa1JHQzZub0dLSmR3eEhhYV9lb3RhektfdzM3cnRVUQ?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -2121,7 +2611,9 @@
         "stuttgarter-nachrichten.de",
         "BILD",
         "weltwoche.ch",
-        "swp.de"
+        "swp.de",
+        "Stuttgarter Nachrichten",
+        "Business Insider Deutschland"
       ],
       "related_articles": [
         {
@@ -2167,10 +2659,11 @@
       "title_variants": [
         "Police investigate apparent attack and find homemade projectiles at a power facility in Brandenburg"
       ],
-      "dedup_confidence": 0.99,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
         "title_plus_anchor",
-        "same_normalized_title"
+        "same_normalized_title",
+        "same_url"
       ],
       "location_confidence_score": 0.9,
       "location_method": "ai_city_geonames",
@@ -2183,6 +2676,92 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Attack on Brandenburg's largest power plant (Jänschwalde power station).",
       "ai_geo_fingerprint": "5416d796900c6bcf49247308940524fdaebd420d870a304be356203d21a9c364",
+      "ai_geo_inferred": true
+    },
+    {
+      "id": "87a0dac4414c88b4",
+      "category": "Weapons",
+      "categories": [
+        "Weapons",
+        "Attacks"
+      ],
+      "title": "Explosion at substation – Government declares target of 'sabotage' – Homemade flying objects found",
+      "summary": "Following an explosion at an electrical substation, the German government has classified the incident as sabotage, noting the discovery of homemade airborne devices.",
+      "original_title": "Explosion an Umspannwerk – Regierung erklärt Ziel der „Sabotage“ – Selbstgebaute Flugkörper gefunden",
+      "original_summary": "Explosion an Umspannwerk – Regierung erklärt Ziel der „Sabotage“ – Selbstgebaute Flugkörper gefunden WELT",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-09-01T14:39:04+00:00",
+      "source": "WELT",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxNVzl4VC1nd1lUYUdiZzlhNExfS0YwUEFtdHBOWGdTSV8ya3NLenJSQzlNU1htTVZGVmwzSjNmaUx6NjBXX1JZV0tpODNoUlhJbHo0dENaRXZEUVJrMFBYdDBxdXVpNWpmb3ZBU2dmTk9yWkxiRmpaYWdONTVJbnROVExmUlExN0hJNk94NkVSdkMySVZndXNic1VhelVQaFRYVnFtaUlXaDFDdEJlbGd3VUhWSjJJa1licE5oWEFjN2hNY2RDTGRWcDBBc1F6N2RrNVlVU0lsVEJxNzd4SHA0Rjhrb18yZUVNTms2dVQyYVFuOFluYmhyelRWcjhTaGhyVGhGN0lneVR2N0d4ZzV1ektCam80LUxDWGhsdE5peUZZVVl2bXhSeA?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": "Jänschwalde",
+      "region": null,
+      "latitude": 51.86066,
+      "longitude": 14.49813,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "WELT",
+        "Yahoo Nachrichten"
+      ],
+      "related_articles": [
+        {
+          "title": "'The vulnerability of critical infrastructure is very large in certain parts'",
+          "original_title": "„Die Verletzlichkeit der kritischen Infrastruktur ist in bestimmten Teilen sehr groß“",
+          "original_language": "de",
+          "summary": "Security commentary discussing the high vulnerability of critical infrastructure following recent sabotage and attack attempts.",
+          "published": "2026-09-01T17:24:50+00:00",
+          "source": "WELT",
+          "url": "https://news.google.com/rss/articles/CBMikgJBVV95cUxPZDFMZFJfMWp0bHN6TzFzY283elRFSXVMc3prejIwX0ViNEI2MTBPWXd3czJpR2tEcEVRVjlnQi1NZEkwenFfZTVFanhWM0ptSkEyXzhjUjFmY2dSbUs1YTJra3hRZkY5ODFfdTdBT2FFYXQ4aXNFUGVndFc4cVJLQlRtd1BYSXhGS21GcnI2TU5rTEllenBERVFMRlh6LVlTZVZ4TG1fbDJXaXZoU3NKMHlzd3U4NjFSYVoxMDJzVkZPTkV6OUdjWjFkaGNjTnlndkowZlcxamVGMXgyUW5aMl82RFNOQmZpMFBnM0dCY2dFR01HalZLY3I0ZE81Q2ZQT3VYbHAtMEdQYWxqWFhFSUdn?oc=5"
+        },
+        {
+          "title": "After substation attack - Eyewitness saw a rocket",
+          "original_title": "Nach Anschlag auf Umspannwerk - Augenzeugin sah Rakete: „Etwa 40 Zentimeter hoch und bunt”",
+          "original_language": "de",
+          "summary": "Following an attack on an electrical substation, an eyewitness reported seeing a small rocket.",
+          "published": "2026-09-01T14:39:04+00:00",
+          "source": "Yahoo Nachrichten",
+          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNODQwaVJzc2hqU2k3M29aUFEwdUVvWkZYUWRiX2ZqVzdjcHBsM1pKeE5NN0ZkZDlWSnZKVjQ3SmpUbEZ0U2Z6dHREb0ZBbjdoc2dEdmQ2eGpKRGlJcjJXZ1A0TFEtWktScXRLNE1zSGxaRkk5NWdwa295NDF4ZnJOb0RSLUVKQzFTZHowYVlvV1JUTHZpREE?oc=5"
+        }
+      ],
+      "article_count": 3,
+      "first_reported": "2026-09-01T14:39:04+00:00",
+      "last_reported": "2026-09-01T17:24:50+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Operational critical infrastructure attack/sabotage involving explosive devices and airborne weapons.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Sabotage attack involving an explosion and homemade flying objects at an electrical substation in Germany",
+      "title_variants": [
+        "Sabotage attack involving an explosion and homemade flying objects at an electrical substation in Germany"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "entity_actor_event_signature",
+        "same_url"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Explosion at substation – Government declares target of 'sabotage'"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Refers to the substation explosion and sabotage event in Brandenburg/Jänschwalde.",
+      "ai_geo_fingerprint": "5389d09d13f2685df02b3f4400c14733a474a941415a557b09a32ef3067862db",
       "ai_geo_inferred": true
     },
     {
@@ -2449,82 +3028,6 @@
       "dedup_methods": [
         "same_url"
       ]
-    },
-    {
-      "id": "3fa4f91217cf101c",
-      "category": "Online Radicalization / Cyberterrorism",
-      "categories": [
-        "Online Radicalization / Cyberterrorism"
-      ],
-      "title": "VOX warns that migration influx in Ceuta increases jihadist threat in Castilla-La Mancha",
-      "summary": "The political party VOX has issued a public warning claiming that irregular migration arrivals in Ceuta heighten the jihadist terrorism threat in Castilla-La Mancha.",
-      "original_title": "VOX alerta de que la invasión de Ceuta incrementa la amenaza yihadista en Castilla-La Mancha",
-      "original_summary": "VOX alerta de que la invasión de Ceuta incrementa la amenaza yihadista en Castilla-La Mancha VOX España",
-      "original_language": "es",
-      "collection_language": "es",
-      "collection_language_name": "Spanish",
-      "collection_locale": "ES:es",
-      "published": "2026-09-01T14:07:56+00:00",
-      "source": "VOX España",
-      "source_count": 2,
-      "url": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxNaGVDMjFLeW41NVduS0xmSlJZQ3RYUzZzSEREZ2w2TXBzWmpEMTRNWl8yRllCdzBPV3ByUDdaMUpPUWh0Z1VrTGtPSEU5b1NsSUYxeVJrSXhzaEppM2ZUZFdCbWZrWVl6MlMyQmJxUjZkYXA3M09GNkdJSXBMSU9EWGVmMkJPbFdzLVlOVE50TEZmcGdnbFBWNzQxbGlheG05WEljU21iS1d6ZEhMTTRiWmdpMFFXT0N4UjhndXg2b0t5V3pkVUo1WDZpN3dvRFpqbGpxRTVkdXBXbk9OcGo0S3VZUTNzblF2MVpmSlZGNklBMDQwN3dlTG8wONIB-wFBVV95cUxNaGVDMjFLeW41NVduS0xmSlJZQ3RYUzZzSEREZ2w2TXBzWmpEMTRNWl8yRllCdzBPV3ByUDdaMUpPUWh0Z1VrTGtPSEU5b1NsSUYxeVJrSXhzaEppM2ZUZFdCbWZrWVl6MlMyQmJxUjZkYXA3M09GNkdJSXBMSU9EWGVmMkJPbFdzLVlOVE50TEZmcGdnbFBWNzQxbGlheG05WEljU21iS1d6ZEhMTTRiWmdpMFFXT0N4UjhndXg2b0t5V3pkVUo1WDZpN3dvRFpqbGpxRTVkdXBXbk9OcGo0S3VZUTNzblF2MVpmSlZGNklBMDQwN3dlTG8wOA?oc=5",
-      "collector": "Google News RSS",
-      "country": "Spain",
-      "country_code": "ES",
-      "city": null,
-      "region": "Castilla-La Mancha",
-      "latitude": 39.4754,
-      "longitude": -3.1091,
-      "location_precision": "region",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "VOX España",
-        "La Tribuna de Ciudad Real"
-      ],
-      "related_articles": [
-        {
-          "title": "Vox dice que la invasión de Ceuta aumenta la amenaza yihadista",
-          "original_title": "Vox dice que la invasión de Ceuta aumenta la amenaza yihadista",
-          "original_language": "es",
-          "summary": "Vox dice que la invasión de Ceuta aumenta la amenaza yihadista La Tribuna de Ciudad Real",
-          "published": "2026-09-01T17:14:51+00:00",
-          "source": "La Tribuna de Ciudad Real",
-          "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNLVhPOEVKM29xbl9GR25QWTRiZklaYjNGZVpoRjlpWVZqSDlUbFVNYzlUQ1lhcWFOdldFelVkMXFORnlBTXlBNjFkejJ0STdwaGk1U3lqVFhMYTJ5NlVyanB4ZTJWS1FqSTlSamJCOTRYN080UnBiZzdlLXdjbnpYNnJCVzhVTVBGLWJSYnRzTTB4MkFnclpuLXVvUS1UTWd6TnV4anhjOUVPUmdjcXc2NmxSTXlxU2E0RmVmTTRhU1FWSnlWdGRIWXFpZ3J1MUlESHJ2dmFhSThiVW5FbzRTc2pudDVaQQ?oc=5"
-        }
-      ],
-      "article_count": 2,
-      "first_reported": "2026-09-01T14:07:56+00:00",
-      "last_reported": "2026-09-01T17:14:51+00:00",
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "title_plus_anchor",
-        "same_url"
-      ],
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 55,
-      "ai_relevance_reason": "This is a political party statement addressing terrorism threat assessments linked to border security.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "political warning by VOX regarding migration and jihadist threat in Spain",
-      "title_variants": [
-        "political warning by VOX regarding migration and jihadist threat in Spain"
-      ],
-      "location_confidence_score": 1.0,
-      "location_method": "ai_region_coordinates",
-      "location_evidence": [
-        "migration influx in Ceuta increases jihadist threat in Castilla-La Mancha"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Political warning issued regarding threats affecting Castilla-La Mancha, Spain.",
-      "ai_geo_fingerprint": "03c95d09595ba1e450da24b513e4f4e6c28829c6bf508408329d736aa62a79e7",
-      "ai_geo_inferred": false
     },
     {
       "id": "45d8cc313e320411",
@@ -2998,82 +3501,6 @@
       "ai_geo_inferred": true
     },
     {
-      "id": "847fe68b16c2e512",
-      "category": "Attacks",
-      "categories": [
-        "Attacks",
-        "Weapons"
-      ],
-      "title": "Attempted attack: At least one detonation at German power plant",
-      "summary": "An attempted attack involving at least one detonation has targeted a power facility in Germany.",
-      "original_title": "Versuchter Anschlag - Mindestens eine Detonation bei deutschem Kraftwerk",
-      "original_summary": "Versuchter Anschlag - Mindestens eine Detonation bei deutschem Kraftwerk Kronen Zeitung",
-      "original_language": "de",
-      "collection_language": "de",
-      "collection_language_name": "German",
-      "collection_locale": "DE:de",
-      "published": "2026-09-01T13:07:00+00:00",
-      "source": "Kronen Zeitung",
-      "source_count": 2,
-      "url": "https://news.google.com/rss/articles/CBMiQkFVX3lxTFBoYjBJVlVSR3hoQ0FzMFNZdFVadWxyZXFLclpRb3B5TmM0Y3VmeEJtejhoZV9JT0MxdXp2MjhNVWJqZw?oc=5",
-      "collector": "Google News RSS",
-      "country": "Germany",
-      "country_code": "DE",
-      "city": null,
-      "region": "Brandenburg",
-      "latitude": 52.4125,
-      "longitude": 12.5316,
-      "location_precision": "region",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "Kronen Zeitung",
-        "nv.ua"
-      ],
-      "related_articles": [
-        {
-          "title": "Explosives found near one of Germany's largest thermal power plants, authorities declare it a terrorist attack",
-          "original_title": "В Германии возле одной из крупнейших ТЭС обнаружили взрывчатку, власти заявили о теракте",
-          "original_language": "ru",
-          "summary": "Authorities in Germany declared an incident a terrorist attack after explosives were discovered near a major thermal power plant.",
-          "published": "2026-09-01T14:16:00+00:00",
-          "source": "nv.ua",
-          "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQN3hoS1dQbGNpQk9zcWpzZWlxVlhsR3JaaVNIbjM0c2lwSkdJNHVUakQxcVlHb05jUHRnSEY5d2NjR2VxOUdUNTY5OVVsUzdEcm5MdkYzTlYzV1RWQmJ3RF9qcndEdUdDNzZkUjhjZUs1LWdrVndNZWIya2xVSnFfdFNXcmpySUdnN0pBdmFhUTJ6cUZ6ZlMzWWxBT2JiUk9oRTNXNmZkaVd6bDR6OWNIUXdTck0wNlkzclJPeVhfZzZxeDBiVFlmNXV3bmNxUGdnUjNFVUtYMNIBxwFBVV95cUxQRTdDVVI3Y2NZRDlBQ25RalBVbllwSUh3ZmFTZlRSN01HV0pXSmk4S1RhSUxfejFtMHhzOGotZG5uSTF4bl9hdDVQMDU3U25PSmY3MmxPaGo1Zk5INGZpRFd0cncxY2dXUUE0REc3STljRGN3LUE2RW1XeVRFV2lIeHZtRmplc2JHV3ZoYWptRkh5VlJzaW12WWx1WUozSGRpeHlGNzh2WTNHSXoxRlN5Um1iUXJCNlBhalFCd0JkTk1TdkVoeGFR?oc=5"
-        }
-      ],
-      "article_count": 2,
-      "first_reported": "2026-09-01T13:07:00+00:00",
-      "last_reported": "2026-09-01T14:16:00+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 85,
-      "ai_relevance_reason": "Reports on an active sabotage/terrorist attack involving explosives against a power plant.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "Attempted explosive attack at a German power facility",
-      "title_variants": [
-        "Attempted explosive attack at a German power facility"
-      ],
-      "dedup_confidence": 0.635,
-      "dedup_methods": [
-        "paraphrase_entity_context"
-      ],
-      "location_confidence_score": 0.9,
-      "location_method": "ai_region_coordinates",
-      "location_evidence": [
-        "detonations at German power plant / substation"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Connected to the major power plant/substation attacks in eastern Germany/Brandenburg.",
-      "ai_geo_fingerprint": "266e7a727dc75f1d46ff6ecbf0cb5f3858a0025908fba4e2005e5221f6b8c97a",
-      "ai_geo_inferred": true
-    },
-    {
       "id": "803a449a06847c49",
       "category": "Attacks",
       "categories": [
@@ -3141,7 +3568,8 @@
       "id": "caee5c814b90edea",
       "category": "Legal / Judicial",
       "categories": [
-        "Legal / Judicial"
+        "Legal / Judicial",
+        "Arrests"
       ],
       "title": "Serious case in the Israel Prison Service: 12 guards charged with killing a terrorist",
       "summary": "Twelve prison guards in Israel have been charged in connection with the death of a detained terrorist prisoner.",
@@ -3182,9 +3610,18 @@
           "published": "2026-09-01T13:23:54+00:00",
           "source": "מקור ראשון",
           "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9ZTEg5OXgzdkdWQVBQeU1RSVd5LUU3SlhMLW5EdnVNa1l0U1Y4Z21kOW8yc3lXejVKRWJlRU15ZURESFdKQm5KVkdTUXAyT3dYRVhoSWN5NGtZM1FnYzFFN2k0aFpMdw?oc=5"
+        },
+        {
+          "title": "IPS Serious Affair: 12 Prison Guards Charged with Causing Death of a Terrorist",
+          "original_title": "פרשה חמורה בשב\"ס: 12 סוהרים נאשמים בהמתת מחבל",
+          "original_language": "he",
+          "summary": "Twelve prison guards from Ketziot Prison are charged with recklessly causing the death of a terrorist prisoner.",
+          "published": "2026-09-01T13:00:51+00:00",
+          "source": "כיכר השבת",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5nU3c2ckx3cEd4aFVpOVdZYnFUYnNsdGxIWlhUR0xDdnBXc2t1NmgyZnBLejd1UVhrUXpibERFQ0FvMmpRNzRaTzIxWGgzY2psekE?oc=5"
         }
       ],
-      "article_count": 2,
+      "article_count": 3,
       "first_reported": "2026-09-01T13:00:38+00:00",
       "last_reported": "2026-09-01T13:23:54+00:00",
       "ai_selection_complete": true,
@@ -3251,10 +3688,20 @@
         "Tageblatt",
         "Kreiszeitung Wesermarsch"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "Stade Murders: Weapons dealer in custody – Arrest in Berlin",
+          "original_title": "Stader Morde: Waffenverkäufer in Haft – Festnahme in Berlin",
+          "original_language": "de",
+          "summary": "German police arrested a weapons dealer in Berlin in connection with the Stade murders investigation.",
+          "published": "2026-09-01T18:45:59+00:00",
+          "source": "Kreiszeitung Wesermarsch",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNSXpVNkQteVZfeDRrOXZFR1dzdi1CMm0yMzB5UzBBWGxzbVlyRmNOMEhRNlVldFhjNnB0NjZjYXBpOGRwMUdMNUZKTDE0ZUZHazhIVXFEU0xXQlZ6WS03dE44MEJFb2xMMjhWR0JyTFhQUWZ2U3RaMUpLR1owY3BacHN0N0FmSnVtZGxEWWc0bUt0SmRrdjBnR05iNk5id0wyQWhvN2RuOVpIVkQzWEFkX0xiWWdWMzg?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-09-01T12:50:00+00:00",
-      "last_reported": "2026-09-01T16:22:58+00:00",
+      "last_reported": "2026-09-01T18:45:59+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -3281,7 +3728,8 @@
       "ai_geo_inferred": false,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "title_plus_anchor"
       ]
     },
     {
@@ -3299,9 +3747,9 @@
       "collection_language": "de",
       "collection_language_name": "German",
       "collection_locale": "DE:de",
-      "published": "2026-09-01T12:48:37+00:00",
+      "published": "2026-09-01T12:47:45+00:00",
       "source": "Nordbayerischer Kurier",
-      "source_count": 5,
+      "source_count": 6,
       "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxPd2VRZENBOS1ManYyWVdyeldDOVduYm1iVUJqRjVIdkJCTFdsbkgxWmhaZ3h2ZUx2eW1pVldrb1pkWmRXdmJuTXhUZ0sweTNqa3UyMVVJeDJUWHJWeVlfaXRIcVhJR0VfaENibHhsLV9TVlV0NHZMNjItZ0NRb3BKWldJc3lqdk9sTlhBSHB1QTFyemcwSGlVZlgyZ21kdm5rRHg4VnFNZkZZSHdZWEdLQmxiTEZHd1hUY083SkRTVzZ3YUNGU0RTd285TW9JeE5LSXVtSjRYazg1RUtodnc0?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -3318,7 +3766,8 @@
         "Investing.com Deutsch",
         "Tagesspiegel",
         "tagesspiegel.de",
-        "WELT"
+        "WELT",
+        "SZ.de"
       ],
       "related_articles": [
         {
@@ -3338,10 +3787,19 @@
           "published": "2026-09-01T12:48:37+00:00",
           "source": "Tagesspiegel",
           "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNSGNIZmFoX1JrYVJzVk1qN3A2eFRRN28zT3ptSHM2Z3RzbFdMN25GUzVHQlUzQUptQXBJQVZIYkNUMV9hSUtFYWM4NVpTY3o4OGxCaEVXVnUtcTByT3NEUFJhVW1oS25ybFdJdktYVUtMUWNXamlDZFlVd1ZfblZSalR2Ung?oc=5"
+        },
+        {
+          "title": "Energy company Leag confirms explosive device near power plant was an attack",
+          "original_title": "Vorfall in Kraftwerksnähe - Leag geht bei Sprengvorrichtung von Anschlag aus - Panorama - SZ.de",
+          "original_language": "de",
+          "summary": "Energy firm Leag confirmed that the explosive devices found near critical power infrastructure in Brandenburg represent an intentional attack.",
+          "published": "2026-09-01T12:47:45+00:00",
+          "source": "SZ.de",
+          "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxOcGwyLW03bDlyMDBST3UwVGVqM1lPTFI1REVCVENVZ3FZbnpYazZLQ2NSWldTMkpJMDkyTkdkU25MOENzcFd3V3djOUlYaFdLWnRfVlhDb2plTHJyN1hhcV85S2lPVC1TbWZiTjNERlhlM0RobWxMbXRzY3pydGxhQ3Z4cGNkR1otWWpCOG9NQVJ3UzNGeWFFMThxYVN3bmt6enpGSFUwdTdSTXZzSjRYel9icnVFUFc4V2h2Ym82TGQtTGRiU2JOSjhzaU1FQ0dxVWlEQ2dXVEZkRkIxcmNKelB5RUhhekx4ZnhtUVBfUC0ySGFX?oc=5"
         }
       ],
-      "article_count": 3,
-      "first_reported": "2026-09-01T12:48:37+00:00",
+      "article_count": 4,
+      "first_reported": "2026-09-01T12:47:45+00:00",
       "last_reported": "2026-09-01T12:53:00+00:00",
       "dedup_confidence": 1.0,
       "dedup_methods": [
@@ -3630,7 +4088,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The wave of bomb threats occurred across multiple regions in Russia.",
       "ai_geo_fingerprint": "7349c05b371cccddac8506732860e26f5ea6c86b35b15655018f6af12edd576b",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "eeb14adf0c9e6fde",
@@ -3779,6 +4241,92 @@
         "same_url",
         "very_high_title_similarity"
       ]
+    },
+    {
+      "id": "3fa4f91217cf101c",
+      "category": "Online Radicalization / Cyberterrorism",
+      "categories": [
+        "Online Radicalization / Cyberterrorism"
+      ],
+      "title": "VOX warns that migration influx in Ceuta increases jihadist threat in Castilla-La Mancha",
+      "summary": "The political party VOX has issued a public warning claiming that irregular migration arrivals in Ceuta heighten the jihadist terrorism threat in Castilla-La Mancha.",
+      "original_title": "VOX alerta de que la invasión de Ceuta incrementa la amenaza yihadista en Castilla-La Mancha",
+      "original_summary": "VOX alerta de que la invasión de Ceuta incrementa la amenaza yihadista en Castilla-La Mancha VOX España",
+      "original_language": "es",
+      "collection_language": "es",
+      "collection_language_name": "Spanish",
+      "collection_locale": "ES:es",
+      "published": "2026-09-01T12:28:25+00:00",
+      "source": "VOX España",
+      "source_count": 3,
+      "url": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxNaGVDMjFLeW41NVduS0xmSlJZQ3RYUzZzSEREZ2w2TXBzWmpEMTRNWl8yRllCdzBPV3ByUDdaMUpPUWh0Z1VrTGtPSEU5b1NsSUYxeVJrSXhzaEppM2ZUZFdCbWZrWVl6MlMyQmJxUjZkYXA3M09GNkdJSXBMSU9EWGVmMkJPbFdzLVlOVE50TEZmcGdnbFBWNzQxbGlheG05WEljU21iS1d6ZEhMTTRiWmdpMFFXT0N4UjhndXg2b0t5V3pkVUo1WDZpN3dvRFpqbGpxRTVkdXBXbk9OcGo0S3VZUTNzblF2MVpmSlZGNklBMDQwN3dlTG8wONIB-wFBVV95cUxNaGVDMjFLeW41NVduS0xmSlJZQ3RYUzZzSEREZ2w2TXBzWmpEMTRNWl8yRllCdzBPV3ByUDdaMUpPUWh0Z1VrTGtPSEU5b1NsSUYxeVJrSXhzaEppM2ZUZFdCbWZrWVl6MlMyQmJxUjZkYXA3M09GNkdJSXBMSU9EWGVmMkJPbFdzLVlOVE50TEZmcGdnbFBWNzQxbGlheG05WEljU21iS1d6ZEhMTTRiWmdpMFFXT0N4UjhndXg2b0t5V3pkVUo1WDZpN3dvRFpqbGpxRTVkdXBXbk9OcGo0S3VZUTNzblF2MVpmSlZGNklBMDQwN3dlTG8wOA?oc=5",
+      "collector": "Google News RSS",
+      "country": "Spain",
+      "country_code": "ES",
+      "city": null,
+      "region": "Castilla-La Mancha",
+      "latitude": 39.4754,
+      "longitude": -3.1091,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "VOX España",
+        "La Tribuna de Ciudad Real",
+        "ABC"
+      ],
+      "related_articles": [
+        {
+          "title": "Vox dice que la invasión de Ceuta aumenta la amenaza yihadista",
+          "original_title": "Vox dice que la invasión de Ceuta aumenta la amenaza yihadista",
+          "original_language": "es",
+          "summary": "Vox dice que la invasión de Ceuta aumenta la amenaza yihadista La Tribuna de Ciudad Real",
+          "published": "2026-09-01T17:14:51+00:00",
+          "source": "La Tribuna de Ciudad Real",
+          "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNLVhPOEVKM29xbl9GR25QWTRiZklaYjNGZVpoRjlpWVZqSDlUbFVNYzlUQ1lhcWFOdldFelVkMXFORnlBTXlBNjFkejJ0STdwaGk1U3lqVFhMYTJ5NlVyanB4ZTJWS1FqSTlSamJCOTRYN080UnBiZzdlLXdjbnpYNnJCVzhVTVBGLWJSYnRzTTB4MkFnclpuLXVvUS1UTWd6TnV4anhjOUVPUmdjcXc2NmxSTXlxU2E0RmVmTTRhU1FWSnlWdGRIWXFpZ3J1MUlESHJ2dmFhSThiVW5FbzRTc2pudDVaQQ?oc=5"
+        },
+        {
+          "title": "Vox warns that the migration situation in Ceuta increases the jihadist threat in Castilla-La Mancha",
+          "original_title": "Vox alerta de que la invasión de Ceuta «incrementa la amenaza yihadista» en Castilla-La Mancha",
+          "original_language": "es",
+          "summary": "The political party Vox issued a warning that migration arrivals in Ceuta heighten the risk of jihadist infiltration and threat in inland Spain.",
+          "published": "2026-09-01T12:28:25+00:00",
+          "source": "ABC",
+          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPVF9wQ3RaY2Rid1U2bjJ3YmNfS2RPNUUyWUFORE9vc2c1NXZBWEFhaEhFNDBpSWZOSUlrVDdYc1pranM5QkpMcjlUaFB1aDR0ekNhOU15dnZxOExhNzc1d1FRVTBsQUs4OTFRYlZKTDgyM3dlVU9aYm9Zam9jcEFrenZ5WE1XY0VIVmVrQTFFQ0JBYWJfM2FtNlFuQnlWcjFZVHFWaGhDSXBWSlNhaHBtMzNvckQzdm1kODUwVVhYOA?oc=5"
+        }
+      ],
+      "article_count": 3,
+      "first_reported": "2026-09-01T12:28:25+00:00",
+      "last_reported": "2026-09-01T17:14:51+00:00",
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "title_plus_anchor",
+        "same_url"
+      ],
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 55,
+      "ai_relevance_reason": "This is a political party statement addressing terrorism threat assessments linked to border security.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "political warning by VOX regarding migration and jihadist threat in Spain",
+      "title_variants": [
+        "political warning by VOX regarding migration and jihadist threat in Spain"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "migration influx in Ceuta increases jihadist threat in Castilla-La Mancha"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Political warning issued regarding threats affecting Castilla-La Mancha, Spain.",
+      "ai_geo_fingerprint": "03c95d09595ba1e450da24b513e4f4e6c28829c6bf508408329d736aa62a79e7",
+      "ai_geo_inferred": false
     },
     {
       "id": "eeb14adf0c9e6fde",
@@ -4479,9 +5027,9 @@
       "collection_language": "de",
       "collection_language_name": "German",
       "collection_locale": "DE:de",
-      "published": "2026-09-01T11:55:50+00:00",
+      "published": "2026-09-01T11:40:00+00:00",
       "source": "RTL.de",
-      "source_count": 1,
+      "source_count": 19,
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNNWttNnVDWFRlcm5mSThvWWZXY2RRRmNfd3E1bTduSFBqUEZJVVEtRXFaeWZFYlFmbEw3S1ZHbWdpRV9NM2dUbnRwSER0Sndwdnc4czdkcHBTMU9qc3lWV1FiX2xWMGlKdFA5VFNLZmdBS3ZqTzZGWkdEZjd0Rl90MDhvQzJ5cU82ekgwTHg3VHRobldVN3phRC1RV2dpajh0YnVEYWZaSlpqWnBRYkVrak1iWnVReXlMemU0?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -4494,7 +5042,25 @@
       "location_confidence": "high",
       "acquisition_channel": "multilingual_discovery",
       "sources": [
-        "RTL.de"
+        "RTL.de",
+        "RP Online",
+        "WELT",
+        "Handelsblatt",
+        "tagesschau.de",
+        "Tagesspiegel",
+        "Spiegel",
+        "DiePresse.com",
+        "Frankfurter Rundschau",
+        "Lausitzer Rundschau",
+        "MDR.de",
+        "Aachener Zeitung",
+        "Stuttgarter Nachrichten",
+        "fnp.de",
+        "Radio Emscher Lippe",
+        "BZ Berlin",
+        "nzz.ch",
+        "FAZ",
+        "TAG24"
       ],
       "related_articles": [
         {
@@ -4505,10 +5071,19 @@
           "published": "2026-09-01T11:55:50+00:00",
           "source": "RTL.de",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPbWlOdHI3bXNHa29jYm5HLWxNTlNHZTdXNWdMQWZDOW1qVS1BUDZSVXhNVXlhQkdqc0V3YjF4djZXSzVfcHhyeXJlZ21BSDRQckNubEtYajc5U21QNWdiQnZ2NjZiWnM0X3dkbFY5Tnc5Y1R0MERMLXVwNEFsWEFrb0RkSGNIVm5ZLUlQNEU4bEUtdll3cXRackE2V1NXZDhxbFhocTdjTk5nYXNJNzRIandB?oc=5"
+        },
+        {
+          "title": "Police discover explosive devices at Brandenburg substation",
+          "original_title": "Brisanter Fund: Polizei entdeckt Sprengvorrichtungen an Umspannwerk in Brandenburg",
+          "original_language": "de",
+          "summary": "German police found explosive devices at a power substation in Brandenburg, indicating a potential sabotage or attack on critical infrastructure.",
+          "published": "2026-09-01T11:40:00+00:00",
+          "source": "Frankfurter Rundschau",
+          "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNUU1lY19zOXUtZjRpcy1zQmhRdkJNcHFETkFrRDRSQkNjUG4wSkJyQzNSS05JQ0pvTEZFVF83VmhxQ0FqWGdYTjdsa0FWWFl2RnFKRWZPbzNrTWVkNVJpR20ybEFwWkhYcUREbzlxd1FyTmRvOXBMcThsa29LUXRnaVV1Vkh2NXFqYV9lQkRhQnJmbGNNa3FMMU5sSUUtai1kUnlScFFRUDlfQQ?oc=5"
         }
       ],
-      "article_count": 2,
-      "first_reported": "2026-09-01T11:55:50+00:00",
+      "article_count": 3,
+      "first_reported": "2026-09-01T11:40:00+00:00",
       "last_reported": "2026-09-01T11:55:50+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
@@ -4522,9 +5097,10 @@
       "title_variants": [
         "Discovery of explosive devices near Jänschwalde power plant"
       ],
-      "dedup_confidence": 0.857,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "title_plus_anchor"
+        "title_plus_anchor",
+        "same_url"
       ],
       "location_confidence_score": 0.95,
       "location_method": "ai_city_geonames",
@@ -4922,7 +5498,7 @@
       "related_articles": [],
       "article_count": 1,
       "first_reported": "2026-09-01T11:26:00+00:00",
-      "last_reported": "2026-09-01T11:26:00+00:00",
+      "last_reported": "2026-09-01T11:26:57+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -5406,153 +5982,6 @@
       "ai_geo_reason": "The attack occurred in Bremen, Germany.",
       "ai_geo_fingerprint": "08a3ed04cb00e791b7a18098a8094dc43b1934e88cea784bfd89c11415250fb3",
       "ai_geo_inferred": false
-    },
-    {
-      "id": "ec5cbfdacae7985c",
-      "category": "Attacks",
-      "categories": [
-        "Attacks",
-        "Weapons",
-        "Legal / Judicial"
-      ],
-      "title": "Germany blames Russia for explosive drone attack at Leipzig airport",
-      "summary": "The German government is taking measures against Russia, accusing Moscow of being behind an explosive drone attack at Leipzig/Halle Airport.",
-      "original_title": "Berlin sévit contre la Russie, accusée d'être derrière le drone explosif de l'aéroport de Leipzig",
-      "original_summary": "Berlin sévit contre la Russie, accusée d'être derrière le drone explosif de l'aéroport de Leipzig France 24",
-      "original_language": "fr",
-      "collection_language": "fr",
-      "collection_language_name": "French",
-      "collection_locale": "FR:fr",
-      "published": "2026-09-01T10:29:00+00:00",
-      "source": "France 24",
-      "source_count": 41,
-      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxPbWJtckVHbUNzSUo1ZmRTU3pnWWdkY0E1SGhGdVppZGNmclhQa0xWWkt0cWZZVmVXc3hQMzNsTkhoczR6Qk11WUxGQmpPb3pnLWlFZkNJS0Zqd3BDLTQyb1JQQ0I3b04yUlZGcnBzMFpOLXpmM2JrMzI4Q2pmSFRMVmRESUlFSE5FRmYyRllPRXBVZ3Z5aGh4TEFVVUtOQnhaSVRHSENHTFd4ay1SR0Y4eHc5VmtwcnJtdnZ2cTVpb2kwOERpYnNIQXVDbjZJc3dtYnFaQmZUMXlJTTJCQlB5b3gyNDBfVFhtdVFqSklEQTU1ejdJUFpjM1VTbDJKa2RjLUQwdw?oc=5",
-      "collector": "Google News RSS",
-      "country": "Germany",
-      "country_code": "DE",
-      "city": "Berlin",
-      "region": null,
-      "latitude": 52.52437,
-      "longitude": 13.41053,
-      "location_precision": "country_capital",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_targeted_source",
-      "targeted_source": "tagesschau.de",
-      "targeted_source_kind": "local_language_media",
-      "sources": [
-        "tagesschau.de",
-        "La Presse",
-        "Le Télégramme",
-        "Ouest-France",
-        "Libération",
-        "France 24",
-        "Le Monde.fr",
-        "Le Nouvel Obs",
-        "Yahoo Actualités",
-        "EL PAÍS",
-        "SZ.de",
-        "STERN.de",
-        "nv.ua",
-        "nd-aktuell.de",
-        "Spiegel",
-        "Les Echos",
-        "NZZ",
-        "El Mundo",
-        "Blick",
-        "RaiNews",
-        "WELT",
-        "Nordkurier",
-        "BILD",
-        "israelhayom.co.il",
-        "RTL",
-        "Berliner Morgenpost",
-        "Augsburger Allgemeine",
-        "tagesspiegel.de",
-        "FAZ",
-        "n-tv.de",
-        "Le Figaro",
-        "MaVille.com",
-        "TF1 Info",
-        "20 Minutes",
-        "Watson",
-        "היום",
-        "sueddeutsche.de",
-        "Le Matin",
-        "novayagazeta.ru",
-        "RTL Lëtzebuerg",
-        "fr.de"
-      ],
-      "related_articles": [
-        {
-          "title": "Germany blames Russia for explosive drone attack at Leipzig airport",
-          "original_title": "Berlin sévit contre la Russie, accusée d'être derrière le drone explosif de l'aéroport de Leipzig",
-          "original_language": "fr",
-          "summary": "The German government is taking measures against Russia, accusing Moscow of being behind an explosive drone attack at Leipzig/Halle Airport.",
-          "published": "2026-09-01T10:29:00+00:00",
-          "source": "France 24",
-          "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxPbWJtckVHbUNzSUo1ZmRTU3pnWWdkY0E1SGhGdVppZGNmclhQa0xWWkt0cWZZVmVXc3hQMzNsTkhoczR6Qk11WUxGQmpPb3pnLWlFZkNJS0Zqd3BDLTQyb1JQQ0I3b04yUlZGcnBzMFpOLXpmM2JrMzI4Q2pmSFRMVmRESUlFSE5FRmYyRllPRXBVZ3Z5aGh4TEFVVUtOQnhaSVRHSENHTFd4ay1SR0Y4eHc5VmtwcnJtdnZ2cTVpb2kwOERpYnNIQXVDbjZJc3dtYnFaQmZUMXlJTTJCQlB5b3gyNDBfVFhtdVFqSklEQTU1ejdJUFpjM1VTbDJKa2RjLUQwdw?oc=5"
-        },
-        {
-          "title": "Drone incident: German government reportedly holds Russia responsible",
-          "original_title": "Drohnenvorfall: Bundesregierung macht offenbar Russland verantwortlich",
-          "original_language": "de",
-          "summary": "The German government is reportedly holding Russia responsible for a recent drone incident.",
-          "published": "2026-09-01T10:29:00+00:00",
-          "source": "tagesschau.de",
-          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNTXhjLWVKa09uTTREZi1uVmUtUGFUbVZtZWxKNmZfX2tPdkt6WV81b21KV213VUp6VFJSUm56czA3NXY4QV9RSS15WE9NMThEajN3eWtHdzBQaTFrODY1aEdxT0QzVko3V1pfdVk1Ml9pZzFPRFpiQWo1NEVyb0twZmFobW5qSlZ3cGc?oc=5"
-        },
-        {
-          "title": "Germany to accuse Russia of attempted attack",
-          "original_title": "L'Allemagne va accuser la Russie de tentative d'attentat",
-          "original_language": "fr",
-          "summary": "Reports indicate that Germany is preparing to accuse Russia of involvement in an attempted attack or sabotage plot.",
-          "published": "2026-09-01T11:49:21+00:00",
-          "source": "Blick",
-          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQaHRZV0F2REE2b085WldSUnU2NV9BcVJFenFCTTVUTDJJdDdLekFZLUQxM0NLQWRGekFqSkdyZlRxY0pMX0xqdXpEUGU2NFJ0anhmekFrWjlUOV9XZW5scEtBLVpFc3dZNVFBd0JGMVhxN0cycVZ1a3RaTktXU1ZvclFwMW9kVHVjT0FwLWFlRlRqZzl4TC05MDM4UHFyallmR0YyR3VxemFyNmo2eHFNdmZnWDIxcXVwVWpQckN0SGhmdTg?oc=5"
-        },
-        {
-          "title": "Germany: Bomb attack near a thermal power plant",
-          "original_title": "Allemagne : Attentat à la bombe près d'une centrale thermique",
-          "original_language": "fr",
-          "summary": "A bomb attack/explosion has damaged an electrical substation near a thermal power plant in Germany, prompting investigations into infrastructure sabotage.",
-          "published": "2026-09-01T11:49:21+00:00",
-          "source": "RTL Lëtzebuerg",
-          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPWW5aR3AzQldyQVJfZXVBTFVVZDMwOU82S3pMOGN1NktVXzJQZTFCTzU3Y2R0WTZCS1lGcHdXNFdhYVJWMHczeEtwNXFiXzk0NnFVcjl2UUZKM1NESnRIenJTdXlDYUZPVEc4dFhuWHJUNVpxb2pNTVR5ckZzXzkwMVo4aFh4RGY0?oc=5"
-        }
-      ],
-      "article_count": 4,
-      "first_reported": "2026-09-01T10:29:00+00:00",
-      "last_reported": "2026-09-01T11:51:03+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 75,
-      "ai_relevance_reason": "State-level attribution of a hostile drone incident bearing national security and CT relevance.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "state attribution of explosive drone attack at Leipzig airport to Russia by Germany",
-      "title_variants": [
-        "Attribution of drone incident in Germany to Russia"
-      ],
-      "location_confidence_score": 0.9,
-      "location_method": "ai_country_capital",
-      "location_evidence": [
-        "The German government is reportedly holding Russia responsible for a recent drone incident."
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "The event concerns the German government responding to a drone incident affecting Germany.",
-      "ai_geo_fingerprint": "8878c10e3d91d45f791a93004b21e987d1d11a2567a8a5720c4bcaa3664f3563",
-      "ai_geo_inferred": true,
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "same_normalized_title",
-        "title_plus_anchor",
-        "same_url"
-      ]
     },
     {
       "id": "eeb14adf0c9e6fde",
@@ -6091,11 +6520,20 @@
           "published": "2026-09-01T09:00:27+00:00",
           "source": "Queer.de",
           "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1iS1hITnRiR3ZMczhFNWZIZ05lQk1XRm8xX1o2bWtRNmFjOVRYOU5fd0lJZDRrS3R0bEpLemhpQnRXTGZqbWx1dlJ3VkUyYXhrcVMzZ0V6X0tKRU9z?oc=5"
+        },
+        {
+          "title": "'Considerable violence': Rainbow bench commemorating Pride terrorist attack found vandalized in Berlin",
+          "original_title": "“Une violence considérable” : à Berlin, le banc arc-en-ciel commémorant l’attentat de la Pride retrouvé vandalisé",
+          "original_language": "fr",
+          "summary": "In Berlin, a rainbow bench dedicated to the victims of the Pride terrorist attack was found severely vandalized.",
+          "published": "2026-09-01T14:07:00+00:00",
+          "source": "La Montagne",
+          "url": "https://news.google.com/rss/articles/CBMi_gFBVV95cUxQVXRwTkU0V2xPYnBQWElOS2ZDb2FRanpwYTVVbk9Ya2tNcWh4VER2QVdnRUlld0lES1J4WjVIbVp4VVFjS2RlM1ozWXF6am9IZDkzU1dxcU9ROWFMOS1JWG9KbVlwQnRiRDZ4TjVWdTRHdk90b2NqbVBNNWhLWDRJNUdtQkgxOS1zSTRYMjFob212eEdTeEN3Y3BBOVRMdXNxamNmUWI5ZDRxcmEtalB3VU1aMmlGSVdKWGpLLWd1YjZVQm5CVHY1X0dkX2lrUnNjVTQtVGVVc0k1R1pYUFgyb3hIVUV1S0k5cUpUWEQ5cXdxSk1MSFAxVnI1ZUdVUQ?oc=5"
         }
       ],
-      "article_count": 2,
+      "article_count": 3,
       "first_reported": "2026-09-01T09:00:27+00:00",
-      "last_reported": "2026-09-01T09:47:00+00:00",
+      "last_reported": "2026-09-01T14:07:00+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -6122,7 +6560,8 @@
       "ai_geo_inferred": false,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "title_plus_anchor"
       ]
     },
     {
@@ -6394,70 +6833,6 @@
       "ai_geo_inferred": false
     },
     {
-      "id": "eeb14adf0c9e6fde",
-      "category": "Attacks",
-      "categories": [
-        "Attacks"
-      ],
-      "title": "New terror group? Syrian gunmen threaten IDF soldiers",
-      "summary": "Armed Syrian individuals appearing as a newly formed group have issued threats against Israel Defense Forces (IDF) soldiers.",
-      "original_title": "ארגון טרור חדש? חמושים סורים מאיימים על חיילי צה\"ל",
-      "original_summary": "ארגון טרור חדש? חמושים סורים מאיימים על חיילי צה\"ל סרוגים",
-      "original_language": "he",
-      "collection_language": "he",
-      "collection_language_name": "Hebrew",
-      "collection_locale": "IL:he",
-      "published": "2026-09-01T08:44:52+00:00",
-      "source": "סרוגים",
-      "source_count": 1,
-      "url": "https://news.google.com/rss/articles/CBMiuwJBVV95cUxQeGJyQ2JNc1BQNmpnQlRmR0Jpcm9NMS1OZW5HNGdKYlI4X3I1emRHbTN3SUg2dlMzdnBEZG5sVER4OUF2aUpnMGxlcDBwbmFDVTEyYnFzVXZHU3AwSFZNdFR1U2xNakh6LWxmMy1kb09GZTFwY25rRTlEalhBMWY0OFZYaDM5LXlNYnBBN1VaTllZUEpMekozZnJXZy1ScXo3OEJVMnpiWlpyUXBKa0ZCcWdQc1BiamoxX0xlN1ZyUTdDRDRUNnY1Wi1rcUdiSGRraF9MNVVfd19mUTRyZ0lWcTFrQVFGaXpkckVfZk8tdVgtTU1xSUNacGJUV2tua2MybGFDN0Q3ZDZrZWlxTmwtcFRVcENGQ0pfVjFzUGkzb29ya05rdHFCQXJrN2VzX2t6R1lEOFhNWlZISE0?oc=5",
-      "collector": "Google News RSS",
-      "country": "Israel",
-      "country_code": "IL",
-      "city": "Jerusalem",
-      "region": null,
-      "latitude": 31.76904,
-      "longitude": 35.21633,
-      "location_precision": "country_capital",
-      "location_confidence": "medium",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "סרוגים"
-      ],
-      "related_articles": [],
-      "article_count": 1,
-      "first_reported": "2026-09-01T08:44:52+00:00",
-      "last_reported": "2026-09-01T09:09:14+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 75,
-      "ai_relevance_reason": "Emerging militant threat and hostile declarations directed at military personnel.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "threats against IDF soldiers by armed Syrian individuals",
-      "title_variants": [
-        "threats against IDF soldiers by armed Syrian individuals"
-      ],
-      "location_confidence_score": 0.8,
-      "location_method": "ai_country_capital",
-      "location_evidence": [
-        "Syrian gunmen threaten IDF soldiers"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Threats directed against the Israel Defense Forces (IDF).",
-      "ai_geo_fingerprint": "bf89f786f5b57d726764b672c697361c1639b0cf90c596b60efcbb9e06c48474",
-      "ai_geo_inferred": true,
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "same_url"
-      ]
-    },
-    {
       "id": "ed2a6ea5ea7b7184",
       "category": "Attacks",
       "categories": [
@@ -6656,6 +7031,82 @@
       "ai_geo_inferred": true
     },
     {
+      "id": "eeb14adf0c9e6fde",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Weapons"
+      ],
+      "title": "New terror group? Syrian gunmen threaten IDF soldiers",
+      "summary": "Armed Syrian individuals appearing as a newly formed group have issued threats against Israel Defense Forces (IDF) soldiers.",
+      "original_title": "ארגון טרור חדש? חמושים סורים מאיימים על חיילי צה\"ל",
+      "original_summary": "ארגון טרור חדש? חמושים סורים מאיימים על חיילי צה\"ל סרוגים",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-09-01T08:01:29+00:00",
+      "source": "סרוגים",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiuwJBVV95cUxQeGJyQ2JNc1BQNmpnQlRmR0Jpcm9NMS1OZW5HNGdKYlI4X3I1emRHbTN3SUg2dlMzdnBEZG5sVER4OUF2aUpnMGxlcDBwbmFDVTEyYnFzVXZHU3AwSFZNdFR1U2xNakh6LWxmMy1kb09GZTFwY25rRTlEalhBMWY0OFZYaDM5LXlNYnBBN1VaTllZUEpMekozZnJXZy1ScXo3OEJVMnpiWlpyUXBKa0ZCcWdQc1BiamoxX0xlN1ZyUTdDRDRUNnY1Wi1rcUdiSGRraF9MNVVfd19mUTRyZ0lWcTFrQVFGaXpkckVfZk8tdVgtTU1xSUNacGJUV2tua2MybGFDN0Q3ZDZrZWlxTmwtcFRVcENGQ0pfVjFzUGkzb29ya05rdHFCQXJrN2VzX2t6R1lEOFhNWlZISE0?oc=5",
+      "collector": "Google News RSS",
+      "country": "Israel",
+      "country_code": "IL",
+      "city": "Jerusalem",
+      "region": null,
+      "latitude": 31.76904,
+      "longitude": 35.21633,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "סרוגים"
+      ],
+      "related_articles": [
+        {
+          "title": "New terrorist organization? Syrian gunmen threaten IDF soldiers",
+          "original_title": "ארגון טרור חדש? חמושים סורים מאיימים על חיילי צה\"ל",
+          "original_language": "he",
+          "summary": "Armed Syrian militants have issued threats against Israel Defense Forces soldiers, raising concerns over a newly emerging armed group.",
+          "published": "2026-09-01T08:01:29+00:00",
+          "source": "סרוגים",
+          "url": "https://news.google.com/rss/articles/CBMixAJBVV95cUxORHYzX19zOTFyNzhXeDJzdC1ieDU3V1BPdm9SUzhJbW9fLVNkNkhTVnYzT3dQaHhKVndtNTNFSWNxa3MtNC1KMkx1V1BaamxOUVZqQVJNM0piYWlISXBESjl3RU5rdS1xRV8td2NMWFptRkNlb3c2OUF6YVlITFpSUDVWR3hNNHJoangzdmRUanpOV3ZpVlZOMDc4cU1KeVRGYlFyUURHeVJLQkdMRlQ1MFRrVTl2SEsyODF2bjVlV0g5ZjVqdU1fVmZMczVzMTlCbGpud0xGZFJPUlAyT25PU1BNUzRfQ3VmQVhJU3YxWUt0X2pQbU10QmNSWFMtSWZvNnIyMkJJWmR4NlhPNWVMeU1hMUpwbmExWDJsam9aQ0VodGJFdGlKQjFMQV9yOWRhZHVrZlJzMVFiZ2VROWNvYW5YckI?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-09-01T08:01:29+00:00",
+      "last_reported": "2026-09-01T09:09:14+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Emerging militant threat and hostile declarations directed at military personnel.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "threats against IDF soldiers by armed Syrian individuals",
+      "title_variants": [
+        "threats against IDF soldiers by armed Syrian individuals"
+      ],
+      "location_confidence_score": 0.8,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Syrian gunmen threaten IDF soldiers"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Threats directed against the Israel Defense Forces (IDF).",
+      "ai_geo_fingerprint": "bf89f786f5b57d726764b672c697361c1639b0cf90c596b60efcbb9e06c48474",
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url",
+        "title_plus_anchor"
+      ]
+    },
+    {
       "id": "10921d832499eeb6",
       "category": "Online Radicalization / Cyberterrorism",
       "categories": [
@@ -6726,7 +7177,8 @@
       "category": "Arrests",
       "categories": [
         "Arrests",
-        "Legal / Judicial"
+        "Legal / Judicial",
+        "Online Radicalization / Cyberterrorism"
       ],
       "title": "Palestine protests push terrorism-related arrests in Britain to record levels",
       "summary": "Pro-Palestinian protests in the UK have driven terrorism-related arrests up to record levels according to reports.",
@@ -6738,7 +7190,7 @@
       "collection_locale": "SA:ar",
       "published": "2026-09-01T07:58:00+00:00",
       "source": "عربي21",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMirgRBVV95cUxNeGxyN3ZwbEdYME9YTEQtUzRUa2VIRER0SEMzaXVPVEVvZjBpTzZyZ25obWlnRGN1SXRudXBrVXFNUERfN1BSWDVtVDROR19adHoycDJKcDdSU2lhandzcGZFSU1mbTdQU2ZMLV9nMWxxY2FCYWg0NTNjdGRZdWl2UFJWNEdOTmlQSHZjQVhWbUdxMXJqb3pEQ045OGhSWXdhOVJXZzhVaGUtS2FJaXhUZTdrVXBnRGJYcVVkZ0ZRRGtZQVVFblFVN2puS1oydVczYmJvNTB5WHl3dzB5THFCWDM2czEtaExFdlN1eDdhazdNWF9QVDBkb0xHdVp2TkdMZC1jS2pIMDB2azdaY0Z3TE5PZEhObUZmaU9iby1VdUJwb1RuY04wczExQTFJdkNoWVVqSW9sRVZzQ2dXQUhMdlMzTDJWcVAtazBlaDV3Z2RlWUpjcFhUU3U4QUt0T0NzTGpWa18zUkgydWtKNUpfcThoRHJpYmpUSjZ5dWp2RXFKUmNHLUt6b2FJZk4tb2JpWXRYMnV5ZTB4ZGZ2ZlYzaV95NkJxckUwcEhiNDZFYTc2aTVpTkRERmlDWE5RY0dUUzZFS3llUlRhblNSRmFkZXE4a1NGTmNVcElQblN4a1c2alpnV0g2WTZUbjRFaXotOE9XeWliR05qRk5WOWYwZFpsT1JSWHlKbWhXYnZob0xVMm9pamtsWGFyVWhuX2hKRFI2dlhSWFJnbklwemfSAbIEQVVfeXFMUGtobHRiODh1RVpqVDJlemtvcTNWSnlXXzJtYm5XQmRFcmZOUmtTMXAyRndxbTBrY29Hb0pVeXJzNG5pV084dVFCclRpbDJTU1Z2a1p5YXZoclhrX1NvREpvSW5JVFlVSkthNFhxOWl6TkxCd08xdkdhOEQ4ZDJ0TExIQ3BCNy1tVnRUV3VZZ19xeE9lTGJsTXd1Q2hFVDFFcFFSQmQ0Yi1OSnBycHVNY291SmNDQnYwSGhvT1BYR0J6MS1wYVdwYVhPd3c1OE9EVFJiQXJfcUVFVFE0YmFIcG9YRmJtYWFZcUxUSGRNbmZ2ZTA2NzFhU0RZdzRXdGJOXy1EYXJtNkE1dGsxaUM2WDNrVV85TmVJdGJ5UEltYUFqTVJERElWMjhlVUJORFNpUkRhNkExelpucnFrWkRnSzA5UndWNUV1QzR1aHhqYU5aOHA1NFo2YURtYmM1eGd6S2tDQnBycTBENktzVkNyVG51dkY5S3ZSMWlwM0Z0YnlmcEdrZU55VmtVanQ1ZnRGQjNhMGRXWmpYQnFsa0VoSTZ4VEptTE9lTzNMZmFFRzRzR3Rhd3VjdlBFcFJOM1dmQmFRdlpnbDlHdWJiN3BhaEVfbXcwaTBsN3RXWHhFMzVucXFQY0xoNmh6eGJVN3JWNlRFeG5rSS1la25jQ1g3eTVKRGhaY3VyZmk0RXJ5V3dMZkRKajU0NGV1MlVCYkxXZndIUEFLeURwMDM1UTlPeG1tQQ?oc=5",
       "collector": "Google News RSS",
       "country": "United Kingdom",
@@ -6751,7 +7203,8 @@
       "location_confidence": "high",
       "acquisition_channel": "multilingual_discovery",
       "sources": [
-        "عربي21"
+        "عربي21",
+        "arabi21.com"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -6803,7 +7256,7 @@
       "collection_locale": "DE:de",
       "published": "2026-09-01T07:52:14+00:00",
       "source": "osthessen-news.de",
-      "source_count": 5,
+      "source_count": 6,
       "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxONjktRXVDYnM2djVqeVhvUF9BekpjNC1OMENOVXBUbVJWT2duMlRwMHdWel9GRjBXc01LMHZRanNQaG9iZ1QwMTR4TDlvWkxqTkJrR2VvRGVyRDF3NlE0dk05TmtGWWFaX3NaNzFfby1uZEJ6d0huSlktanFCQVg0MnlTNHlkVE93eHBWR3lLcndRRXRNekVwbjVHMzYxVjZ5SmNkVFZBZC1tZWJKaHc?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -6820,7 +7273,8 @@
         "Heute",
         "nv.ua",
         "Berliner Morgenpost",
-        "Osthessen|News"
+        "Osthessen|News",
+        "RaiNews"
       ],
       "related_articles": [
         {
@@ -7201,6 +7655,68 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "57c48aec4ac442f6",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Zelensky: '12 dead in the night, air defense is insufficient'",
+      "summary": "Ukrainian President Zelensky reports overnight airstrikes resulting in 12 deaths and calls for increased air defense.",
+      "original_title": "Zelensky, '12 i morti nella notte, difesa aerea è insufficiente'",
+      "original_summary": "Zelensky, '12 i morti nella notte, difesa aerea è insufficiente' ANSA",
+      "original_language": "it",
+      "collection_language": "it",
+      "collection_language_name": "Italian",
+      "collection_locale": "IT:it",
+      "published": "2026-09-01T07:21:51+00:00",
+      "source": "ANSA",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPZ2lyX2RETFRFWm1PXy0xNHlyQkl0akhiR05MeFJkUDJjRjZkNE9CMGpsR2JUUGoydTRUQmEzd3pod25XTkFnU1JBRDhTcGkwckVVLWlxQlllMHF6MmczV3UyNFNYSnV4ZEI0bDFsVjFnYWllcTZkRlZDdDRzMmlzSTgtandkak5XU0tkRjlqZ0RGVG51ZUJYR19NRGl1alZ6XzBWaGZGaGF5V0RSZ3pmWHlsSDJuU3hzaV9MNkpFc1pUWGlKWXBRVlZvVmdtcWh1Q04zY3BzWDJ3T0JDejBsdWlXbTAxWUM0OUVnbNIB7AFBVV95cUxPZ2lyX2RETFRFWm1PXy0xNHlyQkl0akhiR05MeFJkUDJjRjZkNE9CMGpsR2JUUGoydTRUQmEzd3pod25XTkFnU1JBRDhTcGkwckVVLWlxQlllMHF6MmczV3UyNFNYSnV4ZEI0bDFsVjFnYWllcTZkRlZDdDRzMmlzSTgtandkak5XU0tkRjlqZ0RGVG51ZUJYR19NRGl1alZ6XzBWaGZGaGF5V0RSZ3pmWHlsSDJuU3hzaV9MNkpFc1pUWGlKWXBRVlZvVmdtcWh1Q04zY3BzWDJ3T0JDejBsdWlXbTAxWUM0OUVnbA?oc=5",
+      "collector": "Google News RSS",
+      "country": "Ukraine",
+      "country_code": "UA",
+      "city": "Kyiv",
+      "region": null,
+      "latitude": 50.45466,
+      "longitude": 30.5238,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "ansa.it",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "ANSA"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T07:21:51+00:00",
+      "last_reported": "2026-09-01T07:21:51+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 50,
+      "ai_relevance_reason": "Active conflict aerial bombardment resulting in civilian casualties.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Overnight airstrikes and casualties reported by President Zelensky in Ukraine",
+      "title_variants": [
+        "Overnight airstrikes and casualties reported by President Zelensky in Ukraine"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Zelensky, air defense, 12 dead in night"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Refers to overnight airstrikes across Ukraine reported by President Zelensky.",
+      "ai_geo_fingerprint": "5dda78af1235879c3d86ae3cafba5daba5f7f5ecc953fd1f1c677a6d500f7b99",
+      "ai_geo_inferred": true
     },
     {
       "id": "fb3c63caae94e5f2",
@@ -8812,7 +9328,7 @@
       "collection_locale": "DE:de",
       "published": "2026-09-01T03:46:00+00:00",
       "source": "ZFK – Zeitung für kommunale Wirtschaft",
-      "source_count": 32,
+      "source_count": 36,
       "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOUlhTdEFMbHJ2YWpBd1lGbVYxNDF6WGVTMjYyQ09RaU9QbFFOZWpycXJYSDF4QXdXV0ZGQkZUVUswNGV4R2dGeHhBNHhBSnVsY2Yzc3BTSWIwejRRY0pQNXBsblhfbGlJcVFzRXdUNS1XOWZvaWd6TnlNcTlYMTBGNDBSSXp0TGc?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -8856,7 +9372,11 @@
         "Spiegel",
         "Manager Magazin",
         "ZDFheute",
-        "Deutschlandfunk"
+        "Deutschlandfunk",
+        "Joyn",
+        "boerse.de",
+        "zeit.de",
+        "BILD"
       ],
       "related_articles": [
         {
@@ -9047,7 +9567,7 @@
       "collection_locale": "DE:de",
       "published": "2026-09-01T03:46:00+00:00",
       "source": "de.euronews.com",
-      "source_count": 32,
+      "source_count": 34,
       "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPMEpzbFM5dzFoa0lyN0pla1dpNnRiOHpWVzlxZUVHeGRNRzFBSEZBTVlYOFVweU5STGNuSlB1d2EwZmZmZmZEM3BWdzY1TzhEUVcxSWFTNzQ2dTdTY2xnRzJnemNMQ0pURkVGUkhJaGpDb0x6QnpsUXlYTU1qclpjNldtaVlQcUJIcXBybEhkRWtpaHpZcUxwVA?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -9091,7 +9611,9 @@
         "SZ.de",
         "Radio Emscher Lippe",
         "BILD",
-        "RP Online"
+        "RP Online",
+        "ZDFheute",
+        "AD HOC NEWS"
       ],
       "related_articles": [
         {
@@ -9451,6 +9973,339 @@
       "ai_geo_inferred": true
     },
     {
+      "id": "c4bc73de5430281f",
+      "category": "CBRN",
+      "categories": [
+        "CBRN"
+      ],
+      "title": "Syria: Infrastructure discovered in Deir ez-Zor consistent with nuclear reactor, says IAEA",
+      "summary": "The IAEA stated that infrastructure discovered in Deir ez-Zor, Syria, is consistent with that of a nuclear reactor.",
+      "original_title": "Syrie : les infrastructures découvertes à Deir ez-Zor sont « conformes à celles d’un réacteur nucléaire », selon l’AIEA",
+      "original_summary": "Syrie : les infrastructures découvertes à Deir ez-Zor sont « conformes à celles d’un réacteur nucléaire », selon l’AIEA Le Monde.fr",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-09-01T00:07:37+00:00",
+      "source": "Le Monde.fr",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiigJBVV95cUxQaEtoLUViUzBrZ1BPTUNCN2U0dTZGejcyZndrdVJTbDVFLTd4NDIyUlBfSGRsQkJGSi1NTlhIbVhlTXFNRE0wX05vaE9DNU9HbFE4NTZTc1RGZFFja1FPajZrQWJwV1pleWs2QjEtSWI1RV95OUVlNENFbDBBMEkxNnkxbmFSNUlKNFVTck5ScDJyUHVXRWxadlJsMzZ1aDhyWHI1QlBKLUNUb3ZJVGdMdGw3akI1S3BaWkR2dkRxbmQ3T1lNVDMxc1ROOTJMaXpUVHliVGJod0I5V1RqY3RlcVRGY0cwT3VFbEtvWl9PNHp0anJnc1d5RzJQc19sZ2JtcjEtUkx6d0dUQQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Syria",
+      "country_code": "SY",
+      "city": "Deir ez-Zor",
+      "region": null,
+      "latitude": 35.33588,
+      "longitude": 40.14084,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "lemonde.fr",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "Le Monde.fr"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T00:07:37+00:00",
+      "last_reported": "2026-09-01T17:51:43+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Deals with proliferation and CBRN-relevant state infrastructure discovery, falling under security/CBRN monitoring.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "IAEA assessment of nuclear-related infrastructure in Deir ez-Zor, Syria",
+      "title_variants": [
+        "IAEA assessment of nuclear-related infrastructure in Deir ez-Zor, Syria"
+      ],
+      "location_confidence_score": 1.0,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Deir ez-Zor, Syria"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Explicitly names Deir ez-Zor, Syria regarding nuclear infrastructure.",
+      "ai_geo_fingerprint": "f9718a570de8c65fdb98fc3604ff77032c13cf9d2730031651c99f7c2875bf99",
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "847fe68b16c2e512",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Weapons"
+      ],
+      "title": "Germany: Bomb attack near a thermal power plant",
+      "summary": "A bomb attack/explosion has damaged an electrical substation near a thermal power plant in Germany, prompting investigations into infrastructure sabotage.",
+      "original_title": "Allemagne : Attentat à la bombe près d'une centrale thermique",
+      "original_summary": "Allemagne : Attentat à la bombe près d'une centrale thermique RTL Lëtzebuerg",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-09-01T00:05:56+00:00",
+      "source": "RTL Lëtzebuerg",
+      "source_count": 10,
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPWW5aR3AzQldyQVJfZXVBTFVVZDMwOU82S3pMOGN1NktVXzJQZTFCTzU3Y2R0WTZCS1lGcHdXNFdhYVJWMHczeEtwNXFiXzk0NnFVcjl2UUZKM1NESnRIenJTdXlDYUZPVEc4dFhuWHJUNVpxb2pNTVR5ckZzXzkwMVo4aFh4RGY0?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": null,
+      "region": "Brandenburg",
+      "latitude": 52.4125,
+      "longitude": 12.5316,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Kronen Zeitung",
+        "nv.ua",
+        "Le Monde.fr",
+        "Le Télégramme",
+        "Ouest-France",
+        "Yahoo Actualités",
+        "Le Parisien",
+        "Watson",
+        "RTL Lëtzebuerg",
+        "SZ.de"
+      ],
+      "related_articles": [
+        {
+          "title": "Explosives found near one of Germany's largest thermal power plants, authorities declare it a terrorist attack",
+          "original_title": "В Германии возле одной из крупнейших ТЭС обнаружили взрывчатку, власти заявили о теракте",
+          "original_language": "ru",
+          "summary": "Authorities in Germany declared an incident a terrorist attack after explosives were discovered near a major thermal power plant.",
+          "published": "2026-09-01T14:16:00+00:00",
+          "source": "nv.ua",
+          "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQN3hoS1dQbGNpQk9zcWpzZWlxVlhsR3JaaVNIbjM0c2lwSkdJNHVUakQxcVlHb05jUHRnSEY5d2NjR2VxOUdUNTY5OVVsUzdEcm5MdkYzTlYzV1RWQmJ3RF9qcndEdUdDNzZkUjhjZUs1LWdrVndNZWIya2xVSnFfdFNXcmpySUdnN0pBdmFhUTJ6cUZ6ZlMzWWxBT2JiUk9oRTNXNmZkaVd6bDR6OWNIUXdTck0wNlkzclJPeVhfZzZxeDBiVFlmNXV3bmNxUGdnUjNFVUtYMNIBxwFBVV95cUxQRTdDVVI3Y2NZRDlBQ25RalBVbllwSUh3ZmFTZlRSN01HV0pXSmk4S1RhSUxfejFtMHhzOGotZG5uSTF4bl9hdDVQMDU3U25PSmY3MmxPaGo1Zk5INGZpRFd0cncxY2dXUUE0REc3STljRGN3LUE2RW1XeVRFV2lIeHZtRmplc2JHV3ZoYWptRkh5VlJzaW12WWx1WUozSGRpeHlGNzh2WTNHSXoxRlN5Um1iUXJCNlBhalFCd0JkTk1TdkVoeGFR?oc=5"
+        },
+        {
+          "title": "Germany: Bomb attack near a thermal power plant",
+          "original_title": "Allemagne : Attentat à la bombe près d'une centrale thermique",
+          "original_language": "fr",
+          "summary": "A bomb attack/explosion has damaged an electrical substation near a thermal power plant in Germany, prompting investigations into infrastructure sabotage.",
+          "published": "2026-09-01T00:05:56+00:00",
+          "source": "RTL Lëtzebuerg",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPWW5aR3AzQldyQVJfZXVBTFVVZDMwOU82S3pMOGN1NktVXzJQZTFCTzU3Y2R0WTZCS1lGcHdXNFdhYVJWMHczeEtwNXFiXzk0NnFVcjl2UUZKM1NESnRIenJTdXlDYUZPVEc4dFhuWHJUNVpxb2pNTVR5ckZzXzkwMVo4aFh4RGY0?oc=5"
+        },
+        {
+          "title": "Attempted attack: At least one detonation at German power plant",
+          "original_title": "Versuchter Anschlag - Mindestens eine Detonation bei deutschem Kraftwerk",
+          "original_language": "de",
+          "summary": "An attempted attack involving at least one detonation has targeted a power facility in Germany.",
+          "published": "2026-09-01T13:07:00+00:00",
+          "source": "Kronen Zeitung",
+          "url": "https://news.google.com/rss/articles/CBMiQkFVX3lxTFBoYjBJVlVSR3hoQ0FzMFNZdFVadWxyZXFLclpRb3B5TmM0Y3VmeEJtejhoZV9JT0MxdXp2MjhNVWJqZw?oc=5"
+        }
+      ],
+      "article_count": 3,
+      "first_reported": "2026-09-01T00:05:56+00:00",
+      "last_reported": "2026-09-01T14:16:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Reports on an active sabotage/terrorist attack involving explosives against a power plant.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "bomb attack near thermal power plant in Germany",
+      "title_variants": [
+        "Attempted explosive attack at a German power facility"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "paraphrase_entity_context",
+        "same_url"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "detonations at German power plant / substation"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Connected to the major power plant/substation attacks in eastern Germany/Brandenburg.",
+      "ai_geo_fingerprint": "266e7a727dc75f1d46ff6ecbf0cb5f3858a0025908fba4e2005e5221f6b8c97a",
+      "ai_geo_inferred": true
+    },
+    {
+      "id": "ec5cbfdacae7985c",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Weapons",
+        "Legal / Judicial"
+      ],
+      "title": "Germany blames Russia for explosive drone attack at Leipzig airport",
+      "summary": "The German government is taking measures against Russia, accusing Moscow of being behind an explosive drone attack at Leipzig/Halle Airport.",
+      "original_title": "Berlin sévit contre la Russie, accusée d'être derrière le drone explosif de l'aéroport de Leipzig",
+      "original_summary": "Berlin sévit contre la Russie, accusée d'être derrière le drone explosif de l'aéroport de Leipzig France 24",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-31T23:48:18+00:00",
+      "source": "France 24",
+      "source_count": 48,
+      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxPbWJtckVHbUNzSUo1ZmRTU3pnWWdkY0E1SGhGdVppZGNmclhQa0xWWkt0cWZZVmVXc3hQMzNsTkhoczR6Qk11WUxGQmpPb3pnLWlFZkNJS0Zqd3BDLTQyb1JQQ0I3b04yUlZGcnBzMFpOLXpmM2JrMzI4Q2pmSFRMVmRESUlFSE5FRmYyRllPRXBVZ3Z5aGh4TEFVVUtOQnhaSVRHSENHTFd4ay1SR0Y4eHc5VmtwcnJtdnZ2cTVpb2kwOERpYnNIQXVDbjZJc3dtYnFaQmZUMXlJTTJCQlB5b3gyNDBfVFhtdVFqSklEQTU1ejdJUFpjM1VTbDJKa2RjLUQwdw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": "Berlin",
+      "region": null,
+      "latitude": 52.52437,
+      "longitude": 13.41053,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "tagesschau.de",
+      "targeted_source_kind": "local_language_media",
+      "sources": [
+        "tagesschau.de",
+        "La Presse",
+        "Le Télégramme",
+        "Ouest-France",
+        "Libération",
+        "France 24",
+        "Le Monde.fr",
+        "Le Nouvel Obs",
+        "Yahoo Actualités",
+        "EL PAÍS",
+        "SZ.de",
+        "STERN.de",
+        "nv.ua",
+        "nd-aktuell.de",
+        "Spiegel",
+        "Les Echos",
+        "NZZ",
+        "El Mundo",
+        "Blick",
+        "RaiNews",
+        "WELT",
+        "Nordkurier",
+        "BILD",
+        "israelhayom.co.il",
+        "RTL",
+        "Berliner Morgenpost",
+        "Augsburger Allgemeine",
+        "tagesspiegel.de",
+        "FAZ",
+        "n-tv.de",
+        "Le Figaro",
+        "MaVille.com",
+        "TF1 Info",
+        "20 Minutes",
+        "Watson",
+        "היום",
+        "sueddeutsche.de",
+        "Le Matin",
+        "novayagazeta.ru",
+        "RTL Lëtzebuerg",
+        "fr.de",
+        "blick.ch",
+        "liberation.fr",
+        "la Repubblica",
+        "Tages-Anzeiger",
+        "nzz.ch",
+        "zeit.de",
+        "Телеканал «Дождь»"
+      ],
+      "related_articles": [
+        {
+          "title": "Germany blames Russia for explosive drone attack at Leipzig airport",
+          "original_title": "Berlin sévit contre la Russie, accusée d'être derrière le drone explosif de l'aéroport de Leipzig",
+          "original_language": "fr",
+          "summary": "The German government is taking measures against Russia, accusing Moscow of being behind an explosive drone attack at Leipzig/Halle Airport.",
+          "published": "2026-09-01T10:29:00+00:00",
+          "source": "France 24",
+          "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxPbWJtckVHbUNzSUo1ZmRTU3pnWWdkY0E1SGhGdVppZGNmclhQa0xWWkt0cWZZVmVXc3hQMzNsTkhoczR6Qk11WUxGQmpPb3pnLWlFZkNJS0Zqd3BDLTQyb1JQQ0I3b04yUlZGcnBzMFpOLXpmM2JrMzI4Q2pmSFRMVmRESUlFSE5FRmYyRllPRXBVZ3Z5aGh4TEFVVUtOQnhaSVRHSENHTFd4ay1SR0Y4eHc5VmtwcnJtdnZ2cTVpb2kwOERpYnNIQXVDbjZJc3dtYnFaQmZUMXlJTTJCQlB5b3gyNDBfVFhtdVFqSklEQTU1ejdJUFpjM1VTbDJKa2RjLUQwdw?oc=5"
+        },
+        {
+          "title": "Drone incident: German government reportedly holds Russia responsible",
+          "original_title": "Drohnenvorfall: Bundesregierung macht offenbar Russland verantwortlich",
+          "original_language": "de",
+          "summary": "The German government is reportedly holding Russia responsible for a recent drone incident.",
+          "published": "2026-09-01T10:29:00+00:00",
+          "source": "tagesschau.de",
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNTXhjLWVKa09uTTREZi1uVmUtUGFUbVZtZWxKNmZfX2tPdkt6WV81b21KV213VUp6VFJSUm56czA3NXY4QV9RSS15WE9NMThEajN3eWtHdzBQaTFrODY1aEdxT0QzVko3V1pfdVk1Ml9pZzFPRFpiQWo1NEVyb0twZmFobW5qSlZ3cGc?oc=5"
+        },
+        {
+          "title": "Germany to accuse Russia of attempted attack",
+          "original_title": "L'Allemagne va accuser la Russie de tentative d'attentat",
+          "original_language": "fr",
+          "summary": "Reports indicate that Germany is preparing to accuse Russia of involvement in an attempted attack or sabotage plot.",
+          "published": "2026-09-01T11:49:21+00:00",
+          "source": "Blick",
+          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQaHRZV0F2REE2b085WldSUnU2NV9BcVJFenFCTTVUTDJJdDdLekFZLUQxM0NLQWRGekFqSkdyZlRxY0pMX0xqdXpEUGU2NFJ0anhmekFrWjlUOV9XZW5scEtBLVpFc3dZNVFBd0JGMVhxN0cycVZ1a3RaTktXU1ZvclFwMW9kVHVjT0FwLWFlRlRqZzl4TC05MDM4UHFyallmR0YyR3VxemFyNmo2eHFNdmZnWDIxcXVwVWpQckN0SGhmdTg?oc=5"
+        },
+        {
+          "title": "Germany: Bomb attack near a thermal power plant",
+          "original_title": "Allemagne : Attentat à la bombe près d'une centrale thermique",
+          "original_language": "fr",
+          "summary": "A bomb attack/explosion has damaged an electrical substation near a thermal power plant in Germany, prompting investigations into infrastructure sabotage.",
+          "published": "2026-09-01T11:49:21+00:00",
+          "source": "RTL Lëtzebuerg",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPWW5aR3AzQldyQVJfZXVBTFVVZDMwOU82S3pMOGN1NktVXzJQZTFCTzU3Y2R0WTZCS1lGcHdXNFdhYVJWMHczeEtwNXFiXzk0NnFVcjl2UUZKM1NESnRIenJTdXlDYUZPVEc4dFhuWHJUNVpxb2pNTVR5ckZzXzkwMVo4aFh4RGY0?oc=5"
+        },
+        {
+          "title": "Alexander Dobrindt: Moscow behind drone attack in Leipzig",
+          "original_title": "Alexander Dobrindt: Moskau hinter Drohnen-Anschlag in Leipzig – „Russische Involvierung“",
+          "original_language": "de",
+          "summary": "Alexander Dobrindt points to Russian involvement in the drone attack in Leipzig.",
+          "published": "2026-09-01T15:45:12+00:00",
+          "source": "BILD",
+          "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPU3pYR1VLNERSSVZCUjhka01KYnlXeVFVV0U5Z3VEU05hSUdZbGlFSVdDazRYbW9sVFRWS080S3RTVVotM201cUVvaWdBdUJpalVINEpmWGxOWDBYVE12Yy1qeWFLbTAyMDJmZk10T2hJZFVjWWhnUk5XSnQ1cjRQdXQ3NzlkTXR2UWh4V0otTkRndmNqMXBiaGtZbTl4aUplX3VvME9kVmZ1elFyUFJNX01CTHZzdVJMNUw1aFREM3B2VXpKMDNNQlA3bTlwNHd3bTNPTE9PNA?oc=5"
+        }
+      ],
+      "article_count": 5,
+      "first_reported": "2026-08-31T23:48:18+00:00",
+      "last_reported": "2026-09-01T15:45:12+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "State-level attribution of a hostile drone incident bearing national security and CT relevance.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "state attribution of explosive drone attack at Leipzig airport to Russia by Germany",
+      "title_variants": [
+        "Attribution of drone incident in Germany to Russia"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "The German government is reportedly holding Russia responsible for a recent drone incident."
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event concerns the German government responding to a drone incident affecting Germany.",
+      "ai_geo_fingerprint": "8878c10e3d91d45f791a93004b21e987d1d11a2567a8a5720c4bcaa3664f3563",
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_normalized_title",
+        "title_plus_anchor",
+        "same_url",
+        "paraphrase_entity_context"
+      ]
+    },
+    {
       "id": "a01b2f8b11dba446",
       "category": "Terrorist Financing",
       "categories": [
@@ -9598,7 +10453,7 @@
       "collection_locale": "IT:it",
       "published": "2026-08-31T23:00:00+00:00",
       "source": "repubblica.it",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxONkFvbXY3T1VlOE5vMmswT2JRT1ZNMmczNXRSbG5pYnFzSDdzQi1mVjdQMTluSTJYZmlteHhmWWdpRFIwOTZ0SG1LWWpaSTFVb1FfcmU4QnlFaUlTNWFDNDJ2WFlnZXo4cVdyelQ1OV9xd2M3VGhWNFB4SmxnRG0wWnZGZ0VyU0tmLWtzY0xEamZqOE1zRmFWaFl5bGY2V3NDZml1WGxOM3d4bnBnLXfSAbMBQVVfeXFMT1VkdjVXRWdTUDRLNEQtX2pwWWxqSDJLQmpDb0tzUkc1cm5UTVJIX0pXLVNocnpteFpWWlc2THFsNW12UVYzMTdpVXRlYmdZR1NQMWY2c05hSW9jR3ViNDNzVXZhaUFQbEx6RFE4WE1TcHl4TW9VN3hVZElwLVE4VTZqejdfUjhCUmxYX3AtR0doM01LanZ0YW1rWE1lR2RZUDh6ZWlhaWJhZzAtVlp5VU8ya00?oc=5",
       "collector": "Google News RSS",
       "country": "Italy",
@@ -9613,7 +10468,8 @@
       "targeted_source": "repubblica.it",
       "targeted_source_kind": "local_language_media",
       "sources": [
-        "repubblica.it"
+        "repubblica.it",
+        "la Repubblica"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -9778,6 +10634,91 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "0681633d919e11ce",
+      "category": "Terrorist Financing",
+      "categories": [
+        "Terrorist Financing"
+      ],
+      "title": "The role of Arab states in combating terrorist organizations and their financing (Part 3)",
+      "summary": "An analytical piece discussing the efforts and roles of Arab countries in countering terrorist groups and cutting off their financial lifelines.",
+      "original_title": "دور الدول العربية في مكافحة التنظيمات الإرهابية وتمويلها (3)",
+      "original_summary": "دور الدول العربية في مكافحة التنظيمات الإرهابية وتمويلها (3) الأيام البحرينية",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-31T22:05:52+00:00",
+      "source": "الأيام البحرينية",
+      "source_count": 3,
+      "url": "https://news.google.com/rss/articles/CBMi_gNBVV95cUxQaDh0ck1wdTJpVDRZZERxRGczWEdRWXp1WXE2NVBuQ2gzQ0VZdWFnWk9kcXgwZGRyTXg4VGtiQjBJcDBURVQxY1M5TDd3ZlVBRzZFVkhFUWF5a1pGaU5YdnE5OEFlc3pBQXQwQWxzNi1ETVRHanBjaHNCT01yTFFjOFM5UXhBblpyMV9NbnVFSlNabV96UzJuMEYxYTlXOU9DdDBZZURGVjlSODY4TFFUYUFES1FDWTRzVmk5cENTaGduY0swUE9IOHdEOVd0VGF0MFlDUXZtcjQ0NmR2aXF1TEcyajlNanpXblc5ZU1qUnJzQkw5UGdzZXdBU2hzajJMVm0zZnpvQVJWeW5VYnZESWd6Qmc0cHJuTzkzY0hzeGZubXE3TDlVdFdKZnBpZkpfazdhZDUyUlBXM0pMVlRRdnlJUThDdFFpbEMzZHlDV2t6eUFFeXBYRmR1QThMZTEzdThJVE9rMW03Z1BLYndmbWtLOFpTTVdRaUIzOUFmTEVvZHlxWjE1YWZOdmZvSzRhRnAyNXl0UnAyTnEybnlMY1VTeXh2c0otOTM0Q2hCNTljSVV1eVI1bFRWZmpULXd5djJodklZb1AxbXhldUFSdGtocDdNeEFZQjBEQzh4RTlUaTBlOHhndUd6RXpqUEVXV1hxaFhpQlBtMGZFQ0E?oc=5",
+      "collector": "Google News RSS",
+      "country": "Bahrain",
+      "country_code": "BH",
+      "city": "Manama",
+      "region": null,
+      "latitude": 26.22787,
+      "longitude": 50.58565,
+      "location_precision": "country_capital",
+      "location_confidence": "medium",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "الأيام البحرينية",
+        "العربية",
+        "riac34.ru"
+      ],
+      "related_articles": [
+        {
+          "title": "3 تريليونات دولار.. عقود النفط المصغرة تفتح سوق الطاقة أمام الأفراد",
+          "original_title": "3 تريليونات دولار.. عقود النفط المصغرة تفتح سوق الطاقة أمام الأفراد",
+          "original_language": "ar",
+          "summary": "3 تريليونات دولار.. عقود النفط المصغرة تفتح سوق الطاقة أمام الأفراد العربية",
+          "published": "2026-09-01T10:38:00+00:00",
+          "source": "العربية",
+          "url": "https://news.google.com/rss/articles/CBMijgVBVV95cUxPSEpGdTRUaWFLNnI1Yk5pMzh1QlVGTi1URFVVTF9ISVN1eGRxdHgtRFRrOXFiWXRFYTRUVzZjQ1M3TGotSkV1RTdOTTQwMWViSE9EdHZnRUZWVTdQOFBYeG8zS1ZPRjIwU0tlWGpJQlRiZDF3UldWYVEyNVBwRGtPeVdybkxjX2N1dUMwclZuRDRabHJqRkVWbi1hNEFiWjJxTHdOQWxRcEpiWTkzU0JtUkF2TFEwTTZXVUowN2lwYjZRUUcxZ0F1em9lLTItNFREODAxYTlPcWtZeWpGS1A2bFpLR09SdVpZeDRPY2pmaFh3aWR3cGhjNWIzbFRNTEpmaE56YWppVmkzWldLMDNBNnVSUFZndW9jOEZmdjJtSnV0QlJFcVBTWmt4bXhwTzQzZDU2YjJHUW1fS043NkN4N002bHNTSjFrT0ctenVtaE1aRTZzbTk2aGh2aW93MlpLWVJGTnNzY0hJWm5udC1QR2JFSlNzdC1ZQVVKTElLMXVYc0dvaUhUbzdiWE9HSVo4S0g1SUx2cjFfY0ZwR1RGRk43VnBhZkdpY2dZa1cyVmpiQnN3Q0RqVTlYdFhMaHlHRnp1UjdldGVTS0RJZHRVZFlBLVNmSkZQUXBqcmZDRmJPeXNIek5KRHVMUEk1dHRlejRPZjIxSHdwcXdBQXdrREJEclE5TnFzWnNNWFJVY0xTU2dwdVhGa3Bha3AxSHhibS1aUkx5OHNqbko0RDhEWVN5WU9NazBEel9QYTQyZG5aTUstZE5HdVprVmlqZmxlZjNHYk1vcTloUWZ5b2w3YTBmTm5LZlpXQU9vMzk3M3h5bkNJaTI3cS14YnEySlNkWEJWaEk2ZnBEc0w5UnfSAZMFQVVfeXFMT2U3aHhkUzlSbEtPUjJYM0RVX1BMekpMaE13dzJjWW1YQVN0TzduXzR4U3pvNjUyNXBVQWQ3cDFSdkJsVzBQWFdlOGxmRjFETk5IcUQxMk1TbGd4RDFHVFJCb3Yzel84THpnVzNLN2kzQnJnUlJwU01RWVhGY0RmOGxCVms2OWNBR2tuaHBMNWlZT1ZfR1owY3U1azVLNGZ2VVhUXzlBT2xNaWhVMjVzbEpLZTJPd0tjMTNQakRkLW1tQ3JuclcyR3lCSXluc0Z4SkZlUnBlVGxnMzZQckRiUjhzU0hwVTRHWjRYS0VmYUxINFRmbmhxdVdNM19md295ZkwzYk5LT2VjLUprV1FYNkFMZGZUZVduclFhNVdhNW1jY0xCZUZnTWxiYi1pYlZpSGI4cjZhcUlzcjJGLUQ3TUpHZG9ISXZGVjBJY0w1SXByaE5qVlVndFRRcmg4VlNEUVQwVTE3REJJSUE0dFZ5bHFra0M5R2UtRndDQjlhWlEwaTJGVV8zWDFGZThKdjV1bHlmc2ZPd0xmajZkREFKOUVtRFVlZ1FtVTVpNTJlQ01rYXYxMl8yV2dRd1NmYmQxcm9LN3NocnpYdTM4VUFHTWJMOGw0ODYxZjJ3QlpTV1F0WnJsMGc4azhSU3ZvLVVSQTdaNVdSZmRocmpoaTFuVzRldVFlSEJyZkIzZjhsMVJNS2N4S0gwY2ZYbzNsZXhOWmJZSmV6a2xzN25ScjVKeExtdzFiM2ZkN01jLWNvOVd3aDBRM0VRZHA2QzVMcThhbVhtZDU1VTNYdHdRb0o4cEtFZWxWaFg3alN2TURMMmlaaDNZM1lVQm5zZlEzc1hwcUEwS3YyRlozLWp2dnhidXVpOG8?oc=5"
+        },
+        {
+          "title": "3 сентября в Волгограде состоятся памятные мероприятия, приуроченные к годовщине терактов",
+          "original_title": "3 сентября в Волгограде состоятся памятные мероприятия, приуроченные к годовщине терактов",
+          "original_language": "ru",
+          "summary": "3 сентября в Волгограде состоятся памятные мероприятия, приуроченные к годовщине терактов riac34.ru",
+          "published": "2026-09-01T14:04:00+00:00",
+          "source": "riac34.ru",
+          "url": "https://news.google.com/rss/articles/CBMiREFVX3lxTFA2eV9vT0Q4WEduaWRXdHhGS0p0dXpnVTlyLXBtc1llTXhqWHRvX0Q4WmVaOC1fZnhfWHFiVTB2N1I3MTNh?oc=5"
+        }
+      ],
+      "article_count": 3,
+      "first_reported": "2026-08-31T22:05:52+00:00",
+      "last_reported": "2026-09-01T14:04:00+00:00",
+      "dedup_confidence": 0.99,
+      "dedup_methods": [
+        "same_normalized_title"
+      ],
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 70,
+      "ai_relevance_reason": "Directly addresses counter-terrorism measures and terrorist financing frameworks.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Discussion on Arab states combating terrorist organizations and terrorist financing",
+      "title_variants": [
+        "Discussion on Arab states combating terrorist organizations and terrorist financing"
+      ],
+      "location_confidence_score": 0.8,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "الأيام البحرينية"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Article published by a Bahraini source discussing Arab states and terrorism financing.",
+      "ai_geo_fingerprint": "3ceca7fbc5d00ce4941af6c01a6e86b39035a0994f1bfb697b17f3c444e41faa",
+      "ai_geo_inferred": true
     },
     {
       "id": "4126b73882151127",
@@ -10184,7 +11125,7 @@
       "collection_locale": "DE:de",
       "published": "2026-08-31T18:50:00+00:00",
       "source": "Oldenburger Onlinezeitung",
-      "source_count": 3,
+      "source_count": 5,
       "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOTHVLRmllN3BUQnAyME1qOGEySWxVeHZnVkxBZ3JfUXZFNTJZRGJERWY5TVhxbElmWE5uWVN2MU1BUnFyemh6SXNESEJwdnRYaHU0ZFBRbFo2S3RGUVlUYnRJSm1zWncyam50Z3ZDTC1ndXdBR0lsRWxCNnFUYUhVRjdmNGJLVWE3bWhOeFdzQ3JsRkltSUxQOWhialRqanNSNkpLbm5R?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -10199,7 +11140,9 @@
       "sources": [
         "Oldenburger Onlinezeitung",
         "tixio - Nachrichten",
-        "Presse Augsburg"
+        "Presse Augsburg",
+        "presse-augsburg.de",
+        "fuldainfo.de"
       ],
       "related_articles": [
         {
@@ -10477,7 +11420,7 @@
       "collection_locale": "FR:fr",
       "published": "2026-08-31T17:36:40+00:00",
       "source": "Le Parisien",
-      "source_count": 9,
+      "source_count": 10,
       "url": "https://news.google.com/rss/articles/CBMikgJBVV95cUxOOXYxaG0xb09iZm9uR2FVQzFvUFkzaEROMTFUdURvVWxEbmZtRTZ1WF9GYmI1WGMxajJwVHpQa3FrZkpMcWY5WV9QSWdDcFh3VDBxTE1NTlBMQ1VjUWtXNm1oRkZqaWJJRnRPTGw0OWxlZklkazRfeTNqejlxcm15UTQtaVJOcFU1aFdDLXVFcUttY21ucWw2ZXRkZjg1bnR5bExEMS1IaXZDQnVHWWQtd1lUZk1ZZnROWE1EUUJYMkZiTmhCUHNTSXlnSlhtVjlpSkZOSDBSN2NHcFRnc1BBX09kdTVWdDlLWHEtdUx5WGYycHVfa19GWklDalljejh0Q2FudmVOei01VkEyRTcwMmFR?oc=5",
       "collector": "Google News RSS",
       "country": "Poland",
@@ -10498,7 +11441,8 @@
         "Pester Lloyd",
         "Informat.ro",
         "Рамблер",
-        "leparisien.fr"
+        "leparisien.fr",
+        "tf1info.fr"
       ],
       "related_articles": [
         {
@@ -10879,6 +11823,138 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "4ad80ea0c23a6a4f",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Iranian military claims to have hit US targets in Bahrain",
+      "summary": "The Iranian military announced that it targeted US positions in Bahrain amid escalating regional tensions.",
+      "original_title": "İran ordusu, Bahreyn'de ABD hedeflerini vurduğunu duyurdu",
+      "original_summary": "İran ordusu, Bahreyn'de ABD hedeflerini vurduğunu duyurdu TRT Haber",
+      "original_language": "tr",
+      "collection_language": "tr",
+      "collection_language_name": "Turkish",
+      "collection_locale": "TR:tr",
+      "published": "2026-08-31T16:14:21+00:00",
+      "source": "TRT Haber",
+      "source_count": 12,
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPV2N4M29KaGRCbi1uak9FLVUxOWUzaHV6cFlWSXJSaGlYa1VwcmpvWlVRZ09iZzNiNnRIOFA2d2JvNURQMlFXcU5YdmlIZFJKMUdLcmQ4LWU5NGt6cjJRZF9ZT3hXWThGclZ1OHNabjF1SzFmb1RHLXFtaFdnYUozYjlPcjZKbVhjWTZVWjdmeWE3TkxnRGJ4dUJ2bFhIWURPb2dNcXNNbw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Bahrain",
+      "country_code": "BH",
+      "city": "Manama",
+      "region": null,
+      "latitude": 26.22787,
+      "longitude": 50.58565,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Son Dakika",
+        "STAR - Haberler",
+        "ngazete.com",
+        "habervitrini.com",
+        "F5Haber",
+        "Daily Sabah",
+        "Le Monde.fr",
+        "El Mundo",
+        "Anadolu Ajansı",
+        "la Repubblica",
+        "ANSA",
+        "TRT Haber"
+      ],
+      "related_articles": [
+        {
+          "title": "﻿İran'da terör örgütü PJAK'tan köylülere silahlı saldırı: Çok sayıda yaralı var",
+          "original_title": "﻿İran'da terör örgütü PJAK'tan köylülere silahlı saldırı: Çok sayıda yaralı var",
+          "original_language": "tr",
+          "summary": "﻿İran'da terör örgütü PJAK'tan köylülere silahlı saldırı: Çok sayıda yaralı var STAR - Haberler",
+          "published": "2026-08-31T16:15:00+00:00",
+          "source": "STAR - Haberler",
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQbXlaUGZhUVNlTTRPYjNfS05abGJiaklEeVp0OEY5bkZmQkduMVF5NWYzTFdPckZiOGt3TS1jUTJmTDZYV3NjRkxCT3ZCOHFGSV9oQUFXR2J5b2laSDQ1NElnejExQVRjMlNURWRfamtYWkt5dnFjNHJwMDFURGlzcVBfc2ZrdTBpcmxTNEZEdy1EQ0JGeV8tbUQ2N1ExeTlfU2Y2clo2Z0xwSHNSRFFlcnFHYTZRMXRyYV9wedIBvwFBVV95cUxNMEV1a3plcHg2bVBLTTlpUW9tQ29rYnJNQXRzWWZrN05OMjJsVkFjb0NDMHN2T0Utc1IxUHdVSG9kRnlrcWZwdU9UeU9yenVQX0had2xXOTV3dGpCVzNHbUFZamlMdVAwOXpZRm1WTWV0ZzlLdlE0YlNteXR4WTQ1R0RiaGItQmZFNk92Q0ZqTGxxVEQ5TFJYcUQwQlF4OENfQnJUYzcxcFZDa3pCQlhlNWVSMDNwTmdxYl8tMGUyNA?oc=5"
+        },
+        {
+          "title": "İran'da PJAK Saldırısı: Çok Sayıda Yaralı",
+          "original_title": "İran'da PJAK Saldırısı: Çok Sayıda Yaralı",
+          "original_language": "tr",
+          "summary": "İran'da PJAK Saldırısı: Çok Sayıda Yaralı ngazete.com",
+          "published": "2026-08-31T17:01:22+00:00",
+          "source": "ngazete.com",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOY2xoOTF4N1dTai13LXpYRkQwUmM5M0dZWjVpeTNIajJxVEI5djY5SE5ZUUNLa3RkNGlXekQwdEM5RXNpc1dMMFdXLV9ZTUlKVzg2X1ZWUzA4WW03STFoTzRES0s3M1ZwSlNDX2s4d25PNllHM1RPbHN2SkluRVQwRGhMeGp2aUJIZE1CZU91T1_SAZABQVVfeXFMTmNsaDkxeDdXU2otdy16WEZEMFJjOTNHWVo1aXkzSGoycVRCOXY2OUhOWVFDS2t0ZDRpV3pEMHRDOUVzaXNXTDBXVy1fWU1JSlc4Nl9WVlMwOFltN0kxaE80REtLNzNWcEpTQ19rOHduTzZZRzNUT2xzdkpJbkVUMERoTHhqdmlCSGRNQmVPdU9f?oc=5"
+        },
+        {
+          "title": "PJAK köylülere saldırdı: Çok sayıda yaralı var",
+          "original_title": "PJAK köylülere saldırdı: Çok sayıda yaralı var",
+          "original_language": "tr",
+          "summary": "PJAK köylülere saldırdı: Çok sayıda yaralı var habervitrini.com",
+          "published": "2026-08-31T17:51:02+00:00",
+          "source": "habervitrini.com",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPTURaNHNTT3FONkFkbmtsdWlFS1BXUjZ0R0JRSFRQUTZSQTBFaThsT1dOd0VDNGc0R0w3MDVHd1FVS084MkFIV0lydUxHSWhOWDJ2QUZ5b29hdW4zbF9MV0VnMzl2Zm1FMlE1N0hpRlRHMXhnNnZGTGliakVSTkhnVGc2Y3ZaSkIxTl9EX3JJd0FteEZEMnRtNDNn?oc=5"
+        },
+        {
+          "title": "İran'da terör örgütü PJAK sivillere saldırdı: Çok sayıda yaralı var",
+          "original_title": "İran'da terör örgütü PJAK sivillere saldırdı: Çok sayıda yaralı var",
+          "original_language": "tr",
+          "summary": "İran'da terör örgütü PJAK sivillere saldırdı: Çok sayıda yaralı var F5Haber",
+          "published": "2026-08-31T21:14:00+00:00",
+          "source": "F5Haber",
+          "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPOV9weU9rT1YtbkdPUHg3Wl9YZW5aNEZESW1PSmJEUndZUWp6TkduR0lUTjNwMHkwVWJ6Sm0ya0duX2hjcUY3ZVFRNVppUjM2eE5tZzQyUFB4NFFXeXdLZktEUFc5dk5IX1VkcWJoV0dkWTFFV3hsNl96UHVxMnJWeElwcENCbjgyODdNTmRfRFlMYXFFTWxkMWJ6aHhQUmJKUFBPWUR3?oc=5"
+        },
+        {
+          "title": "Iranian military claims to have hit US targets in Bahrain",
+          "original_title": "İran ordusu, Bahreyn'de ABD hedeflerini vurduğunu duyurdu",
+          "original_language": "tr",
+          "summary": "The Iranian military announced that it targeted US positions in Bahrain amid escalating regional tensions.",
+          "published": "2026-08-31T16:36:00+00:00",
+          "source": "TRT Haber",
+          "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPV2N4M29KaGRCbi1uak9FLVUxOWUzaHV6cFlWSXJSaGlYa1VwcmpvWlVRZ09iZzNiNnRIOFA2d2JvNURQMlFXcU5YdmlIZFJKMUdLcmQ4LWU5NGt6cjJRZF9ZT3hXWThGclZ1OHNabjF1SzFmb1RHLXFtaFdnYUozYjlPcjZKbVhjWTZVWjdmeWE3TkxnRGJ4dUJ2bFhIWURPb2dNcXNNbw?oc=5"
+        },
+        {
+          "title": "PJAK terrorist group attacks civilians in Iran, leaving multiple injured",
+          "original_title": "İran'da terör örgütü PJAK sivillere saldırdı: Çok sayıda yaralı var",
+          "original_language": "tr",
+          "summary": "The PJAK terrorist organization launched an armed attack against civilians and villagers in Iran, resulting in numerous injuries.",
+          "published": "2026-08-31T16:14:21+00:00",
+          "source": "Son Dakika",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQbXdnQ3ZJU2ZndnhBNkFnZHV1VnRpZnY1UUgzdFlHNnRNaUdOQUFyelFDN05ST2I1SXpuaGF1WXdsZmk4Y0hHVy0wSUg3aU5renNGY0lIaGp4NzFWSUkweHhTaEd5b2pYd1lFeXRfdVBjNk9COVpJYUJld1VxWklQSFM3VUp4a1JhMktGenllQm1xQnPSAY8BQVVfeXFMUDhBWUhiNTBOTHozOG1sY0ticExwc3JKQm84U1RqczRIV2RraW1PUThjcktDSFhJZFZIUTR2VnVsaGMtMUI4R3hSRmd3OEtNNHlCR1ZTaGFaSXlwM2FvZ28zdk1iUlJNQ25xcWhnTnhVbFVaUkFCQ282cWxxM2NNZDJ3UTBabGllcGk0Ujl3OW8?oc=5"
+        }
+      ],
+      "article_count": 6,
+      "first_reported": "2026-08-31T16:14:21+00:00",
+      "last_reported": "2026-08-31T21:14:00+00:00",
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "title_plus_anchor",
+        "very_high_title_similarity",
+        "same_normalized_title"
+      ],
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Direct armed attack by a designated terrorist group against civilians, highly relevant to operational CT awareness.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Iranian military targeting US positions in Bahrain",
+      "title_variants": [
+        "PJAK armed attack against civilians in Iran"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "hit US targets in Bahrain"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Explicitly states the Iranian military targeted US positions in Bahrain.",
+      "ai_geo_fingerprint": "3fc5d72fd82b1cacab624976949412af64d935e589f6374cdc758247102b6af3",
+      "ai_geo_inferred": false
     },
     {
       "id": "4ad80ea0c23a6a4f",
@@ -12526,6 +13602,65 @@
       ]
     },
     {
+      "id": "fefec3f653af712b",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Heaton Park synagogue terror attack survivor says son has faced death threats",
+      "summary": "A survivor of the Heaton Park synagogue terrorist attack reports that their son has been subjected to death threats in the aftermath.",
+      "original_title": "Heaton Park synagogue terror attack survivor says son has faced death threats",
+      "original_summary": "Heaton Park synagogue terror attack survivor says son has faced death threats Yahoo News UK",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English",
+      "collection_locale": null,
+      "published": "2026-08-31T12:22:56+00:00",
+      "source": "Yahoo News UK",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQcVVZa0J2WGxCV1ZFN2lsbmJsZFZndFpZQlNwOUI2cFdmbVM2R3dtTnVscEhTc0xMRUx4Z2l6RzdSYUNKcTREa1k4Z1J0cVlPRExnLWZzTnNQTWtYYWs4eXlsdkJLSUlqN0Qzak9VTEtqaDhhSG8zWEhKNlRybWZzWVdR?oc=5",
+      "collector": "Google News RSS",
+      "country": "United Kingdom",
+      "country_code": "GB",
+      "city": "Manchester",
+      "region": null,
+      "latitude": 53.48095,
+      "longitude": -2.23743,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "sources": [
+        "Yahoo News UK"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-31T12:22:56+00:00",
+      "last_reported": "2026-08-31T12:22:56+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 80,
+      "ai_relevance_reason": "Direct fallout and security threats linked to a historical/ongoing terrorism case (Heaton Park synagogue attack).",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "threats against family member of Heaton Park synagogue attack survivor",
+      "title_variants": [
+        "threats against family member of Heaton Park synagogue attack survivor"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Heaton Park synagogue"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Heaton Park synagogue is located in Manchester, UK.",
+      "ai_geo_fingerprint": "1abb57826a100ddb5c362e00a56a75b45fafd010934ff4b2bda945aee17b5381",
+      "ai_geo_inferred": true
+    },
+    {
       "id": "9ba4c9423cc6ad90",
       "category": "Legal / Judicial",
       "categories": [
@@ -12586,71 +13721,6 @@
       "ai_geo_reason": "Iraqi government official statements issued from Baghdad.",
       "ai_geo_fingerprint": "7d8bbc7ec43531aaefe5a8390ba6c0345dd8392478bf05b53edeb1d6d4bcd223",
       "ai_geo_inferred": true
-    },
-    {
-      "id": "bb31c7088a6e4628",
-      "category": "Legal / Judicial",
-      "categories": [
-        "Legal / Judicial",
-        "Online Radicalization / Cyberterrorism"
-      ],
-      "title": "Court places 18-year-old Tyumen resident in custody for justifying terrorism",
-      "summary": "A court in Tyumen has ordered an 18-year-old resident to be detained in custody on charges of justifying terrorism.",
-      "original_title": "Суд заключил под стражу 18-летнего тюменца за оправдание терроризма",
-      "original_summary": "Суд заключил под стражу 18-летнего тюменца за оправдание терроризма Тюменская линия",
-      "original_language": "ru",
-      "collection_language": "ru",
-      "collection_language_name": "Russian",
-      "collection_locale": "RU:ru",
-      "published": "2026-08-31T12:05:00+00:00",
-      "source": "Тюменская линия",
-      "source_count": 1,
-      "url": "https://news.google.com/rss/articles/CBMiP0FVX3lxTE9QdTJlbjFaUmZXS0NlY21oSzFRREtxWUNma3VWV1VXWnlfMWRyaDFQZlgwOGpwM0FKRzZVY2RrOA?oc=5",
-      "collector": "Google News RSS",
-      "country": "Russia",
-      "country_code": "RU",
-      "city": "Tyumen",
-      "region": null,
-      "latitude": 57.15222,
-      "longitude": 65.52722,
-      "location_precision": "city",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "Тюменская линия"
-      ],
-      "related_articles": [],
-      "article_count": 1,
-      "first_reported": "2026-08-31T12:05:00+00:00",
-      "last_reported": "2026-08-31T12:05:00+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 90,
-      "ai_relevance_reason": "Judicial prosecution and detention for terrorist justification/propaganda.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "Court detains 18-year-old Tyumen resident for justifying terrorism",
-      "title_variants": [
-        "Court detains 18-year-old Tyumen resident for justifying terrorism"
-      ],
-      "location_confidence_score": 0.99,
-      "location_method": "ai_city_geonames",
-      "location_evidence": [
-        "A court in Tyumen has ordered an 18-year-old resident to be detained"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "The legal proceeding and custody order occurred in Tyumen, Russia.",
-      "ai_geo_fingerprint": "8c38f15b7dabde73c838ee611aa701e296b551eb46143f68a26a5048e320b5f9",
-      "ai_geo_inferred": false,
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "same_url"
-      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -13746,7 +14816,7 @@
       "collection_locale": "IT:it",
       "published": "2026-08-31T10:02:00+00:00",
       "source": "ANSA",
-      "source_count": 12,
+      "source_count": 14,
       "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxNTjFvYUZibkJYSU1xTWd3VVhkU041M1JLT1FuVWRyUm43ZlNZSUtZS0JzbEN4WWE4cGNiOGRmQlRaeVVDNm9adWFkTks4QjR0TnZuM0NsbG1CR29KMkwxcTE1RV9ZdllxNWltdTBnR2xIeVlfVl80ODBZc3dyN2I4bmR5aExQN3Q4c1d1OTJmVUIwVVNrc1UxMDVNckxrN2l5MGhGQ3h1VVJMcThUbmxMbzZaaUN2Mnp0WVB0VFlmcXl6enoyM1ByZ0xuUm9DNjE1bmZvZTNaU0ZhUk5vQVBqTVAtMXB1TlpadlFTdWZ3UVVPdmxyUlgzVnJBWEpvUEE?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -13772,7 +14842,9 @@
         "Живая Кубань",
         "24Krasnodar.ru",
         "utyug.info",
-        "ТСН 24"
+        "ТСН 24",
+        "tsn24.ru",
+        "24krasnodar.ru"
       ],
       "related_articles": [
         {
@@ -14331,70 +15403,6 @@
       ]
     },
     {
-      "id": "cfd6dbe631ba0625",
-      "category": "Arrests",
-      "categories": [
-        "Arrests"
-      ],
-      "title": "Arrest of a terrorist in Nablus",
-      "summary": "Security forces have arrested a suspected terrorist in the West Bank city of Nablus.",
-      "original_title": "Arrestation d'un terroriste à Naplouse",
-      "original_summary": "Arrestation d'un terroriste à Naplouse RadioJ",
-      "original_language": "fr",
-      "collection_language": "fr",
-      "collection_language_name": "French",
-      "collection_locale": "FR:fr",
-      "published": "2026-08-31T08:43:58+00:00",
-      "source": "RadioJ",
-      "source_count": 1,
-      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOS2VmQlJiZUUxZTZCN2J2aFZVejR2REtGLS10czFLa0dKOTdTLXZYX2d3ck5mNmpzMDl1Y3FzbHA4cGNfZ1NTdjNCV3ZkVDFzbXBpMnBEdW4xc08wZlJPRE1vOGxWR3g3UTZsaEFPMDc2c3BGbWRTeEhXaDh3RThzMFhsRTM?oc=5",
-      "collector": "Google News RSS",
-      "country": "Palestinian Territory",
-      "country_code": "PS",
-      "city": "Nablus",
-      "region": null,
-      "latitude": 32.22111,
-      "longitude": 35.25444,
-      "location_precision": "city",
-      "location_confidence": "high",
-      "acquisition_channel": "multilingual_discovery",
-      "sources": [
-        "RadioJ"
-      ],
-      "related_articles": [],
-      "article_count": 1,
-      "first_reported": "2026-08-31T08:43:58+00:00",
-      "last_reported": "2026-08-31T08:43:58+00:00",
-      "ai_selection_complete": true,
-      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
-      "ai_selection_model": "gemini-3.5-flash-lite",
-      "ai_relevance_score": 85,
-      "ai_relevance_reason": "Direct operational counter-terrorism arrest.",
-      "ai_current_ct_event": true,
-      "ai_selected": true,
-      "translated_to_english": true,
-      "ai_canonical_event": "arrest of a terrorist in Nablus",
-      "title_variants": [
-        "arrest of a terrorist in Nablus"
-      ],
-      "location_confidence_score": 0.95,
-      "location_method": "ai_city_geonames",
-      "location_evidence": [
-        "Nablus"
-      ],
-      "excluded_from_map": false,
-      "ai_geo_complete": true,
-      "ai_geo_version": "gemini-ai-first-v5-resilient",
-      "ai_geo_model": "gemini-3.5-flash-lite",
-      "ai_geo_reason": "Arrest of a terrorist in the West Bank city of Nablus.",
-      "ai_geo_fingerprint": "f061b30ef83bdf6095a64b315966023046de43a1118b518f5e022fe2f608705d",
-      "ai_geo_inferred": false,
-      "dedup_confidence": 1.0,
-      "dedup_methods": [
-        "same_url"
-      ]
-    },
-    {
       "id": "9ba4c9423cc6ad90",
       "category": "Arrests",
       "categories": [
@@ -14412,7 +15420,7 @@
       "collection_locale": "SA:ar",
       "published": "2026-08-31T08:42:58+00:00",
       "source": "ANF | Articles",
-      "source_count": 9,
+      "source_count": 11,
       "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNMG1lVXN3anZpWThSbmY1LURXdkZjd01VVVdoWHdKaVg1MlRDNFlVVGNpVFAza0pqc1VxY1JXTDNQdkJkVmVoZzFaZFFKX0FSV2JzX3BobkZpTUFTdHVKSTJYMXg1NGZQNXdmNkNzcUJoeEk3ZTFWdWVraVdOYWVLdVFFdThYWUhSbjFYaFE4c2ZCX1RwNFY4R2dTWlB5ZzVqb1FwVElVWmJsdzBRdmc?oc=5",
       "collector": "Google News RSS",
       "country": "Iraq",
@@ -14433,7 +15441,9 @@
         "video-agencyia.iq",
         "وكالة انباء براثا",
         "kurdistan24.net",
-        "Rudaw"
+        "Rudaw",
+        "al-mirbad.com",
+        "الوكالة الوطنية العراقية للأنباء| نينا"
       ],
       "related_articles": [
         {
@@ -14479,10 +15489,11 @@
       "title_variants": [
         "Report on foreign ISIS fighters transferred from Syrian prisons to Iraq"
       ],
-      "dedup_confidence": 0.959,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
         "actor_country_action_signature",
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "same_url"
       ],
       "location_confidence_score": 0.9,
       "location_method": "ai_country_capital",
@@ -14645,7 +15656,7 @@
       "collection_locale": "DE:de",
       "published": "2026-08-31T08:24:37+00:00",
       "source": "Frankfurter Rundschau",
-      "source_count": 20,
+      "source_count": 21,
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNWmo2NEdSZHpjeC1iWVdpemNPZUc1WkR3c25weklrYnI0U0VVUm9zVmdRRHF3cDdBQXo0cGN0dlhpdUFEWF9CMV8zc2xVaExFNEZlOW8tZC00b01GdVZ6Rl9YYkdscFhPbDdSeTFod0V3VU9BVkl2QXdQMV9SWkZyWUdpRXBYM1Fwc0JhSFdlbjlPSF9HOUVWRHl0VjhkUDFLcDdoaXpwSkhBTzBVLVZCbmlydXNmcWNyOXc?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -14679,7 +15690,8 @@
         "Цензор.НЕТ",
         "BZ Berlin",
         "sueddeutsche.de",
-        "STERN.de"
+        "STERN.de",
+        "Hamburger Abendblatt"
       ],
       "related_articles": [
         {
@@ -14988,7 +16000,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-08-31T07:44:53+00:00",
       "source": "нижнийсейчас.рф",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOOXNVOUFPcEJVMFItUm56cld1bXBSeG44dzFnRkVsRDNzOFNNX2tHWEZGLTljV3cxckFBYS1CNmVZOTNsNmFoOHYtVjYwYm5GVmRFbXNuZTloRnBCOURfYlg3RmkyY2gya0t5dmQ1UUZSZWlBMHQ2RU1VVEcxbUwyLU4zcThWRTVaX1MzcTdIMzJhRFg3b3c?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -15001,7 +16013,8 @@
       "location_confidence": "high",
       "acquisition_channel": "multilingual_discovery",
       "sources": [
-        "нижнийсейчас.рф"
+        "нижнийсейчас.рф",
+        "xn--80ajchbgb0ac6bd4e.xn--p1ai"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -15701,7 +16714,7 @@
       "collection_locale": "FR:fr",
       "published": "2026-08-31T06:36:33+00:00",
       "source": "Blick",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNVDR5RkNXamZqMWN1YTFSTGZoV2VJdGMyZ1JrMTVMQWJmMFVNM2U1R0Y0SXdLdTB3MXJhV1pqSXhueGhHLWJ4TVNyZWxDVkd4U09zRHF0U29RZEVuVjQ5THJFZ2VNaDVNeDNiRk5pV01leGQ5UHExREtJTGE0RkJLaTg2Z3lZcnQ1ejdQU25TcW5fb1pNMnU5UTc3Z1BtSWZTNkZkM3htX3RUT19XVURKYWxUUHcxMHc?oc=5",
       "collector": "Google News RSS",
       "country": "Mexico",
@@ -15714,7 +16727,8 @@
       "location_confidence": "high",
       "acquisition_channel": "multilingual_discovery",
       "sources": [
-        "Blick"
+        "Blick",
+        "blick.ch"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -15981,6 +16995,87 @@
       "ai_geo_reason": "Explicitly mentions fatal shootings in Aarau.",
       "ai_geo_fingerprint": "757324c6e72feef6317b79836ed035c8dde858ccfa91066d606172852c4dfbfb",
       "ai_geo_inferred": false
+    },
+    {
+      "id": "cfd6dbe631ba0625",
+      "category": "Arrests",
+      "categories": [
+        "Arrests",
+        "Attacks"
+      ],
+      "title": "Arrest of a terrorist in Nablus",
+      "summary": "Security forces have arrested a suspected terrorist in the West Bank city of Nablus.",
+      "original_title": "Arrestation d'un terroriste à Naplouse",
+      "original_summary": "Arrestation d'un terroriste à Naplouse RadioJ",
+      "original_language": "fr",
+      "collection_language": "fr",
+      "collection_language_name": "French",
+      "collection_locale": "FR:fr",
+      "published": "2026-08-31T06:12:00+00:00",
+      "source": "RadioJ",
+      "source_count": 6,
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOS2VmQlJiZUUxZTZCN2J2aFZVejR2REtGLS10czFLa0dKOTdTLXZYX2d3ck5mNmpzMDl1Y3FzbHA4cGNfZ1NTdjNCV3ZkVDFzbXBpMnBEdW4xc08wZlJPRE1vOGxWR3g3UTZsaEFPMDc2c3BGbWRTeEhXaDh3RThzMFhsRTM?oc=5",
+      "collector": "Google News RSS",
+      "country": "Palestinian Territory",
+      "country_code": "PS",
+      "city": "Nablus",
+      "region": null,
+      "latitude": 32.22111,
+      "longitude": 35.25444,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "RadioJ",
+        "בחדרי חרדים",
+        "ynet",
+        "israelhayom.co.il",
+        "C14",
+        "חדשות 04"
+      ],
+      "related_articles": [
+        {
+          "title": "Attempted attacks: Wanted 'Lion's Den' terrorist captured in Nablus",
+          "original_title": "ניסה להוציא פיגועים: מחבל מבוקש מ׳גוב האריות׳ נלכד בשכם",
+          "original_language": "he",
+          "summary": "Security forces arrested a wanted terrorist from the 'Lion's Den' group in Nablus who was attempting to carry out attacks.",
+          "published": "2026-08-31T06:12:00+00:00",
+          "source": "בחדרי חרדים",
+          "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE03SC1UcUhhTTJsZXFIOF9fbkhXeGV2cWNySXNNeHJOZFRTeXhLSklleWVGM1RTNVVhOFFWN0ltM1RmZlFYRng5cmQtbw?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-31T06:12:00+00:00",
+      "last_reported": "2026-08-31T08:43:58+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Direct operational counter-terrorism arrest.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "arrest of a terrorist in Nablus",
+      "title_variants": [
+        "arrest of a terrorist in Nablus"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Nablus"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Arrest of a terrorist in the West Bank city of Nablus.",
+      "ai_geo_fingerprint": "f061b30ef83bdf6095a64b315966023046de43a1118b518f5e022fe2f608705d",
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url",
+        "very_high_title_similarity"
+      ]
     },
     {
       "id": "9ba4c9423cc6ad90",
@@ -16303,6 +17398,83 @@
       "ai_geo_reason": "Reported by Israeli media in shekels; jurisdiction implied as Israel.",
       "ai_geo_fingerprint": "f99f6259eabf8de86ae605f9dd9f713f74320c5c3f00820a86a1a00a6cb723dc",
       "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
+    },
+    {
+      "id": "bb31c7088a6e4628",
+      "category": "Legal / Judicial",
+      "categories": [
+        "Legal / Judicial",
+        "Online Radicalization / Cyberterrorism",
+        "Arrests"
+      ],
+      "title": "Court places 18-year-old Tyumen resident in custody for justifying terrorism",
+      "summary": "A court in Tyumen has ordered an 18-year-old resident to be detained in custody on charges of justifying terrorism.",
+      "original_title": "Суд заключил под стражу 18-летнего тюменца за оправдание терроризма",
+      "original_summary": "Суд заключил под стражу 18-летнего тюменца за оправдание терроризма Тюменская линия",
+      "original_language": "ru",
+      "collection_language": "ru",
+      "collection_language_name": "Russian",
+      "collection_locale": "RU:ru",
+      "published": "2026-08-31T05:30:00+00:00",
+      "source": "Тюменская линия",
+      "source_count": 2,
+      "url": "https://news.google.com/rss/articles/CBMiP0FVX3lxTE9QdTJlbjFaUmZXS0NlY21oSzFRREtxWUNma3VWV1VXWnlfMWRyaDFQZlgwOGpwM0FKRzZVY2RrOA?oc=5",
+      "collector": "Google News RSS",
+      "country": "Russia",
+      "country_code": "RU",
+      "city": "Tyumen",
+      "region": null,
+      "latitude": 57.15222,
+      "longitude": 65.52722,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "Тюменская линия",
+        "URA.RU"
+      ],
+      "related_articles": [
+        {
+          "title": "18-year-old guy arrested in Tyumen Oblast for justifying terrorism",
+          "original_title": "В Тюменской области 18-летнего парня арестовали за оправдание терроризма",
+          "original_language": "ru",
+          "summary": "An 18-year-old individual has been arrested in the Tyumen region on charges of justifying terrorism.",
+          "published": "2026-08-31T05:30:00+00:00",
+          "source": "URA.RU",
+          "url": "https://news.google.com/rss/articles/CBMiR0FVX3lxTFBKQW5Ed1AtYzVud3ZwbHhWU2licVdBMldHSzExLXlMa0lKQVFNN25qaEwzSm4zS09OeFZiOElDUk5CdWVFMEV3?oc=5"
+        }
+      ],
+      "article_count": 2,
+      "first_reported": "2026-08-31T05:30:00+00:00",
+      "last_reported": "2026-08-31T12:05:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 90,
+      "ai_relevance_reason": "Judicial prosecution and detention for terrorist justification/propaganda.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Court detains 18-year-old Tyumen resident for justifying terrorism",
+      "title_variants": [
+        "Court detains 18-year-old Tyumen resident for justifying terrorism"
+      ],
+      "location_confidence_score": 0.99,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "A court in Tyumen has ordered an 18-year-old resident to be detained"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The legal proceeding and custody order occurred in Tyumen, Russia.",
+      "ai_geo_fingerprint": "8c38f15b7dabde73c838ee611aa701e296b551eb46143f68a26a5048e320b5f9",
+      "ai_geo_inferred": false,
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "same_url"
@@ -17059,7 +18231,7 @@
       "collection_locale": "TR:tr",
       "published": "2026-08-31T04:02:56+00:00",
       "source": "tr.mehrnews.com",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQdlJfaHJSUXlHYkpETnlKVUk2dEF1QzVSaU9lQkdaT3hVekc5Yjl0Q2xSNFdlZjlkQ2NCOVkyRW9QN3A2T3djY2N3M2hkSk1vVmktRl91VmZJZjVGUDZJNVlnVWRzOG5TQ01aT0l4UnRoRmJHU2FJRmJzQXZ6QWRmN0ZhcDVOaTJPWXFlVGNSS0twS3owUGlQN0RxUkMzVnViZHBSdHFwVTFUZllqSXNfSEkyOTEtbEsxeG1BR1JmakRVZWk0bXJJ?oc=5",
       "collector": "Google News RSS",
       "country": "Iran",
@@ -17072,7 +18244,8 @@
       "location_confidence": "high",
       "acquisition_channel": "multilingual_discovery",
       "sources": [
-        "tr.mehrnews.com"
+        "tr.mehrnews.com",
+        "خبرگزاری مهر"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -17101,7 +18274,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The Islamic Revolutionary Guard Corps is based in Iran.",
       "ai_geo_fingerprint": "10d29dcceb6e0ede2c5d113ba58d200457e62ab18b0780f91f3ce2efa859173a",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "bd0be2534d830ca5",
@@ -17207,8 +18384,18 @@
         "aljazeera.net",
         "alarabiya.net"
       ],
-      "related_articles": [],
-      "article_count": 1,
+      "related_articles": [
+        {
+          "title": "US says raids on Larak were defense, while Iran strikes Jordan",
+          "original_title": "Usa: 'Raid su Larak non sono stati aggressione, ma difesa'. Iran colpisce in Giordania",
+          "original_language": "it",
+          "summary": "The United States defended strikes on Larak as defensive measures while reporting an Iranian strike affecting Jordan.",
+          "published": "2026-08-31T03:44:00+00:00",
+          "source": "ANSA",
+          "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxOS2FBOGlqLWNCQkQ5cGpnZkx5dzhsN3hzS3lZNmIzSkMxMm1yT3hkMGxfX0p1a1FuWlNHdW03WkJTWWVIbUQ5eHQ3clNuakYwa1RqOUdTQUFQS2YwNlBpVkJlVVlvNkJlMFZXZTJJaTVsd2FjVmhZQ21CbnZ2amxkNDlvNDZuenI4bVREMGF5SVR1WV9HMU5Ea2V6SjE5Y2sxVEowcFM5M2VUOHhGWTh3UmFKckRFanFHdW5wR3VJUkxTajJQRXNDM0x2MVlDbEw3ZmxiV3REck85eUFabWVlVWRiampNckFITVc5NVRmRmZxTnfSAfgBQVVfeXFMT0hEVnk3d3YtbTBvM1FPLUduWmpFVjh5S182V3ozdDF5NkwzWW04TWpQUkJfem5qYkVuVmhlbHpHbU1YOWtyS3hQdUZ0SmluQUZscFVrdTFqRVdUSGt4WEpseU1XdlNoOXY3Zk9oM0dkTy1UWEpjTWpaQVEzOVppNGhlc05XVzJvaktXVGVoNVNvZlE5UkhmVXpiazhWTXdkcExKOWtqT3JyenFlWlVFcktfZEV4NDVWeUVWN3dDQ09aQmw3QTRVWWVtdXI5YW5VZ01aUXp1Um94b3BSbTVxWGRIWjNTZjJpLXRDdEhLTzNOZWNuSXNXVG4?oc=5"
+        }
+      ],
+      "article_count": 2,
       "first_reported": "2026-08-31T03:44:00+00:00",
       "last_reported": "2026-08-31T03:44:00+00:00",
       "ai_selection_complete": true,
@@ -17237,7 +18424,8 @@
       "ai_geo_inferred": false,
       "dedup_confidence": 1.0,
       "dedup_methods": [
-        "same_url"
+        "same_url",
+        "title_plus_anchor"
       ]
     },
     {
@@ -18136,7 +19324,7 @@
       "collection_locale": "IT:it",
       "published": "2026-08-30T23:00:00+00:00",
       "source": "la Repubblica",
-      "source_count": 3,
+      "source_count": 4,
       "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNZWhXOW5rM2hCS3o1Mll1ZUpoOVhQQ3JiaWh4bDJNS0JwTjJSOUFyNnBDbDIyZGpBdDRzZl90VkwzQ0l0S3FIbTJoemJHLTUwMGtMeGlTMDJ4MU1aX0hQc3Q2VWNOZGlxZzJZNXgzVkJCVFFOTk0wLUpQWnBLRnk5Tml4RWdvblA2QWNhc0daMEtFckl5YXVwb1pfMlFTX0k5TEg4RjRyUG5WeV85aHl1eFBjbkEzSVN1OGEtUUJnQmhtN3ZmdnNQVjNJMHVIUW1iWFprZ3R4Z0h0VUZMSzNsSFhB0gHnAUFVX3lxTE9BSGZDS201WUh5dFJfa0hYeTlVcHN4WVZTZkJ1NVo0dXBxZmEwM3p2LS10NjFyYmwyMVFVMGNodHhyX1VIbGJ0T2lrNFJSXzdGT1k2d1VFWm8wdjBnd3FUYWcxX0p0djlWbGQwTUdRTEJ4cmxrWUE4Q3VGc2lTQzFweENaVENaeFI3Ri10dG03Z19MMjJ3bUpVQUI4Z2dubzdRX3lHX19Rb2VYOWZzeHlSMHk2OXJ2a3c4Y2p4czRubC1RZlFEb3A0cF9SdG11UjhVc2ZaMHEyTXR4a3FySjVOV3QxRl9SZw?oc=5",
       "collector": "Google News RSS",
       "country": "Switzerland",
@@ -18153,7 +19341,8 @@
       "sources": [
         "la Repubblica",
         "El Mundo",
-        "elmundo.es"
+        "elmundo.es",
+        "ANSA"
       ],
       "related_articles": [
         {
@@ -19026,7 +20215,11 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Arrests took place in Diyarbakir.",
       "ai_geo_fingerprint": "acb4980b95a2f4121d92c8ab94e077766ca015275fb640b83feb6d961df98657",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "a7c1755336dc9916",
@@ -20296,7 +21489,7 @@
       "collection_locale": null,
       "published": "2026-08-30T17:08:45+00:00",
       "source": "i24NEWS",
-      "source_count": 31,
+      "source_count": 32,
       "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxPeEdHNVFFSWJIRGpvZnR2Z2lnNXdjc21SY09VOC1lVEJ2SFpvZk5TWHI0U3BxR2MwYldOLVN3a3NTNVI1NHZ2V04zdXg3TzluSENFaW10ZFRZZnQxVDN2Ukpzbml0NWxGRXk2RzJ3SFVLQ3FDeVZFSGNtbGNVd1luYVBkOW9BeFhwSTFFUHBtWlVTR0tMY2JUcnRIU0RULVd2LW5vd2hkem9DZEQzSFU3NHY4LU9pVnVKYWZCaldGczFhY3FtbUV4TzQ5SlBUOEtQZUE4UDdDM1FpSXdE?oc=5",
       "collector": "Google News RSS",
       "country": "Yemen",
@@ -20341,7 +21534,8 @@
         "elciudadanoweb.com",
         "شبكة تواصل الإخبارية",
         "ye-media.net",
-        "cratar.net"
+        "cratar.net",
+        "Yeni Şafak"
       ],
       "related_articles": [
         {
@@ -22323,6 +23517,66 @@
       ]
     },
     {
+      "id": "a7c1755336dc9916",
+      "category": "Terrorist Financing",
+      "categories": [
+        "Terrorist Financing"
+      ],
+      "title": "Suspicion: Terror Funds Concealed in Vehicle, Uncovered Amount Surprises Forces",
+      "summary": "Israeli security forces uncovered a large sum of hidden terror funds concealed inside a vehicle during operations.",
+      "original_title": "החשד: כספי טרור הוסלקו ברכב והסכום שנחשף הפתיע את הלוחמים",
+      "original_summary": "החשד: כספי טרור הוסלקו ברכב והסכום שנחשף הפתיע את הלוחמים kolhair.co.il",
+      "original_language": "he",
+      "collection_language": "he",
+      "collection_language_name": "Hebrew",
+      "collection_locale": "IL:he",
+      "published": "2026-08-30T11:32:36+00:00",
+      "source": "kolhair.co.il",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9nVC02cC1RMzJBZElyWkxqdnFsZE1KVVJBcVhyS0JLYjVoWlpxRFVVdWFETlBaOXJVMFFEQzVJY0EwS2dqa2x0MHZjXy14ckp1ZmdhN2VZOHc3WUhP?oc=5",
+      "collector": "Google News RSS",
+      "country": "Israel",
+      "country_code": "IL",
+      "city": "Jerusalem",
+      "region": null,
+      "latitude": 31.76904,
+      "longitude": 35.21633,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "kolhair.co.il"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T11:32:36+00:00",
+      "last_reported": "2026-08-30T11:32:36+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Direct counter-terrorism operation intercepting and seizing terrorist financing.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "seizure of hidden terror funds in vehicle by security forces",
+      "title_variants": [
+        "seizure of hidden terror funds in vehicle by security forces"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Israeli security forces uncovered"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Israeli security forces operating to uncover hidden terror funds.",
+      "ai_geo_fingerprint": "f5b1e0292f8a298fbe882bd43f713ac7f1f574d0803d85dda37db55f307816fa",
+      "ai_geo_inferred": true
+    },
+    {
       "id": "026799e0715c9b14",
       "category": "Terrorist Financing",
       "categories": [
@@ -22694,7 +23948,7 @@
       "collection_locale": "SA:ar",
       "published": "2026-08-30T11:07:17+00:00",
       "source": "وكالة صدى نيوز",
-      "source_count": 9,
+      "source_count": 10,
       "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBLc2E0UXV5c2FyTFp2dE4yNVJ2anlMWHRoUEhHZHdxaXlYeW51MnBRQmczS0tYT20zakdneUo1X1Y0WFNIVkNXVnBCR3E3YlhxQ0E?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -22715,7 +23969,8 @@
         "pnn.ps",
         "اليوم السابع",
         "النجاح الإخباري",
-        "وكالة الانباء والمعلومات الفلسطينية - وفا"
+        "وكالة الانباء والمعلومات الفلسطينية - وفا",
+        "nn.najah.edu"
       ],
       "related_articles": [
         {
@@ -23047,7 +24302,7 @@
       "collection_locale": "FR:fr",
       "published": "2026-08-30T10:43:54+00:00",
       "source": "APAnews - Agence de Presse Africaine",
-      "source_count": 9,
+      "source_count": 10,
       "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPcEZZUUMxVk9rSTFWd3JPUThrUUJzWGl1N18xNWxubEFlM2xfc2xPQVZXWDUwQ2xFOFBVV0xfNE8wcjdSb1lncm9POXBGVkgtbGs5d3A5SEFuT0RUdFJYaDFQZmNZSElvUks1ckVwQ2tSUFIwc2FnMkt1WnBzY1pzLWNKOTZqcVVXWDRzY3dwbjNSb2hYS0dkb1VKdERqYlFkQktNb00tcUYwZEY5Tmc?oc=5",
       "collector": "Google News RSS",
       "country": "Nigeria",
@@ -23068,7 +24323,8 @@
         "Bamada.net",
         "Haberler",
         "Bursada Bugün",
-        "İşçi Haber"
+        "İşçi Haber",
+        "Şarkul Avsat Türkçe"
       ],
       "related_articles": [
         {
@@ -23088,9 +24344,18 @@
           "published": "2026-08-31T10:18:21+00:00",
           "source": "Bamada.net",
           "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPbnkxa0NNU3FwT21NZElhTGtoTmpuNUZsdzAzeS1QVzNka1BUdlZuUXctN2hnbVVObzljZnBBSlg5bEZuQ09xOXNLWENZaklhcm1KUENzQnAxcU9sazNTRzJ1VXZEbDNCZlVvT1lKb1h4amowZldnZS14V0tjV3RfYmNtQ3U?oc=5"
+        },
+        {
+          "title": "Nigeria: 26 Terrorists Killed in Clashes with Military",
+          "original_title": "Nijerya: Ordu ile teröristler arasındaki çatışmalarda 26 terörist öldürüldü",
+          "original_language": "tr",
+          "summary": "The Nigerian army engaged in fierce clashes with terrorists, resulting in the neutralization of 26 terrorists.",
+          "published": "2026-08-31T04:04:25+00:00",
+          "source": "Şarkul Avsat Türkçe",
+          "url": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxQazcyRDNwUTl1S185d0J5cXFwMlNTV2V2SzgxNEFFYXRUTlRCYnlZR3FWQ1lDczRNTFNEcklKUDc0N0ZXMjRCdThjWHNtNzBtWGQ1em5pRXU4RFpBSHMyYmdVaTdBb3p6ZDdzMHIyMHVDZm9kcnJybXZFWE96bk1OZmgxX0ZPWnBNNk4yajJhOGxFQW10clJLY0ZDSHVTeG1VSTctRXQ2U2pmaVh4NlVSeHlnOUdsaXhYZGcyVWtBblE2Yldma1J2QmdNV3ZNSm5zcklQTEQzRjhqNktCRUI0T1JYcjF6SGhZTGpnSmlNeHZoQVNQemRCVkpRRlNlZDZnVXVGTVE3WEc?oc=5"
         }
       ],
-      "article_count": 3,
+      "article_count": 4,
       "first_reported": "2026-08-30T10:43:54+00:00",
       "last_reported": "2026-08-31T10:18:21+00:00",
       "ai_selection_complete": true,
@@ -24058,7 +25323,7 @@
       "collection_locale": "IL:he",
       "published": "2026-08-30T09:04:00+00:00",
       "source": "ynet",
-      "source_count": 4,
+      "source_count": 5,
       "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1qYm9WUlV6Y05lcFZXbi1fYlFYZm5vNVAwX0d5cEc5d2NSSlRLRmJqQkhmLTVnNTRLSndIMUE5S0hMZ2p2ZWV0VE5Jd2t1Mm1YM0tqWllBMm9nZw?oc=5",
       "collector": "Google News RSS",
       "country": "Israel",
@@ -24076,7 +25341,8 @@
         "ynet",
         "ynet.co.il",
         "הארץ",
-        "kikar.co.il"
+        "kikar.co.il",
+        "סרוגים"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -24127,7 +25393,7 @@
       "collection_locale": null,
       "published": "2026-08-30T09:00:00+00:00",
       "source": "Newsweek",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNbFdoRi0wWGJUdXE1NHE2RERmSFN3RjUzd1pZYVdqNFRJMUIzZkxwOXA0VE1oUC05YzZ2REY5aGVZZ0VzZUZrUElGLUhaUnBVN28zbVVUWVJ6RFJBbkhYOVh0aE1TNXZhRXBnd25uY2Y0X2ctR1pRcFdyam5vTjdZREU1RE10M3pvOGc?oc=5",
       "collector": "Google News RSS",
       "country": "United States",
@@ -24139,7 +25405,8 @@
       "location_precision": "city",
       "location_confidence": "high",
       "sources": [
-        "Newsweek"
+        "Newsweek",
+        "newsweek.com"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -24173,6 +25440,66 @@
       "dedup_methods": [
         "same_url"
       ]
+    },
+    {
+      "id": "a7c1755336dc9916",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "European Alert Following Two Stabbing Incidents in Britain and the Netherlands",
+      "summary": "Europe goes on alert following two stabbing attacks in Britain and the Netherlands resulting in two deaths and several injuries.",
+      "original_title": "تأهب في أوروبا بعد حادثتي طعن في بريطانيا وهولندا: سقوط قتيلين وعدد من الجرحى",
+      "original_summary": "تأهب في أوروبا بعد حادثتي طعن في بريطانيا وهولندا: سقوط قتيلين وعدد من الجرحى كل العرب",
+      "original_language": "ar",
+      "collection_language": "ar",
+      "collection_language_name": "Arabic",
+      "collection_locale": "SA:ar",
+      "published": "2026-08-30T08:31:58+00:00",
+      "source": "كل العرب",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi3wVBVV95cUxNb1lPYmtxa1B1Nl9Ea1JVQTI4dDdhR01zZWVRVEljY01fVEtlY1hnWEdfbGotVmhkanZlZ1JhM1VDNDBzTzVkdGpTZHBkX2ZibHZTU1E4bVZiZ2tmblRPU1huTkNXTGY0Vk1FNWNSUWZiYTJGTlFJVGEzdnNGMlJBejlRODFhbFY0SmN1YVZIb0dhb2FjUEZrVEt0cGdFRnExY3Z2YXVTZGxUZFNvbGw1WG1DWnFvdFFyRDEzVVloRTVaSUxEWmFlbThkRnFtdm1KVGxMekNpUE9rcUpZTkhtZWdyX2pCOXdvQS1falRzWi1zNjZ0SEJ4NC1xQmNYUElVX0ZseTJ1WEEybDdlaTdpbXBBTzFNdXVuSS1PODd0TUowMjBUNkJCMEFaak92ZXI1TFVUOTlOa3JPVU9qczlNYUQ2Q3VWNk1fNktuS0tvYVdQbWRPODlsSXdwWktKTVRCUXdBSkpmVkdlSElnNy1mYUY0aU4wbXRNZXdwWGhyN0xYOEJCTTB4SlhCU1pzc25MM0RMVzdvbG90MDctRWVrOV9GeGdSdG85WGgyUkJSRTlYWW9CckZ0a2l6OU15VGw4b3JaOHlId1NrZFQyUmNobFdWLW54ZXZpa0M2YmFZQ0ZLdVdCbDBvWnAzM2pBdVRFSS1YanBpMzNLbmVhS3I4TDVnRGtlVEtmMGhGOHRHVWdLeUh4WVNWN0EwYTBjOEhkZkVHS2lHWkFlWVNRVWEzcUlsLS13SzI5SnIwVWVJSWxQUGFtbzUxU0JFc0RQOTQxY1N5T3BGRzNEZWQ4RDYwYjdzRFJWZGVVRkRfb1RvM3k1NUdVY1ZQREpoT21jTmtlQ05tSVBxYklvallpTGRYS3l6cVFDYmVQT3Qzb3pqMDBYaDFJU2tVUDl0Ynp3V2NkNkhYdFI1MnNhTVFtREdjejlyZEd0X2RueEg3TjQ3U3dibU9TT2FqWnpmQVMyNUnSAU5BVV95cUxNSld1TlItNGlhckxLVkhvck41Xy1oTkdLclRRSWstSmotc2pfMEhZSWgySzEtLXM5dUFyazJvbTBxWk1LU29CYXBVRS1kWFE?oc=5",
+      "collector": "Google News RSS",
+      "country": "United Kingdom",
+      "country_code": "GB",
+      "city": "London",
+      "region": null,
+      "latitude": 51.50853,
+      "longitude": -0.12574,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "sources": [
+        "كل العرب"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-08-30T08:31:58+00:00",
+      "last_reported": "2026-08-30T08:31:58+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v2-multilingual",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Reports on recent violent stabbing attacks in Europe causing casualties, triggering security alerts.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "stabbing attacks in britain and netherlands",
+      "title_variants": [
+        "stabbing attacks in britain and netherlands"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "stabbing incidents in Britain and the Netherlands"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_version": "gemini-ai-first-v5-resilient",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "Covers stabbing attacks in Britain and the Netherlands; country-level classification.",
+      "ai_geo_fingerprint": "15c53d29ef1a64c6e1e804ffe31629ab423a5ec3bbefb5c940d6d95cf14bdf4b",
+      "ai_geo_inferred": true
     },
     {
       "id": "a7c1755336dc9916",
@@ -24465,7 +25792,7 @@
       "collection_locale": "TR:tr",
       "published": "2026-08-30T07:58:38+00:00",
       "source": "GZT",
-      "source_count": 7,
+      "source_count": 8,
       "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxNM1NoSFFscGEzNUtXZ296NlFvaWN5RVhEVW9DVHBVRUxoZ1R2Vi01ZEhmWFlva0NFR2pvTE1XZWZuaDJLT2FSS3dNQ1VReS16WnlYU1gxbGxEcHBGOUhfcm9KN1dERDdFRFladVA5andhREVBcXo2Mk1laXRMNUI1YkJiUW5yb1E3RXZqWTg2R1VENkZOMkRhY0h0bm9CazJDdExMZFRJQndaZVBLc21Kek9IR0xxZU9CbWJlWmpKS242N0hXZjhuYkd1SWlDejVkaGplUlBtMHhyOW9haWRzdw?oc=5",
       "collector": "Google News RSS",
       "country": "Turkey",
@@ -24484,7 +25811,8 @@
         "T24",
         "Toplumsal Haber",
         "gzt.com",
-        "yenisafak.com"
+        "yenisafak.com",
+        "takvim.com.tr"
       ],
       "related_articles": [
         {
@@ -24495,11 +25823,20 @@
           "published": "2026-08-30T08:32:29+00:00",
           "source": "Takvim",
           "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNbWhxa3J6VFJ3azkybWVuaXVYaXYybFdmbXpQbnM5MHE3Qk12ZUV0NFBZWk90V0lyQktRWllKWkY5OWxwZU85bWdXbm0wbVFlZWY3c0dzT3ZiLTE0OFJmREJpYzdLYS1ZTDBKX29yYk5RdFFEZEl6ckd4eVZ4Q2RBOWxPN05OYkk0SDl0Z1pLWGR4TU40X2laSW5RbUlwbGc?oc=5"
+        },
+        {
+          "title": "Interior Minister Mustafa Çiftçi: 4 people hanging terrorist organization posters in Diyarbakır detained!",
+          "original_title": "İçişleri Bakanı Mustafa Çiftçi: Diyarbakır’da terör örgütü mensuplarının posterlerini asan 4 kişi gözaltına alındı!",
+          "original_language": "tr",
+          "summary": "Turkish Interior Minister announced that four individuals have been detained in Diyarbakır for hanging posters of a terrorist organization.",
+          "published": "2026-08-30T11:55:00+00:00",
+          "source": "T24",
+          "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxNekpGX0ZhOVk1WlFkLW9zdDg1c2JraXgxWk04S29YWjllUzM0SFgxWEh3dlRNOF9PY3hEdVgzT2ZYVmp3WmZzU0hwSDkzUXhTN1JoREJfc1h1M1BiZE1jdkR4WTR2cDVLZVVvMlo3dUxfNDJidFRWWjFMUk80V0VTNEFwejhJM2RDTDFkc0toanVUWV9iX3NJVVh4TEtWRXdTQ1JGU0plZXk3QnBkbkpoUG8xMjVUYm10N1B0S2JNWDJsbjZpYzZ0NWVwS3hWYUdVZUVRemx6Yk5GUHE0SGF3?oc=5"
         }
       ],
-      "article_count": 2,
+      "article_count": 3,
       "first_reported": "2026-08-30T07:58:38+00:00",
-      "last_reported": "2026-08-30T08:32:29+00:00",
+      "last_reported": "2026-08-30T11:55:00+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -24889,7 +26226,7 @@
       "related_articles": [],
       "article_count": 1,
       "first_reported": "2026-08-30T07:00:00+00:00",
-      "last_reported": "2026-08-31T16:57:23+00:00",
+      "last_reported": "2026-09-01T21:34:11+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -27435,7 +28772,7 @@
       "collection_locale": "SA:ar",
       "published": "2026-08-29T19:13:19+00:00",
       "source": "الجزيرة نت",
-      "source_count": 4,
+      "source_count": 5,
       "url": "https://news.google.com/rss/articles/CBMixwJBVV95cUxOaXd3VnpWd0R5YU5qTk01blhNRXgtbmRWaHVoRmxaMk41ZDRrckd6MzM5MmVFVEFWWjR3ODQwVUdsbnVzN1RyNmNycWtvWXBYdGI3akc4WGNTLUFnQ3Z1R0pTWlJxNllIMjBzNV9PUWpOYzRJY3lPYXF5eHBzWDFLMzdfVnBsVmVQZXlpS0FHRG9ESFl5d3RQa3I4cDlYYzhVZzRCazlzdWRxOEo4VzQxbEZ1VUpOQlJGMDEzbUticFI4bm5VQjVEZmJOazZfc3huVmZvZUM0NGpNYy1aQklvam1DYXc2MlYwbzJUSGVNODNBUzVoVEh4Y3ZaN29OUTEteUktN2o5cGp5RUdHekNKLUVZUEVzSVhkSm96QzFkbjdhT05EQnpTd2VZaUVGNUlUZHRCWGdzdF84LUktM3VrN3FidEItM3PSAcwCQVVfeXFMUHFCMzlVLVBIVnRRa2FiYV9LTExEdjcyV3RaZzNZYmJOeC11TndMU2ZxbkpvcXdhNnhhVExQb0Q0ZE1MaVlYUGs3dlI4aU9xSGhtVjdVdUdhd3djWURpendCdDFCRlVGSmZsLWJZX0x1TjZjSVRvaS1ISEhrMXpUVjBxenBwUzl3aW81WWEtMlY5YWJkU1ZlRjA1SGpJblNaNUV2WEYtTE52alpuekFZb0ZjTVV0WklRcWdsbXJqTl91T3VXODBONEZJaG9xQ1ktMVA4eWRKa21KQW5ncUw0ZjNkcG5zZWdIVTBfRUFOTkpMYUhYajhNNUtkTlZFR0lVTVR3RFdBcmtpME9tMTBwNFhhYnJSOVA0aVA3UkZnZW0yUUZDZFhGUVA0SUZKX09OMWR0bmdDdmdlTl9LQkQ3SkhHM1R4RFJjX0wxSUM?oc=5",
       "collector": "Google News RSS",
       "country": "Syria",
@@ -27453,7 +28790,8 @@
         "الجزيرة نت",
         "سانا",
         "الديار",
-        "Ici Beyrouth"
+        "Ici Beyrouth",
+        "addiyar.com"
       ],
       "related_articles": [
         {
@@ -28967,7 +30305,7 @@
       "collection_locale": "DE:de",
       "published": "2026-08-29T14:23:00+00:00",
       "source": "Frankfurter Rundschau",
-      "source_count": 11,
+      "source_count": 12,
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPOUhlX2NnQzRwcDd5N1lKa3NJYmRyWDhHRlpSbzZqbUxmYjFYTVVwUzFXREEtaVFpUG91SVNpa21WMjh1N3ZfZkdXVlZiM1c2cU41aUd4LUxsQWZfMzNFejF5dFFxYTh5ZEJkOGdCWmVlYTloaS1xYnNHcjVRWUpCMXF4N1hyMkVIN192QmpQSTJROUJFXzNBSjBHX3lNaG5WVExXOHhFRUtmMFN0MWpzbXVWMA?oc=5",
       "collector": "Google News RSS",
       "country": "Germany",
@@ -28990,7 +30328,8 @@
         "n-tv.de",
         "Spiegel",
         "Augsburger Allgemeine",
-        "Frankfurter Rundschau"
+        "Frankfurter Rundschau",
+        "Radio-Canada"
       ],
       "related_articles": [
         {
@@ -29050,7 +30389,7 @@
       ],
       "article_count": 6,
       "first_reported": "2026-08-29T14:23:00+00:00",
-      "last_reported": "2026-09-01T08:32:06+00:00",
+      "last_reported": "2026-09-01T10:08:53+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -29514,7 +30853,7 @@
       "collection_locale": "SA:ar",
       "published": "2026-08-29T13:20:32+00:00",
       "source": "خبرگزاری مهر",
-      "source_count": 8,
+      "source_count": 9,
       "url": "https://news.google.com/rss/articles/CBMiiARBVV95cUxNdGVGX0FJX0ZOdVFYZU9pMllTZFpxUkFXdDJZR2pHVEZmaGYyTUg5UW9TWm1hMTkzd0dyMS1rc1JxUmtUbEE1bGZGc0V1NTRNLU1Db0pUOGxldTFmTFF0aUNub2FTNWh2eHJPdk8zck9mT3E1UmNGQlllaVlQRF96MzI2VlJBZ2s3X2o5NGJCcmRKQmxsTEVPaU5CN0hoVGJ5Rllsb2YwWmQwTlJ3eUM3c1MyRGxLOWtQazBZLWVuQzdVeERSaFpySlhDdzhQbnpyejVQWlVRT3YyVEU5MjJjV1ctcGZrU2s4Yjd5aWZjYnNvdENzaW9WYUViTURKMzBhWGtqdng5M3hpd1BsalF5enVpSzFETHJZTzJlTHZXTVJLOWVEcm1FQjc0VTZKYnBNOVZjYjBPMGFHS01aVVpkQm9rLS1zS25hSl9RY28xcVFRY193VkpzVUYyb2w2cjR5QzdpYkxpcFZZNU5Panh3dWw5WC04cDhKLWlVVkFnSXo3MXFIWXRMVnY0Q0dTVURCYUgwS1ZUTEJLYS16SGoybDhfeE84eXNKRHlDN0hwRmExVldNZFY1R1EzSlNlamVpU3lKQmJKOGtTSXhGaGh2cVRCdHdXSmVtdFI0Nk1LMnhzdTNPNXAzQzU5V2lvZy1sVUdjeF9EcXZ3dEFBSkJ5Q0ZsNVJJZlY1?oc=5",
       "collector": "Google News RSS",
       "country": "Iran",
@@ -29534,7 +30873,8 @@
         "وكالة سبأ",
         "قناة العالم",
         "الجزيرة نت",
-        "saba.ye"
+        "saba.ye",
+        "defapress.ir"
       ],
       "related_articles": [
         {
@@ -34683,7 +36023,7 @@
       "collection_locale": null,
       "published": "2026-08-28T15:46:51+00:00",
       "source": "Reuters",
-      "source_count": 15,
+      "source_count": 18,
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPS1dvY08wWUVmMGNwR3hXbVR4anpDeXoxcndHakhnUzRqNk9Ub3ZqcEhsUUdHTTM3dGxuODQ4bXpNRGkxQjhyTmR5QkVFR2FKVTVaOEhwUi1PTTVSal9xZjd2ME4yUjhleFFSMUFHc1RmNVBUSjBtNUhpRndqb25sVi1HaDBmYmpyR0xFY1lKTVgyd2pSdlBJMEYtb1lMTTVkU2Vya1FjSjR3ZjZnQmlEbnlHeW1ZSmc5eURPTHFNSndsVEk?oc=5",
       "collector": "Google News RSS",
       "country": "Palestinian Territory",
@@ -34712,7 +36052,10 @@
         "כיכר השבת",
         "מקור ראשון",
         "לדעת",
-        "בחדרי חרדים"
+        "בחדרי חרדים",
+        "France 24",
+        "israelhayom.co.il",
+        "חדשות 04"
       ],
       "related_articles": [
         {
@@ -44491,7 +45834,7 @@
       "collection_locale": "IL:he",
       "published": "2026-08-27T13:05:26+00:00",
       "source": "i24NEWS",
-      "source_count": 29,
+      "source_count": 30,
       "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE94VnVoSHVqSlJOejlYa1FyMVZQNzZlNHktUmtvdXZabVVSckVBQW9rRGZ3QlUyUEw4eUREXzBmNWIzYU1QTkJSQ2h0Ym14cUpwcW92VTlQcnVaQmtPVzRnbnpFTVppWWtNQ3c?oc=5",
       "collector": "Google News RSS",
       "country": "Israel",
@@ -44534,7 +45877,8 @@
         "hidabroot.org",
         "Новости Крыма | КИА",
         "minkultrb.ru",
-        "nv.ua"
+        "nv.ua",
+        "URA.RU"
       ],
       "related_articles": [
         {
@@ -46068,7 +47412,7 @@
       ],
       "article_count": 3,
       "first_reported": "2026-08-27T10:52:05+00:00",
-      "last_reported": "2026-09-01T18:09:31+00:00",
+      "last_reported": "2026-09-01T20:16:03+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -52568,7 +53912,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-08-25T09:31:31+00:00",
       "source": "kommersant.ru",
-      "source_count": 4,
+      "source_count": 5,
       "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE4xWEhRR1ptVTNicmFzdi1KOUI0dTlzVkdVVV94VmJNX1Fyd0ZNRjNzUHo3V2lxa1VYTjVncTJYYW9WN0VFQ1hTNWx5LW9TZw?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -52586,7 +53930,8 @@
         "kommersant.ru",
         "prospect.com.ru",
         "Ugra-news.ru",
-        "ugra-news.ru"
+        "ugra-news.ru",
+        "Интерфакс"
       ],
       "related_articles": [
         {
@@ -130518,23 +131863,23 @@
     "primary_model": "gemini-3.5-flash-lite",
     "rescue_model": "gemini-3.6-flash",
     "ai_for_every_event": true,
-    "cached_events": 1810,
-    "ai_processed_this_run": 6,
-    "ai_pending_at_start": 6,
-    "city": 780,
+    "cached_events": 1816,
+    "ai_processed_this_run": 16,
+    "ai_pending_at_start": 16,
+    "city": 789,
     "region": 371,
-    "country_capital": 652,
+    "country_capital": 659,
     "unlocated": 13,
-    "mapped_total": 1803,
-    "high_confidence": 1639,
-    "medium_confidence": 171,
+    "mapped_total": 1819,
+    "high_confidence": 1653,
+    "medium_confidence": 173,
     "low_confidence": 6,
     "methods": {
-      "ai_city_geonames": 753,
+      "ai_country_capital": 659,
+      "ai_city_geonames": 760,
+      "ai_city_coordinates": 29,
       "ai_region_coordinates": 371,
-      "ai_country_capital": 652,
-      "ai_unlocated": 13,
-      "ai_city_coordinates": 27
+      "ai_unlocated": 13
     }
   }
 }
