@@ -4298,15 +4298,15 @@ CBRN
 <input
     type="checkbox"
     class="category-filter"
-    value="Online Radicalization / Cyberterrorism"
+    value="Online / Cyber / AI"
     checked
 >
 
 <span class="category-icon online">
-O
+O/C
 </span>
 
-Online / Cyber
+Online / Cyber / AI
 
 </label>
 
@@ -4369,22 +4369,7 @@ Legal / Judicial
 
 
 
-<label class="category">
 
-<input
-    type="checkbox"
-    class="category-filter"
-    value="Disinformation / Emerging Technologies / AI"
-    checked
->
-
-<span class="category-icon ai">
-AI
-</span>
-
-AI / Emerging Technologies
-
-</label>
 
 
 
@@ -4719,9 +4704,8 @@ Visible rate
             <option value="Weapons">Weapons</option>
             <option value="Maritime Piracy">Maritime Piracy</option>
             <option value="CBRN">CBRN</option>
-            <option value="Online Radicalization / Cyberterrorism">Online / Cyber</option>
+            <option value="Online / Cyber / AI">Online / Cyber / AI</option>
             <option value="Legal / Judicial">Legal / Judicial</option>
-            <option value="Disinformation / Emerging Technologies / AI">AI / Emerging Tech</option>
           </select>
         </label>
 
@@ -5655,10 +5639,10 @@ const categoryStyle = {
 },
 
 
-"Online Radicalization / Cyberterrorism": {
+"Online / Cyber / AI": {
 
     code:
-        "O",
+        "O/C",
 
     className:
         "online"
@@ -5699,15 +5683,7 @@ const categoryStyle = {
 },
 
 
-"Disinformation / Emerging Technologies / AI": {
 
-    code:
-        "AI",
-
-    className:
-        "ai"
-
-}
 
 
 };
@@ -5973,16 +5949,35 @@ function eventLooksLikeMaritimePiracy(event) {
 }
 
 
+const CATEGORY_ALIASES = new Map([
+    ["Online Radicalization / Cyberterrorism", "Online / Cyber / AI"],
+    ["Disinformation / Emerging Technologies / AI", "Online / Cyber / AI"],
+    ["Online / Cyber / AI", "Online / Cyber / AI"]
+]);
+
+
+function normalizeCategoryName(category) {
+    return CATEGORY_ALIASES.get(String(category || "")) || String(category || "");
+}
+
+
 function eventCategories(
     event
 ) {
 
-    const categories =
+    const rawCategories =
         Array.isArray(event.categories)
         ?
         [...event.categories]
         :
         [event.category].filter(Boolean);
+
+    const categories =
+        [...new Set(
+            rawCategories
+                .map(normalizeCategoryName)
+                .filter(Boolean)
+        )];
 
     if (
         eventLooksLikeMaritimePiracy(event)
@@ -7402,8 +7397,8 @@ function updateTrends() {
                 "CBRN":
                     "CBRN",
 
-                "Online Radicalization / Cyberterrorism":
-                    "Online / Cyber",
+                "Online / Cyber / AI":
+                    "Online / Cyber / AI",
 
                 "Attacks":
                     "Attacks",
@@ -7412,10 +7407,7 @@ function updateTrends() {
                     "Arrests",
 
                 "Legal / Judicial":
-                    "Legal / Judicial",
-
-                "Disinformation / Emerging Technologies / AI":
-                    "AI / Tech"
+                    "Legal / Judicial"
 
             };
 
@@ -10388,9 +10380,8 @@ function updateCommandCenterPanels() {
             ["Terrorist Financing", "FINANCING"],
             ["Weapons", "WEAPONS"],
             ["Maritime Piracy", "PIRACY"],
-            ["Online Radicalization / Cyberterrorism", "ONLINE"],
-            ["CBRN", "CBRN"],
-            ["Disinformation / Emerging Technologies / AI", "AI / TECH"]
+            ["Online / Cyber / AI", "ONLINE / CYBER / AI"],
+            ["CBRN", "CBRN"]
         ];
 
         const maxValue =
