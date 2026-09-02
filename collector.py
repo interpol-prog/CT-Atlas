@@ -1056,7 +1056,7 @@ def targeted_source_query(
 #
 # Official sources: one broad CT query per domain.
 # Targeted media: one query per source, with a second theme only for
-# high-volume sources. Results are classified locally into the 9 categories.
+# high-volume sources. Results are classified locally into the 8 categories.
 # ============================================================
 
 OFFICIAL_BROAD_QUERIES = [
@@ -1431,6 +1431,91 @@ ACTION_TERMS = {
         "recruitment","deepfake","campaign","investigation","arrested",
     },
 }
+
+
+# ============================================================
+# MERGED DIGITAL TAXONOMY
+# ============================================================
+
+DIGITAL_CATEGORY = "Online / Cyber / AI"
+LEGACY_DIGITAL_CATEGORIES = (
+    "Online Radicalization / Cyberterrorism",
+    "Disinformation / Emerging Technologies / AI",
+)
+
+
+def _merge_taxonomy_values(first, second):
+    if isinstance(first, list) and isinstance(second, list):
+        return list(dict.fromkeys(first + second))
+
+    if isinstance(first, set) and isinstance(second, set):
+        return set(first) | set(second)
+
+    if isinstance(first, str) and isinstance(second, str):
+        return f"{first} {second}"
+
+    if isinstance(first, dict) and isinstance(second, dict):
+        merged = dict(first)
+        merged.update(second)
+        return merged
+
+    return second if second is not None else first
+
+
+def _merge_digital_taxonomy(mapping):
+    first = mapping.get(LEGACY_DIGITAL_CATEGORIES[0])
+    second = mapping.get(LEGACY_DIGITAL_CATEGORIES[1])
+
+    if first is None and second is None:
+        return
+
+    if first is None:
+        merged = second
+    elif second is None:
+        merged = first
+    else:
+        merged = _merge_taxonomy_values(first, second)
+
+    mapping[DIGITAL_CATEGORY] = merged
+
+    for legacy in LEGACY_DIGITAL_CATEGORIES:
+        mapping.pop(legacy, None)
+
+
+for _taxonomy_mapping in (
+    CATEGORIES,
+    CORE_SEARCH_QUERIES,
+    OFFICIAL_SOURCE_QUERIES,
+    TARGETED_MEDIA_CATEGORY_TERMS,
+    CATEGORY_RELEVANCE,
+    ACTION_TERMS,
+):
+    _merge_digital_taxonomy(_taxonomy_mapping)
+
+
+def normalize_category_name(category):
+    value = clean_text(category)
+
+    if value in LEGACY_DIGITAL_CATEGORIES:
+        return DIGITAL_CATEGORY
+
+    return value
+
+
+def normalize_categories(categories):
+    normalized = []
+
+    for category in categories or []:
+        category = normalize_category_name(category)
+
+        if (
+            category
+            and
+            category not in normalized
+        ):
+            normalized.append(category)
+
+    return normalized
 
 
 session = requests.Session()
@@ -2108,7 +2193,7 @@ def collect_broad_query(
     targeted_source_kind=None,
 ):
     """
-    One broad source query can yield articles for any of the 8 CT categories.
+    One broad source query can yield articles for any of the merged CT categories.
     Classification is performed locally, which is the key reduction in
     Google News request volume.
     """
@@ -2676,11 +2761,10 @@ AI_SELECTION_SCHEMA = {
                                 "Weapons",
                                 "Maritime Piracy",
                                 "CBRN",
-                                "Online Radicalization / Cyberterrorism",
+                                "Online / Cyber / AI",
                                 "Attacks",
                                 "Arrests",
                                 "Legal / Judicial",
-                                "Disinformation / Emerging Technologies / AI",
                             ],
                         },
                     },
@@ -2787,9 +2871,11 @@ Do not add facts that are absent from the source material. Translation must pres
 uncertainty, allegations and attribution.
 
 Also return the most appropriate category or categories from the supplied
-taxonomy. Multiple categories are allowed. Use "Maritime Piracy" for actual
-piracy, pirate attacks, vessel hijacking/boarding, crew kidnapping or armed
-robbery at sea.
+taxonomy. Multiple categories are allowed. Use "Online / Cyber / AI" for online
+radicalization/recruitment/propaganda, cyberterrorism or terrorist cyber activity,
+AI/deepfakes/disinformation, and other relevant emerging digital technologies.
+Use "Maritime Piracy" for actual piracy, pirate attacks, vessel hijacking/boarding,
+crew kidnapping or armed robbery at sea.
 
 Keep the reason concise and specific.
 """
@@ -3523,16 +3609,18 @@ def apply_ai_selection(
         ),
     )
 
+    categories = normalize_categories(
+        result.get(
+            "categories"
+        )
+        or
+        []
+    )
+
     categories = [
         category
         for category
-        in (
-            result.get(
-                "categories"
-            )
-            or
-            []
-        )
+        in categories
         if category
         in CATEGORIES
     ]
@@ -3546,7 +3634,7 @@ def apply_ai_selection(
 
         not categories
     ):
-        categories = list(
+        categories = normalize_categories(
             event.get(
                 "categories"
             )
@@ -5537,31 +5625,25 @@ def merge_event(
         new
     )
 
-    existing_categories = list(
-        dict.fromkeys(
-            [
-                category
-                for category in (
+    existing_categories = normalize_categories(
+        (
+            existing.get(
+                "categories",
+                [
                     existing.get(
-                        "categories",
-                        [
-                            existing.get(
-                                "category"
-                            )
-                        ],
+                        "category"
                     )
-                    +
+                ],
+            )
+            +
+            new.get(
+                "categories",
+                [
                     new.get(
-                        "categories",
-                        [
-                            new.get(
-                                "category"
-                            )
-                        ],
+                        "category"
                     )
-                )
-                if category
-            ]
+                ],
+            )
         )
     )
 
@@ -6067,10 +6149,23 @@ def load_existing():
         ) as file:
             data = json.load(file)
 
-            return data.get(
+            events = data.get(
                 "events",
                 [],
             )
+
+            for event in events:
+                categories = normalize_categories(
+                    event.get("categories")
+                    or
+                    ([event.get("category")] if event.get("category") else [])
+                )
+
+                if categories:
+                    event["categories"] = categories
+                    event["category"] = categories[0]
+
+            return events
     except Exception:
         return []
 
