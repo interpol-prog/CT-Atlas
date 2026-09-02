@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -508,6 +509,10 @@ body {
 
 .ai {
     background: #944c85;
+}
+
+.piracy {
+    background: #39758f;
 }
 
 
@@ -1228,6 +1233,7 @@ body.locked #chronologyPanel {
 .chronology-item.arrests::before { background: #b17b38; }
 .chronology-item.legal::before { background: #687482; }
 .chronology-item.ai::before { background: #944c85; }
+.chronology-item.piracy::before { background: #39758f; }
 
 .chronology-item.unmapped {
     opacity: .72;
@@ -4249,6 +4255,24 @@ Weapons
 </label>
 
 
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
+    value="Maritime Piracy"
+    checked
+>
+
+<span class="category-icon piracy">
+MP
+</span>
+
+Maritime Piracy
+
+</label>
+
+
 
 <label class="category">
 
@@ -4693,6 +4717,7 @@ Visible rate
             <option value="Arrests">Arrests</option>
             <option value="Terrorist Financing">Terrorist Financing</option>
             <option value="Weapons">Weapons</option>
+            <option value="Maritime Piracy">Maritime Piracy</option>
             <option value="CBRN">CBRN</option>
             <option value="Online Radicalization / Cyberterrorism">Online / Cyber</option>
             <option value="Legal / Judicial">Legal / Judicial</option>
@@ -5608,6 +5633,17 @@ const categoryStyle = {
 },
 
 
+"Maritime Piracy": {
+
+    code:
+        "MP",
+
+    className:
+        "piracy"
+
+},
+
+
 "CBRN": {
 
     code:
@@ -5913,26 +5949,50 @@ function selectedCategories() {
 
 
 
+function eventLooksLikeMaritimePiracy(event) {
+
+    const text = [
+        event.title,
+        event.summary,
+        event.canonical_event,
+        event.description
+    ]
+    .map(value => String(value || ""))
+    .join(" ")
+    .toLowerCase();
+
+    if (/\bmaritime piracy\b|\barmed robbery at sea\b|\bpirate attack\b|\bpirate attacks\b/.test(text)) {
+        return true;
+    }
+
+    const piracy = /\bpirate(?:s|d)?\b|\bpiracy\b/.test(text);
+    const maritime = /\bship\b|\bships\b|\bvessel\b|\bvessels\b|\btanker\b|\bcargo ship\b|\bmerchant vessel\b|\bcrew\b|\bseafarer\b|\bmaritime\b|\bat sea\b|\boffshore\b|\bgulf\b|\bcoast\b/.test(text);
+    const action = /\battack(?:ed|s)?\b|\bhijack(?:ed|ing|s)?\b|\bboard(?:ed|ing|s)?\b|\bseiz(?:e|ed|ure)\b|\bkidnap(?:ped|ping|s)?\b|\babduct(?:ed|ion|s)?\b|\brob(?:bed|bery|s)?\b|\bhostage\b/.test(text);
+
+    return piracy && maritime && action;
+}
+
+
 function eventCategories(
     event
 ) {
 
+    const categories =
+        Array.isArray(event.categories)
+        ?
+        [...event.categories]
+        :
+        [event.category].filter(Boolean);
 
     if (
-        Array.isArray(
-            event.categories
-        )
+        eventLooksLikeMaritimePiracy(event)
+        &&
+        !categories.includes("Maritime Piracy")
     ) {
-
-        return event.categories;
-
+        categories.push("Maritime Piracy");
     }
 
-
-    return [
-        event.category
-    ];
-
+    return categories;
 }
 
 
@@ -7335,6 +7395,9 @@ function updateTrends() {
 
                 "Weapons":
                     "Weapons",
+
+                "Maritime Piracy":
+                    "Maritime Piracy",
 
                 "CBRN":
                     "CBRN",
@@ -10324,6 +10387,7 @@ function updateCommandCenterPanels() {
             ["Legal / Judicial", "JUDICIAL"],
             ["Terrorist Financing", "FINANCING"],
             ["Weapons", "WEAPONS"],
+            ["Maritime Piracy", "PIRACY"],
             ["Online Radicalization / Cyberterrorism", "ONLINE"],
             ["CBRN", "CBRN"],
             ["Disinformation / Emerging Technologies / AI", "AI / TECH"]
@@ -11200,17 +11264,211 @@ function reportGeneratorConfigured() {
 }
 
 
-const REPORT_ANALYTICAL_REGIONS = [
-    ["REGION:SUB_SAHARAN_AFRICA", "Sub-Saharan Africa"],
-    ["REGION:MENA", "Middle East & North Africa"],
-    ["REGION:EUROPE", "Europe"],
-    ["REGION:CAUCASUS_CENTRAL_ASIA", "Caucasus & Central Asia"],
-    ["REGION:SOUTH_ASIA", "South Asia"],
-    ["REGION:EAST_SOUTHEAST_ASIA", "East & Southeast Asia"],
-    ["REGION:AMERICAS_CARIBBEAN", "Americas & Caribbean"],
-    ["REGION:OCEANIA", "Oceania"]
+const REPORT_INTERPOL_REGIONS = [
+    ["REGION:AFRICA", "Africa"],
+    ["REGION:AMERICAS", "Americas"],
+    ["REGION:ASIA_SOUTH_PACIFIC", "Asia / South Pacific"],
+    ["REGION:EUROPE", "Europe"]
 ];
 
+const REPORT_INTERPOL_MEMBER_COUNTRIES = [
+    "Afghanistan",
+    "Albania",
+    "Algeria",
+    "Andorra",
+    "Angola",
+    "Antigua & Barbuda",
+    "Argentina",
+    "Armenia",
+    "Aruba",
+    "Australia",
+    "Austria",
+    "Azerbaijan",
+    "Bahamas",
+    "Bahrain",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bhutan",
+    "Bolivia",
+    "Bosnia & Herzegovina",
+    "Botswana",
+    "Brazil",
+    "Brunei",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burundi",
+    "Cabo Verde",
+    "Cambodia",
+    "Cameroon",
+    "Canada",
+    "Central African Republic",
+    "Chad",
+    "Chile",
+    "China",
+    "Colombia",
+    "Comoros",
+    "Congo",
+    "Congo (Democratic Rep.)",
+    "Costa Rica",
+    "Croatia",
+    "Cuba",
+    "Curaçao",
+    "Cyprus",
+    "Czech Republic",
+    "Côte d'Ivoire",
+    "Denmark",
+    "Djibouti",
+    "Dominica",
+    "Dominican Republic",
+    "Ecuador",
+    "Egypt",
+    "El Salvador",
+    "Equatorial Guinea",
+    "Eritrea",
+    "Estonia",
+    "Eswatini",
+    "Ethiopia",
+    "Fiji",
+    "Finland",
+    "France",
+    "Gabon",
+    "Gambia",
+    "Georgia",
+    "Germany",
+    "Ghana",
+    "Greece",
+    "Grenada",
+    "Guatemala",
+    "Guinea",
+    "Guinea Bissau",
+    "Guyana",
+    "Haiti",
+    "Honduras",
+    "Hungary",
+    "Iceland",
+    "India",
+    "Indonesia",
+    "Iran",
+    "Iraq",
+    "Ireland",
+    "Israel",
+    "Italy",
+    "Jamaica",
+    "Japan",
+    "Jordan",
+    "Kazakhstan",
+    "Kenya",
+    "Kiribati",
+    "Korea (Rep. of)",
+    "Kuwait",
+    "Kyrgyzstan",
+    "Lao PDR",
+    "Latvia",
+    "Lebanon",
+    "Lesotho",
+    "Liberia",
+    "Libya",
+    "Liechtenstein",
+    "Lithuania",
+    "Luxembourg",
+    "Madagascar",
+    "Malawi",
+    "Malaysia",
+    "Maldives",
+    "Mali",
+    "Malta",
+    "Marshall Islands",
+    "Mauritania",
+    "Mauritius",
+    "Mexico",
+    "Micronesia (Federated States of)",
+    "Moldova",
+    "Monaco",
+    "Mongolia",
+    "Montenegro",
+    "Morocco",
+    "Mozambique",
+    "Myanmar",
+    "Namibia",
+    "Nauru",
+    "Nepal",
+    "Netherlands",
+    "New Zealand",
+    "Nicaragua",
+    "Niger",
+    "Nigeria",
+    "North Macedonia",
+    "Norway",
+    "Oman",
+    "Pakistan",
+    "Palau",
+    "Palestine",
+    "Panama",
+    "Papua New Guinea",
+    "Paraguay",
+    "Peru",
+    "Philippines",
+    "Poland",
+    "Portugal",
+    "Qatar",
+    "Romania",
+    "Russia",
+    "Rwanda",
+    "Samoa",
+    "San Marino",
+    "Sao Tome & Principe",
+    "Saudi Arabia",
+    "Senegal",
+    "Serbia",
+    "Seychelles",
+    "Sierra Leone",
+    "Singapore",
+    "Sint Maarten",
+    "Slovakia",
+    "Slovenia",
+    "Solomon Islands",
+    "Somalia",
+    "South Africa",
+    "South Sudan",
+    "Spain",
+    "Sri Lanka",
+    "St Kitts & Nevis",
+    "St Lucia",
+    "St Vincent & Grenadines",
+    "Sudan",
+    "Suriname",
+    "Sweden",
+    "Switzerland",
+    "Syria",
+    "Tajikistan",
+    "Tanzania",
+    "Thailand",
+    "Timor Leste",
+    "Togo",
+    "Tonga",
+    "Trinidad & Tobago",
+    "Tunisia",
+    "Turkmenistan",
+    "Türkiye",
+    "Uganda",
+    "Ukraine",
+    "United Arab Emirates",
+    "United Kingdom",
+    "United States",
+    "Uruguay",
+    "Uzbekistan",
+    "Vanuatu",
+    "Vatican City State",
+    "Venezuela",
+    "Viet Nam",
+    "Yemen",
+    "Zambia",
+    "Zimbabwe"
+];
 
 function populateReportRegions() {
 
@@ -11223,56 +11481,16 @@ function populateReportRegions() {
         return;
     }
 
-    const countries =
-        new Set();
-
-    allEvents.forEach(
-        event => {
-
-            const country =
-                String(
-                    event.country
-                    ||
-                    ""
-                ).trim();
-
-            if (country) {
-                countries.add(
-                    country
-                );
-            }
-
-        }
-    );
-
-    const sortedCountries =
-        Array.from(
-            countries
-        ).sort(
-            (
-                a,
-                b
-            ) =>
-                a.localeCompare(
-                    b
-                )
-        );
-
     const regionsHtml =
-        REPORT_ANALYTICAL_REGIONS
+        REPORT_INTERPOL_REGIONS
         .map(
-            (
-                [
-                    value,
-                    label
-                ]
-            ) =>
+            ([value, label]) =>
                 `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`
         )
         .join("");
 
     const countriesHtml =
-        sortedCountries
+        REPORT_INTERPOL_MEMBER_COUNTRIES
         .map(
             value =>
                 `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`
@@ -11282,13 +11500,13 @@ function populateReportRegions() {
     select.innerHTML =
         '<option value="GLOBAL">Global</option>'
         +
-        '<optgroup label="REGIONS">'
+        '<optgroup label="INTERPOL REGIONS">'
         +
         regionsHtml
         +
         '</optgroup>'
         +
-        '<optgroup label="COUNTRIES">'
+        '<optgroup label="INTERPOL MEMBER COUNTRIES">'
         +
         countriesHtml
         +
