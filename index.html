@@ -4462,6 +4462,36 @@ html, body {
     }
 }
 
+
+/* ============================================================
+   REPORT GENERATOR — VALID COMPARISON COVERAGE
+   ============================================================ */
+.report-compare.is-unavailable {
+    opacity: .46;
+    cursor: not-allowed;
+}
+
+.report-compare.is-unavailable span {
+    cursor: not-allowed;
+}
+
+.report-compare-note {
+    margin: -3px 0 4px;
+    padding: 7px 8px;
+    border-left: 2px solid #9b762e;
+    background: rgba(154, 112, 35, .08);
+    color: #c5a45c;
+    font-size: 7.4px;
+    line-height: 1.45;
+    letter-spacing: .025em;
+}
+
+@media (max-width: 640px) {
+    .report-compare-note {
+        font-size: 7px;
+    }
+}
+
 </style>
 
 </head>
@@ -5288,6 +5318,9 @@ Visible rate
           <input id="reportCompare" type="checkbox" checked>
           <span>Compare with previous equivalent period</span>
         </label>
+        <div id="reportCompareNote" class="report-compare-note" hidden>
+          Comparison unavailable — the previous equivalent period falls outside the database coverage.
+        </div>
 
         <button id="reportGenerateButton" type="button">GENERATE ANALYTICAL REPORT</button>
 
@@ -12071,9 +12104,93 @@ function populateReportRegions() {
 }
 
 
+const REPORT_DATABASE_COVERAGE_DAYS = 180;
+
+function updateReportComparisonAvailability() {
+
+    const periodSelect =
+        document.getElementById(
+            "reportPeriod"
+        );
+
+    const checkbox =
+        document.getElementById(
+            "reportCompare"
+        );
+
+    const note =
+        document.getElementById(
+            "reportCompareNote"
+        );
+
+    const label =
+        checkbox?.closest(
+            ".report-compare"
+        );
+
+    if (
+        !periodSelect
+        ||
+        !checkbox
+    ) {
+        return;
+    }
+
+    const periodDays =
+        Number(
+            periodSelect.value
+        );
+
+    const available =
+        (
+            periodDays * 2
+            <=
+            REPORT_DATABASE_COVERAGE_DAYS
+        );
+
+    checkbox.disabled =
+        !available;
+
+    if (!available) {
+        checkbox.checked =
+            false;
+    }
+
+    label?.classList.toggle(
+        "is-unavailable",
+        !available
+    );
+
+    if (note) {
+        note.hidden =
+            available;
+
+        note.textContent =
+            available
+            ?
+            ""
+            :
+            (
+                "Comparison unavailable — the previous equivalent "
+                +
+                periodDays
+                +
+                "-day period falls outside the rolling "
+                +
+                REPORT_DATABASE_COVERAGE_DAYS
+                +
+                "-day database coverage. No increase/decrease "
+                +
+                "inference will be made."
+            );
+    }
+}
+
+
 function openReportGenerator() {
 
     populateReportRegions();
+    updateReportComparisonAvailability();
 
     const panel =
         document.getElementById(
@@ -12999,6 +13116,15 @@ document.addEventListener(
             "click",
             generateCustomReport
         );
+
+        document.getElementById(
+            "reportPeriod"
+        )?.addEventListener(
+            "change",
+            updateReportComparisonAvailability
+        );
+
+        updateReportComparisonAvailability();
 
         document.getElementById(
             "reportCopyButton"
