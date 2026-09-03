@@ -16,7 +16,7 @@ import requests
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# GEMINI AI-FIRST GEOLOCATION V5.1 — NEW EVENTS ONLY + RESILIENT BATCHING
+# GEMINI AI-FIRST GEOLOCATION V5.2 — ONE-SHOT RESCUE + NEW EVENTS ONLY
 #
 # Principle:
 #   - Gemini decides the event location for EVERY event.
@@ -58,7 +58,7 @@ GEMINI_RESCUE_MODEL = os.getenv(
 )
 
 # New cache version: every event must be geolocated by the current AI engine.
-AI_GEO_VERSION = "gemini-ai-first-v5-resilient"
+AI_GEO_VERSION = "gemini-ai-first-v5.2-one-shot-rescue"
 BATCH_SIZE = max(
     1,
     min(
@@ -1159,7 +1159,7 @@ def process_batch_resilient(
 
             print(
                 f"   Gemini still incomplete for single event "
-                f"{event_id}; leaving it unlocated for a later run."
+                f"{event_id}; no usable geolocation result returned."
             )
 
             return []
@@ -1897,6 +1897,10 @@ def prepare_pending_event(
     )
 
     event["ai_geo_complete"] = False
+    event["ai_geo_rescue_complete"] = False
+    event["ai_geo_rescue_status"] = None
+    event["ai_geo_rescue_model"] = None
+    event["ai_geo_rescue_reason"] = None
     event["ai_geo_version"] = AI_GEO_VERSION
     event["ai_geo_model"] = None
     event["ai_geo_reason"] = (
@@ -1910,6 +1914,27 @@ def prepare_pending_event(
 # ============================================================
 # RESCUE PASS
 # ============================================================
+
+def mark_rescue_complete(
+    event,
+    status,
+    reason=None,
+):
+    """
+    Freeze the automatic rescue decision for this event.
+
+    Normal scheduled runs will never send it to the rescue model again.
+    AI_GEO_FORCE=1 resets the rescue state through prepare_pending_event().
+    """
+    event["ai_geo_rescue_complete"] = True
+    event["ai_geo_rescue_status"] = status
+    event["ai_geo_rescue_model"] = GEMINI_RESCUE_MODEL
+    event["ai_geo_rescue_reason"] = (
+        str(reason)[:1000]
+        if reason
+        else None
+    )
+
 
 RESCUE_INSTRUCTIONS = """
 You are doing a second-pass geographic inference for counter-terrorism news
@@ -1931,8 +1956,16 @@ Return unknown only when even the country genuinely cannot be inferred.
 def rescue_unknown_events(
     unresolved
 ):
+    """
+    Return (results, completed_attempt_ids).
+
+    An event is added to completed_attempt_ids only when its rescue batch
+    completed without quota/transient failure. Those events may therefore be
+    frozen after this one automatic rescue. If Gemini is unavailable, the
+    affected batch is NOT frozen and may be retried on a later run.
+    """
     if not unresolved:
-        return []
+        return [], set()
 
     batches = []
 
@@ -1951,6 +1984,7 @@ def rescue_unknown_events(
         )
 
     results = []
+    completed_attempt_ids = set()
 
     rescue_instructions = (
         SYSTEM_INSTRUCTIONS
@@ -1971,13 +2005,29 @@ def rescue_unknown_events(
         )
 
         try:
+            batch_results = process_batch_resilient(
+                batch,
+                instructions_override=
+                    rescue_instructions,
+                model_override=
+                    GEMINI_RESCUE_MODEL,
+            )
+
             results.extend(
-                process_batch_resilient(
-                    batch,
-                    instructions_override=
-                        rescue_instructions,
-                    model_override=
-                        GEMINI_RESCUE_MODEL,
+                batch_results
+            )
+
+            completed_attempt_ids.update(
+                str(
+                    item.get(
+                        "event_id"
+                    )
+                    or
+                    ""
+                )
+                for item in batch
+                if item.get(
+                    "event_id"
                 )
             )
 
@@ -1994,7 +2044,7 @@ def rescue_unknown_events(
             )
             break
 
-    return results
+    return results, completed_attempt_ids
 
 
 # ============================================================
@@ -2005,7 +2055,7 @@ def main():
     print()
     print("=" * 72)
     print("INTERPOL CT Intelligence Map")
-    print("GEMINI AI-FIRST GEOLOCATION V5 — RESILIENT BATCHING + CHECKPOINTS")
+    print("GEMINI AI-FIRST GEOLOCATION V5.2 — ONE-SHOT RESCUE + CHECKPOINTS")
     print("=" * 72)
     print(
         f"Primary model: {GEMINI_MODEL}"
@@ -2292,6 +2342,13 @@ def main():
 
             and
 
+            event.get(
+                "ai_geo_rescue_complete"
+            )
+            is not True
+
+            and
+
             (
                 event.get(
                     "location_precision"
@@ -2330,44 +2387,114 @@ def main():
             f"unlocated events..."
         )
 
-        rescue_results = rescue_unknown_events(
+        (
+            rescue_results,
+            rescue_attempted_ids,
+        ) = rescue_unknown_events(
             unresolved_payloads
         )
 
-        for result in rescue_results:
-            event_id = str(
+        rescue_result_by_id = {
+            str(
                 result.get(
                     "event_id"
                 )
                 or
                 ""
+            ):
+                result
+            for result in rescue_results
+            if result.get(
+                "event_id"
+            )
+        }
+
+        rescue_located = 0
+        rescue_exhausted = 0
+
+        for event_id in rescue_attempted_ids:
+            if event_id not in event_by_id:
+                continue
+
+            event = event_by_id[
+                event_id
+            ]
+
+            result = rescue_result_by_id.get(
+                event_id
             )
 
             if (
-                not event_id
-                or
-                event_id
-                not in event_by_id
-            ):
-                continue
-
-            # Only replace if rescue actually identifies a country.
-            if resolve_country_code(
-                result
+                result is not None
+                and
+                resolve_country_code(
+                    result
+                )
             ):
                 apply_ai_result(
-                    event_by_id[
-                        event_id
-                    ],
+                    event,
                     result,
                     fingerprints[
                         event_id
                     ],
                 )
 
+                mark_rescue_complete(
+                    event,
+                    "located",
+                    result.get(
+                        "reason"
+                    ),
+                )
+
+                rescue_located += 1
+                continue
+
+            # One automatic rescue has completed without a usable country.
+            # Keep the event in events.json for lists/reports, but never send
+            # it to Gemini rescue again during normal scheduled runs.
+            if result is not None:
+                reason = (
+                    result.get(
+                        "reason"
+                    )
+                    or
+                    result.get(
+                        "evidence"
+                    )
+                    or
+                    "Gemini rescue could not infer a reliable country."
+                )
+            else:
+                reason = (
+                    "Gemini rescue completed but returned no usable "
+                    "result for this event."
+                )
+
+            mark_rescue_complete(
+                event,
+                "unlocated_final",
+                reason,
+            )
+
+            event["location_precision"] = "unlocated"
+            event["location_method"] = "ai_unlocated_final"
+            event["excluded_from_map"] = True
+
+            rescue_exhausted += 1
+
+        if rescue_attempted_ids:
+            print(
+                f"   Rescue located: {rescue_located}"
+            )
+            print(
+                f"   Rescue permanently unlocated: "
+                f"{rescue_exhausted}"
+            )
+
         save_checkpoint(
             data,
-            "Gemini 3.6 rescue pass",
+            "Gemini 3.6 one-shot rescue pass",
         )
 
     # --------------------------------------------------------
@@ -2386,6 +2513,14 @@ def main():
         event.get(
             "location_method",
             "unknown",
+        )
+        for event in events
+    )
+
+    rescue_status_counts = Counter(
+        event.get(
+            "ai_geo_rescue_status",
+            "not_attempted",
         )
         for event in events
     )
@@ -2422,6 +2557,15 @@ def main():
 
         "rescue_model":
             GEMINI_RESCUE_MODEL,
+
+        "rescue_policy":
+            "one_automatic_rescue_then_freeze",
+
+        "rescue_unlocated_final":
+            rescue_status_counts.get(
+                "unlocated_final",
+                0,
+            ),
 
         "ai_for_every_event":
             True,
@@ -2512,6 +2656,10 @@ def main():
     print(
         f"Unlocated:         "
         f"{precision_counts['unlocated']}"
+    )
+    print(
+        f"Rescue exhausted:  "
+        f"{rescue_status_counts.get('unlocated_final', 0)}"
     )
     print(
         f"Mapped total:      "
