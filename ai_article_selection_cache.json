@@ -186397,7 +186397,737 @@
         "canonical_event": "Governor address on Anti-Terrorism Solidarity Day in Smolensk",
         "reason": "Official public address/remembrance statement, lacking operational CT content."
       }
+    },
+    "5d4a1681f11d67fddb52e59233c3145b7af57108b2b86c0735dc307de21976c1": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953371+00:00",
+      "result": {
+        "event_id": "eeb14adf0c9e6fde-30",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Arrests"
+        ],
+        "original_language": "ar",
+        "english_title": "Yemeni State Security reveals details of ISIS leader killed in security operation",
+        "english_summary": "Yemeni State Security disclosed details regarding the killing of a senior ISIS leader during a security operation.",
+        "canonical_event": "Killing of an ISIS leader by Yemeni State Security in Yemen",
+        "reason": "Direct reporting on a counter-terrorism operation resulting in the death of a named terrorist group leader."
+      }
+    },
+    "dc3232ffd1e56a653934517bf0564636ff6ab9c49f5f6b945cd61acebe7414d3": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953394+00:00",
+      "result": {
+        "event_id": "eeb14adf0c9e6fde-31",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ru",
+        "english_title": "Fire breaks out following UAV strike on Ust-Luga port in Leningrad Oblast",
+        "english_summary": "A fire occurred after a drone strike hit the port of Ust-Luga in the Leningrad region.",
+        "canonical_event": "UAV strike and fire at Ust-Luga port in Leningrad Oblast",
+        "reason": "General conventional warfare / infrastructure strike, lacking a specific counter-terrorism intelligence or terrorist nexus."
+      }
+    },
+    "c51d53cc07b8d9b6478da0c719dd985358253a83eccbfcacaebe959415b5dc6e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953399+00:00",
+      "result": {
+        "event_id": "eeb14adf0c9e6fde-50",
+        "relevance_score": 60,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Israeli forces conduct counter-terrorism and mass-casualty drills on Syrian border",
+        "english_summary": "Israeli forces practiced counter-terrorism scenarios and mass-casualty events along the Syrian border.",
+        "canonical_event": "Counter-terrorism military drill by Israeli forces on the Syrian border",
+        "reason": "Operational CT military exercise/drill, relevant for situational awareness."
+      }
+    },
+    "a4ab0c9d705b5a7ddb5e52729413330dffa0af817a1a78073a184d36462a3a7a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953402+00:00",
+      "result": {
+        "event_id": "eeb14adf0c9e6fde-79",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "he",
+        "english_title": "Israeli Defense Minister announces arrest of senior Hamas terrorist",
+        "english_summary": "The Israeli Defense Minister announced that a senior Hamas operative was recently arrested.",
+        "canonical_event": "Arrest of a senior Hamas terrorist by Israeli forces",
+        "reason": "High-level counter-terrorism arrest of a named terrorist organization member."
+      }
+    },
+    "14dcced612e6bd2d7d8ac449f05f38f28bf4f8a75f5f4861bb7a8dd8d0c5f6d7": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953404+00:00",
+      "result": {
+        "event_id": "7ecd41f35241ef44",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "ar",
+        "english_title": "Iraqi judiciary concludes investigations involving over 5,000 'terrorists'",
+        "english_summary": "The Iraqi judiciary has finished investigating more than 5,000 individuals accused of terrorism.",
+        "canonical_event": "Conclusion of judicial investigations for over 5,000 terrorism suspects in Iraq",
+        "reason": "Significant judicial and legal counter-terrorism development involving thousands of terrorism suspects."
+      }
+    },
+    "bc41dcce588fb57bb7d8c4b3a3a8818e8f0c986f6e202ad3df62b307d5701b9c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953407+00:00",
+      "result": {
+        "event_id": "eeb14adf0c9e6fde-107",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Arrests"
+        ],
+        "original_language": "ar",
+        "english_title": "State Security announces joint operation eliminating ISIS spokesman in Seiyun",
+        "english_summary": "The State Security apparatus announced a joint security operation that resulted in the elimination of the ISIS spokesman in Seiyun.",
+        "canonical_event": "Elimination of the ISIS spokesman in Seiyun by Yemeni State Security",
+        "reason": "Major counter-terrorism operation targeting and eliminating a senior terrorist figure."
+      }
+    },
+    "6d8194752c496858162f6413b3b4bfb721eef0e7205a584d406406eaad737f89": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953410+00:00",
+      "result": {
+        "event_id": "eeb14adf0c9e6fde-117",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "State Security publishes full details of operation eliminating ISIS tongue in Yemen",
+        "english_summary": "Yemeni State Security released comprehensive details regarding the operation to eliminate a prominent ISIS figure.",
+        "canonical_event": "Publication of details regarding the elimination of an ISIS leader in Yemen by State Security",
+        "reason": "Follow-up counter-terrorism operational intelligence and official disclosures."
+      }
+    },
+    "51c3ce08af4a074d5a083704aefac10eab2f1abde9660c8b5052e53b2da4e6ac": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953413+00:00",
+      "result": {
+        "event_id": "eeb14adf0c9e6fde-127",
+        "relevance_score": 25,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Iranian forces launch decisive operation in response to US actions",
+        "english_summary": "Iranian forces have initiated a decisive operation in response to what is termed American aggression.",
+        "canonical_event": "Iranian military operation in response to US actions",
+        "reason": "State-level geopolitical and military posturing rather than a specific counter-terrorism event."
+      }
+    },
+    "c5d76aa74b95035f93c29c536e417233f1b5defc30a9ac33e8157f79b7289642": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953416+00:00",
+      "result": {
+        "event_id": "eeb14adf0c9e6fde-134",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Simultaneous military and security operations against ISIS and Houthi groups",
+        "english_summary": "Daily roundup details simultaneous military and security operations conducted against the terrorist groups ISIS and the Houthis in Yemen.",
+        "canonical_event": "Concurrent security and military operations against ISIS and Houthi groups in Yemen",
+        "reason": "Ongoing counter-terrorism and counter-insurgency operations against designated terrorist groups."
+      }
+    },
+    "a8ccb259b424d815916835adaa9c0aee8d3dfe5996b80761f6173d70d6975f1e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953419+00:00",
+      "result": {
+        "event_id": "4f2b7f16fad63965",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "Front page of EL MUNDO newspaper",
+        "english_summary": "Daily newspaper front page overview with general news stories.",
+        "canonical_event": "Daily newspaper front page publication by El Mundo",
+        "reason": "General newspaper front page index with no specific counter-terrorism event."
+      }
+    },
+    "40f4bc55ff104b76b4f63f741630faf34315a7da55145048b7698b283b530440": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953422+00:00",
+      "result": {
+        "event_id": "eeb14adf0c9e6fde-137",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "State Security publishes details of operation eliminating ISIS figure in Yemen",
+        "english_summary": "State Security has published full details concerning the counter-terrorism operation against ISIS in Yemen.",
+        "canonical_event": "State Security publication on the elimination of an ISIS figure in Yemen",
+        "reason": "Duplicate report regarding the official security disclosures of the anti-ISIS operation in Yemen."
+      }
+    },
+    "beadb06ed49918114ae6683d6b176c962e7f44f80581ce7afc6597e8e6c5a498": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953425+00:00",
+      "result": {
+        "event_id": "f03d8d9bd2730feb-172",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Legal / Judicial"
+        ],
+        "original_language": "he",
+        "english_title": "Unusual indictment filed: Galilee resident and former IDF soldier identified with ISIS",
+        "english_summary": "An indictment has been filed against a resident of the Galilee and former IDF soldier who expressed allegiance to ISIS.",
+        "canonical_event": "Indictment of an ex-IDF soldier from the Galilee for ISIS affiliation in Israel",
+        "reason": "Counter-terrorism prosecution and indictment for terrorist affiliation."
+      }
+    },
+    "68c05082a07378038b59e76dc4a0fb7afae476ae95a5324f73a79208c0910626": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953428+00:00",
+      "result": {
+        "event_id": "f03d8d9bd2730feb-180",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "UAE dismantles terrorist cell planning to destabilize state security",
+        "english_summary": "UAE security authorities have dismantled a terrorist organization that was plotting to undermine state security.",
+        "canonical_event": "Dismantling of a terrorist cell plotting against state security in the UAE",
+        "reason": "Major counter-terrorism raid and disruption of a terrorist cell."
+      }
+    },
+    "65176e0149aab7d22b7b3312453a560baf3e318aa00bcdd3329fac52032a16a1": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953431+00:00",
+      "result": {
+        "event_id": "f03d8d9bd2730feb-184",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Germany investigates 'terrorist' act after thermal power station targeted",
+        "english_summary": "German authorities have launched a terrorist investigation following an attack on a thermal power plant amid a series of incidents.",
+        "canonical_event": "German police terrorism investigation into a thermal power plant attack",
+        "reason": "Active terrorism investigation into critical infrastructure sabotage."
+      }
+    },
+    "af464ee95884742d3d40eddb05dc142c94b1c052eeb6ad4069eb04cbe8f89cb0": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953434+00:00",
+      "result": {
+        "event_id": "f03d8d9bd2730feb-189",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "German police announce terrorism investigation after thermal power station targeted",
+        "english_summary": "German police have announced the opening of a terrorism investigation following the targeting of a thermal power plant.",
+        "canonical_event": "German police opening a terrorism investigation regarding a thermal power plant strike",
+        "reason": "Official police announcement regarding a suspected terrorist attack on critical infrastructure."
+      }
+    },
+    "3c9032368c9471378d9ec6a08f2d5cacb1b790e93285ebf023501cb7a8beabb4": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953437+00:00",
+      "result": {
+        "event_id": "f03d8d9bd2730feb-196",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "he",
+        "english_title": "Likud petition to High Court against polling station monitoring ban: 'For us this is an attack'",
+        "english_summary": "The Likud party filed a petition to the High Court over a polling station monitoring ban, metaphorically describing it as an attack ('pigua').",
+        "canonical_event": "Likud High Court petition regarding polling station monitoring in Israel",
+        "reason": "Domestic political dispute using hyperbolic slang ('pigua'/attack) with no actual terrorism nexus."
+      }
+    },
+    "9b00ca7786865829e83cf1ebd901c5e6d43cbcae7743c331ac9eb51cf85986c5": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953439+00:00",
+      "result": {
+        "event_id": "f03d8d9bd2730feb-201",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Investigations in Germany following two attacks on electrical grid facilities",
+        "english_summary": "Investigations are underway in Germany following a pair of attacks directed at electricity grid facilities.",
+        "canonical_event": "Investigations into two attacks on electrical grid facilities in Germany",
+        "reason": "Critical infrastructure attacks triggering security and terrorism investigations."
+      }
+    },
+    "a83bb12bb6e8fd3bee34e6b662ccb0cce0eadc1953d3e74fd92fa7234516d519": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953442+00:00",
+      "result": {
+        "event_id": "f03d8d9bd2730feb-213",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Potential terrorist attacks: Germany investigates targeting of electricity grid",
+        "english_summary": "Germany is investigating potential terrorist attacks following the targeting of the electrical power grid.",
+        "canonical_event": "German investigation into potential terrorist attacks targeting the electricity grid",
+        "reason": "Security investigations into potential terrorist targeting of critical energy infrastructure."
+      }
+    },
+    "b70a3e7316a4a2de51eaa756b548ea2c99e8a6b67945b0a4658f8b72ca02a3c6": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953445+00:00",
+      "result": {
+        "event_id": "f03d8d9bd2730feb-222",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ru",
+        "english_title": "UAV attacks on Moscow and Leningrad regions: Main developments",
+        "english_summary": "Overview of drone attacks targeting the Moscow and Leningrad regions.",
+        "canonical_event": "UAV attacks targeting Moscow and Leningrad regions in Russia",
+        "reason": "Standard interstate conflict drone strikes without a specific counter-terrorism context."
+      }
+    },
+    "7ea7beeb04a3cc855d70f073377e759d0bbd9f25ed40a488e05815f8c818a5d2": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:00.953448+00:00",
+      "result": {
+        "event_id": "497fb5858068cea5",
+        "relevance_score": 15,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "Why is Russia pressuring Europe through Germany?",
+        "english_summary": "An analytical opinion piece discussing Russian geopolitical pressure on Europe via Germany.",
+        "canonical_event": "Geopolitical analysis article by El Mundo on Russia and Europe",
+        "reason": "General geopolitical analysis piece rather than a specific counter-terrorism event."
+      }
+    },
+    "e4abfbf23438621f725ef2215ac6e494cfb784921b077809c2aa7284f9d27abb": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724613+00:00",
+      "result": {
+        "event_id": "f03d8d9bd2730feb-247",
+        "relevance_score": 40,
+        "is_current_ct_event": false,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "ar",
+        "english_title": "Sudan Now: Designating the Muslim Brotherhood as a Terrorist Group",
+        "english_summary": "An analysis discussing the implications of designating the Muslim Brotherhood as a terrorist group in Sudan.",
+        "canonical_event": "political discussion on Muslim Brotherhood terrorist designation in Sudan",
+        "reason": "General political analysis and commentary regarding a terrorist designation rather than a specific operational counter-terrorism event."
+      }
+    },
+    "8c67ee56fdad04dfd7d95cd6c076bceb0585cfbfcb04764861e0c0fc2101120b": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724629+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks",
+          "Weapons"
+        ],
+        "original_language": "he",
+        "english_title": "Hezbollah launches explosive drones at Israeli forces, IDF responds with strikes on terror infrastructure",
+        "english_summary": "Hezbollah launched explosive drones toward Israeli forces on the Ali Taher ridge, leading to an IDF counter-strike on Hezbollah terror infrastructure in the Nabatieh area.",
+        "canonical_event": "Hezbollah explosive drone attack and IDF retaliatory strikes in Lebanon-Israel border area",
+        "reason": "Active cross-border drone attack by a designated terrorist group and subsequent military counter-terrorism strikes."
+      }
+    },
+    "d75a929ce58a377200a85be5bc6a8eba5934e0de67e259eea9c7c857d8013fed": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724633+00:00",
+      "result": {
+        "event_id": "4ba75d380525b8f0",
+        "relevance_score": 75,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "en",
+        "english_title": "Maduro seeks to fend off narco-terrorism trial, arguing he has immunity",
+        "english_summary": "Venezuelan President Nicolás Maduro is seeking to dismiss a narco-terrorism trial by asserting immunity.",
+        "canonical_event": "Nicolas Maduro legal defense against narco-terrorism charges",
+        "reason": "Current legal/judicial proceedings concerning major narco-terrorism charges against a head of state."
+      }
+    },
+    "50dcc40083c569dc63fdd8c7aec0a2048f90bcd08ef1e7918fe935704105ca59": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724636+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-254",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Terrorist attack targets PMF checkpoint in Kirkuk, leaving one dead and one severely injured",
+        "english_summary": "A terrorist attack targeting a Popular Mobilization Forces (PMF) checkpoint in Kirkuk resulted in one fatality and a serious injury.",
+        "canonical_event": "terrorist attack on PMF checkpoint in Kirkuk",
+        "reason": "Direct reporting of a terrorist attack against security forces resulting in casualties."
+      }
+    },
+    "fbfc341e696f3f4ec768120707de8a9c05a3127c52733fa455c8a2abeaa92edb": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724640+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-259",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Popular Mobilization Forces announce death of member in terrorist attack in Kirkuk",
+        "english_summary": "The Popular Mobilization Forces announced the martyrdom of one of its members in a terrorist attack in Kirkuk.",
+        "canonical_event": "PMF member killed in terrorist attack in Kirkuk",
+        "reason": "Operational reporting on terrorist violence targeting security personnel."
+      }
+    },
+    "68d30cda7279db5f100842e29e50656f219a7df707ef51ca319691e59a458d46": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724642+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-260",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "he",
+        "english_title": "Indictment filed with a terror charge, though clearly no terror occurred",
+        "english_summary": "A radio discussion regarding an indictment that included a terrorism charge in a domestic legal context.",
+        "canonical_event": "dispute over terrorism indictment in domestic legal case",
+        "reason": "Domestic legal commentary discussing an inappropriate or contested terrorism charge."
+      }
+    },
+    "f58e81d30134f14b1889fd1bcd24be3f9653fa44f1819b7ea09b0cd496ec180d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724646+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-263",
+        "relevance_score": 50,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests"
+        ],
+        "original_language": "ar",
+        "english_title": "Counter-Terrorism Service issues warning to citizens",
+        "english_summary": "The Iraqi Counter-Terrorism Service issued a public warning advisory.",
+        "canonical_event": "Iraqi Counter-Terrorism Service issues public security warning",
+        "reason": "Official counter-terrorism operational advisory issued to the public."
+      }
+    },
+    "62d19ef86404c97c780e07489d4f6f96689b82423ce63cc7caf81fc825447e5c": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724649+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-264",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Weapons"
+        ],
+        "original_language": "ar",
+        "english_title": "Russia: Man arrested for planning terrorist attack on medical facility in Crimea ordered by Ukrainian intelligence",
+        "english_summary": "Russian security services arrested a man in Crimea who was allegedly planning a terrorist attack on a medical facility under Ukrainian intelligence orders.",
+        "canonical_event": "arrest of suspect planning terrorist attack on medical facility in Crimea",
+        "reason": "Disrupted terrorist attack plot and arrest of suspect by security services."
+      }
+    },
+    "3e3fed9d42fd558b1e339420e993656817669f2b4685f6b2412b3f9e58c0af2b": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724651+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-266",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Attacks"
+        ],
+        "original_language": "ar",
+        "english_title": "Popular Mobilization Authority announces member killed in terrorist attack in Kirkuk",
+        "english_summary": "The Popular Mobilization Authority officially confirmed the death of an operative in a terrorist attack in Kirkuk.",
+        "canonical_event": "PMF member killed in terrorist attack in Kirkuk",
+        "reason": "Duplicate report on terrorist attack casualties in Iraq."
+      }
+    },
+    "8c25a192550edf2c6460480310a84143b3b7b8eb44e769c15a7fcf50eadd0b78": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724654+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-274",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "ar",
+        "english_title": "Karbala Criminal Court sentences terrorist to 15 years for plotting to target Arbaeen pilgrims",
+        "english_summary": "The Karbala Criminal Court handed down a 15-year prison sentence to a terrorist who planned attacks against Imam Hussein's Arbaeen pilgrims.",
+        "canonical_event": "court sentencing of terrorist for planning attacks against Arbaeen pilgrims in Karbala",
+        "reason": "Judicial prosecution and sentencing of a convicted terrorist."
+      }
+    },
+    "99d2a78f0df4d53208bf1c48e74ae54933121b7584b5fe12e58e517733c6d573": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724657+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-279",
+        "relevance_score": 80,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "ar",
+        "english_title": "Details of judicial ruling against terrorist who planned to target Arbaeen pilgrims",
+        "english_summary": "Media outlets published details regarding the judicial sentencing of a terrorist plotting against Arbaeen pilgrims.",
+        "canonical_event": "details of judicial sentencing for terrorist plotting against Arbaeen pilgrims",
+        "reason": "Follow-up report on the conviction and sentencing of a terrorist plotter."
+      }
+    },
+    "f326c0617df8c2bba6c882889f8549d3fba43d09c8f95dd6ceb067d29e03327e": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724660+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-282",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "From 'Ambush' to 'Assault'",
+        "english_summary": "A general Russian news commentary or military review article unrelated to counter-terrorism.",
+        "canonical_event": "general military tactical review in Russian media",
+        "reason": "General military affairs article without a specific counter-terrorism nexus."
+      }
+    },
+    "545136fadc611a1e083f0b0f31bb16044c47a385730d313fe57a8902b5c27dcf": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724662+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-283",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Putin: No scenario for a new mobilization wave in Russia at present",
+        "english_summary": "Statements by Russian President Vladimir Putin regarding military mobilization.",
+        "canonical_event": "Putin statement on military mobilization in Russia",
+        "reason": "State-level military policy statement, not a counter-terrorism event."
+      }
+    },
+    "1b55bfaff5ecbe116ea03b1234e00e834a1833db867a297fba8a6d3aa8ddacab": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724664+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-286",
+        "relevance_score": 50,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "ar",
+        "english_title": "US response to Taliban request: We do not deal with terrorists",
+        "english_summary": "The United States rejected a request from the Taliban, stating it does not engage with terrorists.",
+        "canonical_event": "US rejection of diplomatic engagement with Taliban",
+        "reason": "Diplomatic stance and policy enforcement concerning a designated terrorist group."
+      }
+    },
+    "b9b2df1259581424d1d28083d5c9bfd728ab1e99cff8f8171bc6249479a25fb3": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724667+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-287",
+        "relevance_score": 30,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Hundreds of Novosibirsk residents honor memory of Beslan terrorist attack victims",
+        "english_summary": "Residents in Novosibirsk held a commemoration event for victims of the Beslan school terrorist attack.",
+        "canonical_event": "commemoration of Beslan terrorist attack victims in Novosibirsk",
+        "reason": "Historical commemoration event rather than a current operational counter-terrorism development."
+      }
+    },
+    "c1751bd55afd7fc75a3d1505f22d0c9d59f5c405a63d23884d202a42a800d3dc": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724669+00:00",
+      "result": {
+        "event_id": "1bdfecbcb4db7a58",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Moscow Exchange index exceeds 2200 points, updating maximum since August 14",
+        "english_summary": "Financial market update on the Moscow Exchange index.",
+        "canonical_event": "Moscow Exchange index market update",
+        "reason": "Financial market news report with zero relevance to counter-terrorism."
+      }
+    },
+    "0d09b1d420791abbe1e463a7aa0010ac9984dbadaf072e5c238346113032229f": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724671+00:00",
+      "result": {
+        "event_id": "13c792d6b64bf089",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "es",
+        "english_title": "Tremendous crash of a motorcyclist into a bus with an unexpected ending",
+        "english_summary": "A traffic accident report involving a motorcycle and a bus.",
+        "canonical_event": "traffic accident involving motorcycle and bus",
+        "reason": "Ordinary traffic accident with no terrorism or security nexus."
+      }
+    },
+    "b5cd026040e8b357238c3a5434c76496bacf35b2d191a7d8f634af92d7681bb9": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724673+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-291",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Legal / Judicial"
+        ],
+        "original_language": "ar",
+        "english_title": "In cooperation with Iraqi judiciary, Slovenian courts convict a terrorist who fled there",
+        "english_summary": "Slovenian courts have convicted a terrorist who fled to Slovenia, following judicial cooperation with Iraq.",
+        "canonical_event": "Slovenian court conviction of terrorist in cooperation with Iraqi judiciary",
+        "reason": "International judicial cooperation resulting in the prosecution and conviction of a terrorist."
+      }
+    },
+    "95309f54d0bc829b03d6b19ae25f9007a2824f0204c7a1b6309eea70accfa45a": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724676+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-292",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Roshydromet: Crew of vessel 'Professor Molchanov' detained in Norway provided with necessities",
+        "english_summary": "Status update on the crew of a detained Russian research vessel in Norway.",
+        "canonical_event": "status of detained Russian research vessel crew in Norway",
+        "reason": "Maritime detention and consular/administrative matter without piracy or terrorism nexus."
+      }
+    },
+    "bb54b8995012ab1bd7690d3035a6bf3d10bf0c593b84445fa1421ad721afaa67": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:18.724680+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-293",
+        "relevance_score": 85,
+        "is_current_ct_event": true,
+        "categories": [
+          "Arrests",
+          "Weapons"
+        ],
+        "original_language": "ar",
+        "english_title": "Russia announces thwarting of terrorist plot in Crimea and arrest of suspect cooperating with Kiev",
+        "english_summary": "Russian authorities announced the disruption of a terrorist plot in Crimea and the arrest of a suspect linked to Ukrainian intelligence.",
+        "canonical_event": "Russian security services thwart terrorist plot in Crimea and arrest suspect",
+        "reason": "Disrupted terrorist plot and counter-terrorism arrest."
+      }
+    },
+    "4d7ef2c23ad82f0b3bb561c4322a4ab9d4e706bc6e495bc37c0757527bd66b27": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:30.066599+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-294",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Zakharova urges IAEA to warn Ukraine and the West about Zaporizhzhia NPP provocations",
+        "english_summary": "Russian Foreign Ministry spokesperson Maria Zakharova called on the IAEA to convey the dangers of provocations at the Zaporizhzhia Nuclear Power Plant to Ukraine and Western countries.",
+        "canonical_event": "Maria Zakharova calls on IAEA regarding Zaporizhzhia NPP safety",
+        "reason": "This is a geopolitical statement regarding nuclear plant safety and state-level tensions, not a specific counter-terrorism event."
+      }
+    },
+    "4442b1bd7c92ec2a2ce8f1bc8b332596d44fb3c97157e7c4f942866c2f13e193": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:30.066618+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-295",
+        "relevance_score": 10,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Drop of Life event held in Izhevsk in memory of Beslan terror attack victims",
+        "english_summary": "An educational and commemorative event called 'Drop of Life' was held in Izhevsk to honor the victims of the 2004 Beslan school terrorist attack.",
+        "canonical_event": "Commemorative event for Beslan attack victims in Izhevsk",
+        "reason": "This is a historical commemoration/memorial event, which is excluded under the keeping policy for anniversaries and retrospectives."
+      }
+    },
+    "91cc2ec32241b9059551cbbb3da02f8283ee3bac4efcc01296d893f3e39a9e9d": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:30.066624+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-296",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Benefits hanging in the air",
+        "english_summary": "An article discussing social benefits or economic privileges in Russia.",
+        "canonical_event": "Discussion on social benefits in Russia",
+        "reason": "This is an ordinary economic/social policy article unrelated to counter-terrorism."
+      }
+    },
+    "e31159ca1b30467756858ec90d79f882d021a29a68a638cb6adbf16da3f50442": {
+      "version": "gemini-ct-selection-v2-multilingual",
+      "reviewed_at": "2026-09-03T14:40:30.066635+00:00",
+      "result": {
+        "event_id": "a16a58634c33ebca-297",
+        "relevance_score": 20,
+        "is_current_ct_event": false,
+        "categories": [],
+        "original_language": "ru",
+        "english_title": "Russian Ambassador to Denmark rejects accusations over drone incident in Leipzig",
+        "english_summary": "The Russian ambassador rejected allegations concerning a drone incident that occurred in Leipzig.",
+        "canonical_event": "Russian ambassador rejects accusations regarding Leipzig drone incident",
+        "reason": "This is a state-level diplomatic denial regarding a security/drone incident, lacking a concrete terrorism nexus or operation."
+      }
     }
   },
-  "last_updated": "2026-09-03T10:42:55.351243+00:00"
+  "last_updated": "2026-09-03T14:40:30.269447+00:00"
 }
