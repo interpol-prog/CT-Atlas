@@ -3849,25 +3849,68 @@ html, body {
     padding: 15px 17px 18px;
     color: #d2dfe6;
     font-size: 11px;
-    line-height: 1.64;
+    line-height: 1.7;
+    white-space: normal !important;
+    overflow-wrap: break-word;
+}
+
+.generated-report-block {
+    display: block;
+    margin: 0 0 23px;
 }
 
 .generated-report-section {
-    margin: 21px 0 8px;
-    padding-bottom: 5px;
-    color: #8fd3f4;
-    font-size: 13px;
+    display: block;
+    margin: 0 0 10px;
+    padding: 0 0 7px;
+    color: #91d7ff;
+    font-size: 13.5px;
     font-weight: 850;
-    letter-spacing: .05em;
-    border-bottom: 1px solid rgba(103,182,220,.24);
+    line-height: 1.2;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(145,215,255,.24);
 }
 
-.generated-report-section:first-child {
-    margin-top: 0;
+.generated-report-text {
+    display: block;
+    margin: 0;
+    color: #d2dfe6;
 }
 
-.generated-report-break {
-    height: 12px;
+.generated-report-text p {
+    display: block;
+    margin: 0 0 11px;
+}
+
+.generated-report-text p:last-child {
+    margin-bottom: 0;
+}
+
+.generated-report-unsectioned {
+    display: block;
+    margin: 0 0 23px;
+}
+
+@media (max-width: 640px) {
+    #reportResultContent {
+        font-size: 10px;
+        line-height: 1.62;
+    }
+
+    .generated-report-block {
+        margin-bottom: 19px;
+    }
+
+    .generated-report-section {
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+        font-size: 11.5px;
+    }
+
+    .generated-report-text p {
+        margin-bottom: 9px;
+    }
 }
 
 #reportGeneratorDisclaimer {
@@ -11590,63 +11633,163 @@ function reportSectionHtml(
         "OUTLOOK / WATCHPOINTS"
     ];
 
-    let formatted =
-        escapeHtml(
+    function escapeRegExpReport(value) {
+        return String(value).replace(
+            /[.*+?^${}()|[\]\\]/g,
+            "\\$&"
+        );
+    }
+
+    const normalized =
+        String(
             raw
             ||
             ""
+        )
+        .replace(/\r\n?/g, "\n")
+        .trim();
+
+    const headingPattern =
+        new RegExp(
+            "("
+            +
+            sectionNames
+                .map(escapeRegExpReport)
+                .join("|")
+            +
+            ")\\s*:?",
+            "gi"
         );
 
-    sectionNames.forEach(
-        section => {
+    const matches =
+        Array.from(
+            normalized.matchAll(
+                headingPattern
+            )
+        );
 
-            const escaped =
-                section.replace(
-                    /[.*+?^${}()|[\]\\]/g,
-                    "\\$&"
-                );
+    const blocks = [];
 
-            formatted =
-                formatted.replace(
-                    new RegExp(
-                        "(^|\\\\n)\\\\s*"
-                        +
-                        escaped
-                        +
-                        "\\\\s*(?:\\\\n|:)?",
-                        "g"
-                    ),
-                    (
-                        match,
-                        prefix
-                    ) =>
-                        (
-                            prefix
-                            ?
-                            "\n"
-                            :
-                            ""
-                        )
-                        +
-                        `<div class="generated-report-section">${section}</div>`
-                );
+    function paragraphHtml(text) {
+        return String(text || "")
+            .split(/\n{2,}/)
+            .map(value => value.trim())
+            .filter(Boolean)
+            .map(
+                paragraph =>
+                    '<p>'
+                    +
+                    escapeHtml(paragraph)
+                        .replace(/\n/g, "<br>")
+                    +
+                    '</p>'
+            )
+            .join("");
+    }
+
+    if (!matches.length) {
+        return (
+            '<div class="generated-report-unsectioned">'
+            +
+            paragraphHtml(normalized)
+            +
+            '</div>'
+        );
+    }
+
+    const beforeFirst =
+        normalized
+        .slice(
+            0,
+            matches[0].index
+        )
+        .trim();
+
+    if (beforeFirst) {
+        blocks.push(
+            '<div class="generated-report-unsectioned">'
+            +
+            paragraphHtml(beforeFirst)
+            +
+            '</div>'
+        );
+    }
+
+    matches.forEach(
+        (
+            match,
+            index
+        ) => {
+
+            const rawHeading =
+                String(
+                    match[1]
+                    ||
+                    ""
+                ).toUpperCase();
+
+            const canonicalHeading =
+                sectionNames.find(
+                    name =>
+                        name.toUpperCase()
+                        ===
+                        rawHeading
+                )
+                ||
+                rawHeading;
+
+            const textStart =
+                match.index
+                +
+                match[0].length;
+
+            const textEnd =
+                index
+                <
+                matches.length - 1
+                ?
+                matches[index + 1].index
+                :
+                normalized.length;
+
+            const sectionText =
+                normalized
+                .slice(
+                    textStart,
+                    textEnd
+                )
+                .trim()
+                .replace(/^[-–—:\s]+/, "");
+
+            blocks.push(
+                '<section class="generated-report-block">'
+                +
+                '<div class="generated-report-section">'
+                +
+                escapeHtml(canonicalHeading)
+                +
+                '</div>'
+                +
+                '<div class="generated-report-text">'
+                +
+                (
+                    sectionText
+                    ?
+                    paragraphHtml(sectionText)
+                    :
+                    '<p>—</p>'
+                )
+                +
+                '</div>'
+                +
+                '</section>'
+            );
         }
     );
 
-    return formatted
-        .replace(
-            /\n{3,}/g,
-            "\n\n"
-        )
-        .replace(
-            /\n\n/g,
-            '<div class="generated-report-break"></div>'
-        )
-        .replace(
-            /\n/g,
-            "<br>"
-        );
+    return blocks.join("");
 }
+
 
 
 async function generateCustomReport() {
