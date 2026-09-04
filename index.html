@@ -4769,7 +4769,7 @@ Map layers
 <div class="layer-buttons">
 
 <button class="layer-button active" id="markersToggle">EVENTS</button>
-<button class="layer-button" id="heatToggle" title="Heat based only on attacks, arrests and armed clashes/combat">HEAT ZONES</button>
+<button class="layer-button" id="heatToggle" title="Heat based only on attacks and armed clashes/combat">HEAT ZONES</button>
 <button class="layer-button" id="chronologyToggle">LIST / EXPORT</button>
 <button class="layer-button active" id="officesToggle">INTERPOL OFFICES</button>
 
@@ -7182,19 +7182,27 @@ function isHeatEligibleEvent(event) {
         );
 
     /*
-       Heat zones are intentionally limited to operational CT activity:
+       HEAT ZONES represent the geography of actual violent CT activity,
+       not the overall density of CT reporting/events.
+
+       Included:
        - attacks / terrorist attacks
+       - armed clashes / combat
+       - firefights / gunfights / gun battles
+       - armed confrontations / exchanges of fire
+
+       Excluded:
        - arrests
-       - armed clashes / combat / firefights
-       Everything else is excluded.
+       - financing
+       - weapons-only developments
+       - CBRN-only developments
+       - online/cyber/AI
+       - legal/judicial developments
+       - other non-violent CT activity
     */
     if (
         categories.includes(
             "Attacks"
-        )
-        ||
-        categories.includes(
-            "Arrests"
         )
     ) {
         return true;
