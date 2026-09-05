@@ -2,11 +2,7 @@ name: Daily CT Intelligence Map Update
 
 on:
   schedule:
-    - cron: "17 0 * * *"
-      timezone: "Europe/Paris"
-    - cron: "17 6 * * *"
-      timezone: "Europe/Paris"
-    - cron: "17 12 * * *"
+    - cron: "17 10 * * *"
       timezone: "Europe/Paris"
     - cron: "17 18 * * *"
       timezone: "Europe/Paris"
