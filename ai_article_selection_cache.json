@@ -155612,9 +155612,349 @@
         "canonical_event": "Bolivian president cuts salary amid anti-government protests",
         "reason": "Ordinary domestic political protest and executive salary cut with no counter-terrorism or militant nexus."
       }
+    },
+    "f3de8c2782c804b846e2aa52ea36c13e8c111f4108719ae77fcf9d1fdef2cddd": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107639+00:00",
+      "result": {
+        "event_id": "a4c2cec4f8269cea",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Untitled FBI Law Enforcement Bulletin Document",
+        "english_summary": "An archival document from the FBI Law Enforcement Bulletin dating from August 1996.",
+        "canonical_event": "Archival document from FBI Law Enforcement Bulletin from 1996",
+        "reason": "This is an outdated archival document from 1996 with no current counter-terrorism operational relevance."
+      }
+    },
+    "b1350fedbbf3d6156a5a8bb3530f4b11baa7f6852e5e5f6ae72319f8ef79fe0d": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107659+00:00",
+      "result": {
+        "event_id": "880be640e6ae5058",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "NIS Export Control Observer, November 1996",
+        "english_summary": "An archival newsletter issue from November 1996 concerning export controls and non-proliferation.",
+        "canonical_event": "Publication of NIS Export Control Observer from 1996",
+        "reason": "This is a historical export control newsletter from 1996, lacking any current operational counter-terrorism intelligence value."
+      }
+    },
+    "f3ff6b58fcb431876ade8f4ffac0433689f94490d2a2ad4e34050a0f70172102": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107663+00:00",
+      "result": {
+        "event_id": "396c112cd90153ee",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Former Soviet Biological Weapons Facilities in Kazakhstan: Forward",
+        "english_summary": "An archival report from June 1999 concerning former Soviet biological weapons facilities in Kazakhstan.",
+        "canonical_event": "Archival report on former Soviet biological weapons facilities in Kazakhstan from 1999",
+        "reason": "This is a historical non-proliferation report from 1999 and not a current operational counter-terrorism event."
+      }
+    },
+    "3784b47cd424829e59f6ad5871f6aa2372b6d4e1b5d05f8c03508bd1e08ed3fb": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107666+00:00",
+      "result": {
+        "event_id": "fec37f15392fd175",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Chemical Weapons Convention Overview",
+        "english_summary": "An archival informational page regarding the Chemical Weapons Convention from October 1999.",
+        "canonical_event": "Informational document on Chemical Weapons Convention from 1999",
+        "reason": "This is a historical reference document about arms control treaties from 1999, not a current intelligence event."
+      }
+    },
+    "c5bdf06c889f53610a16e1ee72f74079a03f765ee5588f10251e288af1fef67b": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107669+00:00",
+      "result": {
+        "event_id": "ad553caf25527f42",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "2000 WMD Terrorism Chronology",
+        "english_summary": "A historical chronology of WMD terrorism events compiled in August 2001.",
+        "canonical_event": "Publication of 2000 WMD Terrorism Chronology",
+        "reason": "This is a historical timeline published in 2001 and does not represent a current counter-terrorism event."
+      }
+    },
+    "f15b3f7d10883b2f17742a03c9cbd42d51c838e6be23df9a0d3b64ed62ae0320": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107672+00:00",
+      "result": {
+        "event_id": "3889abbcc2e810be",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Assessing the Threat of WMD Terrorism",
+        "english_summary": "An archival non-proliferation report from August 2001 assessing the threat of WMD terrorism.",
+        "canonical_event": "Publication of assessment on the threat of WMD terrorism from 2001",
+        "reason": "This is a retrospective analysis from 2001, providing general commentary rather than a current intelligence event."
+      }
+    },
+    "49dae0c0e6733a78a8934c4fc25939bcb37bfc96181fcf2ad87a04076146c297": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107675+00:00",
+      "result": {
+        "event_id": "4614ea77bbcd676c",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Attorney General John Ashcroft Testimony before House Judiciary Committee",
+        "english_summary": "Archival congressional testimony by Attorney General John Ashcroft from September 2001.",
+        "canonical_event": "Congressional testimony by Attorney General John Ashcroft from 2001",
+        "reason": "This is a historical congressional testimony from September 2001, lacking current operational utility."
+      }
+    },
+    "0d1bc012acef44053b8612c6a0e89af82d2761b7c8b166071f0b474cddbdb870": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107677+00:00",
+      "result": {
+        "event_id": "96a72bddbdd8c4c7",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Proliferation of Chemical and Biological Materials to State and Sub-State Actors",
+        "english_summary": "A historical non-proliferation analysis from November 2001 regarding chemical and biological materials.",
+        "canonical_event": "Publication of non-proliferation analysis on CBW materials from 2001",
+        "reason": "This is an archival academic or policy report from 2001, not a current counter-terrorism event."
+      }
+    },
+    "65441e1ae5c408ac8318288700e6ea4b54c128ce5e3ea45840d6644827545687": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107680+00:00",
+      "result": {
+        "event_id": "85e85f878a0aa29e",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Release of a Secret Soviet Smallpox Report",
+        "english_summary": "A historical non-proliferation report from June 2002 discussing a secret Soviet smallpox document.",
+        "canonical_event": "Publication of report on secret Soviet smallpox documents in 2002",
+        "reason": "This is a historical analysis from 2002 regarding Soviet-era programs, not a current operational event."
+      }
+    },
+    "c688c37b4a8566be9a504e33fbb5c7dfa093b7adf3ce499788eab835924d696c": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107683+00:00",
+      "result": {
+        "event_id": "5e77c6437301a203",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "'Suitcase Nukes': A Reassessment",
+        "english_summary": "A historical non-proliferation commentary from September 2002 re-evaluating the threat of portable nuclear weapons.",
+        "canonical_event": "Publication of reassessment on portable nuclear weapons in 2002",
+        "reason": "This is a historical commentary piece from 2002 discussing nuclear threat assessments."
+      }
+    },
+    "04cce8547efd2f1ae0cd91b49e4a258cf17d830e6531b250d620e84518dc1c52": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107685+00:00",
+      "result": {
+        "event_id": "ee7984156493e931",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Dusty Agents and the Iraqi Chemical Weapons Arsenal",
+        "english_summary": "An archival report from September 2002 concerning Iraqi chemical weapons and dispersal agents.",
+        "canonical_event": "Publication of report on Iraqi chemical weapons from 2002",
+        "reason": "This is a historical analysis from 2002 concerning historical state weapons programs."
+      }
+    },
+    "35543308837d2af3b34c18d34f98912066b61c890ad78d13727f9689fd5f8fff": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107688+00:00",
+      "result": {
+        "event_id": "a51b0cccfcbbfb1e",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "The Moscow Theater Hostage Crisis: Incapacitants and Chemical Warfare",
+        "english_summary": "A historical analysis from November 2002 examining the chemical agents used during the Moscow theater hostage crisis.",
+        "canonical_event": "Publication of analysis on chemical agents used in Moscow theater hostage crisis in 2002",
+        "reason": "This is a retrospective analysis of the 2002 Moscow theater crisis rather than a current event."
+      }
+    },
+    "7aa685e20fa6caa78b8f4dd6e36b152263cf98a7b4c13214c5df03c0c5860461": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107691+00:00",
+      "result": {
+        "event_id": "1ae368c5381c10d6",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Vinalon, the DPRK, and Chemical Weapons Precursors",
+        "english_summary": "An archival report from January 2003 examining North Korean chemical precursors.",
+        "canonical_event": "Publication of report on North Korean chemical precursors from 2003",
+        "reason": "This is an old policy and proliferation analysis from 2003 with no current operational relevance."
+      }
+    },
+    "21945bf4403f44f6299f778b331c3c0cb6e394db9667fa12521947b5f1e6a39c": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107693+00:00",
+      "result": {
+        "event_id": "a48d97197df1512d",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Overview of the Biological Weapons Convention",
+        "english_summary": "An archival informational overview of the Biological Weapons Convention from February 2003.",
+        "canonical_event": "Informational overview of Biological Weapons Convention from 2003",
+        "reason": "This is a historical reference page on arms control treaties from 2003."
+      }
+    },
+    "ea06047acacd511d896ec8d4cd514561978d0ebce8b904db3b09dd7d83e47bed": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107696+00:00",
+      "result": {
+        "event_id": "2853e08a7fa8d801",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "NIS Export Control Observer, March 2003",
+        "english_summary": "An archival newsletter issue from March 2003 covering export control issues in NIS countries.",
+        "canonical_event": "Publication of NIS Export Control Observer from March 2003",
+        "reason": "This is an outdated newsletter issue from 2003."
+      }
+    },
+    "9b9c1c20ac22d88233228089fdf78feb141e7a807d0bae62f8514edca19291fc": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107699+00:00",
+      "result": {
+        "event_id": "a8568b4d9d9e6b0a",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Instability in Georgia: A New Proliferation Threat?",
+        "english_summary": "An archival threat assessment from July 2003 concerning proliferation risks amid instability in Georgia.",
+        "canonical_event": "Publication of threat assessment on Georgia proliferation risks from 2003",
+        "reason": "This is a historical policy report from 2003."
+      }
+    },
+    "c51bc8f2e60ac83f518d5d1a802a43dd764f8ac9218bd86b14d9f09f7121ae17": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107701+00:00",
+      "result": {
+        "event_id": "a172fb50c65ad05f",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "Russian Submarine Dismantlement Issues",
+        "english_summary": "A historical non-proliferation analysis from December 2003 regarding Russian naval submarine dismantlement.",
+        "canonical_event": "Publication of report on Russian submarine dismantlement from 2003",
+        "reason": "This is a historical nuclear security and dismantlement report from 2003."
+      }
+    },
+    "757ac8c61701243de0a25d1568981ec415bf727d3452b37c24a92acae1e0b6ef": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107703+00:00",
+      "result": {
+        "event_id": "c0bbc5373e274970",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "NIS Export Control Observer, May 2004",
+        "english_summary": "An archival export control newsletter issue from February/May 2004.",
+        "canonical_event": "Publication of NIS Export Control Observer from 2004",
+        "reason": "This is a historical newsletter from 2004."
+      }
+    },
+    "1043384ab273394bed8a70cc80d5f035acfade623abcbd3958b1c2bf0531400a": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107705+00:00",
+      "result": {
+        "event_id": "593c4b72dd433f73",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "The Chechen Resistance and Radiological Terrorism",
+        "english_summary": "A historical threat assessment from March 2004 evaluating potential radiological terrorism risks associated with the Chechen resistance.",
+        "canonical_event": "Publication of threat assessment on Chechen resistance and radiological terrorism from 2004",
+        "reason": "This is a historical analytical report from 2004 regarding past threat assessments."
+      }
+    },
+    "feeafd98c0ee024ad2f08d19fb16afa4dfcaad66407a03decb0b0acbe01515e1": {
+      "version": "gemini-ct-selection-v3-specialist",
+      "reviewed_at": "2026-09-05T13:39:23.107708+00:00",
+      "result": {
+        "event_id": "60f8367d03d21792",
+        "relevance_score": 0,
+        "is_current_ct_event": false,
+        "categories": [
+          "CBRN"
+        ],
+        "original_language": "en",
+        "english_title": "NIS Export Control Observer, August 2004",
+        "english_summary": "An archival export control newsletter issue from May 2004.",
+        "canonical_event": "Publication of NIS Export Control Observer from May 2004",
+        "reason": "This is a historical newsletter issue from 2004."
+      }
     }
   },
-  "last_updated": "2026-09-05T12:40:02.385034+00:00",
+  "last_updated": "2026-09-05T13:41:54.708328+00:00",
   "backfill_rss_snapshots": {
     "4bdbe2024cdb78abf26b9d252104dffde103b36d524e9193c90e9800bcfbd952": {
       "day": "2026-09-05",
