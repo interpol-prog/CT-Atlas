@@ -16,7 +16,7 @@ from datetime import datetime, timezone, timedelta
 from difflib import SequenceMatcher
 from functools import lru_cache
 from email.utils import parsedate_to_datetime
-from urllib.parse import quote_plus, urlsplit, urlunsplit
+from urllib.parse import quote_plus, urlsplit, urlunsplit, parse_qsl, urlencode
 from zoneinfo import ZoneInfo
 
 
@@ -39,7 +39,7 @@ except Exception:
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V12 — ARABIC / AFRICA + MARITIME / CBRN
+# OSINT COLLECTOR V13 — INCREMENTAL BACKFILL + RESUMABLE COLLECTION
 #
 # Expanded coverage + stricter event relevance.
 #
@@ -2013,7 +2013,165 @@ def build_google_url(
     )
 
 
-def request_google_news(
+
+# Incremental backfill state lives in the two files already used by the workflow:
+# events.json: completed historical query manifest (only published after AI).
+# ai_article_selection_cache.json: successful RSS snapshots and AI checkpoints.
+# The workflow must restore and persist these files, including cache on failure.
+BACKFILL_ACTIVE = False
+BACKFILL_COMPLETED_QUERIES = {}
+BACKFILL_PENDING_QUERIES = {}
+BACKFILL_RSS_SNAPSHOTS = {}
+BACKFILL_STATS = Counter()
+COLLECTION_QUERY_VERSION = "query-coverage-v1"
+
+
+def atomic_json_write(path, data):
+    temporary = str(path) + ".tmp"
+    try:
+        with open(temporary, "w", encoding="utf-8") as handle:
+            json.dump(data, handle, ensure_ascii=False, indent=2)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.remove(temporary)
+
+
+def load_database_strict():
+    if not os.path.exists(OUTPUT_FILE):
+        return {"events": []}
+    try:
+        with open(OUTPUT_FILE, encoding="utf-8") as handle:
+            data = json.load(handle)
+        if not isinstance(data, dict) or not isinstance(data.get("events"), list):
+            raise ValueError("invalid events database")
+        if any(not isinstance(event, dict) for event in data["events"]):
+            raise ValueError("invalid event record")
+        return data
+    except (OSError, ValueError) as exc:
+        raise RuntimeError("Cannot read existing events.json; refusing to replace it.") from exc
+
+
+def initialize_incremental_state(is_backfill):
+    global BACKFILL_ACTIVE, BACKFILL_COMPLETED_QUERIES
+    global BACKFILL_PENDING_QUERIES, BACKFILL_RSS_SNAPSHOTS
+    BACKFILL_ACTIVE = is_backfill
+    BACKFILL_STATS.clear()
+    database = load_database_strict()
+    manifest = database.get("backfill_completed_queries", {})
+    BACKFILL_COMPLETED_QUERIES = manifest if isinstance(manifest, dict) else {}
+    BACKFILL_PENDING_QUERIES = {}
+    # A valid empty database may still record queries whose results were rejected.
+    cache = load_selection_cache()
+    snapshots = cache.get("backfill_rss_snapshots", {})
+    today = datetime.now(timezone.utc).date().isoformat()
+    # Relative Google News windows are only replayable on the same UTC day.
+    BACKFILL_RSS_SNAPSHOTS = {
+        key: row for key, row in snapshots.items()
+        if isinstance(row, dict) and row.get("day") == today
+    } if isinstance(snapshots, dict) else {}
+
+
+def reviewed_article_fingerprints(events):
+    fingerprints = set()
+    for event in events:
+        if not event.get("ai_selection_complete"):
+            continue
+        fingerprints.update(event.get("source_article_fingerprints", []))
+        # Migration for previously translated records, using their original text.
+        for article in [event] + list(event.get("related_articles") or []):
+            if not isinstance(article, dict) or not article.get("url"):
+                continue
+            original = dict(article)
+            original["title"] = article.get("original_title") or article.get("title", "")
+            original["summary"] = article.get("original_summary") or article.get("summary", "")
+            fingerprints.add(selection_fingerprint(original))
+    return fingerprints
+
+
+def exclude_reviewed_articles(fresh, existing):
+    known = reviewed_article_fingerprints(existing)
+    pending = []
+    seen = set()
+    for event in fresh:
+        fingerprint = selection_fingerprint(event)
+        if fingerprint in known:
+            BACKFILL_STATS["already_reviewed_articles"] += 1
+            continue
+        if fingerprint in seen:
+            BACKFILL_STATS["duplicate_input_articles"] += 1
+            continue
+        seen.add(fingerprint)
+        pending.append(event)
+    print(f"Already reviewed unchanged articles skipped before Gemini: "
+          f"{BACKFILL_STATS['already_reviewed_articles']}")
+    return pending
+
+
+def request_google_news(url, label="query"):
+    if not BACKFILL_ACTIVE:
+        return _request_google_news_network(url, label=label)
+    now = datetime.now(timezone.utc)
+    today = now.date()
+    parts = urlsplit(url)
+    params = dict(parse_qsl(parts.query))
+    query = params.get("q", "")
+    match = re.search(r" when:(\d+)d$", query)
+    if not match:
+        return _request_google_news_network(url, label=label)
+    requested_days = int(match.group(1))
+    bare_query = query[:match.start()]
+    identity = dict(params, q=bare_query, coverage_version=COLLECTION_QUERY_VERSION)
+    key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
+    completed = BACKFILL_COMPLETED_QUERIES.get(key, {})
+    days = requested_days
+    try:
+        checked = datetime.fromisoformat(completed["checked_at"]).date()
+        gap = (today - checked).days
+        if 0 <= gap < requested_days and completed.get("window_days", 0) >= requested_days:
+            # Revisit recent days for delayed indexing; no historical recollection.
+            days = min(requested_days, max(DAILY_LOOKBACK_DAYS, gap + 1))
+            BACKFILL_STATS["historical_queries_reused"] += 1
+    except (KeyError, TypeError, ValueError):
+        pass
+    if days == requested_days:
+        BACKFILL_STATS["historical_queries_requested"] += 1
+    params["q"] = f"{bare_query} when:{days}d"
+    effective_url = urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(params), parts.fragment))
+    snapshot_key = hashlib.sha256(f"{today}|{effective_url}".encode()).hexdigest()
+    snapshot = BACKFILL_RSS_SNAPSHOTS.get(snapshot_key)
+    response = None
+    if snapshot:
+        candidate = feedparser.parse(snapshot.get("rss", ""))
+        if candidate.get("version") and not candidate.bozo:
+            response = requests.Response()
+            response.status_code = 200
+            response._content = snapshot["rss"].encode("utf-8")
+            BACKFILL_STATS["rss_checkpoints_replayed"] += 1
+            QUERY_STATS["successful"] += 1
+            print(f"      Resuming cached RSS: {label}")
+    if response is None:
+        response = _request_google_news_network(effective_url, label=label)
+        if response is None:
+            raise RuntimeError(f"Backfill paused: query failed ({label}); database unchanged, successful RSS checkpoints retained.")
+        parsed = feedparser.parse(response.content)
+        if parsed.bozo or not parsed.get("version"):
+            raise RuntimeError(f"Backfill paused: invalid RSS ({label}); query not marked complete.")
+        BACKFILL_RSS_SNAPSHOTS[snapshot_key] = {
+            "day": str(today), "rss": response.content.decode("utf-8"),
+        }
+        # Save each successful query, before moving to the next network request.
+        save_selection_cache(load_selection_cache())
+    BACKFILL_PENDING_QUERIES[key] = {
+        "checked_at": now.isoformat(), "window_days": requested_days,
+        "query": bare_query, "locale": params.get("ceid", ""),
+    }
+    return response
+
+
+def _request_google_news_network(
     url,
     label="query",
 ):
@@ -2275,6 +2433,7 @@ def entry_to_event(
             "targeted_source_kind"
         ] = targeted_source_kind
 
+    event["source_article_fingerprints"] = [selection_fingerprint(event)]
     return event
 
 
@@ -2619,7 +2778,7 @@ def _collect_all_once(days):
     print()
     print("=" * 70)
     print("INTERPOL CT Intelligence Map")
-    print("OSINT Collector V12 — expanded regional, maritime and CBRN coverage")
+    print("OSINT Collector V13 — incremental backfill and resumable collection")
     print("=" * 70)
     print(f"Window: {days} days")
     print("Collection languages: English + French + Arabic + German + Spanish + Italian + Turkish + Russian + Urdu + Persian + Hebrew")
@@ -3366,8 +3525,8 @@ def load_selection_cache():
                     AI_SELECTION_MODEL,
                 "threshold":
                     AI_SELECTION_THRESHOLD,
-                "items":
-                    {},
+                "items": {},
+                "backfill_rss_snapshots": cache.get("backfill_rss_snapshots", {}),
             }
 
         if not isinstance(
@@ -3416,17 +3575,8 @@ def save_selection_cache(
         timezone.utc
     ).isoformat()
 
-    with open(
-        AI_SELECTION_CACHE_FILE,
-        "w",
-        encoding="utf-8",
-    ) as file:
-        json.dump(
-            cache,
-            file,
-            ensure_ascii=False,
-            indent=2,
-        )
+    cache["backfill_rss_snapshots"] = BACKFILL_RSS_SNAPSHOTS
+    atomic_json_write(AI_SELECTION_CACHE_FILE, cache)
 
 
 def extract_interaction_text(
@@ -5869,6 +6019,10 @@ def merge_event(
         "categories"
     ] = existing_categories
 
+    existing["source_article_fingerprints"] = sorted(set(
+        existing.get("source_article_fingerprints", [])
+        + new.get("source_article_fingerprints", [])
+    ))
     merge_acled_metadata(existing, new)
 
     # Keep a history of genuinely different articles/headlines.
@@ -6361,33 +6515,14 @@ def deduplicate_events(records):
 
 
 def load_existing():
-    try:
-        with open(
-            OUTPUT_FILE,
-            "r",
-            encoding="utf-8",
-        ) as file:
-            data = json.load(file)
-
-            events = data.get(
-                "events",
-                [],
-            )
-
-            for event in events:
-                categories = normalize_categories(
-                    event.get("categories")
-                    or
-                    ([event.get("category")] if event.get("category") else [])
-                )
-
-                if categories:
-                    event["categories"] = categories
-                    event["category"] = categories[0]
-
-            return events
-    except Exception:
-        return []
+    events = load_database_strict()["events"]
+    for event in events:
+        categories = normalize_categories(event.get("categories") or
+            ([event["category"]] if event.get("category") else []))
+        if categories:
+            event["categories"] = categories
+            event["category"] = categories[0]
+    return events
 
 
 def _dedup_day_key(
@@ -8392,6 +8527,10 @@ def save_database(events, trend_summary=None, weekly_analysis=None):
             profile["name"]: list(profile.get("sites", []))
             for profile in MULTILINGUAL_PROFILES
         },
+        "backfill_completed_queries": {
+            **BACKFILL_COMPLETED_QUERIES, **BACKFILL_PENDING_QUERIES,
+        },
+        "incremental_collection_stats": dict(BACKFILL_STATS),
         "specialist_coverage": {
             "maritime_sources": [name for name, site, kind in MARITIME_SOURCE_SITES],
             "cbrn_sources": [name for name, site, kind in CBRN_SOURCE_SITES],
@@ -8426,17 +8565,7 @@ def save_database(events, trend_summary=None, weekly_analysis=None):
             events,
     }
 
-    with open(
-        OUTPUT_FILE,
-        "w",
-        encoding="utf-8",
-    ) as file:
-        json.dump(
-            output,
-            file,
-            ensure_ascii=False,
-            indent=2,
-        )
+    atomic_json_write(OUTPUT_FILE, output)
 
 
 def main():
@@ -8458,13 +8587,15 @@ def main():
         "backfill"
     )
 
+    initialize_incremental_state(is_backfill)
+
     if is_backfill:
         print(
-            "180-DAY BACKFILL MODE"
+            "180-DAY INCREMENTAL BACKFILL MODE"
         )
 
         days = RETENTION_DAYS
-        existing = []
+        existing = load_existing()
 
     else:
         print(
@@ -8479,7 +8610,7 @@ def main():
             f"{len(existing)} events"
         )
 
-    fresh = collect_all(days)
+    fresh = exclude_reviewed_articles(collect_all(days), existing)
 
     print()
     print(
@@ -8556,19 +8687,8 @@ def main():
         f"{len(selected_fresh)}"
     )
 
-    if is_backfill:
-        events = selected_fresh
-
-    else:
-        print(
-            "Using FAST incremental daily clustering "
-            "against the existing database."
-        )
-
-        events = deduplicate_incremental(
-            existing,
-            selected_fresh,
-        )
+    print("Merging new selected events into the existing database, preserving coordinates.")
+    events = deduplicate_incremental(existing, selected_fresh)
 
     events = prune_old(
         events
