@@ -13,20 +13,21 @@
  <style>
  
  * {
-@@ -4492,10 +4494,12 @@
+@@ -4492,10 +4494,13 @@
      }
  }
  
  </style>
  
 +<script src="usage-admin.js" defer></script>
++<script src="usage-auth-fix.js" defer></script>
 +
  </head>
  
  
  <body class="locked">
  
-@@ -5498,10 +5502,19 @@
+@@ -5498,10 +5503,19 @@
          "police-officer": "d1e48410ae1823482d68cd4de5efc759dabd3c515eb14c06fcf8bb0588268593",
          "policy-analyst": "19c030b579851bf0ac2704dba514f2a35c412a92db431bda9379055b20d5e5bc",
          "senior-coordinator": "f2df56e5da8c9a04074faf5b8c171b89c1383de1e6bd992f0b91b8029bd34b9c",
