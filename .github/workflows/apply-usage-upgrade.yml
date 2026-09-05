@@ -18,8 +18,9 @@ permissions:
   pages: write
   id-token: write
 
+# Same group as the collector: no simultaneous database/site deployment.
 concurrency:
-  group: ct-atlas-usage-upgrade
+  group: ct-map-update-main
   cancel-in-progress: false
 
 jobs:
@@ -28,7 +29,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -45,7 +45,6 @@ jobs:
           else
             git apply --ignore-space-change --whitespace=nowarn tools/usage_upgrade.patch
           fi
-
           python - <<'PY'
           from pathlib import Path
           p = Path("index.html")
@@ -53,7 +52,6 @@ jobs:
           normalized = text.replace("\r\n", "\n").replace("\r", "\n")
           p.write_bytes(normalized.replace("\n", "\r\n").encode("utf-8"))
           PY
-
           grep -q '"stephen"' index.html
           grep -q '"anastasia"' index.html
           grep -q 'usage-admin.js' index.html
@@ -84,12 +82,10 @@ jobs:
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-
       - name: Upload website
         uses: actions/upload-pages-artifact@v4
         with:
           path: "."
-
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
