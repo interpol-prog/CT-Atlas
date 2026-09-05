@@ -104,14 +104,14 @@ jobs:
           case "$COLLECTION_MODE" in
             backfill-new-sources)
               echo "Targeted incremental backfill: Arabic additions, Africa, Afghanistan and Syria."
-              python -u collector.py backfill-new-sources
+              python -u tools/run_collector_quota_safe.py backfill-new-sources
               ;;
             backfill)
               echo "Incremental backfill across all configured sources."
-              python -u collector.py backfill
+              python -u tools/run_collector_quota_safe.py backfill
               ;;
             daily)
-              python -u collector.py
+              python -u tools/run_collector_quota_safe.py
               ;;
             *) echo "Unknown collection mode"; exit 1 ;;
           esac
