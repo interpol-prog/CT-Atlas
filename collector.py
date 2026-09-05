@@ -1,3 +1,4 @@
+import argparse
 import feedparser
 import hashlib
 import html
@@ -1404,6 +1405,153 @@ for _profile in MULTILINGUAL_PROFILES:
         ])
 
 
+
+# Afghan/Syrian local and country-focused media, including exile-based outlets.
+# Distinct publishers are counted once even when searched in several languages.
+AFGHANISTAN_LOCAL_SOURCES = {
+    "tolonews.com": "TOLOnews", "pajhwok.com": "Pajhwok Afghan News",
+    "amu.tv": "Amu TV", "8am.media": "Hasht-e Subh / 8AM",
+    "kabulnow.com": "KabulNow", "etilaatroz.com": "Etilaat Roz",
+    "khaama.com": "Khaama Press", "ariananews.af": "Ariana News",
+    "afintl.com": "Afghanistan International", "swn.af": "Salam Watandar",
+}
+SYRIA_LOCAL_SOURCES = {
+    "enabbaladi.net": "Enab Baladi", "syria.tv": "Syria TV",
+    "sana.sy": "SANA", "npasyria.com": "North Press Agency",
+    "deirezzor24.net": "Deir Ezzor 24", "daraa24.org": "Daraa 24",
+    "syriahr.com": "Syrian Observatory for Human Rights",
+    "zamanalwsl.net": "Zaman al-Wasl", "rozana.fm": "Rozana",
+    "syrianobserver.com": "The Syrian Observer",
+    "syriadirect.org": "Syria Direct", "sy-24.com": "SY24",
+}
+AFGHAN_DARI_TERMS = (
+    '(داعش OR "داعش خراسان" OR القاعده OR تروریسم OR تروریستی '
+    'OR انفجار OR انتحاری OR "حمله مسلحانه" OR "حمله انتحاری")'
+)
+AFGHAN_PASHTO_TERMS = (
+    '(داعش OR "داعش خراسان" OR القاعده OR چاودنه OR چاودنې '
+    'OR "ځانمرګی برید" OR "ځانمرګي برید" OR "وسله وال برید" OR ترهګري)'
+)
+AFGHAN_ENGLISH_TERMS = (
+    '("ISIS-K" OR ISKP OR "Islamic State Khorasan" OR "al-Qaeda" '
+    'OR bombing OR "suicide attack" OR "terror plot" OR "terrorist cell")'
+)
+SYRIAN_ARABIC_TERMS = (
+    '(داعش OR "تنظيم الدولة" OR "خلايا التنظيم" OR "خلية إرهابية" '
+    'OR "خلايا نائمة" OR "عبوة ناسفة" OR "هجوم مسلح" OR اغتيال '
+    'OR تفجير OR انتحاري OR "مكافحة الإرهاب")'
+)
+
+MULTILINGUAL_PROFILES.extend([
+    {
+        "code": "fa", "name": "Dari / Afghanistan",
+        # Native query text controls retrieval language. Use a supported English
+        # edition rather than inventing an Afghan Google News edition.
+        "hl": "en-US", "gl": "US", "ceid": "US:en",
+        "sites": [site for site in AFGHANISTAN_LOCAL_SOURCES if site != "kabulnow.com"],
+        "site_terms": AFGHAN_DARI_TERMS,
+        "queries": [
+            {"term": '("داعش خراسان" OR "شاخه خراسان") (حمله OR بازداشت OR انفجار OR تمویل)', "category": "Attacks"},
+            {"term": '(القاعده OR "شبکه حقانی") (افغانستان OR کابل OR ننگرهار) (حمله OR بازداشت OR تروریسم)', "category": "Arrests"},
+        ],
+    },
+    {
+        "code": "ps", "name": "Pashto / Afghanistan",
+        "hl": "en-US", "gl": "US", "ceid": "US:en",
+        "sites": ["tolonews.com", "pajhwok.com", "ariananews.af", "afintl.com", "swn.af"],
+        "site_terms": AFGHAN_PASHTO_TERMS,
+        "queries": [
+            {"term": '(داعش OR القاعده) (افغانستان OR کابل OR ننګرهار OR کندهار) (برید OR چاودنه OR نیول)', "category": "Attacks"},
+        ],
+    },
+    {
+        "code": "en", "name": "English / Afghanistan",
+        "hl": "en-US", "gl": "US", "ceid": "US:en",
+        "sites": ["tolonews.com", "pajhwok.com", "amu.tv", "8am.media", "kabulnow.com", "khaama.com", "ariananews.af"],
+        "site_terms": AFGHAN_ENGLISH_TERMS,
+        "queries": [
+            {"term": '("ISIS-K" OR ISKP OR "Islamic State Khorasan") (Afghanistan OR Kabul OR Nangarhar OR Kandahar) (attack OR arrest OR financing OR recruitment)', "category": "Attacks"},
+        ],
+    },
+    {
+        "code": "ar", "name": "Arabic / Syria",
+        "hl": "ar", "gl": "SA", "ceid": "SA:ar",
+        "sites": [site for site in SYRIA_LOCAL_SOURCES if site != "syrianobserver.com"],
+        "site_terms": SYRIAN_ARABIC_TERMS,
+        "queries": [
+            {"term": '(داعش OR "خلايا نائمة" OR "تنظيم الدولة") ("دير الزور" OR الرقة OR الحسكة OR البادية)', "category": "Attacks"},
+            {"term": '("خلية إرهابية" OR "عبوة ناسفة" OR "هجوم انتحاري") (درعا OR السويداء OR دمشق OR إدلب OR حلب)', "category": "Attacks"},
+        ],
+    },
+    {
+        "code": "en", "name": "English / Syria",
+        "hl": "en-US", "gl": "US", "ceid": "US:en",
+        "sites": ["syrianobserver.com", "syriadirect.org", "npasyria.com", "syriahr.com"],
+        "site_terms": '(ISIS OR ISIL OR "Islamic State" OR "terrorist cell" OR "sleeper cell" OR "suicide bombing")',
+        "queries": [],
+    },
+])
+
+
+
+# Run only the publisher additions from this expansion:
+# python collector.py backfill-new-sources
+# Equivalent: python collector.py backfill --scope regional-additions
+# Existing daily and ordinary incremental-backfill commands keep their scope.
+COLLECTION_SCOPE = "all"
+REGIONAL_BACKFILL_PROFILE_NAMES = {
+    "Arabic", "French / Africa", "English / Africa",
+    "Dari / Afghanistan", "Pashto / Afghanistan", "English / Afghanistan",
+    "Arabic / Syria", "English / Syria",
+}
+
+
+def regional_backfill_profiles():
+    profiles = []
+    seen = set()
+    for profile in MULTILINGUAL_PROFILES:
+        if profile["name"] not in REGIONAL_BACKFILL_PROFILE_NAMES:
+            continue
+        sites = []
+        for site in profile.get("sites", []):
+            # These two Arabic publishers predate the source expansion.
+            if profile["name"] == "Arabic" and site in {"aljazeera.net", "alarabiya.net"}:
+                continue
+            identity = (site, profile["code"], profile["ceid"], profile["site_terms"])
+            if identity not in seen:
+                seen.add(identity)
+                sites.append(site)
+        if sites:
+            # Only site-restricted requests; broad discovery could query old sources.
+            profiles.append(dict(profile, sites=sites, queries=[]))
+    return profiles
+
+
+def planned_collection_query_count():
+    if COLLECTION_SCOPE == "regional-additions":
+        return sum(len(profile["sites"]) for profile in regional_backfill_profiles())
+    return (sum(len(v) for v in CORE_SEARCH_QUERIES.values())
+            + len(OFFICIAL_BROAD_QUERIES)
+            + sum(len(targeted_source_queries(source)) for source in TARGETED_SOURCE_SITES)
+            + multilingual_query_count())
+
+
+def parse_collection_mode(argv=None):
+    parser = argparse.ArgumentParser(description="Incremental CT news collector")
+    parser.add_argument("mode", nargs="?", default="daily",
+                        choices=["daily", "backfill", "backfill-new-sources"])
+    parser.add_argument("--scope", choices=["all", "regional-additions"], default=None)
+    args = parser.parse_args(argv)
+    scope = args.scope or "all"
+    if args.mode == "backfill-new-sources":
+        if args.scope == "all":
+            parser.error("backfill-new-sources cannot use --scope all")
+        scope = "regional-additions"
+    if args.mode == "daily" and scope != "all":
+        parser.error("regional-additions scope requires a backfill mode")
+    return args.mode != "daily", scope
+
+
 def multilingual_query_count():
     return sum(
         len(profile.get("queries", []))
@@ -2678,7 +2826,8 @@ def collect_multilingual_query(
     return results
 
 
-def collect_multilingual(days):
+def collect_multilingual(days, profiles=None):
+    profiles = MULTILINGUAL_PROFILES if profiles is None else profiles
     records = []
     language_counts = Counter()
 
@@ -2688,12 +2837,12 @@ def collect_multilingual(days):
     print("=" * 70)
 
     for number, profile in enumerate(
-        MULTILINGUAL_PROFILES,
+        profiles,
         start=1,
     ):
         print()
         print(
-            f"[LANGUAGE {number}/{len(MULTILINGUAL_PROFILES)}] "
+            f"[LANGUAGE {number}/{len(profiles)}] "
             f"{profile['name']} ({profile['code']})"
         )
 
@@ -2775,13 +2924,20 @@ def collect_multilingual(days):
 
 
 def _collect_all_once(days):
+    if COLLECTION_SCOPE == "regional-additions":
+        if not BACKFILL_ACTIVE:
+            raise RuntimeError("Regional-only collection requires incremental backfill mode.")
+        profiles = regional_backfill_profiles()
+        print(f"TARGETED REGIONAL BACKFILL: {planned_collection_query_count()} publisher/language queries; {days} days")
+        print("Sources: Arabic additions, Africa, Afghanistan and Syria only.")
+        return collect_multilingual(days, profiles=profiles)
     print()
     print("=" * 70)
     print("INTERPOL CT Intelligence Map")
     print("OSINT Collector V13 — incremental backfill and resumable collection")
     print("=" * 70)
     print(f"Window: {days} days")
-    print("Collection languages: English + French + Arabic + German + Spanish + Italian + Turkish + Russian + Urdu + Persian + Hebrew")
+    print("Collection languages: English + French + Arabic + German + Spanish + Italian + Turkish + Russian + Urdu + Persian/Dari + Pashto + Hebrew")
     print("Relevance filter: strict event mode")
     print(
         "Acquisition strategy: compact discovery + local source classification"
@@ -3151,6 +3307,11 @@ piracy unless the event is actual piracy, pirate attack, vessel hijacking/boardi
 crew kidnapping or armed robbery at sea.
 
 Specialist-source categories are provisional retrieval hints, not evidence.
+Country-focused searches and publisher locations do not establish event location.
+Afghan and Syrian sources may report on other countries. Extract only locations
+supported by the article. Preserve claimed versus confirmed responsibility and
+attribute official statements. Do not infer that all Taliban-related governance
+news, Syrian armed clashes, assassinations or arrests are terrorist events.
 For CBRN, retain concrete CT-relevant attacks, plots, seizures, investigations
 and judicial developments. Preserve uncertainty about intent, attribution and
 whether the substance or threat has been confirmed. Never infer terrorism just
@@ -3204,7 +3365,7 @@ IMPORTANT:
   score just above 50 rather than rejecting it.
 
 The input can be in English, French, Arabic, German, Spanish, Italian, Turkish,
-Russian, Urdu, Persian, Hebrew, or another language. Understand the ORIGINAL
+Russian, Urdu, Persian/Dari, Pashto, Hebrew, or another language. Understand the ORIGINAL
 LANGUAGE directly; do not penalize an event because it is not written in English.
 
 For every candidate also return:
@@ -8432,7 +8593,7 @@ def save_database(events, trend_summary=None, weekly_analysis=None):
         "source_languages":
             [
                 "en", "fr", "ar", "de", "es", "it",
-                "tr", "ru", "ur", "fa", "he"
+                "tr", "ru", "ur", "fa", "he", "ps"
             ],
         "collector":
             "Google News RSS multilingual + expanded Arabic/Africa and maritime/CBRN sources + Gemini selection/translation",
@@ -8531,11 +8692,18 @@ def save_database(events, trend_summary=None, weekly_analysis=None):
             **BACKFILL_COMPLETED_QUERIES, **BACKFILL_PENDING_QUERIES,
         },
         "incremental_collection_stats": dict(BACKFILL_STATS),
+        "last_collection_scope": COLLECTION_SCOPE,
+        "last_planned_query_count": planned_collection_query_count(),
         "specialist_coverage": {
             "maritime_sources": [name for name, site, kind in MARITIME_SOURCE_SITES],
             "cbrn_sources": [name for name, site, kind in CBRN_SOURCE_SITES],
             "acquisition": "Public Google News results; no direct incident-database API.",
             "category_hints": "Provisional; Gemini decides relevance and final categories.",
+        },
+        "country_focused_sources": {
+            "Afghanistan": AFGHANISTAN_LOCAL_SOURCES,
+            "Syria": SYRIA_LOCAL_SOURCES,
+            "note": "Local and country-focused reporting, including exile-based media; publishers may have multiple language queries.",
         },
         "regional_coverage": {
             "arabic_target_sites": len(ARABIC_SOURCE_SITES),
@@ -8569,23 +8737,9 @@ def save_database(events, trend_summary=None, weekly_analysis=None):
 
 
 def main():
+    global COLLECTION_SCOPE
+    is_backfill, COLLECTION_SCOPE = parse_collection_mode()
     existing_weekly_analysis = load_existing_weekly_analysis()
-
-    is_backfill = (
-        len(
-            sys.argv
-        )
-        >
-        1
-
-        and
-
-        sys.argv[
-            1
-        ].lower()
-        ==
-        "backfill"
-    )
 
     initialize_incremental_state(is_backfill)
 
@@ -8731,7 +8885,7 @@ def main():
     )
     print(
         f"Search queries: "
-        f"{sum(len(v) for v in CORE_SEARCH_QUERIES.values()) + len(OFFICIAL_BROAD_QUERIES) + sum(len(targeted_source_queries(source)) for source in TARGETED_SOURCE_SITES) + multilingual_query_count()}"
+        f"{planned_collection_query_count()}"
     )
     print(
         f"AI article threshold: "
