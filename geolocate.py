@@ -37,6 +37,7 @@ import requests
 #   GEMINI_RESCUE_MODEL optional, default: gemini-3.6-flash
 #   AI_GEO_BATCH_SIZE   optional, default: 20
 #   AI_GEO_FORCE        optional, "1"/"true" to refresh every event
+#   AI_GEO_PRESERVE_IDS_FILE optional JSON list of protected existing event IDs
 # ============================================================
 
 
@@ -1835,27 +1836,19 @@ def apply_ai_result(
 # QUOTA-SAFE CHECKPOINTS
 # ============================================================
 
-def save_checkpoint(
-    data,
-    label,
-):
-    """Save AI progress after every successful batch."""
-
-    with open(
-        OUTPUT_FILE,
-        "w",
-        encoding="utf-8",
-    ) as file:
-        json.dump(
-            data,
-            file,
-            ensure_ascii=False,
-            indent=2,
-        )
-
-    print(
-        f"   Checkpoint saved: {label}"
-    )
+def save_checkpoint(data, label):
+    """Atomically preserve completed geolocation batches for the next run."""
+    temporary = str(OUTPUT_FILE) + ".tmp"
+    try:
+        with open(temporary, "w", encoding="utf-8") as handle:
+            json.dump(data, handle, ensure_ascii=False, indent=2)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, OUTPUT_FILE)
+    finally:
+        if os.path.exists(temporary):
+            os.remove(temporary)
+    print(f"   Checkpoint saved: {label}")
 
 
 def quota_or_capacity_error(
@@ -2051,7 +2044,22 @@ def rescue_unknown_events(
 # MAIN
 # ============================================================
 
+def load_preserved_event_ids():
+    """Optional per-run protection of pre-existing locations/AI decisions."""
+    path = os.getenv("AI_GEO_PRESERVE_IDS_FILE", "")
+    if not path:
+        return set()
+    if FORCE_AI:
+        raise RuntimeError("Existing-location protection cannot be combined with forced geolocation.")
+    with open(path, encoding="utf-8") as handle:
+        ids = json.load(handle)
+    if not isinstance(ids, list) or any(not isinstance(value, str) for value in ids):
+        raise RuntimeError("Invalid existing-location protection file; geolocation stopped.")
+    return set(ids)
+
+
 def main():
+    preserved_event_ids = load_preserved_event_ids()
     print()
     print("=" * 72)
     print("INTERPOL CT Intelligence Map")
@@ -2118,6 +2126,11 @@ def main():
     for index, event in enumerate(
         events
     ):
+        # Protected events never enter primary or rescue processing.
+        if str(event.get("id", "")) in preserved_event_ids:
+            cached_count += 1
+            continue
+
         payload = event_ai_payload(
             event,
             index,
@@ -2625,17 +2638,7 @@ def main():
             ),
     }
 
-    with open(
-        OUTPUT_FILE,
-        "w",
-        encoding="utf-8",
-    ) as file:
-        json.dump(
-            data,
-            file,
-            ensure_ascii=False,
-            indent=2,
-        )
+    save_checkpoint(data, "geolocation complete")
 
     print()
     print("=" * 72)
