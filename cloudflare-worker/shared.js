@@ -175,7 +175,7 @@ function matchesRegion(event, region) {
 
   const broadRegion = REPORT_REGION_COUNTRY_CODES[selected];
   if (broadRegion) {
-    const countryCode = String(event?.country_code || event?.countryCode || "")
+    const countryCode = String(event?.country_code || event?.country_iso2 || event?.countryCode || event?.iso2 || "")
       .trim()
       .toUpperCase();
     if (countryCode && broadRegion.has(countryCode)) return true;
@@ -300,63 +300,144 @@ async function extractGeminiText(payload) {
 }
 
 async function callGemini(env, input) {
-  const body = {
-    model: env.GEMINI_MODEL || "gemini-3.5-flash-lite",
-    input: "Produce the requested analytical report using only this JSON dataset:\n\n" + JSON.stringify(input),
-    system_instruction: SYSTEM_INSTRUCTION,
-    store: false,
-    response_format: {
-      type: "text",
-      mime_type: "application/json",
-      schema: REPORT_SCHEMA
-    },
-    generation_config: {
-      max_output_tokens: 9000,
-      thinking_level: "minimal"
-    }
-  };
-
-  let last;
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    const response = await fetch(GEMINI_URL, {
-      method: "POST",
-      headers: {
-        "x-goog-api-key": env.GEMINI_API_KEY,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    });
-
-    if (response.status === 429 || response.status >= 500) {
-      last = new Error(`Gemini temporary error ${response.status}`);
-      await new Promise(r=>setTimeout(r, attempt * 2500));
-      continue;
-    }
-
-    if (!response.ok) {
-      throw new Error(`Gemini error ${response.status}: ${await response.text()}`);
-    }
-
-    const payload = await response.json();
-    const raw = await extractGeminiText(payload);
-    const normalizedRaw = raw
-      .trim()
-      .replace(/^```(?:json)?\s*/i, "")
-      .replace(/\s*```$/i, "");
-    let parsed;
-    try {
-      parsed = JSON.parse(normalizedRaw);
-    } catch (error) {
-      console.error("Gemini JSON parse failure", {
-        status: payload?.status,
-        preview: normalizedRaw.slice(0, 500)
-      });
-      throw new Error("Gemini returned text, but the report JSON could not be parsed.");
-    }
-    if (!parsed?.analysis) throw new Error("Gemini returned an empty report.");
-    return parsed;
+  const models = [];
+  const primaryModel = env.GEMINI_MODEL || "gemini-3.5-flash-lite";
+  const fallbackModel = env.GEMINI_FALLBACK_MODEL || "gemini-3.6-flash";
+  for (const model of [primaryModel, fallbackModel]) {
+    if (model && !models.includes(model)) models.push(model);
   }
-  throw last || new Error("Gemini request failed.");
+
+  let lastError = null;
+
+  for (let attempt = 0; attempt < Math.max(3, models.length); attempt++) {
+    const model = models[Math.min(attempt, models.length - 1)];
+    const body = {
+      model,
+      input: "Produce the requested analytical report using only this JSON dataset:\n\n" + JSON.stringify(input),
+      system_instruction: SYSTEM_INSTRUCTION,
+      store: false,
+      response_format: {
+        type: "text",
+        mime_type: "application/json",
+        schema: REPORT_SCHEMA
+      },
+      generation_config: {
+        max_output_tokens: 9000,
+        thinking_level: "minimal"
+      }
+    };
+
+    try {
+      const response = await fetch(GEMINI_URL, {
+        method: "POST",
+        headers: {
+          "x-goog-api-key": env.GEMINI_API_KEY,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (response.status === 429 || response.status >= 500) {
+        lastError = new Error(`Gemini temporary error ${response.status} on ${model}`);
+        await new Promise(r => setTimeout(r, (attempt + 1) * 2200));
+        continue;
+      }
+
+      if (!response.ok) {
+        throw new Error(`Gemini error ${response.status}: ${await response.text()}`);
+      }
+
+      const payload = await response.json();
+      const status = String(payload?.status || "").toLowerCase();
+
+      if (["failed", "cancelled"].includes(status)) {
+        throw new Error(
+          cleanText(payload?.error?.message || `Gemini interaction ${status}.`, 300)
+        );
+      }
+
+      let raw;
+      try {
+        raw = await extractGeminiText(payload);
+      } catch (error) {
+        lastError = error;
+        if (status === "incomplete" || attempt < 2) {
+          await new Promise(r => setTimeout(r, (attempt + 1) * 1200));
+          continue;
+        }
+        throw error;
+      }
+
+      const normalizedRaw = raw
+        .trim()
+        .replace(/^```(?:json)?\s*/i, "")
+        .replace(/\s*```$/i, "");
+
+      let parsed;
+      try {
+        parsed = JSON.parse(normalizedRaw);
+      } catch (error) {
+        lastError = new Error("Gemini returned text, but the report JSON could not be parsed.");
+        console.error("Gemini JSON parse failure", {
+          model,
+          status: payload?.status,
+          preview: normalizedRaw.slice(0, 500)
+        });
+        if (attempt < 2) {
+          await new Promise(r => setTimeout(r, (attempt + 1) * 1200));
+          continue;
+        }
+        throw lastError;
+      }
+
+      if (!parsed?.analysis) {
+        lastError = new Error("Gemini returned an empty report.");
+        if (attempt < 2) continue;
+        throw lastError;
+      }
+
+      return parsed;
+    } catch (error) {
+      lastError = error;
+      if (attempt < 2 && /temporary|incomplete|no readable output|could not be parsed|empty report/i.test(String(error?.message || ""))) {
+        await new Promise(r => setTimeout(r, (attempt + 1) * 1200));
+        continue;
+      }
+      throw error;
+    }
+  }
+
+  throw lastError || new Error("Gemini request failed.");
 }
 
-export { GEMINI_URL, ALLOWED_PERIODS, MAX_EVENTS_CURRENT, MAX_EVENTS_PREVIOUS, CACHE_TTL_MS, REPORT_COOLDOWN_MS, SESSION_TTL_MS, USER_PASSWORD_HASHES, ALLOWED_USERS, REPORT_SCHEMA, SYSTEM_INSTRUCTION, corsHeaders, jsonResponse, cleanText, normalizeUsername, isAllowedUser, parisDayKey, usageTemplate, parseEventDate, eventCategories, matchesTopic, matchesRegion, compactEvent, stats, priority, sha256, gateCall, extractGeminiText, callGemini };
+export {
+  GEMINI_URL,
+  ALLOWED_PERIODS,
+  MAX_EVENTS_CURRENT,
+  MAX_EVENTS_PREVIOUS,
+  CACHE_TTL_MS,
+  REPORT_COOLDOWN_MS,
+  SESSION_TTL_MS,
+  USER_PASSWORD_HASHES,
+  ALLOWED_USERS,
+  REPORT_SCHEMA,
+  SYSTEM_INSTRUCTION,
+  corsHeaders,
+  jsonResponse,
+  cleanText,
+  normalizeUsername,
+  isAllowedUser,
+  parisDayKey,
+  usageTemplate,
+  parseEventDate,
+  eventCategories,
+  matchesTopic,
+  matchesRegion,
+  compactEvent,
+  stats,
+  priority,
+  sha256,
+  gateCall,
+  extractGeminiText,
+  callGemini
+};
