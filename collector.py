@@ -39,7 +39,7 @@ except Exception:
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V10 — MULTILINGUAL GEMINI + FAST DEDUP + 24H TREND
+# OSINT COLLECTOR V11 — EXPANDED ARABIC / AFRICA + MULTILINGUAL GEMINI
 #
 # Expanded coverage + stricter event relevance.
 #
@@ -849,11 +849,7 @@ OFFICIAL_SOURCE_QUERIES = {
 # Each source is queried through Google News RSS using site:
 # restrictions, so the workflow needs no additional API keys.
 #
-# ACLED NOTE:
-# This collector targets ACLED's publicly indexed analysis/news
-# pages only.  The full ACLED event dataset/API requires a myACLED
-# account and authentication and is therefore not pulled directly
-# here.
+# ACLED public reporting is discovered through Google News, without its API.
 #
 # Source targeting improves recall.  Every returned article still
 # has to pass the same CT relevance filter and the same intelligent
@@ -861,14 +857,8 @@ OFFICIAL_SOURCE_QUERIES = {
 # ============================================================
 
 TARGETED_SOURCE_SITES = [
-
-    # Structured conflict / event-analysis source
-    {
-        "name": "ACLED",
-        "site": "acleddata.com",
-        "priority": 118,
-        "kind": "conflict_data_analysis",
-    },
+    {"name": "ACLED", "site": "acleddata.com", "priority": 118,
+     "kind": "specialist_analysis"},
 
     # International wire / mainstream
     {
@@ -1236,6 +1226,98 @@ MULTILINGUAL_PROFILES = [
         "site_terms": '(טרור OR מחבל OR פיגוע OR דאעש)',
     },
 ]
+
+
+
+# Regional source expansion. Domains are discovery targets, not guaranteed feeds.
+# Google News indexing varies; no result from a site does not mean no incidents.
+# Group names are retrieval hints only: Gemini must assess each actual event.
+ARABIC_CT_TERMS = (
+    '(إرهاب OR إرهابي OR إرهابيين OR داعش OR القاعدة OR تفجير OR تفجيرات '
+    'OR "خلية إرهابية" OR "بوكو حرام" OR "حركة الشباب" '
+    'OR "جماعة نصرة الإسلام والمسلمين" OR "تنظيم الدولة")'
+)
+AFRICA_FR_CT_TERMS = (
+    '(terrorisme OR terroriste OR terroristes OR djihadiste OR djihadistes '
+    'OR jihadistes OR attentat OR JNIM OR GSIM OR EIGS OR ISSP OR ISWAP '
+    'OR "Boko Haram" OR shebab OR shabaab OR "État islamique" '
+    'OR "groupe armé" OR "groupes armés" OR embuscade)'
+)
+AFRICA_EN_CT_TERMS = (
+    '(terrorism OR terrorist OR terrorists OR insurgents OR jihadist '
+    'OR "Boko Haram" OR ISWAP OR JNIM OR ISSP OR "al-Qaeda" '
+    'OR "al-Shabaab" OR "Al Shabab" OR "Islamic State" OR ADF '
+    'OR Ansaru OR Lakurawa OR "Cabo Delgado")'
+)
+
+# 26 Arabic-language targets: regional outlets, local reporting and agencies.
+ARABIC_SOURCE_SITES = [
+    "aljazeera.net", "alarabiya.net", "skynewsarabia.com", "asharq.com",
+    "aawsat.com", "alquds.co.uk", "alaraby.co.uk", "france24.com/ar",
+    "bbc.com/arabic", "aa.com.tr/ar", "independentarabia.com",
+    "alhurra.com", "alsumaria.tv", "shafaq.com/ar", "ina.iq",
+    "rudawarabia.net", "enabbaladi.net", "syria.tv", "sana.sy",
+    "almasdaronline.com", "sabanew.net", "alwasat.ly", "alraimedia.com",
+    "hespress.com", "mosaiquefm.net/ar", "akhbaralaane.net",
+]
+
+# Sahel / Lake Chad plus Central Africa. French local reporting matters here.
+AFRICA_FR_SOURCE_SITES = [
+    "studiotamani.org", "studiokalangou.org", "studioyafa.bf",
+    "maliweb.net", "malijet.com", "aib.media", "lefaso.net",
+    "burkina24.com", "actuniger.com", "anp.ne", "tchadinfos.com",
+    "alwihdainfo.com", "crtv.cm", "actucameroun.com", "radiookapi.net",
+    "actualite.cd", "rfi.fr/fr", "jeuneafrique.com", "sahel-intelligence.com",
+]
+
+AFRICA_EN_SOURCE_SITES = [
+    "humanglemedia.com", "dailytrust.com", "premiumtimesng.com",
+    "channelstv.com", "punchng.com", "vanguardngr.com", "thecable.ng",
+    "leadership.ng", "zagazola.org", "shabellemedia.com", "hiiraan.com",
+    "garoweonline.com/en", "goobjoog.com", "sonna.so/en", "nation.africa",
+    "standardmedia.co.ke", "the-star.co.ke", "theeastafrican.co.ke",
+    "monitor.co.ug", "clubofmozambique.com",
+]
+
+for _profile in MULTILINGUAL_PROFILES:
+    if _profile["code"] == "ar":
+        _profile["sites"] = ARABIC_SOURCE_SITES
+        _profile["site_terms"] = ARABIC_CT_TERMS
+        _profile["queries"].extend([
+            {"term": '("بوكو حرام" OR "ولاية غرب أفريقيا" OR "ولاية غرب إفريقيا" OR "إيسواب")', "category": "Attacks"},
+            {"term": '("جماعة نصرة الإسلام والمسلمين" OR "داعش الساحل" OR "ولاية الساحل" OR "أنصار الإسلام")', "category": "Attacks"},
+            {"term": '("حركة الشباب" OR "الشباب الصومالية" OR "داعش الصومال")', "category": "Attacks"},
+            {"term": '("خلية إرهابية" OR "خلايا داعش" OR "عبوة ناسفة" OR "تمويل الإرهاب") (العراق OR سوريا OR اليمن OR ليبيا)', "category": "Arrests"},
+        ])
+
+MULTILINGUAL_PROFILES.extend([
+    {
+        "code": "fr", "name": "French / Africa", "hl": "fr", "gl": "FR", "ceid": "FR:fr",
+        "sites": AFRICA_FR_SOURCE_SITES, "site_terms": AFRICA_FR_CT_TERMS,
+        "queries": [
+            {"term": '(JNIM OR GSIM OR EIGS OR ISSP OR "État islamique" OR djihadistes) (Mali OR Niger OR Burkina OR Sahel)', "category": "Attacks"},
+            {"term": '("Boko Haram" OR ISWAP) (Nigeria OR Niger OR Tchad OR Cameroun)', "category": "Attacks"},
+            {"term": '(terroristes OR djihadistes OR "groupe armé") (Bénin OR Togo OR "Côte d’Ivoire")', "category": "Attacks"},
+            {"term": '(ADF OR "Forces démocratiques alliées" OR shebab OR "Cabo Delgado") (attaque OR arrestation OR attentat)', "category": "Attacks"},
+        ],
+    },
+    {
+        "code": "en", "name": "English / Africa", "hl": "en-NG", "gl": "NG", "ceid": "NG:en",
+        "sites": AFRICA_EN_SOURCE_SITES, "site_terms": AFRICA_EN_CT_TERMS,
+        "queries": [
+            {"term": '("Boko Haram" OR ISWAP OR Ansaru OR Lakurawa) (attack OR arrest OR ambush OR raid OR financing)', "category": "Attacks"},
+            {"term": '(JNIM OR ISSP OR "Islamic State Sahel") (Mali OR Niger OR Burkina OR Benin OR Togo)', "category": "Attacks"},
+        ],
+    },
+    {
+        "code": "en", "name": "English / East Africa", "hl": "en-KE", "gl": "KE", "ceid": "KE:en",
+        "sites": [], "site_terms": AFRICA_EN_CT_TERMS,
+        "queries": [
+            {"term": '("al-Shabaab" OR "Al Shabab" OR "Islamic State Somalia") (attack OR raid OR arrest OR bombing OR financing)', "category": "Attacks"},
+            {"term": '(ADF OR "Allied Democratic Forces" OR "Islamic State" OR insurgents) (Uganda OR Congo OR Mozambique OR "Cabo Delgado")', "category": "Attacks"},
+        ],
+    },
+])
 
 
 def multilingual_query_count():
@@ -2445,7 +2527,7 @@ def _collect_all_once(days):
     print()
     print("=" * 70)
     print("INTERPOL CT Intelligence Map")
-    print("OSINT Collector V9 — multilingual Gemini intelligence")
+    print("OSINT Collector V11 — expanded Arabic and African coverage")
     print("=" * 70)
     print(f"Window: {days} days")
     print("Collection languages: English + French + Arabic + German + Spanish + Italian + Turkish + Russian + Urdu + Persian + Hebrew")
@@ -2891,6 +2973,32 @@ class AISelectionQuotaError(RuntimeError):
 
 class AISelectionTransientError(RuntimeError):
     pass
+
+
+
+
+# ============================================================
+# LEGACY ACLED METADATA COMPATIBILITY (no API acquisition)
+# Preserve identities/coordinates if an older database already contains them.
+# No credentials, authentication or ACLED network requests are used.
+# ============================================================
+ACLED_READ_URL = "https://acleddata.com/api/acled/read"
+
+
+def merge_acled_metadata(existing, new):
+    """Retain ACLED source records and coordinates in mixed news clusters."""
+    rows = {str(r["event_id_cnty"]): r for r in existing.get("acled_records", [])}
+    for row in new.get("acled_records", []):
+        key = str(row["event_id_cnty"])
+        old = rows.get(key, {})
+        if int(row.get("timestamp") or 0) >= int(old.get("timestamp") or 0):
+            rows[key] = row
+    if rows:
+        existing["acled_records"] = list(rows.values())
+    if new.get("geolocation_source") == "ACLED" and len(rows) == 1:
+        for key in ("latitude", "longitude", "country", "city", "region",
+                    "location_precision", "location_confidence", "geolocation_source"):
+            existing[key] = new.get(key)
 
 
 
@@ -4463,6 +4571,9 @@ def normalize_event_text(text):
 
 
 def canonical_url(url):
+    # ACLED record identity is in the query; do not collapse all API links.
+    if url and url.startswith(ACLED_READ_URL + "?"):
+        return url
     if not url:
         return ""
 
@@ -5650,6 +5761,8 @@ def merge_event(
     existing[
         "categories"
     ] = existing_categories
+
+    merge_acled_metadata(existing, new)
 
     # Keep a history of genuinely different articles/headlines.
     known_article_ids = {
@@ -8080,7 +8193,7 @@ def save_database(events, trend_summary=None, weekly_analysis=None):
                 "tr", "ru", "ur", "fa", "he"
             ],
         "collector":
-            "Google News RSS V9 multilingual + Gemini selection/translation",
+            "Google News RSS multilingual + expanded Arabic/Africa sources + Gemini selection/translation",
         "relevance_filter":
             "Deterministic CT candidate filter + Gemini semantic final selection",
 
@@ -8168,8 +8281,19 @@ def save_database(events, trend_summary=None, weekly_analysis=None):
                 for source
                 in TARGETED_SOURCE_SITES
             ],
+        "multilingual_source_sites": {
+            profile["name"]: list(profile.get("sites", []))
+            for profile in MULTILINGUAL_PROFILES
+        },
+        "regional_coverage": {
+            "arabic_target_sites": len(ARABIC_SOURCE_SITES),
+            "africa_french_target_sites": len(AFRICA_FR_SOURCE_SITES),
+            "africa_english_target_sites": len(AFRICA_EN_SOURCE_SITES),
+            "note": "Discovery targets through Google News; indexing and yield vary by publisher.",
+        },
+        "acled_collection": {"status": "api_removed"},
         "acled_mode":
-            "Publicly indexed ACLED analysis/news via Google News; direct ACLED API not enabled",
+            "Public ACLED reporting via Google News only; no event-data API",
         "official_sources":
             [
                 "U.S. Department of Justice",
@@ -8242,9 +8366,7 @@ def main():
             f"{len(existing)} events"
         )
 
-    fresh = collect_all(
-        days
-    )
+    fresh = collect_all(days)
 
     print()
     print(
