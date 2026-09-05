@@ -39,7 +39,7 @@ except Exception:
 
 # ============================================================
 # INTERPOL CT INTELLIGENCE MAP
-# OSINT COLLECTOR V11 — EXPANDED ARABIC / AFRICA + MULTILINGUAL GEMINI
+# OSINT COLLECTOR V12 — ARABIC / AFRICA + MARITIME / CBRN
 #
 # Expanded coverage + stricter event relevance.
 #
@@ -111,7 +111,7 @@ AI_SELECTION_BATCH_SIZE = max(
     ),
 )
 
-AI_SELECTION_VERSION = "gemini-ct-selection-v2-multilingual"
+AI_SELECTION_VERSION = "gemini-ct-selection-v3-specialist"
 AI_SELECTION_CACHE_FILE = "ai_article_selection_cache.json"
 
 AI_SELECTION_ATTEMPTS = 5
@@ -957,6 +957,67 @@ TARGETED_SOURCE_SITES = [
 ]
 
 
+
+# Specialist acquisition uses topic-specific terms instead of requiring a
+# terrorism keyword in every headline. Category hints are provisional: Gemini
+# determines actual event relevance and final categories. No direct API or
+# restricted incident database access is implied by these public-news targets.
+MARITIME_SOURCE_TERMS = (
+    '(piracy OR pirate OR pirates OR hijacked OR hijacking OR "armed robbery" '
+    'OR "crew kidnapped" OR "crew abducted" OR "vessel boarded" '
+    'OR "ship boarded" OR "boarding incident" OR "attempted boarding")'
+)
+CBRN_SOURCE_TERMS = (
+    '(CBRN OR CBRNE OR bioterrorism OR "chemical weapon" OR "chemical weapons" '
+    'OR "biological weapon" OR "biological weapons" OR ricin OR sarin '
+    'OR "dirty bomb" OR "radiological terrorism" OR "nuclear terrorism" '
+    'OR "radioactive material" OR "nuclear material" OR "anthrax attack") '
+    '(attack OR plot OR threat OR arrest OR seized OR seizure OR trafficking '
+    'OR smuggling OR stolen OR investigation OR prosecution OR convicted)'
+)
+
+MARITIME_SOURCE_SITES = [
+    ("IMB / ICC Commercial Crime Services", "icc-ccs.org", "maritime_reporting_body"),
+    ("ReCAAP ISC", "recaap.org", "maritime_reporting_body"),
+    ("UKMTO", "ukmto.org", "official_maritime_source"),
+    ("IMO", "imo.org", "intergovernmental_source"),
+    ("EUNAVFOR Atalanta", "eunavfor.eu", "official_maritime_source"),
+    ("Combined Maritime Forces", "combinedmaritimeforces.com", "official_maritime_source"),
+    ("The Maritime Executive", "maritime-executive.com", "specialist_media"),
+    ("gCaptain", "gcaptain.com", "specialist_media"),
+    ("SAFETY4SEA", "safety4sea.com", "specialist_media"),
+    ("Splash 247", "splash247.com", "specialist_media"),
+    ("TradeWinds", "tradewindsnews.com", "specialist_media"),
+    ("Seatrade Maritime", "seatrade-maritime.com", "specialist_media"),
+    ("Dryad Global / Verihelm", "dryadglobal.com", "commercial_risk_analysis"),
+    ("MarineLink", "marinelink.com", "specialist_media"),
+]
+CBRN_SOURCE_SITES = [
+    ("OPCW", "opcw.org", "intergovernmental_source"),
+    ("IAEA public reporting", "iaea.org", "intergovernmental_source"),
+    ("FBI CBRN reporting", "fbi.gov", "official_law_enforcement"),
+    ("DOJ CBRN reporting", "justice.gov", "official_law_enforcement"),
+    ("INTERPOL CBRN reporting", "interpol.int", "official_law_enforcement"),
+    ("Europol CBRN reporting", "europol.europa.eu", "official_law_enforcement"),
+    ("UK Government CBRN reporting", "gov.uk", "official_government"),
+    ("CBRNe World", "cbrneworld.com", "specialist_media"),
+    ("Nuclear Threat Initiative", "nti.org", "specialist_research"),
+    ("Arms Control Association", "armscontrol.org", "specialist_research"),
+    ("James Martin CNS", "nonproliferation.org", "specialist_research"),
+    ("Johns Hopkins Center for Health Security", "centerforhealthsecurity.org", "specialist_research"),
+]
+for _category, _terms, _sources in (
+    ("Maritime Piracy", MARITIME_SOURCE_TERMS, MARITIME_SOURCE_SITES),
+    ("CBRN", CBRN_SOURCE_TERMS, CBRN_SOURCE_SITES),
+):
+    for _name, _site, _kind in _sources:
+        TARGETED_SOURCE_SITES.append({
+            "name": _name, "site": _site, "kind": _kind,
+            "priority": 85, "query_terms": [_terms],
+            "category_hint": _category,
+        })
+
+
 # Compact category-specific query components used with each site.
 # Keeping these narrower than the broad query bank limits noise and
 # makes the targeted-source pass operationally manageable.
@@ -1100,6 +1161,8 @@ DEEP_SCAN_SOURCES = {
 
 
 def targeted_source_queries(source):
+    if source.get("query_terms"):
+        return [f"site:{source['site']} {terms}" for terms in source["query_terms"]]
     queries = [
         (
             "site:"
@@ -1318,6 +1381,27 @@ MULTILINGUAL_PROFILES.extend([
         ],
     },
 ])
+
+
+
+# Topic discovery also covers regional reporting outside the specialist list.
+for _profile in MULTILINGUAL_PROFILES:
+    if _profile["name"] == "Arabic":
+        _profile["queries"].extend([
+            {"term": '("قرصنة بحرية" OR "قراصنة البحر" OR "اختطاف سفينة" OR "اختطاف ناقلة" OR "سطو مسلح") (سفينة OR سفن OR بحري OR طاقم)', "category": "Maritime Piracy"},
+            {"term": '("أسلحة كيميائية" OR "أسلحة بيولوجية" OR "مواد مشعة" OR "قنبلة قذرة" OR ريسين OR سارين) (إرهاب OR داعش OR هجوم OR اعتقال OR تهريب OR ضبط)', "category": "CBRN"},
+        ])
+    elif _profile["name"] == "French":
+        _profile["queries"].extend([
+            {"term": '("piraterie maritime" OR "navire détourné" OR "marins enlevés" OR "brigandage maritime" OR "vol à main armée") (navire OR mer OR équipage)', "category": "Maritime Piracy"},
+            {"term": '(NRBC OR NRBC-E OR "arme chimique" OR "armes chimiques" OR "arme biologique" OR "matières radioactives" OR ricine OR sarin) (terrorisme OR attentat OR arrestation OR trafic OR saisie OR enquête)', "category": "CBRN"},
+        ])
+    elif _profile["name"] == "English / Africa":
+        _profile["queries"].extend([
+            {"term": '(piracy OR pirates OR "crew kidnapped" OR "vessel hijacked") ("Gulf of Guinea" OR Somalia OR "Gulf of Aden" OR "Indian Ocean")', "category": "Maritime Piracy"},
+            {"term": '("armed robbery" OR piracy OR "vessel boarded") ("Singapore Strait" OR Malacca OR Sulu OR Celebes)', "category": "Maritime Piracy"},
+            {"term": CBRN_SOURCE_TERMS, "category": "CBRN"},
+        ])
 
 
 def multilingual_query_count():
@@ -2273,6 +2357,7 @@ def collect_broad_query(
     acquisition_channel,
     targeted_source=None,
     targeted_source_kind=None,
+    category_hint=None,
 ):
     """
     One broad source query can yield articles for any of the merged CT categories.
@@ -2326,6 +2411,13 @@ def collect_broad_query(
             title,
             summary,
         )
+
+        # These tightly scoped specialist searches must reach semantic review
+        # even when source terminology fails the general English keyword gate.
+        # With AI disabled, keep the original deterministic filtering behavior.
+        if AI_SELECTION_ENABLED and category_hint in {"Maritime Piracy", "CBRN"}:
+            if category_hint not in categories:
+                categories.append(category_hint)
 
         if not categories:
             rejected += 1
@@ -2527,7 +2619,7 @@ def _collect_all_once(days):
     print()
     print("=" * 70)
     print("INTERPOL CT Intelligence Map")
-    print("OSINT Collector V11 — expanded Arabic and African coverage")
+    print("OSINT Collector V12 — expanded regional, maritime and CBRN coverage")
     print("=" * 70)
     print(f"Window: {days} days")
     print("Collection languages: English + French + Arabic + German + Spanish + Italian + Turkish + Russian + Urdu + Persian + Hebrew")
@@ -2705,6 +2797,7 @@ def _collect_all_once(days):
                     source[
                         "kind"
                     ],
+                category_hint=source.get("category_hint"),
             )
 
             records.extend(
@@ -2897,6 +2990,20 @@ Maritime Piracy is explicitly in scope even when no terrorist nexus is stated.
 Exclude ordinary maritime accidents, smuggling, fishing disputes and digital/media
 piracy unless the event is actual piracy, pirate attack, vessel hijacking/boarding,
 crew kidnapping or armed robbery at sea.
+
+Specialist-source categories are provisional retrieval hints, not evidence.
+For CBRN, retain concrete CT-relevant attacks, plots, seizures, investigations
+and judicial developments. Preserve uncertainty about intent, attribution and
+whether the substance or threat has been confirmed. Never infer terrorism just
+from a source name, a CBRN keyword or radioactive material being reported stolen.
+Exclude routine industrial accidents, natural outbreaks, exercises, conferences,
+product announcements and generic preparedness or arms-control commentary.
+For maritime reporting, do not relabel every missile/drone attack or suspicious
+approach as piracy. Only classify as Maritime Piracy when the reported facts
+support piracy, armed robbery against ships, hijacking or related crew abduction.
+Relevant terrorist attacks at sea can instead belong to Attacks.
+New reports about old incidents must not turn the historical incident into a
+new attack; preserve the distinction between a new investigation and its subject.
 
 Score relevance from 0 to 100.
 
@@ -8193,7 +8300,7 @@ def save_database(events, trend_summary=None, weekly_analysis=None):
                 "tr", "ru", "ur", "fa", "he"
             ],
         "collector":
-            "Google News RSS multilingual + expanded Arabic/Africa sources + Gemini selection/translation",
+            "Google News RSS multilingual + expanded Arabic/Africa and maritime/CBRN sources + Gemini selection/translation",
         "relevance_filter":
             "Deterministic CT candidate filter + Gemini semantic final selection",
 
@@ -8284,6 +8391,12 @@ def save_database(events, trend_summary=None, weekly_analysis=None):
         "multilingual_source_sites": {
             profile["name"]: list(profile.get("sites", []))
             for profile in MULTILINGUAL_PROFILES
+        },
+        "specialist_coverage": {
+            "maritime_sources": [name for name, site, kind in MARITIME_SOURCE_SITES],
+            "cbrn_sources": [name for name, site, kind in CBRN_SOURCE_SITES],
+            "acquisition": "Public Google News results; no direct incident-database API.",
+            "category_hints": "Provisional; Gemini decides relevance and final categories.",
         },
         "regional_coverage": {
             "arabic_target_sites": len(ARABIC_SOURCE_SITES),
