@@ -10,20 +10,19 @@ on:
       timezone: "Europe/Paris"
     - cron: "17 18 * * *"
       timezone: "Europe/Paris"
-
   workflow_dispatch:
     inputs:
       mode:
-        description: "Collection mode"
+        description: "daily = recent news; backfill-new-sources = regional additions only; backfill = all sources"
         required: true
         default: "daily"
         type: choice
         options:
           - daily
+          - backfill-new-sources
           - backfill
-
       force_ai:
-        description: "Re-run AI geolocation for every existing event"
+        description: "Re-run all geolocation (ignored for backfill-new-sources)"
         required: true
         default: false
         type: boolean
@@ -33,6 +32,7 @@ permissions:
   pages: write
   id-token: write
 
+# Shared with Apply CT Atlas usage upgrade to serialize writes and deployments.
 concurrency:
   group: ct-map-update-main
   cancel-in-progress: false
@@ -40,9 +40,13 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 330
+    env:
+      COLLECTION_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'daily' }}
+      FORCE_GEO_REQUESTED: ${{ github.event_name == 'workflow_dispatch' && inputs.force_ai || false }}
     steps:
       - name: Checkout repository
+        id: checkout
         uses: actions/checkout@v6
         with:
           ref: main
@@ -58,162 +62,163 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Record already processed locations before collection
+        env:
+          PRESERVE_FILE: ${{ runner.temp }}/ct-preserve-geo-ids.json
+        run: |
+          python - <<'PY'
+          import json, math, os
+          from pathlib import Path
+          path = Path("events.json")
+          data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"events": []}
+          if not isinstance(data, dict) or not isinstance(data.get("events"), list):
+              raise RuntimeError("Invalid existing database; refusing to continue")
+          def located(event):
+              lat, lon = event.get("latitude"), event.get("longitude")
+              if lat is None or lon is None or isinstance(lat, bool) or isinstance(lon, bool):
+                  return False
+              try:
+                  lat, lon = float(lat), float(lon)
+                  return math.isfinite(lat) and math.isfinite(lon) and -90 <= lat <= 90 and -180 <= lon <= 180
+              except (ValueError, TypeError):
+                  return False
+          preserve = []
+          for event in data["events"]:
+              if not isinstance(event, dict):
+                  raise RuntimeError("Invalid existing event")
+              if event.get("id") is not None and (event.get("ai_geo_complete") is True or located(event)):
+                  preserve.append(str(event["id"]))
+          Path(os.environ["PRESERVE_FILE"]).write_text(json.dumps(preserve), encoding="utf-8")
+          print(f"Existing locations/AI decisions protected: {len(preserve)}")
+          PY
+
       - name: Collect multilingual and AI-select CT events
+        id: collect
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           AI_SELECTION_MODEL: "gemini-3.5-flash-lite"
           AI_SELECTION_THRESHOLD: "50"
           AI_SELECTION_BATCH_SIZE: "20"
         run: |
+          set -euo pipefail
           if [ -z "$GEMINI_API_KEY" ]; then
             echo "GEMINI_API_KEY GitHub secret is missing."
             exit 1
           fi
+          case "$COLLECTION_MODE" in
+            backfill-new-sources)
+              echo "Targeted incremental backfill: Arabic additions, Africa, Afghanistan and Syria."
+              python -u collector.py backfill-new-sources
+              ;;
+            backfill)
+              echo "Incremental backfill across all configured sources."
+              python -u collector.py backfill
+              ;;
+            daily)
+              python -u collector.py
+              ;;
+            *) echo "Unknown collection mode"; exit 1 ;;
+          esac
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.mode }}" = "backfill" ]; then
-            echo "Running 180-day multilingual backfill with Gemini selection and English normalization."
-            python -u collector.py backfill
-          else
-            echo "Running scheduled/manual daily multilingual collection with Gemini selection and English normalization."
-            python -u collector.py
-          fi
-
-      - name: Persist AI article-selection cache safely
-        if: always()
-        run: |
-          set -e
-
-          git config user.name "CT Intelligence Map Bot"
-          git config user.email "actions@github.com"
-
-          if [ -f events.json ] && ! git diff --quiet -- events.json; then
-            echo "Temporarily preserving collector-generated events.json."
-            cp events.json /tmp/events.after-collector.json
-            git restore --staged --worktree events.json
-          fi
-
-          push_with_rebase_retry() {
-            for attempt in 1 2 3 4 5; do
-              echo "Cache sync/push attempt ${attempt}/5"
-              git fetch origin main
-
-              if ! git rebase origin/main; then
-                echo "Rebase conflict while persisting AI cache."
-                git rebase --abort || true
-                return 1
-              fi
-
-              if git push origin HEAD:main; then
-                echo "AI cache push succeeded."
-                return 0
-              fi
-
-              echo "Remote main changed again; retrying."
-              sleep $((attempt * 4))
-            done
-
-            echo "Unable to push AI cache after 5 attempts."
-            return 1
-          }
-
-          if [ -f ai_article_selection_cache.json ]; then
-            git add ai_article_selection_cache.json
-
-            if git diff --cached --quiet; then
-              echo "No AI article-selection cache changes to commit."
-            else
-              git commit -m "Update AI article selection cache"
-              push_with_rebase_retry
-            fi
-          else
-            echo "No AI article-selection cache file yet."
-          fi
-
-          if [ -f /tmp/events.after-collector.json ]; then
-            echo "Restoring collector-generated events.json."
-            cp /tmp/events.after-collector.json events.json
-          fi
-
-      - name: Gemini AI-first resilient geolocation
+      - name: Gemini geolocation with existing-location protection
+        id: geolocate
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_GEO_MODEL: "gemini-3.5-flash-lite"
           GEMINI_RESCUE_MODEL: "gemini-3.6-flash"
           AI_GEO_BATCH_SIZE: "20"
+          PRESERVE_FILE: ${{ runner.temp }}/ct-preserve-geo-ids.json
         run: |
+          set -euo pipefail
           if [ -z "$GEMINI_API_KEY" ]; then
             echo "GEMINI_API_KEY GitHub secret is missing."
             exit 1
           fi
-
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force_ai }}" = "true" ]; then
-            echo "Forcing Gemini geolocation refresh for all events."
+          if [ "$COLLECTION_MODE" = "backfill-new-sources" ]; then
+            echo "Protecting all previously located/processed events; full refresh is disabled."
+            AI_GEO_FORCE=0 AI_GEO_PRESERVE_IDS_FILE="$PRESERVE_FILE" python -u geolocate.py
+          elif [ "$FORCE_GEO_REQUESTED" = "true" ]; then
             AI_GEO_FORCE=1 python -u geolocate.py
           else
-            echo "Using cached Gemini geolocation for unchanged events."
-            python -u geolocate.py
+            AI_GEO_FORCE=0 python -u geolocate.py
           fi
 
-      - name: Commit and push updated database
-        run: |
-          set -e
+      - name: Preserve recovery files even if a previous step failed
+        if: ${{ always() && steps.checkout.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ct-recovery-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ai_article_selection_cache.json
+            events.json
+          if-no-files-found: ignore
+          retention-days: 7
 
+      - name: Commit database and checkpoints safely
+        if: ${{ always() && steps.checkout.outcome == 'success' }}
+        env:
+          COLLECT_OUTCOME: ${{ steps.collect.outcome }}
+        run: |
+          set -euo pipefail
           git config user.name "CT Intelligence Map Bot"
           git config user.email "actions@github.com"
-
-          git add events.json
-
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          cache = Path("ai_article_selection_cache.json")
+          if cache.exists():
+              obj = json.loads(cache.read_text(encoding="utf-8"))
+              if not isinstance(obj, dict) or not isinstance(obj.get("items"), dict):
+                  raise RuntimeError("Invalid AI checkpoint file; recovery artifact retained")
+              subprocess.run(["git", "add", "--", str(cache)], check=True)
+          if os.environ["COLLECT_OUTCOME"] == "success":
+              db = json.loads(Path("events.json").read_text(encoding="utf-8"))
+              if not isinstance(db, dict) or not isinstance(db.get("events"), list):
+                  raise RuntimeError("Invalid database checkpoint; recovery artifact retained")
+              subprocess.run(["git", "add", "--", "events.json"], check=True)
+          else:
+              # Collector failed: preserve its AI/RSS cache, keep the published DB.
+              tracked = subprocess.run(["git", "ls-files", "--error-unmatch", "events.json"], capture_output=True)
+              if tracked.returncode == 0:
+                  subprocess.run(["git", "restore", "--staged", "--worktree", "events.json"], check=True)
+          PY
           if git diff --cached --quiet; then
-            echo "No database changes to commit."
+            echo "No database or cache changes to commit."
             exit 0
           fi
-
-          git commit -m "Update CT intelligence map"
-
+          git commit -m "Update CT database and resumable AI checkpoints"
           for attempt in 1 2 3 4 5; do
-            echo "Database sync/push attempt ${attempt}/5"
             git fetch origin main
-
             if ! git rebase origin/main; then
-              echo "Rebase conflict while publishing events.json."
               git rebase --abort || true
+              echo "Concurrent modification conflict; recovery artifact retained."
               exit 1
             fi
-
             if git push origin HEAD:main; then
-              echo "Database push succeeded."
               exit 0
             fi
-
-            echo "Remote main changed again; retrying."
             sleep $((attempt * 4))
           done
-
-          echo "Unable to push events.json after 5 attempts."
+          echo "Push failed; recovery artifact retained."
           exit 1
 
   deploy:
     needs: update
     runs-on: ubuntu-latest
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Checkout updated repository
         uses: actions/checkout@v6
         with:
           ref: main
-
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-
       - name: Upload website
         uses: actions/upload-pages-artifact@v4
         with:
           path: "."
-
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
