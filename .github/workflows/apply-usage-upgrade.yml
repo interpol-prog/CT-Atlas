@@ -1,0 +1,95 @@
+name: Apply CT Atlas usage upgrade
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "tools/usage_upgrade.patch"
+      - "usage-admin.js"
+      - "usage-admin.css"
+      - "usage-auth-fix.js"
+      - "cloudflare-worker/**"
+      - ".github/workflows/apply-usage-upgrade.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ct-atlas-usage-upgrade
+  cancel-in-progress: false
+
+jobs:
+  apply-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply usage/admin patch to index.html
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -q 'usage-admin.js' index.html; then
+            echo "Usage/admin patch is already present in index.html."
+          else
+            git apply --ignore-space-change --whitespace=nowarn tools/usage_upgrade.patch
+          fi
+
+          python - <<'PY'
+          from pathlib import Path
+          p = Path("index.html")
+          text = p.read_text(encoding="utf-8")
+          normalized = text.replace("\r\n", "\n").replace("\r", "\n")
+          p.write_bytes(normalized.replace("\n", "\r\n").encode("utf-8"))
+          PY
+
+          grep -q '"stephen"' index.html
+          grep -q '"anastasia"' index.html
+          grep -q 'usage-admin.js' index.html
+          grep -q 'usage-auth-fix.js' index.html
+          grep -q 'usage-admin.css' index.html
+
+      - name: Validate JavaScript
+        run: |
+          node --check usage-admin.js
+          node --check usage-auth-fix.js
+          node --check cloudflare-worker/shared.js
+          node --check cloudflare-worker/report-gate.js
+          node --check cloudflare-worker/index.js
+
+      - name: Commit upgraded index
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "CT Atlas Upgrade Bot"
+          git config user.email "actions@github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No index.html changes to commit."
+          else
+            git commit -m "Add usage analytics and report cooldown UI"
+            git push origin HEAD:main
+          fi
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "."
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
