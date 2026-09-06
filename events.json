@@ -22,39 +22,39 @@
   "collector": "Google News RSS multilingual + expanded Arabic/Africa and maritime/CBRN sources + Gemini selection/translation",
   "relevance_filter": "Deterministic CT candidate filter + Gemini semantic final selection",
   "trend_summary": {
-    "overview": "Recent counter-terrorism reporting highlights significant kinetic operations, thwarted threats, and militant factional violence globally. Key developments include Pakistani security forces eliminating over 20 militants in Khyber Pakhtunkhwa, Islamic State Sahel Province claiming mass casualties against rival JNIM fighters near Timbuktu in Mali, and Israeli security forces successfully intercepting a major planned terrorist attack in the central region.",
+    "overview": "Recent high-impact developments include major counter-militant operations in Pakistan resulting in over 20 fatalities, multi-state Sahel Province attacks leaving 51 dead across Nigeria and Niger, and an IS-Sahel claim of mass casualties against rival JNIM militants near Timbuktu, Mali.",
     "developments": [
       {
         "event_id": "0cf935721ca58bc8",
         "severity": "CRITICAL",
         "category": "Attacks",
-        "headline": "Pakistani Security Forces Eliminate Over 20 Terrorists in Khyber Pakhtunkhwa",
-        "detail": "Security forces in Pakistan successfully neutralized more than 20 militants during counter-terrorism operations in Khyber Pakhtunkhwa.",
+        "headline": "Pakistani security forces neutralize over 20 terrorists",
+        "detail": "Security forces successfully eliminated more than 20 militants during counter-terrorism operations in Khyber Pakhtunkhwa.",
         "location": "Pakistan, Khyber Pakhtunkhwa"
+      },
+      {
+        "event_id": "82add6dd452f1e7f",
+        "severity": "CRITICAL",
+        "category": "Attacks",
+        "headline": "ISIS Sahel Province kills 51 in Nigeria and Niger",
+        "detail": "A MEMRI report detailed that ISIS' Sahel Province has killed 51 individuals across coordinated operations spanning Nigeria and Niger.",
+        "location": "Nigeria, Sahel"
       },
       {
         "event_id": "6ba8fc3e8fce3c4b",
         "severity": "HIGH",
         "category": "Attacks",
-        "headline": "IS-Sahel Claims Mass Casualties Against JNIM Near Timbuktu",
-        "detail": "Islamic State Sahel Province (IS-Sahel) claimed responsibility for inflicting mass casualties on rival JNIM militants in the Gourma region near Timbuktu.",
+        "headline": "IS-Sahel claims mass casualties against rival JNIM near Timbuktu",
+        "detail": "The Islamic State Sahel Province claimed responsibility for inflicting mass casualties on rival JNIM militants in the Gourma region near Timbuktu.",
         "location": "Mali, Timbuktu"
-      },
-      {
-        "event_id": "cad4c8f9da417277",
-        "severity": "CRITICAL",
-        "category": "Attacks",
-        "headline": "Massive Terrorist Attack Thwarted in Israel's Central Region",
-        "detail": "Israeli security forces successfully intercepted and thwarted a massive planned terrorist attack in the central region at the last moment.",
-        "location": "Israel, Central District"
       }
     ],
     "status": "ok",
     "model": "gemini-3.5-flash-lite",
     "window_hours": 24,
-    "generated_at": "2026-09-06T12:29:23.020655+00:00",
-    "candidate_events": 80,
-    "top_hash": "615684298933a376243875b58a4a7c126a83ddf6ac311d284f0937fa6d81bb34",
+    "generated_at": "2026-09-06T18:25:15.899552+00:00",
+    "candidate_events": 61,
+    "top_hash": "a046b9baf07ff9c8be10ad6a32eea11fef00652f3d35743340709e7b0e52d27d",
     "top_event_count": 10,
     "reused": false
   },
@@ -307,8 +307,8 @@
   },
   "backfill_completed_queries": {},
   "incremental_collection_stats": {
-    "already_reviewed_articles": 923,
-    "duplicate_input_articles": 68
+    "already_reviewed_articles": 1033,
+    "duplicate_input_articles": 83
   },
   "last_collection_scope": "all",
   "last_planned_query_count": 275,
@@ -393,8 +393,8 @@
     "UK Government / Counter-Terrorism",
     "INTERPOL English News"
   ],
-  "last_updated": "2026-09-06T12:29:25.179824+00:00",
-  "number_of_events": 2216,
+  "last_updated": "2026-09-06T18:25:18.019677+00:00",
+  "number_of_events": 2224,
   "events": [
     {
       "id": "62fbc479b1869851",
@@ -4218,6 +4218,75 @@
       "ai_geo_inferred": false
     },
     {
+      "id": "9b65b25a05bcaae1",
+      "category": "Maritime Piracy",
+      "categories": [
+        "Maritime Piracy"
+      ],
+      "title": "Norway to help Russians stranded in Arctic after ship seizure",
+      "summary": "Norway is providing assistance to Russian crew members stranded in the Arctic following the seizure of their ship.",
+      "original_title": "Norway To Help Russians Stranded In Arctic After ship Seizure",
+      "original_summary": "Norway To Help Russians Stranded In Arctic After ship Seizure gCaptain",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English",
+      "collection_locale": null,
+      "published": "2026-09-05T16:08:26+00:00",
+      "source": "gCaptain",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPSXY0SUU2azNxODlrSkZ1anZVT0RxNDhRWTN6T2ktRHlmV1ZiWnlfNFdfc1BiNDNsRTZJVUM5N2FFSzNaREU5ZDdXVXVyZ2ZqZThOVG9CQ0todlJRQmZfSE9nU3FZTmNqa2laTDYxWDdjRzNxRGFKRVE2cU9zUzBrbGNrQXM4OXVjcmp3?oc=5",
+      "collector": "Google News RSS",
+      "country": "Norway",
+      "country_code": "NO",
+      "city": null,
+      "region": "Arctic",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "targeted_source_query",
+      "targeted_source": "gCaptain",
+      "targeted_source_kind": "specialist_media",
+      "source_article_fingerprints": [
+        "4eb24176455aaa5e946f814985fe5795c6776e55d10248ec33ee97d9b6631355"
+      ],
+      "sources": [
+        "gCaptain"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-05T16:08:26+00:00",
+      "last_reported": "2026-09-05T16:08:26+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v3-specialist",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Maritime vessel seizure/detention event in the Arctic with international assistance implications.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "Norway assists stranded Russian crew after ship seizure in Arctic",
+      "title_variants": [
+        "Norway assists stranded Russian crew after ship seizure in Arctic"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Norway to help Russians stranded in Arctic after ship seizure"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_rescue_complete": false,
+      "ai_geo_rescue_status": null,
+      "ai_geo_rescue_model": null,
+      "ai_geo_rescue_reason": null,
+      "ai_geo_version": "gemini-ai-first-v5.2-one-shot-rescue",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event involves a ship seizure and stranded crew in the Arctic, with assistance provided by Norway.",
+      "ai_geo_fingerprint": "ef3c0ed1056e32a2f4aa28f427960306f17b9261cd87c28350544e36bccbd045",
+      "ai_geo_inferred": true
+    },
+    {
       "id": "f0ab8b9e7cda5b2e",
       "category": "Arrests",
       "categories": [
@@ -5431,6 +5500,74 @@
       "ai_geo_inferred": false
     },
     {
+      "id": "3878f79f04cb9c13",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Legal / Judicial"
+      ],
+      "title": "Merz reaffirms Russia's responsibility for the Leipzig attack",
+      "summary": "German political figure Friedrich Merz has reaffirmed allegations regarding Russia's responsibility for an attack in Leipzig.",
+      "original_title": "„Klar, unbestreitbar, gerichtsfest“ Merz bekräftigt Russlands Verantwortung für den Anschlag von Leipzig",
+      "original_summary": "„Klar, unbestreitbar, gerichtsfest“ Merz bekräftigt Russlands Verantwortung für den Anschlag von Leipzig Tagesspiegel",
+      "original_language": "de",
+      "collection_language": "de",
+      "collection_language_name": "German",
+      "collection_locale": "DE:de",
+      "published": "2026-09-05T13:44:20+00:00",
+      "source": "Tagesspiegel",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNVWVuSnpiOUdyTVVobUJScmhJd05ZeUQ4ajBubnk3MUtHekVGQjFzSFdDbEFDS2lIQjlORzRtOXZMdHU1U1hCZ05sd01JMWozYld5UzZJdzREandLVG0zT2pFckdPS1lvNWhVQXo3azdnbDQ5Y2FWWXYweFJNdXU1dG0zRDAwaEFhMURreS10SHBoQ2szQ0FzTVp6S2ktcVcxYXVYdkllMktUX09GLUtfSHhTeXE2Mlprblh4dkZIWkltWVNNWXh2UFRSYnRqdVhvdUowMTN4X0VObndpbXdFa0FPYjg?oc=5",
+      "collector": "Google News RSS",
+      "country": "Germany",
+      "country_code": "DE",
+      "city": "Leipzig",
+      "region": null,
+      "latitude": 51.33962,
+      "longitude": 12.37129,
+      "location_precision": "city",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_discovery",
+      "source_article_fingerprints": [
+        "ed422266920590c0ee1eec7e4857d15d72894fc8ba80d2a095b5a6e6b0df0fc8"
+      ],
+      "sources": [
+        "Tagesspiegel"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-05T13:44:20+00:00",
+      "last_reported": "2026-09-05T13:44:20+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v3-specialist",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 65,
+      "ai_relevance_reason": "Political statements and ongoing investigations regarding a major sabotage or attack incident.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "Friedrich Merz reaffirms Russia responsibility for the Leipzig attack",
+      "title_variants": [
+        "Friedrich Merz reaffirms Russia responsibility for the Leipzig attack"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_city_geonames",
+      "location_evidence": [
+        "Leipzig attack, German political figure Friedrich Merz"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_rescue_complete": false,
+      "ai_geo_rescue_status": null,
+      "ai_geo_rescue_model": null,
+      "ai_geo_rescue_reason": null,
+      "ai_geo_version": "gemini-ai-first-v5.2-one-shot-rescue",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The attack occurred in Leipzig, Germany.",
+      "ai_geo_fingerprint": "af12cd13768d3715efc1f280e15d96a1a30c8db82b14776b2662575fd5ffbf5b",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "c34bb387f3707c17",
       "category": "Arrests",
       "categories": [
@@ -5670,6 +5807,75 @@
       "ai_geo_reason": "Bilateral talks involving Côte d'Ivoire and the US took place in Abidjan.",
       "ai_geo_fingerprint": "64d97c336308e7ef1fb6541cffd95151e2ad4190ce9312d69cbbb88ecadaeb96",
       "ai_geo_inferred": true
+    },
+    {
+      "id": "ce87ed2075eb3a5c",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Two reported killed in clashes between security forces and an armed group in Iran",
+      "summary": "Two individuals were killed in an armed clash between security forces and an armed group in Iran.",
+      "original_title": "İran'da güvenlik güçleriyle silahlı bir grup arasında çıkan çatışmada 2 kişinin öldüğü belirtildi",
+      "original_summary": "İran'da güvenlik güçleriyle silahlı bir grup arasında çıkan çatışmada 2 kişinin öldüğü belirtildi Anadolu Ajansı",
+      "original_language": "tr",
+      "collection_language": "tr",
+      "collection_language_name": "Turkish",
+      "collection_locale": "TR:tr",
+      "published": "2026-09-05T12:35:47+00:00",
+      "source": "Anadolu Ajansı",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPWW85LWtEUnZxanlCZ0VlZFE2MXN5SVFFalN5UktQc2Q0ai1SZHN5aElRXzdxOFpvRXJPMm9DYVBiYVlpRWpUZUF3eENiWU5ZcHpweVd3OFdwSDd6U2hXRUtMZ2w3alU4czJhTHJ3Y0w3akVhcFBkbFQ5ZVQ4UTVkaGNHd3VLaE1DVS0wZHdWNHZsejR2N2JCVWI3NTF1bHFCb2lfMDJzWXhrY1dGLVhmY1lmZGNqd0ktejFXWjg2VnBqSms3UEZDaklBNkdtWGhQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Iran",
+      "country_code": "IR",
+      "city": "Tehran",
+      "region": null,
+      "latitude": 35.69439,
+      "longitude": 51.42151,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "aa.com.tr/tr",
+      "targeted_source_kind": "local_language_media",
+      "source_article_fingerprints": [
+        "894df64f41d6984c0c63f49a7ecf646b0c05f9e21d9c761b68b31493cd6b30b9"
+      ],
+      "sources": [
+        "Anadolu Ajansı"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-05T12:35:47+00:00",
+      "last_reported": "2026-09-05T12:35:47+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v3-specialist",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "Armed clashes involving security forces and insurgent/militant elements in Iran.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": true,
+      "ai_canonical_event": "armed clashes between security forces and armed group in Iran",
+      "title_variants": [
+        "armed clashes between security forces and armed group in Iran"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "clashes between security forces and an armed group in Iran"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_rescue_complete": false,
+      "ai_geo_rescue_status": null,
+      "ai_geo_rescue_model": null,
+      "ai_geo_rescue_reason": null,
+      "ai_geo_version": "gemini-ai-first-v5.2-one-shot-rescue",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The text explicitly specifies Iran as the country where the clashes occurred.",
+      "ai_geo_fingerprint": "36f2e23390e4620a8ed96bec2ac95102016b1cc0459292d876daaf2f19fd5310",
+      "ai_geo_inferred": false
     },
     {
       "id": "c34bb387f3707c17",
@@ -6505,7 +6711,7 @@
       "collection_locale": "SA:ar",
       "published": "2026-09-05T11:01:00+00:00",
       "source": "ABNA",
-      "source_count": 9,
+      "source_count": 10,
       "url": "https://news.google.com/rss/articles/CBMi5gNBVV95cUxOSWJLYkpQWnFVc2RjTkJLSGlQcUFqWWNQWXVrbzM1cnp5aHphX0NSeVJRWjdSN1Y3bll0ekwtZFVlY2I0RFRsMjd6S1E2eDhtTGJvUUZYYjNvc3hVQ0ZaSGJnWnZsYkZmdXI0Xy1IRlZRejQ5UTd5ZnlzMnpWM3Z0Y0x4TEVNUmVjV3E2RVVLcnRieTRDS0pvaHhDVE1XNTJhcXRpSFFTXzB6VjY1ZVdjODA0aVJaVTA2eHRMSDg4eDJURGJfaDRTSU85dWQ1b3RwWDhlY3ZKZXZ1NkNoaF9GWFFpR2JzQkJaaHk4d1JZQ0pkNHdRRUhXTzNHQXVSbThKZkh6UF9Ba1dMSXJIS0t2bHJlU1E4WXY1aV93bGQ0U2txbXJWQVdEdFBIYjdWSWFzR1JGa2REeERzajd5VEVZZFQyZVJfQ3VWVnktZ251cjQ3cnNGX0pMRGxMTlhxZmpLcG1fanpyaGxXWDM3djFPV0JFT2FRNlk3NEhtZDFuNlk4Tjk2X3Q3R3J2R1JUT3BPZFUySzVTaUluMEdQS0hxdDBXSnozU3RxX0s4WHZLYWYtR0xUM0tLZUpYeGtuXzhjVmJvSXNQRmJmdEZ2RlgweV9uNFpraV9udWJWRnpLUG9jZXVOZlE?oc=5",
       "collector": "Google News RSS",
       "country": "Iran",
@@ -6527,6 +6733,7 @@
         "b4239554287b2b120cf142e34b8e465a7638a6e7de14e6dfe745ebf720987dfe",
         "b6737966c13f5ed2d6d9caeed42cca2649bc15aba9f0b66bb9d09a21b3eaf3d5",
         "e035afe372949ba051d84ee7c940ebb13d27679e7f62ca66c0a7a62ae2f97dfc",
+        "f024f595afbcad86de0a624f68afa66ca9152d73f52a83caa1adae9b059b0d97",
         "f10d54de95960f7ef245a912f1809030fa734a3434c4a37b39c3cf0a53f531a6",
         "f8bc71c351c727913bbdafb2e3e0007d66c6154fa10f5cea8615bb4bce6fa531",
         "fdb261e25346d6a4d3fe96cb08f5919622e77ebf5dc9b5a895f99df2844e4eb9"
@@ -6540,7 +6747,8 @@
         "burathanews.com",
         "ilna.ir",
         "saba.ye",
-        "nournews.ir"
+        "nournews.ir",
+        "تسنیم"
       ],
       "related_articles": [
         {
@@ -6605,9 +6813,18 @@
           "published": "2026-09-05T12:03:57+00:00",
           "source": "nournews.ir",
           "url": "https://news.google.com/rss/articles/CBMiwARBVV95cUxQamx0VW9NUkhkUDJoRFR1bWJjZjZzdV9iVGlGRUJlSEpnLUNwaHlBa3NuMERRV1hQekRDQklDQldGeGZiSFJDS0VQdzlROUpSbDViUXZhMWNQcmdId3RKd1Q5X0RBSlF6SHpjZDViMU43bkVKeUItakJ0VU9jbklXTHpDTjFkNjJoLUROXy1oUnZweldzbldudzdzZEEzSGN1MURDX1hIRk9lZGplekZ3ZWRBaU1qZlZSXzVYMWtGdDFOYm1CZi02bHpBY2tVTVpJWUk4Tk9FWUVvN2lseVhxeDNQMHJmU0RMWkZzaGtxSmhnR005Y1N2SGJtMW4xMUpLZnVZd2RHUVoyYkRQd2FhTkgySEw3T1ZqZ2Z0UFU1MEFoNjZYenRReDFIcFFhenJIYmp2QVNnOXN3MllFd3FZVkozbGc5OHdMX3B5N244bTVESXZFSHM0a3RLTGw2SkJGSDN6S0NiaFQ4QWNzZE10U1MzT0tKbjgyYWY0cnNaY2VzekNrZkJka1BuUS1qbENCcGs5VWtvWmVWZWM2WnRCTGJES2Q5ajNIZkJSNV9PZmtLZEtkTGtzQlpRblpxREN0dmlnTUEwTEt0Y0JEWDhKckNPXy0zdTFLM012UnMwdHlLR1pCc0JFeWw0alJKU2tYNFVhbzFLdlhXQ2hfR3o4TjViaWVsQl81NE1pT0hTX1FtN25oZlFkQkszQTNuNmFkSHRWVldEamg2SEVWajRCY3pqdlFZclVCaE5OMzFJUDE?oc=5"
+        },
+        {
+          "title": "Islamic Revolutionary Guard Corps dismantles a US-Israeli terrorist cell, killing two terrorists",
+          "original_title": "الحرس الثوري يفكك خلية إرهابية أمريكية ـ إسرائيلية ومقتل إرهابيين اثنين",
+          "original_language": "ar",
+          "summary": "Iran's IRGC dismantled an alleged US-Israeli backed terrorist cell, resulting in the killing of two militants.",
+          "published": "2026-09-05T11:09:22+00:00",
+          "source": "تسنیم",
+          "url": "https://news.google.com/rss/articles/CBMi3gRBVV95cUxNRnJTQkdSdjFYU1pKaU1RMUduWFBleWRleVVHb3czVnpvUUVGcExCWm9jdFJUXzJwWUdlZ3pqdE8xbUFHc3dlcGxiTXZwd0dCb09GbHBfdl9rOWNrY2YzMm1nRS13MVEzMndua2tpcUhVNlZfbUpaMExPOVJnUFhOQmpMWGUxN3NuQ0N0QmN3UGJPbW1TZXd4NnllcDRoNmtPMEljOUdVZGFqWGtrN3pjWk95T2N5QkgxMGtHSmNTb3hpU0ZEaTZodTVSRDlyUDRVdmk0RENTa1FpQVVaXzlyWUpOc3h1NTlBRjNhNmMyQjZqM3luQkRORDRkekVDajVLc2s3WklmYUVEMWQwTnQwd214LTdBWFFYdEt1Y1pvS0hvZ0JxVk1tWEw4R3NSc0FzNTVyejdnUTc0eUxLa24xMEQxUVpGb1lzNS1ybW5aazN5ZkpCSHZnWjh6OEtJbVgtZTFqWlozTG5JQ1ptZ09JREg4cy1HNTA4eVlPU1FWR2JTN3ZOOG9aLTNvaTVTZ3dTRHFJdTY0eklRMGoyRnc1UmlGOWY4d1R4NUVlOW9xSkRPS2JwS3VIUzBxNW00M0l4bzE4RmVyY1ZSSG1wNXRZLVhocU0wdEpQOXBrVFZkazFlWmRrV1NPd2hWX09oUEsxaWw4bUhYeDVnNTRjLXhKVl9qVmZ2cmpEQXJIVnN4SS1fQXdmRUV1Q2Jjd1Z5aHFZZXJpdkwyS1pVb1BJN2tWSWM2VTBsMENyb0trVzUzaklSUXB1dHFkSEdSeW1seXZqYWRibE95RnJ5Tm84d2fSAd4EQVVfeXFMTUZyU0JHUnYxWFNaSmlNUTFHblhQZXlkZXlVR293M1Z6b1FFRnBMQlpvY3RSVF8ycFlHZWd6anRPMW1BR3N3ZXBsYk12cHdHQm9PRmxwX3Zfazlja2NmMzJtZ0UtdzFRMzJ3bmtraXFIVTZWX21KWjBMTzlSZ1BYTkJqTFhlMTdzbkNDdEJjd1BiT21tU2V3eDZ5ZXA0aDZrTzBJYzlHVWRhalhrazd6Y1pPeU9jeUJIMTBrR0pjU294aVNGRGk2aHU1UkQ5clA0VXZpNERDU2tRaUFVWl85cllKTnN4dTU5QUYzYTZjMkI2ajN5bkJETkQ0ZHpFQ2o1S3NrN1pJZmFFRDFkME50MHdteC03QVhRWHRLdWNab0tIb2dCcVZNbVhMOEdzUnNBczU1cno3Z1E3NHlMS2tuMTBEMVFaRm9ZczUtcm1uWmszeWZKQkh2Z1o4ejhLSW1YLWUxalpaM0xuSUNabWdPSURIOHMtRzUwOHlZT1NRVkdiUzd2TjhvWi0zb2k1U2d3U0RxSXU2NHpJUTBqMkZ3NVJpRjlmOHdUeDVFZTlvcUpET0ticEt1SFMwcTVtNDNJeG8xOEZlcmNWUkhtcDV0WS1YaHFNMHRKUDlwa1RWZGsxZVpka1dTT3doVl9PaFBLMWlsOG1IWHg1ZzU0Yy14SlZfalZmdnJqREFySFZzeEktX0F3ZkVFdUNiY3dWeWhxWWVyaXZMMktaVW9QSTdrVkljNlUwbDBDcm9La1c1M2pJUlFwdXRxZEhHUnltbHl2amFkYmxPeUZyeU5vOHdn?oc=5"
         }
       ],
-      "article_count": 8,
+      "article_count": 9,
       "first_reported": "2026-09-05T11:01:00+00:00",
       "last_reported": "2026-09-05T13:02:07+00:00",
       "ai_selection_complete": true,
@@ -19070,6 +19287,75 @@
       "source_article_fingerprints": [
         "a543ff2110c8088d808d8cdd39f42449cfa21d5868cf154742625dddc22ee112"
       ]
+    },
+    {
+      "id": "63557ad253c2e095",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "2 Killed In Fresh Attacks On Plateau Communities",
+      "summary": "Two people were killed in fresh armed attacks on communities in Plateau State, Nigeria.",
+      "original_title": "2 Killed In Fresh Attacks On Plateau Communities",
+      "original_summary": "2 Killed In Fresh Attacks On Plateau Communities LEADERSHIP Newspapers",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English / Africa",
+      "collection_locale": "NG:en",
+      "published": "2026-09-04T03:13:55+00:00",
+      "source": "LEADERSHIP Newspapers",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1lNXZQdVRyT3RMRFFJRVhzcEMxNW94Zkk3OGdFVVJUTlBNbzBVa2N1OHFsMXpUVTJGOWlLenZSalJtODUxRy1icktqRWk0Uk13MTRfd1NyV0VEWVFac253NVVqdjJNanBMRDZrWkdZWjdneWVSNFdJb0NzWQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Nigeria",
+      "country_code": "NG",
+      "city": null,
+      "region": "Plateau State",
+      "latitude": 9.2182,
+      "longitude": 9.5179,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "leadership.ng",
+      "targeted_source_kind": "local_language_media",
+      "source_article_fingerprints": [
+        "598c1f006bee69e00d733437d585738166cb586bbbca924901fad3181b8bacbe"
+      ],
+      "sources": [
+        "LEADERSHIP Newspapers"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-04T03:13:55+00:00",
+      "last_reported": "2026-09-04T03:13:55+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v3-specialist",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 60,
+      "ai_relevance_reason": "Violent communal/militant attacks falling within regional security monitoring.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "Armed attack kills two in Plateau communities Nigeria",
+      "title_variants": [
+        "Armed attack kills two in Plateau communities Nigeria"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "attacks on communities in Plateau State, Nigeria"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_rescue_complete": false,
+      "ai_geo_rescue_status": null,
+      "ai_geo_rescue_model": null,
+      "ai_geo_rescue_reason": null,
+      "ai_geo_version": "gemini-ai-first-v5.2-one-shot-rescue",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The event took place in Plateau State, Nigeria.",
+      "ai_geo_fingerprint": "89630a16fa0e773e1c36f2273030ecdaee9a1264fcb25976d79ee860a5713fc0",
+      "ai_geo_inferred": false
     },
     {
       "id": "871fbac2f3f7d150",
@@ -41561,7 +41847,7 @@
       "collection_locale": "RU:ru",
       "published": "2026-09-02T10:39:00+00:00",
       "source": "penzainform.ru",
-      "source_count": 4,
+      "source_count": 5,
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQem5QdDNvZDlYc0QwdFdjSHVIejhvYjdrLWZXeXVLNHFubmdtYkFweHU1ZTIxVWFIX0pFcEY3Q0lnNmQ4dUJycXY5NmJlaHlWVW9GU05NQXdyRTk1Vng4SmN6QXp5U1gyUDZmazBzZkJSZ0N0cG5sWlU3bnFjTzNWWE9vODBLa2wwM2RrTDJybTdKWXlXWll4YjRiUHNKRnNkSlM5cmhWQQ?oc=5",
       "collector": "Google News RSS",
       "country": "Russia",
@@ -41577,7 +41863,8 @@
         "penzainform.ru",
         "Югорский снегирь",
         "Сургутская трибуна",
-        "Европейско-Азиатские Новости"
+        "Европейско-Азиатские Новости",
+        "don24.ru"
       ],
       "related_articles": [
         {
@@ -41588,11 +41875,20 @@
           "published": "2026-09-02T10:39:00+00:00",
           "source": "Югорский снегирь",
           "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPSW9fRGt3U21FMC10Tmc4cEJNT191X21mMmk1anJvR1dmaXNMd0pLS0tXMEZvUmFxMllfMVBmVDVqYV94ay1zdkZrTnFYZDNKZHdCc0ZFQ3hvSHV4VFdZZ2pVcWJsYTJfVlNDcjZFbGZHM3A5c1hUcnZZMHIwM0FoU1RZRUFUMUxxZVZVeXdsQTBxVmhGaEpRMy1oUy01YUNaZEE?oc=5"
+        },
+        {
+          "title": "Sentencing of terrorists",
+          "original_title": "Приговор террористам",
+          "original_language": "ru",
+          "summary": "A Russian court delivered a criminal sentence against convicted terrorists.",
+          "published": "2026-09-04T12:10:31+00:00",
+          "source": "don24.ru",
+          "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1BRlVlS2tOUFUzckJwSEJFME1WZURJMHMzcGxmYTFoNXBVV3FXZG9KaDQ3ZDIzbjYzZklvc1FDWnpSZ1JaSUxTMnR6NjFsTElJUFAzeFVTZEc4U1VqYkxSNF9CbnZucFZEdjAzaVZWYVpWa253?oc=5"
         }
       ],
-      "article_count": 2,
+      "article_count": 3,
       "first_reported": "2026-09-02T10:39:00+00:00",
-      "last_reported": "2026-09-02T12:58:00+00:00",
+      "last_reported": "2026-09-04T12:10:31+00:00",
       "ai_selection_complete": true,
       "ai_selection_version": "gemini-ct-selection-v2-multilingual",
       "ai_selection_model": "gemini-3.5-flash-lite",
@@ -41620,7 +41916,11 @@
       "dedup_confidence": 1.0,
       "dedup_methods": [
         "paraphrase_entity_context",
-        "same_url"
+        "same_url",
+        "very_high_title_similarity"
+      ],
+      "source_article_fingerprints": [
+        "edd84ab9742d686b0db3e5dccaab1cc1ac1e5838db2eb91fbc8ab340b97f050a"
       ]
     },
     {
@@ -52399,6 +52699,76 @@
       ]
     },
     {
+      "id": "69973ba6772b3323",
+      "category": "Maritime Piracy",
+      "categories": [
+        "Maritime Piracy",
+        "Attacks"
+      ],
+      "title": "Iran Increases Hormuz Pressure with Nearly Simultaneous Attacks on Tankers",
+      "summary": "Iran escalates pressure in the Strait of Hormuz through nearly simultaneous attacks targeting oil tankers.",
+      "original_title": "Iran Increases Hormuz Pressure with Nearly Simultaneous Attacks on Tankers",
+      "original_summary": "Iran Increases Hormuz Pressure with Nearly Simultaneous Attacks on Tankers The Maritime Executive",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English",
+      "collection_locale": null,
+      "published": "2026-09-01T15:57:59+00:00",
+      "source": "The Maritime Executive",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQZ1QzNXVndV95S0hId3VLd3BLdUllZGNxTWhadVE2Vm9sT1lrZ0dHVVlUelNHY2puWnRRSFBZQkhQWnA4N1BOamN6UHlHRFhNQ1lzcGhjemU5dW5PWDhnOXZCWVFiOEJ3UTZ1dnU2bzhxVzdQUzBYNkszZ2tRWEVfRjZvOVlhM1VZS1lkWE0ySUhGT0hfaWpCZG53RHZPTjVLNlFyTllBUnB6dEhSUlptZjhpbw?oc=5",
+      "collector": "Google News RSS",
+      "country": "Iran",
+      "country_code": "IR",
+      "city": null,
+      "region": "Strait of Hormuz",
+      "latitude": 26.5667,
+      "longitude": 56.25,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "targeted_source_query",
+      "targeted_source": "The Maritime Executive",
+      "targeted_source_kind": "specialist_media",
+      "source_article_fingerprints": [
+        "33e82e8650467bdc8127e72a360038fdfaeacad2a33d0d9235ebaad4180f8b9a"
+      ],
+      "sources": [
+        "The Maritime Executive"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T15:57:59+00:00",
+      "last_reported": "2026-09-01T15:57:59+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v3-specialist",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Armed attacks on commercial shipping vessels in a critical international maritime chokepoint.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "nearly simultaneous attacks on tankers by Iran in the Strait of Hormuz",
+      "title_variants": [
+        "nearly simultaneous attacks on tankers by Iran in the Strait of Hormuz"
+      ],
+      "location_confidence_score": 0.9,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Iran Increases Hormuz Pressure with Nearly Simultaneous Attacks on Tankers"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_rescue_complete": false,
+      "ai_geo_rescue_status": null,
+      "ai_geo_rescue_model": null,
+      "ai_geo_rescue_reason": null,
+      "ai_geo_version": "gemini-ai-first-v5.2-one-shot-rescue",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The maritime attacks occurred in the Strait of Hormuz, associated with Iran's pressure.",
+      "ai_geo_fingerprint": "b3a376ce54d9866a5abb052eeb66ff95cf96330c3148522e3f5a18311424b762",
+      "ai_geo_inferred": true
+    },
+    {
       "id": "eeb14adf0c9e6fde",
       "category": "Arrests",
       "categories": [
@@ -58582,6 +58952,76 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Refers to the same explosive drone incident at Leipzig airport.",
       "ai_geo_fingerprint": "2bb3508f2bda7f2899e3c332a9d33c420e339c359a0bd6d4a3d1330194b381c4",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "3af0ea7276d4d658",
+      "category": "Attacks",
+      "categories": [
+        "Attacks",
+        "Arrests"
+      ],
+      "title": "‘They threatened to kill us’, rescued NYSC member recounts Kogi ordeal",
+      "summary": "A rescued National Youth Service Corps member recounts kidnapping and captivity by armed groups in Kogi State, Nigeria.",
+      "original_title": "‘‘They threatened to kill us’, rescued NYSC member recounts Kogi ordeal",
+      "original_summary": "‘‘They threatened to kill us’, rescued NYSC member recounts Kogi ordeal Premium Times Nigeria",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English / Africa",
+      "collection_locale": "NG:en",
+      "published": "2026-09-01T07:34:41+00:00",
+      "source": "Premium Times Nigeria",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQS2h5YmFVaG5aeGtULUR4aFUzRGJnMDFQaGdCM3EyOE5FbS15enRXUEIxaDJfY2VobWtYTTd3OGVkSHJSbVpPYzRWYnVpMmt2dGFLSjRuRzBlR3dsYlVtclR2bDFWSGFFVHpLX0xSY2hZSklzcHpWMnJaU3ZZdC1XUVpZZTlxT0tEUE15NzVNVEhIS1RrcW5uZUpOZVpIb2tuUGh4RWl5NmJGYWpzUVFpck9ETU9fczdCN09LU0Y1eGVKaVBlM0N3T2ZxT1NyUQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Nigeria",
+      "country_code": "NG",
+      "city": null,
+      "region": "Kogi State",
+      "latitude": 8.1574,
+      "longitude": 6.7398,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "premiumtimesng.com",
+      "targeted_source_kind": "local_language_media",
+      "source_article_fingerprints": [
+        "fd20c34a62488fa8310cf9f9954398f5b3520b108f80682e0611ed1a303c025e"
+      ],
+      "sources": [
+        "Premium Times Nigeria"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-09-01T07:34:41+00:00",
+      "last_reported": "2026-09-01T07:34:41+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v3-specialist",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 75,
+      "ai_relevance_reason": "First-hand account of armed kidnapping and captivity by militant/criminal gangs in Nigeria, relevant to operational security and local threat reporting.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "Rescued NYSC member recounts kidnapping ordeal by armed criminals in Kogi State",
+      "title_variants": [
+        "Rescued NYSC member recounts kidnapping ordeal by armed criminals in Kogi State"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "rescued NYSC member recounts Kogi ordeal, Kogi State, Nigeria"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_rescue_complete": false,
+      "ai_geo_rescue_status": null,
+      "ai_geo_rescue_model": null,
+      "ai_geo_rescue_reason": null,
+      "ai_geo_version": "gemini-ai-first-v5.2-one-shot-rescue",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The kidnapping and captivity occurred in Kogi State, Nigeria.",
+      "ai_geo_fingerprint": "6af5c5e770e10820890a74002a0b0c2bc063215116483f794c4a70e5f7ebe4ed",
       "ai_geo_inferred": false
     },
     {
@@ -118240,9 +118680,10 @@
       "title_variants": [
         "global report on maritime piracy incidents falling to lowest level since 1992"
       ],
-      "dedup_confidence": 0.954,
+      "dedup_confidence": 1.0,
       "dedup_methods": [
-        "very_high_title_similarity"
+        "very_high_title_similarity",
+        "same_url"
       ],
       "location_confidence_score": 1.0,
       "location_method": "ai_unlocated_final",
@@ -118259,7 +118700,10 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Global statistical report with no specific single country event.",
       "ai_geo_fingerprint": "82c9f85d111eb663e5118adb9adb8d6b4e6d0bb8a1b086164fe217bcd5c784fd",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "source_article_fingerprints": [
+        "38a5304ca27fdac5289a2b3de5b46fbb7e5a7ee7fbbc8236a20ca9a008dc199c"
+      ]
     },
     {
       "id": "ca9a452dea1926b9",
@@ -126177,6 +126621,75 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "FSB prevented an attack on a synagogue in Yaroslavl.",
       "ai_geo_fingerprint": "ab98954b4c26bebc2e8f47fc025e1130c3d0e2d9577b33527014f7fb0d3a8c5d",
+      "ai_geo_inferred": false
+    },
+    {
+      "id": "229f84ce726de7bf",
+      "category": "Attacks",
+      "categories": [
+        "Attacks"
+      ],
+      "title": "Boko Haram abducts students writing NECO at Borno school",
+      "summary": "Boko Haram militants have abducted students sitting for examinations at a school in Borno State.",
+      "original_title": "Boko Haram abducts students writing NECO at Borno school",
+      "original_summary": "Boko Haram abducts students writing NECO at Borno school Premium Times Nigeria",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English / Africa",
+      "collection_locale": "NG:en",
+      "published": "2026-06-29T07:00:00+00:00",
+      "source": "Premium Times Nigeria",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPTkZLdkRxZE5EMlM3Z3lVMjZLcmdXMEN0aXhpYzNPbmlneVhpdjU5MTZobHpKMUhPYUpwZjg1SGllLXZCdHhweHJXWlc1Z3FuYk9YcGlKaVRiTUNNRzRVUXZLRnRiTDhkSnpzUmZLcEtpVHhBSDh0RTVkRUl4RGFJRXIxck1sXzFQUEpvbG9lLWFjTlNPbWxfZTUzSHg1V21FTm9WeG84V29CYkMteVJLRUR0TDd1UDdTNy0yNQ?oc=5",
+      "collector": "Google News RSS",
+      "country": "Nigeria",
+      "country_code": "NG",
+      "city": null,
+      "region": "Borno State",
+      "latitude": 11.8333,
+      "longitude": 13.15,
+      "location_precision": "region",
+      "location_confidence": "high",
+      "acquisition_channel": "multilingual_targeted_source",
+      "targeted_source": "premiumtimesng.com",
+      "targeted_source_kind": "local_language_media",
+      "source_article_fingerprints": [
+        "d2a09bba2ffa81886e2561e27647953de9ed034eabdbe56014ea1c5ac13e1039"
+      ],
+      "sources": [
+        "Premium Times Nigeria"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-06-29T07:00:00+00:00",
+      "last_reported": "2026-06-29T07:00:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v3-specialist",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 90,
+      "ai_relevance_reason": "Direct report of a terrorist attack and mass kidnapping by Boko Haram.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "Boko Haram abduction of students at a school in Borno, Nigeria",
+      "title_variants": [
+        "Boko Haram abduction of students at a school in Borno, Nigeria"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_region_coordinates",
+      "location_evidence": [
+        "Boko Haram abducts students writing NECO at Borno school"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_rescue_complete": false,
+      "ai_geo_rescue_status": null,
+      "ai_geo_rescue_model": null,
+      "ai_geo_rescue_reason": null,
+      "ai_geo_version": "gemini-ai-first-v5.2-one-shot-rescue",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The abduction took place at a school in Borno State, Nigeria.",
+      "ai_geo_fingerprint": "a5e627cd20922948abc5c3c781faad6bfbabe36354962c14bcb35c02cf1cd252",
       "ai_geo_inferred": false
     },
     {
@@ -144040,6 +144553,75 @@
       "ai_geo_inferred": true
     },
     {
+      "id": "cb431a66c4e44013",
+      "category": "Maritime Piracy",
+      "categories": [
+        "Maritime Piracy"
+      ],
+      "title": "Hijacked dhows raise alarm over new piracy threats in Somalia",
+      "summary": "Recent incidents involving hijacked dhows off the coast of Somalia have raised international alarms regarding a resurgence of piracy threats.",
+      "original_title": "Hijacked dhows raise alarm over new piracy threats in Somalia",
+      "original_summary": "Hijacked dhows raise alarm over new piracy threats in Somalia safety4sea.com",
+      "original_language": "en",
+      "collection_language": "en",
+      "collection_language_name": "English",
+      "collection_locale": null,
+      "published": "2026-05-11T07:00:00+00:00",
+      "source": "safety4sea.com",
+      "source_count": 1,
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNU1NOMFN6elJmcnBNUmJoNHVYV2g3ODRuTGZjYVRhY3FlTWZmcV9zdmNERHUwSnZUYkRzelFXQkNnQmM3UHF6ZzAydlltbXNWa0hIbDBKdlZQZ1lPdjduUnVmRXhEZ2FraU1zQkNILUFna25OcmttMGdPSXhXN0pmMUtveWxGTmxjZU9wS2lR?oc=5",
+      "collector": "Google News RSS",
+      "country": "Somalia",
+      "country_code": "SO",
+      "city": "Mogadishu",
+      "region": null,
+      "latitude": 2.03711,
+      "longitude": 45.34375,
+      "location_precision": "country_capital",
+      "location_confidence": "high",
+      "acquisition_channel": "targeted_source_query",
+      "targeted_source": "SAFETY4SEA",
+      "targeted_source_kind": "specialist_media",
+      "source_article_fingerprints": [
+        "a2d49cbaa813f3da144f1fbf6304df410dae14fab54014685e560a7a4c6691f1"
+      ],
+      "sources": [
+        "safety4sea.com"
+      ],
+      "related_articles": [],
+      "article_count": 1,
+      "first_reported": "2026-05-11T07:00:00+00:00",
+      "last_reported": "2026-05-11T07:00:00+00:00",
+      "ai_selection_complete": true,
+      "ai_selection_version": "gemini-ct-selection-v3-specialist",
+      "ai_selection_model": "gemini-3.5-flash-lite",
+      "ai_relevance_score": 85,
+      "ai_relevance_reason": "Highlights a current wave of maritime piracy incidents and vessel hijackings off Somalia.",
+      "ai_current_ct_event": true,
+      "ai_selected": true,
+      "translated_to_english": false,
+      "ai_canonical_event": "hijacked dhows raise alarm over renewed piracy threats off Somalia",
+      "title_variants": [
+        "hijacked dhows raise alarm over renewed piracy threats off Somalia"
+      ],
+      "location_confidence_score": 0.95,
+      "location_method": "ai_country_capital",
+      "location_evidence": [
+        "Hijacked dhows raise alarm over new piracy threats in Somalia"
+      ],
+      "excluded_from_map": false,
+      "ai_geo_complete": true,
+      "ai_geo_rescue_complete": false,
+      "ai_geo_rescue_status": null,
+      "ai_geo_rescue_model": null,
+      "ai_geo_rescue_reason": null,
+      "ai_geo_version": "gemini-ai-first-v5.2-one-shot-rescue",
+      "ai_geo_model": "gemini-3.5-flash-lite",
+      "ai_geo_reason": "The piracy threat and hijacked dhows are located off the coast of Somalia.",
+      "ai_geo_fingerprint": "06a011c7d8e09633a4f3d75f1827dc98c47647b66a9f295b3f5df777d9afd247",
+      "ai_geo_inferred": false
+    },
+    {
       "id": "88f62422d565124d",
       "category": "Attacks",
       "categories": [
@@ -150716,7 +151298,7 @@
       "collection_locale": "NG:en",
       "published": "2026-04-22T07:00:00+00:00",
       "source": "Hiiraan Online",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOa29TUE9ncUkwa2YwVnFMQ21ZZUx1dnQ4d0JqQ1VZQnVIY2NhZ1Atem01RXo2MlViMnY1SGQxczltNmYwd1BNT0VEd1hmQnlMV1ZsN0JaSGlKR0UxM3M5VEFKdEExamE0emFqM1I1bnNWOHk3cUJoZjJHYlgwbVMzV3N3N3hBU0dHd3hUZjhvSU5laVVvYWtfTDFoUzgyLXdsVjY5LTlhQ1pwRXF2TjJ5RA?oc=5",
       "collector": "Google News RSS",
       "country": "Somalia",
@@ -150731,7 +151313,8 @@
       "targeted_source": "hiiraan.com",
       "targeted_source_kind": "local_language_media",
       "sources": [
-        "Hiiraan Online"
+        "Hiiraan Online",
+        "hiiraan.com"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -150764,7 +151347,14 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Operations took place in the Middle Shabelle region of Somalia.",
       "ai_geo_fingerprint": "ca032cf2be56b98382f9d6a922611bcfbaca943281a19b3385bf9fe648720797",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "source_article_fingerprints": [
+        "67c4f54e691e2dd79f56f96dd5708d6c8939792b5c92f74da083f70f0c5d2645"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "fecfc770e516d8dc",
@@ -154704,7 +155294,7 @@
       "collection_locale": "NG:en",
       "published": "2026-04-09T07:00:00+00:00",
       "source": "Hiiraan Online",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQZkJnTWpfQUt0cGpVNkVkSHJsdURHdFF6WjNTT2VBYkpCUE5LMEhPYXZKWkduZGxDVWcwS2Z1LTBUR1E1UEZoWVBlamphTHlZNUJ6M20xc3lqMl83aWthdm5TTXptcmt6MzU2QXNpQjFac1JLaXhFUVdZTlZGcWRqUmt1dnZjNThIbG1rbktLMEFqUEV2T3pYLXN2NFpLVEQ5Z1E?oc=5",
       "collector": "Google News RSS",
       "country": "United Kingdom",
@@ -154719,7 +155309,8 @@
       "targeted_source": "hiiraan.com",
       "targeted_source_kind": "local_language_media",
       "sources": [
-        "Hiiraan Online"
+        "Hiiraan Online",
+        "hiiraan.com"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -154752,7 +155343,14 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "A UK national was charged in the United Kingdom.",
       "ai_geo_fingerprint": "b904053693389ebd3e0745b13387c4ca1b4f59f763d3a717722719939cf009e6",
-      "ai_geo_inferred": false
+      "ai_geo_inferred": false,
+      "source_article_fingerprints": [
+        "bd0284b2054a9645a5902273bf4b3fb5c61dd1e665bd53a4630b53418461f2d5"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "0dcff42ad4d0dd67",
@@ -155914,7 +156512,7 @@
       "collection_locale": "NG:en",
       "published": "2026-04-05T07:00:00+00:00",
       "source": "Hiiraan Online",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPNVpyMlVSYjNfMnBESFhQT25VOG9zYm9NUjZDOGpXSWdlam5SeGVyTV8yNWMwelJQSlNDWkt5SWJvOVYzVWZNcWVTb3JEY0NmRUNtYWtIS0w3Zl9nSGpMQUVuZllBb09WaXB6czNhVFJhbmNidE00VE1tVV8tRUlVcXgyUU9TZXFXdWV5QmRWS2E3TG5uMGpJTzdTMWFTRlVfSHp4a09QdVpjQQ?oc=5",
       "collector": "Google News RSS",
       "country": "Somalia",
@@ -155929,7 +156527,8 @@
       "targeted_source": "hiiraan.com",
       "targeted_source_kind": "local_language_media",
       "sources": [
-        "Hiiraan Online"
+        "Hiiraan Online",
+        "hiiraan.com"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -155962,7 +156561,14 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Military airstrikes in Somalia.",
       "ai_geo_fingerprint": "0812dad28b17ea66546889e714b72212bba5f2fa14f8eea0b9ac2b2274318361",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "source_article_fingerprints": [
+        "7347888498e4aef9fe64a15cc358b5511b1123e52edd7e631c47a654f2bfc03c"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "0304197b7e7da40a",
@@ -155981,7 +156587,7 @@
       "collection_locale": "NG:en",
       "published": "2026-04-04T07:00:00+00:00",
       "source": "Hiiraan Online",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPYTU4azM5bmliOWVrWVFuWUdKQ1QwaWtvMXRNTFdfLW1aWHNmY1hob0xJY0ZBUXd2ZmE5TGdKOHozZ0ppQWdqVWFtZmRNM2RGMzZ6SG9taFZyV2g2SVRYQmhSUVdObC1aMklOcHNyRTJWYmJ3bEs4WS1jTmdXUFpmYkdqWjNsNjY2RHhveUMtV2RaTFctTkZqdjhyRW4yTTlzNmdEanBJeEdUbG8?oc=5",
       "collector": "Google News RSS",
       "country": "Somalia",
@@ -155996,7 +156602,8 @@
       "targeted_source": "hiiraan.com",
       "targeted_source_kind": "local_language_media",
       "sources": [
-        "Hiiraan Online"
+        "Hiiraan Online",
+        "hiiraan.com"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -156029,7 +156636,14 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The event involves Somali and AU forces capturing an al-Shabaab commander in Somalia.",
       "ai_geo_fingerprint": "208b8cdc88175905379442a05464f9cb8d875a919a7b7cfa5634dd85be0d2a6f",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "source_article_fingerprints": [
+        "d73a6ebe8cd840fac7fe5945c6ecab957b7171bdfe33086be976ca904bdc86f6"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "333afbce607109ec",
@@ -158430,7 +159044,8 @@
       "id": "d27d84812525254a",
       "category": "Attacks",
       "categories": [
-        "Attacks"
+        "Attacks",
+        "Arrests"
       ],
       "title": "Somali forces kill over 42 al-Shabaab terrorists, including 2 ringleaders",
       "summary": "Somali military operations resulted in the killing of over 42 al-Shabaab terrorists, including two key ringleaders.",
@@ -158442,7 +159057,7 @@
       "collection_locale": "NG:en",
       "published": "2026-03-28T07:00:00+00:00",
       "source": "Hiiraan Online",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxPMlhWNFJkTGVEVVV4b1RYajl4ZU9jV2VCTEdvTllNelNKeTZDRVFnTTdyR3FQbGFLNFp4OVFjWEcxNVFic2t2Y3dwYkNMY1hBamdpR2VKbUdGSzZReV9LMTQxc01RQ3ZsV2paSDA2aC1vNzV4ZzhXT1BOZjdobzRUTHN0Z0hoQTktajVpY3dBbEFpdW5GNzRJMG9yNXBEbkdnRjBqRFZaa3IyTWJsYlhiVzN6VzVucG81dG5XRWNFYjllY2w5akpuTGN6V1B3VmVYdWFUcHA1ZTRrOXU1bkgyemNGbw?oc=5",
       "collector": "Google News RSS",
       "country": "Somalia",
@@ -158457,7 +159072,8 @@
       "targeted_source": "hiiraan.com",
       "targeted_source_kind": "local_language_media",
       "sources": [
-        "Hiiraan Online"
+        "Hiiraan Online",
+        "hiiraan.com"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -158490,7 +159106,14 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "Military operations conducted by Somali forces against al-Shabaab in Somalia.",
       "ai_geo_fingerprint": "83adc705713eacc116477f983e01c7a10405f7ed3f68afd326791a25046ac2d8",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "source_article_fingerprints": [
+        "ccee4956e9129c038c8aabfc704376a614dec957a49a02779975ea19f45b2e2e"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "641d4131ac4e5063",
@@ -164747,7 +165370,7 @@
       "collection_locale": "NG:en",
       "published": "2026-03-11T07:00:00+00:00",
       "source": "Hiiraan Online",
-      "source_count": 1,
+      "source_count": 2,
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOUUJPNWUxRWRpRm9PMWtSbTdmN0kxTU9QLThhRHUzdkdlMFJ6QXhaYmlsWDVucDVROEY4WUN0aEVRT1BXTmQ5M2p4QVJpZnVWdlJ0RnlsTnhBSTYyOVhwbjVDUG9iOWo0X1FPYWhzVThQN2ZWM2xlbEZrX1NOZnE5SGlpX0x3aUc2eVZBY3JncHJCbzJQWnpvNlBPejdUa1QzS0dCcTU0eXQ5NVFHbEdNallIdkdlM1ZVbFBR?oc=5",
       "collector": "Google News RSS",
       "country": "Somalia",
@@ -164762,7 +165385,8 @@
       "targeted_source": "hiiraan.com",
       "targeted_source_kind": "local_language_media",
       "sources": [
-        "Hiiraan Online"
+        "Hiiraan Online",
+        "hiiraan.com"
       ],
       "related_articles": [],
       "article_count": 1,
@@ -164795,7 +165419,14 @@
       "ai_geo_model": "gemini-3.5-flash-lite",
       "ai_geo_reason": "The event took place in the southern region of Somalia by the Somali national army against Al-Shabaab.",
       "ai_geo_fingerprint": "77515099809213aaa0547373f1907242b6a1bbb36e19da4fa604698a88d6c243",
-      "ai_geo_inferred": true
+      "ai_geo_inferred": true,
+      "source_article_fingerprints": [
+        "1659764463c2e3f501d2f51d825c0c66928089697b8cc75a0502e1b6815d8bde"
+      ],
+      "dedup_confidence": 1.0,
+      "dedup_methods": [
+        "same_url"
+      ]
     },
     {
       "id": "265a84148b5b0212",
@@ -164872,21 +165503,21 @@
     "rescue_policy": "one_automatic_rescue_then_freeze",
     "rescue_unlocated_final": 33,
     "ai_for_every_event": true,
-    "cached_events": 2162,
-    "ai_processed_this_run": 54,
-    "ai_pending_at_start": 54,
-    "city": 857,
-    "region": 540,
-    "country_capital": 786,
+    "cached_events": 2216,
+    "ai_processed_this_run": 8,
+    "ai_pending_at_start": 8,
+    "city": 858,
+    "region": 545,
+    "country_capital": 788,
     "unlocated": 33,
-    "mapped_total": 2183,
-    "high_confidence": 1993,
+    "mapped_total": 2191,
+    "high_confidence": 2001,
     "medium_confidence": 205,
     "low_confidence": 18,
     "methods": {
-      "ai_region_coordinates": 540,
-      "ai_city_geonames": 814,
-      "ai_country_capital": 786,
+      "ai_region_coordinates": 545,
+      "ai_city_geonames": 815,
+      "ai_country_capital": 788,
       "ai_unlocated_final": 33,
       "ai_city_coordinates": 43
     }

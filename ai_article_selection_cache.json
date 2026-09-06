@@ -180471,25 +180471,25 @@
       }
     }
   },
-  "last_updated": "2026-09-06T12:28:22.423836+00:00",
+  "last_updated": "2026-09-06T18:24:58.517230+00:00",
   "backfill_rss_snapshots": {},
   "selection_quota_usage": {
     "pacific_day": "2026-09-06",
     "calls": 60,
     "daily_budget": 60,
-    "last_updated": "2026-09-06T12:28:22.423821+00:00"
+    "last_updated": "2026-09-06T18:24:58.517213+00:00"
   },
   "selection_runtime_telemetry": {
-    "last_run_at": "2026-09-06T12:28:22.423830+00:00",
+    "last_run_at": "2026-09-06T18:24:58.517223+00:00",
     "threshold": 60,
     "batch_size": 25,
     "max_calls_per_run": 30,
     "daily_call_budget": 60,
-    "calls_this_run": 30,
+    "calls_this_run": 0,
     "calls_today": 60,
-    "official_auto_accepted": 1,
-    "recent_pending": 1877,
-    "backlog_pending": 5452,
+    "official_auto_accepted": 0,
+    "recent_pending": 1774,
+    "backlog_pending": 5425,
     "budget_reached": true,
     "gemini_429": false,
     "partial_recovery": true
