@@ -93,8 +93,11 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           AI_SELECTION_MODEL: "gemini-3.5-flash-lite"
-          AI_SELECTION_THRESHOLD: "50"
-          AI_SELECTION_BATCH_SIZE: "20"
+          AI_SELECTION_THRESHOLD: "60"
+          AI_SELECTION_BATCH_SIZE: "25"
+          AI_SELECTION_MAX_CALLS_PER_RUN: "30"
+          AI_SELECTION_DAILY_CALL_BUDGET: "60"
+          AI_SELECTION_RECENT_PRIORITY_DAYS: "3"
         run: |
           set -euo pipefail
           if [ -z "$GEMINI_API_KEY" ]; then
