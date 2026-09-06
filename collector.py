@@ -1889,11 +1889,86 @@ def has_non_event_pattern(text):
     )
 
 
+
+# Conservative, offline scope guard. It also applies to legacy cached decisions
+# and stored English-normalized events, without invalidating every AI cache.
+_SCOPE_NONSTATE = re.compile(
+    r"\b(?:isis(?:-k)?|isil|daesh|islamic state|al[- ]qa(?:e|i)da|al[- ]shab(?:a|aa)b|"
+    r"boko haram|iswap|jnim|hamas|hezbollah|houthi\w*|pjak|pkk|ttp|"
+    r"terror(?:ist)? cells?|terror(?:ist)? networks?|terrorist organi[sz]ations?|"
+    r"terrorist groups?|terrorists|terror modules?|militants?|insurgents?|militias?|jihad(?:ist|i)s?|"
+    r"extremists?|gunmen|assailants?|bandits?|settlers?|armed civilians?|"
+    r"terrorist financing|terrorist propaganda|terrorist hideout|terrorist leaders?|"
+    r"terrorist plan|terrorist in|jihad|red notice|indictment|perpetrators?|"
+    r"man|woman|individuals?|terrorism financing|bomb attack|anarch\w*|ipob|mordisco|"
+    r"suspects?|defendants?|suspected|charged|convicted|sentenced|indicted|"
+    r"bomb plots?|bombings?|stabbing|shooting|attacker|sailors held|crew held|"
+    r"lone[- ](?:actor|wolf)|pirates?|piracy|hijack\w*|kidnap\w*|"
+    r"terror(?:ist)? attack plots?|terror(?:ist)? attacks?)\b|"
+    r"داعش|القاعدة|بوكو حرام|حزب الله|حماس|الحوثي|خلية إرهابية|قراصنة|قرصنة|"
+    r"\b(?:cellule terroriste|groupe armé|milice|piraterie)\b", re.I)
+_SCOPE_STATE = re.compile(
+    r"\b(?:iran\w*|tehran|united states|u\.?s\.?|american\w*|washington|"
+    r"israel\w*|russia\w*|ukrain\w*|china|chinese|pakistan\w*|india\w*|"
+    r"irgc|revolutionary guards?|mossad|idf|army|navy|air force|military|"
+    r"bahrain\w*|kuwait\w*|qatar\w*|emirat\w*|uae|saudi\w*)\b|"
+    r"إيران|إسرائيل|الولايات المتحدة|روسيا|أوكرانيا|الحرس الثوري|"
+    r"\b(?:états.unis|armée|iranien\w*|israélien\w*)\b", re.I)
+_SCOPE_WAR = re.compile(
+    r"\b(?:war|strikes?|raids?|bomb\w*|missile\w*|drones?|retaliat\w*|"
+    r"attack\w*|targets?|targeting|intercept\w*|offensive|military operation|"
+    r"tanker.for.tanker|seiz\w*|chemical weapons|nuclear programme?|"
+    r"nuclear program|cyberwar|cyber threat|rocket launchers?)\b|"
+    r"\b(?:guerre|frappes?|bombard\w*|représailles)\b|"
+    r"غارات|قصف|حرب|صواريخ|ضربات|استهداف", re.I)
+_SCOPE_DIPLOMACY = re.compile(
+    r"\b(?:diploma\w*|summit|foreign.policy|condemn\w*|ceasefire talks|"
+    r"peace talks|nuclear talks|memorandum of understanding|mou expired|"
+    r"sanctions?|warns?|threatens?|vows?|appeals? for|calls? for|"
+    r"redrawing.{0,30}influence|public duty)\b|"
+    r"\b(?:diplomatie|sommet|condamn\w*|négociations)\b|"
+    r"دبلوماس|قمة|مفاوضات|إدانة|تنديد", re.I)
+
+def out_of_scope_reason(event):
+    title = clean_text(event.get("title") or "")
+    summary = clean_text(event.get("summary") or "")
+    text = title + " " + summary
+    # Concrete Taliban security events in Afghanistan are explicitly exempt.
+    afghan = str(event.get("country_code") or "").upper() == "AF" or re.search(
+        r"afghan|أفغانستان", text, re.I)
+    if afghan and re.search(r"taliban|طالبان", text, re.I) and re.search(
+        r"attack|raid|arrest|kill|execut|repress|detain|clash|terror|security operation|اعتقال|قتل|هجوم", title, re.I):
+        return ""
+    # Condemnation-only headlines are political reactions, not new incidents.
+    if re.search(r"^[^:]{0,100}\b(?:condemns?|condemnations?|condamne l.attaque)\b|^(?:يدين|تدين|إدانة)", title, re.I):
+        return "diplomatic condemnation rather than a new operational event"
+    # A concrete non-state actor in the headline protects operational stories.
+    # AI still has to reject incidental/analytical references semantically.
+    if _SCOPE_NONSTATE.search(title):
+        return ""
+    # Preserve a concrete non-state nexus supplied by the summary (e.g. a raid
+    # against an unnamed cell), but not a background group name alone.
+    if _SCOPE_NONSTATE.search(summary):
+        return ""
+    if _SCOPE_DIPLOMACY.search(title):
+        return "politics/diplomacy without a concrete non-state actor nexus"
+    state_mentions = {m.group(0).lower() for m in _SCOPE_STATE.finditer(title)}
+    explicit_state_action = re.search(
+        r"^(?:iran\w*|russia\w*|ukrain\w*|israel\w*|us|u\.s\.|united states|washington|tehran|idf|irgc)"
+        r".{0,45}\b(?:strikes?|attacks?|targets?|responds?|bombs?|raids?|retaliat\w*|seiz\w*)\b", title, re.I)
+    if _SCOPE_WAR.search(title) and (len(state_mentions) >= 2 or explicit_state_action):
+        return "state military/security activity without a concrete non-state actor nexus"
+    return ""
+
+
 def is_relevant_article(
     category,
     title,
     summary,
 ):
+    if out_of_scope_reason({"title": title, "summary": summary}):
+        return False
+
     combined = normalize_relevance_text(
         title + " " + summary
     )
@@ -3325,6 +3400,34 @@ Relevant terrorist attacks at sea can instead belong to Attacks.
 New reports about old incidents must not turn the historical incident into a
 new attack; preserve the distinction between a new investigation and its subject.
 
+
+MANDATORY ACTOR SCOPE (takes precedence over relevance scores):
+- Keep concrete security/CT events involving non-state actors: terrorist or
+  extremist groups, cells, lone actors, insurgents, armed militias, or pirates.
+  State operations AGAINST such actors, their financing, recruitment, weapons,
+  investigations and court cases remain eligible. State backing does not by
+  itself turn a non-state group into a regular state force.
+- Reject wars, strikes, retaliation, naval seizures and cyber operations solely
+  between sovereign states or their regular armed forces/security services,
+  including IRGC and intelligence agencies acting directly. Calling a state
+  or its army "terrorist" does not establish a non-state-actor nexus.
+- Reject diplomacy, summits, condemnations, ceasefire negotiations, interstate
+  sanctions and political commentary unless the MAIN reported development is
+  a concrete operation, plot, investigation or financing measure involving a
+  non-state actor. Incidental mentions of ISIS, Hamas or Hezbollah do not count.
+- Afghanistan is the ONLY governing-authority exception: concrete Taliban
+  security operations, violence, repression or CT developments in Afghanistan
+  may be included even when the Taliban act as the governing authority.
+  This does NOT include routine Afghan diplomacy, economics or governance,
+  and does NOT exempt articles about other countries from Afghan publishers.
+- CBRN, weapons and cyber stories need the same concrete non-state-actor nexus;
+  interstate nuclear programmes and state-to-state cyberwar are out of scope.
+- Maritime Security is the DISPLAY name for the Maritime Piracy category.
+  Its scope remains actual piracy/armed robbery at sea, vessel hijacking and
+  related crew abduction, rescue, investigation or prosecution. Do not broaden
+  it to naval warfare, state tanker seizures, accidents or trade disruption.
+Out-of-scope events MUST have is_current_ct_event=false and relevance_score=0.
+
 Score relevance from 0 to 100.
 
 KEEPING POLICY:
@@ -4338,6 +4441,13 @@ def apply_ai_selection(
         event[
             "title_variants"
         ] = variants
+
+    scope_reason = out_of_scope_reason(event)
+    if scope_reason:
+        event["ai_selected"] = False
+        event["ai_current_ct_event"] = False
+        event["ai_scope_rejection"] = scope_reason
+        return False
 
     return (
         score
@@ -7401,6 +7511,8 @@ def prune_old(events):
     result = []
 
     for event in events:
+        if out_of_scope_reason(event):
+            continue
         published = event.get(
             "published"
         )

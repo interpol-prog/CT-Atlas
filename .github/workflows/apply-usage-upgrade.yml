@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - "index.html"
       - "tools/usage_upgrade.patch"
       - "usage-admin.js"
       - "usage-admin.css"

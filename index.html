@@ -4860,7 +4860,7 @@ Weapons
 <input
     type="checkbox"
     class="category-filter"
-    value="Maritime Piracy"
+    value="Maritime Security"
     checked
 >
 
@@ -4868,7 +4868,7 @@ Weapons
 MP
 </span>
 
-Maritime Piracy
+Maritime Security
 
 </label>
 
@@ -5302,7 +5302,7 @@ Visible rate
             <option value="Arrests">Arrests</option>
             <option value="Terrorist Financing">Terrorist Financing</option>
             <option value="Weapons">Weapons</option>
-            <option value="Maritime Piracy">Maritime Piracy</option>
+            <option value="Maritime Piracy">Maritime Security</option>
             <option value="CBRN">CBRN</option>
             <option value="Online / Cyber / AI">Online / Cyber / AI</option>
             <option value="Legal / Judicial">Legal / Judicial</option>
@@ -6234,10 +6234,10 @@ const categoryStyle = {
 },
 
 
-"Maritime Piracy": {
+"Maritime Security": {
 
     code:
-        "MP",
+        "MS",
 
     className:
         "piracy"
@@ -6567,6 +6567,7 @@ function eventLooksLikeMaritimePiracy(event) {
 
 
 const CATEGORY_ALIASES = new Map([
+    ["Maritime Piracy", "Maritime Security"],
     ["Online Radicalization / Cyberterrorism", "Online / Cyber / AI"],
     ["Disinformation / Emerging Technologies / AI", "Online / Cyber / AI"],
     ["Online / Cyber / AI", "Online / Cyber / AI"]
@@ -6599,9 +6600,9 @@ function eventCategories(
     if (
         eventLooksLikeMaritimePiracy(event)
         &&
-        !categories.includes("Maritime Piracy")
+        !categories.includes("Maritime Security")
     ) {
-        categories.push("Maritime Piracy");
+        categories.push("Maritime Security");
     }
 
     return categories;
@@ -8016,8 +8017,8 @@ function updateTrends() {
                 "Weapons":
                     "Weapons",
 
-                "Maritime Piracy":
-                    "Maritime Piracy",
+                "Maritime Security":
+                    "Maritime Security",
 
                 "CBRN":
                     "CBRN",
@@ -11004,7 +11005,7 @@ function updateCommandCenterPanels() {
             ["Legal / Judicial", "JUDICIAL"],
             ["Terrorist Financing", "FINANCING"],
             ["Weapons", "WEAPONS"],
-            ["Maritime Piracy", "PIRACY"],
+            ["Maritime Security", "MARITIME"],
             ["Online / Cyber / AI", "ONLINE / CYBER / AI"],
             ["CBRN", "CBRN"]
         ];
@@ -11780,7 +11781,7 @@ function renderTrendSummaryPanel() {
                     <div class="trend-development">
                         <div class="trend-development-head">
                             <span class="trend-severity ${severityClass}">${escapeHtml(severity)}</span>
-                            <span class="trend-category">${escapeHtml(item.category || "CT Development")}</span>
+                            <span class="trend-category">${escapeHtml(normalizeCategoryName(item.category) || "CT Development")}</span>
                         </div>
                         <div class="trend-headline">${escapeHtml(item.headline || "")}</div>
                         ${item.location ? `<div class="trend-location">${escapeHtml(item.location)}</div>` : ""}
