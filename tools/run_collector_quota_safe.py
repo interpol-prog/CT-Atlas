@@ -72,6 +72,7 @@ def post(url,*args,**kwargs):
 collector.requests.post=post
 
 def official_result(e):
+    if collector.out_of_scope_reason(e): return None
     if collector.source_rank(collector.clean_text(e.get("source","")))<122: return None
     title=collector.clean_text(e.get("title","")); summary=collector.clean_text(e.get("summary",""))
     combined=collector.normalize_relevance_text(title+" "+summary); tt=collector.normalize_relevance_text(title)
