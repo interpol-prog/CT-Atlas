@@ -144,7 +144,7 @@ jobs:
 
       - name: Preserve recovery files even if a previous step failed
         if: ${{ always() && steps.checkout.outcome == 'success' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ct-recovery-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
@@ -213,11 +213,11 @@ jobs:
         with:
           ref: main
       - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload website
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: "."
       - name: Deploy GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
