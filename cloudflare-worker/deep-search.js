@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.7-subrequest-safe";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.8-priority-language";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
@@ -41,6 +41,55 @@ const LANGUAGE_LOCALES = Object.freeze({
 });
 
 const DEEP_SEARCH_LANGUAGE_CODES = Object.freeze(Object.keys(LANGUAGE_LOCALES));
+
+
+const COUNTRY_LANGUAGE_PRIORITY = Object.freeze([
+  { pattern: /\b(?:afghanistan|afghan)\b/i, languages: ["fa", "ps"] },
+  { pattern: /\b(?:pakistan|pakistani)\b/i, languages: ["ur"] },
+  { pattern: /\b(?:iran|iranian)\b/i, languages: ["fa"] },
+  { pattern: /\b(?:france|french)\b/i, languages: ["fr"] },
+  { pattern: /\b(?:germany|german)\b/i, languages: ["de"] },
+  { pattern: /\b(?:spain|spanish)\b/i, languages: ["es"] },
+  { pattern: /\b(?:italy|italian)\b/i, languages: ["it"] },
+  { pattern: /\b(?:turkey|türkiye|turkiye|turkish)\b/i, languages: ["tr"] },
+  { pattern: /\b(?:russia|russian)\b/i, languages: ["ru"] },
+  { pattern: /\b(?:israel|israeli)\b/i, languages: ["he", "ar"] },
+  { pattern: /\b(?:palestine|palestinian|gaza|west bank)\b/i, languages: ["ar", "he"] },
+  { pattern: /\b(?:iraq|iraqi|syria|syrian|lebanon|lebanese|jordan|jordanian|saudi arabia|saudi|yemen|yemeni|oman|omani|qatar|qatari|united arab emirates|uae|bahrain|bahraini|kuwait|kuwaiti|egypt|egyptian|libya|libyan|tunisia|tunisian|algeria|algerian|morocco|moroccan|sudan|sudanese|mauritania|mauritanian)\b/i, languages: ["ar"] }
+]);
+
+function detectPriorityLanguages(question) {
+  const text = String(question || "");
+  const out = [];
+  const add = code => {
+    if (DEEP_SEARCH_LANGUAGE_CODES.includes(code) && !out.includes(code)) out.push(code);
+  };
+  for (const rule of COUNTRY_LANGUAGE_PRIORITY) {
+    if (rule.pattern.test(text)) rule.languages.forEach(add);
+  }
+  // Urdu is not an official Afghan language, but it is highly relevant to
+  // Afghanistan-Pakistan narcotics routes and cross-border enforcement reporting.
+  if (/\b(?:afghanistan|afghan)\b/i.test(text) && /\b(?:drug|narcotic|opium|heroin|meth|methamphetamine|traffick|smuggl|seizure|laborator)\w*\b/i.test(text)) add("ur");
+  return out.slice(0, 3);
+}
+
+function broadGdeltQuery(plan) {
+  const primary = cleanText(plan?.queries?.find(item => item.language === "en" && item.variant === "primary")?.query || "", 220);
+  const secondary = cleanText(plan?.queries?.find(item => item.language === "en" && item.variant === "secondary")?.query || "", 220);
+  const stop = new Set(["the","and","for","with","from","into","over","under","about","information","data","report","reports","latest","recent"]);
+  const tokens = value => (String(value || "").toLowerCase().match(/[a-z0-9][a-z0-9-]{2,}/g) || []).filter(t => !stop.has(t));
+  const p = tokens(primary), q = tokens(secondary), qset = new Set(q);
+  const shared = p.filter(t => qset.has(t));
+  const head = shared[0] || p[0] || q[0] || "";
+  const rest = [];
+  for (const token of [...p, ...q]) {
+    if (!token || token === head || rest.includes(token)) continue;
+    rest.push(token);
+    if (rest.length >= 4) break;
+  }
+  if (!head) return "";
+  return rest.length ? `${head} (${rest.join(" OR ")})` : head;
+}
 
 const PLAN_SCHEMA = {
   type: "object",
@@ -438,10 +487,9 @@ async function fetchGdeltWave(language, query, periodDays) {
   }
 }
 
-async function retrieveNews(plan, periodDays) {
-  // Cloudflare Workers Free allows 50 external subrequests per invocation.
-  // Keep search bounded at 24 Google News requests plus at most one
-  // GDELT rescue request per sparse language (maximum 12).
+async function retrieveNews(plan, periodDays, priorityLanguages = []) {
+  // Bound search below Cloudflare Free's 50-subrequest ceiling:
+  // 24 Google News + max 3 priority Google rescues + max 9 GDELT = max 36.
   const googleWaves = await Promise.all(
     plan.queries.map((item, index) =>
       fetchNewsWave(item, index, periodDays, LANGUAGE_LOCALES[item.language], false)
@@ -453,31 +501,52 @@ async function retrieveNews(plan, periodDays) {
     for (const row of wave.rows) totals[wave.query.language].add(row.url);
   }
 
-  const englishPrimary = plan.queries.find(item => item.language === "en" && item.variant === "primary")
-    || plan.queries.find(item => item.language === "en");
-  const gdeltQuery = cleanText(englishPrimary?.query || plan.interpreted_request || "", 220);
-  const sparseLanguages = DEEP_SEARCH_LANGUAGE_CODES.filter(code => totals[code].size < 3);
-  const gdeltWaves = [];
+  // Country-relevant languages get one extra native-language query through the
+  // stable en-US Google edition if the local edition returned fewer than 3 items.
+  const priorityRescueItems = [];
+  for (const language of priorityLanguages.slice(0, 3)) {
+    if ((totals[language]?.size || 0) >= 3) continue;
+    const candidate = plan.queries.find(item => item.language === language && item.variant === "primary")
+      || plan.queries.find(item => item.language === language);
+    if (candidate) priorityRescueItems.push({ ...candidate, variant: "priority-locale-rescue" });
+  }
+  const priorityRescueWaves = await Promise.all(
+    priorityRescueItems.map((item, index) =>
+      fetchNewsWave(item, googleWaves.length + index, periodDays, SEARCH_FALLBACK_LOCALE, true)
+    )
+  );
 
+  const googleAll = [...googleWaves, ...priorityRescueWaves];
+  const afterGoogle = Object.fromEntries(DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, new Set()]));
+  for (const wave of googleAll) {
+    for (const row of wave.rows) afterGoogle[wave.query.language].add(row.url);
+  }
+
+  // GDELT rescues priority languages first, then other sparse languages.
+  const gdeltQuery = broadGdeltQuery(plan);
+  const sparse = DEEP_SEARCH_LANGUAGE_CODES.filter(code => (afterGoogle[code]?.size || 0) < 3);
+  const gdeltLanguages = [...new Set([...priorityLanguages, ...sparse])]
+    .filter(code => DEEP_SEARCH_LANGUAGE_CODES.includes(code))
+    .slice(0, 9);
+  const gdeltWaves = [];
   if (gdeltQuery) {
-    for (let i = 0; i < sparseLanguages.length; i += 3) {
-      const batch = sparseLanguages.slice(i, i + 3);
-      const results = await Promise.all(
-        batch.map(code => fetchGdeltWave(code, gdeltQuery, periodDays, "gdelt-rescue"))
-      );
+    for (let i = 0; i < gdeltLanguages.length; i += 3) {
+      const batch = gdeltLanguages.slice(i, i + 3);
+      const results = await Promise.all(batch.map(code => fetchGdeltWave(code, gdeltQuery, periodDays)));
       gdeltWaves.push(...results);
-      if (i + 3 < sparseLanguages.length) await new Promise(resolve => setTimeout(resolve, 300));
+      if (i + 3 < gdeltLanguages.length) await new Promise(resolve => setTimeout(resolve, 250));
     }
   }
 
-  const waves = [...googleWaves, ...gdeltWaves];
+  const waves = [...googleAll, ...gdeltWaves];
   return {
     waves,
     rows: waves.flatMap(item => item.rows),
+    priority_languages: priorityLanguages,
     subrequest_budget: {
-      google_news_requests: googleWaves.length,
+      google_news_requests: googleAll.length,
       gdelt_requests: gdeltWaves.length,
-      search_requests: googleWaves.length + gdeltWaves.length,
+      search_requests: googleAll.length + gdeltWaves.length,
       max_search_requests: 36
     }
   };
@@ -549,12 +618,24 @@ function evidencePriority(row) {
   return score;
 }
 
-function buildEvidence(rows) {
+function buildEvidence(rows, priorityLanguages = []) {
   const ranked = [...rows].sort((a, b) => evidencePriority(b) - evidencePriority(a));
   const selected = [];
   const used = new Set();
 
+  // Protect two evidence slots per country-priority language when available.
+  for (const language of priorityLanguages) {
+    for (let take = 0; take < 2 && selected.length < DEEP_SEARCH_MAX_EVIDENCE; take++) {
+      const index = ranked.findIndex((row, i) => !used.has(i) && row.language === language);
+      if (index < 0) break;
+      selected.push(ranked[index]);
+      used.add(index);
+    }
+  }
+
+  // Then preserve at least one item from every other language when available.
   for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
+    if (selected.some(row => row.language === language)) continue;
     const index = ranked.findIndex((row, i) => !used.has(i) && row.language === language);
     if (index >= 0 && selected.length < DEEP_SEARCH_MAX_EVIDENCE) {
       selected.push(ranked[index]);
@@ -628,7 +709,7 @@ function citationMetrics(analysis, evidence) {
   };
 }
 
-function languageDiagnostics(plan, retrieval) {
+function languageDiagnostics(plan, retrieval, priorityLanguages = []) {
   const byLanguage = {};
   for (const code of DEEP_SEARCH_LANGUAGE_CODES) {
     byLanguage[code] = {
@@ -638,7 +719,8 @@ function languageDiagnostics(plan, retrieval) {
       article_count: 0,
       successful_queries: 0,
       google_news_articles: 0,
-      gdelt_articles: 0
+      gdelt_articles: 0,
+      priority: priorityLanguages.includes(code)
     };
   }
   for (const wave of retrieval.waves) {
@@ -709,9 +791,10 @@ export async function handleDeepSearch(request, env, ctx) {
     const plan = sanitizePlan(planRaw, question);
     if (!plan.queries.length) return jsonResponse({ error: "Deep Search could not create a usable multilingual search plan." }, 422, env);
 
-    const retrieval = await retrieveNews(plan, periodDays);
+    const priorityLanguages = detectPriorityLanguages(question);
+    const retrieval = await retrieveNews(plan, periodDays, priorityLanguages);
     const unique = deduplicateRows(retrieval.rows);
-    const languagesSearched = languageDiagnostics(plan, retrieval);
+    const languagesSearched = languageDiagnostics(plan, retrieval, priorityLanguages);
 
     if (!unique.length) {
       return jsonResponse({
@@ -731,13 +814,14 @@ export async function handleDeepSearch(request, env, ctx) {
     } catch (_) {}
 
     const compared = compareWithAtlas(unique, candidateMapEvents(db, periodDays));
-    const evidence = buildEvidence(compared);
+    const evidence = buildEvidence(compared, priorityLanguages);
     const dataset = {
       analyst_question: question,
       interpreted_request: plan.interpreted_request,
       period_days: periodDays,
       database_version: databaseVersion,
       language_search_coverage: languagesSearched,
+      priority_languages: priorityLanguages,
       evidence
     };
 
@@ -765,6 +849,7 @@ export async function handleDeepSearch(request, env, ctx) {
       model: DEEP_SEARCH_MODEL,
       version: DEEP_SEARCH_VERSION,
       languages_searched: languagesSearched,
+      priority_languages: priorityLanguages,
       search_queries: retrieval.waves.map(w => ({
         language: w.query.language, query: w.query.query,
         variant: w.query.variant,
@@ -783,7 +868,8 @@ export async function handleDeepSearch(request, env, ctx) {
         matched_to_atlas: inAtlas,
         potential_atlas_gaps: gaps,
         google_news_articles: retrieval.rows.filter(row => row.search_engine === "google_news").length,
-        gdelt_articles: retrieval.rows.filter(row => row.search_engine === "gdelt").length
+        gdelt_articles: retrieval.rows.filter(row => row.search_engine === "gdelt").length,
+        search_subrequests: retrieval.subrequest_budget?.search_requests || retrieval.waves.length
       },
       grounding: {
         ...metrics,

@@ -64,7 +64,7 @@ function inject(){
               </select>
             </label>
             <div id="deepSearchMethod">
-              Deep Search runs two native-language Google News searches in each of the 12 supported languages. Languages with sparse results are automatically supplemented through GDELT; all reporting is then merged, deduplicated, compared with CT Atlas and analysed with source citations.
+              Deep Search runs two native-language Google News searches in each of the 12 supported languages. Languages relevant to the country in the analyst question receive priority rescue searches; sparse coverage is then supplemented through GDELT before deduplication, CT Atlas comparison and source-cited analysis.
             </div>
             <button id="deepSearchRun" type="button">RUN DEEP SEARCH</button>
             <div id="deepSearchStatus"></div>
@@ -237,11 +237,12 @@ function languageCoverageHtml(payload){
     const queryCount=Number(item.query_count||0);
     const googleCount=Number(item.google_news_articles||0);
     const gdeltCount=Number(item.gdelt_articles||0);
+    const priority=Boolean(item.priority);
     const cls=count>0?" has-results":" no-results";
     return `<div class="deep-language${cls}">
       <span class="deep-language-name">${esc(item.name||item.code||"Language")}</span>
       <strong>${count}</strong>
-      <small>${count===1?"article":"articles"} · Google ${googleCount} · GDELT ${gdeltCount} · ${queryCount||1} ${queryCount===1?"query":"queries"}</small>
+      <small>${count===1?"article":"articles"}${priority?" · PRIORITY":""} · Google ${googleCount} · GDELT ${gdeltCount} · ${queryCount||1} ${queryCount===1?"query":"queries"}</small>
     </div>`;
   }).join("");
 }
@@ -376,7 +377,7 @@ async function downloadPdf(){
     const filename=`CT-Atlas-Deep-Search-${fileStamp}-${pdfSafeName(lastPayload.title)}.pdf`;
 
     shell=document.createElement("section");
-    shell.style.cssText="position:fixed;left:0;top:0;z-index:-9999;width:780px;background:#fff;color:#111;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;padding:30px;box-sizing:border-box";
+    shell.style.cssText="position:absolute;left:0;top:0;z-index:2147483000;width:780px;height:auto;overflow:visible;background:#fff;color:#111;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;padding:30px;box-sizing:border-box;pointer-events:none";
     shell.innerHTML=`
       <div style="font-size:11px;letter-spacing:1.5px;color:#6b7280;font-weight:700">CT ATLAS · DEEP SEARCH</div>
       <h1 style="font-size:24px;line-height:1.2;margin:8px 0 10px">${esc(lastPayload.title||"CT Atlas Deep Search")}</h1>
@@ -391,13 +392,18 @@ async function downloadPdf(){
       <h2 style="font-size:15px;border-bottom:1px solid #d1d5db;padding-bottom:5px;margin:28px 0 10px">EVIDENCE PACK</h2>
       ${evidence.map(item=>`<div class="pdf-source" style="border-top:1px solid #e5e7eb;padding:9px 0;page-break-inside:avoid"><div style="font-weight:700">${esc(item.id)} · ${esc(item.source||"Source")}${cited.has(item.id)?" · CITED":""}</div><div style="font-size:12px;margin:2px 0">${esc(item.title||"")}</div><div style="font-size:10px;color:#6b7280">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())} · ${item.search_engine==="gdelt"?"GDELT":"Google News"}</div>${item.url?`<div style="font-size:9px;word-break:break-all;color:#1d4ed8">${esc(item.url)}</div>`:""}</div>`).join("")}
       <div style="margin-top:24px;border-top:1px solid #d1d5db;padding-top:9px;font-size:9px;color:#6b7280">This analytical tool is an independent OSINT prototype created for research and analytical purposes. The information displayed is derived from open sources and automated AI-assisted processing. It should not be considered verified intelligence and must be independently validated before any operational or decision-making use.</div>`;
+    shell.id="ctAtlasDeepPdfSource";
     document.body.appendChild(shell);
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    if(document.fonts?.ready){try{await document.fonts.ready;}catch(_){}}
+    const rect=shell.getBoundingClientRect();
+    if(shell.scrollHeight<100||rect.width<100)throw new Error("PDF source did not render correctly.");
 
     await html2pdf().set({
       margin:[10,10,12,10],
       filename,
       image:{type:"jpeg",quality:0.98},
-      html2canvas:{scale:2,useCORS:true,logging:false,backgroundColor:"#ffffff"},
+      html2canvas:{scale:2,useCORS:true,logging:false,backgroundColor:"#ffffff",scrollX:0,scrollY:0,windowWidth:780,windowHeight:Math.max(shell.scrollHeight,1120)},
       jsPDF:{unit:"mm",format:"a4",orientation:"portrait"},
       pagebreak:{mode:["css","legacy"],avoid:[".pdf-source"]},
       enableLinks:true
