@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.13-subrequest-safety";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.14-gdelt-topic-relevance";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
@@ -87,6 +87,21 @@ function resolvePriorityLanguages(question, plannerLanguages = []) {
   return [...new Set(merged)].slice(0, PRIORITY_LANGUAGE_CAP);
 }
 
+// Generic administrative/legal/news-cycle words that show up across almost
+// any security or political topic without distinguishing what the analyst
+// actually asked about. Left in the OR group unchecked, a word like "ban" or
+// "enforcement" matches any unrelated story that happens to mention some
+// other ban or enforcement action (e.g. an Afghanistan opium-ban question
+// pulling in stories about education or media bans instead).
+const GDELT_GENERIC_STOPWORDS = new Set([
+  "ban","bans","banned","banning","enforcement","enforce","enforced","enforcing",
+  "decree","decrees","policy","policies","law","laws","order","orders","rule","rules",
+  "regulation","regulations","restriction","restrictions","government","authorities",
+  "official","officials","statement","announcement","announced","celebration","celebrate",
+  "anniversary","power","years","year","return","meeting","visit","international","national",
+  "world","global","political"
+]);
+
 function broadGdeltQuery(plan) {
   const primary = cleanText(plan?.queries?.find(item => item.language === "en" && item.variant === "primary")?.query || "", 220);
   const secondary = cleanText(plan?.queries?.find(item => item.language === "en" && item.variant === "secondary")?.query || "", 220);
@@ -95,12 +110,27 @@ function broadGdeltQuery(plan) {
   const p = tokens(primary), q = tokens(secondary), qset = new Set(q);
   const shared = p.filter(t => qset.has(t));
   const head = shared[0] || p[0] || q[0] || "";
-  const rest = [];
-  for (const token of [...p, ...q]) {
-    if (!token || token === head || rest.includes(token)) continue;
-    rest.push(token);
-    if (rest.length >= 4) break;
+
+  // Interleave primary/secondary tokens instead of exhausting primary first,
+  // so a secondary-only topic noun (e.g. "methamphetamine") isn't crowded
+  // out by primary's own words, then push generic words to the back so the
+  // OR group favours specific topic nouns over administrative filler.
+  const interleaved = [];
+  for (let i = 0; i < Math.max(p.length, q.length); i++) {
+    if (p[i]) interleaved.push(p[i]);
+    if (q[i]) interleaved.push(q[i]);
   }
+  const seen = new Set([head]);
+  const candidates = [];
+  for (const token of interleaved) {
+    if (!token || seen.has(token)) continue;
+    seen.add(token);
+    candidates.push(token);
+  }
+  candidates.sort((a, b) =>
+    (GDELT_GENERIC_STOPWORDS.has(a) ? 1 : 0) - (GDELT_GENERIC_STOPWORDS.has(b) ? 1 : 0));
+  const rest = candidates.slice(0, 4);
+
   if (!head) return "";
   return rest.length ? `${head} (${rest.join(" OR ")})` : head;
 }

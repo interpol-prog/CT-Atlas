@@ -6,7 +6,7 @@ const source=fs.readFileSync('cloudflare-worker/deep-search.js','utf8').replace(
 function harness(fetch){
  const c=vm.createContext({fetch,URLSearchParams,AbortSignal,setTimeout:fn=>fn(),cleanText:(v,n)=>String(v||'').trim().slice(0,n)});
  vm.runInContext(source,c);
- return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltWave,DEEP_SEARCH_LANGUAGE_CODES})',c);
+ return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltWave,broadGdeltQuery,DEEP_SEARCH_LANGUAGE_CODES})',c);
 }
 function plan(h){return h.sanitizePlan({priority_languages:['fa','ps','ur','invalid'],queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l} Afghanistan opium`,secondary:`${l} Afghanistan heroin`}]))},'Afghanistan drugs');}
 test('Afghanistan narcotics prioritises English, French, Dari, Pashto and Urdu',()=>{
@@ -49,6 +49,18 @@ test('HTML 200 provider failures remain distinct from empty RSS',async()=>{
  assert.ok(r.waves.filter(w=>!w.query.engine).every(w=>!w.ok&&w.error.includes('non-RSS')));
 });
 test('missing language plans fail explicitly',()=>{assert.throws(()=>harness().sanitizePlan({queries:{}},''),/every required language/);});
+test('GDELT broad query prefers specific topic nouns from both primary and secondary over generic administrative words',()=>{
+ const h=harness();
+ const gdeltPlan={queries:[
+   {language:'en',variant:'primary',query:'Afghanistan opium cultivation ban enforcement decree'},
+   {language:'en',variant:'secondary',query:'Afghanistan methamphetamine heroin laboratory seizure trafficking'},
+ ]};
+ const q=h.broadGdeltQuery(gdeltPlan);
+ assert.ok(q.startsWith('afghanistan ('),q);
+ assert.ok(q.includes('methamphetamine')||q.includes('heroin'),'secondary-only drug nouns must not be crowded out: '+q);
+ assert.ok(!q.includes(' ban ')&&!q.includes('(ban')&&!/\bban\b/.test(q),'generic "ban" should be deprioritised out of the top 4: '+q);
+ assert.ok(!/\benforcement\b/.test(q),'generic "enforcement" should be deprioritised out of the top 4: '+q);
+});
 test('long PDF export renders bounded canvases and advances to the final page',async()=>{
  const js=fs.readFileSync('deep-search.js','utf8');
  const fn=js.slice(js.indexOf('async function savePagedPdf'),js.indexOf('\nfunction pdfSafeName'));
