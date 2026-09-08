@@ -9,13 +9,9 @@ let backendReady=false;
 
 function esc(value){
   return String(value??"")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
-
 function token(){return String(sessionStorage.getItem(TOKEN_KEY)||"");}
 function user(){return String(sessionStorage.getItem(USER_KEY)||"").trim().toLowerCase();}
 
@@ -24,7 +20,7 @@ function ensureCss(){
   const link=document.createElement("link");
   link.id="deepSearchCss";
   link.rel="stylesheet";
-  link.href="deep-search.css?v=1";
+  link.href="deep-search.css?v=2";
   document.head.appendChild(link);
 }
 
@@ -55,7 +51,7 @@ function inject(){
           <div id="deepSearchControls">
             <label class="deep-field deep-question-field">
               <span>ANALYST QUESTION</span>
-              <textarea id="deepSearchQuestion" rows="4" maxlength="1200" placeholder="Example: What terrorist-financing cases involving cryptocurrency have been reported in Europe during the last 30 days?"></textarea>
+              <textarea id="deepSearchQuestion" rows="4" maxlength="1200" placeholder="Example: Identify recent reporting on ISKP facilitation networks, local-language sources and potential CT Atlas gaps."></textarea>
             </label>
             <label class="deep-field">
               <span>SEARCH PERIOD</span>
@@ -67,7 +63,7 @@ function inject(){
               </select>
             </label>
             <div id="deepSearchMethod">
-              Deep Search builds a targeted multilingual search plan, retrieves fresh open-source reporting, clusters duplicate coverage, compares the results with CT Atlas, and generates a source-cited analytical answer. During the test phase it shares the Report Generator allowance.
+              Deep Search builds a targeted multilingual search plan, retrieves fresh open-source reporting, clusters duplicate coverage, compares results with CT Atlas and generates a source-cited analytical report. Local languages are selected according to the geography and subject.
             </div>
             <button id="deepSearchRun" type="button">RUN DEEP SEARCH</button>
             <div id="deepSearchStatus"></div>
@@ -86,6 +82,11 @@ function inject(){
             </div>
 
             <div id="deepSearchMetrics"></div>
+
+            <div class="deep-section-head deep-search-coverage-head">SEARCH COVERAGE</div>
+            <div id="deepSearchLanguageCoverage"></div>
+
+            <div class="deep-section-head">ANALYTICAL REPORT</div>
             <div id="deepSearchReport"></div>
 
             <div class="deep-section-head">SOURCES CITED / EVIDENCE PACK</div>
@@ -101,9 +102,7 @@ function inject(){
 
   document.getElementById("deepSearchButton")?.addEventListener("click",open);
   document.getElementById("deepSearchClose")?.addEventListener("click",close);
-  document.getElementById("deepSearchPanel")?.addEventListener("click",event=>{
-    if(event.target.id==="deepSearchPanel")close();
-  });
+  document.getElementById("deepSearchPanel")?.addEventListener("click",event=>{if(event.target.id==="deepSearchPanel")close();});
   document.getElementById("deepSearchRun")?.addEventListener("click",run);
   document.getElementById("deepSearchCopy")?.addEventListener("click",copyReport);
   document.getElementById("deepSearchPrint")?.addEventListener("click",printReport);
@@ -120,49 +119,106 @@ async function checkBackend(){
     const response=await fetch(API_BASE+"/health",{cache:"no-store"});
     const payload=await response.json().catch(()=>({}));
     backendReady=Boolean(response.ok&&payload.deep_search===true);
-  }catch(_){
-    backendReady=false;
-  }
+  }catch(_){backendReady=false;}
   if(backendReady){
-    button.disabled=false;
-    button.textContent="DEEP SEARCH";
-    button.title="Multilingual ad hoc OSINT search";
+    button.disabled=false; button.textContent="DEEP SEARCH"; button.title="Multilingual ad hoc OSINT search";
   }else{
-    button.disabled=true;
-    button.textContent="DEEP SEARCH · DEPLOY PENDING";
-    button.title="Deep Search backend is prepared but the Cloudflare Worker has not yet been deployed.";
+    button.disabled=true; button.textContent="DEEP SEARCH · DEPLOY PENDING";
+    button.title="Deep Search backend is not currently available.";
   }
 }
 
 function open(){
   const panel=document.getElementById("deepSearchPanel");
-  panel?.classList.add("open");
-  panel?.setAttribute("aria-hidden","false");
+  panel?.classList.add("open"); panel?.setAttribute("aria-hidden","false");
   setTimeout(()=>document.getElementById("deepSearchQuestion")?.focus(),30);
 }
-
 function close(){
   const panel=document.getElementById("deepSearchPanel");
-  panel?.classList.remove("open");
-  panel?.setAttribute("aria-hidden","true");
+  panel?.classList.remove("open"); panel?.setAttribute("aria-hidden","true");
 }
-
 function setStatus(message,type=""){
   const status=document.getElementById("deepSearchStatus");
   if(!status)return;
-  status.textContent=message;
-  status.className=type?"deep-status "+type:"deep-status";
+  status.textContent=message; status.className=type?"deep-status "+type:"deep-status";
+}
+
+function stripFence(value){
+  return String(value||"").trim()
+    .replace(/^```(?:json|text|markdown)?\s*/i,"")
+    .replace(/\s*```$/i,"").trim();
+}
+
+function normalizePayload(payload){
+  const normalized={...(payload||{})};
+  let title=String(normalized.title||"").trim();
+  let analysis=String(normalized.analysis||"").trim();
+
+  for(let pass=0;pass<2;pass++){
+    const candidate=stripFence(analysis);
+    if(!(candidate.startsWith("{")&&candidate.endsWith("}")))break;
+    try{
+      const nested=JSON.parse(candidate);
+      if(!nested||typeof nested!=="object"||!nested.analysis)break;
+      title=String(nested.title||title).trim();
+      analysis=String(nested.analysis||"").trim();
+    }catch(_){break;}
+  }
+
+  if(!analysis.includes("\n")&&analysis.includes("\\n")){
+    analysis=analysis.replace(/\\n/g,"\n").replace(/\\"/g,'"');
+  }
+  analysis=stripFence(analysis)
+    .replace(/^\*\*```(?:json)?\*\*/i,"")
+    .replace(/\*\*```\*\*$/i,"").trim();
+
+  normalized.title=title||"CT Atlas Deep Search";
+  normalized.analysis=analysis;
+  return normalized;
+}
+
+function inlineMarkup(value){
+  let safe=esc(value);
+  safe=safe.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");
+  safe=safe.replace(/\[(S\d{2}(?:,\s*S\d{2})*)\]/g,(_,ids)=>{
+    const label=ids.split(",").map(x=>x.trim()).join(", ");
+    return `<span class="deep-citation">[${label}]</span>`;
+  });
+  return safe;
 }
 
 function formatAnalysis(text){
-  const lines=String(text||"").split(/\n/);
-  return lines.map(line=>{
-    const value=line.trim();
-    if(!value)return '<div class="deep-spacer"></div>';
-    if(/^[A-Z][A-Z /&-]{4,}$/.test(value))return `<h4>${esc(value)}</h4>`;
-    const cited=esc(value).replace(/\[(S\d{2})\]/g,'<span class="deep-citation">[$1]</span>');
-    return `<p>${cited}</p>`;
-  }).join("");
+  const clean=stripFence(String(text||"")).replace(/\r\n?/g,"\n");
+  const lines=clean.split("\n");
+  const out=[];
+  let inList=false;
+
+  function closeList(){
+    if(inList){out.push("</ul>");inList=false;}
+  }
+
+  for(const raw of lines){
+    let value=raw.trim();
+    if(!value){closeList();continue;}
+    value=value.replace(/^#{1,6}\s*/,"").trim();
+
+    if(/^[A-Z][A-Z0-9 /&()’'–—-]{3,}$/.test(value)){
+      closeList();
+      out.push(`<h4>${inlineMarkup(value)}</h4>`);
+      continue;
+    }
+
+    if(/^[-•]\s+/.test(value)){
+      if(!inList){out.push('<ul class="deep-report-list">');inList=true;}
+      out.push(`<li>${inlineMarkup(value.replace(/^[-•]\s+/,""))}</li>`);
+      continue;
+    }
+
+    closeList();
+    out.push(`<p>${inlineMarkup(value)}</p>`);
+  }
+  closeList();
+  return out.join("");
 }
 
 function fmtDate(value){
@@ -170,6 +226,21 @@ function fmtDate(value){
   const date=new Date(value);
   if(Number.isNaN(date.getTime()))return String(value);
   return date.toLocaleString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
+}
+
+function languageCoverageHtml(payload){
+  const languages=Array.isArray(payload.languages_searched)?payload.languages_searched:[];
+  if(!languages.length)return '<div class="deep-language-empty">Language diagnostics unavailable for this cached result.</div>';
+  return languages.map(item=>{
+    const count=Number(item.article_count||0);
+    const queryCount=Number(item.query_count||0);
+    const cls=count>0?" has-results":" no-results";
+    return `<div class="deep-language${cls}">
+      <span class="deep-language-name">${esc(item.name||item.code||"Language")}</span>
+      <strong>${count}</strong>
+      <small>${count===1?"article":"articles"} · ${queryCount||1} ${queryCount===1?"query":"queries"}</small>
+    </div>`;
+  }).join("");
 }
 
 function evidenceHtml(payload){
@@ -201,7 +272,8 @@ function evidenceHtml(payload){
   }).join("");
 }
 
-function render(payload){
+function render(rawPayload){
+  const payload=normalizePayload(rawPayload);
   lastPayload=payload;
   const result=document.getElementById("deepSearchResult");
   if(result)result.hidden=false;
@@ -220,29 +292,18 @@ function render(payload){
     <div class="deep-metric"><span>POTENTIAL GAPS</span><strong>${Number(retrieved.potential_atlas_gaps||0)}</strong></div>
     <div class="deep-metric"><span>CITATION COVERAGE</span><strong>${Number(payload.grounding?.citation_coverage_percent||0)}%</strong></div>`;
 
+  document.getElementById("deepSearchLanguageCoverage").innerHTML=languageCoverageHtml(payload);
   document.getElementById("deepSearchReport").innerHTML=formatAnalysis(payload.analysis||"");
   document.getElementById("deepSearchEvidence").innerHTML=evidenceHtml(payload);
 }
 
 async function run(){
-  if(!backendReady){
-    setStatus("Deep Search backend deployment is still pending.","warning");
-    return;
-  }
+  if(!backendReady){setStatus("Deep Search backend is not available.","warning");return;}
   const question=String(document.getElementById("deepSearchQuestion")?.value||"").trim();
   const period=Number(document.getElementById("deepSearchPeriod")?.value||30);
-  const username=user();
-  const sessionToken=token();
-  const button=document.getElementById("deepSearchRun");
-
-  if(question.length<8){
-    setStatus("Enter a more specific analyst question.","warning");
-    return;
-  }
-  if(!username||!sessionToken){
-    setStatus("Deep Search requires an authenticated CT Atlas session. Sign in again.","error");
-    return;
-  }
+  const username=user(), sessionToken=token(), button=document.getElementById("deepSearchRun");
+  if(question.length<8){setStatus("Enter a more specific analyst question.","warning");return;}
+  if(!username||!sessionToken){setStatus("Deep Search requires an authenticated CT Atlas session. Sign in again.","error");return;}
 
   if(button){button.disabled=true;button.textContent="SEARCHING MULTILINGUAL SOURCES…";}
   const result=document.getElementById("deepSearchResult");
@@ -252,15 +313,8 @@ async function run(){
   try{
     const response=await fetch(API_BASE+"/deep-search",{
       method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "X-Session-Token":sessionToken
-      },
-      body:JSON.stringify({
-        user_id:username,
-        question,
-        period_days:period
-      })
+      headers:{"Content-Type":"application/json","X-Session-Token":sessionToken},
+      body:JSON.stringify({user_id:username,question,period_days:period})
     });
     const payload=await response.json().catch(()=>({}));
     if(!response.ok){
@@ -268,53 +322,40 @@ async function run(){
       throw new Error((payload.error||"Deep Search failed.")+(retry?` Retry in approximately ${Math.ceil(retry/60)} minute(s).`:""));
     }
     render(payload);
-    setStatus(
-      `Deep Search complete · ${Number(payload.retrieval?.articles_retrieved||0)} articles retrieved · ${Number(payload.retrieval?.unique_event_clusters||0)} unique event clusters · ${Number(payload.retrieval?.potential_atlas_gaps||0)} potential CT Atlas gaps.`,
-      "success"
-    );
-  }catch(error){
-    setStatus(error?.message||"Deep Search failed.","error");
-  }finally{
-    if(button){button.disabled=false;button.textContent="RUN DEEP SEARCH";}
-  }
+    setStatus(`Deep Search complete · ${Number(payload.retrieval?.articles_retrieved||0)} articles · ${Number(payload.retrieval?.unique_event_clusters||0)} unique event clusters · ${Number(payload.retrieval?.potential_atlas_gaps||0)} potential CT Atlas gaps.`,"success");
+  }catch(error){setStatus(error?.message||"Deep Search failed.","error");}
+  finally{if(button){button.disabled=false;button.textContent="RUN DEEP SEARCH";}}
 }
 
 async function copyReport(){
   if(!lastPayload)return;
   const cited=new Set(lastPayload.grounding?.cited_source_ids||[]);
-  const sourceText=(lastPayload.evidence||[])
-    .filter(item=>cited.has(item.id))
-    .map(item=>`${item.id} — ${item.source} — ${item.title} — ${item.url}`)
-    .join("\n");
+  const sourceText=(lastPayload.evidence||[]).filter(item=>cited.has(item.id))
+    .map(item=>`${item.id} — ${item.source} — ${item.title} — ${item.url}`).join("\n");
   const text=`${lastPayload.title||"CT Atlas Deep Search"}\n\nQuestion: ${lastPayload.question||""}\n\n${lastPayload.analysis||""}\n\nSOURCES CITED\n${sourceText}`;
-  try{
-    await navigator.clipboard.writeText(text);
-    setStatus("Deep Search report and cited sources copied to clipboard.","success");
-  }catch(_){
-    setStatus("Clipboard access was unavailable.","warning");
-  }
+  try{await navigator.clipboard.writeText(text);setStatus("Deep Search report and cited sources copied to clipboard.","success");}
+  catch(_){setStatus("Clipboard access was unavailable.","warning");}
 }
 
 function printReport(){
   if(!lastPayload)return;
   const popup=window.open("","_blank","noopener,noreferrer,width=980,height=800");
-  if(!popup){
-    setStatus("Popup blocked. Allow popups to use PRINT / PDF.","warning");
-    return;
-  }
+  if(!popup){setStatus("Popup blocked. Allow popups to use PRINT / PDF.","warning");return;}
   const cited=new Set(lastPayload.grounding?.cited_source_ids||[]);
   const sources=(lastPayload.evidence||[]).filter(item=>cited.has(item.id));
-  popup.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(lastPayload.title||"Deep Search")}</title><style>body{font-family:Arial,sans-serif;max-width:900px;margin:40px auto;color:#111;line-height:1.55}h1{font-size:24px}h2{margin-top:32px;font-size:16px}h3{font-size:13px;margin:22px 0 8px}p{margin:8px 0}.meta{color:#555;font-size:12px}.source{border-top:1px solid #ddd;padding:10px 0;font-size:12px}.source a{color:#0645ad}</style></head><body><h1>${esc(lastPayload.title||"CT Atlas Deep Search")}</h1><div class="meta">Question: ${esc(lastPayload.question||"")} · Generated ${esc(new Date(lastPayload.generated_at||Date.now()).toLocaleString("en-GB"))}</div>${formatAnalysis(lastPayload.analysis||"")}<h2>SOURCES CITED / EVIDENCE PACK</h2>${sources.map(item=>`<div class="source"><strong>${esc(item.id)} · ${esc(item.source)}</strong><br>${esc(item.title)}<br>${esc(fmtDate(item.published))}<br>${item.url?`<a href="${esc(item.url)}">${esc(item.url)}</a>`:""}</div>`).join("")}<p class="meta">AI-assisted OSINT analysis. Validate significant claims against source material before operational use.</p></body></html>`);
-  popup.document.close();
-  popup.focus();
-  setTimeout(()=>popup.print(),250);
+  const coverage=languageCoverageHtml(lastPayload);
+  popup.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(lastPayload.title||"Deep Search")}</title>
+  <style>body{font-family:Arial,sans-serif;max-width:900px;margin:40px auto;color:#111;line-height:1.55}h1{font-size:24px}h2{margin-top:32px;font-size:16px;border-bottom:1px solid #ddd;padding-bottom:5px}h4{font-size:13px;margin:22px 0 8px;color:#174d70}p{margin:8px 0}ul{margin:7px 0 12px 20px}.meta{color:#555;font-size:12px}.source{border-top:1px solid #ddd;padding:10px 0;font-size:12px}.source a{color:#0645ad}.deep-language{display:inline-block;border:1px solid #ccc;padding:6px 8px;margin:3px;font-size:11px}.deep-language strong{margin-left:7px}.deep-language small{display:block;color:#666}.deep-citation{font-weight:bold;color:#8a6518}</style>
+  </head><body><h1>${esc(lastPayload.title||"CT Atlas Deep Search")}</h1>
+  <div class="meta">Question: ${esc(lastPayload.question||"")} · Generated ${esc(new Date(lastPayload.generated_at||Date.now()).toLocaleString("en-GB"))}</div>
+  <h2>SEARCH COVERAGE</h2><div>${coverage}</div>
+  <h2>ANALYTICAL REPORT</h2>${formatAnalysis(lastPayload.analysis||"")}
+  <h2>SOURCES CITED / EVIDENCE PACK</h2>${sources.map(item=>`<div class="source"><strong>${esc(item.id)} · ${esc(item.source)}</strong><br>${esc(item.title)}<br>${esc(fmtDate(item.published))}<br>${item.url?`<a href="${esc(item.url)}">${esc(item.url)}</a>`:""}</div>`).join("")}
+  <p class="meta">AI-assisted OSINT analysis. Validate significant claims against source material before operational use.</p></body></html>`);
+  popup.document.close(); popup.focus(); setTimeout(()=>popup.print(),250);
 }
 
-document.addEventListener("keydown",event=>{
-  if(event.key==="Escape")close();
-});
-
+document.addEventListener("keydown",event=>{if(event.key==="Escape")close();});
 document.addEventListener("DOMContentLoaded",inject);
 if(document.readyState!=="loading")inject();
-
 })();
