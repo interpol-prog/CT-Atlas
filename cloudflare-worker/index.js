@@ -20,6 +20,7 @@ stats,
 compactEvent,
 callGemini
 } from "./shared.js";
+import { handleDeepSearch } from "./deep-search.js";
 export default {
 async fetch(request, env, ctx) {
 const url = new URL(request.url);
@@ -27,7 +28,7 @@ if (request.method === "OPTIONS") {
 return new Response(null, { status: 204, headers: corsHeaders(env) });
 }
 if (url.pathname === "/health" && request.method === "GET") {
-return jsonResponse({ ok: true, service: "ct-report-generator" }, 200, env);
+return jsonResponse({ ok: true, service: "ct-report-generator", deep_search: true }, 200, env);
 }
 if (url.pathname === "/auth-login" && request.method === "POST") {
 let authBody;
@@ -88,6 +89,9 @@ const period = cleanText(url.searchParams.get("period") || "today", 16);
 if (!["today", "7", "30", "all"].includes(period)) return jsonResponse({ error: "Unsupported statistics period." }, 400, env);
 const statsResponse = await gateCall(env, "/usage-stats", { period });
 return jsonResponse(await statsResponse.json(), statsResponse.status, env);
+}
+if (url.pathname === "/deep-search" && request.method === "POST") {
+return handleDeepSearch(request, env, ctx);
 }
 if (url.pathname !== "/report" || request.method !== "POST") return jsonResponse({ error: "Not found" }, 404, env);
 let body;
