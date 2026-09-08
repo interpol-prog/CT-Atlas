@@ -1,0 +1,83 @@
+name: Apply Deep Search recall fix v2
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-deep-search-recall-v2.yml'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Apply validated recall transformation
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, textwrap
+
+          wf = Path('.github/workflows/apply-deep-search-recall-fix.yml').read_text(encoding='utf-8')
+          marker = '      - name: Upgrade Deep Search retrieval recall\n        shell: python\n        run: |\n'
+          start = wf.index(marker) + len(marker)
+          end = wf.index('\n      - name: Validate JavaScript', start)
+          lines = wf[start:end].splitlines()
+          script = '\n'.join(line[10:] if line.startswith('          ') else line for line in lines)
+
+          # The original migration reached the final output-format replacement and
+          # failed only because that cosmetic anchor differed slightly. Remove that
+          # non-essential block and keep all retrieval/ranking/cache changes.
+          script, count = re.subn(
+              r"\nold_out = '''search_queries:.*?s = s\.replace\(old_out, new_out\)\n",
+              '\n',
+              script,
+              count=1,
+              flags=re.S
+          )
+          if count != 1:
+              raise SystemExit('Could not remove obsolete search_queries migration block')
+
+          exec(compile(script, 'deep-search-recall-migration', 'exec'), {})
+
+      - name: Validate JavaScript and changes
+        run: |
+          node --check cloudflare-worker/deep-search.js
+          node --check cloudflare-worker/index.js
+          node --check deep-search.js
+          grep -q 'deep-search-v4-multi-query-language-rescue' cloudflare-worker/deep-search.js
+          grep -q 'DEEP_SEARCH_MAX_QUERIES = 24' cloudflare-worker/deep-search.js
+          grep -q 'language-rescue' cloudflare-worker/deep-search.js
+          grep -q 'Last 1 year' deep-search.js
+
+      - name: Commit recall fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cloudflare-worker/deep-search.js cloudflare-worker/index.js deep-search.js
+          git diff --cached --quiet || git commit -m "Improve Deep Search multilingual recall"
+          git push
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: .
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
