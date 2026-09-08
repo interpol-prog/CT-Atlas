@@ -353,7 +353,7 @@ function loadPdfLibraries(){
   });
   pdfLibrariesPromise=Promise.all([
     load("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",()=>window.html2canvas),
-    load("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js",()=>window.jspdf?.jsPDF)
+    load("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",()=>window.jspdf?.jsPDF)
   ]).catch(error=>{pdfLibrariesPromise=null;throw error;});
   return pdfLibrariesPromise;
 }

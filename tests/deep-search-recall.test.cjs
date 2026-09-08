@@ -6,12 +6,18 @@ const source=fs.readFileSync('cloudflare-worker/deep-search.js','utf8').replace(
 function harness(fetch){
  const c=vm.createContext({fetch,URLSearchParams,AbortSignal,setTimeout:fn=>fn(),cleanText:(v,n)=>String(v||'').trim().slice(0,n)});
  vm.runInContext(source,c);
- return vm.runInContext('({sanitizePlan,retrieveNews,detectPriorityLanguages,buildEvidence,DEEP_SEARCH_LANGUAGE_CODES})',c);
+ return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,DEEP_SEARCH_LANGUAGE_CODES})',c);
 }
 function plan(h){return h.sanitizePlan({priority_languages:['fa','ps','ur','invalid'],queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l} Afghanistan opium`,secondary:`${l} Afghanistan heroin`}]))},'Afghanistan drugs');}
-test('Afghanistan narcotics prioritises Dari, Pashto and Urdu',()=>{
- const h=harness();assert.deepEqual(Array.from(h.detectPriorityLanguages('Afghanistan drug trafficking')),['fa','ps','ur']);
+test('Afghanistan narcotics prioritises English, French, Dari, Pashto and Urdu',()=>{
+ const h=harness();assert.deepEqual(Array.from(h.resolvePriorityLanguages('Afghanistan drug trafficking',[])),['en','fr','fa','ps','ur']);
  assert.deepEqual(Array.from(plan(h).priority_languages),['fa','ps','ur']);
+});
+test('English and French are always prioritised even without a detected country',()=>{
+ const h=harness();assert.deepEqual(Array.from(h.resolvePriorityLanguages('What is the current threat level?',[])),['en','fr']);
+});
+test('Egypt questions prioritise Arabic alongside English and French',()=>{
+ const h=harness();assert.deepEqual(Array.from(h.resolvePriorityLanguages('Recent extremist activity in Egypt',[])),['en','fr','ar']);
 });
 test('sparse local feeds get native queries through fallback edition within 36 search calls',async()=>{
  const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
@@ -21,6 +27,13 @@ test('sparse local feeds get native queries through fallback edition within 36 s
  assert.deepEqual(Array.from(rescue,w=>w.query.language),['fa','ps','ur']);
  assert.ok(rescue.every(w=>w.query.fallback_locale));
  assert.ok(calls[0].searchParams.get('q').startsWith('fa '));
+});
+test('five priority languages still stay within the 38-call search budget',async()=>{
+ const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
+ const result=await h.retrieveNews(plan(h),30,h.resolvePriorityLanguages('Afghanistan drug trafficking',[]));
+ assert.equal(calls.length,38);assert.equal(result.subrequest_budget.search_requests,38);
+ const rescue=result.waves.filter(w=>w.query.variant==='priority-locale-rescue');
+ assert.equal(rescue.length,5);
 });
 test('HTML 200 provider failures remain distinct from empty RSS',async()=>{
  const h=harness(async url=>new Response(url.includes('gdelt')?'{}':'<html>Unavailable</html>'));

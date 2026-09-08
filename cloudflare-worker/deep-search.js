@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.9-local-language-pdf";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.10-question-analysis-priority-langs";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
@@ -44,7 +44,7 @@ const DEEP_SEARCH_LANGUAGE_CODES = Object.freeze(Object.keys(LANGUAGE_LOCALES));
 
 
 const COUNTRY_LANGUAGE_PRIORITY = Object.freeze([
-  { pattern: /\b(?:afghanistan|afghan)\b/i, languages: ["fa", "ps"] },
+  { pattern: /\b(?:afghanistan|afghan)\b/i, languages: ["fa", "ps", "ur"] },
   { pattern: /\b(?:pakistan|pakistani)\b/i, languages: ["ur"] },
   { pattern: /\b(?:iran|iranian)\b/i, languages: ["fa"] },
   { pattern: /\b(?:france|french)\b/i, languages: ["fr"] },
@@ -58,7 +58,13 @@ const COUNTRY_LANGUAGE_PRIORITY = Object.freeze([
   { pattern: /\b(?:iraq|iraqi|syria|syrian|lebanon|lebanese|jordan|jordanian|saudi arabia|saudi|yemen|yemeni|oman|omani|qatar|qatari|united arab emirates|uae|bahrain|bahraini|kuwait|kuwaiti|egypt|egyptian|libya|libyan|tunisia|tunisian|algeria|algerian|morocco|moroccan|sudan|sudanese|mauritania|mauritanian)\b/i, languages: ["ar"] }
 ]);
 
-function detectPriorityLanguages(question) {
+// English and French are always searched with priority: they are the two
+// languages CT Atlas analysts read directly, and they are searched first no
+// matter which country the question is about.
+const ALWAYS_PRIORITY_LANGUAGES = Object.freeze(["en", "fr"]);
+const PRIORITY_LANGUAGE_CAP = 5;
+
+function detectCountryLanguages(question) {
   const text = String(question || "");
   const out = [];
   const add = code => {
@@ -67,10 +73,16 @@ function detectPriorityLanguages(question) {
   for (const rule of COUNTRY_LANGUAGE_PRIORITY) {
     if (rule.pattern.test(text)) rule.languages.forEach(add);
   }
-  // Urdu is not an official Afghan language, but it is highly relevant to
-  // Afghanistan-Pakistan narcotics routes and cross-border enforcement reporting.
-  if (/\b(?:afghanistan|afghan)\b/i.test(text) && /\b(?:drug|narcotic|opium|heroin|meth|methamphetamine|traffick|smuggl|seizure|laborator)\w*\b/i.test(text)) add("ur");
-  return out.slice(0, 3);
+  return out;
+}
+
+// Combines the always-on languages, the languages detected from country names
+// in the question, and the languages the planner LLM itself proposed, capped
+// so the retrieval budget stays well under Cloudflare's subrequest ceiling.
+function resolvePriorityLanguages(question, plannerLanguages = []) {
+  const merged = [...ALWAYS_PRIORITY_LANGUAGES, ...detectCountryLanguages(question), ...plannerLanguages]
+    .filter(code => DEEP_SEARCH_LANGUAGE_CODES.includes(code));
+  return [...new Set(merged)].slice(0, PRIORITY_LANGUAGE_CAP);
 }
 
 function broadGdeltQuery(plan) {
@@ -145,6 +157,22 @@ MANDATORY 12-LANGUAGE COVERAGE:
 - he: Hebrew
 - ps: Pashto
 
+QUESTION ANALYSIS (do this before writing any query):
+- Identify the core geography, actors and the underlying category of activity
+  (terrorism, organised crime, narcotics, trafficking, financing, weapons,
+  cybercrime, etc.).
+- Identify well-established, directly relevant associated terms, synonyms,
+  known actor/group names, methods or evidence types that an expert OSINT
+  analyst would also search even when not explicitly named in the question —
+  for example a question about maritime piracy off a given coast should also
+  consider "hijacking", "hostage" or "ransom" as associated terms where
+  relevant.
+- Only use associated terms that are well-known and directly relevant. Do not
+  invent specific group names, events or claims that are not either stated by
+  the analyst or extremely well-established for the requested subject.
+- Use this analysis to strengthen — not replace — the literal request when
+  building each language's primary/secondary queries.
+
 QUERY DESIGN RULES:
 - Silently correct obvious spelling mistakes in the analyst request before making
   search terms.
@@ -152,7 +180,8 @@ QUERY DESIGN RULES:
 - Each query should normally contain about 3-8 meaningful search terms or short
   phrases, plus the requested geography/actor where needed.
 - primary = the broad/core subject of the request.
-- secondary = a complementary facet, synonym set or action/evidence dimension.
+- secondary = a complementary facet, synonym set or action/evidence dimension
+  drawing on the associated terms identified above.
 - For multi-part requests, DISTRIBUTE requested facets across primary and secondary
   instead of requiring every concept in the same result.
 - Keep the same information need in all 12 languages using natural local terms.
@@ -161,6 +190,9 @@ QUERY DESIGN RULES:
   seizures, cross-border operations or comparisons requested by the analyst.
 - Use common synonyms/alternate spellings where they improve recall, but do not
   overload the query with every possible synonym.
+- Prefer short, keyword-style terms over fluent grammatical sentences for
+  languages with typically sparse news indexing (fa, ur, he, ps): a handful of
+  natural local keywords matches published reporting better than a full phrase.
 
 For narcotics research, split complex requests sensibly. One query may cover
 cultivation/production/laboratories and the second trafficking/routes/networks/
@@ -170,7 +202,12 @@ If the analyst asks about narcotics, organised crime, smuggling, weapons,
 cybercrime or another adjacent security topic, search it directly even when no
 terrorism nexus is stated.
 
-Set priority_languages to up to three supported languages used locally in the requested countries. Recognise country names in any language. For Afghanistan prioritise fa and ps; add ur for cross-border narcotics research. Arabic remains part of the full search.
+Set priority_languages to up to five supported languages: always include "en"
+and "fr", plus up to three languages used locally in the requested countries.
+Recognise country names in any language. For example: Afghanistan -> fa, ps, ur;
+Egypt or another Arabic-speaking country -> ar; Iran -> fa; Pakistan -> ur;
+Israel/Palestine -> he, ar. Arabic and every other required language remain
+part of the full 12-language search regardless of priority_languages.
 
 Return only the structured search plan. For every language key, return both
 "primary" and "secondary". Do not answer the analyst's question yet.
@@ -380,7 +417,7 @@ function sanitizePlan(plan, fallbackQuestion) {
 
   return {
     interpreted_request: cleanText(plan?.interpreted_request || fallbackQuestion, 700),
-    priority_languages: (Array.isArray(plan?.priority_languages) ? plan.priority_languages : []).filter(code => DEEP_SEARCH_LANGUAGE_CODES.includes(code)).slice(0, 3),
+    priority_languages: (Array.isArray(plan?.priority_languages) ? plan.priority_languages : []).filter(code => DEEP_SEARCH_LANGUAGE_CODES.includes(code)).slice(0, PRIORITY_LANGUAGE_CAP),
     queries: queries.slice(0, DEEP_SEARCH_MAX_QUERIES)
   };
 }
@@ -493,7 +530,7 @@ async function fetchGdeltWave(language, query, periodDays) {
 
 async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   // Bound search below Cloudflare Free's 50-subrequest ceiling:
-  // 24 Google News + max 3 priority Google rescues + max 9 GDELT = max 36.
+  // 24 Google News + max 5 priority Google rescues + max 9 GDELT = max 38.
   const googleWaves = await Promise.all(
     [...plan.queries].sort((a,b) => Number(priorityLanguages.includes(b.language))-Number(priorityLanguages.includes(a.language))).map((item, index) =>
       fetchNewsWave(item, index, periodDays, LANGUAGE_LOCALES[item.language], false)
@@ -508,7 +545,7 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   // Country-relevant languages get one extra native-language query through the
   // stable en-US Google edition if the local edition returned fewer than 3 items.
   const priorityRescueItems = [];
-  for (const language of priorityLanguages.slice(0, 3)) {
+  for (const language of priorityLanguages.slice(0, PRIORITY_LANGUAGE_CAP)) {
     if ((totals[language]?.size || 0) >= 3) continue;
     const candidate = plan.queries.find(item => item.language === language && item.variant === "primary")
       || plan.queries.find(item => item.language === language);
@@ -795,7 +832,7 @@ export async function handleDeepSearch(request, env, ctx) {
     const plan = sanitizePlan(planRaw, question);
     if (!plan.queries.length) return jsonResponse({ error: "Deep Search could not create a usable multilingual search plan." }, 422, env);
 
-    const priorityLanguages = [...new Set([...detectPriorityLanguages(question), ...(plan.priority_languages || [])])].slice(0, 3);
+    const priorityLanguages = resolvePriorityLanguages(question, plan.priority_languages || []);
     const retrieval = await retrieveNews(plan, periodDays, priorityLanguages);
     const unique = deduplicateRows(retrieval.rows);
     const languagesSearched = languageDiagnostics(plan, retrieval, priorityLanguages);
