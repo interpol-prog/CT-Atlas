@@ -191,6 +191,52 @@ export class ReportGate {
       return Response.json({ ok: true });
     }
 
+    if (url.pathname === "/commit-report") {
+      const permitId = String(body.permitId || "");
+      const username = normalizeUsername(body.username);
+      const active = (await this.state.storage.get("active")) || {};
+      const permit = active[permitId];
+
+      if (!permit || normalizeUsername(permit.user_id) !== username) {
+        return Response.json({
+          error: "Report permit expired before completion."
+        }, { status: 409 });
+      }
+
+      if (permit.counted === true) {
+        return Response.json({ ok: true, already_counted: true });
+      }
+
+      const dayBucket = parisDayKey(now);
+      const globalDayKey = `global-day:${dayBucket}`;
+      const globalDay = Number((await this.state.storage.get(globalDayKey)) || 0);
+      const writes = {
+        [globalDayKey]: globalDay + 1
+      };
+
+      let dailyUsed = null;
+      if (username !== "admin") {
+        const userDayKey = `report-day:${dayBucket}:${username}`;
+        const userDay = Number((await this.state.storage.get(userDayKey)) || 0);
+        dailyUsed = userDay + 1;
+        writes[userDayKey] = dailyUsed;
+        writes[`report-last:${username}`] = now;
+      }
+
+      permit.counted = true;
+      permit.completed_at = now;
+      active[permitId] = permit;
+      writes.active = active;
+
+      await this.state.storage.put(writes);
+
+      return Response.json({
+        ok: true,
+        daily_used: dailyUsed,
+        daily_limit: username === "admin" ? null : 5
+      });
+    }
+
     if (url.pathname === "/release") {
       const active = (await this.state.storage.get("active")) || {};
 
@@ -380,11 +426,10 @@ export class ReportGate {
       (await this.state.storage.get(globalDayKey)) || 0
     );
 
-    let userDayKey = "";
     let userDay = 0;
 
     if (username !== "admin") {
-      userDayKey = `report-day:${dayBucket}:${username}`;
+      const userDayKey = `report-day:${dayBucket}:${username}`;
       userDay = Number(
         (await this.state.storage.get(userDayKey)) || 0
       );
@@ -423,31 +468,21 @@ export class ReportGate {
       }
     }
 
-    if (globalDay >= 100) {
+    if (globalDay + Object.keys(active).length >= 100) {
       return Response.json({
         error: "Daily report generation limit reached (100/day).",
         retry_after_seconds: 3600
       }, { status: 429 });
     }
 
-    const writes = {
-      active: null,
-      [globalDayKey]: globalDay + 1
-    };
-
-    if (username !== "admin") {
-      writes[`report-last:${username}`] = now;
-      writes[userDayKey] = userDay + 1;
-    }
-
     const permitId = crypto.randomUUID();
     active[permitId] = {
       user_id: username,
-      started_at: now
+      started_at: now,
+      counted: false
     };
-    writes.active = active;
 
-    await this.state.storage.put(writes);
+    await this.state.storage.put("active", active);
 
     await this.incrementUsage(username, {
       report_requests: 1
