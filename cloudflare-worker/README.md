@@ -50,20 +50,17 @@ Do not create a new Durable Object namespace if the existing Worker already has 
 
 GitHub Pages deployment does not deploy Cloudflare Workers. The Worker files in this folder must therefore be deployed separately to the existing Cloudflare Worker before server-side 20-minute enforcement and the Admin Usage dashboard become authoritative.
 
-## Deep Search recall fix and release verification
+## Deep Search v5.9
 
-The v5 search planner supplies two initial queries plus a short scope-preserving
-rescue query in each of 12 languages. Languages with fewer than three distinct
-result URLs, including English, receive the broad rescue (at most 36 news
-requests). Provider HTML failures are reported separately from empty RSS feeds.
-The cache version changes so old reports are not reused.
+Country-priority languages receive fallback Google edition searches using the same
+native query and are first in GDELT rescue and evidence selection. All 12 languages
+are still searched. Search calls are bounded at 36. The planner also identifies local
+languages for country names in any language. Old report caches are invalidated.
 
-Validation: `node --test tests/deep-search-recall.test.cjs` (mocked retrieval).
-These tests do not establish live Google News recall or model plan quality.
+Deploy the four Worker modules together to the existing ct-report-generator Worker,
+preserving its existing bindings and secrets. GitHub Pages only deploys the frontend.
+GET /health must report deep_search_version: deep-search-v5.9-local-language-pdf.
 
-Deploy the four Worker modules together to the existing `ct-report-generator`
-Worker, preserving all existing bindings and secrets. Publishing GitHub Pages
-alone does not release this fix. After deployment, GET `/health` must return
-`deep_search_version: "deep-search-v5-broad-query-rescue"`. Then repeat the
-original Afghanistan question in an authenticated session and inspect language
-coverage and actual queries. No live source-count increase has been verified yet.
+Validation: node --test tests/deep-search-recall.test.cjs (5 mocked tests).
+These verify priority, fallback requests, request limits, error handling and bounded
+PDF pagination. Live search recall and actual browser PDF rendering are not verified.

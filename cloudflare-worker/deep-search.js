@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.8-priority-language";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.9-local-language-pdf";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
@@ -95,6 +95,7 @@ const PLAN_SCHEMA = {
   type: "object",
   properties: {
     interpreted_request: { type: "string" },
+    priority_languages: { type: "array", items: { type: "string", enum: [...DEEP_SEARCH_LANGUAGE_CODES] } },
     queries: {
       type: "object",
       properties: Object.fromEntries(
@@ -168,6 +169,8 @@ seizures/decrees/enforcement.
 If the analyst asks about narcotics, organised crime, smuggling, weapons,
 cybercrime or another adjacent security topic, search it directly even when no
 terrorism nexus is stated.
+
+Set priority_languages to up to three supported languages used locally in the requested countries. Recognise country names in any language. For Afghanistan prioritise fa and ps; add ur for cross-border narcotics research. Arabic remains part of the full search.
 
 Return only the structured search plan. For every language key, return both
 "primary" and "secondary". Do not answer the analyst's question yet.
@@ -377,6 +380,7 @@ function sanitizePlan(plan, fallbackQuestion) {
 
   return {
     interpreted_request: cleanText(plan?.interpreted_request || fallbackQuestion, 700),
+    priority_languages: (Array.isArray(plan?.priority_languages) ? plan.priority_languages : []).filter(code => DEEP_SEARCH_LANGUAGE_CODES.includes(code)).slice(0, 3),
     queries: queries.slice(0, DEEP_SEARCH_MAX_QUERIES)
   };
 }
@@ -491,7 +495,7 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   // Bound search below Cloudflare Free's 50-subrequest ceiling:
   // 24 Google News + max 3 priority Google rescues + max 9 GDELT = max 36.
   const googleWaves = await Promise.all(
-    plan.queries.map((item, index) =>
+    [...plan.queries].sort((a,b) => Number(priorityLanguages.includes(b.language))-Number(priorityLanguages.includes(a.language))).map((item, index) =>
       fetchNewsWave(item, index, periodDays, LANGUAGE_LOCALES[item.language], false)
     )
   );
@@ -791,7 +795,7 @@ export async function handleDeepSearch(request, env, ctx) {
     const plan = sanitizePlan(planRaw, question);
     if (!plan.queries.length) return jsonResponse({ error: "Deep Search could not create a usable multilingual search plan." }, 422, env);
 
-    const priorityLanguages = detectPriorityLanguages(question);
+    const priorityLanguages = [...new Set([...detectPriorityLanguages(question), ...(plan.priority_languages || [])])].slice(0, 3);
     const retrieval = await retrieveNews(plan, periodDays, priorityLanguages);
     const unique = deduplicateRows(retrieval.rows);
     const languagesSearched = languageDiagnostics(plan, retrieval, priorityLanguages);

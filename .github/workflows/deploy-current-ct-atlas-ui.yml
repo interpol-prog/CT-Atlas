@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - ".github/workflows/deploy-current-ct-atlas-ui.yml"
+      - "deep-search.js"
+      - "deep-search.css"
   workflow_dispatch:
 
 permissions:

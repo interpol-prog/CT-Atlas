@@ -341,19 +341,52 @@ async function copyReport(){
   catch(_){setStatus("Clipboard access was unavailable.","warning");}
 }
 
-let html2pdfLoader=null;
-function loadHtml2Pdf(){
-  if(window.html2pdf)return Promise.resolve(window.html2pdf);
-  if(html2pdfLoader)return html2pdfLoader;
-  html2pdfLoader=new Promise((resolve,reject)=>{
+let pdfLibrariesPromise=null;
+function loadPdfLibraries(){
+  if(pdfLibrariesPromise)return pdfLibrariesPromise;
+  const load=(src,ready)=>ready()?Promise.resolve():new Promise((resolve,reject)=>{
     const script=document.createElement("script");
-    script.id="ctAtlasHtml2Pdf";
-    script.src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
-    script.onload=()=>window.html2pdf?resolve(window.html2pdf):reject(new Error("PDF library did not initialise."));
-    script.onerror=()=>reject(new Error("Unable to load the PDF export library."));
+    script.src=src;
+    script.onload=()=>ready()?resolve():reject(new Error("PDF library did not initialise."));
+    script.onerror=()=>{script.remove();reject(new Error("Unable to load PDF library. Please retry."));};
     document.head.appendChild(script);
   });
-  return html2pdfLoader;
+  pdfLibrariesPromise=Promise.all([
+    load("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",()=>window.html2canvas),
+    load("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js",()=>window.jspdf?.jsPDF)
+  ]).catch(error=>{pdfLibrariesPromise=null;throw error;});
+  return pdfLibrariesPromise;
+}
+
+// Render one bounded canvas per page, even for a very long evidence pack.
+async function savePagedPdf(shell,filename){
+  const pdf=new window.jspdf.jsPDF({unit:"mm",format:"a4",orientation:"portrait"});
+  const width=shell.offsetWidth;
+  const pageHeight=Math.floor(width*275/190);
+  const height=shell.scrollHeight;
+  // Prefer block boundaries to keep source cards and paragraphs together.
+  const top=shell.getBoundingClientRect().top;
+  const boundaries=[...shell.querySelectorAll("h1,h2,p,.pdf-source")]
+    .map(el=>Math.floor(el.getBoundingClientRect().top-top)).filter(y=>y>0);
+  let offset=0,page=0;
+  while(offset<height){
+    let end=Math.min(offset+pageHeight,height);
+    if(end<height){
+      const candidates=boundaries.filter(y=>y>offset+pageHeight*0.65&&y<=end);
+      if(candidates.length)end=Math.max(...candidates);
+    }
+    const canvas=await window.html2canvas(shell,{
+      scale:2,useCORS:true,logging:false,backgroundColor:"#ffffff",
+      scrollX:0,scrollY:0,windowWidth:width,windowHeight:1120,
+      x:0,y:offset,width,height:end-offset
+    });
+    if(!canvas.width||!canvas.height)throw new Error("PDF page could not be rendered.");
+    if(page++)pdf.addPage();
+    pdf.addImage(canvas.toDataURL("image/jpeg",0.98),"JPEG",10,10,190,(end-offset)*190/width);
+    canvas.width=canvas.height=0;
+    offset=end;
+  }
+  pdf.save(filename);
 }
 
 function pdfSafeName(value){
@@ -367,7 +400,7 @@ async function downloadPdf(){
   if(button){button.disabled=true;button.textContent="BUILDING PDF…";}
   let shell=null;
   try{
-    const html2pdf=await loadHtml2Pdf();
+    await loadPdfLibraries();
     const cited=new Set(lastPayload.grounding?.cited_source_ids||[]);
     const evidence=[...(lastPayload.evidence||[])].sort((a,b)=>(cited.has(b.id)?1:0)-(cited.has(a.id)?1:0));
     const languages=Array.isArray(lastPayload.languages_searched)?lastPayload.languages_searched:[];
@@ -399,15 +432,7 @@ async function downloadPdf(){
     const rect=shell.getBoundingClientRect();
     if(shell.scrollHeight<100||rect.width<100)throw new Error("PDF source did not render correctly.");
 
-    await html2pdf().set({
-      margin:[10,10,12,10],
-      filename,
-      image:{type:"jpeg",quality:0.98},
-      html2canvas:{scale:2,useCORS:true,logging:false,backgroundColor:"#ffffff",scrollX:0,scrollY:0,windowWidth:780,windowHeight:Math.max(shell.scrollHeight,1120)},
-      jsPDF:{unit:"mm",format:"a4",orientation:"portrait"},
-      pagebreak:{mode:["css","legacy"],avoid:[".pdf-source"]},
-      enableLinks:true
-    }).from(shell).save();
+    await savePagedPdf(shell,filename);
     setStatus("PDF downloaded successfully.","success");
   }catch(error){
     setStatus(error?.message||"PDF download failed.","error");
