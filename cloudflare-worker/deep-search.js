@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.6-safe-dual-engine";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.7-subrequest-safe";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
@@ -439,61 +439,48 @@ async function fetchGdeltWave(language, query, periodDays) {
 }
 
 async function retrieveNews(plan, periodDays) {
-  const firstWaves = await Promise.all(
+  // Cloudflare Workers Free allows 50 external subrequests per invocation.
+  // Keep search bounded at 24 Google News requests plus at most one
+  // GDELT rescue request per sparse language (maximum 12).
+  const googleWaves = await Promise.all(
     plan.queries.map((item, index) =>
       fetchNewsWave(item, index, periodDays, LANGUAGE_LOCALES[item.language], false)
     )
   );
 
-  const firstTotals = Object.fromEntries(DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, new Set()]));
-  for (const wave of firstWaves) {
-    for (const row of wave.rows) firstTotals[wave.query.language].add(row.url);
-  }
-
-  const googleRescueItems = [];
-  for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
-    if (firstTotals[language].size > 0) continue;
-    const candidate = plan.queries.find(item => item.language === language && item.variant === "primary")
-      || plan.queries.find(item => item.language === language);
-    if (candidate) googleRescueItems.push({ ...candidate, variant: "google-language-rescue" });
-  }
-
-  const googleRescueWaves = await Promise.all(
-    googleRescueItems.map((item, index) =>
-      fetchNewsWave(item, firstWaves.length + index, periodDays, SEARCH_FALLBACK_LOCALE, true)
-    )
-  );
-
-  const googleWaves = [...firstWaves, ...googleRescueWaves];
   const totals = Object.fromEntries(DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, new Set()]));
   for (const wave of googleWaves) {
     for (const row of wave.rows) totals[wave.query.language].add(row.url);
   }
 
-  const englishQueries = plan.queries
-    .filter(item => item.language === "en")
-    .map(item => cleanText(item.query, 220))
-    .filter(Boolean)
-    .slice(0, 2);
+  const englishPrimary = plan.queries.find(item => item.language === "en" && item.variant === "primary")
+    || plan.queries.find(item => item.language === "en");
+  const gdeltQuery = cleanText(englishPrimary?.query || plan.interpreted_request || "", 220);
   const sparseLanguages = DEEP_SEARCH_LANGUAGE_CODES.filter(code => totals[code].size < 3);
   const gdeltWaves = [];
 
-  for (const englishQuery of englishQueries) {
-    const stillSparse = sparseLanguages.filter(code => {
-      const added = gdeltWaves.filter(w => w.query.language === code)
-        .reduce((sum, wave) => sum + wave.rows.length, 0);
-      return totals[code].size + added < 3;
-    });
-    for (let i = 0; i < stillSparse.length; i += 3) {
-      const batch = stillSparse.slice(i, i + 3);
-      const results = await Promise.all(batch.map(code => fetchGdeltWave(code, englishQuery, periodDays)));
+  if (gdeltQuery) {
+    for (let i = 0; i < sparseLanguages.length; i += 3) {
+      const batch = sparseLanguages.slice(i, i + 3);
+      const results = await Promise.all(
+        batch.map(code => fetchGdeltWave(code, gdeltQuery, periodDays, "gdelt-rescue"))
+      );
       gdeltWaves.push(...results);
-      if (i + 3 < stillSparse.length) await new Promise(resolve => setTimeout(resolve, 300));
+      if (i + 3 < sparseLanguages.length) await new Promise(resolve => setTimeout(resolve, 300));
     }
   }
 
   const waves = [...googleWaves, ...gdeltWaves];
-  return { waves, rows: waves.flatMap(item => item.rows) };
+  return {
+    waves,
+    rows: waves.flatMap(item => item.rows),
+    subrequest_budget: {
+      google_news_requests: googleWaves.length,
+      gdelt_requests: gdeltWaves.length,
+      search_requests: googleWaves.length + gdeltWaves.length,
+      max_search_requests: 36
+    }
+  };
 }
 
 function candidateMapEvents(db, periodDays) {
