@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-const DEEP_SEARCH_VERSION = "deep-search-v4-multi-query-language-rescue";
+export const DEEP_SEARCH_VERSION = "deep-search-v5-broad-query-rescue";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 
 const LANGUAGE_LOCALES = Object.freeze({
@@ -46,9 +46,10 @@ const PLAN_SCHEMA = {
           type: "object",
           properties: {
             primary: { type: "string" },
-            secondary: { type: "string" }
+            secondary: { type: "string" },
+            broad: { type: "string" }
           },
-          required: ["primary", "secondary"]
+          required: ["primary", "secondary", "broad"]
         }])
       ),
       required: [...DEEP_SEARCH_LANGUAGE_CODES]
@@ -72,7 +73,8 @@ multilingual OSINT research tool.
 
 Interpret the analyst's exact free-text request and create EXACTLY TWO concise
 Google News search queries in EACH of the 12 CT Atlas search languages (24 planned
-queries total). Every Deep Search must search ALL 12 languages.
+queries total), plus ONE short broad rescue query per language. Every Deep Search
+must search ALL 12 languages.
 
 MANDATORY 12-LANGUAGE COVERAGE:
 - en: English
@@ -94,10 +96,18 @@ QUERY DESIGN RULES:
 - NEVER turn the analyst's whole request into one long sentence-like query.
 - Each query should normally contain about 3-8 meaningful search terms or short
   phrases, plus the requested geography/actor where needed.
+- Unconnected words are cumulative search requirements. Use OR between
+  alternative commodities or actions; do not require all facets in one article.
 - primary = the broad/core subject of the request.
 - secondary = a complementary facet, synonym set or action/evidence dimension.
 - For multi-part requests, DISTRIBUTE the requested facets across primary and
   secondary instead of requiring every concept to appear in the same result.
+- broad = geography/actor anchor plus ONE core topic, normally 2-4 terms.
+  Keep mandatory scope but omit action qualifiers such as seizures, production,
+  networks or decrees. This query is used when the first searches are sparse.
+  Example: primary "Afghanistan (opium OR heroin)"; secondary "Afghanistan
+  (methamphetamine OR narcotics)"; broad "Afghanistan drugs". Use natural native
+  terms for every language, including Dari/Persian and Pashto.
 - Keep the same information need in all 12 languages, using natural local terms.
 - Preserve precise geography and named actors. Do not drift into unrelated places.
 - Adjacent countries are acceptable only for directly relevant routes, networks,
@@ -114,8 +124,8 @@ If the analyst asks about narcotics, organised crime, smuggling, weapons,
 cybercrime or another adjacent security topic, search it directly even when no
 terrorism nexus is stated.
 
-Return only the structured search plan. For every language key, return both
-"primary" and "secondary". Do not answer the analyst's question yet.
+Return only the structured search plan. For every language key, return all three fields
+"primary", "secondary" and "broad". Do not answer the analyst's question yet.
 `;
 
 const REPORT_INSTRUCTION = `
@@ -298,46 +308,56 @@ function sanitizePlan(plan, fallbackQuestion) {
     ? plan.queries
     : {};
 
+  const rescueQueries = [];
   const missing = [];
   for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
     const item = raw[language];
     const primary = cleanText(item?.primary, 220);
     const secondary = cleanText(item?.secondary, 220);
-    if (!primary || !secondary) {
+    const broad = cleanText(item?.broad, 220);
+    if (!primary || !secondary || !broad) {
       missing.push(language);
       continue;
     }
     queries.push({ language, query: primary, variant: "primary" });
     queries.push({ language, query: secondary, variant: "secondary" });
+    rescueQueries.push({ language, query: broad, variant: "broad-rescue" });
   }
 
   if (missing.length) {
     throw new Error(
-      "Deep Search planner did not return two usable queries for every required language: " +
+      "Deep Search planner did not return primary, secondary and broad queries for every required language: " +
       missing.join(", ")
     );
   }
 
   return {
     interpreted_request: cleanText(plan?.interpreted_request || fallbackQuestion, 700),
-    queries: queries.slice(0, DEEP_SEARCH_MAX_QUERIES)
+    queries: queries.slice(0, DEEP_SEARCH_MAX_QUERIES),
+    rescue_queries: rescueQueries
   };
 }
 
 async function fetchNewsWave(item, index, periodDays, locale, fallbackLocale = false) {
   try {
     const response = await fetch(googleNewsUrl(item.query, locale, periodDays), {
-      headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/4.0" },
-      cf: { cacheTtl: 300, cacheEverything: true }
+      headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.0" },
+      cf: { cacheTtl: 300, cacheEverything: true },
+      signal: AbortSignal.timeout(15000)
     });
     if (!response.ok) {
       return { query: { ...item, fallback_locale: fallbackLocale }, ok: false, status: response.status, rows: [] };
+    }
+    const xml = await response.text();
+    if (!/<rss[\s>]/i.test(xml) || !/<channel[\s>]/i.test(xml)) {
+      return { query: { ...item, fallback_locale: fallbackLocale }, ok: false,
+        status: response.status, error: "Search provider returned non-RSS content", rows: [] };
     }
     return {
       query: { ...item, fallback_locale: fallbackLocale },
       ok: true,
       status: response.status,
-      rows: parseRss(await response.text(), item, index, fallbackLocale)
+      rows: parseRss(xml, item, index, fallbackLocale)
     };
   } catch (error) {
     return {
@@ -357,17 +377,12 @@ async function retrieveNews(plan, periodDays) {
     )
   );
 
-  const totals = Object.fromEntries(DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, 0]));
-  for (const wave of firstWaves) totals[wave.query.language] += wave.rows.length;
-
-  const rescueItems = [];
-  for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
-    if (language === "en" || totals[language] > 0) continue;
-    const candidate = plan.queries.find(item => item.language === language && item.variant === "primary")
-      || plan.queries.find(item => item.language === language);
-    if (candidate) rescueItems.push({ ...candidate, variant: "language-rescue" });
+  // Count unique URLs: repeated results from two queries are still sparse.
+  const totals = Object.fromEntries(DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, new Set()]));
+  for (const wave of firstWaves) {
+    for (const row of wave.rows) totals[wave.query.language].add(row.url);
   }
-
+  const rescueItems = (plan.rescue_queries || []).filter(item => totals[item.language].size < 3);
   const rescueWaves = await Promise.all(
     rescueItems.map((item, index) =>
       fetchNewsWave(item, firstWaves.length + index, periodDays, SEARCH_FALLBACK_LOCALE, true)
@@ -649,11 +664,14 @@ export async function handleDeepSearch(request, env, ctx) {
       languages_searched: languagesSearched,
       search_queries: retrieval.waves.map(w => ({
         language: w.query.language, query: w.query.query,
-        forced_local_language: Boolean(w.query.forced_local_language),
+        variant: w.query.variant,
+        fallback_locale: Boolean(w.query.fallback_locale),
+        error: w.error || "",
         ok: w.ok, status: w.status, result_count: w.rows.length
       })),
       retrieval: {
         queries_planned: plan.queries.length,
+        queries_attempted: retrieval.waves.length,
         queries_successful: successfulQueries,
         articles_retrieved: retrieval.rows.length,
         unique_event_clusters: unique.length,

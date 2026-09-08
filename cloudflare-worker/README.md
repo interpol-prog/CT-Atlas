@@ -26,13 +26,14 @@ This folder contains the upgraded Cloudflare Worker used by CT Atlas.
 
 ## Files
 
+- `deep-search.js` — multilingual search planning, retrieval and reports
 - `index.js` — Worker HTTP entry point
 - `shared.js` — report generation, authentication and common helpers
 - `report-gate.js` — Durable Object, sessions, cooldown and usage accounting
 
 ## Deploy to the existing Worker
 
-Deploy these three files to the existing `ct-report-generator` Worker, with `index.js` as the entry module.
+Deploy these four files to the existing `ct-report-generator` Worker, with `index.js` as the entry module.
 
 Preserve the existing Worker bindings and variables, especially:
 
@@ -48,3 +49,21 @@ Do not create a new Durable Object namespace if the existing Worker already has 
 ## Important
 
 GitHub Pages deployment does not deploy Cloudflare Workers. The Worker files in this folder must therefore be deployed separately to the existing Cloudflare Worker before server-side 20-minute enforcement and the Admin Usage dashboard become authoritative.
+
+## Deep Search recall fix and release verification
+
+The v5 search planner supplies two initial queries plus a short scope-preserving
+rescue query in each of 12 languages. Languages with fewer than three distinct
+result URLs, including English, receive the broad rescue (at most 36 news
+requests). Provider HTML failures are reported separately from empty RSS feeds.
+The cache version changes so old reports are not reused.
+
+Validation: `node --test tests/deep-search-recall.test.cjs` (mocked retrieval).
+These tests do not establish live Google News recall or model plan quality.
+
+Deploy the four Worker modules together to the existing `ct-report-generator`
+Worker, preserving all existing bindings and secrets. Publishing GitHub Pages
+alone does not release this fix. After deployment, GET `/health` must return
+`deep_search_version: "deep-search-v5-broad-query-rescue"`. Then repeat the
+original Afghanistan question in an authenticated session and inspect language
+coverage and actual queries. No live source-count increase has been verified yet.
