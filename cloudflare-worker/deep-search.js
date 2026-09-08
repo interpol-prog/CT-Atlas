@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.14-gdelt-topic-relevance";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.15-ai-broad-terms";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
@@ -110,7 +110,21 @@ function broadGdeltQuery(plan) {
   const p = tokens(primary), q = tokens(secondary), qset = new Set(q);
   const shared = p.filter(t => qset.has(t));
   const head = shared[0] || p[0] || q[0] || "";
+  if (!head) return "";
 
+  // Prefer the planner LLM's own judgment of which words most specifically
+  // identify THIS request over the static heuristic below: it already
+  // reasoned about the analyst's exact topic (whatever it is — narcotics,
+  // financing, maritime piracy, cyber...) and can name the truly
+  // distinguishing terms far better than any fixed stoplist we maintain,
+  // which can only ever anticipate topics we've already seen fail.
+  const aiTerms = (Array.isArray(plan?.gdelt_broad_terms) ? plan.gdelt_broad_terms : [])
+    .filter(term => term && term !== head);
+  if (aiTerms.length >= 2) {
+    return `${head} (${aiTerms.slice(0, 5).join(" OR ")})`;
+  }
+
+  // Fallback heuristic for when the planner didn't return usable broad terms.
   // Interleave primary/secondary tokens instead of exhausting primary first,
   // so a secondary-only topic noun (e.g. "methamphetamine") isn't crowded
   // out by primary's own words, then push generic words to the back so the
@@ -131,7 +145,6 @@ function broadGdeltQuery(plan) {
     (GDELT_GENERIC_STOPWORDS.has(a) ? 1 : 0) - (GDELT_GENERIC_STOPWORDS.has(b) ? 1 : 0));
   const rest = candidates.slice(0, 4);
 
-  if (!head) return "";
   return rest.length ? `${head} (${rest.join(" OR ")})` : head;
 }
 
@@ -140,6 +153,7 @@ const PLAN_SCHEMA = {
   properties: {
     interpreted_request: { type: "string" },
     priority_languages: { type: "array", items: { type: "string", enum: [...DEEP_SEARCH_LANGUAGE_CODES] } },
+    gdelt_broad_terms: { type: "array", items: { type: "string" }, minItems: 3, maxItems: 5 },
     queries: {
       type: "object",
       properties: Object.fromEntries(
@@ -259,6 +273,20 @@ Recognise country names in any language. For example: Afghanistan -> fa, ps, ur;
 Egypt or another Arabic-speaking country -> ar; Iran -> fa; Pakistan -> ur;
 Israel/Palestine -> he, ar. Arabic and every other required language remain
 part of the full 12-language search regardless of priority_languages.
+
+Set gdelt_broad_terms to 3-5 English keywords for a SEPARATE, wider fallback
+search used only when the main per-language searches come back too sparse.
+These must be the single most specific, topic-defining nouns for this exact
+request (commodities, methods, technologies, specific named actors/groups) —
+the words that could NOT plausibly appear in an unrelated story about the
+same country or actor. Deliberately EXCLUDE generic administrative, legal or
+news-cycle words even if they appear in your own queries above (for example:
+ban, enforcement, decree, policy, law, restriction, government, official,
+statement, anniversary, celebration) — those are generic enough to match
+unrelated stories (e.g. a different kind of ban) and would dilute this
+fallback search's precision. When the request itself is narrow enough that
+your primary/secondary terms are already maximally specific, gdelt_broad_terms
+can simply repeat the strongest 3-5 of them.
 
 Return only the structured search plan. For every language key, return both
 "primary" and "secondary". Do not answer the analyst's question yet.
@@ -466,9 +494,15 @@ function sanitizePlan(plan, fallbackQuestion) {
     );
   }
 
+  const gdeltBroadTerms = (Array.isArray(plan?.gdelt_broad_terms) ? plan.gdelt_broad_terms : [])
+    .flatMap(term => String(term || "").toLowerCase().match(/[a-z0-9][a-z0-9-]{2,}/g) || [])
+    .filter((term, index, arr) => arr.indexOf(term) === index)
+    .slice(0, 5);
+
   return {
     interpreted_request: cleanText(plan?.interpreted_request || fallbackQuestion, 700),
     priority_languages: (Array.isArray(plan?.priority_languages) ? plan.priority_languages : []).filter(code => DEEP_SEARCH_LANGUAGE_CODES.includes(code)).slice(0, PRIORITY_LANGUAGE_CAP),
+    gdelt_broad_terms: gdeltBroadTerms,
     queries: queries.slice(0, DEEP_SEARCH_MAX_QUERIES)
   };
 }

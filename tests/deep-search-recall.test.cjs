@@ -49,6 +49,28 @@ test('HTML 200 provider failures remain distinct from empty RSS',async()=>{
  assert.ok(r.waves.filter(w=>!w.query.engine).every(w=>!w.ok&&w.error.includes('non-RSS')));
 });
 test('missing language plans fail explicitly',()=>{assert.throws(()=>harness().sanitizePlan({queries:{}},''),/every required language/);});
+test('GDELT broad query uses the planner-supplied gdelt_broad_terms when available, ignoring the static heuristic',()=>{
+ const h=harness();
+ const gdeltPlan={
+   gdelt_broad_terms:['methamphetamine','fentanyl','cartel'],
+   queries:[
+     {language:'en',variant:'primary',query:'Afghanistan opium cultivation ban enforcement decree'},
+     {language:'en',variant:'secondary',query:'Afghanistan methamphetamine heroin laboratory seizure trafficking'},
+   ]};
+ assert.equal(h.broadGdeltQuery(gdeltPlan),'afghanistan (methamphetamine OR fentanyl OR cartel)');
+});
+test('GDELT broad query falls back to the heuristic when the planner gives too few broad terms',()=>{
+ const h=harness();
+ const gdeltPlan={
+   gdelt_broad_terms:['opium'],
+   queries:[
+     {language:'en',variant:'primary',query:'Afghanistan opium cultivation ban enforcement decree'},
+     {language:'en',variant:'secondary',query:'Afghanistan methamphetamine heroin laboratory seizure trafficking'},
+   ]};
+ const q=h.broadGdeltQuery(gdeltPlan);
+ assert.ok(q.startsWith('afghanistan ('),q);
+ assert.ok(!/\bban\b/.test(q)&&!/\benforcement\b/.test(q),'should still use the deprioritised heuristic, not the raw single AI term: '+q);
+});
 test('GDELT broad query prefers specific topic nouns from both primary and secondary over generic administrative words',()=>{
  const h=harness();
  const gdeltPlan={queries:[
