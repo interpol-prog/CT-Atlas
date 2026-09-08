@@ -78,7 +78,7 @@ function inject(){
               </div>
               <div id="deepSearchActions">
                 <button id="deepSearchCopy" type="button">COPY</button>
-                <button id="deepSearchPrint" type="button">PRINT / PDF</button>
+                <button id="deepSearchPrint" type="button">DOWNLOAD PDF</button>
               </div>
             </div>
 
@@ -106,7 +106,7 @@ function inject(){
   document.getElementById("deepSearchPanel")?.addEventListener("click",event=>{if(event.target.id==="deepSearchPanel")close();});
   document.getElementById("deepSearchRun")?.addEventListener("click",run);
   document.getElementById("deepSearchCopy")?.addEventListener("click",copyReport);
-  document.getElementById("deepSearchPrint")?.addEventListener("click",printReport);
+  document.getElementById("deepSearchPrint")?.addEventListener("click",downloadPdf);
   document.getElementById("deepSearchQuestion")?.addEventListener("keydown",event=>{
     if((event.ctrlKey||event.metaKey)&&event.key==="Enter")run();
   });
@@ -235,11 +235,13 @@ function languageCoverageHtml(payload){
   return languages.map(item=>{
     const count=Number(item.article_count||0);
     const queryCount=Number(item.query_count||0);
+    const googleCount=Number(item.google_news_articles||0);
+    const gdeltCount=Number(item.gdelt_articles||0);
     const cls=count>0?" has-results":" no-results";
     return `<div class="deep-language${cls}">
       <span class="deep-language-name">${esc(item.name||item.code||"Language")}</span>
       <strong>${count}</strong>
-      <small>${count===1?"article":"articles"} · ${queryCount||1} ${queryCount===1?"query":"queries"}</small>
+      <small>${count===1?"article":"articles"} · Google ${googleCount} · GDELT ${gdeltCount} · ${queryCount||1} ${queryCount===1?"query":"queries"}</small>
     </div>`;
   }).join("");
 }
@@ -262,7 +264,7 @@ function evidenceHtml(payload){
           <span class="deep-gap-badge${gapClass}">${gapLabel}</span>
         </div>
         <div class="deep-evidence-title">${esc(item.title||"")}</div>
-        <div class="deep-evidence-meta">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())}${Number(item.source_count||1)>1?` · ${Number(item.source_count)} merged sources`:""}</div>
+        <div class="deep-evidence-meta">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())}${item.search_engine?` · ${item.search_engine==="gdelt"?"GDELT":"GOOGLE NEWS"}`:""}${Number(item.source_count||1)>1?` · ${Number(item.source_count)} merged sources`:""}</div>
         ${item.summary?`<div class="deep-evidence-summary">${esc(item.summary)}</div>`:""}
         <div class="deep-evidence-links">
           ${item.url?`<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">OPEN ARTICLE</a>`:""}
@@ -338,25 +340,78 @@ async function copyReport(){
   catch(_){setStatus("Clipboard access was unavailable.","warning");}
 }
 
-function printReport(){
-  if(!lastPayload)return;
-  const popup=window.open("","_blank","noopener,noreferrer,width=980,height=800");
-  if(!popup){setStatus("Popup blocked. Allow popups to use PRINT / PDF.","warning");return;}
-  const cited=new Set(lastPayload.grounding?.cited_source_ids||[]);
-  const sources=(lastPayload.evidence||[]).filter(item=>cited.has(item.id));
-  const coverage=languageCoverageHtml(lastPayload);
-  popup.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(lastPayload.title||"Deep Search")}</title>
-  <style>body{font-family:Arial,sans-serif;max-width:900px;margin:40px auto;color:#111;line-height:1.55}h1{font-size:24px}h2{margin-top:32px;font-size:16px;border-bottom:1px solid #ddd;padding-bottom:5px}h4{font-size:13px;margin:22px 0 8px;color:#174d70}p{margin:8px 0}ul{margin:7px 0 12px 20px}.meta{color:#555;font-size:12px}.source{border-top:1px solid #ddd;padding:10px 0;font-size:12px}.source a{color:#0645ad}.deep-language{display:inline-block;border:1px solid #ccc;padding:6px 8px;margin:3px;font-size:11px}.deep-language strong{margin-left:7px}.deep-language small{display:block;color:#666}.deep-citation{font-weight:bold;color:#8a6518}</style>
-  </head><body><h1>${esc(lastPayload.title||"CT Atlas Deep Search")}</h1>
-  <div class="meta">Question: ${esc(lastPayload.question||"")} · Generated ${esc(new Date(lastPayload.generated_at||Date.now()).toLocaleString("en-GB"))}</div>
-  <h2>SEARCH COVERAGE</h2><div>${coverage}</div>
-  <h2>ANALYTICAL REPORT</h2>${formatAnalysis(lastPayload.analysis||"")}
-  <h2>SOURCES CITED / EVIDENCE PACK</h2>${sources.map(item=>`<div class="source"><strong>${esc(item.id)} · ${esc(item.source)}</strong><br>${esc(item.title)}<br>${esc(fmtDate(item.published))}<br>${item.url?`<a href="${esc(item.url)}">${esc(item.url)}</a>`:""}</div>`).join("")}
-  <p class="meta">AI-assisted OSINT analysis. Validate significant claims against source material before operational use.</p></body></html>`);
-  popup.document.close(); popup.focus(); setTimeout(()=>popup.print(),250);
+let html2pdfLoader=null;
+function loadHtml2Pdf(){
+  if(window.html2pdf)return Promise.resolve(window.html2pdf);
+  if(html2pdfLoader)return html2pdfLoader;
+  html2pdfLoader=new Promise((resolve,reject)=>{
+    const script=document.createElement("script");
+    script.id="ctAtlasHtml2Pdf";
+    script.src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+    script.onload=()=>window.html2pdf?resolve(window.html2pdf):reject(new Error("PDF library did not initialise."));
+    script.onerror=()=>reject(new Error("Unable to load the PDF export library."));
+    document.head.appendChild(script);
+  });
+  return html2pdfLoader;
 }
 
-document.addEventListener("keydown",event=>{if(event.key==="Escape")close();});
+function pdfSafeName(value){
+  return String(value||"Deep-Search").replace(/[^a-z0-9_-]+/gi,"-").replace(/^-+|-+$/g,"").slice(0,70)||"Deep-Search";
+}
+
+async function downloadPdf(){
+  if(!lastPayload)return;
+  const button=document.getElementById("deepSearchPrint");
+  const original=button?.textContent||"DOWNLOAD PDF";
+  if(button){button.disabled=true;button.textContent="BUILDING PDF…";}
+  let shell=null;
+  try{
+    const html2pdf=await loadHtml2Pdf();
+    const cited=new Set(lastPayload.grounding?.cited_source_ids||[]);
+    const evidence=[...(lastPayload.evidence||[])].sort((a,b)=>(cited.has(b.id)?1:0)-(cited.has(a.id)?1:0));
+    const languages=Array.isArray(lastPayload.languages_searched)?lastPayload.languages_searched:[];
+    const retrieved=lastPayload.retrieval||{};
+    const stamp=new Date(lastPayload.generated_at||Date.now());
+    const fileStamp=stamp.toISOString().replace(/[:T]/g,"-").slice(0,16);
+    const filename=`CT-Atlas-Deep-Search-${fileStamp}-${pdfSafeName(lastPayload.title)}.pdf`;
+
+    shell=document.createElement("section");
+    shell.style.cssText="position:fixed;left:0;top:0;z-index:-9999;width:780px;background:#fff;color:#111;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;padding:30px;box-sizing:border-box";
+    shell.innerHTML=`
+      <div style="font-size:11px;letter-spacing:1.5px;color:#6b7280;font-weight:700">CT ATLAS · DEEP SEARCH</div>
+      <h1 style="font-size:24px;line-height:1.2;margin:8px 0 10px">${esc(lastPayload.title||"CT Atlas Deep Search")}</h1>
+      <div style="font-size:11px;color:#4b5563;margin-bottom:18px"><strong>Question:</strong> ${esc(lastPayload.question||"")}<br><strong>Generated:</strong> ${esc(stamp.toLocaleString("en-GB"))} · <strong>Period:</strong> ${Number(lastPayload.period_days||0)} days · <strong>Model:</strong> ${esc(lastPayload.model||"Gemini")}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;margin:0 0 20px">
+        ${[["Articles",retrieved.articles_retrieved],["Unique events",retrieved.unique_event_clusters],["Evidence",retrieved.evidence_events_used_for_analysis],["Atlas matches",retrieved.matched_to_atlas],["Potential gaps",retrieved.potential_atlas_gaps],["Citation coverage",`${Number(lastPayload.grounding?.citation_coverage_percent||0)}%`]].map(([k,v])=>`<div style="border:1px solid #d1d5db;border-radius:6px;padding:7px 10px;min-width:92px"><div style="font-size:9px;color:#6b7280;text-transform:uppercase">${esc(k)}</div><div style="font-size:16px;font-weight:700">${esc(v??0)}</div></div>`).join("")}
+      </div>
+      <h2 style="font-size:15px;border-bottom:1px solid #d1d5db;padding-bottom:5px;margin:24px 0 10px">SEARCH COVERAGE</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:5px">${languages.map(item=>`<div style="border:1px solid #d1d5db;border-radius:5px;padding:5px 7px;font-size:10px"><strong>${esc(item.name||item.code)}</strong> · ${Number(item.article_count||0)} articles · Google ${Number(item.google_news_articles||0)} · GDELT ${Number(item.gdelt_articles||0)}</div>`).join("")}</div>
+      <h2 style="font-size:15px;border-bottom:1px solid #d1d5db;padding-bottom:5px;margin:26px 0 10px">ANALYTICAL REPORT</h2>
+      <div style="font-size:12px">${formatAnalysis(lastPayload.analysis||"")}</div>
+      <h2 style="font-size:15px;border-bottom:1px solid #d1d5db;padding-bottom:5px;margin:28px 0 10px">EVIDENCE PACK</h2>
+      ${evidence.map(item=>`<div class="pdf-source" style="border-top:1px solid #e5e7eb;padding:9px 0;page-break-inside:avoid"><div style="font-weight:700">${esc(item.id)} · ${esc(item.source||"Source")}${cited.has(item.id)?" · CITED":""}</div><div style="font-size:12px;margin:2px 0">${esc(item.title||"")}</div><div style="font-size:10px;color:#6b7280">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())} · ${item.search_engine==="gdelt"?"GDELT":"Google News"}</div>${item.url?`<div style="font-size:9px;word-break:break-all;color:#1d4ed8">${esc(item.url)}</div>`:""}</div>`).join("")}
+      <div style="margin-top:24px;border-top:1px solid #d1d5db;padding-top:9px;font-size:9px;color:#6b7280">This analytical tool is an independent OSINT prototype created for research and analytical purposes. The information displayed is derived from open sources and automated AI-assisted processing. It should not be considered verified intelligence and must be independently validated before any operational or decision-making use.</div>`;
+    document.body.appendChild(shell);
+
+    await html2pdf().set({
+      margin:[10,10,12,10],
+      filename,
+      image:{type:"jpeg",quality:0.98},
+      html2canvas:{scale:2,useCORS:true,logging:false,backgroundColor:"#ffffff"},
+      jsPDF:{unit:"mm",format:"a4",orientation:"portrait"},
+      pagebreak:{mode:["css","legacy"],avoid:[".pdf-source"]},
+      enableLinks:true
+    }).from(shell).save();
+    setStatus("PDF downloaded successfully.","success");
+  }catch(error){
+    setStatus(error?.message||"PDF download failed.","error");
+  }finally{
+    if(shell) shell.remove();
+    if(button){button.disabled=false;button.textContent=original;}
+  }
+}
+
+          document.addEventListener("keydown",event=>{if(event.key==="Escape")close();});
 document.addEventListener("DOMContentLoaded",inject);
 if(document.readyState!=="loading")inject();
 })();

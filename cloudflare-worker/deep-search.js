@@ -15,8 +15,14 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5-broad-query-rescue";
-const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
+export const DEEP_SEARCH_VERSION = "deep-search-v5.5-dual-engine-gdelt";
+const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
+const GDELT_RESULTS_PER_LANGUAGE = 25;
+const GDELT_LANGUAGE_FILTERS = Object.freeze({
+  en: "english", fr: "french", ar: "arabic", de: "german",
+  es: "spanish", it: "italian", tr: "turkish", ru: "russian",
+  fa: "persian", ur: "urdu", he: "hebrew", ps: "pashto"
+});
 
 const LANGUAGE_LOCALES = Object.freeze({
   en: { label: "English", hl: "en-US", gl: "US", ceid: "US:en" },
@@ -39,6 +45,7 @@ const PLAN_SCHEMA = {
   type: "object",
   properties: {
     interpreted_request: { type: "string" },
+    gdelt_query: { type: "string" },
     queries: {
       type: "object",
       properties: Object.fromEntries(
@@ -46,16 +53,15 @@ const PLAN_SCHEMA = {
           type: "object",
           properties: {
             primary: { type: "string" },
-            secondary: { type: "string" },
-            broad: { type: "string" }
+            secondary: { type: "string" }
           },
-          required: ["primary", "secondary", "broad"]
+          required: ["primary", "secondary"]
         }])
       ),
       required: [...DEEP_SEARCH_LANGUAGE_CODES]
     }
   },
-  required: ["interpreted_request", "queries"]
+  required: ["interpreted_request", "gdelt_query", "queries"]
 };
 
 const REPORT_SCHEMA = {
@@ -73,8 +79,14 @@ multilingual OSINT research tool.
 
 Interpret the analyst's exact free-text request and create EXACTLY TWO concise
 Google News search queries in EACH of the 12 CT Atlas search languages (24 planned
-queries total), plus ONE short broad rescue query per language. Every Deep Search
-must search ALL 12 languages.
+native-language queries total). Every Deep Search must search ALL 12 languages.
+
+Also create one concise English field named "gdelt_query" for GDELT's translated
+news index. It must preserve the analyst's exact scope, silently correct obvious
+spelling errors, and use compact English terms or phrases. It may use quotes and OR
+blocks. Do NOT include a sourcelang operator because the application adds that for
+each target language. This is a rescue layer for languages where Google News is
+sparse, not a replacement for the 12 native-language searches.
 
 MANDATORY 12-LANGUAGE COVERAGE:
 - en: English
@@ -92,40 +104,25 @@ MANDATORY 12-LANGUAGE COVERAGE:
 
 QUERY DESIGN RULES:
 - Silently correct obvious spelling mistakes in the analyst request before making
-  search terms (for example misspelled drug names, actors or action words).
+  search terms.
 - NEVER turn the analyst's whole request into one long sentence-like query.
-- Each query should normally contain about 3-8 meaningful search terms or short
-  phrases, plus the requested geography/actor where needed.
-- Unconnected words are cumulative search requirements. Use OR between
-  alternative commodities or actions; do not require all facets in one article.
-- primary = the broad/core subject of the request.
-- secondary = a complementary facet, synonym set or action/evidence dimension.
-- For multi-part requests, DISTRIBUTE the requested facets across primary and
-  secondary instead of requiring every concept to appear in the same result.
-- broad = geography/actor anchor plus ONE core topic, normally 2-4 terms.
-  Keep mandatory scope but omit action qualifiers such as seizures, production,
-  networks or decrees. This query is used when the first searches are sparse.
-  Example: primary "Afghanistan (opium OR heroin)"; secondary "Afghanistan
-  (methamphetamine OR narcotics)"; broad "Afghanistan drugs". Use natural native
-  terms for every language, including Dari/Persian and Pashto.
-- Keep the same information need in all 12 languages, using natural local terms.
-- Preserve precise geography and named actors. Do not drift into unrelated places.
-- Adjacent countries are acceptable only for directly relevant routes, networks,
-  seizures, cross-border operations or comparisons requested by the analyst.
-- Use common synonyms/alternate spellings where they improve recall, but do not
-  overload the query with every possible synonym.
+- Each native query should normally contain about 3-8 meaningful search terms or
+  short phrases, plus the requested geography or actor where needed.
+- Use OR between genuine alternatives; do not require every requested facet to be
+  present in the same article.
+- primary = broad/core subject; secondary = a complementary facet or evidence type.
+- For multi-part requests, DISTRIBUTE facets across primary and secondary.
+- Preserve precise geography and named actors. Adjacent countries are acceptable
+  only for directly relevant routes, networks, seizures or cross-border operations.
+- Keep the same information need in all 12 languages using natural local terms.
 
-For narcotics research, split complex requests sensibly. For example, one query
-may cover cultivation/production/laboratories and the second may cover trafficking
-routes/networks/seizures/decrees/enforcement. This is an example of query design,
-not a restriction to narcotics topics.
+For narcotics research, split complex requests sensibly: cultivation/production/
+laboratories can be separated from trafficking/routes/networks/seizures/decrees/
+enforcement. Search narcotics or other adjacent security topics directly even when
+the analyst did not state a terrorism nexus.
 
-If the analyst asks about narcotics, organised crime, smuggling, weapons,
-cybercrime or another adjacent security topic, search it directly even when no
-terrorism nexus is stated.
-
-Return only the structured search plan. For every language key, return all three fields
-"primary", "secondary" and "broad". Do not answer the analyst's question yet.
+Return only the structured search plan. Return "gdelt_query" plus, for every
+language key, "primary" and "secondary". Do not answer the analyst's question yet.
 `;
 
 const REPORT_INSTRUCTION = `
@@ -214,6 +211,7 @@ function parseRss(xml, queryMeta, queryIndex, fallbackLocale = false) {
       query_index: queryIndex,
       query_variant: queryMeta.variant || "primary",
       search_query: queryMeta.query,
+      search_engine: "google_news",
       fallback_locale: Boolean(fallbackLocale)
     });
   }
@@ -256,15 +254,16 @@ function deduplicateRows(rows) {
     for (const candidate of clusters) {
       const gap = dateDistanceDays(row.published, candidate.published);
       if (gap !== null && gap > 5) continue;
+      if (row.url && candidate.url && row.url === candidate.url) { match = candidate; break; }
       if (normalized && normalized === candidate._normalized) { match = candidate; break; }
       const sim = tokenSimilarity(row.title, candidate.title);
       if (sim.shared >= 4 && (sim.jaccard >= 0.62 || sim.containment >= 0.78)) { match = candidate; break; }
     }
     if (!match) {
-      clusters.push({ ...row, _normalized: normalized, sources: [{ source: row.source, url: row.url, language: row.language, published: row.published }] });
+      clusters.push({ ...row, _normalized: normalized, sources: [{ source: row.source, url: row.url, language: row.language, published: row.published, search_engine: row.search_engine || "google_news" }] });
     } else {
       if (!match.sources.some(item => item.url === row.url)) {
-        match.sources.push({ source: row.source, url: row.url, language: row.language, published: row.published });
+        match.sources.push({ source: row.source, url: row.url, language: row.language, published: row.published, search_engine: row.search_engine || "google_news" });
       }
       if ((row.summary || "").length > (match.summary || "").length) match.summary = row.summary;
     }
@@ -308,33 +307,33 @@ function sanitizePlan(plan, fallbackQuestion) {
     ? plan.queries
     : {};
 
-  const rescueQueries = [];
   const missing = [];
   for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
     const item = raw[language];
     const primary = cleanText(item?.primary, 220);
     const secondary = cleanText(item?.secondary, 220);
-    const broad = cleanText(item?.broad, 220);
-    if (!primary || !secondary || !broad) {
+    if (!primary || !secondary) {
       missing.push(language);
       continue;
     }
     queries.push({ language, query: primary, variant: "primary" });
     queries.push({ language, query: secondary, variant: "secondary" });
-    rescueQueries.push({ language, query: broad, variant: "broad-rescue" });
   }
 
   if (missing.length) {
     throw new Error(
-      "Deep Search planner did not return primary, secondary and broad queries for every required language: " +
+      "Deep Search planner did not return two usable queries for every required language: " +
       missing.join(", ")
     );
   }
 
+  const gdeltQuery = cleanText(plan?.gdelt_query, 280);
+  if (!gdeltQuery) throw new Error("Deep Search planner did not return the required GDELT rescue query.");
+
   return {
     interpreted_request: cleanText(plan?.interpreted_request || fallbackQuestion, 700),
-    queries: queries.slice(0, DEEP_SEARCH_MAX_QUERIES),
-    rescue_queries: rescueQueries
+    gdelt_query: gdeltQuery,
+    queries: queries.slice(0, DEEP_SEARCH_MAX_QUERIES)
   };
 }
 
@@ -370,26 +369,102 @@ async function fetchNewsWave(item, index, periodDays, locale, fallbackLocale = f
   }
 }
 
+function gdeltUrl(query, language, periodDays) {
+  const lang = GDELT_LANGUAGE_FILTERS[language] || language;
+  const timespan = periodDays >= 365 ? "1y" : `${periodDays}d`;
+  return GDELT_DOC_URL + "?" + new URLSearchParams({
+    query: `${cleanText(query, 280)} sourcelang:${lang}`,
+    mode: "artlist",
+    format: "json",
+    maxrecords: String(GDELT_RESULTS_PER_LANGUAGE),
+    timespan
+  }).toString();
+}
+
+function parseGdeltDate(value) {
+  const raw = String(value || "").trim();
+  const digits = raw.replace(/\D/g, "");
+  if (digits.length >= 14) {
+    const iso = `${digits.slice(0,4)}-${digits.slice(4,6)}-${digits.slice(6,8)}T${digits.slice(8,10)}:${digits.slice(10,12)}:${digits.slice(12,14)}Z`;
+    const dt = new Date(iso);
+    if (!Number.isNaN(dt.getTime())) return dt.toISOString();
+  }
+  const dt = raw ? new Date(raw) : null;
+  return dt && !Number.isNaN(dt.getTime()) ? dt.toISOString() : "";
+}
+
+function parseGdeltArticles(payload, language, query) {
+  const articles = Array.isArray(payload?.articles) ? payload.articles : [];
+  return articles.slice(0, GDELT_RESULTS_PER_LANGUAGE).map(article => {
+    const title = cleanText(article?.title, 500);
+    const url = cleanText(article?.url || article?.url_mobile, 1200);
+    if (!title || !url) return null;
+    return {
+      title,
+      summary: "",
+      source: cleanText(article?.domain || article?.sourcecountry || "GDELT source", 140),
+      url,
+      published: parseGdeltDate(article?.seendate),
+      language,
+      query_index: -1,
+      query_variant: "gdelt-rescue",
+      search_query: query,
+      search_engine: "gdelt",
+      fallback_locale: false
+    };
+  }).filter(Boolean);
+}
+
+async function fetchGdeltWave(language, query, periodDays) {
+  try {
+    const response = await fetch(gdeltUrl(query, language, periodDays), {
+      headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.5" },
+      cf: { cacheTtl: 300, cacheEverything: true },
+      signal: AbortSignal.timeout(15000)
+    });
+    if (!response.ok) {
+      return { query: { language, query, variant: "gdelt-rescue", engine: "gdelt" }, ok: false, status: response.status, rows: [] };
+    }
+    const payload = await response.json().catch(() => ({}));
+    return {
+      query: { language, query, variant: "gdelt-rescue", engine: "gdelt" },
+      ok: true,
+      status: response.status,
+      rows: parseGdeltArticles(payload, language, query)
+    };
+  } catch (error) {
+    return {
+      query: { language, query, variant: "gdelt-rescue", engine: "gdelt" },
+      ok: false,
+      status: 0,
+      error: cleanText(error?.message, 180),
+      rows: []
+    };
+  }
+}
+
 async function retrieveNews(plan, periodDays) {
-  const firstWaves = await Promise.all(
+  const googleWaves = await Promise.all(
     plan.queries.map((item, index) =>
-      fetchNewsWave(item, index, periodDays, LANGUAGE_LOCALES[item.language], false)
+      fetchNewsWave({ ...item, engine: "google_news" }, index, periodDays, LANGUAGE_LOCALES[item.language], false)
     )
   );
 
-  // Count unique URLs: repeated results from two queries are still sparse.
   const totals = Object.fromEntries(DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, new Set()]));
-  for (const wave of firstWaves) {
+  for (const wave of googleWaves) {
     for (const row of wave.rows) totals[wave.query.language].add(row.url);
   }
-  const rescueItems = (plan.rescue_queries || []).filter(item => totals[item.language].size < 3);
-  const rescueWaves = await Promise.all(
-    rescueItems.map((item, index) =>
-      fetchNewsWave(item, firstWaves.length + index, periodDays, SEARCH_FALLBACK_LOCALE, true)
-    )
-  );
 
-  const waves = [...firstWaves, ...rescueWaves];
+  const sparseLanguages = DEEP_SEARCH_LANGUAGE_CODES.filter(code => totals[code].size < 3);
+  const gdeltWaves = [];
+  for (let i = 0; i < sparseLanguages.length; i += 4) {
+    const batch = sparseLanguages.slice(i, i + 4);
+    const results = await Promise.all(batch.map(code => fetchGdeltWave(code, plan.gdelt_query, periodDays)));
+    gdeltWaves.push(...results);
+    if (i + 4 < sparseLanguages.length) await new Promise(resolve => setTimeout(resolve, 350));
+  }
+
+  const waves = [...googleWaves, ...gdeltWaves];
   return { waves, rows: waves.flatMap(item => item.rows) };
 }
 
@@ -483,12 +558,14 @@ function buildEvidence(rows) {
     source: cleanText(row.source, 140), url: cleanText(row.url, 1200),
     published: row.published, language: row.language,
     query_variant: row.query_variant || "primary",
-    search_query: cleanText(row.search_query, 220),
+    search_query: cleanText(row.search_query, 280),
+    search_engine: row.search_engine || "google_news",
     fallback_locale: Boolean(row.fallback_locale),
     source_count: row.sources?.length || 1,
     additional_sources: (row.sources || []).slice(1, 5).map(source => ({
       source: cleanText(source.source, 140), url: cleanText(source.url, 1200),
-      language: source.language, published: source.published
+      language: source.language, published: source.published,
+      search_engine: source.search_engine || "google_news"
     })),
     atlas_status: row.atlas_status, atlas_match_id: row.atlas_match_id,
     atlas_match_title: row.atlas_match_title, atlas_match_score: row.atlas_match_score
@@ -538,8 +615,16 @@ function citationMetrics(analysis, evidence) {
 
 function languageDiagnostics(plan, retrieval) {
   const byLanguage = {};
-  for (const code of [...new Set(plan.queries.map(item => item.language))]) {
-    byLanguage[code] = { code, name: LANGUAGE_LOCALES[code]?.label || code, query_count: 0, article_count: 0, successful_queries: 0 };
+  for (const code of DEEP_SEARCH_LANGUAGE_CODES) {
+    byLanguage[code] = {
+      code,
+      name: LANGUAGE_LOCALES[code]?.label || code,
+      query_count: 0,
+      article_count: 0,
+      successful_queries: 0,
+      google_news_articles: 0,
+      gdelt_articles: 0
+    };
   }
   for (const wave of retrieval.waves) {
     const code = wave.query.language;
@@ -547,6 +632,9 @@ function languageDiagnostics(plan, retrieval) {
     byLanguage[code].query_count++;
     byLanguage[code].article_count += wave.rows.length;
     if (wave.ok) byLanguage[code].successful_queries++;
+    const engine = wave.query.engine || (wave.query.variant === "gdelt-rescue" ? "gdelt" : "google_news");
+    if (engine === "gdelt") byLanguage[code].gdelt_articles += wave.rows.length;
+    else byLanguage[code].google_news_articles += wave.rows.length;
   }
   return Object.values(byLanguage);
 }
@@ -665,6 +753,7 @@ export async function handleDeepSearch(request, env, ctx) {
       search_queries: retrieval.waves.map(w => ({
         language: w.query.language, query: w.query.query,
         variant: w.query.variant,
+        engine: w.query.engine || (w.query.variant === "gdelt-rescue" ? "gdelt" : "google_news"),
         fallback_locale: Boolean(w.query.fallback_locale),
         error: w.error || "",
         ok: w.ok, status: w.status, result_count: w.rows.length
@@ -677,7 +766,9 @@ export async function handleDeepSearch(request, env, ctx) {
         unique_event_clusters: unique.length,
         evidence_events_used_for_analysis: evidence.length,
         matched_to_atlas: inAtlas,
-        potential_atlas_gaps: gaps
+        potential_atlas_gaps: gaps,
+        google_news_articles: retrieval.rows.filter(row => row.search_engine === "google_news").length,
+        gdelt_articles: retrieval.rows.filter(row => row.search_engine === "gdelt").length
       },
       grounding: {
         ...metrics,
