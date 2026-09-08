@@ -60,10 +60,11 @@ function inject(){
                 <option value="30" selected>Last 30 days</option>
                 <option value="90">Last 90 days</option>
                 <option value="180">Last 6 months</option>
+                <option value="365">Last 1 year</option>
               </select>
             </label>
             <div id="deepSearchMethod">
-              Deep Search builds a targeted multilingual search plan, retrieves fresh open-source reporting, clusters duplicate coverage, compares results with CT Atlas and generates a source-cited analytical report. Local languages are selected according to the geography and subject.
+              Deep Search runs two complementary searches in each of the 12 supported languages, retrieves open-source reporting, clusters duplicate coverage, compares results with CT Atlas and generates a source-cited analytical report. Zero-result language searches are automatically retried through a fallback news edition.
             </div>
             <button id="deepSearchRun" type="button">RUN DEEP SEARCH</button>
             <div id="deepSearchStatus"></div>

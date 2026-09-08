@@ -9,13 +9,14 @@ import {
   sha256
 } from "./shared.js";
 
-const DEEP_SEARCH_ALLOWED_PERIODS = new Set([7, 30, 90, 180]);
-const DEEP_SEARCH_MAX_QUERIES = 12;
-const DEEP_SEARCH_RESULTS_PER_QUERY = 35;
+const DEEP_SEARCH_ALLOWED_PERIODS = new Set([7, 30, 90, 180, 365]);
+const DEEP_SEARCH_MAX_QUERIES = 24;
+const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-const DEEP_SEARCH_VERSION = "deep-search-v3-all-12-languages";
+const DEEP_SEARCH_VERSION = "deep-search-v4-multi-query-language-rescue";
+const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 
 const LANGUAGE_LOCALES = Object.freeze({
   en: { label: "English", hl: "en-US", gl: "US", ceid: "US:en" },
@@ -41,7 +42,14 @@ const PLAN_SCHEMA = {
     queries: {
       type: "object",
       properties: Object.fromEntries(
-        DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, { type: "string" }])
+        DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, {
+          type: "object",
+          properties: {
+            primary: { type: "string" },
+            secondary: { type: "string" }
+          },
+          required: ["primary", "secondary"]
+        }])
       ),
       required: [...DEEP_SEARCH_LANGUAGE_CODES]
     }
@@ -62,10 +70,9 @@ const PLAN_INSTRUCTION = `
 You are the query-planning component of CT Atlas Deep Search, an authorised
 multilingual OSINT research tool.
 
-Interpret the analyst's exact free-text request and create EXACTLY TWELVE Google
-News queries: one in each CT Atlas search language. Every Deep Search must search
-ALL 12 languages, regardless of the geography or topic. Do not choose or omit
-languages based on relevance.
+Interpret the analyst's exact free-text request and create EXACTLY TWO concise
+Google News search queries in EACH of the 12 CT Atlas search languages (24 planned
+queries total). Every Deep Search must search ALL 12 languages.
 
 MANDATORY 12-LANGUAGE COVERAGE:
 - en: English
@@ -81,26 +88,34 @@ MANDATORY 12-LANGUAGE COVERAGE:
 - he: Hebrew
 - ps: Pashto
 
-For every language, translate/adapt the analyst's SAME core information need into
-natural search language. Preserve named actors, organisations, places, commodities,
-weapons, routes, dates and other constraints. Do not broaden a precise geography,
-actor, commodity or question into generic regional news. Adjacent countries may
-appear only when directly relevant to a route, network, cross-border operation or
-comparison requested by the analyst.
+QUERY DESIGN RULES:
+- Silently correct obvious spelling mistakes in the analyst request before making
+  search terms (for example misspelled drug names, actors or action words).
+- NEVER turn the analyst's whole request into one long sentence-like query.
+- Each query should normally contain about 3-8 meaningful search terms or short
+  phrases, plus the requested geography/actor where needed.
+- primary = the broad/core subject of the request.
+- secondary = a complementary facet, synonym set or action/evidence dimension.
+- For multi-part requests, DISTRIBUTE the requested facets across primary and
+  secondary instead of requiring every concept to appear in the same result.
+- Keep the same information need in all 12 languages, using natural local terms.
+- Preserve precise geography and named actors. Do not drift into unrelated places.
+- Adjacent countries are acceptable only for directly relevant routes, networks,
+  seizures, cross-border operations or comparisons requested by the analyst.
+- Use common synonyms/alternate spellings where they improve recall, but do not
+  overload the query with every possible synonym.
 
-If the analyst explicitly asks about narcotics, organised crime, smuggling,
-weapons, cybercrime or another adjacent security topic, search that topic directly
-even when no terrorism nexus is stated. Do not silently force a CT nexus that the
-analyst did not request.
+For narcotics research, split complex requests sensibly. For example, one query
+may cover cultivation/production/laboratories and the second may cover trafficking
+routes/networks/seizures/decrees/enforcement. This is an example of query design,
+not a restriction to narcotics topics.
 
-For narcotics queries distinguish, when relevant: cultivation, production,
-laboratories, precursor chemicals, methamphetamine/synthetic drugs, heroin,
-trafficking networks/routes, seizures, decrees/bans, enforcement and laboratory
-destruction.
+If the analyst asks about narcotics, organised crime, smuggling, weapons,
+cybercrime or another adjacent security topic, search it directly even when no
+terrorism nexus is stated.
 
-Return only the structured search plan. The queries object MUST contain all 12
-language keys and no language may be omitted. Do not answer the analyst's question
-yet.
+Return only the structured search plan. For every language key, return both
+"primary" and "secondary". Do not answer the analyst's question yet.
 `;
 
 const REPORT_INSTRUCTION = `
@@ -167,7 +182,7 @@ function tagValue(xml, tag) {
   return match ? decodeXml(match[1]).trim() : "";
 }
 
-function parseRss(xml, language, queryIndex) {
+function parseRss(xml, queryMeta, queryIndex, fallbackLocale = false) {
   const items = String(xml || "").match(/<item\b[\s\S]*?<\/item>/gi) || [];
   const rows = [];
   for (const item of items.slice(0, DEEP_SEARCH_RESULTS_PER_QUERY)) {
@@ -185,7 +200,11 @@ function parseRss(xml, language, queryIndex) {
     rows.push({
       title, summary, source: source || "Google News source", url,
       published: publishedDate && !Number.isNaN(publishedDate.getTime()) ? publishedDate.toISOString() : "",
-      language, query_index: queryIndex
+      language: queryMeta.language,
+      query_index: queryIndex,
+      query_variant: queryMeta.variant || "primary",
+      search_query: queryMeta.query,
+      fallback_locale: Boolean(fallbackLocale)
     });
   }
   return rows;
@@ -244,7 +263,7 @@ function deduplicateRows(rows) {
 }
 
 function googleNewsUrl(query, locale, periodDays) {
-  const term = `${cleanText(query, 420)} when:${periodDays}d`;
+  const term = `${cleanText(query, 220)} when:${periodDays}d`;
   return "https://news.google.com/rss/search?" + new URLSearchParams({
     q: term, hl: locale.hl, gl: locale.gl, ceid: locale.ceid
   }).toString();
@@ -281,48 +300,87 @@ function sanitizePlan(plan, fallbackQuestion) {
 
   const missing = [];
   for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
-    const query = cleanText(raw[language], 420);
-    if (!query) {
+    const item = raw[language];
+    const primary = cleanText(item?.primary, 220);
+    const secondary = cleanText(item?.secondary, 220);
+    if (!primary || !secondary) {
       missing.push(language);
       continue;
     }
-    queries.push({ language, query });
+    queries.push({ language, query: primary, variant: "primary" });
+    queries.push({ language, query: secondary, variant: "secondary" });
   }
 
   if (missing.length) {
     throw new Error(
-      "Deep Search planner did not return all 12 required language queries: " +
+      "Deep Search planner did not return two usable queries for every required language: " +
       missing.join(", ")
     );
   }
 
   return {
     interpreted_request: cleanText(plan?.interpreted_request || fallbackQuestion, 700),
-    queries
+    queries: queries.slice(0, DEEP_SEARCH_MAX_QUERIES)
   };
 }
 
-async function retrieveNews(plan, periodDays) {
-  const tasks = plan.queries.map(async (item, index) => {
-    const locale = LANGUAGE_LOCALES[item.language];
-    try {
-      const response = await fetch(googleNewsUrl(item.query, locale, periodDays), {
-        headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/3.0" },
-        cf: { cacheTtl: 300, cacheEverything: true }
-      });
-      if (!response.ok) return { query: item, ok: false, status: response.status, rows: [] };
-      return { query: item, ok: true, status: response.status, rows: parseRss(await response.text(), item.language, index) };
-    } catch (error) {
-      return { query: item, ok: false, status: 0, error: cleanText(error?.message, 180), rows: [] };
+async function fetchNewsWave(item, index, periodDays, locale, fallbackLocale = false) {
+  try {
+    const response = await fetch(googleNewsUrl(item.query, locale, periodDays), {
+      headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/4.0" },
+      cf: { cacheTtl: 300, cacheEverything: true }
+    });
+    if (!response.ok) {
+      return { query: { ...item, fallback_locale: fallbackLocale }, ok: false, status: response.status, rows: [] };
     }
-  });
-  const waves = await Promise.all(tasks);
+    return {
+      query: { ...item, fallback_locale: fallbackLocale },
+      ok: true,
+      status: response.status,
+      rows: parseRss(await response.text(), item, index, fallbackLocale)
+    };
+  } catch (error) {
+    return {
+      query: { ...item, fallback_locale: fallbackLocale },
+      ok: false,
+      status: 0,
+      error: cleanText(error?.message, 180),
+      rows: []
+    };
+  }
+}
+
+async function retrieveNews(plan, periodDays) {
+  const firstWaves = await Promise.all(
+    plan.queries.map((item, index) =>
+      fetchNewsWave(item, index, periodDays, LANGUAGE_LOCALES[item.language], false)
+    )
+  );
+
+  const totals = Object.fromEntries(DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, 0]));
+  for (const wave of firstWaves) totals[wave.query.language] += wave.rows.length;
+
+  const rescueItems = [];
+  for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
+    if (language === "en" || totals[language] > 0) continue;
+    const candidate = plan.queries.find(item => item.language === language && item.variant === "primary")
+      || plan.queries.find(item => item.language === language);
+    if (candidate) rescueItems.push({ ...candidate, variant: "language-rescue" });
+  }
+
+  const rescueWaves = await Promise.all(
+    rescueItems.map((item, index) =>
+      fetchNewsWave(item, firstWaves.length + index, periodDays, SEARCH_FALLBACK_LOCALE, true)
+    )
+  );
+
+  const waves = [...firstWaves, ...rescueWaves];
   return { waves, rows: waves.flatMap(item => item.rows) };
 }
 
 function candidateMapEvents(db, periodDays) {
   const all = Array.isArray(db) ? db : (Array.isArray(db?.events) ? db.events : []);
-  const cutoff = Date.now() - (Math.min(180, periodDays + 14) * 86400000);
+  const cutoff = Date.now() - (Math.min(365, periodDays + 14) * 86400000);
   return all.filter(event => {
     const raw = event?.event_date || event?.occurrence_date || event?.published || event?.last_reported;
     if (!raw) return true;
@@ -365,35 +423,61 @@ function compareWithAtlas(rows, mapEvents) {
   });
 }
 
+function searchRelevance(row) {
+  const query = cleanText(row.search_query, 220);
+  if (!query) return 0;
+  const combined = `${row.title || ""} ${row.summary || ""}`;
+  const sim = tokenSimilarity(combined, query);
+  return Math.min(30, (sim.containment * 22) + Math.min(8, sim.shared) * 1.4);
+}
+
 function evidencePriority(row) {
-  let score = 0;
+  let score = searchRelevance(row);
   const published = row.published ? new Date(row.published) : null;
   if (published && !Number.isNaN(published.getTime())) {
     const ageDays = Math.max(0, (Date.now() - published.getTime()) / 86400000);
-    score += Math.max(0, 40 - ageDays * 0.6);
+    score += Math.max(0, 32 - ageDays * 0.35);
   }
-  score += Math.min(20, (row.sources?.length || 1) * 5);
+  score += Math.min(18, (row.sources?.length || 1) * 4.5);
   if (row.atlas_status === "potential_gap") score += 3;
-  if (/justice|interpol|europol|government|police|treasury|ministry|prosecut|united nations|unodc/i.test(row.source || "")) score += 7;
+  if (/justice|interpol|europol|government|police|treasury|ministry|prosecut|united nations|unodc|customs|counter narcotics|interior/i.test(row.source || "")) score += 9;
   return score;
 }
 
 function buildEvidence(rows) {
-  return [...rows].sort((a, b) => evidencePriority(b) - evidencePriority(a))
-    .slice(0, DEEP_SEARCH_MAX_EVIDENCE)
-    .map((row, index) => ({
-      id: `S${String(index + 1).padStart(2, "0")}`,
-      title: cleanText(row.title, 420), summary: cleanText(row.summary, 650),
-      source: cleanText(row.source, 140), url: cleanText(row.url, 1200),
-      published: row.published, language: row.language,
-      source_count: row.sources?.length || 1,
-      additional_sources: (row.sources || []).slice(1, 5).map(source => ({
-        source: cleanText(source.source, 140), url: cleanText(source.url, 1200),
-        language: source.language, published: source.published
-      })),
-      atlas_status: row.atlas_status, atlas_match_id: row.atlas_match_id,
-      atlas_match_title: row.atlas_match_title, atlas_match_score: row.atlas_match_score
-    }));
+  const ranked = [...rows].sort((a, b) => evidencePriority(b) - evidencePriority(a));
+  const selected = [];
+  const used = new Set();
+
+  for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
+    const index = ranked.findIndex((row, i) => !used.has(i) && row.language === language);
+    if (index >= 0 && selected.length < DEEP_SEARCH_MAX_EVIDENCE) {
+      selected.push(ranked[index]);
+      used.add(index);
+    }
+  }
+  ranked.forEach((row, index) => {
+    if (selected.length >= DEEP_SEARCH_MAX_EVIDENCE || used.has(index)) return;
+    selected.push(row);
+    used.add(index);
+  });
+
+  return selected.map((row, index) => ({
+    id: `S${String(index + 1).padStart(2, "0")}`,
+    title: cleanText(row.title, 420), summary: cleanText(row.summary, 650),
+    source: cleanText(row.source, 140), url: cleanText(row.url, 1200),
+    published: row.published, language: row.language,
+    query_variant: row.query_variant || "primary",
+    search_query: cleanText(row.search_query, 220),
+    fallback_locale: Boolean(row.fallback_locale),
+    source_count: row.sources?.length || 1,
+    additional_sources: (row.sources || []).slice(1, 5).map(source => ({
+      source: cleanText(source.source, 140), url: cleanText(source.url, 1200),
+      language: source.language, published: source.published
+    })),
+    atlas_status: row.atlas_status, atlas_match_id: row.atlas_match_id,
+    atlas_match_title: row.atlas_match_title, atlas_match_score: row.atlas_match_score
+  }));
 }
 
 function unwrapGeneratedReport(generated) {
