@@ -64,7 +64,7 @@ function inject(){
               </select>
             </label>
             <div id="deepSearchMethod">
-              Deep Search runs two complementary searches in each of the 12 supported languages, retrieves open-source reporting, clusters duplicate coverage, compares results with CT Atlas and generates a source-cited analytical report. Languages returning fewer than three distinct articles are retried with a shorter, broader query through a fallback news edition. Coverage is limited to Google News and the selected period.
+              Deep Search runs two native-language Google News searches in each of the 12 supported languages. Languages with sparse results are automatically supplemented through GDELT; all reporting is then merged, deduplicated, compared with CT Atlas and analysed with source citations.
             </div>
             <button id="deepSearchRun" type="button">RUN DEEP SEARCH</button>
             <div id="deepSearchStatus"></div>
