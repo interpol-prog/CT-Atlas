@@ -10,6 +10,8 @@ on:
       - "usage-admin.js"
       - "usage-admin.css"
       - "usage-auth-fix.js"
+      - "deep-search.js"
+      - "deep-search.css"
       - "cloudflare-worker/**"
       - ".github/workflows/apply-usage-upgrade.yml"
   workflow_dispatch:
@@ -63,8 +65,10 @@ jobs:
         run: |
           node --check usage-admin.js
           node --check usage-auth-fix.js
+          node --check deep-search.js
           node --check cloudflare-worker/shared.js
           node --check cloudflare-worker/report-gate.js
+          node --check cloudflare-worker/deep-search.js
           node --check cloudflare-worker/index.js
 
       - name: Commit upgraded index
@@ -82,11 +86,11 @@ jobs:
           fi
 
       - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload website
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: "."
       - name: Deploy GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
