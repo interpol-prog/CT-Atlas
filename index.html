@@ -4776,7 +4776,7 @@ Map layers
 <button class="layer-button active" id="markersToggle">EVENTS</button>
 <button class="layer-button" id="heatToggle" title="Heat based only on attacks and armed clashes/combat">HEAT ZONES</button>
 <button class="layer-button" id="chronologyToggle">LIST / EXPORT</button>
-<button class="layer-button active" id="officesToggle">INTERPOL OFFICES</button>
+<button class="layer-button active" id="officesToggle">OUR OFFICES</button>
 
 </div>
 
@@ -5182,7 +5182,7 @@ Visible rate
     <div id="healthStatusHeader">
       <div>
         <div id="healthStatusTitle">SYSTEM HEALTH STATUS</div>
-        <div id="healthStatusSubtitle">CT Intelligence Map infrastructure</div>
+        <div id="healthStatusSubtitle">CT Atlas Infrastructure</div>
       </div>
       <button id="healthStatusClose" type="button" aria-label="Close">×</button>
     </div>
@@ -5236,13 +5236,13 @@ Visible rate
     <div id="disclaimerHeader">
       <div>
         <div id="disclaimerTitle">DISCLAIMER</div>
-        <div id="disclaimerSubtitle">CT Intelligence Map</div>
+        <div id="disclaimerSubtitle">CT Atlas</div>
       </div>
       <button id="disclaimerClose" type="button" aria-label="Close">×</button>
     </div>
     <div id="disclaimerBody">
       <p>
-        This analytical tool is an independent staff-developed OSINT prototype created for research and analytical purposes. It does not constitute an official INTERPOL product, publication, position or assessment. The information displayed is derived from open sources and automated AI-assisted processing. It should not be considered verified intelligence and must be independently validated before any operational or decision-making use.
+        This analytical tool is an independent OSINT prototype created for research and analytical purposes. The information displayed is derived from open sources and automated AI-assisted processing. It should not be considered verified intelligence and must be independently validated before any operational or decision-making use.
       </p>
     </div>
   </div>
@@ -12118,13 +12118,13 @@ function populateReportRegions() {
     select.innerHTML =
         '<option value="GLOBAL">Global</option>'
         +
-        '<optgroup label="INTERPOL REGIONS">'
+        '<optgroup label="OFFICIAL REGIONS">'
         +
         regionsHtml
         +
         '</optgroup>'
         +
-        '<optgroup label="INTERPOL MEMBER COUNTRIES">'
+        '<optgroup label="MEMBER COUNTRIES">'
         +
         countriesHtml
         +
