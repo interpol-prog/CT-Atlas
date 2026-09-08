@@ -1,0 +1,50 @@
+name: Deploy current CT Atlas UI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/deploy-current-ct-atlas-ui.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ct-map-update-main
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: main
+      - name: Validate updated labels
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'OUR OFFICES' index.html
+          grep -q 'CT Atlas Infrastructure' index.html
+          grep -q '<div id="disclaimerSubtitle">CT Atlas</div>' index.html
+          grep -q 'independent OSINT prototype created for research and analytical purposes' index.html
+          grep -q 'OFFICIAL REGIONS' index.html
+          grep -q 'MEMBER COUNTRIES' index.html
+          grep -q 'INTERPOL_CT_events_' index.html
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: "."
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
