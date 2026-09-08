@@ -5,6 +5,7 @@ const API_BASE="https://ct-report-generator.fairpeace.workers.dev";
 const TOKEN_KEY="ct_map_session_token";
 const USER_KEY="ct_map_username";
 let lastPayload=null;
+let backendReady=false;
 
 function esc(value){
   return String(value??"")
@@ -109,6 +110,28 @@ function inject(){
   document.getElementById("deepSearchQuestion")?.addEventListener("keydown",event=>{
     if((event.ctrlKey||event.metaKey)&&event.key==="Enter")run();
   });
+  checkBackend();
+}
+
+async function checkBackend(){
+  const button=document.getElementById("deepSearchButton");
+  if(!button)return;
+  try{
+    const response=await fetch(API_BASE+"/health",{cache:"no-store"});
+    const payload=await response.json().catch(()=>({}));
+    backendReady=Boolean(response.ok&&payload.deep_search===true);
+  }catch(_){
+    backendReady=false;
+  }
+  if(backendReady){
+    button.disabled=false;
+    button.textContent="DEEP SEARCH";
+    button.title="Multilingual ad hoc OSINT search";
+  }else{
+    button.disabled=true;
+    button.textContent="DEEP SEARCH · DEPLOY PENDING";
+    button.title="Deep Search backend is prepared but the Cloudflare Worker has not yet been deployed.";
+  }
 }
 
 function open(){
@@ -202,6 +225,10 @@ function render(payload){
 }
 
 async function run(){
+  if(!backendReady){
+    setStatus("Deep Search backend deployment is still pending.","warning");
+    return;
+  }
   const question=String(document.getElementById("deepSearchQuestion")?.value||"").trim();
   const period=Number(document.getElementById("deepSearchPeriod")?.value||30);
   const username=user();
