@@ -15,7 +15,8 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.5-dual-engine-gdelt";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.6-safe-dual-engine";
+const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
 const GDELT_LANGUAGE_FILTERS = Object.freeze({
@@ -45,7 +46,6 @@ const PLAN_SCHEMA = {
   type: "object",
   properties: {
     interpreted_request: { type: "string" },
-    gdelt_query: { type: "string" },
     queries: {
       type: "object",
       properties: Object.fromEntries(
@@ -61,7 +61,7 @@ const PLAN_SCHEMA = {
       required: [...DEEP_SEARCH_LANGUAGE_CODES]
     }
   },
-  required: ["interpreted_request", "gdelt_query", "queries"]
+  required: ["interpreted_request", "queries"]
 };
 
 const REPORT_SCHEMA = {
@@ -79,14 +79,7 @@ multilingual OSINT research tool.
 
 Interpret the analyst's exact free-text request and create EXACTLY TWO concise
 Google News search queries in EACH of the 12 CT Atlas search languages (24 planned
-native-language queries total). Every Deep Search must search ALL 12 languages.
-
-Also create one concise English field named "gdelt_query" for GDELT's translated
-news index. It must preserve the analyst's exact scope, silently correct obvious
-spelling errors, and use compact English terms or phrases. It may use quotes and OR
-blocks. Do NOT include a sourcelang operator because the application adds that for
-each target language. This is a rescue layer for languages where Google News is
-sparse, not a replacement for the 12 native-language searches.
+queries total). Every Deep Search must search ALL 12 languages.
 
 MANDATORY 12-LANGUAGE COVERAGE:
 - en: English
@@ -106,23 +99,29 @@ QUERY DESIGN RULES:
 - Silently correct obvious spelling mistakes in the analyst request before making
   search terms.
 - NEVER turn the analyst's whole request into one long sentence-like query.
-- Each native query should normally contain about 3-8 meaningful search terms or
-  short phrases, plus the requested geography or actor where needed.
-- Use OR between genuine alternatives; do not require every requested facet to be
-  present in the same article.
-- primary = broad/core subject; secondary = a complementary facet or evidence type.
-- For multi-part requests, DISTRIBUTE facets across primary and secondary.
-- Preserve precise geography and named actors. Adjacent countries are acceptable
-  only for directly relevant routes, networks, seizures or cross-border operations.
+- Each query should normally contain about 3-8 meaningful search terms or short
+  phrases, plus the requested geography/actor where needed.
+- primary = the broad/core subject of the request.
+- secondary = a complementary facet, synonym set or action/evidence dimension.
+- For multi-part requests, DISTRIBUTE requested facets across primary and secondary
+  instead of requiring every concept in the same result.
 - Keep the same information need in all 12 languages using natural local terms.
+- Preserve precise geography and named actors. Do not drift into unrelated places.
+- Adjacent countries are acceptable only for directly relevant routes, networks,
+  seizures, cross-border operations or comparisons requested by the analyst.
+- Use common synonyms/alternate spellings where they improve recall, but do not
+  overload the query with every possible synonym.
 
-For narcotics research, split complex requests sensibly: cultivation/production/
-laboratories can be separated from trafficking/routes/networks/seizures/decrees/
-enforcement. Search narcotics or other adjacent security topics directly even when
-the analyst did not state a terrorism nexus.
+For narcotics research, split complex requests sensibly. One query may cover
+cultivation/production/laboratories and the second trafficking/routes/networks/
+seizures/decrees/enforcement.
 
-Return only the structured search plan. Return "gdelt_query" plus, for every
-language key, "primary" and "secondary". Do not answer the analyst's question yet.
+If the analyst asks about narcotics, organised crime, smuggling, weapons,
+cybercrime or another adjacent security topic, search it directly even when no
+terrorism nexus is stated.
+
+Return only the structured search plan. For every language key, return both
+"primary" and "secondary". Do not answer the analyst's question yet.
 `;
 
 const REPORT_INSTRUCTION = `
@@ -327,12 +326,8 @@ function sanitizePlan(plan, fallbackQuestion) {
     );
   }
 
-  const gdeltQuery = cleanText(plan?.gdelt_query, 280);
-  if (!gdeltQuery) throw new Error("Deep Search planner did not return the required GDELT rescue query.");
-
   return {
     interpreted_request: cleanText(plan?.interpreted_request || fallbackQuestion, 700),
-    gdelt_query: gdeltQuery,
     queries: queries.slice(0, DEEP_SEARCH_MAX_QUERIES)
   };
 }
@@ -444,24 +439,57 @@ async function fetchGdeltWave(language, query, periodDays) {
 }
 
 async function retrieveNews(plan, periodDays) {
-  const googleWaves = await Promise.all(
+  const firstWaves = await Promise.all(
     plan.queries.map((item, index) =>
-      fetchNewsWave({ ...item, engine: "google_news" }, index, periodDays, LANGUAGE_LOCALES[item.language], false)
+      fetchNewsWave(item, index, periodDays, LANGUAGE_LOCALES[item.language], false)
     )
   );
 
+  const firstTotals = Object.fromEntries(DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, new Set()]));
+  for (const wave of firstWaves) {
+    for (const row of wave.rows) firstTotals[wave.query.language].add(row.url);
+  }
+
+  const googleRescueItems = [];
+  for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
+    if (firstTotals[language].size > 0) continue;
+    const candidate = plan.queries.find(item => item.language === language && item.variant === "primary")
+      || plan.queries.find(item => item.language === language);
+    if (candidate) googleRescueItems.push({ ...candidate, variant: "google-language-rescue" });
+  }
+
+  const googleRescueWaves = await Promise.all(
+    googleRescueItems.map((item, index) =>
+      fetchNewsWave(item, firstWaves.length + index, periodDays, SEARCH_FALLBACK_LOCALE, true)
+    )
+  );
+
+  const googleWaves = [...firstWaves, ...googleRescueWaves];
   const totals = Object.fromEntries(DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, new Set()]));
   for (const wave of googleWaves) {
     for (const row of wave.rows) totals[wave.query.language].add(row.url);
   }
 
+  const englishQueries = plan.queries
+    .filter(item => item.language === "en")
+    .map(item => cleanText(item.query, 220))
+    .filter(Boolean)
+    .slice(0, 2);
   const sparseLanguages = DEEP_SEARCH_LANGUAGE_CODES.filter(code => totals[code].size < 3);
   const gdeltWaves = [];
-  for (let i = 0; i < sparseLanguages.length; i += 4) {
-    const batch = sparseLanguages.slice(i, i + 4);
-    const results = await Promise.all(batch.map(code => fetchGdeltWave(code, plan.gdelt_query, periodDays)));
-    gdeltWaves.push(...results);
-    if (i + 4 < sparseLanguages.length) await new Promise(resolve => setTimeout(resolve, 350));
+
+  for (const englishQuery of englishQueries) {
+    const stillSparse = sparseLanguages.filter(code => {
+      const added = gdeltWaves.filter(w => w.query.language === code)
+        .reduce((sum, wave) => sum + wave.rows.length, 0);
+      return totals[code].size + added < 3;
+    });
+    for (let i = 0; i < stillSparse.length; i += 3) {
+      const batch = stillSparse.slice(i, i + 3);
+      const results = await Promise.all(batch.map(code => fetchGdeltWave(code, englishQuery, periodDays)));
+      gdeltWaves.push(...results);
+      if (i + 3 < stillSparse.length) await new Promise(resolve => setTimeout(resolve, 300));
+    }
   }
 
   const waves = [...googleWaves, ...gdeltWaves];
