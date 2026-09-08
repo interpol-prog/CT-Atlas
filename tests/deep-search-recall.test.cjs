@@ -6,7 +6,7 @@ const source=fs.readFileSync('cloudflare-worker/deep-search.js','utf8').replace(
 function harness(fetch){
  const c=vm.createContext({fetch,URLSearchParams,AbortSignal,setTimeout:fn=>fn(),cleanText:(v,n)=>String(v||'').trim().slice(0,n)});
  vm.runInContext(source,c);
- return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,DEEP_SEARCH_LANGUAGE_CODES})',c);
+ return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltWave,DEEP_SEARCH_LANGUAGE_CODES})',c);
 }
 function plan(h){return h.sanitizePlan({priority_languages:['fa','ps','ur','invalid'],queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l} Afghanistan opium`,secondary:`${l} Afghanistan heroin`}]))},'Afghanistan drugs');}
 test('Afghanistan narcotics prioritises English, French, Dari, Pashto and Urdu',()=>{
@@ -41,6 +41,24 @@ test('HTML 200 provider failures remain distinct from empty RSS',async()=>{
  assert.ok(r.waves.filter(w=>!w.query.engine).every(w=>!w.ok&&w.error.includes('non-RSS')));
 });
 test('missing language plans fail explicitly',()=>{assert.throws(()=>harness().sanitizePlan({queries:{}},''),/every required language/);});
+test('a single 429 from Google News is retried once and can still succeed',async()=>{
+ let calls=0;
+ const h=harness(async()=>{calls++;if(calls===1)return new Response('rate limited',{status:429});return new Response('<rss><channel><item><title>T</title><link>https://x</link></item></channel></rss>');});
+ const wave=await h.fetchNewsWave({language:'en',query:'q',variant:'primary'},0,30,{hl:'en-US',gl:'US',ceid:'US:en'});
+ assert.equal(calls,2);assert.equal(wave.ok,true);assert.equal(wave.rows.length,1);
+});
+test('a second consecutive 503 from Google News gives up gracefully',async()=>{
+ let calls=0;
+ const h=harness(async()=>{calls++;return new Response('unavailable',{status:503});});
+ const wave=await h.fetchNewsWave({language:'en',query:'q',variant:'primary'},0,30,{hl:'en-US',gl:'US',ceid:'US:en'});
+ assert.equal(calls,2);assert.equal(wave.ok,false);assert.equal(wave.status,503);
+});
+test('a single 429 from GDELT is retried once and can still succeed',async()=>{
+ let calls=0;
+ const h=harness(async()=>{calls++;if(calls===1)return new Response('rate limited',{status:429});return new Response(JSON.stringify({articles:[{title:'T',url:'https://x',seendate:'20260101000000'}]}));});
+ const wave=await h.fetchGdeltWave('en','q',30);
+ assert.equal(calls,2);assert.equal(wave.ok,true);assert.equal(wave.rows.length,1);
+});
 test('long PDF export renders bounded canvases and advances to the final page',async()=>{
  const js=fs.readFileSync('deep-search.js','utf8');
  const fn=js.slice(js.indexOf('async function savePagedPdf'),js.indexOf('\nfunction pdfSafeName'));

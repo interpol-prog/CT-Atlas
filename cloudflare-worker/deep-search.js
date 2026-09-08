@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.11-strict-term-limit";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.12-staggered-retry";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
@@ -441,13 +441,35 @@ function sanitizePlan(plan, fallbackQuestion) {
   };
 }
 
-async function fetchNewsWave(item, index, periodDays, locale, fallbackLocale = false) {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Runs `worker` over `items` in small batches with a short pause between
+// batches, instead of firing every request at once. Google News and GDELT
+// both rate-limit/block bursty, simultaneous requests from shared Cloudflare
+// egress IPs far more aggressively than gently-staggered ones.
+async function runInBatches(items, batchSize, delayMs, worker) {
+  const results = [];
+  for (let i = 0; i < items.length; i += batchSize) {
+    const batch = items.slice(i, i + batchSize);
+    results.push(...await Promise.all(batch.map(worker)));
+    if (i + batchSize < items.length) await sleep(delayMs);
+  }
+  return results;
+}
+
+async function fetchNewsWave(item, index, periodDays, locale, fallbackLocale = false, attempt = 0) {
   try {
     const response = await fetch(googleNewsUrl(item.query, locale, periodDays), {
       headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.0" },
       cf: { cacheTtl: 300, cacheEverything: true },
       signal: AbortSignal.timeout(15000)
     });
+    if ((response.status === 429 || response.status === 503) && attempt < 1) {
+      await sleep(500 + Math.random() * 500);
+      return fetchNewsWave(item, index, periodDays, locale, fallbackLocale, attempt + 1);
+    }
     if (!response.ok) {
       return { query: { ...item, fallback_locale: fallbackLocale }, ok: false, status: response.status, rows: [] };
     }
@@ -519,13 +541,17 @@ function parseGdeltArticles(payload, language, query) {
   }).filter(Boolean);
 }
 
-async function fetchGdeltWave(language, query, periodDays) {
+async function fetchGdeltWave(language, query, periodDays, attempt = 0) {
   try {
     const response = await fetch(gdeltUrl(query, language, periodDays), {
       headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.5" },
       cf: { cacheTtl: 300, cacheEverything: true },
       signal: AbortSignal.timeout(15000)
     });
+    if ((response.status === 429 || response.status === 503) && attempt < 1) {
+      await sleep(500 + Math.random() * 500);
+      return fetchGdeltWave(language, query, periodDays, attempt + 1);
+    }
     if (!response.ok) {
       return { query: { language, query, variant: "gdelt-rescue", engine: "gdelt" }, ok: false, status: response.status, rows: [] };
     }
@@ -550,10 +576,15 @@ async function fetchGdeltWave(language, query, periodDays) {
 async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   // Bound search below Cloudflare Free's 50-subrequest ceiling:
   // 24 Google News + max 5 priority Google rescues + max 9 GDELT = max 38.
-  const googleWaves = await Promise.all(
-    [...plan.queries].sort((a,b) => Number(priorityLanguages.includes(b.language))-Number(priorityLanguages.includes(a.language))).map((item, index) =>
-      fetchNewsWave(item, index, periodDays, LANGUAGE_LOCALES[item.language], false)
-    )
+  // Sent in small staggered batches rather than all at once: Google News
+  // rate-limits/blocks a burst of simultaneous identical-looking requests
+  // from shared Cloudflare egress IPs far more readily than gently-paced ones.
+  const sortedQueries = [...plan.queries].sort((a, b) =>
+    Number(priorityLanguages.includes(b.language)) - Number(priorityLanguages.includes(a.language)));
+  const googleWaves = await runInBatches(
+    sortedQueries.map((item, index) => ({ item, index })),
+    6, 200,
+    ({ item, index }) => fetchNewsWave(item, index, periodDays, LANGUAGE_LOCALES[item.language], false)
   );
 
   const totals = Object.fromEntries(DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, new Set()]));

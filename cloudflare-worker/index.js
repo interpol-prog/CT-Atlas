@@ -28,7 +28,7 @@ if (request.method === "OPTIONS") {
 return new Response(null, { status: 204, headers: corsHeaders(env) });
 }
 if (url.pathname === "/health" && request.method === "GET") {
-return jsonResponse({ ok: true, service: "ct-report-generator", version: "5.11", deep_search: true, deep_search_version: DEEP_SEARCH_VERSION, model: "gemini-3.5-flash-lite" }, 200, env);
+return jsonResponse({ ok: true, service: "ct-report-generator", version: "5.12", deep_search: true, deep_search_version: DEEP_SEARCH_VERSION, model: "gemini-3.5-flash-lite" }, 200, env);
 }
 if (url.pathname === "/auth-login" && request.method === "POST") {
 let authBody;
