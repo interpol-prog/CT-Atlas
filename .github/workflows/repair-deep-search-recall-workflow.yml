@@ -1,0 +1,50 @@
+name: Repair Deep Search recall migration
+
+on:
+  push:
+    paths:
+      - '.github/workflows/repair-deep-search-recall-workflow.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Repair migration anchor
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('.github/workflows/apply-deep-search-recall-fix.yml')
+          s = p.read_text(encoding='utf-8')
+          a = s.index("          old_out = '''search_queries:")
+          b = s.index("          s = s.replace(\n              'queries_planned", a)
+          new = '''          report_out = re.search(
+              r'search_queries: retrieval\\.waves\\.map\\(w => \\(\\{\\s*language: w\\.query\\.language, query: w\\.query\\.query,\\s*forced_local_language: Boolean\\(w\\.query\\.forced_local_language\\),\\s*ok: w\\.ok, status: w\\.status, result_count: w\\.rows\\.length\\s*\\}\\)\\),',
+              s,
+              flags=re.S
+          )
+          if not report_out:
+              raise SystemExit('search_queries report output anchor not found')
+          new_out = '''search_queries: retrieval.waves.map(w => ({
+              language: w.query.language,
+              variant: w.query.variant || "primary",
+              query: w.query.query,
+              fallback_locale: Boolean(w.query.fallback_locale),
+              ok: w.ok, status: w.status, result_count: w.rows.length
+            })),'''
+          s = s[:report_out.start()] + new_out + s[report_out.end():]
+'''
+          p.write_text(s[:a] + new + s[b:], encoding='utf-8')
+
+      - name: Commit repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows/apply-deep-search-recall-fix.yml
+          git commit -m "Repair Deep Search recall migration anchor"
+          git push
