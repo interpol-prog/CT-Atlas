@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.12-staggered-retry";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.13-subrequest-safety";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
@@ -63,6 +63,8 @@ const COUNTRY_LANGUAGE_PRIORITY = Object.freeze([
 // matter which country the question is about.
 const ALWAYS_PRIORITY_LANGUAGES = Object.freeze(["en", "fr"]);
 const PRIORITY_LANGUAGE_CAP = 5;
+const GDELT_LANGUAGE_CAP = 5;
+const MAX_SEARCH_SUBREQUESTS = DEEP_SEARCH_MAX_QUERIES + PRIORITY_LANGUAGE_CAP + GDELT_LANGUAGE_CAP;
 
 function detectCountryLanguages(question) {
   const text = String(question || "");
@@ -459,17 +461,13 @@ async function runInBatches(items, batchSize, delayMs, worker) {
   return results;
 }
 
-async function fetchNewsWave(item, index, periodDays, locale, fallbackLocale = false, attempt = 0) {
+async function fetchNewsWave(item, index, periodDays, locale, fallbackLocale = false) {
   try {
     const response = await fetch(googleNewsUrl(item.query, locale, periodDays), {
       headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.0" },
       cf: { cacheTtl: 300, cacheEverything: true },
       signal: AbortSignal.timeout(15000)
     });
-    if ((response.status === 429 || response.status === 503) && attempt < 1) {
-      await sleep(500 + Math.random() * 500);
-      return fetchNewsWave(item, index, periodDays, locale, fallbackLocale, attempt + 1);
-    }
     if (!response.ok) {
       return { query: { ...item, fallback_locale: fallbackLocale }, ok: false, status: response.status, rows: [] };
     }
@@ -541,17 +539,13 @@ function parseGdeltArticles(payload, language, query) {
   }).filter(Boolean);
 }
 
-async function fetchGdeltWave(language, query, periodDays, attempt = 0) {
+async function fetchGdeltWave(language, query, periodDays) {
   try {
     const response = await fetch(gdeltUrl(query, language, periodDays), {
       headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.5" },
       cf: { cacheTtl: 300, cacheEverything: true },
       signal: AbortSignal.timeout(15000)
     });
-    if ((response.status === 429 || response.status === 503) && attempt < 1) {
-      await sleep(500 + Math.random() * 500);
-      return fetchGdeltWave(language, query, periodDays, attempt + 1);
-    }
     if (!response.ok) {
       return { query: { language, query, variant: "gdelt-rescue", engine: "gdelt" }, ok: false, status: response.status, rows: [] };
     }
@@ -574,8 +568,18 @@ async function fetchGdeltWave(language, query, periodDays, attempt = 0) {
 }
 
 async function retrieveNews(plan, periodDays, priorityLanguages = []) {
-  // Bound search below Cloudflare Free's 50-subrequest ceiling:
-  // 24 Google News + max 5 priority Google rescues + max 9 GDELT = max 38.
+  // Bound search well below Cloudflare's 50-subrequest-per-invocation ceiling.
+  // A full handleDeepSearch call also makes ~9 NON-search subrequests
+  // (session-get, acquire, cache-get, plan Gemini call, events.json fetch,
+  // report Gemini call, cache-put, commit-report, release), so the search
+  // phase must never approach 50 on its own:
+  // 24 Google News + max 5 priority Google rescues + max GDELT_LANGUAGE_CAP
+  // GDELT = max 24 + 5 + GDELT_LANGUAGE_CAP, kept comfortably under ~40 total
+  // so the whole invocation (search + the ~9 calls above) stays safely under
+  // 50. Do NOT add per-wave retries here: retrying every failed wave once
+  // can double the search subrequest count on exactly the runs where most
+  // waves are failing, and has previously blown through Cloudflare's
+  // subrequest ceiling and hard-crashed the whole invocation.
   // Sent in small staggered batches rather than all at once: Google News
   // rate-limits/blocks a burst of simultaneous identical-looking requests
   // from shared Cloudflare egress IPs far more readily than gently-paced ones.
@@ -618,7 +622,7 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   const sparse = DEEP_SEARCH_LANGUAGE_CODES.filter(code => (afterGoogle[code]?.size || 0) < 3);
   const gdeltLanguages = [...new Set([...priorityLanguages, ...sparse])]
     .filter(code => DEEP_SEARCH_LANGUAGE_CODES.includes(code))
-    .slice(0, 9);
+    .slice(0, GDELT_LANGUAGE_CAP);
   const gdeltWaves = [];
   if (gdeltQuery) {
     for (let i = 0; i < gdeltLanguages.length; i += 3) {
@@ -638,7 +642,7 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
       google_news_requests: googleAll.length,
       gdelt_requests: gdeltWaves.length,
       search_requests: googleAll.length + gdeltWaves.length,
-      max_search_requests: 36
+      max_search_requests: MAX_SEARCH_SUBREQUESTS
     }
   };
 }

@@ -19,21 +19,29 @@ test('English and French are always prioritised even without a detected country'
 test('Egypt questions prioritise Arabic alongside English and French',()=>{
  const h=harness();assert.deepEqual(Array.from(h.resolvePriorityLanguages('Recent extremist activity in Egypt',[])),['en','fr','ar']);
 });
-test('sparse local feeds get native queries through fallback edition within 36 search calls',async()=>{
+test('sparse local feeds get native queries through fallback edition within 32 search calls',async()=>{
  const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
  const result=await h.retrieveNews(plan(h),180,['fa','ps','ur']);
- assert.equal(calls.length,36);assert.equal(result.subrequest_budget.search_requests,36);
+ assert.equal(calls.length,32);assert.equal(result.subrequest_budget.search_requests,32);
  const rescue=result.waves.filter(w=>w.query.variant==='priority-locale-rescue');
  assert.deepEqual(Array.from(rescue,w=>w.query.language),['fa','ps','ur']);
  assert.ok(rescue.every(w=>w.query.fallback_locale));
  assert.ok(calls[0].searchParams.get('q').startsWith('fa '));
 });
-test('five priority languages still stay within the 38-call search budget',async()=>{
+test('five priority languages still stay within the 34-call search budget, well under the 50 subrequest ceiling once the ~9 non-search calls are counted',async()=>{
  const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
  const result=await h.retrieveNews(plan(h),30,h.resolvePriorityLanguages('Afghanistan drug trafficking',[]));
- assert.equal(calls.length,38);assert.equal(result.subrequest_budget.search_requests,38);
+ assert.equal(calls.length,34);assert.equal(result.subrequest_budget.search_requests,34);
+ assert.ok(result.subrequest_budget.search_requests+9<50);
  const rescue=result.waves.filter(w=>w.query.variant==='priority-locale-rescue');
  assert.equal(rescue.length,5);
+});
+test('a failing wave is never retried — retries risk blowing the subrequest ceiling on exactly the runs where most waves are failing',async()=>{
+ let calls=0;const h=harness(async()=>{calls++;return new Response('rate limited',{status:429});});
+ await h.fetchNewsWave({language:'en',query:'q',variant:'primary'},0,30,{hl:'en-US',gl:'US',ceid:'US:en'});
+ assert.equal(calls,1);
+ calls=0;await h.fetchGdeltWave('en','q',30);
+ assert.equal(calls,1);
 });
 test('HTML 200 provider failures remain distinct from empty RSS',async()=>{
  const h=harness(async url=>new Response(url.includes('gdelt')?'{}':'<html>Unavailable</html>'));
@@ -41,24 +49,6 @@ test('HTML 200 provider failures remain distinct from empty RSS',async()=>{
  assert.ok(r.waves.filter(w=>!w.query.engine).every(w=>!w.ok&&w.error.includes('non-RSS')));
 });
 test('missing language plans fail explicitly',()=>{assert.throws(()=>harness().sanitizePlan({queries:{}},''),/every required language/);});
-test('a single 429 from Google News is retried once and can still succeed',async()=>{
- let calls=0;
- const h=harness(async()=>{calls++;if(calls===1)return new Response('rate limited',{status:429});return new Response('<rss><channel><item><title>T</title><link>https://x</link></item></channel></rss>');});
- const wave=await h.fetchNewsWave({language:'en',query:'q',variant:'primary'},0,30,{hl:'en-US',gl:'US',ceid:'US:en'});
- assert.equal(calls,2);assert.equal(wave.ok,true);assert.equal(wave.rows.length,1);
-});
-test('a second consecutive 503 from Google News gives up gracefully',async()=>{
- let calls=0;
- const h=harness(async()=>{calls++;return new Response('unavailable',{status:503});});
- const wave=await h.fetchNewsWave({language:'en',query:'q',variant:'primary'},0,30,{hl:'en-US',gl:'US',ceid:'US:en'});
- assert.equal(calls,2);assert.equal(wave.ok,false);assert.equal(wave.status,503);
-});
-test('a single 429 from GDELT is retried once and can still succeed',async()=>{
- let calls=0;
- const h=harness(async()=>{calls++;if(calls===1)return new Response('rate limited',{status:429});return new Response(JSON.stringify({articles:[{title:'T',url:'https://x',seendate:'20260101000000'}]}));});
- const wave=await h.fetchGdeltWave('en','q',30);
- assert.equal(calls,2);assert.equal(wave.ok,true);assert.equal(wave.rows.length,1);
-});
 test('long PDF export renders bounded canvases and advances to the final page',async()=>{
  const js=fs.readFileSync('deep-search.js','utf8');
  const fn=js.slice(js.indexOf('async function savePagedPdf'),js.indexOf('\nfunction pdfSafeName'));
