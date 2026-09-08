@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.10-question-analysis-priority-langs";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.11-strict-term-limit";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
@@ -170,33 +170,52 @@ QUESTION ANALYSIS (do this before writing any query):
 - Only use associated terms that are well-known and directly relevant. Do not
   invent specific group names, events or claims that are not either stated by
   the analyst or extremely well-established for the requested subject.
-- Use this analysis to strengthen — not replace — the literal request when
-  building each language's primary/secondary queries.
+- If the request has many facets (for example: cultivation, manufacture of a
+  second substance, trafficking routes for each substance, enforcement
+  decrees, laboratory destruction, seizures — six-plus distinct facets),
+  do NOT try to cram all of them into two queries. Split the facets into two
+  groups (see QUERY DESIGN RULES) and accept that some minor facets will only
+  be covered indirectly or by the broader term set, not named individually.
 
-QUERY DESIGN RULES:
+QUERY DESIGN RULES — RECALL IS THE PRIORITY, NOT COMPLETENESS:
+- Google News RSS matches queries as AND-of-terms: every extra term you add
+  MULTIPLIES how narrow the search becomes, and past about 6 terms real
+  queries commonly return ZERO results even when good reporting exists. A
+  short query that finds real articles is far more useful than a detailed
+  query that finds nothing.
+- HARD LIMIT: 3 to 6 meaningful search terms or short phrases per query,
+  including geography. Never exceed 6. When in doubt, use fewer, not more.
 - Silently correct obvious spelling mistakes in the analyst request before making
   search terms.
-- NEVER turn the analyst's whole request into one long sentence-like query.
-- Each query should normally contain about 3-8 meaningful search terms or short
-  phrases, plus the requested geography/actor where needed.
-- primary = the broad/core subject of the request.
-- secondary = a complementary facet, synonym set or action/evidence dimension
-  drawing on the associated terms identified above.
-- For multi-part requests, DISTRIBUTE requested facets across primary and secondary
-  instead of requiring every concept in the same result.
-- Keep the same information need in all 12 languages using natural local terms.
+- NEVER turn the analyst's whole request into one long sentence-like query,
+  and never chain more than 2-3 concepts together.
+- primary = the single broadest, most central subject (usually just geography +
+  the main activity/commodity, e.g. "Afghanistan opium cultivation ban").
+- secondary = ONE complementary facet or action/evidence dimension (e.g.
+  routes/trafficking, or laboratory seizures) — not every remaining facet at
+  once. Pick whichever second facet is most central to the request; it is
+  fine and expected to leave minor facets uncovered by name.
+- When a request names two parallel items (e.g. two drug types, two actor
+  groups), prefer covering the more prominent one by name and referring to
+  the other only if it fits within the term limit — do not AND both together
+  with everything else.
+- Keep the same information need in all 12 languages using natural local terms,
+  respecting the same strict term limit in every language.
 - Preserve precise geography and named actors. Do not drift into unrelated places.
 - Adjacent countries are acceptable only for directly relevant routes, networks,
   seizures, cross-border operations or comparisons requested by the analyst.
-- Use common synonyms/alternate spellings where they improve recall, but do not
-  overload the query with every possible synonym.
+- Use at most one or two synonyms where they clearly improve recall; do not
+  overload the query with every possible synonym or associated term from the
+  analysis above — that analysis is there to help you CHOOSE the single best
+  terms, not to add more of them.
 - Prefer short, keyword-style terms over fluent grammatical sentences for
   languages with typically sparse news indexing (fa, ur, he, ps): a handful of
   natural local keywords matches published reporting better than a full phrase.
 
-For narcotics research, split complex requests sensibly. One query may cover
-cultivation/production/laboratories and the second trafficking/routes/networks/
-seizures/decrees/enforcement.
+For narcotics research, split complex requests sensibly: one query may cover
+cultivation/production/laboratories, the second trafficking/seizures/enforcement —
+but still pick only 3-6 of the strongest terms for EACH query. Do not list every
+word from both buckets in the same query.
 
 If the analyst asks about narcotics, organised crime, smuggling, weapons,
 cybercrime or another adjacent security topic, search it directly even when no
