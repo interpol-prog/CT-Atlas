@@ -1,0 +1,93 @@
+name: Apply Deep Search v5.7 subrequest safe
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-deep-search-v57-subrequest-safe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Apply bounded search strategy
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          p = Path('cloudflare-worker/deep-search.js')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('deep-search-v5.6-safe-dual-engine', 'deep-search-v5.7-subrequest-safe')
+
+          start = s.index('async function retrieveNews(plan, periodDays) {')
+          end = s.index('\nfunction candidateMapEvents', start)
+          new_func = '''async function retrieveNews(plan, periodDays) {
+            // Cloudflare Workers Free allows 50 external subrequests per invocation.
+            // Keep search bounded at 24 Google News requests plus at most one
+            // GDELT rescue request per sparse language (maximum 12).
+            const googleWaves = await Promise.all(
+              plan.queries.map((item, index) =>
+                fetchNewsWave(item, index, periodDays, LANGUAGE_LOCALES[item.language], false)
+              )
+            );
+
+            const totals = Object.fromEntries(DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, new Set()]));
+            for (const wave of googleWaves) {
+              for (const row of wave.rows) totals[wave.query.language].add(row.url);
+            }
+
+            const englishPrimary = plan.queries.find(item => item.language === "en" && item.variant === "primary")
+              || plan.queries.find(item => item.language === "en");
+            const gdeltQuery = cleanText(englishPrimary?.query || plan.interpreted_request || "", 220);
+            const sparseLanguages = DEEP_SEARCH_LANGUAGE_CODES.filter(code => totals[code].size < 3);
+            const gdeltWaves = [];
+
+            if (gdeltQuery) {
+              for (let i = 0; i < sparseLanguages.length; i += 3) {
+                const batch = sparseLanguages.slice(i, i + 3);
+                const results = await Promise.all(
+                  batch.map(code => fetchGdeltWave(code, gdeltQuery, periodDays, "gdelt-rescue"))
+                );
+                gdeltWaves.push(...results);
+                if (i + 3 < sparseLanguages.length) await new Promise(resolve => setTimeout(resolve, 300));
+              }
+            }
+
+            const waves = [...googleWaves, ...gdeltWaves];
+            return {
+              waves,
+              rows: waves.flatMap(item => item.rows),
+              subrequest_budget: {
+                google_news_requests: googleWaves.length,
+                gdelt_requests: gdeltWaves.length,
+                search_requests: googleWaves.length + gdeltWaves.length,
+                max_search_requests: 36
+              }
+            };
+          }
+          '''
+          s = s[:start] + new_func + s[end:]
+          p.write_text(s, encoding='utf-8')
+
+          idx = Path('cloudflare-worker/index.js')
+          t = idx.read_text(encoding='utf-8').replace('version: "5.6"', 'version: "5.7"')
+          idx.write_text(t, encoding='utf-8')
+      - name: Validate JavaScript
+        run: |
+          node --check cloudflare-worker/deep-search.js
+          node --check cloudflare-worker/index.js
+          ! grep -q 'googleRescueItems' cloudflare-worker/deep-search.js
+          ! grep -q 'englishQueries.slice(0, 2)' cloudflare-worker/deep-search.js
+          grep -q 'deep-search-v5.7-subrequest-safe' cloudflare-worker/deep-search.js
+          grep -q 'max_search_requests: 36' cloudflare-worker/deep-search.js
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cloudflare-worker/deep-search.js cloudflare-worker/index.js
+          git diff --cached --quiet || git commit -m "Bound Deep Search below Cloudflare subrequest limit"
+          git push
