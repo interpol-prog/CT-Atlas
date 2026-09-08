@@ -28,7 +28,7 @@ if (request.method === "OPTIONS") {
 return new Response(null, { status: 204, headers: corsHeaders(env) });
 }
 if (url.pathname === "/health" && request.method === "GET") {
-return jsonResponse({ ok: true, service: "ct-report-generator", deep_search: true }, 200, env);
+return jsonResponse({ ok: true, service: "ct-report-generator", version: "5.0", deep_search: true, model: "gemini-3.5-flash-lite" }, 200, env);
 }
 if (url.pathname === "/auth-login" && request.method === "POST") {
 let authBody;
@@ -123,6 +123,11 @@ try {
 const cachedResponse = await gateCall(env, "/cache-get", { cacheKey });
 const cached = await cachedResponse.json();
 if (cached?.hit && cached?.report) {
+const commitResponse = await gateCall(env, "/commit-report", { permitId, username });
+if (!commitResponse.ok) {
+const commitError = await commitResponse.json().catch(()=>({}));
+throw new Error(commitError?.error || "Unable to finalize report allowance.");
+}
 await gateCall(env, "/usage-increment", { username, metrics: { cached_reports: 1 } });
 return jsonResponse({ ...cached.report, cached: true }, 200, env);
 }
@@ -144,10 +149,17 @@ const generated = await callGemini(env, dataset);
 const meta = `${region === "GLOBAL" ? "Global" : region} · ${topic === "ALL" ? "All CT activity" : topic} · last ${periodDays} days${compare ? " vs previous equivalent period" : ""} · generated ${new Date().toISOString()}`;
 const report = { title: cleanText(generated.title || `CT Analytical Report — ${region}`, 180), analysis: String(generated.analysis || "").trim(), meta, database_version: databaseVersion, generated_at: new Date().toISOString() };
 await gateCall(env, "/cache-put", { cacheKey, report, expires_at: Date.now() + CACHE_TTL_MS });
+const commitResponse = await gateCall(env, "/commit-report", { permitId, username });
+if (!commitResponse.ok) {
+const commitError = await commitResponse.json().catch(()=>({}));
+throw new Error(commitError?.error || "Unable to finalize report allowance.");
+}
 await gateCall(env, "/usage-increment", { username, metrics: { reports_generated: 1 } });
 return jsonResponse({ ...report, cached: false }, 200, env);
 } catch (error) {
-console.error(error); return jsonResponse({ error: cleanText(error?.message || "Report generation failed.", 300) }, 503, env);
+console.error(error);
+const status = Number(error?.code) === 429 ? 429 : 503;
+return jsonResponse({ error: cleanText(error?.message || "Report generation failed.", 300), ...(status === 429 ? { retry_after_seconds: 300 } : {}) }, status, env);
 } finally { ctx.waitUntil(gateCall(env, "/release", { permitId, username })); }
 }
 };
