@@ -10,12 +10,12 @@ import {
 } from "./shared.js";
 
 const DEEP_SEARCH_ALLOWED_PERIODS = new Set([7, 30, 90, 180]);
-const DEEP_SEARCH_MAX_QUERIES = 8;
+const DEEP_SEARCH_MAX_QUERIES = 12;
 const DEEP_SEARCH_RESULTS_PER_QUERY = 35;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-const DEEP_SEARCH_VERSION = "deep-search-v2-grounded-local-language";
+const DEEP_SEARCH_VERSION = "deep-search-v3-all-12-languages";
 
 const LANGUAGE_LOCALES = Object.freeze({
   en: { label: "English", hl: "en-US", gl: "US", ceid: "US:en" },
@@ -32,21 +32,18 @@ const LANGUAGE_LOCALES = Object.freeze({
   ps: { label: "Pashto", hl: "ps", gl: "AF", ceid: "AF:ps" }
 });
 
+const DEEP_SEARCH_LANGUAGE_CODES = Object.freeze(Object.keys(LANGUAGE_LOCALES));
+
 const PLAN_SCHEMA = {
   type: "object",
   properties: {
     interpreted_request: { type: "string" },
     queries: {
-      type: "array",
-      maxItems: DEEP_SEARCH_MAX_QUERIES,
-      items: {
-        type: "object",
-        properties: {
-          language: { type: "string", enum: Object.keys(LANGUAGE_LOCALES) },
-          query: { type: "string" }
-        },
-        required: ["language", "query"]
-      }
+      type: "object",
+      properties: Object.fromEntries(
+        DEEP_SEARCH_LANGUAGE_CODES.map(code => [code, { type: "string" }])
+      ),
+      required: [...DEEP_SEARCH_LANGUAGE_CODES]
     }
   },
   required: ["interpreted_request", "queries"]
@@ -65,37 +62,45 @@ const PLAN_INSTRUCTION = `
 You are the query-planning component of CT Atlas Deep Search, an authorised
 multilingual OSINT research tool.
 
-Interpret the analyst's exact free-text request and create a compact Google News
-search plan. Do not broaden a precise geography, actor, commodity or question
-into generic regional news. Search adjacent countries only when they are directly
-relevant to a route, network, cross-border operation or comparison explicitly
-requested by the analyst.
+Interpret the analyst's exact free-text request and create EXACTLY TWELVE Google
+News queries: one in each CT Atlas search language. Every Deep Search must search
+ALL 12 languages, regardless of the geography or topic. Do not choose or omit
+languages based on relevance.
 
-Always include English plus the most relevant LOCAL languages. Use 4-8 queries.
+MANDATORY 12-LANGUAGE COVERAGE:
+- en: English
+- fr: French
+- ar: Arabic
+- de: German
+- es: Spanish
+- it: Italian
+- tr: Turkish
+- ru: Russian
+- fa: Dari / Persian
+- ur: Urdu
+- he: Hebrew
+- ps: Pashto
 
-MANDATORY LANGUAGE RULES:
-- If Afghanistan is central to the request, include Dari/Persian (fa) AND Pashto
-  (ps), in addition to English.
-- If an Afghanistan request concerns trafficking, smuggling, border routes,
-  narcotics or networks that may involve Pakistan, also include Urdu (ur) for
-  Pakistani/regional reporting. Urdu is a Pakistan regional language, not an
-  Afghan official language.
-- Preserve Arabic, Russian, Turkish or other relevant local-language searches
-  when the geography or actors justify them.
+For every language, translate/adapt the analyst's SAME core information need into
+natural search language. Preserve named actors, organisations, places, commodities,
+weapons, routes, dates and other constraints. Do not broaden a precise geography,
+actor, commodity or question into generic regional news. Adjacent countries may
+appear only when directly relevant to a route, network, cross-border operation or
+comparison requested by the analyst.
 
 If the analyst explicitly asks about narcotics, organised crime, smuggling,
-weapons, cybercrime or another adjacent security topic, search that topic
-directly even when no terrorism nexus is stated. Do not silently force a CT
-nexus that the analyst did not request.
+weapons, cybercrime or another adjacent security topic, search that topic directly
+even when no terrorism nexus is stated. Do not silently force a CT nexus that the
+analyst did not request.
 
 For narcotics queries distinguish, when relevant: cultivation, production,
 laboratories, precursor chemicals, methamphetamine/synthetic drugs, heroin,
 trafficking networks/routes, seizures, decrees/bans, enforcement and laboratory
 destruction.
 
-Each query must be written naturally in the selected language. Keep named actors,
-places and commodities from the analyst request. Return only the structured
-search plan; do not answer the question yet.
+Return only the structured search plan. The queries object MUST contain all 12
+language keys and no language may be omitted. Do not answer the analyst's question
+yet.
 `;
 
 const REPORT_INSTRUCTION = `
@@ -268,49 +273,32 @@ async function callGeminiJson(env, instruction, input, schema, maxOutputTokens) 
   return JSON.parse(raw);
 }
 
-function requiredLanguages(question) {
-  const q = String(question || "").toLowerCase();
-  const required = new Set(["en"]);
-  if (/\bafghanistan|afghan|taliban\b/.test(q)) {
-    required.add("fa");
-    required.add("ps");
-    if (/\bdrug|narcotic|opium|poppy|heroin|meth|methamphetamine|synthetic|traffick|smuggl|route|network|seizure|laborator|precursor\b/.test(q)) {
-      required.add("ur");
-    }
-  }
-  return [...required];
-}
-
-function localFallbackQuery(language, question) {
-  const q = String(question || "").toLowerCase();
-  const afghanDrugs = /\bafghanistan|afghan|taliban\b/.test(q) &&
-    /\bdrug|narcotic|opium|poppy|heroin|meth|methamphetamine|synthetic|traffick|smuggl|route|network|seizure|laborator|precursor\b/.test(q);
-  if (afghanDrugs) {
-    if (language === "fa") return "افغانستان کشت خشخاش تریاک هروئین متامفتامین مواد مخدر قاچاق لابراتوار ضبط ممنوعیت طالبان";
-    if (language === "ps") return "افغانستان کوکنار کښت اپین هیرویین متامفیتامین نشه يي توکي قاچاق لابراتوار نیول بندیز طالبان";
-    if (language === "ur") return "افغانستان افیون پوست کاشت ہیروئن میتھامفیٹامین منشیات اسمگلنگ نیٹ ورک راستے لیبارٹری ضبط طالبان";
-  }
-  return cleanText(question, 420);
-}
-
 function sanitizePlan(plan, fallbackQuestion) {
-  const queries = [], seen = new Set();
-  for (const item of Array.isArray(plan?.queries) ? plan.queries : []) {
-    const language = String(item?.language || "").toLowerCase();
-    const query = cleanText(item?.query, 420);
-    if (!LANGUAGE_LOCALES[language] || !query) continue;
-    const key = language + "|" + query.toLowerCase();
-    if (seen.has(key)) continue;
-    seen.add(key); queries.push({ language, query });
-    if (queries.length >= DEEP_SEARCH_MAX_QUERIES) break;
+  const queries = [];
+  const raw = plan?.queries && typeof plan.queries === "object" && !Array.isArray(plan.queries)
+    ? plan.queries
+    : {};
+
+  const missing = [];
+  for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
+    const query = cleanText(raw[language], 420);
+    if (!query) {
+      missing.push(language);
+      continue;
+    }
+    queries.push({ language, query });
   }
-  for (const language of requiredLanguages(fallbackQuestion)) {
-    if (queries.some(item => item.language === language)) continue;
-    queries.push({ language, query: localFallbackQuery(language, fallbackQuestion), forced_local_language: true });
+
+  if (missing.length) {
+    throw new Error(
+      "Deep Search planner did not return all 12 required language queries: " +
+      missing.join(", ")
+    );
   }
+
   return {
     interpreted_request: cleanText(plan?.interpreted_request || fallbackQuestion, 700),
-    queries: queries.slice(0, DEEP_SEARCH_MAX_QUERIES)
+    queries
   };
 }
 
@@ -319,7 +307,7 @@ async function retrieveNews(plan, periodDays) {
     const locale = LANGUAGE_LOCALES[item.language];
     try {
       const response = await fetch(googleNewsUrl(item.query, locale, periodDays), {
-        headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/2.0" },
+        headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/3.0" },
         cf: { cacheTtl: 300, cacheEverything: true }
       });
       if (!response.ok) return { query: item, ok: false, status: response.status, rows: [] };
@@ -514,7 +502,7 @@ export async function handleDeepSearch(request, env, ctx) {
     const planRaw = await callGeminiJson(
       env, PLAN_INSTRUCTION,
       `Analyst question: ${question}\nTime window: last ${periodDays} days.`,
-      PLAN_SCHEMA, 4000
+      PLAN_SCHEMA, 6000
     );
     const plan = sanitizePlan(planRaw, question);
     if (!plan.queries.length) return jsonResponse({ error: "Deep Search could not create a usable multilingual search plan." }, 422, env);
