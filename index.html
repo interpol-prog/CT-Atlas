@@ -4777,6 +4777,7 @@ Map layers
 <button class="layer-button" id="heatToggle" title="Heat based only on attacks and armed clashes/combat">HEAT ZONES</button>
 <button class="layer-button" id="chronologyToggle">LIST / EXPORT</button>
 <button class="layer-button active" id="officesToggle">OUR OFFICES</button>
+<button class="layer-button" id="downloadMapButton">DOWNLOAD MAP</button>
 
 </div>
 
@@ -5785,6 +5786,118 @@ L.tileLayer(
 ).addTo(
     map
 );
+
+
+// ============================================================
+// UN-ALIGNED BOUNDARY CORRECTION: Western Sahara
+//
+// The Esri basemap above renders Western Sahara merged into
+// Morocco's own administrative regions, with no boundary drawn.
+// The United Nations treats Western Sahara as a separate
+// Non-Self-Governing Territory (it is not recognised as
+// sovereign Moroccan territory). This lightweight overlay draws
+// its boundary using a dashed line, matching the cartographic
+// convention already used for other disputed/undetermined
+// boundaries (e.g. the Kashmir Line of Control) rather than a
+// solid line, which would incorrectly imply a settled border.
+// Coordinates: public domain country boundary data (Natural
+// Earth derived), simplified to 28 vertices.
+// ============================================================
+
+const westernSaharaBoundary =
+L.geoJSON(
+    {
+        type: "Feature",
+        properties: { name: "Western Sahara" },
+        geometry: {
+            type: "Polygon",
+            coordinates: [[
+                [-8.7949, 27.1207], [-8.8178, 27.6564], [-8.6656, 27.6564],
+                [-8.6651, 27.5895], [-8.6844, 27.3957], [-8.6873, 25.8811],
+                [-11.9694, 25.9334], [-11.9372, 23.3746], [-12.8742, 23.2848],
+                [-13.1188, 22.7712], [-12.9291, 21.3271], [-16.8452, 21.3333],
+                [-17.0634, 20.9998], [-17.0204, 21.4223], [-17.003, 21.4207],
+                [-14.751, 21.5006], [-14.6308, 21.8609], [-14.2212, 22.3102],
+                [-13.8911, 23.691], [-12.501, 24.7701], [-12.0308, 26.0309],
+                [-11.7182, 26.1041], [-11.3926, 26.8834], [-10.5513, 26.9908],
+                [-10.1894, 26.8609], [-9.7353, 26.8609], [-9.413, 27.0885],
+                [-8.7949, 27.1207]
+            ]]
+        }
+    },
+    {
+        pane: "overlayPane",
+        // Forces this layer onto a <canvas> instead of Leaflet's default SVG
+        // renderer. html2canvas (used by the Download Map feature below)
+        // drops dashArray styling -- and can even skip the path entirely --
+        // when capturing SVG-rendered vector layers, but reproduces a
+        // canvas-rendered path pixel-for-pixel, dashes included.
+        renderer: L.canvas({ pane: "overlayPane" }),
+        style: {
+            color: "#c9c9c9",
+            weight: 1.5,
+            opacity: 0.85,
+            dashArray: "4 4",
+            fill: false
+        }
+    }
+).addTo(
+    map
+);
+
+
+// ============================================================
+// DOWNLOAD MAP AS IMAGE
+//
+// Captures the current map view (base layers, boundary overlay,
+// markers, heat zones, offices — whatever is visible) as a JPEG
+// using html2canvas. Esri's tile servers send permissive CORS
+// headers, so this works without a screenshot proxy.
+// ============================================================
+
+let html2canvasLoaderPromise = null;
+function loadHtml2CanvasForMap() {
+    if (window.html2canvas) return Promise.resolve();
+    if (html2canvasLoaderPromise) return html2canvasLoaderPromise;
+    html2canvasLoaderPromise = new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+        script.onload = () => window.html2canvas ? resolve() : reject(new Error("html2canvas did not initialise."));
+        script.onerror = () => { html2canvasLoaderPromise = null; reject(new Error("Unable to load the map export library.")); };
+        document.head.appendChild(script);
+    });
+    return html2canvasLoaderPromise;
+}
+
+document.getElementById("downloadMapButton").addEventListener("click", async function() {
+    const button = this;
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = "PREPARING…";
+    try {
+        await loadHtml2CanvasForMap();
+        const canvas = await window.html2canvas(document.getElementById("map"), {
+            useCORS: true,
+            backgroundColor: "#1a1a1a",
+            scale: 2,
+            logging: false
+        });
+        const stamp = new Date().toISOString().replace(/[:T]/g, "-").slice(0, 16);
+        const link = document.createElement("a");
+        link.download = `CT-Atlas-Map-${stamp}.jpg`;
+        link.href = canvas.toDataURL("image/jpeg", 0.95);
+        link.click();
+        button.textContent = "DOWNLOADED";
+    } catch (error) {
+        console.error("Map download failed", error);
+        button.textContent = "DOWNLOAD FAILED";
+    } finally {
+        setTimeout(() => {
+            button.disabled = false;
+            button.textContent = originalText;
+        }, 2200);
+    }
+});
 
 
 
