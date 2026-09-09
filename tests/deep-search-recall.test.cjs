@@ -78,6 +78,34 @@ test('computeLanguageAnchors finds the shared geography token per language, in a
  assert.equal(anchors.ar,'أفغانستان');
  assert.equal(anchors.de,undefined,'no shared token in German queries above: should not guess an anchor');
 });
+test('computeLanguageAnchors prefers the planner-supplied explicit anchor, fixing the real case where secondary never repeats the geography',()=>{
+ const h=harness();
+ // This is the exact failure mode found in production: the secondary query
+ // is a global/comparative facet that never repeats "Afghanistan", so the
+ // old shared-token heuristic found no anchor at all and left English rows
+ // completely unfiltered — letting unrelated Nigeria/Mexico/Colombia drug
+ // stories into the evidence pack.
+ const p={
+   anchors:{en:'afghanistan'},
+   queries:[
+     {language:'en',variant:'primary',query:'Afghanistan opium cultivation ban'},
+     {language:'en',variant:'secondary',query:'global methamphetamine production trends emerging hubs'},
+   ]};
+ const anchors=h.computeLanguageAnchors(p);
+ assert.equal(anchors.en,'afghanistan');
+ const rows=[
+   {language:'en',title:'NDLEA Uncovers Mexican Cartel Links to Ogun, Oyo Meth Labs',summary:''},
+   {language:'en',title:'Afghanistan opium ban devastates farmers, UN says',summary:''},
+ ];
+ assert.deepEqual(h.filterByAnchor(rows,anchors).map(r=>r.title),['Afghanistan opium ban devastates farmers, UN says']);
+});
+test('sanitizePlan extracts the explicit anchor per language but does not require it',()=>{
+ const h=harness();
+ const raw={queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l} p`,secondary:`${l} s`,anchor:l==='en'?'Afghanistan':''}]))};
+ const sanitized=h.sanitizePlan(raw,'q');
+ assert.equal(sanitized.anchors.en,'afghanistan');
+ assert.equal(sanitized.anchors.fr,undefined);
+});
 test('filterByAnchor drops off-topic articles but is lenient when a language has no anchor',()=>{
  const h=harness();
  const anchors={es:'afganistán'};

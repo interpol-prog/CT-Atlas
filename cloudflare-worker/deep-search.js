@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.16-anchor-filter-region-exclude";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.17-explicit-anchor";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
@@ -172,6 +172,14 @@ function tokenizeUnicode(value) {
 function computeLanguageAnchors(plan) {
   const anchors = {};
   for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
+    // Prefer the planner's own explicit anchor for this language: it is
+    // required by the schema and doesn't depend on primary/secondary
+    // happening to repeat the same word, unlike the fallback below — the
+    // fallback exists only for plans sanitized without going through the
+    // normal LLM schema (e.g. tests, or a future planner response missing
+    // this field despite being required).
+    const explicit = plan?.anchors?.[language];
+    if (explicit) { anchors[language] = explicit; continue; }
     const primary = plan?.queries?.find(item => item.language === language && item.variant === "primary")?.query || "";
     const secondary = plan?.queries?.find(item => item.language === language && item.variant === "secondary")?.query || "";
     const pTokens = tokenizeUnicode(primary);
@@ -204,9 +212,10 @@ const PLAN_SCHEMA = {
           type: "object",
           properties: {
             primary: { type: "string" },
-            secondary: { type: "string" }
+            secondary: { type: "string" },
+            anchor: { type: "string" }
           },
-          required: ["primary", "secondary"]
+          required: ["primary", "secondary", "anchor"]
         }])
       ),
       required: [...DEEP_SEARCH_LANGUAGE_CODES]
@@ -288,6 +297,15 @@ QUERY DESIGN RULES — RECALL IS THE PRIORITY, NOT COMPLETENESS:
   groups), prefer covering the more prominent one by name and referring to
   the other only if it fits within the term limit — do not AND both together
   with everything else.
+- For EVERY language also return anchor: the single most important
+  geography/country/actor name this request is actually about, written in
+  that language's own script (e.g. "Afghanistan" in English, "Afganistán" in
+  Spanish, "أفغانستان" in Arabic). This is used afterward to verify a
+  retrieved article is actually about the right subject, so it must be a
+  real, distinctive name — not a generic word — and it must always be
+  present even if your secondary query for that language does not happen to
+  repeat it (secondary is allowed to focus on a facet without repeating the
+  geography by name; anchor is not optional and stands in for it).
 - Keep the same information need in all 12 languages using natural local terms,
   respecting the same strict term limit in every language.
 - Preserve precise geography and named actors. Do not drift into unrelated places.
@@ -531,6 +549,7 @@ function sanitizePlan(plan, fallbackQuestion) {
     : {};
 
   const missing = [];
+  const anchors = {};
   for (const language of DEEP_SEARCH_LANGUAGE_CODES) {
     const item = raw[language];
     const primary = cleanText(item?.primary, 220);
@@ -541,6 +560,8 @@ function sanitizePlan(plan, fallbackQuestion) {
     }
     queries.push({ language, query: primary, variant: "primary" });
     queries.push({ language, query: secondary, variant: "secondary" });
+    const anchor = cleanText(item?.anchor, 80).toLowerCase();
+    if (anchor.length >= 3) anchors[language] = anchor;
   }
 
   if (missing.length) {
@@ -560,6 +581,7 @@ function sanitizePlan(plan, fallbackQuestion) {
     priority_languages: (Array.isArray(plan?.priority_languages) ? plan.priority_languages : []).filter(code => DEEP_SEARCH_LANGUAGE_CODES.includes(code)).slice(0, PRIORITY_LANGUAGE_CAP),
     gdelt_broad_terms: sanitizeTermList(plan?.gdelt_broad_terms),
     gdelt_exclude_terms: sanitizeTermList(plan?.gdelt_exclude_terms),
+    anchors,
     queries: queries.slice(0, DEEP_SEARCH_MAX_QUERIES)
   };
 }
