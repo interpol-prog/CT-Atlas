@@ -227,6 +227,7 @@ function priority(event) {
   const cats = eventCategories(event);
   let score = Number(event.ai_relevance_score || 0);
   if (cats.includes("Attacks")) score += 40;
+  if (cats.includes("Counter Terrorism Action")) score += 35;
   if (cats.includes("Arrests")) score += 25;
   score += Math.min(20, Number(event.source_count || 1) * 3);
   return score;

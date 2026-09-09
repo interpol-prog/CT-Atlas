@@ -496,6 +496,11 @@ body {
 }
 
 
+.ctaction {
+    background: #4f7a5c;
+}
+
+
 .arrests {
     background: #b17b38;
 }
@@ -4997,6 +5002,25 @@ Attacks
 <input
     type="checkbox"
     class="category-filter"
+    value="Counter Terrorism Action"
+    checked
+>
+
+<span class="category-icon ctaction">
+CTA
+</span>
+
+Counter Terrorism Action
+
+</label>
+
+
+
+<label class="category">
+
+<input
+    type="checkbox"
+    class="category-filter"
     value="Arrests"
     checked
 >
@@ -5360,6 +5384,7 @@ Visible rate
           <select id="reportTopic">
             <option value="ALL">All CT activity</option>
             <option value="Attacks">Attacks</option>
+            <option value="Counter Terrorism Action">Counter Terrorism Action</option>
             <option value="Arrests">Arrests</option>
             <option value="Terrorist Financing">Terrorist Financing</option>
             <option value="Weapons">Weapons</option>
@@ -6447,6 +6472,17 @@ const categoryStyle = {
 
     className:
         "attacks"
+
+},
+
+
+"Counter Terrorism Action": {
+
+    code:
+        "CTA",
+
+    className:
+        "ctaction"
 
 },
 
@@ -8201,6 +8237,9 @@ function updateTrends() {
 
                 "Attacks":
                     "Attacks",
+
+                "Counter Terrorism Action":
+                    "Counter Terrorism Action",
 
                 "Arrests":
                     "Arrests",
@@ -10992,6 +11031,7 @@ function updateCommandCenterPanels() {
 
         const order = [
             ["Attacks", "ATTACK"],
+            ["Counter Terrorism Action", "CT ACTION"],
             ["Arrests", "ARREST"],
             ["Legal / Judicial", "JUDICIAL"],
             ["Terrorist Financing", "FINANCING"],

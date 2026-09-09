@@ -112,7 +112,7 @@ AI_SELECTION_BATCH_SIZE = max(
     ),
 )
 
-AI_SELECTION_VERSION = "gemini-ct-selection-v3-specialist"
+AI_SELECTION_VERSION = "gemini-ct-selection-v4-counter-terrorism-action"
 AI_SELECTION_CACHE_FILE = "ai_article_selection_cache.json"
 
 AI_SELECTION_ATTEMPTS = 5
@@ -512,6 +512,29 @@ CATEGORIES = {
         '"al Qaeda suspect arrested"',
     ],
 
+    "Counter Terrorism Action": [
+        '"security forces kill" terrorist',
+        '"security forces killed" militants',
+        '"troops kill" terrorists',
+        '"militants killed in raid"',
+        '"terrorists killed in raid"',
+        '"terrorist killed in operation"',
+        '"militants killed in operation"',
+        '"killed in counter-terrorism operation"',
+        '"counter-terrorism raid"',
+        '"anti-terrorism operation"',
+        '"militants killed in gunfight"',
+        '"terrorist killed in shootout"',
+        '"forces neutralize" terrorist',
+        '"forces neutralise" terrorist',
+        '"eliminated" terrorist commander',
+        '"jihadists killed in raid"',
+        '"ISIS commander killed"',
+        '"al Qaeda commander killed"',
+        '"militant hideout raided"',
+        '"terrorist hideout stormed"',
+    ],
+
     "Legal / Judicial": [
         '"terrorism trial"',
         '"terrorist trial"',
@@ -642,6 +665,15 @@ CORE_SEARCH_QUERIES = {
         '"terrorist cell arrested"',
         '"jihadist arrested"',
         '"terrorism raid" arrests',
+    ],
+
+    "Counter Terrorism Action": [
+        '"militants killed in raid"',
+        '"terrorists killed in operation"',
+        '"counter-terrorism raid"',
+        '"security forces kill" terrorist',
+        '"militants killed in gunfight"',
+        '"terrorist hideout stormed"',
     ],
 
     "Legal / Judicial": [
@@ -800,6 +832,27 @@ OFFICIAL_SOURCE_QUERIES = {
         'site:interpol.int/en/News-and-Events/News '
         '(terrorism OR terrorist) '
         '(arrest OR arrests OR apprehended)',
+
+    ],
+
+
+    "Counter Terrorism Action": [
+
+        'site:justice.gov '
+        '(terrorist OR terrorism OR ISIS OR ISIL OR al-Qaeda) '
+        '(raid OR operation OR neutralized OR neutralised OR killed)',
+
+        'site:gov.uk/government/news '
+        '(terrorism OR terrorist) '
+        '(raid OR operation OR neutralised OR eliminated)',
+
+        'site:counterterrorism.police.uk/news '
+        '(terrorism OR terrorist) '
+        '(raid OR operation OR neutralised OR eliminated)',
+
+        'site:interpol.int/en/News-and-Events/News '
+        '(terrorism OR terrorist) '
+        '(raid OR operation OR neutralized)',
 
     ],
 
@@ -1064,6 +1117,12 @@ TARGETED_MEDIA_CATEGORY_TERMS = {
         'OR jihadist OR extremist OR "al-Qaeda") '
         '(arrest OR arrested OR arrests OR detained OR captured OR raid '
         'OR suspects OR cell)',
+
+    "Counter Terrorism Action":
+        '(terrorist OR terrorism OR ISIS OR ISIL OR Daesh OR "Islamic State" '
+        'OR jihadist OR extremist OR "al-Qaeda" OR militant OR militants) '
+        '(raid OR operation OR neutralized OR neutralised OR eliminated '
+        'OR gunfight OR shootout OR "special forces")',
 
     "Legal / Judicial":
         '(terrorist OR terrorism OR ISIS OR ISIL OR Daesh OR "Islamic State" '
@@ -1673,6 +1732,12 @@ CATEGORY_RELEVANCE = {
         "raid","raided","suspect","suspects","cell","investigation",
     },
 
+    "Counter Terrorism Action": {
+        "raid","raided","operation","neutralized","neutralised","eliminated",
+        "gunfight","firefight","clash","clashed","shootout","cordon","stormed",
+        "commando","special forces","killed","wounded","captured",
+    },
+
     "Legal / Judicial": {
         "trial","court","charged","charges","convicted","conviction","sentenced",
         "sentence","prosecution","prosecutor","indicted","indictment","guilty",
@@ -1735,6 +1800,10 @@ ACTION_TERMS = {
     },
     "Arrests": {
         "arrest","arrested","detained","captured","raid","raided","seized",
+    },
+    "Counter Terrorism Action": {
+        "raided","killed","eliminated","neutralized","neutralised","captured",
+        "stormed","clashed","operation",
     },
     "Legal / Judicial": {
         "trial","charged","convicted","sentenced","indicted","guilty",
@@ -3328,6 +3397,7 @@ AI_SELECTION_SCHEMA = {
                                 "CBRN",
                                 "Online / Cyber / AI",
                                 "Attacks",
+                                "Counter Terrorism Action",
                                 "Arrests",
                                 "Legal / Judicial",
                             ],
@@ -3488,6 +3558,29 @@ radicalization/recruitment/propaganda, cyberterrorism or terrorist cyber activit
 AI/deepfakes/disinformation, and other relevant emerging digital technologies.
 Use "Maritime Piracy" for actual piracy, pirate attacks, vessel hijacking/boarding,
 crew kidnapping or armed robbery at sea.
+
+"Attacks" vs "Counter Terrorism Action" vs "Arrests" -- these three are easily
+confused and must be kept separate:
+- "Attacks" is for violence INITIATED BY terrorists/militants/extremists: an
+  attack, attempted attack, bombing, shooting, ambush, or a terrorist who
+  attacked security forces and was then killed in the ensuing fight. The
+  defining feature is who started the violence.
+- "Counter Terrorism Action" is for an OFFENSIVE or COMBAT operation BY
+  security/military forces AGAINST terrorists: a raid, strike, siege, clearance
+  operation, ambush of a terrorist position, or firefight in which militants
+  are killed, wounded OR CAPTURED as the result of that operation. A raid that
+  ends in a capture still belongs here, not in "Arrests" -- what matters is
+  the offensive/combat nature of the operation, not whether the outcome was a
+  kill or a capture.
+- "Arrests" is for the plain apprehension, detention, indictment or custody of
+  a suspect with NO described raid, assault, clash or combat -- e.g. a suspect
+  arrested at a checkpoint, at home, or during a routine investigation. If a
+  raid or firefight is described, use "Counter Terrorism Action" instead of
+  "Arrests" even if an arrest also results from it.
+An event can legitimately carry both "Attacks" and "Counter Terrorism Action"
+when terrorists attacked first and were then killed/captured by responding
+forces. A routine arrest with no combat should carry "Arrests" only, never
+"Counter Terrorism Action".
 
 Keep the reason concise and specific.
 """
@@ -7596,6 +7689,8 @@ def _trend_priority(event):
 
     if "Attacks" in categories:
         score += 18
+    if "Counter Terrorism Action" in categories:
+        score += 15
     if "Weapons" in categories:
         score += 7
     if "CBRN" in categories:
