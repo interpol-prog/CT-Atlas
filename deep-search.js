@@ -393,6 +393,19 @@ function pdfSafeName(value){
   return String(value||"Deep-Search").replace(/[^a-z0-9_-]+/gi,"-").replace(/^-+|-+$/g,"").slice(0,70)||"Deep-Search";
 }
 
+// The PDF evidence pack is a rasterised image (html2canvas + jsPDF), so the
+// URL text is never clickable there anyway. A very long unbroken
+// word-break:break-all string (Google News redirect URLs run 200+ chars)
+// has caused corrupted/overlapping text in that render pipeline; showing a
+// shortened form sidesteps the failure mode and is more readable in a
+// printed report besides — the live web view already just shows an
+// "OPEN ARTICLE" button rather than the raw URL, for the same reason.
+function pdfDisplayUrl(url,maxLength=100){
+  const value=String(url||"");
+  if(value.length<=maxLength)return value;
+  return value.slice(0,maxLength)+"…";
+}
+
 async function downloadPdf(){
   if(!lastPayload)return;
   const button=document.getElementById("deepSearchPrint");
@@ -423,7 +436,7 @@ async function downloadPdf(){
       <h2 style="font-size:15px;border-bottom:1px solid #d1d5db;padding-bottom:5px;margin:26px 0 10px">ANALYTICAL REPORT</h2>
       <div style="font-size:12px">${formatAnalysis(lastPayload.analysis||"")}</div>
       <h2 style="font-size:15px;border-bottom:1px solid #d1d5db;padding-bottom:5px;margin:28px 0 10px">EVIDENCE PACK</h2>
-      ${evidence.map(item=>`<div class="pdf-source" style="border-top:1px solid #e5e7eb;padding:9px 0;page-break-inside:avoid"><div style="font-weight:700">${esc(item.id)} · ${esc(item.source||"Source")}${cited.has(item.id)?" · CITED":""}</div><div style="font-size:12px;margin:2px 0">${esc(item.title||"")}</div><div style="font-size:10px;color:#6b7280">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())} · ${item.search_engine==="gdelt"?"GDELT":"Google News"}</div>${item.url?`<div style="font-size:9px;word-break:break-all;color:#1d4ed8">${esc(item.url)}</div>`:""}</div>`).join("")}
+      ${evidence.map(item=>`<div class="pdf-source" style="border-top:1px solid #e5e7eb;padding:9px 0;page-break-inside:avoid"><div style="font-weight:700">${esc(item.id)} · ${esc(item.source||"Source")}${cited.has(item.id)?" · CITED":""}</div><div style="font-size:12px;margin:2px 0">${esc(item.title||"")}</div><div style="font-size:10px;color:#6b7280">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())} · ${item.search_engine==="gdelt"?"GDELT":"Google News"}</div>${item.url?`<div style="font-size:9px;word-break:break-all;color:#1d4ed8">${esc(pdfDisplayUrl(item.url))}</div>`:""}</div>`).join("")}
       <div style="margin-top:24px;border-top:1px solid #d1d5db;padding-top:9px;font-size:9px;color:#6b7280">This analytical tool is an independent OSINT prototype created for research and analytical purposes. The information displayed is derived from open sources and automated AI-assisted processing. It should not be considered verified intelligence and must be independently validated before any operational or decision-making use.</div>`;
     shell.id="ctAtlasDeepPdfSource";
     document.body.appendChild(shell);

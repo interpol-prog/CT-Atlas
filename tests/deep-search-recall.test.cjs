@@ -6,7 +6,7 @@ const source=fs.readFileSync('cloudflare-worker/deep-search.js','utf8').replace(
 function harness(fetch){
  const c=vm.createContext({fetch,URLSearchParams,AbortSignal,setTimeout:fn=>fn(),cleanText:(v,n)=>String(v||'').trim().slice(0,n)});
  vm.runInContext(source,c);
- return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltWave,broadGdeltQuery,DEEP_SEARCH_LANGUAGE_CODES})',c);
+ return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltWave,broadGdeltQuery,computeLanguageAnchors,filterByAnchor,DEEP_SEARCH_LANGUAGE_CODES})',c);
 }
 function plan(h){return h.sanitizePlan({priority_languages:['fa','ps','ur','invalid'],queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l} Afghanistan opium`,secondary:`${l} Afghanistan heroin`}]))},'Afghanistan drugs');}
 test('Afghanistan narcotics prioritises English, French, Dari, Pashto and Urdu',()=>{
@@ -49,6 +49,58 @@ test('HTML 200 provider failures remain distinct from empty RSS',async()=>{
  assert.ok(r.waves.filter(w=>!w.query.engine).every(w=>!w.ok&&w.error.includes('non-RSS')));
 });
 test('missing language plans fail explicitly',()=>{assert.throws(()=>harness().sanitizePlan({queries:{}},''),/every required language/);});
+test('GDELT broad query appends planner-supplied exclude terms as -term',()=>{
+ const h=harness();
+ const gdeltPlan={
+   gdelt_broad_terms:['methamphetamine','fentanyl','cartel'],
+   gdelt_exclude_terms:['spain','madrid'],
+   queries:[
+     {language:'en',variant:'primary',query:'Afghanistan opium cultivation ban enforcement decree'},
+     {language:'en',variant:'secondary',query:'Afghanistan methamphetamine heroin laboratory seizure trafficking'},
+   ]};
+ assert.equal(h.broadGdeltQuery(gdeltPlan),'afghanistan (methamphetamine OR fentanyl OR cartel) -spain -madrid');
+});
+test('computeLanguageAnchors finds the shared geography token per language, in any script',()=>{
+ const h=harness();
+ const p={queries:[
+   {language:'en',variant:'primary',query:'Afghanistan opium cultivation'},
+   {language:'en',variant:'secondary',query:'Afghanistan heroin trafficking'},
+   {language:'es',variant:'primary',query:'Afganistán cultivo de opio'},
+   {language:'es',variant:'secondary',query:'Afganistán tráfico de heroína'},
+   {language:'ar',variant:'primary',query:'أفغانستان زراعة الأفيون'},
+   {language:'ar',variant:'secondary',query:'أفغانستان تهريب الهيروين'},
+   {language:'de',variant:'primary',query:'Drogen Opium Anbau'},
+   {language:'de',variant:'secondary',query:'Heroin Schmuggel Labor'},
+ ]};
+ const anchors=h.computeLanguageAnchors(p);
+ assert.equal(anchors.en,'afghanistan');
+ assert.equal(anchors.es,'afganistán');
+ assert.equal(anchors.ar,'أفغانستان');
+ assert.equal(anchors.de,undefined,'no shared token in German queries above: should not guess an anchor');
+});
+test('filterByAnchor drops off-topic articles but is lenient when a language has no anchor',()=>{
+ const h=harness();
+ const anchors={es:'afganistán'};
+ const rows=[
+   {language:'es',title:'Detenido con heroína en Huelva',summary:'sin relación con el país solicitado'},
+   {language:'es',title:'Afganistán: incautan heroína en ruta hacia Europa',summary:''},
+   {language:'de',title:'Beliebiger Artikel ohne Anker',summary:''},
+ ];
+ const kept=h.filterByAnchor(rows,anchors);
+ assert.deepEqual(kept.map(r=>r.title),['Afganistán: incautan heroína en ruta hacia Europa','Beliebiger Artikel ohne Anker']);
+});
+test('retrieveNews filters out an off-topic article for a language with a confident anchor',async()=>{
+ const onTopicRss='<rss><channel><item><title>Afghanistan opium seizure reported</title><link>https://x/1</link></item></channel></rss>';
+ const offTopicRss='<rss><channel><item><title>Domestic heroin bust unrelated to the requested country</title><link>https://x/2</link></item><item><title>Afganistán: incautan opio en la frontera</title><link>https://x/3</link></item></channel></rss>';
+ const h=harness(async url=>new Response(url.includes('gdelt')?'{}':(url.includes('hl=es')?offTopicRss:onTopicRss)));
+ const p=h.sanitizePlan({queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l==='es'?'Afganistán':'Afghanistan'} opium cultivation`,secondary:`${l==='es'?'Afganistán':'Afghanistan'} heroin trafficking`}]))},'Afghanistan drugs');
+ const result=await h.retrieveNews(p,30,[]);
+ // Both the primary and secondary "es" queries hit the same mocked feed, so
+ // the off-topic item must be dropped from each of those two waves.
+ const esRows=result.waves.filter(w=>w.query.language==='es').flatMap(w=>w.rows);
+ assert.equal(esRows.length,2);
+ assert.ok(esRows.every(r=>r.title==='Afganistán: incautan opio en la frontera'));
+});
 test('GDELT broad query uses the planner-supplied gdelt_broad_terms when available, ignoring the static heuristic',()=>{
  const h=harness();
  const gdeltPlan={
@@ -82,6 +134,19 @@ test('GDELT broad query prefers specific topic nouns from both primary and secon
  assert.ok(q.includes('methamphetamine')||q.includes('heroin'),'secondary-only drug nouns must not be crowded out: '+q);
  assert.ok(!q.includes(' ban ')&&!q.includes('(ban')&&!/\bban\b/.test(q),'generic "ban" should be deprioritised out of the top 4: '+q);
  assert.ok(!/\benforcement\b/.test(q),'generic "enforcement" should be deprioritised out of the top 4: '+q);
+});
+test('pdfDisplayUrl truncates long URLs so the PDF never renders a 200+ char unbroken string',()=>{
+ const js=fs.readFileSync('deep-search.js','utf8');
+ const fn=js.slice(js.indexOf('function pdfDisplayUrl'),js.indexOf('\nasync function downloadPdf'));
+ const c=vm.createContext({});
+ vm.runInContext(fn,c);
+ const longUrl='https://news.google.com/rss/articles/'+'A'.repeat(250)+'?oc=5';
+ const result=vm.runInContext('pdfDisplayUrl',c)(longUrl);
+ assert.ok(result.length<=101,'expected truncation to ~100 chars, got '+result.length);
+ assert.ok(result.endsWith('…'));
+ assert.ok(longUrl.startsWith(result.slice(0,-1)));
+ const shortUrl='https://example.com/short';
+ assert.equal(vm.runInContext('pdfDisplayUrl',c)(shortUrl),shortUrl);
 });
 test('long PDF export renders bounded canvases and advances to the final page',async()=>{
  const js=fs.readFileSync('deep-search.js','utf8');
