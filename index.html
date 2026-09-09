@@ -3334,9 +3334,11 @@ html, body {
 
 /* ============================================================
    V11.7 — HEADER CASUALTY METRICS
-   Current Paris calendar day (00:00 Paris to now), split into
-   victims vs. terrorists killed/wounded. See isCurrentCasualtyEvent()
-   and extractStrict24hCasualtyBreakdown() in the JS below.
+   Most recently completed Paris calendar day (yesterday, 00:00-24:00
+   Paris), split into victims killed/wounded and terrorists
+   killed/captured. See isCurrentCasualtyEvent(),
+   extractStrict24hCasualtyBreakdown() and
+   extractStrict24hCapturedCount() in the JS below.
    ============================================================ */
 
 #updated {
@@ -3415,7 +3417,7 @@ html, body {
 }
 
 #headerTerroristsDeaths24,
-#headerTerroristsWounded24 {
+#headerTerroristsCaptured24 {
     color: #c8dbe5;
 }
 
@@ -4630,8 +4632,8 @@ html, body {
 
         </div>
 
-        <div id="headerCasualties24" title="Casualties from attacks and armed clashes on the current Paris calendar day (00:00 Paris time to now). Event date is preferred; recent article date is used when no occurrence date is available. Split into victims (everyone the attack harmed) and terrorists (attackers/militants killed or wounded, e.g. by security forces).">
-            <div id="headerCasualtiesWindow">SINCE 00:00 PARIS</div>
+        <div id="headerCasualties24" title="Casualties for the most recently completed Paris calendar day (yesterday, 00:00-24:00 Paris time -- used because today's collector update mostly finishes covering yesterday, not today). Event date is preferred; recent article date is used when no occurrence date is available. Victims = everyone the attack harmed, killed or wounded. Terrorists = attackers/militants killed, or captured -- either during a raid/firefight (Counter Terrorism Action) or by a plain arrest.">
+            <div id="headerCasualtiesWindow">FULL DAY (PARIS)</div>
             <div class="header-casualty-group">
                 <span class="header-casualty-group-label">VICTIMS</span>
                 <div class="header-casualty">
@@ -4650,8 +4652,8 @@ html, body {
                     <strong id="headerTerroristsDeaths24">—</strong>
                 </div>
                 <div class="header-casualty">
-                    <span class="header-casualty-label">WOUNDED</span>
-                    <strong id="headerTerroristsWounded24">—</strong>
+                    <span class="header-casualty-label">CAPTURED</span>
+                    <strong id="headerTerroristsCaptured24">—</strong>
                 </div>
             </div>
         </div>
@@ -5254,7 +5256,7 @@ Visible rate
 </div>
 
 <div id="operationalDisclaimer">
-    Open-source analytical environment · 10 source languages translated into English · header casualty counts cover the current Paris calendar day (00:00 Paris to now), split into victims and terrorists killed/wounded; publication date alone is never sufficient to confirm timing · verify against primary sources before operational use
+    Open-source analytical environment · 10 source languages translated into English · header casualty counts cover the most recently completed Paris calendar day (yesterday, 00:00-24:00 Paris), split into victims killed/wounded and terrorists killed/captured; publication date alone is never sufficient to confirm timing · verify against primary sources before operational use
 </div>
 
 
@@ -10117,6 +10119,60 @@ function parisCalendarDateString(
 }
 
 
+/*
+   Shifts a "YYYY-MM-DD" calendar-date string by a whole number of days
+   using pure UTC date arithmetic (noon anchor, so no DST transition can
+   ever push the result onto the wrong day). Used to go from "today in
+   Paris" to "yesterday in Paris" without re-deriving a timezone offset.
+*/
+function shiftCalendarDateString(
+    dateString,
+    dayOffset
+) {
+
+    const parts =
+        dateString.split(
+            "-"
+        )
+        .map(
+            Number
+        );
+
+    const shifted =
+        new Date(
+            Date.UTC(
+                parts[0],
+                parts[1] - 1,
+                parts[2],
+                12
+            )
+        );
+
+    shifted.setUTCDate(
+        shifted.getUTCDate()
+        +
+        dayOffset
+    );
+
+    return shifted
+        .toISOString()
+        .slice(
+            0,
+            10
+        );
+}
+
+
+function parisYesterdayDateString() {
+    return shiftCalendarDateString(
+        parisCalendarDateString(
+            new Date()
+        ),
+        -1
+    );
+}
+
+
 function parseArticlePublicationDateForCasualties(
     event
 ) {
@@ -10190,24 +10246,24 @@ function isCurrentCasualtyEvent(
 ) {
 
     /*
-       Stable window definition: the current Paris CALENDAR DAY, from
-       00:00 Paris time to now -- not a rolling "last 24 hours" window.
-       A rolling window silently shifts on every single refresh (each one
-       reads a new `Date.now()`), which is why the header count used to
-       seem to change for no visible reason even a few minutes apart. A
-       calendar-day boundary only resets once, at Paris midnight, so
-       during the day the count can only grow as new attacks are
-       collected -- it will never quietly drop an event just because the
-       clock ticked forward. renderHeaderCasualtyWindowLabel() displays
-       this exact boundary next to the numbers so the scope is explicit.
+       Stable window definition: the most recently COMPLETED Paris
+       CALENDAR DAY -- yesterday, 00:00 to 24:00 Paris time -- not today,
+       and not a rolling "last 24 hours" window.
+       Two reasons, both from direct user feedback:
+       1) A rolling window silently shifts on every refresh (each one
+          reads a new `Date.now()`), so the header count seemed to change
+          for no visible reason even a few minutes apart. A calendar-day
+          boundary only resets once, at Paris midnight.
+       2) Today's collector run(s) mostly finish covering YESTERDAY, not
+          today -- today's own news is still incomplete while it's still
+          being collected. Anchoring on yesterday means the window is a
+          closed, complete 24-hour day rather than a partial "so far
+          today" count that would under-report right after midnight.
+       parisCasualtyWindowLabel() displays this exact date next to the
+       numbers so the scope is explicit.
     */
-    const now =
-        new Date();
-
-    const todayParis =
-        parisCalendarDateString(
-            now
-        );
+    const targetParisDay =
+        parisYesterdayDateString();
 
     /*
        1) Prefer the real occurrence date whenever the event has one.
@@ -10229,7 +10285,7 @@ function isCurrentCasualtyEvent(
                 occurrenceDate
             )
             ===
-            todayParis
+            targetParisDay
         );
     }
 
@@ -10250,7 +10306,7 @@ function isCurrentCasualtyEvent(
             publicationDate
         )
         !==
-        todayParis
+        targetParisDay
     ) {
         return false;
     }
@@ -10693,11 +10749,165 @@ function extractStrict24hWoundedCount(
 
 
 /*
-   Renders the exact boundary of the "current Paris day" casualty window
-   (e.g. "SINCE 00:00 PARIS · SEP 9, 2026") so the scope of the header
-   numbers is always visible instead of implied by an unlabeled "24H".
+   Terrorists "captured" merges two distinct real-world outcomes into one
+   number, by design: captured during a raid/firefight (Counter Terrorism
+   Action) and a plain arrest with no combat described (Arrests). Unlike
+   the killed/wounded extraction, every match here is inherently about
+   the terrorist/suspect side -- an Arrests or Counter Terrorism Action
+   article is never reporting a victim being "arrested" -- so no
+   terrorist/victim phrase-side classification is needed.
 */
-function parisTodayWindowLabel() {
+function extractStrict24hCapturedCount(
+    event
+) {
+
+    if (
+        !isCurrentCasualtyEvent(
+            event
+        )
+    ) {
+        return 0;
+    }
+
+    const structuredTotal =
+        explicitStructuredCasualtyValue(
+            event,
+            [
+                "arrested",
+                "arrests",
+                "detained",
+                "captured",
+                "suspects_arrested",
+                "suspects_captured"
+            ]
+        );
+
+    if (
+        structuredTotal !== null
+    ) {
+        return structuredTotal;
+    }
+
+    const text =
+        casualtyTextForEvent(
+            event
+        );
+
+    if (!text) {
+        return 0;
+    }
+
+    const patterns = [
+        /\b(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\s+(?:people\s+|persons\s+|suspects\s+|militants\s+|terrorists\s+|attackers\s+|fighters\s+|jihadists\s+|extremists\s+|members\s+)?(?:were\s+)?(?:arrested|detained|captured|apprehended)\b/gi,
+        /\b(?:arrested|detained|captured|apprehended)\s*[:\-]?\s*(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\b/gi
+    ];
+
+    const matches = [];
+
+    patterns.forEach(
+        pattern => {
+
+            let match;
+
+            while (
+                (
+                    match =
+                        pattern.exec(
+                            text
+                        )
+                )
+                !==
+                null
+            ) {
+
+                const value =
+                    Number(
+                        match[
+                            1
+                        ]
+                    );
+
+                if (
+                    !Number.isFinite(
+                        value
+                    )
+                    ||
+                    value < 0
+                    ||
+                    value > 100000
+                ) {
+                    continue;
+                }
+
+                const phrase =
+                    match[
+                        0
+                    ]
+                    .toLowerCase()
+                    .replace(
+                        /\s+/g,
+                        " "
+                    )
+                    .trim();
+
+                matches.push(
+                    {
+                        value,
+                        phrase
+                    }
+                );
+
+            }
+
+        }
+    );
+
+    if (!matches.length) {
+        return 0;
+    }
+
+    const unique =
+        new Map();
+
+    matches.forEach(
+        item => {
+
+            if (
+                !unique.has(
+                    item.phrase
+                )
+            ) {
+                unique.set(
+                    item.phrase,
+                    item.value
+                );
+            }
+
+        }
+    );
+
+    return Array.from(
+        unique.values()
+    )
+    .reduce(
+        (
+            sum,
+            value
+        ) =>
+            sum
+            +
+            value,
+        0
+    );
+}
+
+
+/*
+   Renders the exact date of the completed Paris day the header numbers
+   cover (e.g. "SEP 8, 2026 · FULL DAY (PARIS)"), which is YESTERDAY --
+   see the comment on isCurrentCasualtyEvent() for why.
+*/
+function parisCasualtyWindowLabel() {
 
     const dateLabel =
         new Intl.DateTimeFormat(
@@ -10709,31 +10919,47 @@ function parisTodayWindowLabel() {
                 year: "numeric"
             }
         ).format(
-            new Date()
+            shiftCalendarDateStringToDate(
+                parisYesterdayDateString()
+            )
         );
 
     return (
-        "SINCE 00:00 PARIS · "
-        +
         dateLabel.toUpperCase()
+        +
+        " · FULL DAY (PARIS)"
+    );
+}
+
+
+function shiftCalendarDateStringToDate(
+    dateString
+) {
+
+    const parts =
+        dateString.split(
+            "-"
+        )
+        .map(
+            Number
+        );
+
+    return new Date(
+        Date.UTC(
+            parts[0],
+            parts[1] - 1,
+            parts[2],
+            12
+        )
     );
 }
 
 
 function updateHeaderCasualties24() {
 
-    const attackEvents =
+    const relevantEvents =
         allEvents.filter(
-            event =>
-                eventCategories(
-                    event
-                ).includes(
-                    "Attacks"
-                )
-                &&
-                isCurrentCasualtyEvent(
-                    event
-                )
+            isCurrentCasualtyEvent
         );
 
     const deathTotals = {
@@ -10741,31 +10967,78 @@ function updateHeaderCasualties24() {
         victim: 0
     };
 
-    const woundedTotals = {
-        terrorist: 0,
-        victim: 0
-    };
+    let victimWounded = 0;
+    let terroristCaptured = 0;
 
-    attackEvents.forEach(
+    relevantEvents.forEach(
         event => {
 
-            const deathBreakdown =
-                extractStrict24hCasualtyBreakdown(
-                    event,
-                    "death"
+            const categories =
+                eventCategories(
+                    event
                 );
 
-            deathTotals.terrorist += deathBreakdown.terrorist;
-            deathTotals.victim += deathBreakdown.victim;
-
-            const woundedBreakdown =
-                extractStrict24hCasualtyBreakdown(
-                    event,
-                    "wounded"
+            const isAttack =
+                categories.includes(
+                    "Attacks"
                 );
 
-            woundedTotals.terrorist += woundedBreakdown.terrorist;
-            woundedTotals.victim += woundedBreakdown.victim;
+            const isCounterTerrorismAction =
+                categories.includes(
+                    "Counter Terrorism Action"
+                );
+
+            const isArrest =
+                categories.includes(
+                    "Arrests"
+                );
+
+            if (
+                isAttack
+                ||
+                isCounterTerrorismAction
+            ) {
+
+                const deathBreakdown =
+                    extractStrict24hCasualtyBreakdown(
+                        event,
+                        "death"
+                    );
+
+                deathTotals.terrorist += deathBreakdown.terrorist;
+
+                if (
+                    isAttack
+                ) {
+                    deathTotals.victim += deathBreakdown.victim;
+                }
+
+            }
+
+            if (
+                isAttack
+            ) {
+
+                victimWounded +=
+                    extractStrict24hCasualtyBreakdown(
+                        event,
+                        "wounded"
+                    ).victim;
+
+            }
+
+            if (
+                isCounterTerrorismAction
+                ||
+                isArrest
+            ) {
+
+                terroristCaptured +=
+                    extractStrict24hCapturedCount(
+                        event
+                    );
+
+            }
 
         }
     );
@@ -10798,7 +11071,7 @@ function updateHeaderCasualties24() {
 
     setCasualtyNode(
         "headerVictimsWounded24",
-        woundedTotals.victim
+        victimWounded
     );
 
     setCasualtyNode(
@@ -10807,8 +11080,8 @@ function updateHeaderCasualties24() {
     );
 
     setCasualtyNode(
-        "headerTerroristsWounded24",
-        woundedTotals.terrorist
+        "headerTerroristsCaptured24",
+        terroristCaptured
     );
 
     const windowNode =
@@ -10820,7 +11093,7 @@ function updateHeaderCasualties24() {
         windowNode
     ) {
         windowNode.textContent =
-            parisTodayWindowLabel();
+            parisCasualtyWindowLabel();
     }
 }
 
