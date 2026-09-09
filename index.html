@@ -3328,8 +3328,10 @@ html, body {
 
 
 /* ============================================================
-   V11.7 — HEADER 24H CASUALTY METRICS
-   Strict event-occurrence date; never article publication date.
+   V11.7 — HEADER CASUALTY METRICS
+   Current Paris calendar day (00:00 Paris to now), split into
+   victims vs. terrorists killed/wounded. See isCurrentCasualtyEvent()
+   and extractStrict24hCasualtyBreakdown() in the JS below.
    ============================================================ */
 
 #updated {
@@ -3341,78 +3343,121 @@ html, body {
 #headerCasualties24 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4px;
-    margin-top: 5px;
+    column-gap: 6px;
+    row-gap: 1px;
+    margin-top: 4px;
     width: 100%;
 }
 
-.header-casualty {
+#headerCasualtiesWindow {
+    grid-column: 1 / -1;
+    color: #55707f;
+    font-size: 5.4px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    line-height: 1.3;
+    white-space: nowrap;
+    text-transform: uppercase;
+    margin-bottom: 1px;
+}
+
+.header-casualty-group {
     min-width: 0;
-    padding-top: 4px;
+    padding-top: 3px;
     border-top: 1px solid rgba(103, 145, 168, .22);
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
+}
+
+.header-casualty-group-label {
+    color: #6f8999;
+    font-size: 6px;
+    font-weight: 750;
+    letter-spacing: .05em;
+    line-height: 1.2;
+    white-space: nowrap;
+    margin-bottom: 1px;
+}
+
+.header-casualty {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px;
 }
 
 .header-casualty-label {
     color: #6f8999;
-    font-size: 6.4px;
-    font-weight: 750;
-    letter-spacing: .055em;
-    line-height: 1;
+    font-size: 5.6px;
+    font-weight: 700;
+    letter-spacing: .03em;
+    line-height: 1.4;
     white-space: nowrap;
 }
 
 .header-casualty strong {
     color: #d9e9f1;
-    font-size: 12px;
+    font-size: 10.5px;
     font-weight: 750;
     line-height: 1;
     font-variant-numeric: tabular-nums;
 }
 
-#headerDeaths24 {
+#headerVictimsDeaths24,
+#headerVictimsWounded24 {
     color: #e0e8ec;
 }
 
-#headerWounded24 {
+#headerTerroristsDeaths24,
+#headerTerroristsWounded24 {
     color: #c8dbe5;
 }
 
 @media (max-width: 900px) {
     #headerCasualties24 {
-        gap: 3px;
-        margin-top: 4px;
+        column-gap: 4px;
+        margin-top: 3px;
+    }
+
+    #headerCasualtiesWindow {
+        font-size: 4.8px;
+    }
+
+    .header-casualty-group-label {
+        font-size: 5.4px;
     }
 
     .header-casualty-label {
-        font-size: 5.7px;
-        letter-spacing: .035em;
-    }
-
-    .header-casualty strong {
-        font-size: 10px;
-    }
-}
-
-@media (max-width: 640px) {
-    #headerCasualties24 {
-        grid-template-columns: 1fr 1fr;
-        gap: 2px;
-    }
-
-    .header-casualty {
-        padding-top: 3px;
-    }
-
-    .header-casualty-label {
-        font-size: 5.1px;
-        letter-spacing: .015em;
+        font-size: 5px;
     }
 
     .header-casualty strong {
         font-size: 9px;
+    }
+}
+
+@media (max-width: 640px) {
+    #headerCasualtiesWindow {
+        display: none;
+    }
+
+    .header-casualty-group {
+        padding-top: 2px;
+    }
+
+    .header-casualty-group-label {
+        font-size: 4.8px;
+        letter-spacing: .02em;
+    }
+
+    .header-casualty-label {
+        font-size: 4.4px;
+        letter-spacing: .01em;
+    }
+
+    .header-casualty strong {
+        font-size: 8px;
     }
 }
 
@@ -4580,14 +4625,29 @@ html, body {
 
         </div>
 
-        <div id="headerCasualties24" title="Casualties from attacks and armed clashes in the last 24h / current Paris day. Event date is preferred; recent article date is used when no occurrence date is available. Includes attackers/terrorists killed or wounded.">
-            <div class="header-casualty">
-                <span class="header-casualty-label">24H DEATHS</span>
-                <strong id="headerDeaths24">—</strong>
+        <div id="headerCasualties24" title="Casualties from attacks and armed clashes on the current Paris calendar day (00:00 Paris time to now). Event date is preferred; recent article date is used when no occurrence date is available. Split into victims (everyone the attack harmed) and terrorists (attackers/militants killed or wounded, e.g. by security forces).">
+            <div id="headerCasualtiesWindow">SINCE 00:00 PARIS</div>
+            <div class="header-casualty-group">
+                <span class="header-casualty-group-label">VICTIMS</span>
+                <div class="header-casualty">
+                    <span class="header-casualty-label">KILLED</span>
+                    <strong id="headerVictimsDeaths24">—</strong>
+                </div>
+                <div class="header-casualty">
+                    <span class="header-casualty-label">WOUNDED</span>
+                    <strong id="headerVictimsWounded24">—</strong>
+                </div>
             </div>
-            <div class="header-casualty">
-                <span class="header-casualty-label">24H WOUNDED</span>
-                <strong id="headerWounded24">—</strong>
+            <div class="header-casualty-group">
+                <span class="header-casualty-group-label">TERRORISTS</span>
+                <div class="header-casualty">
+                    <span class="header-casualty-label">KILLED</span>
+                    <strong id="headerTerroristsDeaths24">—</strong>
+                </div>
+                <div class="header-casualty">
+                    <span class="header-casualty-label">WOUNDED</span>
+                    <strong id="headerTerroristsWounded24">—</strong>
+                </div>
             </div>
         </div>
 
@@ -5170,7 +5230,7 @@ Visible rate
 </div>
 
 <div id="operationalDisclaimer">
-    Open-source analytical environment · 10 source languages translated into English · 24h deaths count only attacks assessed as occurring within the last 24 hours; publication date alone is never sufficient · verify against primary sources before operational use
+    Open-source analytical environment · 10 source languages translated into English · header casualty counts cover the current Paris calendar day (00:00 Paris to now), split into victims and terrorists killed/wounded; publication date alone is never sufficient to confirm timing · verify against primary sources before operational use
 </div>
 
 
@@ -9910,139 +9970,6 @@ function parseEventOccurrenceDate(event) {
 }
 
 
-function isAttackActuallyWithinLast24Hours(event) {
-
-    const now =
-        new Date();
-
-    const cutoff =
-        new Date(
-            now.getTime()
-            -
-            24
-            *
-            60
-            *
-            60
-            *
-            1000
-        );
-
-    const occurrenceDate =
-        parseEventOccurrenceDate(
-            event
-        );
-
-    /*
-       Best case: the event itself carries an occurrence date.
-       This is always preferred over article publication time.
-    */
-    if (
-        occurrenceDate
-    ) {
-        return (
-            occurrenceDate >= cutoff
-            &&
-            occurrenceDate <= now
-        );
-    }
-
-
-    const text =
-        (
-            (event.title || "")
-            + " "
-            + (event.summary || "")
-            + " "
-            + (event.original_title || "")
-            + " "
-            + (event.original_summary || "")
-        )
-        .replace(/\s+/g, " ")
-        .trim()
-        .toLowerCase();
-
-
-    if (!text) {
-        return false;
-    }
-
-
-    /*
-       Explicit signals that the attack happened before the current
-       24-hour window. These override a publication date from today.
-    */
-    const historicalSignals = [
-        /\byesterday\b/i,
-        /\blast night\b/i,
-        /\blast week\b/i,
-        /\blast month\b/i,
-        /\blast year\b/i,
-        /\bprevious day\b/i,
-        /\bprevious week\b/i,
-        /\bearlier this week\b/i,
-        /\bdays? ago\b/i,
-        /\bweeks? ago\b/i,
-        /\bmonths? ago\b/i,
-        /\banniversary\b/i,
-        /\bcommemorat(?:e|es|ed|ing|ion)\b/i,
-        /\bafter (?:an?|the) attack\b/i,
-        /\bfollowing (?:an?|the) attack\b/i,
-        /\bdeath toll (?:rose|rises|has risen|climbed|reached)\b/i
-    ];
-
-    if (
-        historicalSignals.some(
-            pattern =>
-                pattern.test(
-                    text
-                )
-        )
-    ) {
-        return false;
-    }
-
-
-    /*
-       Only accept an event without a structured occurrence date when
-       the wording itself strongly indicates a current-day attack.
-       This deliberately favors precision over recall.
-    */
-    const currentAttackSignals = [
-        /\btoday\b/i,
-        /\bthis morning\b/i,
-        /\bthis afternoon\b/i,
-        /\bthis evening\b/i,
-        /\btonight\b/i,
-        /\bearlier today\b/i,
-        /\bhours? ago\b/i,
-        /\bjust (?:killed|attacked|struck|bombed|exploded)\b/i,
-        /\bovernight\b/i
-    ];
-
-    if (
-        currentAttackSignals.some(
-            pattern =>
-                pattern.test(
-                    text
-                )
-        )
-    ) {
-        return true;
-    }
-
-
-    /*
-       As a final conservative fallback, publication time alone is NOT
-       enough. Returning false prevents today's reporting about an older
-       attack from contaminating the "Deaths in 24h" metric.
-    */
-    return false;
-}
-
-
-
-
 function parisNowParts() {
 
     const parts =
@@ -10223,26 +10150,28 @@ function isCurrentCasualtyEvent(
     event
 ) {
 
+    /*
+       Stable window definition: the current Paris CALENDAR DAY, from
+       00:00 Paris time to now -- not a rolling "last 24 hours" window.
+       A rolling window silently shifts on every single refresh (each one
+       reads a new `Date.now()`), which is why the header count used to
+       seem to change for no visible reason even a few minutes apart. A
+       calendar-day boundary only resets once, at Paris midnight, so
+       during the day the count can only grow as new attacks are
+       collected -- it will never quietly drop an event just because the
+       clock ticked forward. renderHeaderCasualtyWindowLabel() displays
+       this exact boundary next to the numbers so the scope is explicit.
+    */
     const now =
         new Date();
 
-    const cutoff =
-        new Date(
-            now.getTime()
-            -
-            24
-            *
-            60
-            *
-            60
-            *
-            1000
+    const todayParis =
+        parisCalendarDateString(
+            now
         );
 
     /*
        1) Prefer the real occurrence date whenever the event has one.
-       Count it when it falls in the rolling last 24 hours OR on today's
-       Paris calendar date.
     */
     const occurrenceDate =
         parseEventOccurrenceDate(
@@ -10256,35 +10185,12 @@ function isCurrentCasualtyEvent(
             occurrenceDate.getTime()
         )
     ) {
-
-        const todayParis =
-            parisCalendarDateString(
-                now
-            );
-
-        const eventParisDay =
-            parisCalendarDateString(
-                occurrenceDate
-            );
-
         return (
-            (
+            parisCalendarDateString(
                 occurrenceDate
-                >=
-                cutoff
-                &&
-                occurrenceDate
-                <=
-                now
             )
-            ||
-            (
-                eventParisDay
-                &&
-                eventParisDay
-                ===
-                todayParis
-            )
+            ===
+            todayParis
         );
     }
 
@@ -10301,9 +10207,11 @@ function isCurrentCasualtyEvent(
     if (
         !publicationDate
         ||
-        publicationDate < cutoff
-        ||
-        publicationDate > now
+        parisCalendarDateString(
+            publicationDate
+        )
+        !==
+        todayParis
     ) {
         return false;
     }
@@ -10409,8 +10317,63 @@ function explicitStructuredCasualtyValue(
 
 
 
-function extractStrict24hDeathCount(
-    event
+const TERRORIST_SIDE_CASUALTY_WORDS = new Set(
+    [
+        "militant", "militants",
+        "terrorist", "terrorists",
+        "attacker", "attackers",
+        "assailant", "assailants",
+        "fighter", "fighters",
+        "suspect", "suspects",
+        "insurgent", "insurgents",
+        "gunman", "gunmen",
+        "jihadist", "jihadists",
+        "bomber", "bombers"
+    ]
+);
+
+
+/*
+   Classifies a matched casualty phrase (e.g. "21 militants killed" or
+   "6 security personnel killed") as "terrorist" when its qualifier word
+   names an attacker/militant, or "victim" otherwise -- including when
+   the phrase has no qualifier at all ("27 killed"), since an unqualified
+   toll conventionally refers to the attack's victims in news reporting.
+*/
+function casualtyPhraseSide(phrase) {
+
+    const words =
+        phrase.split(
+            /\s+/
+        );
+
+    for (
+        const word
+        of
+        words
+    ) {
+        if (
+            TERRORIST_SIDE_CASUALTY_WORDS.has(
+                word
+            )
+        ) {
+            return "terrorist";
+        }
+    }
+
+    return "victim";
+}
+
+
+/*
+   Shared extraction behind both the death and wounded counters. Returns
+   {terrorist, victim} so the header can show the two distinctions asked
+   for: casualties among the perpetrators (terrorists killed/wounded)
+   versus casualties among everyone else (victims killed/wounded).
+*/
+function extractStrict24hCasualtyBreakdown(
+    event,
+    kind
 ) {
 
     if (
@@ -10418,15 +10381,23 @@ function extractStrict24hDeathCount(
             event
         )
     ) {
-        return 0;
+        return {
+            terrorist: 0,
+            victim: 0
+        };
     }
 
     /*
-       Structured totals remain authoritative when available.
+       Structured totals never carry a side breakdown today -- the
+       collector does not emit one -- so an explicit total is attributed
+       entirely to victims, the conventional reading of an unqualified
+       casualty figure.
     */
     const structuredTotal =
         explicitStructuredCasualtyValue(
             event,
+            kind === "death"
+            ?
             [
                 "fatalities",
                 "deaths",
@@ -10434,12 +10405,24 @@ function extractStrict24hDeathCount(
                 "total_deaths",
                 "total_killed"
             ]
+            :
+            [
+                "wounded",
+                "wounded_count",
+                "injured",
+                "injured_count",
+                "total_wounded",
+                "total_injured"
+            ]
         );
 
     if (
         structuredTotal !== null
     ) {
-        return structuredTotal;
+        return {
+            terrorist: 0,
+            victim: structuredTotal
+        };
     }
 
     const text =
@@ -10448,21 +10431,33 @@ function extractStrict24hDeathCount(
         );
 
     if (!text) {
-        return 0;
+        return {
+            terrorist: 0,
+            victim: 0
+        };
     }
 
     /*
-       Capture explicit killed/dead/fatality statements. We keep unique
-       matched phrases so duplicated source wording is not counted twice.
+       Capture explicit killed/wounded statements. We keep unique matched
+       phrases so duplicated source wording is not counted twice.
        Different groups in the same incident CAN be added together:
-       e.g. "6 security personnel killed" + "21 militants killed" = 27.
+       e.g. "6 security personnel killed" + "21 militants killed" = 27,
+       split here into victim=6 and terrorist=21 instead of merged.
     */
-    const patterns = [
-        /\b(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|troops\s+|officers\s+|police\s+|security\s+personnel\s+|security\s+forces\s+|militants\s+|terrorists\s+|attackers\s+|assailants\s+|fighters\s+|suspects\s+|victims\s+)?(?:were\s+)?(?:killed|dead|died)\b/gi,
-        /\b(?:killed|dead|fatalities|deaths)\s*[:\-]?\s*(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\b/gi,
-        /\bdeath\s+toll(?:\s+(?:has\s+)?(?:risen|rose|rises|climbed|stands|reached|reaches|at))?\s*(?:to|at|:)?\s*(\d{1,5})\b/gi,
-        /\b(\d{1,5})\s+fatalities\b/gi
-    ];
+    const patterns =
+        kind === "death"
+        ?
+        [
+            /\b(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|troops\s+|officers\s+|police\s+|security\s+personnel\s+|security\s+forces\s+|militants\s+|terrorists\s+|attackers\s+|assailants\s+|fighters\s+|suspects\s+|victims\s+)?(?:were\s+)?(?:killed|dead|died)\b/gi,
+            /\b(?:killed|dead|fatalities|deaths)\s*[:\-]?\s*(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\b/gi,
+            /\bdeath\s+toll(?:\s+(?:has\s+)?(?:risen|rose|rises|climbed|stands|reached|reaches|at))?\s*(?:to|at|:)?\s*(\d{1,5})\b/gi,
+            /\b(\d{1,5})\s+fatalities\b/gi
+        ]
+        :
+        [
+            /\b(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|troops\s+|officers\s+|police\s+|security\s+personnel\s+|security\s+forces\s+|militants\s+|terrorists\s+|attackers\s+|assailants\s+|fighters\s+|victims\s+)?(?:were\s+)?(?:wounded|injured|hurt)\b/gi,
+            /\b(?:wounded|injured|hurt)\s*[:\-]?\s*(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\b/gi
+        ];
 
     const matches = [];
 
@@ -10525,36 +10520,51 @@ function extractStrict24hDeathCount(
     );
 
     if (!matches.length) {
-        return 0;
+        return {
+            terrorist: 0,
+            victim: 0
+        };
     }
 
     /*
-       If a death-toll / total-fatalities statement exists, use the largest
-       explicit total because it normally already includes all groups.
+       A death-toll / total-fatalities statement normally already
+       includes every group in the incident, so -- exactly as before the
+       terrorist/victim split -- it is used on its own (as the victim
+       figure) rather than added to other group mentions, which would
+       double-count casualties already folded into that total.
     */
-    const totalLike =
-        matches.filter(
-            item =>
-                /death\s+toll|fatalities|deaths\s*[:\-]/i.test(
-                    item.phrase
-                )
-        );
-
     if (
-        totalLike.length
+        kind === "death"
     ) {
-        return Math.max(
-            ...totalLike.map(
+
+        const totalLike =
+            matches.filter(
                 item =>
-                    item.value
-            )
-        );
+                    /death\s+toll|fatalities|deaths\s*[:\-]/i.test(
+                        item.phrase
+                    )
+            );
+
+        if (
+            totalLike.length
+        ) {
+            return {
+                terrorist: 0,
+                victim: Math.max(
+                    ...totalLike.map(
+                        item =>
+                            item.value
+                    )
+                )
+            };
+        }
+
     }
 
     /*
        Otherwise sum distinct casualty statements, but only once per
-       normalized phrase. This allows attackers/terrorists killed in the
-       same battle to be included without multiplying identical reporting.
+       normalized phrase, bucketing each by which side its qualifier
+       word names.
     */
     const unique =
         new Map();
@@ -10576,160 +10586,97 @@ function extractStrict24hDeathCount(
         }
     );
 
-    return Array.from(
-        unique.values()
-    )
-    .reduce(
+    let terrorist = 0;
+    let victim = 0;
+
+    unique.forEach(
         (
-            sum,
-            value
-        ) =>
-            sum
-            +
             value,
-        0
+            phrase
+        ) => {
+
+            if (
+                casualtyPhraseSide(
+                    phrase
+                )
+                ===
+                "terrorist"
+            ) {
+                terrorist += value;
+            } else {
+                victim += value;
+            }
+
+        }
     );
+
+    return {
+        terrorist,
+        victim
+    };
 }
 
+
+function extractStrict24hDeathCount(
+    event
+) {
+
+    const breakdown =
+        extractStrict24hCasualtyBreakdown(
+            event,
+            "death"
+        );
+
+    return (
+        breakdown.terrorist
+        +
+        breakdown.victim
+    );
+}
 
 
 function extractStrict24hWoundedCount(
     event
 ) {
 
-    if (
-        !isCurrentCasualtyEvent(
-            event
-        )
-    ) {
-        return 0;
-    }
-
-    const structuredTotal =
-        explicitStructuredCasualtyValue(
+    const breakdown =
+        extractStrict24hCasualtyBreakdown(
             event,
-            [
-                "wounded",
-                "wounded_count",
-                "injured",
-                "injured_count",
-                "total_wounded",
-                "total_injured"
-            ]
+            "wounded"
         );
 
-    if (
-        structuredTotal !== null
-    ) {
-        return structuredTotal;
-    }
+    return (
+        breakdown.terrorist
+        +
+        breakdown.victim
+    );
+}
 
-    const text =
-        casualtyTextForEvent(
-            event
+
+/*
+   Renders the exact boundary of the "current Paris day" casualty window
+   (e.g. "SINCE 00:00 PARIS · SEP 9, 2026") so the scope of the header
+   numbers is always visible instead of implied by an unlabeled "24H".
+*/
+function parisTodayWindowLabel() {
+
+    const dateLabel =
+        new Intl.DateTimeFormat(
+            "en-US",
+            {
+                timeZone: "Europe/Paris",
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+            }
+        ).format(
+            new Date()
         );
 
-    if (!text) {
-        return 0;
-    }
-
-    const patterns = [
-        /\b(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|troops\s+|officers\s+|police\s+|security\s+personnel\s+|security\s+forces\s+|militants\s+|terrorists\s+|attackers\s+|assailants\s+|fighters\s+|victims\s+)?(?:were\s+)?(?:wounded|injured|hurt)\b/gi,
-        /\b(?:wounded|injured|hurt)\s*[:\-]?\s*(?:at\s+least\s+|more\s+than\s+|over\s+)?(\d{1,5})\b/gi
-    ];
-
-    const matches = [];
-
-    patterns.forEach(
-        pattern => {
-
-            let match;
-
-            while (
-                (
-                    match =
-                        pattern.exec(
-                            text
-                        )
-                )
-                !==
-                null
-            ) {
-
-                const value =
-                    Number(
-                        match[
-                            1
-                        ]
-                    );
-
-                if (
-                    !Number.isFinite(
-                        value
-                    )
-                    ||
-                    value < 0
-                    ||
-                    value > 100000
-                ) {
-                    continue;
-                }
-
-                const phrase =
-                    match[
-                        0
-                    ]
-                    .toLowerCase()
-                    .replace(
-                        /\s+/g,
-                        " "
-                    )
-                    .trim();
-
-                matches.push(
-                    {
-                        value,
-                        phrase
-                    }
-                );
-
-            }
-
-        }
-    );
-
-    const unique =
-        new Map();
-
-    matches.forEach(
-        item => {
-
-            if (
-                !unique.has(
-                    item.phrase
-                )
-            ) {
-                unique.set(
-                    item.phrase,
-                    item.value
-                );
-            }
-
-        }
-    );
-
-    return Array.from(
-        unique.values()
-    )
-    .reduce(
-        (
-            sum,
-            value
-        ) =>
-            sum
-            +
-            value,
-        0
+    return (
+        "SINCE 00:00 PARIS · "
+        +
+        dateLabel.toUpperCase()
     );
 }
 
@@ -10750,161 +10697,92 @@ function updateHeaderCasualties24() {
                 )
         );
 
-    const deaths =
-        attackEvents.reduce(
-            (
-                total,
-                event
-            ) =>
-                total
-                +
-                extractStrict24hDeathCount(
-                    event
-                ),
-            0
-        );
+    const deathTotals = {
+        terrorist: 0,
+        victim: 0
+    };
 
-    const wounded =
-        attackEvents.reduce(
-            (
-                total,
-                event
-            ) =>
-                total
-                +
-                extractStrict24hWoundedCount(
-                    event
-                ),
-            0
-        );
+    const woundedTotals = {
+        terrorist: 0,
+        victim: 0
+    };
 
-    const deathsNode =
-        document.getElementById(
-            "headerDeaths24"
-        );
+    attackEvents.forEach(
+        event => {
 
-    const woundedNode =
-        document.getElementById(
-            "headerWounded24"
-        );
+            const deathBreakdown =
+                extractStrict24hCasualtyBreakdown(
+                    event,
+                    "death"
+                );
 
-    if (
-        deathsNode
-    ) {
-        deathsNode.textContent =
-            deaths.toLocaleString(
-                "en-US"
-            );
-    }
+            deathTotals.terrorist += deathBreakdown.terrorist;
+            deathTotals.victim += deathBreakdown.victim;
 
-    if (
-        woundedNode
-    ) {
-        woundedNode.textContent =
-            wounded.toLocaleString(
-                "en-US"
-            );
-    }
-}
+            const woundedBreakdown =
+                extractStrict24hCasualtyBreakdown(
+                    event,
+                    "wounded"
+                );
 
-
-function extractAttackDeathCount(event) {
-
-    if (
-        !isAttackActuallyWithinLast24Hours(
-            event
-        )
-    ) {
-        return 0;
-    }
-
-
-    const text =
-        (
-            (event.title || "")
-            + " "
-            + (event.summary || "")
-            + " "
-            + (event.original_title || "")
-        )
-        .replace(/,/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
-
-    if (!text) {
-        return 0;
-    }
-
-
-    const patterns = [
-        /\bdeath toll(?:\s+(?:has\s+)?(?:risen|rose|rises|climbed|stands|reached|reaches|at))?\s*(?:to|at|:)?\s*(\d{1,5})\b/gi,
-        /\b(\d{1,5})\s+(?:people\s+|persons\s+|civilians\s+|soldiers\s+|officers\s+|police\s+|victims\s+)?(?:were\s+)?(?:killed|dead|died|fatalities|deaths)\b/gi,
-        /\b(?:killed|left dead|leaves dead|leaving dead|dead|deaths|fatalities)\s*[:\-]?\s*(\d{1,5})\b/gi,
-        /\b(\d{1,5})\s+fatal\b/gi
-    ];
-
-
-    const values = [];
-
-    patterns.forEach(
-        pattern => {
-
-            let match;
-
-            while (
-                (
-                    match =
-                        pattern.exec(
-                            text
-                        )
-                )
-                !==
-                null
-            ) {
-
-                const value =
-                    Number(
-                        match[
-                            1
-                        ]
-                    );
-
-                if (
-                    Number.isFinite(
-                        value
-                    )
-                    &&
-                    value >= 0
-                    &&
-                    value <= 10000
-                ) {
-                    values.push(
-                        value
-                    );
-                }
-
-            }
+            woundedTotals.terrorist += woundedBreakdown.terrorist;
+            woundedTotals.victim += woundedBreakdown.victim;
 
         }
     );
 
+    const setCasualtyNode = (
+        id,
+        value
+    ) => {
+
+        const node =
+            document.getElementById(
+                id
+            );
+
+        if (
+            node
+        ) {
+            node.textContent =
+                value.toLocaleString(
+                    "en-US"
+                );
+        }
+
+    };
+
+    setCasualtyNode(
+        "headerVictimsDeaths24",
+        deathTotals.victim
+    );
+
+    setCasualtyNode(
+        "headerVictimsWounded24",
+        woundedTotals.victim
+    );
+
+    setCasualtyNode(
+        "headerTerroristsDeaths24",
+        deathTotals.terrorist
+    );
+
+    setCasualtyNode(
+        "headerTerroristsWounded24",
+        woundedTotals.terrorist
+    );
+
+    const windowNode =
+        document.getElementById(
+            "headerCasualtiesWindow"
+        );
 
     if (
-        values.length
-        ===
-        0
+        windowNode
     ) {
-        return 0;
+        windowNode.textContent =
+            parisTodayWindowLabel();
     }
-
-
-    /*
-       A deduplicated event can repeat the same casualty figure in several
-       source/title variants. Use the largest explicit death figure once.
-    */
-    return Math.max(
-        ...values
-    );
 }
 
 
