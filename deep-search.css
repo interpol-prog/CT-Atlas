@@ -44,6 +44,7 @@
 .deep-language.no-results{border-left:3px solid #b58d39;background:rgba(111,79,24,.08)}
 .deep-language.no-results strong{color:#d2aa55}
 .deep-language-empty{color:#7d94a0;font:500 8px/1.5 Arial,sans-serif}
+.deep-language-fetch-issue{display:inline-block;margin-left:3px;color:#e0a53a;font-weight:800;cursor:help}
 #deepSearchReport{padding:2px 0 8px;color:#d4e1e8;font:500 10.5px/1.7 Arial,sans-serif}
 #deepSearchReport h4{margin:20px 0 8px;padding:7px 9px;border-left:3px solid #328fc2;background:linear-gradient(90deg,rgba(35,113,155,.16),rgba(8,24,34,0));color:#79c8f1;font:900 9px/1.25 Arial,sans-serif;letter-spacing:.12em}
 #deepSearchReport h4:first-child{margin-top:4px}

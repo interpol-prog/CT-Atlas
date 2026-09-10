@@ -28,6 +28,20 @@ test('sparse local feeds get native queries through fallback edition within 32 s
  assert.ok(rescue.every(w=>w.query.fallback_locale));
  assert.ok(calls[0].searchParams.get('q').startsWith('fa '));
 });
+test('English priority rescue uses a genuinely different locale than its own primary/secondary queries, not a no-op duplicate',async()=>{
+ // Regression test for v5.18: SEARCH_FALLBACK_LOCALE (en-US/US/US:en) used
+ // to be reused for English's own rescue, but LANGUAGE_LOCALES.en is
+ // *already* en-US/US/US:en -- so the "rescue" resent the exact same
+ // request and could never surface anything new. English must get a
+ // distinct fallback (the UK edition) instead.
+ const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
+ await h.retrieveNews(plan(h),30,['en','fr','fa','ps','ur']);
+ const englishCalls=calls.filter(u=>(u.searchParams.get('q')||'').toLowerCase().startsWith('en '));
+ assert.ok(englishCalls.length>=3,'expected English primary, secondary, and a rescue call');
+ const locales=new Set(englishCalls.map(u=>u.searchParams.get('hl')));
+ assert.ok(locales.size>1,'English rescue must use a different hl than en-US, otherwise it just resends the identical request: '+[...locales]);
+ assert.ok(englishCalls.some(u=>u.searchParams.get('hl')==='en-GB'&&u.searchParams.get('gl')==='GB'));
+});
 test('five priority languages still stay within the 34-call search budget, well under the 50 subrequest ceiling once the ~9 non-search calls are counted',async()=>{
  const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
  const result=await h.retrieveNews(plan(h),30,h.resolvePriorityLanguages('Afghanistan drug trafficking',[]));

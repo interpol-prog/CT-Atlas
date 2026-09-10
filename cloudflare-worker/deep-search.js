@@ -15,8 +15,17 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.17-explicit-anchor";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.18-english-rescue-fix";
+// Used to re-query a sparse priority language through Google News' broader
+// US-hosted edition instead of its own country/language edition -- these can
+// carry different indexes even for the same native-script query text. This
+// is a genuine no-op for English itself, since LANGUAGE_LOCALES.en already
+// IS en-US/US/US:en: the "rescue" would just resend the identical request.
+// English gets its own distinct fallback (the UK edition) so a sparse or
+// transiently-failed English wave still has a real second, different query
+// to fall back on instead of silently retrying nothing.
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
+const ENGLISH_SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-GB", gl: "GB", ceid: "GB:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_RESULTS_PER_LANGUAGE = 25;
 const GDELT_LANGUAGE_FILTERS = Object.freeze({
@@ -752,7 +761,8 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   }
   const priorityRescueWaves = await Promise.all(
     priorityRescueItems.map((item, index) =>
-      fetchNewsWave(item, googleWaves.length + index, periodDays, SEARCH_FALLBACK_LOCALE, true)
+      fetchNewsWave(item, googleWaves.length + index, periodDays,
+        item.language === "en" ? ENGLISH_SEARCH_FALLBACK_LOCALE : SEARCH_FALLBACK_LOCALE, true)
     )
   );
   for (const wave of priorityRescueWaves) wave.rows = filterByAnchor(wave.rows, anchors);
