@@ -229,6 +229,25 @@ function fmtDate(value){
   return date.toLocaleString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
 }
 
+// A zero article count is ambiguous on its own: it could mean the search
+// genuinely found nothing, or that the fetch itself failed (rate limit,
+// timeout, provider error) and never got a real answer. successful_queries <
+// query_count for a language means at least one of its requests failed, so a
+// low/zero count there is NOT proof of an absence of coverage. Rather than
+// repeating a warning on every affected language row, a single ⚠ is shown
+// once at the top of the report when this is true for ANY language -- see
+// hasFetchIssue() below.
+function hasFetchIssue(payload){
+  const languages=Array.isArray(payload.languages_searched)?payload.languages_searched:[];
+  return languages.some(item=>{
+    const queryCount=Number(item.query_count||0);
+    const successCount=Number(item.successful_queries||0);
+    return queryCount>0&&successCount<queryCount;
+  });
+}
+
+const FETCH_ISSUE_TITLE="At least one search request failed somewhere in this report (rate limit, timeout or provider error) -- some counts below may be lower than real coverage.";
+
 function languageCoverageHtml(payload){
   const languages=Array.isArray(payload.languages_searched)?payload.languages_searched:[];
   if(!languages.length)return '<div class="deep-language-empty">Language diagnostics unavailable for this cached result.</div>';
@@ -240,16 +259,10 @@ function languageCoverageHtml(payload){
     const gdeltCount=Number(item.gdelt_articles||0);
     const priority=Boolean(item.priority);
     const cls=count>0?" has-results":" no-results";
-    // A zero article count is ambiguous on its own: it could mean the search
-    // genuinely found nothing, or that the fetch itself failed (rate limit,
-    // timeout, provider error) and never got a real answer. successCount <
-    // queryCount means at least one request for this language failed, so
-    // "0 articles" here is NOT proof there is no coverage.
-    const fetchIssue=queryCount>0&&successCount<queryCount;
     return `<div class="deep-language${cls}">
       <span class="deep-language-name">${esc(item.name||item.code||"Language")}</span>
       <strong>${count}</strong>
-      <small>${count===1?"article":"articles"}${priority?" · PRIORITY":""} · Google ${googleCount} · GDELT ${gdeltCount} · ${successCount}/${queryCount||1} ${queryCount===1?"query":"queries"} succeeded${fetchIssue?' <span class="deep-language-fetch-issue" title="At least one search request for this language failed (rate limit, timeout or provider error) -- a low or zero count here may reflect that failure, not an absence of coverage.">⚠ fetch issue</span>':""}</small>
+      <small>${count===1?"article":"articles"}${priority?" · PRIORITY":""} · Google ${googleCount} · GDELT ${gdeltCount} · ${successCount}/${queryCount||1} ${queryCount===1?"query":"queries"} succeeded</small>
     </div>`;
   }).join("");
 }
@@ -288,7 +301,7 @@ function render(rawPayload){
   lastPayload=payload;
   const result=document.getElementById("deepSearchResult");
   if(result)result.hidden=false;
-  document.getElementById("deepSearchResultTitle").textContent=payload.title||"DEEP SEARCH REPORT";
+  document.getElementById("deepSearchResultTitle").innerHTML=esc(payload.title||"DEEP SEARCH REPORT")+(hasFetchIssue(payload)?` <span class="deep-fetch-issue-flag" title="${esc(FETCH_ISSUE_TITLE)}">⚠</span>`:"");
 
   const languages=(payload.languages_searched||[]).map(item=>item.name||item.code).join(", ");
   const retrieved=payload.retrieval||{};
@@ -433,13 +446,13 @@ async function downloadPdf(){
     shell.style.cssText="position:absolute;left:0;top:0;z-index:2147483000;width:780px;height:auto;overflow:visible;background:#fff;color:#111;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;padding:30px;box-sizing:border-box;pointer-events:none";
     shell.innerHTML=`
       <div style="font-size:11px;letter-spacing:1.5px;color:#6b7280;font-weight:700">CT ATLAS · DEEP SEARCH</div>
-      <h1 style="font-size:24px;line-height:1.2;margin:8px 0 10px">${esc(lastPayload.title||"CT Atlas Deep Search")}</h1>
+      <h1 style="font-size:24px;line-height:1.2;margin:8px 0 10px">${esc(lastPayload.title||"CT Atlas Deep Search")}${hasFetchIssue(lastPayload)?` <span style="color:#b45309;font-weight:800;font-size:18px" title="${esc(FETCH_ISSUE_TITLE)}">⚠</span>`:""}</h1>
       <div style="font-size:11px;color:#4b5563;margin-bottom:18px"><strong>Question:</strong> ${esc(lastPayload.question||"")}<br><strong>Generated:</strong> ${esc(stamp.toLocaleString("en-GB"))} · <strong>Period:</strong> ${Number(lastPayload.period_days||0)} days · <strong>Model:</strong> ${esc(lastPayload.model||"Gemini")}</div>
       <div style="display:flex;flex-wrap:wrap;gap:7px;margin:0 0 20px">
         ${[["Articles",retrieved.articles_retrieved],["Unique events",retrieved.unique_event_clusters],["Evidence",retrieved.evidence_events_used_for_analysis],["Atlas matches",retrieved.matched_to_atlas],["Potential gaps",retrieved.potential_atlas_gaps],["Citation coverage",`${Number(lastPayload.grounding?.citation_coverage_percent||0)}%`]].map(([k,v])=>`<div style="border:1px solid #d1d5db;border-radius:6px;padding:7px 10px;min-width:92px"><div style="font-size:9px;color:#6b7280;text-transform:uppercase">${esc(k)}</div><div style="font-size:16px;font-weight:700">${esc(v??0)}</div></div>`).join("")}
       </div>
       <h2 style="font-size:15px;border-bottom:1px solid #d1d5db;padding-bottom:5px;margin:24px 0 10px">SEARCH COVERAGE</h2>
-      <div style="display:flex;flex-wrap:wrap;gap:5px">${languages.map(item=>{const queryCount=Number(item.query_count||0);const successCount=Number(item.successful_queries||0);const fetchIssue=queryCount>0&&successCount<queryCount;return `<div style="border:1px solid #d1d5db;border-radius:5px;padding:5px 7px;font-size:10px"><strong>${esc(item.name||item.code)}</strong> · ${Number(item.article_count||0)} articles · Google ${Number(item.google_news_articles||0)} · GDELT ${Number(item.gdelt_articles||0)} · ${successCount}/${queryCount||1} queries succeeded${fetchIssue?' <span style="color:#b45309;font-weight:700">⚠ fetch issue -- low/zero count may not mean no coverage</span>':""}</div>`;}).join("")}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px">${languages.map(item=>{const queryCount=Number(item.query_count||0);const successCount=Number(item.successful_queries||0);return `<div style="border:1px solid #d1d5db;border-radius:5px;padding:5px 7px;font-size:10px"><strong>${esc(item.name||item.code)}</strong> · ${Number(item.article_count||0)} articles · Google ${Number(item.google_news_articles||0)} · GDELT ${Number(item.gdelt_articles||0)} · ${successCount}/${queryCount||1} queries succeeded</div>`;}).join("")}</div>
       <h2 style="font-size:15px;border-bottom:1px solid #d1d5db;padding-bottom:5px;margin:26px 0 10px">ANALYTICAL REPORT</h2>
       <div style="font-size:12px">${formatAnalysis(lastPayload.analysis||"")}</div>
       <h2 style="font-size:15px;border-bottom:1px solid #d1d5db;padding-bottom:5px;margin:28px 0 10px">EVIDENCE PACK</h2>
