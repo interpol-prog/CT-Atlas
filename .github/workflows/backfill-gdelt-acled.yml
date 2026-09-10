@@ -66,6 +66,27 @@ jobs:
           fi
           python -u tools/backfill_gdelt_acled.py
 
+      - name: Gemini geolocation for the newly added events
+        id: geolocate
+        if: ${{ always() && steps.backfill.outcome == 'success' }}
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_GEO_MODEL: "gemini-3.5-flash-lite"
+          GEMINI_RESCUE_MODEL: "gemini-3.6-flash"
+          AI_GEO_BATCH_SIZE: "20"
+        run: |
+          set -euo pipefail
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "GEMINI_API_KEY GitHub secret is missing."
+            exit 1
+          fi
+          # backfill_gdelt_acled.py only appends new events with no
+          # coordinates yet -- geolocate.py's own per-event fingerprint cache
+          # (is_cached()) already skips every event that already has a
+          # location, so this only spends Gemini calls on the events this
+          # run actually added.
+          AI_GEO_FORCE=0 python -u geolocate.py
+
       - name: Preserve recovery artifact even if a previous step failed
         if: ${{ always() && steps.checkout.outcome == 'success' }}
         uses: actions/upload-artifact@v6
