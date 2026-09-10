@@ -2899,6 +2899,186 @@ def collect_broad_query(
     return results
 
 
+# ============================================================
+# GDELT DOC 2.0 DISCOVERY (additional source, not a replacement)
+#
+# This is GDELT's article-SEARCH product (real titles/domains/timestamps),
+# not the raw bulk Event Database. The Event Database was evaluated against
+# live sample exports and rejected for this purpose: even at the strictest
+# possible thresholds (CAMEO root codes 18/19/20, extreme Goldstein score,
+# high article counts) the real data was still dominated by unrelated
+# stories (DUI arrests, unrelated murder trials, house fires) because GDELT's
+# automated CAMEO coding has no access to the article's actual text. DOC 2.0
+# gives a real headline, so results still pass through the same local
+# classify_article_categories()/is_relevant_article() gate as every other
+# broad-source query below -- no separate, lower bar for this source.
+#
+# GDELT enforces roughly one request every 5 seconds; queries here are
+# spaced well above that and run once per CT Atlas category per collection
+# run (not once per language), since GDELT has no per-language query mode
+# and mixes languages in one response, tagged via each article's own
+# reported language field.
+# ============================================================
+
+GDELT_DOC_SEARCH_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
+GDELT_DOC_RESULTS_PER_QUERY = 75
+GDELT_DOC_TERMS_PER_CATEGORY = 5
+GDELT_DOC_QUERY_SPACING_SECONDS = 6.0
+
+GDELT_LANGUAGE_NAME_TO_CODE = {
+    "english": "en", "french": "fr", "arabic": "ar", "german": "de",
+    "spanish": "es", "italian": "it", "turkish": "tr", "russian": "ru",
+    "persian": "fa", "dari": "fa", "urdu": "ur", "hebrew": "he", "pashto": "ps",
+}
+GDELT_LANGUAGE_CODE_TO_NAME = {
+    "en": "English", "fr": "French", "ar": "Arabic", "de": "German",
+    "es": "Spanish", "it": "Italian", "tr": "Turkish", "ru": "Russian",
+    "fa": "Dari / Persian", "ur": "Urdu", "he": "Hebrew", "ps": "Pashto",
+}
+
+
+def gdelt_doc_category_query(category):
+    terms = CATEGORIES.get(category, [])[:GDELT_DOC_TERMS_PER_CATEGORY]
+    if not terms:
+        return ""
+    return "(" + " OR ".join(terms) + ")"
+
+
+def gdelt_doc_url(query, days=None, start_dt=None, end_dt=None):
+    params = {
+        "query": query,
+        "mode": "artlist",
+        "format": "json",
+        "maxrecords": str(GDELT_DOC_RESULTS_PER_QUERY),
+    }
+    # An explicit date range (used by the historical backfill to slice 180
+    # days into monthly chunks, since maxrecords caps each single query at
+    # GDELT_DOC_RESULTS_PER_QUERY regardless of window length) takes priority
+    # over the relative "last N days" window the daily collector uses.
+    if start_dt and end_dt:
+        params["startdatetime"] = start_dt.strftime("%Y%m%d%H%M%S")
+        params["enddatetime"] = end_dt.strftime("%Y%m%d%H%M%S")
+    else:
+        params["timespan"] = f"{min(max(int(days or 1), 1), 365)}d"
+    return GDELT_DOC_SEARCH_URL + "?" + urlencode(params)
+
+
+def fetch_gdelt_doc_articles(query, days=None, start_dt=None, end_dt=None, label="gdelt"):
+    url = gdelt_doc_url(query, days=days, start_dt=start_dt, end_dt=end_dt)
+    try:
+        response = requests.get(
+            url,
+            headers={"User-Agent": "Mozilla/5.0 CT-Atlas-Collector/1.0"},
+            timeout=20,
+        )
+    except requests.RequestException as exc:
+        print(f"   GDELT DOC request failed for {label}: {exc}")
+        return []
+    if response.status_code != 200:
+        print(f"   GDELT DOC HTTP {response.status_code} for {label}")
+        return []
+    try:
+        payload = response.json()
+    except ValueError:
+        print(f"   GDELT DOC returned non-JSON for {label}")
+        return []
+    articles = payload.get("articles")
+    return articles if isinstance(articles, list) else []
+
+
+def parse_gdelt_seendate(value):
+    digits = re.sub(r"\D", "", str(value or ""))
+    if len(digits) < 14:
+        return None
+    try:
+        return datetime.strptime(digits[:14], "%Y%m%d%H%M%S").replace(tzinfo=timezone.utc)
+    except ValueError:
+        return None
+
+
+def gdelt_article_to_event(article, categories):
+    url = clean_text(article.get("url") or article.get("url_mobile") or "")
+    title = clean_text(article.get("title", ""))
+    primary_category = categories[0] if categories else None
+    if not url or not title or not primary_category:
+        return None
+
+    published_dt = parse_gdelt_seendate(article.get("seendate"))
+    published = published_dt.isoformat() if published_dt else None
+    language_code = GDELT_LANGUAGE_NAME_TO_CODE.get(
+        clean_text(article.get("language", "")).lower(), "en"
+    )
+
+    event = {
+        "id": create_event_id(title, published),
+        "category": primary_category,
+        "categories": categories,
+        "title": title,
+        "summary": "",
+        "original_title": title,
+        "original_summary": "",
+        "original_language": language_code,
+        "collection_language": language_code,
+        "collection_language_name": GDELT_LANGUAGE_CODE_TO_NAME.get(language_code, "English"),
+        "collection_locale": None,
+        "published": published,
+        "source": clean_text(article.get("domain", "")) or "GDELT source",
+        "source_count": 1,
+        "url": url,
+        "collector": "GDELT DOC 2.0",
+        "acquisition_channel": "gdelt_doc_search",
+        "country": None,
+        "country_code": None,
+        "city": None,
+        "region": None,
+        "latitude": None,
+        "longitude": None,
+        "location_precision": "unknown",
+        "location_confidence": "low",
+    }
+    event["source_article_fingerprints"] = [selection_fingerprint(event)]
+    return event
+
+
+def collect_gdelt_category_query(category, days=None, start_dt=None, end_dt=None):
+    # GDELT's own full-text search already confirmed one of this category's
+    # exact CT Atlas phrases (the same phrases CATEGORY_RELEVANCE/is_relevant_
+    # article look for) appears somewhere in the real article body -- a
+    # stronger check than our local classifier can repeat, since artlist mode
+    # gives no summary/snippet, only the headline. Re-demanding the full
+    # anchor+category+action combination against headline-only text would
+    # reject most real matches simply because a headline paraphrases rather
+    # than repeats the matched phrase. So GDELT's query category is trusted
+    # as the relevance signal; classify_article_categories() only ENRICHES it
+    # when the headline itself is clear enough to add or refine categories,
+    # and out_of_scope_reason() still screens out state-vs-state war
+    # reporting, diplomatic condemnations and similar non-CT-Atlas framing
+    # using the same title-based guard every other source is held to.
+    query = gdelt_doc_category_query(category)
+    if not query:
+        return []
+    articles = fetch_gdelt_doc_articles(
+        query, days=days, start_dt=start_dt, end_dt=end_dt, label=f"gdelt:{category}"
+    )
+    results = []
+    rejected = 0
+    for article in articles:
+        title = clean_text(article.get("title", ""))
+        if not title:
+            continue
+        if out_of_scope_reason({"title": title, "summary": ""}):
+            rejected += 1
+            continue
+        categories_matched = classify_article_categories(title, "") or [category]
+        event = gdelt_article_to_event(article, categories_matched)
+        if event:
+            results.append(event)
+        else:
+            rejected += 1
+    if rejected:
+        print(f"      locally rejected → {rejected}")
+    return results
+
 
 def collect_multilingual_query(
     term,
@@ -3282,7 +3462,41 @@ def _collect_all_once(days):
         )
 
     # ========================================================
-    # 4. MULTILINGUAL DISCOVERY
+    # 4. GDELT DOC 2.0 DISCOVERY (additional source, not a replacement)
+    #    One query per CT Atlas category, spaced to respect GDELT's
+    #    ~1 request/5 seconds limit.
+    # ========================================================
+
+    print()
+    print("=" * 70)
+    print("GDELT DOC 2.0 DISCOVERY")
+    print("=" * 70)
+
+    gdelt_total = 0
+    gdelt_categories = list(CATEGORIES.keys())
+
+    for category_number, category in enumerate(gdelt_categories, start=1):
+        print()
+        print(
+            f"[GDELT {category_number}/{len(gdelt_categories)}] "
+            f"{category}"
+        )
+
+        results = collect_gdelt_category_query(category, days)
+
+        records.extend(results)
+        gdelt_total += len(results)
+
+        print(f"      accepted → {len(results)}")
+
+        if category_number < len(gdelt_categories):
+            time.sleep(GDELT_DOC_QUERY_SPACING_SECONDS)
+
+    print()
+    print(f"GDELT TOTAL: {gdelt_total}")
+
+    # ========================================================
+    # 5. MULTILINGUAL DISCOVERY
     # ========================================================
 
     multilingual_records = collect_multilingual(
@@ -3312,6 +3526,10 @@ def _collect_all_once(days):
     print(
         f"Targeted-source records: "
         f"{targeted_total}"
+    )
+    print(
+        f"GDELT DOC 2.0 records: "
+        f"{gdelt_total}"
     )
     print(
         f"Multilingual records: "
