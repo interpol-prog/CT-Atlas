@@ -6,7 +6,7 @@ const source=fs.readFileSync('cloudflare-worker/deep-search.js','utf8').replace(
 function harness(fetch){
  const c=vm.createContext({fetch,URLSearchParams,AbortSignal,setTimeout:fn=>fn(),cleanText:(v,n)=>String(v||'').trim().slice(0,n)});
  vm.runInContext(source,c);
- return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltGlobalWave,splitGdeltRowsByLanguage,broadGdeltQuery,computeLanguageAnchors,filterByAnchor,DEEP_SEARCH_LANGUAGE_CODES})',c);
+ return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltGlobalWave,splitGdeltRowsByLanguage,broadGdeltQuery,computeLanguageAnchors,filterByAnchor,DEEP_SEARCH_LANGUAGE_CODES,extractExplicitQuestionDate,resolveEffectivePeriodDays})',c);
 }
 function plan(h){return h.sanitizePlan({priority_languages:['fa','ps','ur','invalid'],queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l} Afghanistan opium`,secondary:`${l} Afghanistan heroin`}]))},'Afghanistan drugs');}
 test('Afghanistan narcotics prioritises English, French, Dari, Pashto and Urdu',()=>{
@@ -222,6 +222,29 @@ test('buildEvidence never fabricates English items beyond what was actually retr
  const evidence=h.buildEvidence(rows,['en']);
  assert.equal(evidence.length,1);
  assert.equal(evidence.filter(e=>e.language==='en').length,0);
+});
+test('a date explicitly named in the question widens the search period instead of returning "no coverage"',()=>{
+ // Regression test for the real user report: "...Herat province on 10 april
+ // 2026" with the 30-day dropdown default silently never reaching back to
+ // April -- the period must widen to actually cover the named date.
+ const h=harness();
+ const q='Killing of civilians Shia Shrine in Herat province on 10 april 2026';
+ const resolved=h.resolveEffectivePeriodDays(q,30);
+ assert.equal(resolved.widened,true);
+ assert.ok(resolved.periodDays>=resolved.detected_days_ago,`period ${resolved.periodDays} must cover ${resolved.detected_days_ago} days ago`);
+ assert.ok(h.DEEP_SEARCH_LANGUAGE_CODES.length>0); // sanity: harness context loaded correctly
+});
+test('resolveEffectivePeriodDays never narrows an already-sufficient period, and handles month-day-year and ISO dates',()=>{
+ const h=harness();
+ assert.equal(h.resolveEffectivePeriodDays('generic question with no date',90).widened,false);
+ const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+ const fiftyDaysAgo=new Date(Date.now()-50*86400000);
+ const mdY=`${monthNames[fiftyDaysAgo.getUTCMonth()]} ${fiftyDaysAgo.getUTCDate()}, ${fiftyDaysAgo.getUTCFullYear()}`;
+ assert.equal(h.resolveEffectivePeriodDays(`something on ${mdY}`,90).widened,false,'a 90-day period already covers a date only ~50 days ago');
+ const isoStr=fiftyDaysAgo.toISOString().slice(0,10);
+ const iso=h.resolveEffectivePeriodDays(`event on ${isoStr}`,7);
+ assert.equal(iso.widened,true);
+ assert.equal(iso.periodDays,90,'a ~50-day-old date must widen a 7-day request up to the next allowed bucket (90)');
 });
 test('pdfDisplayUrl truncates long URLs so the PDF never renders a 200+ char unbroken string',()=>{
  const js=fs.readFileSync('deep-search.js','utf8');

@@ -341,12 +341,13 @@ async function run(){
       body:JSON.stringify({user_id:username,question,period_days:period})
     });
     const payload=await response.json().catch(()=>({}));
+    const widenedNote=payload.period_widened_for_question?` A date in your question is older than the ${payload.period_days_requested}-day search window you selected, so it was automatically extended to ${payload.period_days} days.`:"";
     if(!response.ok){
       const retry=Number(payload.retry_after_seconds||0);
-      throw new Error((payload.error||"Deep Search failed.")+(retry?` Retry in approximately ${Math.ceil(retry/60)} minute(s).`:""));
+      throw new Error((payload.error||"Deep Search failed.")+widenedNote+(retry?` Retry in approximately ${Math.ceil(retry/60)} minute(s).`:""));
     }
     render(payload);
-    setStatus(`Deep Search complete · ${Number(payload.retrieval?.articles_retrieved||0)} articles · ${Number(payload.retrieval?.unique_event_clusters||0)} unique event clusters · ${Number(payload.retrieval?.potential_atlas_gaps||0)} potential CT Atlas gaps.`,"success");
+    setStatus(`Deep Search complete · ${Number(payload.retrieval?.articles_retrieved||0)} articles · ${Number(payload.retrieval?.unique_event_clusters||0)} unique event clusters · ${Number(payload.retrieval?.potential_atlas_gaps||0)} potential CT Atlas gaps.${widenedNote}`,"success");
   }catch(error){setStatus(error?.message||"Deep Search failed.","error");}
   finally{if(button){button.disabled=false;button.textContent="RUN DEEP SEARCH";}}
 }
@@ -447,7 +448,7 @@ async function downloadPdf(){
     shell.innerHTML=`
       <div style="font-size:11px;letter-spacing:1.5px;color:#6b7280;font-weight:700">CT ATLAS · DEEP SEARCH</div>
       <h1 style="font-size:24px;line-height:1.2;margin:8px 0 10px">${esc(lastPayload.title||"CT Atlas Deep Search")}${hasFetchIssue(lastPayload)?` <span style="color:#b45309;font-weight:800;font-size:18px" title="${esc(FETCH_ISSUE_TITLE)}">⚠</span>`:""}</h1>
-      <div style="font-size:11px;color:#4b5563;margin-bottom:18px"><strong>Question:</strong> ${esc(lastPayload.question||"")}<br><strong>Generated:</strong> ${esc(stamp.toLocaleString("en-GB"))} · <strong>Period:</strong> ${Number(lastPayload.period_days||0)} days · <strong>Model:</strong> ${esc(lastPayload.model||"Gemini")}</div>
+      <div style="font-size:11px;color:#4b5563;margin-bottom:18px"><strong>Question:</strong> ${esc(lastPayload.question||"")}<br><strong>Generated:</strong> ${esc(stamp.toLocaleString("en-GB"))} · <strong>Period:</strong> ${Number(lastPayload.period_days||0)} days${lastPayload.period_widened_for_question?` (auto-extended from ${Number(lastPayload.period_days_requested||0)})`:""} · <strong>Model:</strong> ${esc(lastPayload.model||"Gemini")}</div>
       <div style="display:flex;flex-wrap:wrap;gap:7px;margin:0 0 20px">
         ${[["Articles",retrieved.articles_retrieved],["Unique events",retrieved.unique_event_clusters],["Evidence",retrieved.evidence_events_used_for_analysis],["Atlas matches",retrieved.matched_to_atlas],["Potential gaps",retrieved.potential_atlas_gaps],["Citation coverage",`${Number(lastPayload.grounding?.citation_coverage_percent||0)}%`]].map(([k,v])=>`<div style="border:1px solid #d1d5db;border-radius:6px;padding:7px 10px;min-width:92px"><div style="font-size:9px;color:#6b7280;text-transform:uppercase">${esc(k)}</div><div style="font-size:16px;font-weight:700">${esc(v??0)}</div></div>`).join("")}
       </div>

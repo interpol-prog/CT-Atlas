@@ -15,7 +15,59 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.20-english-evidence-floor";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.21-question-date-widens-period";
+
+const MONTH_NAMES = Object.freeze({
+  january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
+  july: 7, august: 8, september: 9, october: 10, november: 11, december: 12,
+  jan: 1, feb: 2, mar: 3, apr: 4, jun: 6, jul: 7, aug: 8,
+  sep: 9, sept: 9, oct: 10, nov: 11, dec: 12
+});
+const MONTH_NAME_PATTERN = Object.keys(MONTH_NAMES).sort((a, b) => b.length - a.length).join("|");
+
+// A user typing an explicit date into the question ("on 10 april 2026") is a
+// far more precise signal of what window actually matters than the SEARCH
+// PERIOD dropdown, which most people leave on its default (30 days). Without
+// this, a perfectly well-covered event from 5 months ago returns "no usable
+// open-source reporting" not because it doesn't exist, but because the
+// search window silently never reached back that far. This only ever WIDENS
+// the period actually used for retrieval, never narrows it below what the
+// dropdown already requested.
+function extractExplicitQuestionDate(question) {
+  const text = String(question || "").toLowerCase();
+
+  // "10 april 2026" / "10th of april 2026"
+  let m = text.match(new RegExp(`\\b(\\d{1,2})(?:st|nd|rd|th)?\\s+(?:of\\s+)?(${MONTH_NAME_PATTERN})\\.?,?\\s+(\\d{4})\\b`));
+  if (m) return new Date(Date.UTC(Number(m[3]), MONTH_NAMES[m[2]] - 1, Number(m[1])));
+
+  // "april 10, 2026" / "april 10 2026"
+  m = text.match(new RegExp(`\\b(${MONTH_NAME_PATTERN})\\.?\\s+(\\d{1,2})(?:st|nd|rd|th)?,?\\s+(\\d{4})\\b`));
+  if (m) return new Date(Date.UTC(Number(m[3]), MONTH_NAMES[m[1]] - 1, Number(m[2])));
+
+  // ISO: 2026-04-10
+  m = text.match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
+  if (m) return new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
+
+  // "april 2026" (month + year only -- treat as the 1st, still enough to widen)
+  m = text.match(new RegExp(`\\b(${MONTH_NAME_PATTERN})\\.?\\s+(\\d{4})\\b`));
+  if (m) return new Date(Date.UTC(Number(m[2]), MONTH_NAMES[m[1]] - 1, 1));
+
+  return null;
+}
+
+function resolveEffectivePeriodDays(question, requestedPeriodDays) {
+  const explicitDate = extractExplicitQuestionDate(question);
+  if (!explicitDate || Number.isNaN(explicitDate.getTime())) {
+    return { periodDays: requestedPeriodDays, widened: false };
+  }
+  const daysAgo = Math.ceil((Date.now() - explicitDate.getTime()) / 86400000);
+  if (daysAgo <= requestedPeriodDays) {
+    return { periodDays: requestedPeriodDays, widened: false };
+  }
+  const ascending = [...DEEP_SEARCH_ALLOWED_PERIODS].sort((a, b) => a - b);
+  const widenedTo = ascending.find(candidate => candidate >= daysAgo) || ascending[ascending.length - 1];
+  return { periodDays: widenedTo, widened: widenedTo !== requestedPeriodDays, detected_days_ago: daysAgo };
+}
 // Used to re-query a sparse priority language through Google News' broader
 // US-hosted edition instead of its own country/language edition -- these can
 // carry different indexes even for the same native-script query text. This
@@ -1068,9 +1120,12 @@ export async function handleDeepSearch(request, env, ctx) {
   if (auth.error) return auth.error;
 
   const question = cleanText(body.question, 1200);
-  const periodDays = Number(body.period_days || 30);
+  const requestedPeriodDays = Number(body.period_days || 30);
   if (question.length < 8) return jsonResponse({ error: "Enter a more specific Deep Search question." }, 400, env);
-  if (!DEEP_SEARCH_ALLOWED_PERIODS.has(periodDays)) return jsonResponse({ error: "Unsupported Deep Search period." }, 400, env);
+  if (!DEEP_SEARCH_ALLOWED_PERIODS.has(requestedPeriodDays)) return jsonResponse({ error: "Unsupported Deep Search period." }, 400, env);
+
+  const periodResolution = resolveEffectivePeriodDays(question, requestedPeriodDays);
+  const periodDays = periodResolution.periodDays;
 
   const username = auth.username;
   const cacheKey = await sha256(JSON.stringify({
@@ -1112,6 +1167,9 @@ export async function handleDeepSearch(request, env, ctx) {
     if (!unique.length) {
       return jsonResponse({
         error: "Deep Search found no usable open-source reporting for this question and period.",
+        period_days: periodDays,
+        period_days_requested: requestedPeriodDays,
+        period_widened_for_question: periodResolution.widened,
         languages_searched: languagesSearched,
         search_queries: retrieval.waves.map(w => ({ ...w.query, ok: w.ok, status: w.status, result_count: w.rows.length }))
       }, 422, env);
@@ -1157,6 +1215,8 @@ export async function handleDeepSearch(request, env, ctx) {
       question,
       interpreted_request: plan.interpreted_request,
       period_days: periodDays,
+      period_days_requested: requestedPeriodDays,
+      period_widened_for_question: periodResolution.widened,
       generated_at: new Date().toISOString(),
       database_version: databaseVersion,
       model: DEEP_SEARCH_MODEL,
