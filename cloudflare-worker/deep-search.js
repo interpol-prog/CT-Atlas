@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.19-gdelt-single-global-query";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.20-english-evidence-floor";
 // Used to re-query a sparse priority language through Google News' broader
 // US-hosted edition instead of its own country/language edition -- these can
 // carry different indexes even for the same native-script query text. This
@@ -917,6 +917,24 @@ function buildEvidence(rows, priorityLanguages = []) {
   const ranked = [...rows].sort((a, b) => evidencePriority(b) - evidencePriority(a));
   const selected = [];
   const used = new Set();
+
+  // English is a permanent priority language for retrieval, but until now it
+  // only ever got the same flat 2-slot floor as any other priority language
+  // further below -- so when another language simply had more or
+  // better-ranked candidates, English could end up as a sliver of the final
+  // evidence pack even when plenty of English material was actually
+  // retrieved. Guarantee it at least a third of the eventual evidence count
+  // instead, reserved from the top of its own ranking, before any other
+  // language-diversity logic runs.
+  const targetEvidenceTotal = Math.min(DEEP_SEARCH_MAX_EVIDENCE, ranked.length);
+  const englishFloor = Math.ceil(targetEvidenceTotal / 3);
+  let englishCount = 0;
+  for (let i = 0; i < ranked.length && englishCount < englishFloor; i++) {
+    if (ranked[i].language !== "en") continue;
+    selected.push(ranked[i]);
+    used.add(i);
+    englishCount++;
+  }
 
   // Protect two evidence slots per country-priority language when available.
   for (const language of priorityLanguages) {

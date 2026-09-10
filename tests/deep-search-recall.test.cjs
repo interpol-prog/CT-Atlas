@@ -206,6 +206,23 @@ test('GDELT broad query prefers specific topic nouns from both primary and secon
  assert.ok(!q.includes(' ban ')&&!q.includes('(ban')&&!/\bban\b/.test(q),'generic "ban" should be deprioritised out of the top 4: '+q);
  assert.ok(!/\benforcement\b/.test(q),'generic "enforcement" should be deprioritised out of the top 4: '+q);
 });
+test('buildEvidence guarantees English at least a third of the final evidence even when another language ranks higher throughout',()=>{
+ const h=harness();
+ const arabicRow=(n)=>({title:`Ministry of Interior attack report ${n}`,summary:'attack operation',source:'Ministry of Interior',url:`https://x/ar${n}`,published:new Date().toISOString(),language:'ar',search_query:'attack',sources:[{},{},{}]});
+ const englishRow=(n)=>({title:`Old blog post ${n}`,summary:'unrelated commentary',source:'Random Blog',url:`https://x/en${n}`,published:new Date(Date.now()-90*86400000).toISOString(),language:'en',search_query:'attack',sources:[{}]});
+ const rows=[...Array.from({length:7},(_,i)=>arabicRow(i)),...Array.from({length:5},(_,i)=>englishRow(i))];
+ const evidence=h.buildEvidence(rows,['en']);
+ assert.equal(evidence.length,12);
+ const englishCount=evidence.filter(e=>e.language==='en').length;
+ assert.ok(englishCount>=Math.ceil(12/3),`expected at least 4 English items even though Arabic ranks higher throughout, got ${englishCount}`);
+});
+test('buildEvidence never fabricates English items beyond what was actually retrieved',()=>{
+ const h=harness();
+ const rows=[{title:'Only Arabic item',summary:'x',source:'x',url:'https://x/1',published:new Date().toISOString(),language:'ar',search_query:'x',sources:[{}]}];
+ const evidence=h.buildEvidence(rows,['en']);
+ assert.equal(evidence.length,1);
+ assert.equal(evidence.filter(e=>e.language==='en').length,0);
+});
 test('pdfDisplayUrl truncates long URLs so the PDF never renders a 200+ char unbroken string',()=>{
  const js=fs.readFileSync('deep-search.js','utf8');
  const fn=js.slice(js.indexOf('function pdfDisplayUrl'),js.indexOf('\nasync function downloadPdf'));
