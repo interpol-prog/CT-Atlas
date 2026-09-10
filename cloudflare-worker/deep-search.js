@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.21-question-date-widens-period";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.22-acled-google-news-source";
 
 const MONTH_NAMES = Object.freeze({
   january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
@@ -101,6 +101,45 @@ const GDELT_LANGUAGE_NAME_TO_CODE = Object.freeze(
   Object.fromEntries(Object.entries(GDELT_LANGUAGE_FILTERS).map(([code, name]) => [name, code]))
 );
 
+// ACLED (Armed Conflict Location & Event Data Project) is added as one MORE
+// evidence source, not a replacement for anything above. ACLED's own
+// event-level data API requires a paid licence CT Atlas does not hold
+// (confirmed directly against the live API: valid authentication, but
+// /api/acled/read returns 403 "Access denied" -- an account/licensing
+// restriction, not a code issue), so this instead surfaces ACLED's own public
+// reporting the same way collector.py already does for the main map: via a
+// single Google News query restricted to acleddata.com, once per Deep Search
+// (ACLED publishes in English regardless of the requested geography, so one
+// English-anchored query covers it -- no need to repeat per language).
+const ACLED_SITE_FILTER = "site:acleddata.com";
+
+function acledNewsUrl(query, periodDays) {
+  const term = `${cleanText(query, 200)} ${ACLED_SITE_FILTER} when:${periodDays}d`;
+  return "https://news.google.com/rss/search?" + new URLSearchParams({
+    q: term, hl: "en-US", gl: "US", ceid: "US:en"
+  }).toString();
+}
+
+async function fetchAcledWave(query, periodDays) {
+  const item = { language: "en", query, variant: "acled", engine: "acled" };
+  try {
+    const response = await fetch(acledNewsUrl(query, periodDays), {
+      headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.0" },
+      cf: { cacheTtl: 300, cacheEverything: true },
+      signal: AbortSignal.timeout(15000)
+    });
+    if (!response.ok) return { query: item, ok: false, status: response.status, rows: [] };
+    const xml = await response.text();
+    if (!/<rss[\s>]/i.test(xml) || !/<channel[\s>]/i.test(xml)) {
+      return { query: item, ok: false, status: response.status, error: "Search provider returned non-RSS content", rows: [] };
+    }
+    const rows = parseRss(xml, item, -2, false).map(row => ({ ...row, search_engine: "acled" }));
+    return { query: item, ok: true, status: response.status, rows };
+  } catch (error) {
+    return { query: item, ok: false, status: 0, error: cleanText(error?.message, 180), rows: [] };
+  }
+}
+
 const LANGUAGE_LOCALES = Object.freeze({
   en: { label: "English", hl: "en-US", gl: "US", ceid: "US:en" },
   fr: { label: "French", hl: "fr", gl: "FR", ceid: "FR:fr" },
@@ -143,7 +182,8 @@ const PRIORITY_LANGUAGE_CAP = 5;
 // this only caps how many languages the one shared result gets attributed
 // across for diagnostics -- it no longer multiplies the real request count.
 const GDELT_LANGUAGE_CAP = 5;
-const MAX_SEARCH_SUBREQUESTS = DEEP_SEARCH_MAX_QUERIES + PRIORITY_LANGUAGE_CAP + 1;
+// +1 GDELT (single global query) +1 ACLED (single site:acleddata.com query).
+const MAX_SEARCH_SUBREQUESTS = DEEP_SEARCH_MAX_QUERIES + PRIORITY_LANGUAGE_CAP + 1 + 1;
 
 function detectCountryLanguages(question) {
   const text = String(question || "");
@@ -819,9 +859,10 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   // report Gemini call, cache-put, commit-report, release), so the search
   // phase must never approach 50 on its own:
   // 24 Google News + max 5 priority Google rescues + exactly 1 GDELT call
-  // (see fetchGdeltGlobalWave) = max 30 total, kept comfortably under ~40
-  // so the whole invocation (search + the ~9 calls above) stays safely under
-  // 50. Do NOT add per-wave retries here: retrying every failed wave once
+  // (see fetchGdeltGlobalWave) + exactly 1 ACLED call (see fetchAcledWave) =
+  // max 31 total, kept comfortably under ~40 so the whole invocation (search
+  // + the ~9 calls above) stays safely under 50. Do NOT add per-wave retries
+  // here: retrying every failed wave once
   // can double the search subrequest count on exactly the runs where most
   // waves are failing, and has previously blown through Cloudflare's
   // subrequest ceiling and hard-crashed the whole invocation.
@@ -885,7 +926,21 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
     gdeltWaves = splitGdeltRowsByLanguage(globalWave, gdeltQuery, gdeltAttributionLanguages);
   }
 
-  const waves = [...googleAll, ...gdeltWaves];
+  // ACLED as an additional source: one single Google-News query scoped to
+  // acleddata.com, anchored on the broadest English query from the plan.
+  const acledQueryText = plan.queries.find(item => item.language === "en" && item.variant === "primary")?.query
+    || plan.queries.find(item => item.language === "en")?.query
+    || "";
+  let acledWaves = [];
+  let acledRequests = 0;
+  if (acledQueryText) {
+    acledRequests = 1;
+    const acledWave = await fetchAcledWave(acledQueryText, periodDays);
+    acledWave.rows = filterByAnchor(acledWave.rows, anchors);
+    acledWaves = [acledWave];
+  }
+
+  const waves = [...googleAll, ...gdeltWaves, ...acledWaves];
   return {
     waves,
     rows: waves.flatMap(item => item.rows),
@@ -893,7 +948,8 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
     subrequest_budget: {
       google_news_requests: googleAll.length,
       gdelt_requests: gdeltRequests,
-      search_requests: googleAll.length + gdeltRequests,
+      acled_requests: acledRequests,
+      search_requests: googleAll.length + gdeltRequests + acledRequests,
       max_search_requests: MAX_SEARCH_SUBREQUESTS
     }
   };
@@ -961,7 +1017,7 @@ function evidencePriority(row) {
   }
   score += Math.min(18, (row.sources?.length || 1) * 4.5);
   if (row.atlas_status === "potential_gap") score += 3;
-  if (/justice|interpol|europol|government|police|treasury|ministry|prosecut|united nations|unodc|customs|counter narcotics|interior/i.test(row.source || "")) score += 9;
+  if (row.search_engine === "acled" || /justice|interpol|europol|government|police|treasury|ministry|prosecut|united nations|unodc|customs|counter narcotics|interior/i.test(row.source || "")) score += 9;
   return score;
 }
 
@@ -1085,6 +1141,7 @@ function languageDiagnostics(plan, retrieval, priorityLanguages = []) {
       successful_queries: 0,
       google_news_articles: 0,
       gdelt_articles: 0,
+      acled_articles: 0,
       priority: priorityLanguages.includes(code)
     };
   }
@@ -1096,6 +1153,7 @@ function languageDiagnostics(plan, retrieval, priorityLanguages = []) {
     if (wave.ok) byLanguage[code].successful_queries++;
     const engine = wave.query.engine || (wave.query.variant === "gdelt-rescue" ? "gdelt" : "google_news");
     if (engine === "gdelt") byLanguage[code].gdelt_articles += wave.rows.length;
+    else if (engine === "acled") byLanguage[code].acled_articles += wave.rows.length;
     else byLanguage[code].google_news_articles += wave.rows.length;
   }
   return Object.values(byLanguage);
@@ -1242,6 +1300,7 @@ export async function handleDeepSearch(request, env, ctx) {
         potential_atlas_gaps: gaps,
         google_news_articles: retrieval.rows.filter(row => row.search_engine === "google_news").length,
         gdelt_articles: retrieval.rows.filter(row => row.search_engine === "gdelt").length,
+        acled_articles: retrieval.rows.filter(row => row.search_engine === "acled").length,
         search_subrequests: retrieval.subrequest_budget?.search_requests || retrieval.waves.length
       },
       grounding: {

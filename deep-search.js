@@ -257,12 +257,13 @@ function languageCoverageHtml(payload){
     const successCount=Number(item.successful_queries||0);
     const googleCount=Number(item.google_news_articles||0);
     const gdeltCount=Number(item.gdelt_articles||0);
+    const acledCount=Number(item.acled_articles||0);
     const priority=Boolean(item.priority);
     const cls=count>0?" has-results":" no-results";
     return `<div class="deep-language${cls}">
       <span class="deep-language-name">${esc(item.name||item.code||"Language")}</span>
       <strong>${count}</strong>
-      <small>${count===1?"article":"articles"}${priority?" · PRIORITY":""} · Google ${googleCount} · GDELT ${gdeltCount} · ${successCount}/${queryCount||1} ${queryCount===1?"query":"queries"} succeeded</small>
+      <small>${count===1?"article":"articles"}${priority?" · PRIORITY":""} · Google ${googleCount} · GDELT ${gdeltCount}${acledCount?` · ACLED ${acledCount}`:""} · ${successCount}/${queryCount||1} ${queryCount===1?"query":"queries"} succeeded</small>
     </div>`;
   }).join("");
 }
@@ -285,7 +286,7 @@ function evidenceHtml(payload){
           <span class="deep-gap-badge${gapClass}">${gapLabel}</span>
         </div>
         <div class="deep-evidence-title">${esc(item.title||"")}</div>
-        <div class="deep-evidence-meta">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())}${item.search_engine?` · ${item.search_engine==="gdelt"?"GDELT":"GOOGLE NEWS"}`:""}${Number(item.source_count||1)>1?` · ${Number(item.source_count)} merged sources`:""}</div>
+        <div class="deep-evidence-meta">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())}${item.search_engine?` · ${item.search_engine==="gdelt"?"GDELT":item.search_engine==="acled"?"ACLED":"GOOGLE NEWS"}`:""}${Number(item.source_count||1)>1?` · ${Number(item.source_count)} merged sources`:""}</div>
         ${item.summary?`<div class="deep-evidence-summary">${esc(item.summary)}</div>`:""}
         <div class="deep-evidence-links">
           ${item.url?`<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">OPEN ARTICLE</a>`:""}
