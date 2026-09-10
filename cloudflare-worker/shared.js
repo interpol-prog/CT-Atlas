@@ -5,6 +5,10 @@ const MAX_EVENTS_PREVIOUS = 60;
 const CACHE_TTL_MS = 8 * 60 * 60 * 1000;
 const REPORT_COOLDOWN_MS = 20 * 60 * 1000;
 const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
+// Bump whenever the report SHAPE changes (new fields, schema, citation
+// rules) so an existing cache entry from before the change is never served
+// as-is -- folded into the cache key in index.js's /report handler.
+const REPORT_GENERATOR_VERSION = "report-v2-sources-and-citations";
 
 const USER_PASSWORD_HASHES = Object.freeze({
   "intel-analyst": "d4cc63dfe1815a0b323c3d8471eae21ebf00499e8f6b7a8cc26e7bd4fde7646c",
@@ -49,6 +53,7 @@ TACTICS / MODUS OPERANDI
 COUNTER-TERRORISM RESPONSE
 SIGNIFICANT CHANGES
 OUTLOOK / WATCHPOINTS
+SOURCE / CONFIDENCE NOTES
 
 When a comparison period is supplied, focus on WHAT CHANGED between the current
 period and the immediately preceding equivalent period. Distinguish reporting
@@ -61,6 +66,25 @@ emerging-technology developments when materially relevant to the selected topic.
 Do not invent facts, casualty figures, attribution, coordination, causes or
 predictions. Preserve uncertainty. Use only the supplied records and statistics.
 The outlook may identify watchpoints but must not make unsupported forecasts.
+
+CITATION RULES (this is how the analyst checks the report against real
+sources and catches hallucination -- follow exactly):
+- Every priority_events record carries a source_id like "S01". Cite it
+  in brackets immediately after the claim it supports, exactly like
+  [S01] or [S01, S07]. Never invent a source_id that was not supplied.
+- Every factual sentence or bullet in EXECUTIVE ASSESSMENT, KEY
+  DEVELOPMENTS, GEOGRAPHIC PATTERNS, TACTICS / MODUS OPERANDI,
+  COUNTER-TERRORISM RESPONSE and SIGNIFICANT CHANGES must carry at least
+  one citation. A sentence with no citation is read as your own
+  unsupported inference, not a database fact -- avoid that.
+- In SOURCE / CONFIDENCE NOTES, briefly state the overall reliability of
+  this report: how many independent records it draws on, whether key
+  claims rest on a single source or are corroborated by several
+  (each record's source_count says how many outlets reported it), and
+  name any specific claim above that is weakly supported (single-source,
+  low relevance score, or otherwise uncertain). If the underlying data is
+  thin for the requested topic/period, say so plainly instead of padding
+  the report with speculation.
 `;
 
 function corsHeaders(env) {
@@ -206,8 +230,36 @@ function compactEvent(event) {
     region: cleanText(event.region, 100),
     city: cleanText(event.city, 100),
     date: parseEventDate(event)?.toISOString() || "",
+    source: cleanText(event.source, 140),
+    url: cleanText(event.url, 1200),
     source_count: Number(event.source_count || 1),
     relevance: Number(event.ai_relevance_score || 0)
+  };
+}
+
+// Shared by both the Report Generator and Deep Search: counts how many
+// factual paragraphs in the generated analysis actually carry a [Sxx] /
+// [Sxx, Syy] citation pointing at a real supplied source id, versus how
+// many read as a bare, uncited claim. This is the concrete anti-hallucination
+// signal surfaced to the user -- a citation coverage below 100% means some
+// factual statements in the report are not directly traceable to a source.
+function citationMetrics(analysis, validIds) {
+  const valid = new Set(validIds);
+  const cited = new Set();
+  for (const match of String(analysis || "").matchAll(/\[(S\d{2})(?:,\s*S\d{2})*\]/g)) {
+    const ids = match[0].match(/S\d{2}/g) || [];
+    ids.forEach(id => { if (valid.has(id)) cited.add(id); });
+  }
+  const paragraphs = String(analysis || "").split(/\n+/).map(v => v.trim())
+    .filter(v => v && !/^[A-Z][A-Z /&-]{4,}$/.test(v));
+  const factual = paragraphs.filter(v => v.length >= 35);
+  const grounded = factual.filter(v => /\[S\d{2}/.test(v));
+  return {
+    cited_source_ids: [...cited],
+    citation_coverage_percent: factual.length ? Math.round(grounded.length / factual.length * 100) : 100,
+    cited_sources: cited.size,
+    factual_paragraphs: factual.length,
+    cited_factual_paragraphs: grounded.length
   };
 }
 
@@ -414,6 +466,7 @@ async function callGemini(env, input) {
 export {
   GEMINI_URL,
   ALLOWED_PERIODS,
+  REPORT_GENERATOR_VERSION,
   MAX_EVENTS_CURRENT,
   MAX_EVENTS_PREVIOUS,
   CACHE_TTL_MS,
@@ -435,6 +488,7 @@ export {
   matchesTopic,
   matchesRegion,
   compactEvent,
+  citationMetrics,
   stats,
   priority,
   sha256,

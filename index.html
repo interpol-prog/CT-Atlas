@@ -3905,6 +3905,41 @@ html, body {
     overflow-wrap: break-word;
 }
 
+/* Reuses .deep-evidence / .deep-citation etc. from deep-search.css, which
+   loads on every page view regardless of whether Deep Search itself is
+   opened -- see usage-auth-fix.js's loadDeepSearch(). Only the badge here
+   (corroboration/relevance, not an Atlas gap/match) is Report-Generator-own. */
+#reportResultSources {
+    padding: 0 17px 18px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+#reportResultSources .report-sources-heading {
+    margin: 4px 0 9px;
+    color: #79c8f1;
+    font: 900 9px/1.25 Arial, sans-serif;
+    letter-spacing: .12em;
+}
+
+#reportResultSources .report-source-badge {
+    margin-left: auto;
+    padding: 3px 5px;
+    border: 1px solid rgba(140, 170, 190, .35);
+    background: rgba(60, 95, 120, .12);
+    color: #9cc3d8;
+    font: 800 6px/1 Arial, sans-serif;
+    letter-spacing: .08em;
+}
+
+#reportCitationCoverage {
+    margin-top: 3px;
+    color: #8bc2df;
+    font-size: 8px;
+    letter-spacing: .04em;
+}
+
 .generated-report-block {
     display: block;
     margin: 0 0 23px;
@@ -5425,6 +5460,7 @@ Visible rate
           <div>
             <div id="reportResultTitle">ANALYTICAL REPORT</div>
             <div id="reportResultMeta"></div>
+            <div id="reportCitationCoverage"></div>
           </div>
           <div id="reportResultActions">
             <button id="reportCopyButton" type="button">COPY</button>
@@ -5432,6 +5468,7 @@ Visible rate
           </div>
         </div>
         <div id="reportResultContent"></div>
+        <div id="reportResultSources"></div>
         <div id="reportGeneratorDisclaimer">
           AI-assisted analysis based on deduplicated open-source events held in the map database. It does not constitute verified intelligence and must be independently validated before operational or decision-making use.
         </div>
@@ -12586,7 +12623,8 @@ function reportSectionHtml(
         "TACTICS / MODUS OPERANDI",
         "COUNTER-TERRORISM RESPONSE",
         "SIGNIFICANT CHANGES",
-        "OUTLOOK / WATCHPOINTS"
+        "OUTLOOK / WATCHPOINTS",
+        "SOURCE / CONFIDENCE NOTES"
     ];
 
     function escapeRegExpReport(value) {
@@ -12626,6 +12664,18 @@ function reportSectionHtml(
 
     const blocks = [];
 
+    function highlightCitations(escaped) {
+        return escaped.replace(
+            /\[(S\d{2}(?:,\s*S\d{2})*)\]/g,
+            (_, ids) =>
+                '<span class="deep-citation">['
+                +
+                ids.split(",").map(id => id.trim()).join(", ")
+                +
+                ']</span>'
+        );
+    }
+
     function paragraphHtml(text) {
         return String(text || "")
             .split(/\n{2,}/)
@@ -12635,8 +12685,10 @@ function reportSectionHtml(
                 paragraph =>
                     '<p>'
                     +
-                    escapeHtml(paragraph)
-                        .replace(/\n/g, "<br>")
+                    highlightCitations(
+                        escapeHtml(paragraph)
+                            .replace(/\n/g, "<br>")
+                    )
                     +
                     '</p>'
             )
@@ -12746,6 +12798,112 @@ function reportSectionHtml(
     return blocks.join("");
 }
 
+
+function reportSourcesHtml(sources, grounding) {
+
+    const list =
+        Array.isArray(sources)
+        ?
+        sources
+        :
+        [];
+
+    if (!list.length) {
+        return "";
+    }
+
+    const cited =
+        new Set(
+            grounding?.cited_source_ids
+            ||
+            []
+        );
+
+    const ordered =
+        [...list].sort(
+            (a, b) =>
+                (cited.has(b.id) ? 1 : 0)
+                -
+                (cited.has(a.id) ? 1 : 0)
+        );
+
+    const coverage =
+        Number(
+            grounding?.citation_coverage_percent
+        );
+
+    const coverageNode =
+        document.getElementById(
+            "reportCitationCoverage"
+        );
+
+    if (coverageNode) {
+        coverageNode.textContent =
+            Number.isFinite(coverage)
+            ?
+            `Citation coverage: ${coverage}% of factual statements cite a source below`
+            :
+            "";
+    }
+
+    const cards =
+        ordered.map(
+            item => {
+
+                const citedClass =
+                    cited.has(item.id)
+                    ?
+                    " cited"
+                    :
+                    "";
+
+                const dateLabel =
+                    item.date
+                    ?
+                    new Date(item.date).toLocaleDateString(
+                        "en-GB",
+                        { day: "2-digit", month: "short", year: "numeric" }
+                    )
+                    :
+                    "Date unavailable";
+
+                const relevanceLabel =
+                    Number(item.relevance)
+                    ?
+                    ` · relevance ${Math.round(Number(item.relevance))}%`
+                    :
+                    "";
+
+                const corroborationLabel =
+                    Number(item.source_count || 1) > 1
+                    ?
+                    `${Number(item.source_count)} sources`
+                    :
+                    "1 source";
+
+                return `
+                    <article class="deep-evidence${citedClass}">
+                        <div class="deep-evidence-head">
+                            <strong>${escapeHtml(item.id)}</strong>
+                            <span class="deep-evidence-source">${escapeHtml(item.source || "CT Atlas database")}</span>
+                            <span class="report-source-badge">${escapeHtml(corroborationLabel)}${escapeHtml(relevanceLabel)}</span>
+                        </div>
+                        <div class="deep-evidence-title">${escapeHtml(item.title || "")}</div>
+                        <div class="deep-evidence-meta">${escapeHtml(dateLabel)}${item.country ? " · " + escapeHtml(item.country) : ""}</div>
+                        <div class="deep-evidence-links">
+                            ${item.url ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">OPEN ARTICLE</a>` : ""}
+                        </div>
+                    </article>`;
+
+            }
+        ).join("");
+
+    return (
+        '<div class="report-sources-heading">SOURCES</div>'
+        +
+        cards
+    );
+}
 
 
 async function generateCustomReport() {
@@ -12884,6 +13042,14 @@ async function generateCustomReport() {
                 payload.analysis
             );
 
+        document.getElementById(
+            "reportResultSources"
+        ).innerHTML =
+            reportSourcesHtml(
+                payload.sources,
+                payload.grounding
+            );
+
         result.hidden =
             false;
 
@@ -12941,6 +13107,20 @@ function copyGeneratedReport() {
         ||
         "";
 
+    const coverage =
+        document.getElementById(
+            "reportCitationCoverage"
+        )?.textContent
+        ||
+        "";
+
+    const sources =
+        document.getElementById(
+            "reportResultSources"
+        )?.innerText
+        ||
+        "";
+
     navigator.clipboard?.writeText(
         title
         +
@@ -12948,9 +13128,13 @@ function copyGeneratedReport() {
         +
         meta
         +
+        (coverage ? "\n" + coverage : "")
+        +
         "\n\n"
         +
         content
+        +
+        (sources ? "\n\n" + sources : "")
     );
 }
 
@@ -12974,6 +13158,20 @@ function printGeneratedReport() {
     const body =
         document.getElementById(
             "reportResultContent"
+        )?.innerHTML
+        ||
+        "";
+
+    const coverage =
+        document.getElementById(
+            "reportCitationCoverage"
+        )?.textContent
+        ||
+        "";
+
+    const sources =
+        document.getElementById(
+            "reportResultSources"
         )?.innerHTML
         ||
         "";
@@ -13003,12 +13201,25 @@ function printGeneratedReport() {
             .generated-report-section{font-weight:800;font-size:15px;color:#176082;margin:20px 0 8px;border-bottom:1px solid #b8d8e7;padding-bottom:5px}
             .generated-report-break{height:12px}
             .disclaimer{margin-top:28px;font-size:9px;color:#666;border-top:1px solid #ddd;padding-top:10px}
+            .coverage{font-size:10px;color:#176082;margin-bottom:14px}
+            .deep-citation{display:inline-block;margin:0 1px;padding:0 3px;border:1px solid #d9b65a;border-radius:2px;background:#fbf1d8;color:#8a6a1f;font-weight:800;white-space:nowrap}
+            .report-sources-heading{font-weight:800;font-size:15px;color:#176082;margin:26px 0 10px;border-bottom:1px solid #b8d8e7;padding-bottom:5px}
+            .deep-evidence{padding:9px 0;border-top:1px solid #e0e0e0;page-break-inside:avoid}
+            .deep-evidence-head{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:10px;color:#555}
+            .deep-evidence-head strong{color:#176082}
+            .report-source-badge{margin-left:auto;padding:2px 5px;border:1px solid #ccc;font-size:8px;color:#666}
+            .deep-evidence-title{margin-top:4px;font-size:12px;color:#111}
+            .deep-evidence-meta{margin-top:2px;font-size:9px;color:#777}
+            .deep-evidence-links{margin-top:4px;font-size:9px}
+            .deep-evidence-links a{color:#1d5fa8}
           </style>
         </head>
         <body>
           <h1>${escapeHtml(title)}</h1>
           <div class="meta">${escapeHtml(meta)}</div>
+          <div class="coverage">${escapeHtml(coverage)}</div>
           <div>${body}</div>
+          <div>${sources}</div>
           <div class="disclaimer">AI-assisted analysis based on deduplicated open-source events. It does not constitute verified intelligence and must be independently validated before operational or decision-making use.</div>
           <script>window.onload=()=>window.print();<\/script>
         </body>

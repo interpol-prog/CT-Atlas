@@ -1,5 +1,6 @@
 import {
 ALLOWED_PERIODS,
+REPORT_GENERATOR_VERSION,
 MAX_EVENTS_CURRENT,
 MAX_EVENTS_PREVIOUS,
 CACHE_TTL_MS,
@@ -18,6 +19,7 @@ parseEventDate,
 priority,
 stats,
 compactEvent,
+citationMetrics,
 callGemini
 } from "./shared.js";
 import { handleDeepSearch, DEEP_SEARCH_VERSION } from "./deep-search.js";
@@ -28,7 +30,7 @@ if (request.method === "OPTIONS") {
 return new Response(null, { status: 204, headers: corsHeaders(env) });
 }
 if (url.pathname === "/health" && request.method === "GET") {
-return jsonResponse({ ok: true, service: "ct-report-generator", version: "5.21", deep_search: true, deep_search_version: DEEP_SEARCH_VERSION, model: "gemini-3.5-flash-lite" }, 200, env);
+return jsonResponse({ ok: true, service: "ct-report-generator", version: "5.22", deep_search: true, deep_search_version: DEEP_SEARCH_VERSION, report_generator_version: REPORT_GENERATOR_VERSION, model: "gemini-3.5-flash-lite" }, 200, env);
 }
 if (url.pathname === "/auth-login" && request.method === "POST") {
 let authBody;
@@ -114,7 +116,7 @@ if (!dbResponse.ok) return jsonResponse({ error: "Unable to read current events 
 const db = await dbResponse.json();
 const allEvents = Array.isArray(db) ? db : (Array.isArray(db.events) ? db.events : []);
 const databaseVersion = cleanText(db.updated_at || db.generated_at || db.last_updated || "unknown", 100);
-const cacheKey = await sha256(JSON.stringify({ region, topic, periodDays, compare, databaseVersion }));
+const cacheKey = await sha256(JSON.stringify({ region, topic, periodDays, compare, databaseVersion, version: REPORT_GENERATOR_VERSION }));
 const permitResponse = await gateCall(env, "/acquire", { username });
 const permit = await permitResponse.json();
 if (!permitResponse.ok || !permit?.permit_id) return jsonResponse({ error: permit?.error || "Report capacity temporarily unavailable.", retry_after_seconds: permit?.retry_after_seconds || 20 }, permitResponse.status || 429, env);
@@ -144,10 +146,23 @@ else if (compare && dt >= previousStart && dt < currentStart) previous.push(even
 }
 if (!current.length) return jsonResponse({ error: "No matching events found for the selected current period." }, 422, env);
 current.sort((a,b)=>priority(b)-priority(a)); previous.sort((a,b)=>priority(b)-priority(a));
-const dataset = { selection: { region, topic, period_days: periodDays, compare }, database_version: databaseVersion, current_period: { start: currentStart.toISOString(), end: now.toISOString(), stats: stats(current), priority_events: current.slice(0, MAX_EVENTS_CURRENT).map(compactEvent) }, comparison_period: compare ? { start: previousStart.toISOString(), end: currentStart.toISOString(), stats: stats(previous), priority_events: previous.slice(0, MAX_EVENTS_PREVIOUS).map(compactEvent) } : null };
+// Assign a sequential source_id (S01, S02...) to every event handed to
+// Gemini, in the same [Sxx] convention Deep Search already uses, so the
+// model can cite a specific record instead of writing unsupported prose --
+// and so the response can carry back a real, clickable sources list plus a
+// citation-coverage metric instead of a plain block of text.
+let sourceSeq = 0;
+const withSourceId = event => ({ ...compactEvent(event), source_id: `S${String(++sourceSeq).padStart(2, "0")}` });
+const currentSourced = current.slice(0, MAX_EVENTS_CURRENT).map(withSourceId);
+const previousSourced = compare ? previous.slice(0, MAX_EVENTS_PREVIOUS).map(withSourceId) : [];
+const allSourced = [...currentSourced, ...previousSourced];
+const dataset = { selection: { region, topic, period_days: periodDays, compare }, database_version: databaseVersion, current_period: { start: currentStart.toISOString(), end: now.toISOString(), stats: stats(current), priority_events: currentSourced }, comparison_period: compare ? { start: previousStart.toISOString(), end: currentStart.toISOString(), stats: stats(previous), priority_events: previousSourced } : null };
 const generated = await callGemini(env, dataset);
 const meta = `${region === "GLOBAL" ? "Global" : region} · ${topic === "ALL" ? "All CT activity" : topic} · last ${periodDays} days${compare ? " vs previous equivalent period" : ""} · generated ${new Date().toISOString()}`;
-const report = { title: cleanText(generated.title || `CT Analytical Report — ${region}`, 180), analysis: String(generated.analysis || "").trim(), meta, database_version: databaseVersion, generated_at: new Date().toISOString() };
+const analysisText = String(generated.analysis || "").trim();
+const grounding = citationMetrics(analysisText, allSourced.map(e => e.source_id));
+const sources = allSourced.map(e => ({ id: e.source_id, title: e.title, source: e.source, url: e.url, date: e.date, country: e.country, source_count: e.source_count, relevance: e.relevance }));
+const report = { title: cleanText(generated.title || `CT Analytical Report — ${region}`, 180), analysis: analysisText, meta, database_version: databaseVersion, generated_at: new Date().toISOString(), sources, grounding };
 await gateCall(env, "/cache-put", { cacheKey, report, expires_at: Date.now() + CACHE_TTL_MS });
 const commitResponse = await gateCall(env, "/commit-report", { permitId, username });
 if (!commitResponse.ok) {
