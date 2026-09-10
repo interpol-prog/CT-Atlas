@@ -1,7 +1,7 @@
 {
   "version": "gemini-ct-selection-v4-counter-terrorism-action",
   "model": "gemini-3.5-flash-lite",
-  "threshold": 50,
+  "threshold": 60,
   "items": {
     "e85053c0bbd85decde691934654c5849cd3e0c935415b7494272e13680efec57": {
       "version": "gemini-ct-selection-v4-counter-terrorism-action",
@@ -56641,6 +56641,24 @@
         "canonical_event": "Four ISKP terrorists including Tarlai imambargah attack mastermind killed in intelligence-based operation Pakistan",
         "reason": "Counter-terrorism offensive operation resulting in the killing of high-profile ISKP militants linked to a prior attack."
       }
+    },
+    "50303cb35dab2be288afd797529dc34289a4eb4e5f6470e76c593e5c726774d8": {
+      "version": "gemini-ct-selection-v4-counter-terrorism-action",
+      "reviewed_at": "2026-09-10T22:57:12.151376+00:00",
+      "result": {
+        "event_id": "302a77ad823eba27",
+        "relevance_score": 88,
+        "is_current_ct_event": true,
+        "categories": [
+          "Counter Terrorism Action"
+        ],
+        "original_language": "en",
+        "english_title": "Operation Economic Outcast Strikes Iran’s Global Terrorist Proxy Network",
+        "english_summary": "Operation Economic Outcast Strikes Iran’s Global Terrorist Proxy Network U.S. Department of the Treasury (.gov)",
+        "canonical_event": "Operation Economic Outcast Strikes Iran’s Global Terrorist Proxy Network",
+        "reason": "Auto-accepted: authoritative official source with strong CT category/action evidence in the headline."
+      },
+      "decision_source": "official_rule"
     }
   },
   "backfill_rss_snapshots": {},
@@ -56648,22 +56666,22 @@
     "pacific_day": "2026-09-10",
     "calls": 60,
     "daily_budget": 60,
-    "last_updated": "2026-09-10T19:26:29.714400+00:00"
+    "last_updated": "2026-09-10T22:57:13.078296+00:00"
   },
   "selection_runtime_telemetry": {
-    "last_run_at": "2026-09-10T19:26:29.714410+00:00",
+    "last_run_at": "2026-09-10T22:57:13.078304+00:00",
     "threshold": 60,
     "batch_size": 25,
     "max_calls_per_run": 30,
     "daily_call_budget": 60,
-    "calls_this_run": 30,
+    "calls_this_run": 0,
     "calls_today": 60,
-    "official_auto_accepted": 0,
-    "recent_pending": 2075,
-    "backlog_pending": 5385,
+    "official_auto_accepted": 1,
+    "recent_pending": 2146,
+    "backlog_pending": 5489,
     "budget_reached": true,
     "gemini_429": false,
     "partial_recovery": true
   },
-  "last_updated": "2026-09-10T22:33:03.900860+00:00"
+  "last_updated": "2026-09-10T22:57:13.078309+00:00"
 }
