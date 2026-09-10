@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.18-english-rescue-fix";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.19-gdelt-single-global-query";
 // Used to re-query a sparse priority language through Google News' broader
 // US-hosted edition instead of its own country/language edition -- these can
 // carry different indexes even for the same native-script query text. This
@@ -27,12 +27,27 @@ export const DEEP_SEARCH_VERSION = "deep-search-v5.18-english-rescue-fix";
 const SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-US", gl: "US", ceid: "US:en" });
 const ENGLISH_SEARCH_FALLBACK_LOCALE = Object.freeze({ hl: "en-GB", gl: "GB", ceid: "GB:en" });
 const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
-const GDELT_RESULTS_PER_LANGUAGE = 25;
+// GDELT's own 429 response states its limit explicitly: "one [request] every
+// 5 seconds". A previous version queried GDELT once PER language, in
+// concurrent batches of 3 with only a 250ms pause between batches -- multiple
+// simultaneous requests, several times faster than GDELT's stated minimum
+// interval, so it reliably 429'd on almost every attempt (confirmed directly
+// against the live API, independent of Cloudflare's own egress IPs). GDELT is
+// now queried exactly ONCE per Deep Search, with no per-language sourcelang
+// filter, and the response is split back into a virtual per-language wave
+// using each article's own reported language (see
+// GDELT_LANGUAGE_NAME_TO_CODE / splitGdeltRowsByLanguage below) so every
+// downstream consumer (diagnostics, evidence building) still sees one wave
+// per language, unaware that only a single real fetch produced them all.
+const GDELT_GLOBAL_RESULTS_CAP = 75;
 const GDELT_LANGUAGE_FILTERS = Object.freeze({
   en: "english", fr: "french", ar: "arabic", de: "german",
   es: "spanish", it: "italian", tr: "turkish", ru: "russian",
   fa: "persian", ur: "urdu", he: "hebrew", ps: "pashto"
 });
+const GDELT_LANGUAGE_NAME_TO_CODE = Object.freeze(
+  Object.fromEntries(Object.entries(GDELT_LANGUAGE_FILTERS).map(([code, name]) => [name, code]))
+);
 
 const LANGUAGE_LOCALES = Object.freeze({
   en: { label: "English", hl: "en-US", gl: "US", ceid: "US:en" },
@@ -72,8 +87,11 @@ const COUNTRY_LANGUAGE_PRIORITY = Object.freeze([
 // matter which country the question is about.
 const ALWAYS_PRIORITY_LANGUAGES = Object.freeze(["en", "fr"]);
 const PRIORITY_LANGUAGE_CAP = 5;
+// GDELT is now a single global fetch (see GDELT_GLOBAL_RESULTS_CAP above), so
+// this only caps how many languages the one shared result gets attributed
+// across for diagnostics -- it no longer multiplies the real request count.
 const GDELT_LANGUAGE_CAP = 5;
-const MAX_SEARCH_SUBREQUESTS = DEEP_SEARCH_MAX_QUERIES + PRIORITY_LANGUAGE_CAP + GDELT_LANGUAGE_CAP;
+const MAX_SEARCH_SUBREQUESTS = DEEP_SEARCH_MAX_QUERIES + PRIORITY_LANGUAGE_CAP + 1;
 
 function detectCountryLanguages(question) {
   const text = String(question || "");
@@ -645,14 +663,13 @@ async function fetchNewsWave(item, index, periodDays, locale, fallbackLocale = f
   }
 }
 
-function gdeltUrl(query, language, periodDays) {
-  const lang = GDELT_LANGUAGE_FILTERS[language] || language;
+function gdeltUrl(query, periodDays) {
   const timespan = periodDays >= 365 ? "1y" : `${periodDays}d`;
   return GDELT_DOC_URL + "?" + new URLSearchParams({
-    query: `${cleanText(query, 280)} sourcelang:${lang}`,
+    query: cleanText(query, 280),
     mode: "artlist",
     format: "json",
-    maxrecords: String(GDELT_RESULTS_PER_LANGUAGE),
+    maxrecords: String(GDELT_GLOBAL_RESULTS_CAP),
     timespan
   }).toString();
 }
@@ -669,12 +686,18 @@ function parseGdeltDate(value) {
   return dt && !Number.isNaN(dt.getTime()) ? dt.toISOString() : "";
 }
 
-function parseGdeltArticles(payload, language, query) {
+// GDELT's own article.language field is a full name ("English", "Arabic"...),
+// not one of our 2-letter codes -- map it back so each row can be attributed
+// to the right language without ever having asked GDELT to filter by one.
+// An article in a language outside our 12 is dropped, matching how an
+// unrecognized code is already filtered out everywhere else in this file.
+function parseGdeltArticles(payload, query) {
   const articles = Array.isArray(payload?.articles) ? payload.articles : [];
-  return articles.slice(0, GDELT_RESULTS_PER_LANGUAGE).map(article => {
+  return articles.slice(0, GDELT_GLOBAL_RESULTS_CAP).map(article => {
     const title = cleanText(article?.title, 500);
     const url = cleanText(article?.url || article?.url_mobile, 1200);
-    if (!title || !url) return null;
+    const language = GDELT_LANGUAGE_NAME_TO_CODE[cleanText(article?.language, 40).toLowerCase()];
+    if (!title || !url || !language) return null;
     return {
       title,
       summary: "",
@@ -691,32 +714,50 @@ function parseGdeltArticles(payload, language, query) {
   }).filter(Boolean);
 }
 
-async function fetchGdeltWave(language, query, periodDays) {
+// A single global GDELT fetch, with no sourcelang restriction: GDELT allows
+// only about one request every 5 seconds (its own 429 response says so
+// explicitly), so this must never be called more than once per Deep Search.
+// The mixed-language result is split back into one virtual wave per language
+// by splitGdeltRowsByLanguage() below.
+async function fetchGdeltGlobalWave(query, periodDays) {
   try {
-    const response = await fetch(gdeltUrl(query, language, periodDays), {
+    const response = await fetch(gdeltUrl(query, periodDays), {
       headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.5" },
       cf: { cacheTtl: 300, cacheEverything: true },
       signal: AbortSignal.timeout(15000)
     });
     if (!response.ok) {
-      return { query: { language, query, variant: "gdelt-rescue", engine: "gdelt" }, ok: false, status: response.status, rows: [] };
+      return { ok: false, status: response.status, rows: [] };
     }
     const payload = await response.json().catch(() => ({}));
-    return {
-      query: { language, query, variant: "gdelt-rescue", engine: "gdelt" },
-      ok: true,
-      status: response.status,
-      rows: parseGdeltArticles(payload, language, query)
-    };
+    return { ok: true, status: response.status, rows: parseGdeltArticles(payload, query) };
   } catch (error) {
-    return {
-      query: { language, query, variant: "gdelt-rescue", engine: "gdelt" },
-      ok: false,
-      status: 0,
-      error: cleanText(error?.message, 180),
-      rows: []
-    };
+    return { ok: false, status: 0, error: cleanText(error?.message, 180), rows: [] };
   }
+}
+
+// Turns the one real GDELT fetch into a wave per language, so every
+// downstream consumer (languageDiagnostics, evidence building) keeps working
+// exactly as if GDELT had genuinely been queried once per language. Every
+// language in `languages` gets a wave carrying the shared ok/status/error
+// (so a 429 or success is visible per language too), with rows attributed
+// only to the language they actually belong to.
+function splitGdeltRowsByLanguage(globalWave, query, languages) {
+  const byLanguage = new Map();
+  for (const row of globalWave.rows) {
+    if (!byLanguage.has(row.language)) byLanguage.set(row.language, []);
+    byLanguage.get(row.language).push(row);
+  }
+  const relevant = [...new Set([...languages, ...byLanguage.keys()])]
+    .filter(code => DEEP_SEARCH_LANGUAGE_CODES.includes(code))
+    .slice(0, GDELT_LANGUAGE_CAP);
+  return relevant.map(language => ({
+    query: { language, query, variant: "gdelt-rescue", engine: "gdelt" },
+    ok: globalWave.ok,
+    status: globalWave.status,
+    error: globalWave.error,
+    rows: byLanguage.get(language) || []
+  }));
 }
 
 async function retrieveNews(plan, periodDays, priorityLanguages = []) {
@@ -725,8 +766,8 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   // (session-get, acquire, cache-get, plan Gemini call, events.json fetch,
   // report Gemini call, cache-put, commit-report, release), so the search
   // phase must never approach 50 on its own:
-  // 24 Google News + max 5 priority Google rescues + max GDELT_LANGUAGE_CAP
-  // GDELT = max 24 + 5 + GDELT_LANGUAGE_CAP, kept comfortably under ~40 total
+  // 24 Google News + max 5 priority Google rescues + exactly 1 GDELT call
+  // (see fetchGdeltGlobalWave) = max 30 total, kept comfortably under ~40
   // so the whole invocation (search + the ~9 calls above) stays safely under
   // 50. Do NOT add per-wave retries here: retrying every failed wave once
   // can double the search subrequest count on exactly the runs where most
@@ -773,21 +814,23 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
     for (const row of wave.rows) afterGoogle[wave.query.language].add(row.url);
   }
 
-  // GDELT rescues priority languages first, then other sparse languages.
+  // GDELT rescues priority languages first, then other sparse languages --
+  // but as a SINGLE global fetch (see fetchGdeltGlobalWave), never one
+  // request per language: GDELT allows only about one request every 5
+  // seconds, and firing several at once (as a previous version did)
+  // reliably got every one of them 429'd.
   const gdeltQuery = broadGdeltQuery(plan);
   const sparse = DEEP_SEARCH_LANGUAGE_CODES.filter(code => (afterGoogle[code]?.size || 0) < 3);
-  const gdeltLanguages = [...new Set([...priorityLanguages, ...sparse])]
+  const gdeltAttributionLanguages = [...new Set([...priorityLanguages, ...sparse])]
     .filter(code => DEEP_SEARCH_LANGUAGE_CODES.includes(code))
     .slice(0, GDELT_LANGUAGE_CAP);
-  const gdeltWaves = [];
+  let gdeltWaves = [];
+  let gdeltRequests = 0;
   if (gdeltQuery) {
-    for (let i = 0; i < gdeltLanguages.length; i += 3) {
-      const batch = gdeltLanguages.slice(i, i + 3);
-      const results = await Promise.all(batch.map(code => fetchGdeltWave(code, gdeltQuery, periodDays)));
-      for (const wave of results) wave.rows = filterByAnchor(wave.rows, anchors);
-      gdeltWaves.push(...results);
-      if (i + 3 < gdeltLanguages.length) await new Promise(resolve => setTimeout(resolve, 250));
-    }
+    gdeltRequests = 1;
+    const globalWave = await fetchGdeltGlobalWave(gdeltQuery, periodDays);
+    globalWave.rows = filterByAnchor(globalWave.rows, anchors);
+    gdeltWaves = splitGdeltRowsByLanguage(globalWave, gdeltQuery, gdeltAttributionLanguages);
   }
 
   const waves = [...googleAll, ...gdeltWaves];
@@ -797,8 +840,8 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
     priority_languages: priorityLanguages,
     subrequest_budget: {
       google_news_requests: googleAll.length,
-      gdelt_requests: gdeltWaves.length,
-      search_requests: googleAll.length + gdeltWaves.length,
+      gdelt_requests: gdeltRequests,
+      search_requests: googleAll.length + gdeltRequests,
       max_search_requests: MAX_SEARCH_SUBREQUESTS
     }
   };

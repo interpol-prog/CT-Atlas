@@ -6,7 +6,7 @@ const source=fs.readFileSync('cloudflare-worker/deep-search.js','utf8').replace(
 function harness(fetch){
  const c=vm.createContext({fetch,URLSearchParams,AbortSignal,setTimeout:fn=>fn(),cleanText:(v,n)=>String(v||'').trim().slice(0,n)});
  vm.runInContext(source,c);
- return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltWave,broadGdeltQuery,computeLanguageAnchors,filterByAnchor,DEEP_SEARCH_LANGUAGE_CODES})',c);
+ return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltGlobalWave,splitGdeltRowsByLanguage,broadGdeltQuery,computeLanguageAnchors,filterByAnchor,DEEP_SEARCH_LANGUAGE_CODES})',c);
 }
 function plan(h){return h.sanitizePlan({priority_languages:['fa','ps','ur','invalid'],queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l} Afghanistan opium`,secondary:`${l} Afghanistan heroin`}]))},'Afghanistan drugs');}
 test('Afghanistan narcotics prioritises English, French, Dari, Pashto and Urdu',()=>{
@@ -19,10 +19,11 @@ test('English and French are always prioritised even without a detected country'
 test('Egypt questions prioritise Arabic alongside English and French',()=>{
  const h=harness();assert.deepEqual(Array.from(h.resolvePriorityLanguages('Recent extremist activity in Egypt',[])),['en','fr','ar']);
 });
-test('sparse local feeds get native queries through fallback edition within 32 search calls',async()=>{
+test('sparse local feeds get native queries through fallback edition within 28 search calls (24 google + 3 rescue + 1 single global GDELT call)',async()=>{
  const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
  const result=await h.retrieveNews(plan(h),180,['fa','ps','ur']);
- assert.equal(calls.length,32);assert.equal(result.subrequest_budget.search_requests,32);
+ assert.equal(calls.length,28);assert.equal(result.subrequest_budget.search_requests,28);
+ assert.equal(calls.filter(u=>u.href.includes('gdelt')).length,1,'GDELT must be queried exactly once, never per-language');
  const rescue=result.waves.filter(w=>w.query.variant==='priority-locale-rescue');
  assert.deepEqual(Array.from(rescue,w=>w.query.language),['fa','ps','ur']);
  assert.ok(rescue.every(w=>w.query.fallback_locale));
@@ -42,20 +43,48 @@ test('English priority rescue uses a genuinely different locale than its own pri
  assert.ok(locales.size>1,'English rescue must use a different hl than en-US, otherwise it just resends the identical request: '+[...locales]);
  assert.ok(englishCalls.some(u=>u.searchParams.get('hl')==='en-GB'&&u.searchParams.get('gl')==='GB'));
 });
-test('five priority languages still stay within the 34-call search budget, well under the 50 subrequest ceiling once the ~9 non-search calls are counted',async()=>{
+test('five priority languages still stay within the 30-call search budget, well under the 50 subrequest ceiling once the ~9 non-search calls are counted',async()=>{
  const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
  const result=await h.retrieveNews(plan(h),30,h.resolvePriorityLanguages('Afghanistan drug trafficking',[]));
- assert.equal(calls.length,34);assert.equal(result.subrequest_budget.search_requests,34);
+ assert.equal(calls.length,30);assert.equal(result.subrequest_budget.search_requests,30);
  assert.ok(result.subrequest_budget.search_requests+9<50);
  const rescue=result.waves.filter(w=>w.query.variant==='priority-locale-rescue');
  assert.equal(rescue.length,5);
+ assert.equal(calls.filter(u=>u.href.includes('gdelt')).length,1,'GDELT must be queried exactly once even with 5 priority languages');
 });
 test('a failing wave is never retried — retries risk blowing the subrequest ceiling on exactly the runs where most waves are failing',async()=>{
  let calls=0;const h=harness(async()=>{calls++;return new Response('rate limited',{status:429});});
  await h.fetchNewsWave({language:'en',query:'q',variant:'primary'},0,30,{hl:'en-US',gl:'US',ceid:'US:en'});
  assert.equal(calls,1);
- calls=0;await h.fetchGdeltWave('en','q',30);
+ calls=0;await h.fetchGdeltGlobalWave('q',30);
  assert.equal(calls,1);
+});
+test('GDELT is queried once globally and its mixed-language response is split back into one wave per language',async()=>{
+ // Regression test for v5.19: GDELT allows ~1 request per 5 seconds (its own
+ // 429 response says so), so it must never be queried more than once per
+ // Deep Search. A single global query (no sourcelang filter) is split back
+ // into per-language rows using each article's own reported language.
+ const h=harness();
+ const globalWave={ok:true,status:200,rows:[
+   {title:'Afghanistan opium seizure reported',summary:'',source:'x',url:'https://x/1',published:'',language:'en',query_index:-1,query_variant:'gdelt-rescue',search_query:'q',search_engine:'gdelt',fallback_locale:false},
+   {title:'Article en arabe',summary:'',source:'x',url:'https://x/2',published:'',language:'ar',query_index:-1,query_variant:'gdelt-rescue',search_query:'q',search_engine:'gdelt',fallback_locale:false},
+ ]};
+ const waves=h.splitGdeltRowsByLanguage(globalWave,'q',['en','ar','fr']);
+ assert.deepEqual(Array.from(waves,w=>w.query.language).sort(),['ar','en','fr']);
+ assert.equal(waves.find(w=>w.query.language==='en').rows.length,1);
+ assert.equal(waves.find(w=>w.query.language==='ar').rows.length,1);
+ assert.equal(waves.find(w=>w.query.language==='fr').rows.length,0);
+ assert.ok(waves.every(w=>w.ok===true&&w.status===200),'the shared fetch outcome must be visible on every derived per-language wave');
+});
+test('GDELT articles in an unrecognized language are dropped, not miscounted',async()=>{
+ const json=JSON.stringify({articles:[
+   {title:'English piece',url:'https://x/1',language:'English',domain:'x.com',seendate:'20260101120000Z'},
+   {title:'Unknown script piece',url:'https://x/2',language:'Klingon',domain:'x.com',seendate:'20260101120000Z'},
+ ]});
+ const h=harness(async()=>new Response(json));
+ const wave=await h.fetchGdeltGlobalWave('q',30);
+ assert.equal(wave.rows.length,1);
+ assert.equal(wave.rows[0].language,'en');
 });
 test('HTML 200 provider failures remain distinct from empty RSS',async()=>{
  const h=harness(async url=>new Response(url.includes('gdelt')?'{}':'<html>Unavailable</html>'));
