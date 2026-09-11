@@ -3808,15 +3808,31 @@ For every candidate also return:
   - "Al-Shabaab" for Al-Shabaab, Al-Shabab, Harakat al-Shabaab al-Mujahideen.
   - "Houthis" for Houthis, Ansar Allah.
   - "PKK" for PKK, Kurdistan Workers' Party -- keep "PJAK" separate.
-  For any other named group, cell, faction or actor not listed above, use its
-  most common English name with consistent standard spelling and
-  capitalization so repeated mentions of the same group always produce
-  identical text (e.g. always "JNIM", never spelling out the full name once
-  an established acronym exists). If the event involves an unnamed or
-  unidentified individual, cell or group with no specific named organisation
-  stated (e.g. "a lone gunman", "unidentified militants", "a local criminal
-  network"), or if it is a state actor / government operation with no
-  non-state actor named, return an empty string rather than guessing.
+  - "ADF" for ADF, Allied Democratic Forces.
+  - "ISGS" for ISGS, Islamic State Sahel Province, Islamic State in the
+    Greater Sahara -- keep separate from plain "ISIS", same reasoning as
+    ISIS-K/ISWAP above.
+  For any other named group, cell, faction or actor not listed above:
+  - decide which single form (the acronym, or the full name) is the one most
+    commonly used to refer to this group in English-language open-source
+    reporting, and ALWAYS use exactly that one form -- never alternate
+    between the acronym and the spelled-out name for the same group across
+    different events (e.g. always "JNIM", never spelling out the full name
+    once an established acronym exists; conversely use the full name, not an
+    obscure acronym, when English reporting overwhelmingly uses the full
+    name).
+  - use standard, dictionary-style capitalization every time (e.g. always
+    "Antifa", never "antifa" or "ANTIFA"; always "Wagner", never "wagner").
+    The exact same group must never appear with different capitalization in
+    different events.
+  - preserve the correct spelling/diacritics of the group's own name exactly
+    (e.g. "FETÖ" keeps its Ö; do not silently drop or ASCII-fold accents,
+    and do not invent alternate transliterations of the same name).
+  If the event involves an unnamed or unidentified individual, cell or group
+  with no specific named organisation stated (e.g. "a lone gunman",
+  "unidentified militants", "a local criminal network"), or if it is a state
+  actor / government operation with no non-state actor named, return an
+  empty string rather than guessing.
 
 Do not add facts that are absent from the source material. Translation must preserve
 uncertainty, allegations and attribution.
@@ -3853,6 +3869,50 @@ forces. A routine arrest with no combat should carry "Arrests" only, never
 
 Keep the reason concise and specific.
 """
+
+
+# ============================================================
+# ACTOR/GROUP CODE-LEVEL CANONICALIZATION
+#
+# Prompt instructions alone cannot guarantee that two independent Gemini
+# calls, days apart, always spell/case the same group identically -- real
+# examples found in production: "antifa" vs "Antifa", "ADF" vs "Allied
+# Democratic Forces", "FETO" vs "FETÖ", "Jaish-e-Mohammad" vs
+# "Jaish-e-Mohammed", "RDK" vs "Russian Volunteer Corps". This is the
+# deterministic second line of defense: known aliases are always collapsed
+# to one canonical value here, in code, regardless of what the model wrote.
+# Extend this table whenever a new alias pair is spotted in the live data --
+# see tools/normalize_actor_group.py for the one-off corrective pass applied
+# to events already stored before an alias was added here.
+# ============================================================
+
+ACTOR_GROUP_ALIASES = {
+    "antifa": "Antifa",
+    "adf": "ADF",
+    "allied democratic forces": "ADF",
+    "feto": "FETÖ",
+    "fetö": "FETÖ",
+    "jaish-e-mohammad": "Jaish-e-Mohammed",
+    "jaish-e-mohammed": "Jaish-e-Mohammed",
+    "jem": "Jaish-e-Mohammed",
+    "azov": "Azov",
+    "azov brigade": "Azov",
+    "azov regiment": "Azov",
+    "764": "764",
+    "network 764": "764",
+    "rdk": "Russian Volunteer Corps",
+    "russian volunteer corps": "Russian Volunteer Corps",
+    "islamic state sahel province": "ISGS",
+    "isgs": "ISGS",
+    "islamic state greater sahara": "ISGS",
+}
+
+
+def canonicalize_actor_group(raw):
+    value = clean_text(raw or "")
+    if not value:
+        return ""
+    return ACTOR_GROUP_ALIASES.get(value.lower(), value)
 
 
 class AISelectionIncompleteError(RuntimeError):
@@ -4759,12 +4819,10 @@ def apply_ai_selection(
 
     event[
         "actor_group"
-    ] = clean_text(
+    ] = canonicalize_actor_group(
         result.get(
             "actor_group"
         )
-        or
-        ""
     )
 
     event[

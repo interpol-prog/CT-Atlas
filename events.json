@@ -78617,7 +78617,7 @@
       "ai_geo_reason": "Explicitly located in Beni, DRC, targeting Allied Democratic Forces (ADF).",
       "ai_geo_fingerprint": "f2dac22abef1ecbe8de17e3b8c11f21d34d2a088a1258658d203de084b5538fc",
       "ai_geo_inferred": false,
-      "actor_group": "Allied Democratic Forces"
+      "actor_group": "ADF"
     },
     {
       "id": "5073f430cc2da887",
@@ -78682,7 +78682,7 @@
       "ai_geo_reason": "Operation Shujaa and ADF actions involve Somalia and Uganda, but the target killed is a Somali commander in Somalia.",
       "ai_geo_fingerprint": "269b08e1e598e8d113b77931b1663f684bea6d274ffb333f4b378c0adb02e880",
       "ai_geo_inferred": true,
-      "actor_group": "Allied Democratic Forces"
+      "actor_group": "ADF"
     },
     {
       "id": "d66b8527caf1a2ee",
@@ -84422,7 +84422,7 @@
       "ai_geo_reason": "Ambush occurred near Ndaki in Mali.",
       "ai_geo_fingerprint": "6ab54e436d1d086cf741c99bd7d0f74bc5655e2a7820ff8f5689cc7a6ed87f2f",
       "ai_geo_inferred": false,
-      "actor_group": "Islamic State Sahel Province"
+      "actor_group": "ISGS"
     },
     {
       "id": "06e8d1116d7a471e",
@@ -91793,7 +91793,7 @@
       "ai_geo_reason": "ADF is a militant group active in Uganda and the DRC; published in NewVision Uganda.",
       "ai_geo_fingerprint": "1a1ee203aa348561a0283afa2ac442f1b5c745bfd731852f48ac192dc392efc6",
       "ai_geo_inferred": true,
-      "actor_group": "Allied Democratic Forces"
+      "actor_group": "ADF"
     },
     {
       "id": "55c4da42a71d56c4",
@@ -96627,7 +96627,7 @@
       "dedup_methods": [
         "same_url"
       ],
-      "actor_group": "RDK"
+      "actor_group": "Russian Volunteer Corps"
     },
     {
       "id": "f03d8d9bd2730feb",
@@ -102770,7 +102770,7 @@
       "source_article_fingerprints": [
         "b34fcba79616ce2ecc07f8fb2089337b54b82f381958ce5950e7c99788f98bb0"
       ],
-      "actor_group": "Network 764"
+      "actor_group": "764"
     },
     {
       "id": "55c335d4edd270ab",
@@ -144885,7 +144885,7 @@
       "ai_geo_reason": "Individual handed over to Moscow authorities.",
       "ai_geo_fingerprint": "c44bb3c3be22a556f6d4f7e20a1011aa8b001fb8183d2ebfdb12752c184cd597",
       "ai_geo_inferred": true,
-      "actor_group": "Azov Brigade"
+      "actor_group": "Azov"
     },
     {
       "id": "fc495576cc9e76b1",
@@ -157171,7 +157171,7 @@
       "ai_geo_reason": "Explicit mention of the Democratic Republic of Congo.",
       "ai_geo_fingerprint": "8e0db457f8554089c97a0e07a5b076c3028bf9a887115ed0120af4c5d92a3f86",
       "ai_geo_inferred": false,
-      "actor_group": "Allied Democratic Forces"
+      "actor_group": "ADF"
     },
     {
       "id": "ffede54977df11f8",
@@ -157307,7 +157307,7 @@
       "ai_geo_reason": "Explicit mention of Vunanga village in North Kivu, DR Congo.",
       "ai_geo_fingerprint": "0d3433998279acc92dbf9f7d6802d4c36ee169b3f0a6e4f306d49e3c11ebdff5",
       "ai_geo_inferred": false,
-      "actor_group": "Allied Democratic Forces"
+      "actor_group": "ADF"
     },
     {
       "id": "1f2baac1ccc84566",
@@ -182073,7 +182073,7 @@
       "ai_geo_reason": "Refers to a federal terrorism case (typical US terminology for federal court prosecutions).",
       "ai_geo_fingerprint": "935ab78e7c7641ceaf07a71dcb86654bfcc29e6c2961eae0d9058db29e983c4c",
       "ai_geo_inferred": true,
-      "actor_group": "antifa"
+      "actor_group": "Antifa"
     },
     {
       "id": "465c5529b65b681a",
@@ -183188,7 +183188,7 @@
       "ai_geo_reason": "Activity of the ADF in the Democratic Republic of Congo.",
       "ai_geo_fingerprint": "4978bd75cc313f0270f1ae2dc3f35647b32d38d40e3cb05786046ef1584afc04",
       "ai_geo_inferred": false,
-      "actor_group": "Allied Democratic Forces"
+      "actor_group": "ADF"
     },
     {
       "id": "22dfe5634b4f29e2",
@@ -190472,7 +190472,7 @@
       "ai_geo_reason": "Arrest occurred in Jaipur, India.",
       "ai_geo_fingerprint": "18fcb0a65a0d715b3bc06b318022b166689c4336af3365848d4aefc98feff0b7",
       "ai_geo_inferred": false,
-      "actor_group": "Jaish-e-Mohammad"
+      "actor_group": "Jaish-e-Mohammed"
     },
     {
       "id": "8e9c59006a9267c4",
@@ -207792,7 +207792,7 @@
       "ai_geo_reason": "Nationwide operations across Turkey by Turkish authorities.",
       "ai_geo_fingerprint": "1a0472455e847ed61e48fbe441d2e21f8cdc91359ef933c0f1718367bc507103",
       "ai_geo_inferred": false,
-      "actor_group": "FETO"
+      "actor_group": "FETÖ"
     },
     {
       "id": "6407b4d42eeb1fa1",
@@ -210262,7 +210262,7 @@
       "ai_geo_reason": "Explicitly refers to events across the DRC.",
       "ai_geo_fingerprint": "8dd611aa2db8f420408135a85e6f3a2c3a958f49cbd1816b89042631fc68d6bd",
       "ai_geo_inferred": false,
-      "actor_group": "Allied Democratic Forces"
+      "actor_group": "ADF"
     },
     {
       "id": "80ff4f6431f07f7e",
@@ -223581,7 +223581,7 @@
       "ai_geo_reason": "The attack by ADF rebels took place in the Democratic Republic of Congo.",
       "ai_geo_fingerprint": "fd91cc3d807f32fbd6fba4ee1f014229af0827e2a27a594402fd44bcdc45e482",
       "ai_geo_inferred": true,
-      "actor_group": "Allied Democratic Forces"
+      "actor_group": "ADF"
     },
     {
       "id": "9166c6d9450df2ad",
@@ -223708,7 +223708,7 @@
       "ai_geo_reason": "Islamic State-linked rebels attack in eastern Democratic Republic of Congo.",
       "ai_geo_fingerprint": "a581ce8ff57784bbae2b28ebd1514d3f5a5f2235472ce1a3de723f7e05982476",
       "ai_geo_inferred": true,
-      "actor_group": "Allied Democratic Forces"
+      "actor_group": "ADF"
     },
     {
       "id": "64ac747cf236e9d8",
