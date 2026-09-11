@@ -185,6 +185,15 @@ The task is COMPARATIVE, not merely descriptive:
 - CURRENT PERIOD = the most recent 7 days;
 - COMPARISON PERIOD = the immediately preceding 7 days.
 
+The supplied data includes a reporting_period object with current_start,
+current_end, comparison_start and comparison_end as ISO timestamps. The very
+first sentence of EXECUTIVE ASSESSMENT MUST state both date ranges in
+readable form, for example: "This report covers 30 August-6 September 2026,
+compared with the preceding period, 23-30 August 2026." Compute the
+human-readable dates only from these supplied timestamps -- never guess,
+approximate or omit them. Every reader must know exactly which calendar
+period this brief covers without needing to look anywhere else.
+
 Explain WHAT CHANGED between the two periods.
 
 Write approximately one A4 page: about 650-900 words in clear professional
@@ -317,8 +326,13 @@ violence". The reader should immediately learn WHAT happened, WHERE it happened,
 and WHY these specific cases matter. If fewer than three genuinely significant
 cases exist, mention only those.
 
-Return between 0 and 6 developments. It is better to return 2 genuinely
-important items than 6 weak ones. For every selected development, copy the
+Return the SIX most serious, deadly or sensitive qualifying developments
+whenever at least six genuinely qualifying cases exist in the supplied
+events -- do not stop at 2 or 3 just because they are the clearest cases; keep
+going down the severity ranking until you reach six or exhaust genuinely
+qualifying cases. Only return fewer than six when fewer than six cases
+actually meet the CRITICAL/HIGH/SIGNIFICANT bar above -- never pad the list
+with routine or weak cases just to reach six. For every selected development, copy the
 event_id EXACTLY from the corresponding supplied event. Never invent or alter
 an event_id. Each development must use the most specific supported location
 available. Do not invent facts, casualty figures, locations, identities,
