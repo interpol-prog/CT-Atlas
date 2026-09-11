@@ -471,6 +471,26 @@ body {
 }
 
 
+.group-filter-list {
+    max-height: 220px;
+    overflow-y: auto;
+    margin-bottom: 7px;
+}
+
+.group-filter-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.group-filter-count {
+    color: #70899a;
+    font-size: 10px;
+    margin-left: 6px;
+}
+
+
 .financing {
     background: #3a78a8;
 }
@@ -5092,6 +5112,33 @@ Legal / Judicial
 
 
 
+<div class="section-title">
+Actor / group
+</div>
+
+<div class="category-actions">
+
+<button
+    class="action-button"
+    id="selectAllGroups"
+>
+SELECT ALL
+</button>
+
+<button
+    class="action-button"
+    id="clearAllGroups"
+>
+CLEAR
+</button>
+
+</div>
+
+<div id="groupFilterList" class="group-filter-list"></div>
+
+
+
+
 
 
 
@@ -6691,6 +6738,8 @@ fetch(
         }
 
 
+        renderGroupFilters();
+
         refreshDashboard();
 
     }
@@ -6891,6 +6940,57 @@ function categoryMatches(
 
 
 
+const UNSPECIFIED_GROUP_LABEL = "Unspecified / no named group";
+
+function eventActorGroup(event) {
+    const value = String(event.actor_group || "").trim();
+    return value || UNSPECIFIED_GROUP_LABEL;
+}
+
+function renderGroupFilters() {
+    const container = document.getElementById("groupFilterList");
+    if (!container) return;
+
+    const counts = new Map();
+    allEvents.forEach(event => {
+        const group = eventActorGroup(event);
+        counts.set(group, (counts.get(group) || 0) + 1);
+    });
+
+    const groups = Array.from(counts.entries()).sort(
+        (a, b) => b[1] - a[1] || a[0].localeCompare(b[0])
+    );
+
+    container.innerHTML = groups.map(([group, count]) => `
+        <label class="category">
+            <input type="checkbox" class="group-filter" value="${escapeHtml(group)}" checked>
+            <span class="group-filter-name">${escapeHtml(group)}</span>
+            <span class="group-filter-count">${count}</span>
+        </label>
+    `).join("");
+
+    if (!container.dataset.bound) {
+        container.addEventListener("change", event => {
+            if (event.target.classList.contains("group-filter")) {
+                refreshDashboard();
+            }
+        });
+        container.dataset.bound = "1";
+    }
+}
+
+function selectedGroups() {
+    return Array.from(
+        document.querySelectorAll(".group-filter:checked")
+    ).map(checkbox => checkbox.value);
+}
+
+function groupMatches(event) {
+    return selectedGroups().includes(eventActorGroup(event));
+}
+
+
+
 function searchMatches(
     event
 ) {
@@ -6967,6 +7067,12 @@ function filteredAllEvents() {
             &&
 
             categoryMatches(
+                event
+            )
+
+            &&
+
+            groupMatches(
                 event
             )
 
@@ -13867,6 +13973,62 @@ document.querySelectorAll(
             refreshDashboard
 
         );
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "selectAllGroups"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+
+        document.querySelectorAll(
+            ".group-filter"
+        ).forEach(
+
+            checkbox =>
+                checkbox.checked =
+                    true
+
+        );
+
+
+        refreshDashboard();
+
+    }
+
+);
+
+
+
+document.getElementById(
+    "clearAllGroups"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+
+        document.querySelectorAll(
+            ".group-filter"
+        ).forEach(
+
+            checkbox =>
+                checkbox.checked =
+                    false
+
+        );
+
+
+        refreshDashboard();
 
     }
 

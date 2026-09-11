@@ -112,7 +112,7 @@ AI_SELECTION_BATCH_SIZE = max(
     ),
 )
 
-AI_SELECTION_VERSION = "gemini-ct-selection-v4-counter-terrorism-action"
+AI_SELECTION_VERSION = "gemini-ct-selection-v5-actor-group"
 AI_SELECTION_CACHE_FILE = "ai_article_selection_cache.json"
 
 AI_SELECTION_ATTEMPTS = 5
@@ -3647,6 +3647,9 @@ AI_SELECTION_SCHEMA = {
                     "canonical_event": {
                         "type": "string"
                     },
+                    "actor_group": {
+                        "type": "string"
+                    },
                     "reason": {
                         "type": "string"
                     },
@@ -3660,6 +3663,7 @@ AI_SELECTION_SCHEMA = {
                     "english_title",
                     "english_summary",
                     "canonical_event",
+                    "actor_group",
                     "reason",
                 ],
             },
@@ -3780,6 +3784,39 @@ For every candidate also return:
 - canonical_event: a short language-neutral-in-meaning English description of
   action + main actor/group + place if stated + essential object/target. This is
   used for cross-language deduplication.
+- actor_group: the primary named non-state actor, terrorist/militant
+  organisation, cell or group responsible for or centrally involved in this
+  event, normalized to ONE consistent canonical English name so the SAME group
+  is never split into several map-filter values by alias, spelling or
+  translation. Use these canonical names whenever the text refers to any of
+  their aliases:
+  - "ISIS" for ISIS, ISIL, Daesh, Islamic State, Islamic State of Iraq and
+    Syria/the Levant -- but keep distinct regional branches under their OWN
+    canonical name instead of folding them into plain "ISIS": "ISIS-K" (also
+    called ISKP / Islamic State Khorasan), "ISWAP" (Islamic State West Africa
+    Province), etc. -- these are operationally separate branches, not spelling
+    variants.
+  - "Al-Qaeda" for Al-Qaeda, AQ, al-Qaida, al-Qa'ida -- but keep "AQAP"
+    (Al-Qaeda in the Arabian Peninsula), "AQIM" (Al-Qaeda in the Islamic
+    Maghreb) and "JNIM" as their own separate canonical names.
+  - "Hezbollah" for Hezbollah, Hizballah, Hizbollah, Hizbullah.
+  - "Boko Haram" for Boko Haram, Jama'atu Ahlis Sunna Lidda'awati wal-Jihad --
+    but keep "ISWAP" separate; it split from Boko Haram and is now distinct.
+  - "Taliban" for the AFGHAN Taliban only -- keep "TTP" (Tehrik-i-Taliban
+    Pakistan / Pakistani Taliban) as its own separate canonical name; despite
+    the shared name it is a distinct organisation.
+  - "Al-Shabaab" for Al-Shabaab, Al-Shabab, Harakat al-Shabaab al-Mujahideen.
+  - "Houthis" for Houthis, Ansar Allah.
+  - "PKK" for PKK, Kurdistan Workers' Party -- keep "PJAK" separate.
+  For any other named group, cell, faction or actor not listed above, use its
+  most common English name with consistent standard spelling and
+  capitalization so repeated mentions of the same group always produce
+  identical text (e.g. always "JNIM", never spelling out the full name once
+  an established acronym exists). If the event involves an unnamed or
+  unidentified individual, cell or group with no specific named organisation
+  stated (e.g. "a lone gunman", "unidentified militants", "a local criminal
+  network"), or if it is a state actor / government operation with no
+  non-state actor named, return an empty string rather than guessing.
 
 Do not add facts that are absent from the source material. Translation must preserve
 uncertainty, allegations and attribution.
@@ -4715,6 +4752,16 @@ def apply_ai_selection(
     canonical_event = clean_text(
         result.get(
             "canonical_event"
+        )
+        or
+        ""
+    )
+
+    event[
+        "actor_group"
+    ] = clean_text(
+        result.get(
+            "actor_group"
         )
         or
         ""
@@ -6866,6 +6913,7 @@ def merge_event(
             "collection_locale",
             "translated_to_english",
             "ai_canonical_event",
+            "actor_group",
         ):
             if field in new:
                 existing[
