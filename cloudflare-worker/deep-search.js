@@ -9,64 +9,73 @@ import {
   sha256
 } from "./shared.js";
 
-const DEEP_SEARCH_ALLOWED_PERIODS = new Set([7, 30, 90, 180, 365, 730]);
 const DEEP_SEARCH_MAX_QUERIES = 24;
 const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.25-two-year-period-and-deeper-gdelt-chunking";
+export const DEEP_SEARCH_VERSION = "deep-search-v6-question-driven-period";
 
-const MONTH_NAMES = Object.freeze({
-  january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
-  july: 7, august: 8, september: 9, october: 10, november: 11, december: 12,
-  jan: 1, feb: 2, mar: 3, apr: 4, jun: 6, jul: 7, aug: 8,
-  sep: 9, sept: 9, oct: 10, nov: 11, dec: 12
-});
-const MONTH_NAME_PATTERN = Object.keys(MONTH_NAMES).sort((a, b) => b.length - a.length).join("|");
+// There is no period selector any more -- the analyst's own question is the
+// only source of a time window. The planner LLM (see PLAN_SCHEMA's
+// detected_period below) reads the question and decides one of three modes:
+// "global" (no period stated -- search as far back as the sources below can
+// usefully go), "relative" (a duration like "last 3 months"), or "absolute"
+// (a specific past range like "in 2019" or "since January 2023").
+// GDELT's real-time monitoring is only reliably dense from around this date;
+// earlier coverage exists but thins out, so "global" mode uses this as its
+// practical historical floor rather than an arbitrary/unbounded one.
+const GDELT_ARCHIVE_START = new Date("2017-01-01T00:00:00Z");
+// Fallback when the planner's detected_period is missing or malformed.
+const DEEP_SEARCH_DEFAULT_RELATIVE_DAYS = 90;
+// Safety cap on any single absolute/relative window, so a malformed or
+// adversarial date pair from the planner can never blow up chunk math.
+const DEEP_SEARCH_MAX_WINDOW_DAYS = 3650;
 
-// A user typing an explicit date into the question ("on 10 april 2026") is a
-// far more precise signal of what window actually matters than the SEARCH
-// PERIOD dropdown, which most people leave on its default (30 days). Without
-// this, a perfectly well-covered event from 5 months ago returns "no usable
-// open-source reporting" not because it doesn't exist, but because the
-// search window silently never reached back that far. This only ever WIDENS
-// the period actually used for retrieval, never narrows it below what the
-// dropdown already requested.
-function extractExplicitQuestionDate(question) {
-  const text = String(question || "").toLowerCase();
-
-  // "10 april 2026" / "10th of april 2026"
-  let m = text.match(new RegExp(`\\b(\\d{1,2})(?:st|nd|rd|th)?\\s+(?:of\\s+)?(${MONTH_NAME_PATTERN})\\.?,?\\s+(\\d{4})\\b`));
-  if (m) return new Date(Date.UTC(Number(m[3]), MONTH_NAMES[m[2]] - 1, Number(m[1])));
-
-  // "april 10, 2026" / "april 10 2026"
-  m = text.match(new RegExp(`\\b(${MONTH_NAME_PATTERN})\\.?\\s+(\\d{1,2})(?:st|nd|rd|th)?,?\\s+(\\d{4})\\b`));
-  if (m) return new Date(Date.UTC(Number(m[3]), MONTH_NAMES[m[1]] - 1, Number(m[2])));
-
-  // ISO: 2026-04-10
-  m = text.match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
-  if (m) return new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
-
-  // "april 2026" (month + year only -- treat as the 1st, still enough to widen)
-  m = text.match(new RegExp(`\\b(${MONTH_NAME_PATTERN})\\.?\\s+(\\d{4})\\b`));
-  if (m) return new Date(Date.UTC(Number(m[2]), MONTH_NAMES[m[1]] - 1, 1));
-
-  return null;
+function isoDateOnly(date) {
+  return date.toISOString().slice(0, 10);
 }
 
-function resolveEffectivePeriodDays(question, requestedPeriodDays) {
-  const explicitDate = extractExplicitQuestionDate(question);
-  if (!explicitDate || Number.isNaN(explicitDate.getTime())) {
-    return { periodDays: requestedPeriodDays, widened: false };
+function clampDate(date, minDate, maxDate) {
+  if (date.getTime() < minDate.getTime()) return minDate;
+  if (date.getTime() > maxDate.getTime()) return maxDate;
+  return date;
+}
+
+// Pure function turning the planner's detected_period into a concrete
+// {mode, startDt, endDt, label} search window every downstream fetcher
+// (Google/ACLED after:/before:, GDELT startdatetime/enddatetime, the CT
+// Atlas comparison cutoff) uses as its single source of truth.
+function resolveSearchWindow(plan, now = new Date()) {
+  const detected = plan?.detected_period && typeof plan.detected_period === "object" ? plan.detected_period : {};
+  const mode = ["global", "relative", "absolute"].includes(detected.mode) ? detected.mode : "relative";
+  const label = cleanText(detected.explanation, 200);
+
+  if (mode === "global") {
+    return { mode: "global", startDt: GDELT_ARCHIVE_START, endDt: now,
+      label: label || "Global search -- no period stated, searched as far back as available sources go" };
   }
-  const daysAgo = Math.ceil((Date.now() - explicitDate.getTime()) / 86400000);
-  if (daysAgo <= requestedPeriodDays) {
-    return { periodDays: requestedPeriodDays, widened: false };
+
+  if (mode === "absolute") {
+    const start = new Date(detected.start_date);
+    const endRaw = detected.end_date ? new Date(detected.end_date) : now;
+    if (!Number.isNaN(start.getTime())) {
+      const endDt = Number.isNaN(endRaw.getTime()) ? now : clampDate(endRaw, start, now);
+      const minStart = new Date(endDt.getTime() - DEEP_SEARCH_MAX_WINDOW_DAYS * 86400000);
+      const startDt = clampDate(start, minStart, endDt);
+      return { mode: "absolute", startDt, endDt,
+        label: label || `${isoDateOnly(startDt)} to ${isoDateOnly(endDt)}` };
+    }
+    // Malformed dates from the planner: fall through to the relative default below.
   }
-  const ascending = [...DEEP_SEARCH_ALLOWED_PERIODS].sort((a, b) => a - b);
-  const widenedTo = ascending.find(candidate => candidate >= daysAgo) || ascending[ascending.length - 1];
-  return { periodDays: widenedTo, widened: widenedTo !== requestedPeriodDays, detected_days_ago: daysAgo };
+
+  const days = Math.min(DEEP_SEARCH_MAX_WINDOW_DAYS, Math.max(1, Math.round(Number(detected.relative_days)) || DEEP_SEARCH_DEFAULT_RELATIVE_DAYS));
+  return { mode: "relative", startDt: new Date(now.getTime() - days * 86400000), endDt: now,
+    label: label || `Last ${days} days` };
+}
+
+function windowSpanDays(window) {
+  return Math.max(1, Math.round((window.endDt.getTime() - window.startDt.getTime()) / 86400000));
 }
 
 // A zero-result report can mean two very different things: genuinely no
@@ -140,17 +149,18 @@ const GDELT_LANGUAGE_NAME_TO_CODE = Object.freeze(
 // English-anchored query covers it -- no need to repeat per language).
 const ACLED_SITE_FILTER = "site:acleddata.com";
 
-function acledNewsUrl(query, periodDays) {
-  const term = `${cleanText(query, 200)} ${ACLED_SITE_FILTER} when:${periodDays}d`;
+function acledNewsUrl(query, window) {
+  const bufferedEnd = new Date(window.endDt.getTime() + 86400000);
+  const term = `${cleanText(query, 200)} ${ACLED_SITE_FILTER} after:${isoDateOnly(window.startDt)} before:${isoDateOnly(bufferedEnd)}`;
   return "https://news.google.com/rss/search?" + new URLSearchParams({
     q: term, hl: "en-US", gl: "US", ceid: "US:en"
   }).toString();
 }
 
-async function fetchAcledWave(query, periodDays) {
+async function fetchAcledWave(query, window) {
   const item = { language: "en", query, variant: "acled", engine: "acled" };
   try {
-    const response = await fetch(acledNewsUrl(query, periodDays), {
+    const response = await fetch(acledNewsUrl(query, window), {
       headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.0" },
       cf: { cacheTtl: 300, cacheEverything: true },
       signal: AbortSignal.timeout(15000)
@@ -433,6 +443,17 @@ const PLAN_SCHEMA = {
   type: "object",
   properties: {
     interpreted_request: { type: "string" },
+    detected_period: {
+      type: "object",
+      properties: {
+        mode: { type: "string", enum: ["global", "relative", "absolute"] },
+        relative_days: { type: "integer" },
+        start_date: { type: "string" },
+        end_date: { type: "string" },
+        explanation: { type: "string" }
+      },
+      required: ["mode", "explanation"]
+    },
     priority_languages: { type: "array", items: { type: "string", enum: [...DEEP_SEARCH_LANGUAGE_CODES] } },
     gdelt_broad_terms: { type: "array", items: { type: "string" }, minItems: 3, maxItems: 5 },
     gdelt_exclude_terms: { type: "array", items: { type: "string" }, maxItems: 5 },
@@ -452,7 +473,7 @@ const PLAN_SCHEMA = {
       required: [...DEEP_SEARCH_LANGUAGE_CODES]
     }
   },
-  required: ["interpreted_request", "queries"]
+  required: ["interpreted_request", "detected_period", "queries"]
 };
 
 const REPORT_SCHEMA = {
@@ -467,6 +488,36 @@ const REPORT_SCHEMA = {
 const PLAN_INSTRUCTION = `
 You are the query-planning component of CT Atlas Deep Search, an authorised
 multilingual OSINT research tool.
+
+There is no separate period selector -- the analyst's free-text question is
+the ONLY signal for what time window to search. The input gives you today's
+date; use it to resolve relative or absolute periods into concrete dates.
+Set detected_period exactly as follows:
+
+- mode "global": the question states or implies NO period at all (e.g. "what
+  is Daesh", "who is active in the Sahel", a general/background question).
+  This is the DEFAULT when no time cue is present -- it means search as far
+  back as available sources go, not just the recent past. Do not default to
+  "relative" just because a question sounds current; only pick "relative" or
+  "absolute" when the question actually contains a real time cue.
+- mode "relative": the question names a DURATION relative to now ("last 3
+  months", "recently", "this week", "over the past year"). Set relative_days
+  to the best integer estimate (e.g. "last 3 months" -> 90, "recently"/
+  "recent" with no further qualifier -> 60, "this week" -> 7, "the past
+  year" -> 365). Prefer a slightly wider estimate over a narrower one when
+  genuinely unsure.
+- mode "absolute": the question names a SPECIFIC past date, range or year
+  ("in 2019", "since January 2023", "between March and June 2022", "on 10
+  April 2026"). Set start_date and end_date as ISO dates (YYYY-MM-DD). A
+  single named year means start_date = that year's Jan 1 and end_date = that
+  year's Dec 31 (never today, unless the year is the current year, in which
+  case end_date = today). "Since <date>" means end_date = today. A single
+  named day means start_date = end_date = that day.
+
+Always set explanation to one short, human-readable sentence describing the
+window you chose (e.g. "Last 90 days", "Global search across all available
+history", "January to December 2019") -- this is shown directly to the
+analyst, so it must be accurate and specific.
 
 Interpret the analyst's exact free-text request and create EXACTLY TWO concise
 Google News search queries in EACH of the 12 CT Atlas search languages (24 planned
@@ -743,8 +794,9 @@ function deduplicateRows(rows) {
   return clusters.map(({ _normalized, ...row }) => row);
 }
 
-function googleNewsUrl(query, locale, periodDays) {
-  const term = `${cleanText(query, 220)} when:${periodDays}d`;
+function googleNewsUrl(query, locale, window) {
+  const bufferedEnd = new Date(window.endDt.getTime() + 86400000);
+  const term = `${cleanText(query, 200)} after:${isoDateOnly(window.startDt)} before:${isoDateOnly(bufferedEnd)}`;
   return "https://news.google.com/rss/search?" + new URLSearchParams({
     q: term, hl: locale.hl, gl: locale.gl, ceid: locale.ceid
   }).toString();
@@ -807,8 +859,23 @@ function sanitizePlan(plan, fallbackQuestion) {
     .filter((term, index, arr) => arr.indexOf(term) === index)
     .slice(0, 5);
 
+  // Only lightly cleaned here -- resolveSearchWindow() is the authoritative
+  // validator and safely falls back to a sane default if this is missing or
+  // malformed (e.g. an unparsable start_date), so no need to duplicate that
+  // defensiveness here.
+  const detectedPeriod = plan?.detected_period && typeof plan.detected_period === "object"
+    ? {
+        mode: cleanText(plan.detected_period.mode, 20),
+        relative_days: Number(plan.detected_period.relative_days) || undefined,
+        start_date: cleanText(plan.detected_period.start_date, 20),
+        end_date: cleanText(plan.detected_period.end_date, 20),
+        explanation: cleanText(plan.detected_period.explanation, 200)
+      }
+    : {};
+
   return {
     interpreted_request: cleanText(plan?.interpreted_request || fallbackQuestion, 700),
+    detected_period: detectedPeriod,
     priority_languages: (Array.isArray(plan?.priority_languages) ? plan.priority_languages : []).filter(code => DEEP_SEARCH_LANGUAGE_CODES.includes(code)).slice(0, PRIORITY_LANGUAGE_CAP),
     gdelt_broad_terms: sanitizeTermList(plan?.gdelt_broad_terms),
     gdelt_exclude_terms: sanitizeTermList(plan?.gdelt_exclude_terms),
@@ -835,9 +902,9 @@ async function runInBatches(items, batchSize, delayMs, worker) {
   return results;
 }
 
-async function fetchNewsWave(item, index, periodDays, locale, fallbackLocale = false) {
+async function fetchNewsWave(item, index, window, locale, fallbackLocale = false) {
   try {
-    const response = await fetch(googleNewsUrl(item.query, locale, periodDays), {
+    const response = await fetch(googleNewsUrl(item.query, locale, window), {
       headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.0" },
       cf: { cacheTtl: 300, cacheEverything: true },
       signal: AbortSignal.timeout(15000)
@@ -871,46 +938,40 @@ function gdeltDateTimeParam(date) {
   return date.toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "");
 }
 
-// An explicit date range (used to slice a long period into several chunks --
-// see gdeltChunkRanges below) takes priority over the relative "last N days"
-// window a single short-period query uses.
-function gdeltUrl(query, periodDays, range = null) {
+// Always an explicit date range now -- no more relative "timespan=Nd" branch,
+// since every search window (relative, absolute or global) already resolves
+// to concrete startDt/endDt via resolveSearchWindow before any fetch happens.
+function gdeltUrl(query, range) {
   const params = {
     query: cleanText(query, 280),
     mode: "artlist",
     format: "json",
-    maxrecords: String(GDELT_GLOBAL_RESULTS_CAP)
+    maxrecords: String(GDELT_GLOBAL_RESULTS_CAP),
+    startdatetime: gdeltDateTimeParam(range.startDt),
+    enddatetime: gdeltDateTimeParam(range.endDt)
   };
-  if (range && range.startDt && range.endDt) {
-    params.startdatetime = gdeltDateTimeParam(range.startDt);
-    params.enddatetime = gdeltDateTimeParam(range.endDt);
-  } else {
-    params.timespan = periodDays >= 365 ? "1y" : `${periodDays}d`;
-  }
   return GDELT_DOC_URL + "?" + new URLSearchParams(params).toString();
 }
 
 // GDELT caps each query's results regardless of window length, so a single
-// "timespan=365d" query only ever returns its top ~GDELT_GLOBAL_RESULTS_CAP
-// hits across the WHOLE year. For periods longer than
+// query for a long span only ever returns its top ~GDELT_GLOBAL_RESULTS_CAP
+// hits across the WHOLE window. For spans longer than
 // GDELT_CHUNK_THRESHOLD_DAYS, slice into up to GDELT_MAX_CHUNKS sequential
-// date-range queries instead, each covering its own slice of the period, so
-// long-period questions get real depth across the whole window rather than
-// one query straining to summarize a year in ~250 results. Short periods
-// (<= the threshold) are returned as a single un-sliced range so nothing
-// changes for the common case.
-function gdeltChunkRanges(periodDays) {
-  if (periodDays <= GDELT_CHUNK_THRESHOLD_DAYS) return [null];
-  const chunkCount = Math.min(GDELT_MAX_CHUNKS, Math.ceil(periodDays / GDELT_CHUNK_THRESHOLD_DAYS));
-  const chunkDays = Math.ceil(periodDays / chunkCount);
-  const now = Date.now();
+// date-range queries instead, each covering its own slice, so long/global
+// searches get real depth across the whole window rather than one query
+// straining to summarize years in ~250 results. Short spans (<= the
+// threshold) are returned as a single un-sliced range so nothing changes for
+// the common case.
+function gdeltChunkRanges(startDt, endDt) {
+  const totalDays = Math.max(1, Math.round((endDt.getTime() - startDt.getTime()) / 86400000));
+  if (totalDays <= GDELT_CHUNK_THRESHOLD_DAYS) return [{ startDt, endDt }];
+  const chunkCount = Math.min(GDELT_MAX_CHUNKS, Math.ceil(totalDays / GDELT_CHUNK_THRESHOLD_DAYS));
+  const chunkMs = (endDt.getTime() - startDt.getTime()) / chunkCount;
   const ranges = [];
   for (let i = 0; i < chunkCount; i++) {
-    const endOffsetDays = i * chunkDays;
-    const startOffsetDays = Math.min(periodDays, (i + 1) * chunkDays);
     ranges.push({
-      endDt: new Date(now - endOffsetDays * 86400000),
-      startDt: new Date(now - startOffsetDays * 86400000)
+      endDt: new Date(endDt.getTime() - i * chunkMs),
+      startDt: new Date(endDt.getTime() - (i + 1) * chunkMs)
     });
   }
   return ranges;
@@ -958,13 +1019,12 @@ function parseGdeltArticles(payload, query) {
 
 // A single global GDELT fetch, with no sourcelang restriction: GDELT allows
 // only about one request every 5 seconds (its own 429 response says so
-// explicitly). `range`, when supplied, requests an explicit date slice
-// instead of the relative `periodDays` window -- see fetchGdeltChunked below,
-// which is the only caller that ever issues more than one of these per
-// Deep Search, always spaced GDELT_CHUNK_SPACING_MS apart.
-async function fetchGdeltGlobalWave(query, periodDays, range = null) {
+// explicitly). `range` is always an explicit {startDt, endDt} date slice --
+// see fetchGdeltChunked below, which is the only caller that ever issues more
+// than one of these per Deep Search, always spaced GDELT_CHUNK_SPACING_MS apart.
+async function fetchGdeltGlobalWave(query, range) {
   try {
-    const response = await fetch(gdeltUrl(query, periodDays, range), {
+    const response = await fetch(gdeltUrl(query, range), {
       headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.5" },
       cf: { cacheTtl: 300, cacheEverything: true },
       signal: AbortSignal.timeout(15000)
@@ -979,17 +1039,18 @@ async function fetchGdeltGlobalWave(query, periodDays, range = null) {
   }
 }
 
-// Issues gdeltChunkRanges(periodDays) sequential GDELT queries (1 for short
-// periods, up to GDELT_MAX_CHUNKS for long ones), spaced GDELT_CHUNK_SPACING_MS
-// apart to respect GDELT's ~1-request/5s limit, and merges them into one
-// combined wave -- ok if AT LEAST one chunk succeeded (partial coverage is
-// still real evidence), status/error from the last chunk attempted.
-async function fetchGdeltChunked(query, periodDays) {
-  const ranges = gdeltChunkRanges(periodDays);
+// Issues gdeltChunkRanges(startDt,endDt) sequential GDELT queries (1 for
+// short spans, up to GDELT_MAX_CHUNKS for long/global ones), spaced
+// GDELT_CHUNK_SPACING_MS apart to respect GDELT's ~1-request/5s limit, and
+// merges them into one combined wave -- ok if AT LEAST one chunk succeeded
+// (partial coverage is still real evidence), status/error from the last
+// chunk attempted.
+async function fetchGdeltChunked(query, startDt, endDt) {
+  const ranges = gdeltChunkRanges(startDt, endDt);
   const rows = [];
   let anyOk = false, lastStatus = 0, lastError;
   for (let i = 0; i < ranges.length; i++) {
-    const wave = await fetchGdeltGlobalWave(query, periodDays, ranges[i]);
+    const wave = await fetchGdeltGlobalWave(query, ranges[i]);
     if (wave.ok) anyOk = true;
     lastStatus = wave.status;
     lastError = wave.error;
@@ -1023,13 +1084,13 @@ function splitGdeltRowsByLanguage(globalWave, query, languages) {
   }));
 }
 
-async function retrieveNews(plan, periodDays, priorityLanguages = []) {
+async function retrieveNews(plan, window, priorityLanguages = []) {
   // Bound search well below Cloudflare's 50-subrequest-per-invocation ceiling.
   // A full handleDeepSearch call also makes ~9 NON-search subrequests
   // (session-get, acquire, cache-get, plan Gemini call, events.json fetch,
   // report Gemini call, cache-put, commit-report, release), so the search
   // phase must never approach 50 on its own:
-  // 24 Google News + max 5 priority Google rescues + up to GDELT_MAX_CHUNKS(3)
+  // 24 Google News + max 5 priority Google rescues + up to GDELT_MAX_CHUNKS(5)
   // GDELT calls (see fetchGdeltChunked) + 1 ACLED call (see fetchAcledWave) +
   // max 5 Bing rescues (see fetchBingWave) = max 38 total, kept under ~40 so
   // the whole invocation (search + the ~9 calls above) stays safely under
@@ -1046,7 +1107,7 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   const googleWaves = await runInBatches(
     sortedQueries.map((item, index) => ({ item, index })),
     6, 200,
-    ({ item, index }) => fetchNewsWave(item, index, periodDays, LANGUAGE_LOCALES[item.language], false)
+    ({ item, index }) => fetchNewsWave(item, index, window, LANGUAGE_LOCALES[item.language], false)
   );
   for (const wave of googleWaves) wave.rows = filterByAnchor(wave.rows, anchors);
 
@@ -1066,7 +1127,7 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   }
   const priorityRescueWaves = await Promise.all(
     priorityRescueItems.map((item, index) =>
-      fetchNewsWave(item, googleWaves.length + index, periodDays,
+      fetchNewsWave(item, googleWaves.length + index, window,
         item.language === "en" ? ENGLISH_SEARCH_FALLBACK_LOCALE : SEARCH_FALLBACK_LOCALE, true)
     )
   );
@@ -1113,7 +1174,7 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   let gdeltWaves = [];
   let gdeltRequests = 0;
   if (gdeltQuery) {
-    const globalWave = await fetchGdeltChunked(gdeltQuery, periodDays);
+    const globalWave = await fetchGdeltChunked(gdeltQuery, window.startDt, window.endDt);
     gdeltRequests = globalWave.chunks || 1;
     globalWave.rows = filterByAnchor(globalWave.rows, anchors);
     gdeltWaves = splitGdeltRowsByLanguage(globalWave, gdeltQuery, gdeltAttributionLanguages);
@@ -1128,7 +1189,7 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   let acledRequests = 0;
   if (acledQueryText) {
     acledRequests = 1;
-    const acledWave = await fetchAcledWave(acledQueryText, periodDays);
+    const acledWave = await fetchAcledWave(acledQueryText, window);
     acledWave.rows = filterByAnchor(acledWave.rows, anchors);
     acledWaves = [acledWave];
   }
@@ -1150,13 +1211,13 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
 }
 
 // The CT Atlas comparison window must cover at least the whole search
-// period (plus a small buffer), never a hardcoded 365-day cap -- otherwise
-// a longer Deep Search period (e.g. 730 days) would compare freshly
-// retrieved older articles against a database window that stops at 1 year,
-// mislabelling real CT Atlas matches beyond that as "potential gaps".
-function candidateMapEvents(db, periodDays) {
+// window (plus a small buffer), never a hardcoded cap -- otherwise a long or
+// global Deep Search would compare freshly retrieved older articles against
+// a database window that stops short, mislabelling real CT Atlas matches
+// beyond that as "potential gaps".
+function candidateMapEvents(db, window) {
   const all = Array.isArray(db) ? db : (Array.isArray(db?.events) ? db.events : []);
-  const cutoff = Date.now() - ((periodDays + 14) * 86400000);
+  const cutoff = window.startDt.getTime() - (14 * 86400000);
   return all.filter(event => {
     const raw = event?.event_date || event?.occurrence_date || event?.published || event?.last_reported;
     if (!raw) return true;
@@ -1379,16 +1440,16 @@ export async function handleDeepSearch(request, env, ctx) {
   if (auth.error) return auth.error;
 
   const question = cleanText(body.question, 1200);
-  const requestedPeriodDays = Number(body.period_days || 30);
   if (question.length < 8) return jsonResponse({ error: "Enter a more specific Deep Search question." }, 400, env);
-  if (!DEEP_SEARCH_ALLOWED_PERIODS.has(requestedPeriodDays)) return jsonResponse({ error: "Unsupported Deep Search period." }, 400, env);
 
-  const periodResolution = resolveEffectivePeriodDays(question, requestedPeriodDays);
-  const periodDays = periodResolution.periodDays;
-
+  // No period is requested from the client any more -- the planner LLM reads
+  // the period out of the question itself (see detected_period / resolveSearchWindow).
+  // The cache key therefore only needs the question text: the resolved window
+  // is a deterministic function of it, and the short cache TTL below means a
+  // "relative" window (e.g. "last 30 days") never drifts meaningfully stale.
   const username = auth.username;
   const cacheKey = await sha256(JSON.stringify({
-    question: question.toLowerCase(), periodDays, version: DEEP_SEARCH_VERSION
+    question: question.toLowerCase(), version: DEEP_SEARCH_VERSION
   }));
 
   const permitResponse = await gateCall(env, "/acquire", { username });
@@ -1412,14 +1473,22 @@ export async function handleDeepSearch(request, env, ctx) {
 
     const planRaw = await callGeminiJson(
       env, PLAN_INSTRUCTION,
-      `Analyst question: ${question}\nTime window: last ${periodDays} days.`,
+      `Analyst question: ${question}\nToday's date: ${isoDateOnly(new Date())}.`,
       PLAN_SCHEMA, 6000
     );
     const plan = sanitizePlan(planRaw, question);
     if (!plan.queries.length) return jsonResponse({ error: "Deep Search could not create a usable multilingual search plan." }, 422, env);
 
+    const window = resolveSearchWindow(plan);
+    const detectedPeriod = {
+      mode: window.mode,
+      start: window.startDt.toISOString(),
+      end: window.endDt.toISOString(),
+      label: window.label
+    };
+
     const priorityLanguages = resolvePriorityLanguages(question, plan.priority_languages || []);
-    const retrieval = await retrieveNews(plan, periodDays, priorityLanguages);
+    const retrieval = await retrieveNews(plan, window, priorityLanguages);
     const unique = deduplicateRows(retrieval.rows);
     const languagesSearched = languageDiagnostics(plan, retrieval, priorityLanguages);
 
@@ -1437,9 +1506,7 @@ export async function handleDeepSearch(request, env, ctx) {
           ? "Deep Search's search providers (Google News/GDELT) failed or were rate-limited for every query in this search. This is a temporary infrastructure issue, not evidence that no coverage exists for this question -- please retry in a few minutes."
           : "Deep Search found no usable open-source reporting for this question and period.",
         likely_transient_fetch_issue: likelyTransientFetchIssue,
-        period_days: periodDays,
-        period_days_requested: requestedPeriodDays,
-        period_widened_for_question: periodResolution.widened,
+        detected_period: detectedPeriod,
         languages_searched: languagesSearched,
         search_queries: retrieval.waves.map(w => ({ ...w.query, ok: w.ok, status: w.status, result_count: w.rows.length }))
       }, 422, env);
@@ -1454,12 +1521,12 @@ export async function handleDeepSearch(request, env, ctx) {
       }
     } catch (_) {}
 
-    const compared = compareWithAtlas(unique, candidateMapEvents(db, periodDays));
+    const compared = compareWithAtlas(unique, candidateMapEvents(db, window));
     const evidence = buildEvidence(compared, priorityLanguages);
     const dataset = {
       analyst_question: question,
       interpreted_request: plan.interpreted_request,
-      period_days: periodDays,
+      period: detectedPeriod.label,
       database_version: databaseVersion,
       language_search_coverage: languagesSearched,
       priority_languages: priorityLanguages,
@@ -1484,9 +1551,7 @@ export async function handleDeepSearch(request, env, ctx) {
       analysis: generated.analysis,
       question,
       interpreted_request: plan.interpreted_request,
-      period_days: periodDays,
-      period_days_requested: requestedPeriodDays,
-      period_widened_for_question: periodResolution.widened,
+      detected_period: detectedPeriod,
       generated_at: new Date().toISOString(),
       database_version: databaseVersion,
       model: DEEP_SEARCH_MODEL,

@@ -49,20 +49,12 @@ function inject(){
         </div>
         <div id="deepSearchBody">
           <div id="deepSearchControls">
+            <div id="deepSearchGuidance">
+              Deep Search generates a full sourced analytical report from your question, so be specific: name the <strong>period</strong> ("last 3 months", "in 2022" -- or leave it out entirely for a full historical search), the <strong>group / actor</strong>, and the <strong>country or region</strong>. There is no separate period field any more -- Deep Search reads the time window directly out of your question.
+            </div>
             <label class="deep-field deep-question-field">
               <span>ANALYST QUESTION</span>
-              <textarea id="deepSearchQuestion" rows="4" maxlength="1200" placeholder="Example: Identify recent reporting on ISKP facilitation networks, local-language sources and potential CT Atlas gaps."></textarea>
-            </label>
-            <label class="deep-field">
-              <span>SEARCH PERIOD</span>
-              <select id="deepSearchPeriod">
-                <option value="7">Last 7 days</option>
-                <option value="30" selected>Last 30 days</option>
-                <option value="90">Last 90 days</option>
-                <option value="180">Last 6 months</option>
-                <option value="365">Last 1 year</option>
-                <option value="730">Last 2 years</option>
-              </select>
+              <textarea id="deepSearchQuestion" rows="5" maxlength="1200" placeholder="Example: ISIS-K facilitation networks in Afghanistan and Pakistan over the last 6 months. Or: Al-Shabaab attacks in Somalia since 2022."></textarea>
             </label>
             <div id="deepSearchMethod">
               Deep Search runs two native-language Google News searches in each of the 12 supported languages, plus ACLED and GDELT (chunked across longer periods for real historical depth). Languages relevant to the country in the analyst question receive priority rescue searches through Bing News as well when Google coverage comes up sparse, before deduplication, CT Atlas comparison and source-cited analysis.
@@ -76,6 +68,7 @@ function inject(){
               <div>
                 <div id="deepSearchResultTitle">DEEP SEARCH REPORT</div>
                 <div id="deepSearchResultMeta"></div>
+                <div id="deepSearchDetectedPeriod"></div>
               </div>
               <div id="deepSearchActions">
                 <button id="deepSearchCopy" type="button">COPY</button>
@@ -315,6 +308,8 @@ function render(rawPayload){
   const retrieved=payload.retrieval||{};
   document.getElementById("deepSearchResultMeta").textContent=
     `Generated ${new Date(payload.generated_at||Date.now()).toLocaleString("en-GB")} · ${payload.model||"Gemini"} · ${languages||"multilingual"}${payload.cached?" · CACHED":""}`;
+  document.getElementById("deepSearchDetectedPeriod").textContent=
+    payload.detected_period?.label?`Period detected from your question: ${payload.detected_period.label}`:"";
 
   document.getElementById("deepSearchMetrics").innerHTML=`
     <div class="deep-metric"><span>ARTICLES</span><strong>${Number(retrieved.articles_retrieved||0)}</strong></div>
@@ -332,7 +327,6 @@ function render(rawPayload){
 async function run(){
   if(!backendReady){setStatus("Deep Search backend is not available.","warning");return;}
   const question=String(document.getElementById("deepSearchQuestion")?.value||"").trim();
-  const period=Number(document.getElementById("deepSearchPeriod")?.value||30);
   const username=user(), sessionToken=token(), button=document.getElementById("deepSearchRun");
   if(question.length<8){setStatus("Enter a more specific analyst question.","warning");return;}
   if(!username||!sessionToken){setStatus("Deep Search requires an authenticated CT Atlas session. Sign in again.","error");return;}
@@ -340,22 +334,22 @@ async function run(){
   if(button){button.disabled=true;button.textContent="SEARCHING MULTILINGUAL SOURCES…";}
   const result=document.getElementById("deepSearchResult");
   if(result)result.hidden=true;
-  setStatus("Building multilingual search plan, retrieving fresh reporting and comparing it with CT Atlas…","working");
+  setStatus("Reading the period from your question, building a multilingual search plan, retrieving fresh reporting and comparing it with CT Atlas…","working");
 
   try{
     const response=await fetch(API_BASE+"/deep-search",{
       method:"POST",
       headers:{"Content-Type":"application/json","X-Session-Token":sessionToken},
-      body:JSON.stringify({user_id:username,question,period_days:period})
+      body:JSON.stringify({user_id:username,question})
     });
     const payload=await response.json().catch(()=>({}));
-    const widenedNote=payload.period_widened_for_question?` A date in your question is older than the ${payload.period_days_requested}-day search window you selected, so it was automatically extended to ${payload.period_days} days.`:"";
+    const periodNote=payload.detected_period?.label?` Period searched: ${payload.detected_period.label}.`:"";
     if(!response.ok){
       const retry=Number(payload.retry_after_seconds||0);
-      throw new Error((payload.error||"Deep Search failed.")+widenedNote+(retry?` Retry in approximately ${Math.ceil(retry/60)} minute(s).`:""));
+      throw new Error((payload.error||"Deep Search failed.")+periodNote+(retry?` Retry in approximately ${Math.ceil(retry/60)} minute(s).`:""));
     }
     render(payload);
-    setStatus(`Deep Search complete · ${Number(payload.retrieval?.articles_retrieved||0)} articles · ${Number(payload.retrieval?.unique_event_clusters||0)} unique event clusters · ${Number(payload.retrieval?.potential_atlas_gaps||0)} potential CT Atlas gaps.${widenedNote}`,"success");
+    setStatus(`Deep Search complete · ${Number(payload.retrieval?.articles_retrieved||0)} articles · ${Number(payload.retrieval?.unique_event_clusters||0)} unique event clusters · ${Number(payload.retrieval?.potential_atlas_gaps||0)} potential CT Atlas gaps.${periodNote}`,"success");
   }catch(error){setStatus(error?.message||"Deep Search failed.","error");}
   finally{if(button){button.disabled=false;button.textContent="RUN DEEP SEARCH";}}
 }
@@ -456,7 +450,7 @@ async function downloadPdf(){
     shell.innerHTML=`
       <div style="font-size:11px;letter-spacing:1.5px;color:#6b7280;font-weight:700">CT ATLAS · DEEP SEARCH</div>
       <h1 style="font-size:24px;line-height:1.2;margin:8px 0 10px">${esc(lastPayload.title||"CT Atlas Deep Search")}${hasFetchIssue(lastPayload)?` <span style="color:#b45309;font-weight:800;font-size:18px" title="${esc(FETCH_ISSUE_TITLE)}">⚠</span>`:""}</h1>
-      <div style="font-size:11px;color:#4b5563;margin-bottom:18px"><strong>Question:</strong> ${esc(lastPayload.question||"")}<br><strong>Generated:</strong> ${esc(stamp.toLocaleString("en-GB"))} · <strong>Period:</strong> ${Number(lastPayload.period_days||0)} days${lastPayload.period_widened_for_question?` (auto-extended from ${Number(lastPayload.period_days_requested||0)})`:""} · <strong>Model:</strong> ${esc(lastPayload.model||"Gemini")}</div>
+      <div style="font-size:11px;color:#4b5563;margin-bottom:18px"><strong>Question:</strong> ${esc(lastPayload.question||"")}<br><strong>Generated:</strong> ${esc(stamp.toLocaleString("en-GB"))} · <strong>Period:</strong> ${esc(lastPayload.detected_period?.label||"unknown")} · <strong>Model:</strong> ${esc(lastPayload.model||"Gemini")}</div>
       <div style="display:flex;flex-wrap:wrap;gap:7px;margin:0 0 20px">
         ${[["Articles",retrieved.articles_retrieved],["Unique events",retrieved.unique_event_clusters],["Evidence",retrieved.evidence_events_used_for_analysis],["Atlas matches",retrieved.matched_to_atlas],["Potential gaps",retrieved.potential_atlas_gaps],["Citation coverage",`${Number(lastPayload.grounding?.citation_coverage_percent||0)}%`]].map(([k,v])=>`<div style="border:1px solid #d1d5db;border-radius:6px;padding:7px 10px;min-width:92px"><div style="font-size:9px;color:#6b7280;text-transform:uppercase">${esc(k)}</div><div style="font-size:16px;font-weight:700">${esc(v??0)}</div></div>`).join("")}
       </div>

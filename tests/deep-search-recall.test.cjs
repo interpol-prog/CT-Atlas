@@ -6,9 +6,16 @@ const source=fs.readFileSync('cloudflare-worker/deep-search.js','utf8').replace(
 function harness(fetch){
  const c=vm.createContext({fetch,URL,URLSearchParams,AbortSignal,setTimeout:fn=>fn(),cleanText:(v,n)=>String(v||'').trim().slice(0,n)});
  vm.runInContext(source,c);
- return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltGlobalWave,fetchGdeltChunked,gdeltChunkRanges,splitGdeltRowsByLanguage,broadGdeltQuery,computeLanguageAnchors,filterByAnchor,DEEP_SEARCH_LANGUAGE_CODES,extractExplicitQuestionDate,resolveEffectivePeriodDays,fetchAcledWave,fetchBingWave,parseBingRss,extractBingRealUrl,isLikelyTransientFetchIssue})',c);
+ return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltGlobalWave,fetchGdeltChunked,gdeltChunkRanges,splitGdeltRowsByLanguage,broadGdeltQuery,computeLanguageAnchors,filterByAnchor,DEEP_SEARCH_LANGUAGE_CODES,resolveSearchWindow,windowSpanDays,GDELT_ARCHIVE_START,fetchAcledWave,fetchBingWave,parseBingRss,extractBingRealUrl,isLikelyTransientFetchIssue})',c);
 }
 function plan(h){return h.sanitizePlan({priority_languages:['fa','ps','ur','invalid'],queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l} Afghanistan opium`,secondary:`${l} Afghanistan heroin`}]))},'Afghanistan drugs');}
+// Test-only helper: builds the same {startDt,endDt} shape resolveSearchWindow()
+// produces for a "relative" window, since retrieveNews/fetchNewsWave/
+// fetchAcledWave/fetchGdeltGlobalWave now take an explicit window/range object
+// instead of a bare periodDays number.
+function windowFor(days,now=new Date()){
+ return {startDt:new Date(now.getTime()-days*86400000),endDt:now};
+}
 test('Afghanistan narcotics prioritises English, French, Dari, Pashto and Urdu',()=>{
  const h=harness();assert.deepEqual(Array.from(h.resolvePriorityLanguages('Afghanistan drug trafficking',[])),['en','fr','fa','ps','ur']);
  assert.deepEqual(Array.from(plan(h).priority_languages),['fa','ps','ur']);
@@ -21,7 +28,7 @@ test('Egypt questions prioritise Arabic alongside English and French',()=>{
 });
 test('sparse local feeds get native queries through fallback edition within 33 search calls (24 google + 3 google rescue + 3 bing rescue + 2 chunked GDELT calls [180d > 90d threshold] + 1 ACLED call)',async()=>{
  const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
- const result=await h.retrieveNews(plan(h),180,['fa','ps','ur']);
+ const result=await h.retrieveNews(plan(h),windowFor(180),['fa','ps','ur']);
  assert.equal(calls.length,33);assert.equal(result.subrequest_budget.search_requests,33);
  assert.equal(calls.filter(u=>u.href.includes('gdelt')).length,2,'a 180-day period is over the 90-day chunk threshold, so GDELT should be queried twice (date-range chunks), never per-language');
  assert.equal(calls.filter(u=>(u.searchParams.get('q')||'').includes('site:acleddata.com')).length,1,'ACLED must be queried exactly once');
@@ -35,20 +42,20 @@ test('sparse local feeds get native queries through fallback edition within 33 s
 });
 test('ACLED is queried once via a Google News query scoped to site:acleddata.com, tagged with search_engine "acled"',async()=>{
  const h=harness(async()=>new Response('<rss><channel><item><title>ACLED raid report</title><link>https://acleddata.com/x</link></item></channel></rss>'));
- const wave=await h.fetchAcledWave('Afghanistan opium cultivation',30);
+ const wave=await h.fetchAcledWave('Afghanistan opium cultivation',windowFor(30));
  assert.ok(wave.ok);
  assert.equal(wave.query.engine,'acled');
  assert.equal(wave.rows.length,1);
  assert.equal(wave.rows[0].search_engine,'acled');
  assert.equal(wave.rows[0].language,'en');
 });
-test('gdeltChunkRanges leaves short periods as a single un-sliced query and slices long ones into contiguous date ranges',()=>{
+test('gdeltChunkRanges leaves short spans as a single un-sliced range and slices long ones into contiguous date ranges',()=>{
  const h=harness();
- assert.equal(h.gdeltChunkRanges(30).length,1,'periods at or under the 90-day threshold must not be chunked');
- assert.equal(h.gdeltChunkRanges(30)[0],null);
- assert.equal(h.gdeltChunkRanges(90).length,1);
- assert.equal(h.gdeltChunkRanges(90)[0],null);
- const chunks365=h.gdeltChunkRanges(365);
+ const now=new Date();
+ assert.equal(h.gdeltChunkRanges(windowFor(30,now).startDt,now).length,1,'spans at or under the 90-day threshold must not be chunked');
+ assert.equal(h.gdeltChunkRanges(windowFor(90,now).startDt,now).length,1);
+ const w365=windowFor(365,now);
+ const chunks365=h.gdeltChunkRanges(w365.startDt,w365.endDt);
  assert.equal(chunks365.length,5,'ceil(365/90)=5, at the GDELT_MAX_CHUNKS cap');
  // Contiguous: each chunk's start must equal the previous chunk's end (within rounding).
  for(let i=0;i<chunks365.length-1;i++){
@@ -56,16 +63,21 @@ test('gdeltChunkRanges leaves short periods as a single un-sliced query and slic
      `chunk ${i} start should meet chunk ${i+1} end`);
  }
  assert.ok(chunks365[0].endDt.getTime()>chunks365[chunks365.length-1].startDt.getTime());
- const chunks180=h.gdeltChunkRanges(180);
- assert.equal(chunks180.length,2,'a 180-day period only needs 2 chunks of 90 days each');
- const chunks730=h.gdeltChunkRanges(730);
- assert.equal(chunks730.length,5,'capped at GDELT_MAX_CHUNKS even for a 2-year period');
+ const w180=windowFor(180,now);
+ assert.equal(h.gdeltChunkRanges(w180.startDt,w180.endDt).length,2,'a 180-day span only needs 2 chunks of 90 days each');
+ const w730=windowFor(730,now);
+ const chunks730=h.gdeltChunkRanges(w730.startDt,w730.endDt);
+ assert.equal(chunks730.length,5,'capped at GDELT_MAX_CHUNKS even for a 2-year span');
  assert.ok(chunks730[0].endDt.getTime()>chunks730[chunks730.length-1].startDt.getTime());
+ // A "global" span (years wide) must chunk the same way, not error or explode.
+ const chunksGlobal=h.gdeltChunkRanges(h.GDELT_ARCHIVE_START,now);
+ assert.equal(chunksGlobal.length,5,'a multi-year global span is still capped at GDELT_MAX_CHUNKS');
 });
 test('fetchGdeltChunked issues one spaced request per chunk and merges rows, ok if any chunk succeeded',async()=>{
  let calls=0;
  const h=harness(async()=>{calls++;return new Response(JSON.stringify({articles:[{title:`Article ${calls}`,url:`https://x/${calls}`,language:'English',domain:'x.com',seendate:'20260101120000Z'}]}));});
- const result=await h.fetchGdeltChunked('terrorism',365);
+ const w=windowFor(365);
+ const result=await h.fetchGdeltChunked('terrorism',w.startDt,w.endDt);
  assert.equal(calls,5,'a full year should issue exactly GDELT_MAX_CHUNKS requests');
  assert.equal(result.chunks,5);
  assert.equal(result.ok,true);
@@ -101,13 +113,13 @@ test('fetchBingWave uses the market for the requested language and tags rows wit
 test('retrieveNews does not call Bing at all when Google coverage is already sufficient (no cost on a healthy day)',async()=>{
  const goodRss='<rss><channel>'+Array.from({length:5},(_,i)=>`<item><title>Afghanistan real article ${i}</title><link>https://x/${i}</link></item>`).join('')+'</channel></rss>';
  const h=harness(async url=>new Response(url.includes('gdelt')?'{}':goodRss));
- const result=await h.retrieveNews(plan(h),30,['fa','ps','ur']);
+ const result=await h.retrieveNews(plan(h),windowFor(30),['fa','ps','ur']);
  const bingWaves=result.waves.filter(w=>w.query.engine==='bing');
  assert.equal(bingWaves.length,0,'Bing must not be called when every priority language already has >=3 results from Google');
 });
 test('retrieveNews includes exactly one ACLED wave alongside the Google News and GDELT waves',async()=>{
  const h=harness(async url=>new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>'));
- const result=await h.retrieveNews(plan(h),30,[]);
+ const result=await h.retrieveNews(plan(h),windowFor(30),[]);
  const acledWaves=result.waves.filter(w=>w.query.engine==='acled');
  assert.equal(acledWaves.length,1);
  assert.equal(result.subrequest_budget.acled_requests,1);
@@ -119,7 +131,7 @@ test('English priority rescue uses a genuinely different locale than its own pri
  // request and could never surface anything new. English must get a
  // distinct fallback (the UK edition) instead.
  const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
- await h.retrieveNews(plan(h),30,['en','fr','fa','ps','ur']);
+ await h.retrieveNews(plan(h),windowFor(30),['en','fr','fa','ps','ur']);
  const englishCalls=calls.filter(u=>(u.searchParams.get('q')||'').toLowerCase().startsWith('en '));
  assert.ok(englishCalls.length>=3,'expected English primary, secondary, and a rescue call');
  const locales=new Set(englishCalls.map(u=>u.searchParams.get('hl')));
@@ -128,7 +140,7 @@ test('English priority rescue uses a genuinely different locale than its own pri
 });
 test('five priority languages still stay within the 36-call search budget, well under the 50 subrequest ceiling once the ~9 non-search calls are counted',async()=>{
  const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
- const result=await h.retrieveNews(plan(h),30,h.resolvePriorityLanguages('Afghanistan drug trafficking',[]));
+ const result=await h.retrieveNews(plan(h),windowFor(30),h.resolvePriorityLanguages('Afghanistan drug trafficking',[]));
  assert.equal(calls.length,36);assert.equal(result.subrequest_budget.search_requests,36);
  assert.ok(result.subrequest_budget.search_requests+9<50);
  const rescue=result.waves.filter(w=>w.query.variant==='priority-locale-rescue');
@@ -139,9 +151,9 @@ test('five priority languages still stay within the 36-call search budget, well 
 });
 test('a failing wave is never retried — retries risk blowing the subrequest ceiling on exactly the runs where most waves are failing',async()=>{
  let calls=0;const h=harness(async()=>{calls++;return new Response('rate limited',{status:429});});
- await h.fetchNewsWave({language:'en',query:'q',variant:'primary'},0,30,{hl:'en-US',gl:'US',ceid:'US:en'});
+ await h.fetchNewsWave({language:'en',query:'q',variant:'primary'},0,windowFor(30),{hl:'en-US',gl:'US',ceid:'US:en'});
  assert.equal(calls,1);
- calls=0;await h.fetchGdeltGlobalWave('q',30);
+ calls=0;await h.fetchGdeltGlobalWave('q',windowFor(30));
  assert.equal(calls,1);
 });
 test('GDELT is queried once globally and its mixed-language response is split back into one wave per language',async()=>{
@@ -167,13 +179,13 @@ test('GDELT articles in an unrecognized language are dropped, not miscounted',as
    {title:'Unknown script piece',url:'https://x/2',language:'Klingon',domain:'x.com',seendate:'20260101120000Z'},
  ]});
  const h=harness(async()=>new Response(json));
- const wave=await h.fetchGdeltGlobalWave('q',30);
+ const wave=await h.fetchGdeltGlobalWave('q',windowFor(30));
  assert.equal(wave.rows.length,1);
  assert.equal(wave.rows[0].language,'en');
 });
 test('HTML 200 provider failures remain distinct from empty RSS',async()=>{
  const h=harness(async url=>new Response(url.includes('gdelt')?'{}':'<html>Unavailable</html>'));
- const r=await h.retrieveNews(plan(h),7,[]);
+ const r=await h.retrieveNews(plan(h),windowFor(7),[]);
  assert.ok(r.waves.filter(w=>!w.query.engine).every(w=>!w.ok&&w.error.includes('non-RSS')));
 });
 test('missing language plans fail explicitly',()=>{assert.throws(()=>harness().sanitizePlan({queries:{}},''),/every required language/);});
@@ -250,7 +262,7 @@ test('retrieveNews filters out an off-topic article for a language with a confid
  const offTopicRss='<rss><channel><item><title>Domestic heroin bust unrelated to the requested country</title><link>https://x/2</link></item><item><title>Afganistán: incautan opio en la frontera</title><link>https://x/3</link></item></channel></rss>';
  const h=harness(async url=>new Response(url.includes('gdelt')?'{}':(url.includes('hl=es')?offTopicRss:onTopicRss)));
  const p=h.sanitizePlan({queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l==='es'?'Afganistán':'Afghanistan'} opium cultivation`,secondary:`${l==='es'?'Afganistán':'Afghanistan'} heroin trafficking`}]))},'Afghanistan drugs');
- const result=await h.retrieveNews(p,30,[]);
+ const result=await h.retrieveNews(p,windowFor(30),[]);
  // Both the primary and secondary "es" queries hit the same mocked feed, so
  // the off-topic item must be dropped from each of those two waves.
  const esRows=result.waves.filter(w=>w.query.language==='es').flatMap(w=>w.rows);
@@ -308,28 +320,52 @@ test('buildEvidence never fabricates English items beyond what was actually retr
  assert.equal(evidence.length,1);
  assert.equal(evidence.filter(e=>e.language==='en').length,0);
 });
-test('a date explicitly named in the question widens the search period instead of returning "no coverage"',()=>{
- // Regression test for the real user report: "...Herat province on 10 april
- // 2026" with the 30-day dropdown default silently never reaching back to
- // April -- the period must widen to actually cover the named date.
+test('resolveSearchWindow: "global" mode searches from the GDELT archive floor to now',()=>{
+ // There is no period dropdown any more -- when the planner detects no time
+ // cue in the question at all, it must return mode "global" so the search
+ // covers the full available depth, not just a recent slice.
  const h=harness();
- const q='Killing of civilians Shia Shrine in Herat province on 10 april 2026';
- const resolved=h.resolveEffectivePeriodDays(q,30);
- assert.equal(resolved.widened,true);
- assert.ok(resolved.periodDays>=resolved.detected_days_ago,`period ${resolved.periodDays} must cover ${resolved.detected_days_ago} days ago`);
- assert.ok(h.DEEP_SEARCH_LANGUAGE_CODES.length>0); // sanity: harness context loaded correctly
+ const now=new Date('2026-06-15T12:00:00Z');
+ const plan={detected_period:{mode:'global',explanation:'Global search across all available history'}};
+ const w=h.resolveSearchWindow(plan,now);
+ assert.equal(w.mode,'global');
+ assert.equal(w.startDt.getTime(),h.GDELT_ARCHIVE_START.getTime());
+ assert.equal(w.endDt.getTime(),now.getTime());
+ assert.equal(w.label,'Global search across all available history');
 });
-test('resolveEffectivePeriodDays never narrows an already-sufficient period, and handles month-day-year and ISO dates',()=>{
+test('resolveSearchWindow: "relative" mode turns a duration into a window ending now',()=>{
  const h=harness();
- assert.equal(h.resolveEffectivePeriodDays('generic question with no date',90).widened,false);
- const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
- const fiftyDaysAgo=new Date(Date.now()-50*86400000);
- const mdY=`${monthNames[fiftyDaysAgo.getUTCMonth()]} ${fiftyDaysAgo.getUTCDate()}, ${fiftyDaysAgo.getUTCFullYear()}`;
- assert.equal(h.resolveEffectivePeriodDays(`something on ${mdY}`,90).widened,false,'a 90-day period already covers a date only ~50 days ago');
- const isoStr=fiftyDaysAgo.toISOString().slice(0,10);
- const iso=h.resolveEffectivePeriodDays(`event on ${isoStr}`,7);
- assert.equal(iso.widened,true);
- assert.equal(iso.periodDays,90,'a ~50-day-old date must widen a 7-day request up to the next allowed bucket (90)');
+ const now=new Date('2026-06-15T12:00:00Z');
+ const plan={detected_period:{mode:'relative',relative_days:90,explanation:'Last 90 days'}};
+ const w=h.resolveSearchWindow(plan,now);
+ assert.equal(w.mode,'relative');
+ assert.equal(h.windowSpanDays(w),90);
+ assert.equal(w.endDt.getTime(),now.getTime());
+});
+test('resolveSearchWindow: "absolute" mode uses the planner\'s exact past dates, not "now minus N days"',()=>{
+ // Regression scenario for the real ask: "what happened in Syria in 2019"
+ // must search 2019 itself, not the last N days from today.
+ const h=harness();
+ const now=new Date('2026-06-15T12:00:00Z');
+ const plan={detected_period:{mode:'absolute',start_date:'2019-01-01',end_date:'2019-12-31',explanation:'January to December 2019'}};
+ const w=h.resolveSearchWindow(plan,now);
+ assert.equal(w.mode,'absolute');
+ assert.equal(w.startDt.toISOString().slice(0,10),'2019-01-01');
+ assert.equal(w.endDt.toISOString().slice(0,10),'2019-12-31');
+});
+test('resolveSearchWindow: "absolute" mode clamps an end date in the future to now',()=>{
+ const h=harness();
+ const now=new Date('2026-06-15T12:00:00Z');
+ const plan={detected_period:{mode:'absolute',start_date:'2026-01-01',end_date:'2099-01-01',explanation:'Since January 2026'}};
+ const w=h.resolveSearchWindow(plan,now);
+ assert.equal(w.endDt.getTime(),now.getTime(),'an end date beyond now must clamp to now, never search the future');
+});
+test('resolveSearchWindow falls back to a bounded relative default when detected_period is missing or malformed, instead of crashing or defaulting to an unbounded search',()=>{
+ const h=harness();
+ const now=new Date('2026-06-15T12:00:00Z');
+ assert.equal(h.windowSpanDays(h.resolveSearchWindow({},now)),90,'no detected_period at all');
+ assert.equal(h.windowSpanDays(h.resolveSearchWindow({detected_period:{mode:'absolute',start_date:'not-a-date',explanation:''}},now)),90,'unparsable absolute start_date must fall back, not throw');
+ assert.equal(h.windowSpanDays(h.resolveSearchWindow({detected_period:{mode:'nonsense'}},now)),90,'an unrecognised mode must fall back to the relative default');
 });
 test('isLikelyTransientFetchIssue flags a zero-result report only when every single wave failed',()=>{
  // Regression test for a real report: "AI in terrorism" over 1 year came

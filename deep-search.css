@@ -11,6 +11,9 @@
 #deepSearchClose:hover{color:#fff}
 #deepSearchBody{display:grid;grid-template-columns:320px minmax(0,1fr);min-height:0;flex:1}
 #deepSearchControls{padding:15px;border-right:1px solid rgba(91,161,202,.18);overflow:auto;background:rgba(3,12,19,.5)}
+#deepSearchGuidance{margin:0 0 13px;padding:10px;border-left:2px solid #2e8fc5;background:rgba(41,139,194,.07);color:#a9c8d8;font:500 8px/1.55 Arial,sans-serif}
+#deepSearchGuidance strong{color:#cfe6f2}
+#deepSearchDetectedPeriod{margin-top:4px;color:#71bce4;font:700 8px/1.4 Arial,sans-serif}
 .deep-field{display:block;margin-bottom:13px}
 .deep-field>span{display:block;margin-bottom:6px;color:#8ca8b8;font:800 7px/1 Arial,sans-serif;letter-spacing:.13em}
 .deep-field textarea,.deep-field select{box-sizing:border-box;width:100%;border:1px solid rgba(85,137,166,.38);background:#07141e;color:#e0edf4;padding:9px 10px;font:500 11px/1.45 Arial,sans-serif;outline:none}
