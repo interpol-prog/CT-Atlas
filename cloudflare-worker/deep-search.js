@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.22-acled-google-news-source";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.23-distinguish-transient-fetch-failure";
 
 const MONTH_NAMES = Object.freeze({
   january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
@@ -68,6 +68,18 @@ function resolveEffectivePeriodDays(question, requestedPeriodDays) {
   const widenedTo = ascending.find(candidate => candidate >= daysAgo) || ascending[ascending.length - 1];
   return { periodDays: widenedTo, widened: widenedTo !== requestedPeriodDays, detected_days_ago: daysAgo };
 }
+
+// A zero-result report can mean two very different things: genuinely no
+// open-source coverage exists, or every single search request was rejected
+// by a provider (Google News/GDELT rate-limiting or blocking Cloudflare's
+// shared egress IPs, a known transient condition -- see the v5.12/v5.19
+// incidents). Telling these apart matters: the first is a real finding, the
+// second is not evidence of anything and should never be read as "no
+// coverage exists".
+function isLikelyTransientFetchIssue(waves) {
+  return waves.length > 0 && waves.every(wave => !wave.ok);
+}
+
 // Used to re-query a sparse priority language through Google News' broader
 // US-hosted edition instead of its own country/language edition -- these can
 // carry different indexes even for the same native-script query text. This
@@ -1223,8 +1235,19 @@ export async function handleDeepSearch(request, env, ctx) {
     const languagesSearched = languageDiagnostics(plan, retrieval, priorityLanguages);
 
     if (!unique.length) {
+      // A zero-result report can mean two very different things: genuinely
+      // no open-source coverage exists, or every single search request was
+      // rejected by a provider (Google News/GDELT rate-limiting or blocking
+      // Cloudflare's shared egress IPs, a known transient condition -- see
+      // the v5.12/v5.19 incidents). Telling these apart matters: the first
+      // is a real finding, the second is not evidence of anything and
+      // should never be read as "no coverage exists".
+      const likelyTransientFetchIssue = isLikelyTransientFetchIssue(retrieval.waves);
       return jsonResponse({
-        error: "Deep Search found no usable open-source reporting for this question and period.",
+        error: likelyTransientFetchIssue
+          ? "Deep Search's search providers (Google News/GDELT) failed or were rate-limited for every query in this search. This is a temporary infrastructure issue, not evidence that no coverage exists for this question -- please retry in a few minutes."
+          : "Deep Search found no usable open-source reporting for this question and period.",
+        likely_transient_fetch_issue: likelyTransientFetchIssue,
         period_days: periodDays,
         period_days_requested: requestedPeriodDays,
         period_widened_for_question: periodResolution.widened,

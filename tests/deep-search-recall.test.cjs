@@ -6,7 +6,7 @@ const source=fs.readFileSync('cloudflare-worker/deep-search.js','utf8').replace(
 function harness(fetch){
  const c=vm.createContext({fetch,URLSearchParams,AbortSignal,setTimeout:fn=>fn(),cleanText:(v,n)=>String(v||'').trim().slice(0,n)});
  vm.runInContext(source,c);
- return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltGlobalWave,splitGdeltRowsByLanguage,broadGdeltQuery,computeLanguageAnchors,filterByAnchor,DEEP_SEARCH_LANGUAGE_CODES,extractExplicitQuestionDate,resolveEffectivePeriodDays,fetchAcledWave})',c);
+ return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltGlobalWave,splitGdeltRowsByLanguage,broadGdeltQuery,computeLanguageAnchors,filterByAnchor,DEEP_SEARCH_LANGUAGE_CODES,extractExplicitQuestionDate,resolveEffectivePeriodDays,fetchAcledWave,isLikelyTransientFetchIssue})',c);
 }
 function plan(h){return h.sanitizePlan({priority_languages:['fa','ps','ur','invalid'],queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l} Afghanistan opium`,secondary:`${l} Afghanistan heroin`}]))},'Afghanistan drugs');}
 test('Afghanistan narcotics prioritises English, French, Dari, Pashto and Urdu',()=>{
@@ -263,6 +263,20 @@ test('resolveEffectivePeriodDays never narrows an already-sufficient period, and
  const iso=h.resolveEffectivePeriodDays(`event on ${isoStr}`,7);
  assert.equal(iso.widened,true);
  assert.equal(iso.periodDays,90,'a ~50-day-old date must widen a 7-day request up to the next allowed bucket (90)');
+});
+test('isLikelyTransientFetchIssue flags a zero-result report only when every single wave failed',()=>{
+ // Regression test for a real report: "AI in terrorism" over 1 year came
+ // back with 0 results because every one of 35 search waves got a 503
+ // (Google News) or 429 (GDELT) from Cloudflare's shared egress IPs -- a
+ // transient infrastructure condition, not evidence that no coverage
+ // exists. Confirmed live: the same Google News query succeeded (HTTP 200)
+ // from a non-Cloudflare IP at the same time.
+ const h=harness();
+ const allFailed=[{ok:false},{ok:false},{ok:false}];
+ assert.equal(h.isLikelyTransientFetchIssue(allFailed),true);
+ const someSucceeded=[{ok:false},{ok:true},{ok:false}];
+ assert.equal(h.isLikelyTransientFetchIssue(someSucceeded),false,'even one successful wave means this is a real (if sparse) search, not a wholesale outage');
+ assert.equal(h.isLikelyTransientFetchIssue([]),false,'no waves at all is a different failure mode (e.g. planner error), not a fetch outage');
 });
 test('pdfDisplayUrl truncates long URLs so the PDF never renders a 200+ char unbroken string',()=>{
  const js=fs.readFileSync('deep-search.js','utf8');
