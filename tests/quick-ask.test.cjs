@@ -79,3 +79,25 @@ test('QUICK_ASK_VERSION is exported for cache-busting on schema changes',()=>{
  assert.equal(typeof h.QUICK_ASK_VERSION,'string');
  assert.ok(h.QUICK_ASK_VERSION.length>0);
 });
+
+test('regression: "isis" must not match purely because it is a substring of "crisis" (whole-word matching)',()=>{
+ const h=harness();
+ const events=[event({id:'unrelated',title:'Government faces constitutional crisis',summary:'A political crisis over budget authority.'})];
+ const result=h.localEventMatches(events,'isis attack');
+ assert.equal(result.length,0,'a bare substring hit inside "crisis" must not count as an ISIS match');
+});
+
+test('a short but meaningful acronym like "ai" is matched as a whole word, not filtered out as too short',()=>{
+ const h=harness();
+ const events=[event({id:'ai-event',title:'Group uses AI to generate propaganda videos',summary:'AI-generated content spread online.'})];
+ const result=h.localEventMatches(events,'how is AI used by terrorists');
+ assert.equal(result.length,1);
+ assert.equal(result[0].id,'ai-event');
+});
+
+test('"ai" as a whole-word token does not falsely match events whose text merely contains the letters a-i inside other words',()=>{
+ const h=harness();
+ const events=[event({id:'no-ai',title:'Suspect claimed he remained at the scene',summary:'Witnesses said little.'})];
+ const result=h.localEventMatches(events,'how is AI used by terrorists');
+ assert.equal(result.length,0,'"claimed", "remained" and "said" contain the letters a-i but are not the word "ai"');
+});
