@@ -30,7 +30,7 @@ if (request.method === "OPTIONS") {
 return new Response(null, { status: 204, headers: corsHeaders(env) });
 }
 if (url.pathname === "/health" && request.method === "GET") {
-return jsonResponse({ ok: true, service: "ct-report-generator", version: "5.23", deep_search: true, deep_search_version: DEEP_SEARCH_VERSION, report_generator_version: REPORT_GENERATOR_VERSION, model: "gemini-3.5-flash-lite" }, 200, env);
+return jsonResponse({ ok: true, service: "ct-report-generator", version: "5.24", deep_search: true, deep_search_version: DEEP_SEARCH_VERSION, report_generator_version: REPORT_GENERATOR_VERSION, model: "gemini-3.5-flash-lite" }, 200, env);
 }
 if (url.pathname === "/auth-login" && request.method === "POST") {
 let authBody;

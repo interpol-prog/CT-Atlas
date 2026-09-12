@@ -8,7 +8,7 @@ const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 // Bump whenever the report SHAPE changes (new fields, schema, citation
 // rules) so an existing cache entry from before the change is never served
 // as-is -- folded into the cache key in index.js's /report handler.
-const REPORT_GENERATOR_VERSION = "report-v2-sources-and-citations";
+const REPORT_GENERATOR_VERSION = "report-v3-hub-severity-not-volume";
 
 const USER_PASSWORD_HASHES = Object.freeze({
   "group-i-1": "73b888d49521429ac698cda951475bd0f6d16fc01821c3f527f8bfd3fa612b36",
@@ -74,9 +74,30 @@ When a comparison period is supplied, focus on WHAT CHANGED between the current
 period and the immediately preceding equivalent period. Distinguish reporting
 volume from evidence of an actual operational change whenever possible.
 
-Prioritise concrete countries, regions, cities, attacks, arrests, clashes,
-disrupted plots, weapons/explosives, terrorist financing, CBRN, cyber and
-emerging-technology developments when materially relevant to the selected topic.
+HUB / HOTSPOT RULE (critical -- this has been a real error in past reports):
+in GEOGRAPHIC PATTERNS, never call a country or region a "hub", an "emerging
+hotspot", or otherwise newly significant merely because it has a high
+event_count or article count. Reporting volume can rise simply because a
+country's press produces a lot of routine wire copy (many short items about
+the same court case, minor detentions, or a story simply getting picked up
+and translated by many outlets) -- none of that reflects real operational
+activity on the ground. A location only qualifies as a hub/hotspot when
+top_countries_by_attack_ct_action_activity shows a genuinely high count of
+Attacks or Counter Terrorism Action events specifically -- actual attacks,
+armed clashes, or offensive/combat counter-terrorism operations (raids,
+sieges, captures). A high count of plain "Arrests" (routine, no-combat
+custody) does NOT by itself make somewhere a hub, even at high volume --
+only a large-scale, combat-linked operation (already classified as Counter
+Terrorism Action) counts. When you cite a country as significant, name
+whether that significance comes from attacks it suffered, combat CT
+operations conducted there, or something else -- never leave it ambiguous
+whether you mean "lots of attacks happened here" versus "lots of articles
+were written about here".
+
+Prioritise concrete countries, regions, cities, attacks, offensive/combat
+counter-terrorism operations, clashes, disrupted plots, weapons/explosives,
+terrorist financing, CBRN, cyber and emerging-technology developments when
+materially relevant to the selected topic.
 
 Do not invent facts, casualty figures, attribution, coordination, causes or
 predictions. Preserve uncertainty. Use only the supplied records and statistics.
@@ -278,16 +299,45 @@ function citationMetrics(analysis, validIds) {
   };
 }
 
+// Real "hub" activity per the analyst's own definition: sustained attacks or
+// offensive/combat counter-terrorism operations (raids, clashes, captures).
+// Deliberately excludes "Arrests" (plain, no-combat custody -- can be high in
+// volume purely because a country's courts/police generate a lot of routine
+// wire copy, without a single attack or clash happening) and every other
+// category, so a country's rank can never be driven by reporting volume on
+// financing, legal proceedings, CBRN or online-radicalization stories.
+const HIGH_SEVERITY_HUB_CATEGORIES = new Set(["Attacks", "Counter Terrorism Action"]);
+
 function stats(events) {
   const category = {};
-  const country = {};
+  const totals = {};
+  const highSeverity = {};
+  const categoriesByCountry = {};
   for (const e of events) {
-    for (const c of eventCategories(e)) category[c] = (category[c] || 0) + 1;
+    const cats = eventCategories(e);
+    for (const c of cats) category[c] = (category[c] || 0) + 1;
     const co = cleanText(e.country, 80);
-    if (co) country[co] = (country[co] || 0) + 1;
+    if (!co) continue;
+    totals[co] = (totals[co] || 0) + 1;
+    if (cats.some(c => HIGH_SEVERITY_HUB_CATEGORIES.has(c))) {
+      highSeverity[co] = (highSeverity[co] || 0) + 1;
+    }
+    const byCat = categoriesByCountry[co] || (categoriesByCountry[co] = {});
+    for (const c of cats) byCat[c] = (byCat[c] || 0) + 1;
   }
-  const topCountries = Object.entries(country).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  return { event_count: events.length, categories: category, top_countries: topCountries };
+  // Ranked by ACTUAL attack/CT-action activity, never by raw event/article
+  // volume -- see HIGH_SEVERITY_HUB_CATEGORIES above.
+  const topCountries = Object.keys(totals)
+    .sort((a, b) => (highSeverity[b] || 0) - (highSeverity[a] || 0) || totals[b] - totals[a])
+    .slice(0, 10)
+    .map(name => ({
+      name,
+      attacks_or_ct_action_events: highSeverity[name] || 0,
+      total_events: totals[name],
+      top_categories: Object.entries(categoriesByCountry[name])
+        .sort((a, b) => b[1] - a[1]).slice(0, 3)
+    }));
+  return { event_count: events.length, categories: category, top_countries_by_attack_ct_action_activity: topCountries };
 }
 
 function priority(event) {

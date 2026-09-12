@@ -201,10 +201,33 @@ English. The analysis should be concise, evidence-based and operationally
 useful. It must distinguish changes in reporting volume from evidence of an
 actual change in terrorist/criminal activity when that distinction matters.
 
+HUB / HOTSPOT RULE (critical -- this has been a real error in past reports):
+never call a country or region a "hub", an "emerging hotspot", or otherwise
+newly significant merely because it has a high event_count or a high article
+count. Reporting volume can rise simply because a country's press produces a
+lot of routine wire copy (many short items about the same court case, minor
+detentions, or a story simply getting picked up and translated by many
+outlets) -- none of that reflects real operational activity on the ground.
+A location only qualifies as a hub/hotspot when the supplied
+top_countries_by_attack_ct_action_activity / top_regions_by_attack_ct_action_activity
+fields show a genuinely high count of Attacks or Counter Terrorism Action
+events specifically -- actual attacks, armed clashes, or offensive/combat
+counter-terrorism operations (raids, sieges, captures). A high count of
+plain "Arrests" (routine, no-combat custody) does NOT by itself make
+somewhere a hub, even at high volume -- only a large-scale, combat-linked
+operation (which the data already classifies as Counter Terrorism Action)
+counts. When you cite a country as significant, name whether that
+significance comes from attacks it suffered, combat CT operations conducted
+there, or something else -- never leave it ambiguous whether you mean
+"lots of attacks happened here" or "lots of articles were written about
+here".
+
 Prioritise:
 - changes in attack / bombing / assassination / armed-clash activity;
-- changes in arrests, disrupted plots and operational counter-terrorism action;
-- geographic shifts, emerging or declining hotspots;
+- changes in disrupted plots and offensive/combat counter-terrorism action
+  (raids, clashes, captures) -- not routine, no-combat arrests;
+- geographic shifts in ACTUAL attack or combat-CT-operation activity (per the
+  hub/hotspot rule above), not shifts in reporting volume;
 - meaningful changes in tactics, weapons, targeting or modus operandi;
 - important actor/group developments when supported by the supplied records;
 - major terrorist-financing, CBRN, cyber or emerging-technology developments
@@ -8494,25 +8517,62 @@ def _weekly_event_time(event):
     )
 
 
-def _weekly_top_counter(events, field_name, limit=8):
-    counter = Counter()
+# Real "hub" activity per the analyst's own definition: sustained attacks or
+# offensive/combat counter-terrorism operations (raids, clashes, captures).
+# Deliberately excludes "Arrests" (plain, no-combat custody -- can be high in
+# volume purely because a country's courts/police generate a lot of routine
+# wire copy, without a single attack or clash happening) and every other
+# category, so a country's rank here can never be driven by reporting volume
+# on financing, legal proceedings, CBRN or online-radicalization stories.
+HIGH_SEVERITY_HUB_CATEGORIES = {"Attacks", "Counter Terrorism Action"}
+
+
+def _weekly_geo_breakdown(events, field_name, limit=8):
+    """
+    Ranks locations by ACTUAL high-severity activity (attacks/clashes/combat
+    CT operations), not by raw event or article count -- a location with a
+    lot of routine arrest/legal reporting must never outrank one with real
+    attacks just because more articles were written about it. total_events
+    and categories are still reported for context, but they are not what
+    determines the ranking or ordering below.
+    """
+    totals = Counter()
+    high_severity = Counter()
+    categories_by_location = defaultdict(Counter)
 
     for event in events:
-        value = clean_text(
-            event.get(
-                field_name,
-                ""
-            )
+        location = clean_text(event.get(field_name, ""))
+        if not location:
+            continue
+
+        totals[location] += 1
+
+        categories = event.get("categories") or (
+            [event.get("category")] if event.get("category") else []
         )
+        categories = set(categories)
 
-        if value:
-            counter[
-                value
-            ] += 1
+        for category in categories:
+            if category:
+                categories_by_location[location][category] += 1
 
-    return counter.most_common(
-        limit
-    )
+        if categories & HIGH_SEVERITY_HUB_CATEGORIES:
+            high_severity[location] += 1
+
+    ranked = sorted(
+        totals.keys(),
+        key=lambda location: (-high_severity[location], -totals[location]),
+    )[:limit]
+
+    return [
+        {
+            "name": location,
+            "attacks_or_ct_action_events": high_severity[location],
+            "total_events": totals[location],
+            "top_categories": categories_by_location[location].most_common(3),
+        }
+        for location in ranked
+    ]
 
 
 def _weekly_category_counts(events):
@@ -8561,14 +8621,14 @@ def _weekly_stats(events):
             _weekly_category_counts(
                 events
             ),
-        "top_countries":
-            _weekly_top_counter(
+        "top_countries_by_attack_ct_action_activity":
+            _weekly_geo_breakdown(
                 events,
                 "country",
                 10,
             ),
-        "top_regions":
-            _weekly_top_counter(
+        "top_regions_by_attack_ct_action_activity":
+            _weekly_geo_breakdown(
                 events,
                 "region",
                 8,
