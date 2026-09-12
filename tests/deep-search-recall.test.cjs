@@ -4,9 +4,9 @@ const fs=require('node:fs');
 const vm=require('node:vm');
 const source=fs.readFileSync('cloudflare-worker/deep-search.js','utf8').replace(/^import[\s\S]*?from "\.\/shared.js";\s*/,'').replace(/export /g,'');
 function harness(fetch){
- const c=vm.createContext({fetch,URLSearchParams,AbortSignal,setTimeout:fn=>fn(),cleanText:(v,n)=>String(v||'').trim().slice(0,n)});
+ const c=vm.createContext({fetch,URL,URLSearchParams,AbortSignal,setTimeout:fn=>fn(),cleanText:(v,n)=>String(v||'').trim().slice(0,n)});
  vm.runInContext(source,c);
- return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltGlobalWave,splitGdeltRowsByLanguage,broadGdeltQuery,computeLanguageAnchors,filterByAnchor,DEEP_SEARCH_LANGUAGE_CODES,extractExplicitQuestionDate,resolveEffectivePeriodDays,fetchAcledWave,isLikelyTransientFetchIssue})',c);
+ return vm.runInContext('({sanitizePlan,retrieveNews,resolvePriorityLanguages,buildEvidence,fetchNewsWave,fetchGdeltGlobalWave,fetchGdeltChunked,gdeltChunkRanges,splitGdeltRowsByLanguage,broadGdeltQuery,computeLanguageAnchors,filterByAnchor,DEEP_SEARCH_LANGUAGE_CODES,extractExplicitQuestionDate,resolveEffectivePeriodDays,fetchAcledWave,fetchBingWave,parseBingRss,extractBingRealUrl,isLikelyTransientFetchIssue})',c);
 }
 function plan(h){return h.sanitizePlan({priority_languages:['fa','ps','ur','invalid'],queries:Object.fromEntries(h.DEEP_SEARCH_LANGUAGE_CODES.map(l=>[l,{primary:`${l} Afghanistan opium`,secondary:`${l} Afghanistan heroin`}]))},'Afghanistan drugs');}
 test('Afghanistan narcotics prioritises English, French, Dari, Pashto and Urdu',()=>{
@@ -19,15 +19,18 @@ test('English and French are always prioritised even without a detected country'
 test('Egypt questions prioritise Arabic alongside English and French',()=>{
  const h=harness();assert.deepEqual(Array.from(h.resolvePriorityLanguages('Recent extremist activity in Egypt',[])),['en','fr','ar']);
 });
-test('sparse local feeds get native queries through fallback edition within 29 search calls (24 google + 3 rescue + 1 single global GDELT call + 1 single ACLED call)',async()=>{
+test('sparse local feeds get native queries through fallback edition within 33 search calls (24 google + 3 google rescue + 3 bing rescue + 2 chunked GDELT calls [180d > 90d threshold] + 1 ACLED call)',async()=>{
  const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
  const result=await h.retrieveNews(plan(h),180,['fa','ps','ur']);
- assert.equal(calls.length,29);assert.equal(result.subrequest_budget.search_requests,29);
- assert.equal(calls.filter(u=>u.href.includes('gdelt')).length,1,'GDELT must be queried exactly once, never per-language');
+ assert.equal(calls.length,33);assert.equal(result.subrequest_budget.search_requests,33);
+ assert.equal(calls.filter(u=>u.href.includes('gdelt')).length,2,'a 180-day period is over the 90-day chunk threshold, so GDELT should be queried twice (date-range chunks), never per-language');
  assert.equal(calls.filter(u=>(u.searchParams.get('q')||'').includes('site:acleddata.com')).length,1,'ACLED must be queried exactly once');
+ assert.equal(calls.filter(u=>u.href.includes('bing.com')).length,3,'all 3 sparse priority languages should get a Bing rescue');
  const rescue=result.waves.filter(w=>w.query.variant==='priority-locale-rescue');
  assert.deepEqual(Array.from(rescue,w=>w.query.language),['fa','ps','ur']);
  assert.ok(rescue.every(w=>w.query.fallback_locale));
+ const bingRescue=result.waves.filter(w=>w.query.engine==='bing');
+ assert.deepEqual(Array.from(bingRescue,w=>w.query.language).sort(),['fa','ps','ur']);
  assert.ok(calls[0].searchParams.get('q').startsWith('fa '));
 });
 test('ACLED is queried once via a Google News query scoped to site:acleddata.com, tagged with search_engine "acled"',async()=>{
@@ -38,6 +41,66 @@ test('ACLED is queried once via a Google News query scoped to site:acleddata.com
  assert.equal(wave.rows.length,1);
  assert.equal(wave.rows[0].search_engine,'acled');
  assert.equal(wave.rows[0].language,'en');
+});
+test('gdeltChunkRanges leaves short periods as a single un-sliced query and slices long ones into contiguous date ranges',()=>{
+ const h=harness();
+ assert.equal(h.gdeltChunkRanges(30).length,1,'periods at or under the 90-day threshold must not be chunked');
+ assert.equal(h.gdeltChunkRanges(30)[0],null);
+ assert.equal(h.gdeltChunkRanges(90).length,1);
+ assert.equal(h.gdeltChunkRanges(90)[0],null);
+ const chunks365=h.gdeltChunkRanges(365);
+ assert.equal(chunks365.length,3,'capped at GDELT_MAX_CHUNKS even for a full year');
+ // Contiguous: each chunk's start must equal the previous chunk's end (within rounding).
+ for(let i=0;i<chunks365.length-1;i++){
+   assert.ok(Math.abs(chunks365[i].startDt.getTime()-chunks365[i+1].endDt.getTime())<2000,
+     `chunk ${i} start should meet chunk ${i+1} end`);
+ }
+ assert.ok(chunks365[0].endDt.getTime()>chunks365[chunks365.length-1].startDt.getTime());
+ const chunks180=h.gdeltChunkRanges(180);
+ assert.equal(chunks180.length,2,'a 180-day period only needs 2 chunks of 90 days each');
+});
+test('fetchGdeltChunked issues one spaced request per chunk and merges rows, ok if any chunk succeeded',async()=>{
+ let calls=0;
+ const h=harness(async()=>{calls++;return new Response(JSON.stringify({articles:[{title:`Article ${calls}`,url:`https://x/${calls}`,language:'English',domain:'x.com',seendate:'20260101120000Z'}]}));});
+ const result=await h.fetchGdeltChunked('terrorism',365);
+ assert.equal(calls,3,'a full year should issue exactly GDELT_MAX_CHUNKS requests');
+ assert.equal(result.chunks,3);
+ assert.equal(result.ok,true);
+ assert.equal(result.rows.length,3,'rows from every chunk must be merged');
+});
+test('parseBingRss extracts the real article URL from Bing\'s redirect link and the source from News:Source',()=>{
+ const h=harness();
+ const xml=`<rss><channel><item><title>UN warns terror groups exploiting AI</title>` +
+   `<link>http://www.bing.com/news/apiclick.aspx?ref=FexRss&amp;url=https%3a%2f%2fexample.com%2fai-terrorism&amp;c=123</link>` +
+   `<description>Some summary text here.</description><pubDate>Wed, 01 Jul 2026 06:00:00 GMT</pubDate>` +
+   `<News:Source>example.com</News:Source></item></channel></rss>`;
+ const rows=h.parseBingRss(xml,'en','artificial intelligence terrorism');
+ assert.equal(rows.length,1);
+ assert.equal(rows[0].url,'https://example.com/ai-terrorism','must decode the real URL out of the Bing tracking redirect, not keep the bing.com link');
+ assert.equal(rows[0].source,'example.com');
+ assert.equal(rows[0].search_engine,'bing');
+ assert.equal(rows[0].language,'en');
+});
+test('extractBingRealUrl falls back to the original link when there is no url= param',()=>{
+ const h=harness();
+ assert.equal(h.extractBingRealUrl('https://example.com/direct-article'),'https://example.com/direct-article');
+});
+test('fetchBingWave uses the market for the requested language and tags rows with search_engine "bing"',async()=>{
+ const h=harness(async url=>{
+   assert.ok(url.includes('mkt=fr-FR'),'French should map to the fr-FR Bing market: '+url);
+   return new Response('<rss><channel><item><title>Alerte terrorisme IA</title><link>https://example.fr/x</link></item></channel></rss>');
+ });
+ const wave=await h.fetchBingWave('terrorisme intelligence artificielle','fr');
+ assert.ok(wave.ok);
+ assert.equal(wave.query.engine,'bing');
+ assert.equal(wave.rows[0].search_engine,'bing');
+});
+test('retrieveNews does not call Bing at all when Google coverage is already sufficient (no cost on a healthy day)',async()=>{
+ const goodRss='<rss><channel>'+Array.from({length:5},(_,i)=>`<item><title>Afghanistan real article ${i}</title><link>https://x/${i}</link></item>`).join('')+'</channel></rss>';
+ const h=harness(async url=>new Response(url.includes('gdelt')?'{}':goodRss));
+ const result=await h.retrieveNews(plan(h),30,['fa','ps','ur']);
+ const bingWaves=result.waves.filter(w=>w.query.engine==='bing');
+ assert.equal(bingWaves.length,0,'Bing must not be called when every priority language already has >=3 results from Google');
 });
 test('retrieveNews includes exactly one ACLED wave alongside the Google News and GDELT waves',async()=>{
  const h=harness(async url=>new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>'));
@@ -60,15 +123,16 @@ test('English priority rescue uses a genuinely different locale than its own pri
  assert.ok(locales.size>1,'English rescue must use a different hl than en-US, otherwise it just resends the identical request: '+[...locales]);
  assert.ok(englishCalls.some(u=>u.searchParams.get('hl')==='en-GB'&&u.searchParams.get('gl')==='GB'));
 });
-test('five priority languages still stay within the 31-call search budget, well under the 50 subrequest ceiling once the ~9 non-search calls are counted',async()=>{
+test('five priority languages still stay within the 36-call search budget, well under the 50 subrequest ceiling once the ~9 non-search calls are counted',async()=>{
  const calls=[];const h=harness(async url=>{calls.push(new URL(url));return new Response(url.includes('gdelt')?'{}':'<rss><channel></channel></rss>');});
  const result=await h.retrieveNews(plan(h),30,h.resolvePriorityLanguages('Afghanistan drug trafficking',[]));
- assert.equal(calls.length,31);assert.equal(result.subrequest_budget.search_requests,31);
+ assert.equal(calls.length,36);assert.equal(result.subrequest_budget.search_requests,36);
  assert.ok(result.subrequest_budget.search_requests+9<50);
  const rescue=result.waves.filter(w=>w.query.variant==='priority-locale-rescue');
  assert.equal(rescue.length,5);
- assert.equal(calls.filter(u=>u.href.includes('gdelt')).length,1,'GDELT must be queried exactly once even with 5 priority languages');
+ assert.equal(calls.filter(u=>u.href.includes('gdelt')).length,1,'a 30-day period is under the chunk threshold, so GDELT stays a single call even with 5 priority languages');
  assert.equal(calls.filter(u=>(u.searchParams.get('q')||'').includes('site:acleddata.com')).length,1,'ACLED must be queried exactly once even with 5 priority languages');
+ assert.equal(calls.filter(u=>u.href.includes('bing.com')).length,5,'all 5 sparse priority languages should get a Bing rescue');
 });
 test('a failing wave is never retried — retries risk blowing the subrequest ceiling on exactly the runs where most waves are failing',async()=>{
  let calls=0;const h=harness(async()=>{calls++;return new Response('rate limited',{status:429});});

@@ -15,7 +15,7 @@ const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.23-distinguish-transient-fetch-failure";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.24-gdelt-chunking-and-bing-rescue-beta";
 
 const MONTH_NAMES = Object.freeze({
   january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
@@ -103,7 +103,22 @@ const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 // GDELT_LANGUAGE_NAME_TO_CODE / splitGdeltRowsByLanguage below) so every
 // downstream consumer (diagnostics, evidence building) still sees one wave
 // per language, unaware that only a single real fetch produced them all.
-const GDELT_GLOBAL_RESULTS_CAP = 75;
+// Raised from 75 to GDELT's documented per-query ceiling: a single
+// "timespan=365d" query only ever returns its top N results across the
+// WHOLE window, so a low cap was quietly starving long-period questions.
+// See gdeltChunkRanges() below for how long periods now also get split into
+// several date-range queries instead of one query straining to cover a year.
+const GDELT_GLOBAL_RESULTS_CAP = 250;
+// Long periods (e.g. 365 days) get split into this many sequential
+// date-range GDELT queries instead of one "timespan=365d" query -- GDELT
+// caps each query's results regardless of window length, so one query for
+// a whole year only ever surfaces its top ~250 hits across all 365 days.
+// Capped at 3 (not more) to keep the added latency (each chunk needs GDELT's
+// own ~5s spacing) and Cloudflare subrequest budget bounded -- see
+// MAX_SEARCH_SUBREQUESTS below.
+const GDELT_MAX_CHUNKS = 3;
+const GDELT_CHUNK_THRESHOLD_DAYS = 90;
+const GDELT_CHUNK_SPACING_MS = 6000;
 const GDELT_LANGUAGE_FILTERS = Object.freeze({
   en: "english", fr: "french", ar: "arabic", de: "german",
   es: "spanish", it: "italian", tr: "turkish", ru: "russian",
@@ -152,6 +167,88 @@ async function fetchAcledWave(query, periodDays) {
   }
 }
 
+// Bing News search (bing.com/news/search?format=rss) is added as a rescue
+// channel alongside Google's own native-locale rescue, triggered by the
+// SAME sparsity condition -- so on a normal day where Google News works
+// fine, this costs nothing. It exists specifically for the case seen live in
+// production: Google News rejecting every single request from Cloudflare's
+// shared egress IPs (HTTP 503) while working normally from any other
+// network -- Bing is a genuinely independent path, unaffected by that.
+// Unlike Google (`when:Nd`) or GDELT (`timespan`/date-range), Bing's RSS
+// search has no documented arbitrary historical-range parameter -- it
+// reflects current/recent coverage regardless of the requested period, so
+// it helps most for recent questions and cannot substitute for GDELT on a
+// genuinely old (e.g. one-year-old) question.
+// Bing's own RSS response states its results may only be used "for
+// personal, non-commercial" purposes -- flagged explicitly to the site
+// owner, who confirmed proceeding anyway for this internal analytical tool.
+const BING_NEWS_SEARCH_URL = "https://www.bing.com/news/search";
+const BING_MARKET_BY_LANGUAGE = Object.freeze({
+  en: "en-US", fr: "fr-FR", ar: "ar-SA", de: "de-DE", es: "es-ES", it: "it-IT",
+  tr: "tr-TR", ru: "ru-RU", fa: "fa-IR", ur: "ur-PK", he: "he-IL", ps: "ps-AF"
+});
+const BING_RESCUE_SPACING_MS = 400;
+
+function bingNewsUrl(query, language) {
+  const market = BING_MARKET_BY_LANGUAGE[language] || "en-US";
+  return BING_NEWS_SEARCH_URL + "?" + new URLSearchParams({
+    q: cleanText(query, 200), format: "rss", mkt: market
+  }).toString();
+}
+
+// Bing's RSS <link> is a tracking redirect (bing.com/news/apiclick.aspx?...
+// &url=<encoded real article URL>&...); extract the real URL so citations
+// and dedup work against the actual source, not a Bing redirect link.
+function extractBingRealUrl(bingLink) {
+  try {
+    const real = new URL(bingLink).searchParams.get("url");
+    return real ? decodeURIComponent(real) : bingLink;
+  } catch (_) {
+    return bingLink;
+  }
+}
+
+function parseBingRss(xml, language, query) {
+  const items = String(xml || "").match(/<item\b[\s\S]*?<\/item>/gi) || [];
+  const rows = [];
+  for (const item of items.slice(0, DEEP_SEARCH_RESULTS_PER_QUERY)) {
+    const title = cleanText(tagValue(item, "title"), 500);
+    const url = cleanText(extractBingRealUrl(tagValue(item, "link")), 1200);
+    if (!title || !url) continue;
+    const summary = stripHtml(tagValue(item, "description"));
+    const sourceMatch = item.match(/<News:Source>([\s\S]*?)<\/News:Source>/i);
+    const source = cleanText(sourceMatch ? decodeXml(sourceMatch[1]) : "", 140);
+    const publishedRaw = cleanText(tagValue(item, "pubDate"), 100);
+    const publishedDate = publishedRaw ? new Date(publishedRaw) : null;
+    rows.push({
+      title, summary, source: source || "Bing News source", url,
+      published: publishedDate && !Number.isNaN(publishedDate.getTime()) ? publishedDate.toISOString() : "",
+      language, query_index: -3, query_variant: "bing-rescue", search_query: query,
+      search_engine: "bing", fallback_locale: false
+    });
+  }
+  return rows;
+}
+
+async function fetchBingWave(query, language) {
+  const item = { language, query, variant: "bing-rescue", engine: "bing" };
+  try {
+    const response = await fetch(bingNewsUrl(query, language), {
+      headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.0" },
+      cf: { cacheTtl: 300, cacheEverything: true },
+      signal: AbortSignal.timeout(15000)
+    });
+    if (!response.ok) return { query: item, ok: false, status: response.status, rows: [] };
+    const xml = await response.text();
+    if (!/<rss[\s>]/i.test(xml) || !/<channel[\s>]/i.test(xml)) {
+      return { query: item, ok: false, status: response.status, error: "Search provider returned non-RSS content", rows: [] };
+    }
+    return { query: item, ok: true, status: response.status, rows: parseBingRss(xml, language, query) };
+  } catch (error) {
+    return { query: item, ok: false, status: 0, error: cleanText(error?.message, 180), rows: [] };
+  }
+}
+
 const LANGUAGE_LOCALES = Object.freeze({
   en: { label: "English", hl: "en-US", gl: "US", ceid: "US:en" },
   fr: { label: "French", hl: "fr", gl: "FR", ceid: "FR:fr" },
@@ -190,12 +287,15 @@ const COUNTRY_LANGUAGE_PRIORITY = Object.freeze([
 // matter which country the question is about.
 const ALWAYS_PRIORITY_LANGUAGES = Object.freeze(["en", "fr"]);
 const PRIORITY_LANGUAGE_CAP = 5;
-// GDELT is now a single global fetch (see GDELT_GLOBAL_RESULTS_CAP above), so
-// this only caps how many languages the one shared result gets attributed
+// GDELT is now a small number of global fetches (see GDELT_MAX_CHUNKS above),
+// so this only caps how many languages the shared result gets attributed
 // across for diagnostics -- it no longer multiplies the real request count.
 const GDELT_LANGUAGE_CAP = 5;
-// +1 GDELT (single global query) +1 ACLED (single site:acleddata.com query).
-const MAX_SEARCH_SUBREQUESTS = DEEP_SEARCH_MAX_QUERIES + PRIORITY_LANGUAGE_CAP + 1 + 1;
+// 24 base Google + up to 5 native-locale Google rescues + up to
+// GDELT_MAX_CHUNKS GDELT date-range queries + 1 ACLED query + up to
+// PRIORITY_LANGUAGE_CAP Bing rescues (only fired when Google came up sparse
+// for that language, same trigger as the Google rescue above).
+const MAX_SEARCH_SUBREQUESTS = DEEP_SEARCH_MAX_QUERIES + PRIORITY_LANGUAGE_CAP + GDELT_MAX_CHUNKS + 1 + PRIORITY_LANGUAGE_CAP;
 
 function detectCountryLanguages(question) {
   const text = String(question || "");
@@ -767,15 +867,53 @@ async function fetchNewsWave(item, index, periodDays, locale, fallbackLocale = f
   }
 }
 
-function gdeltUrl(query, periodDays) {
-  const timespan = periodDays >= 365 ? "1y" : `${periodDays}d`;
-  return GDELT_DOC_URL + "?" + new URLSearchParams({
+function gdeltDateTimeParam(date) {
+  return date.toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "");
+}
+
+// An explicit date range (used to slice a long period into several chunks --
+// see gdeltChunkRanges below) takes priority over the relative "last N days"
+// window a single short-period query uses.
+function gdeltUrl(query, periodDays, range = null) {
+  const params = {
     query: cleanText(query, 280),
     mode: "artlist",
     format: "json",
-    maxrecords: String(GDELT_GLOBAL_RESULTS_CAP),
-    timespan
-  }).toString();
+    maxrecords: String(GDELT_GLOBAL_RESULTS_CAP)
+  };
+  if (range && range.startDt && range.endDt) {
+    params.startdatetime = gdeltDateTimeParam(range.startDt);
+    params.enddatetime = gdeltDateTimeParam(range.endDt);
+  } else {
+    params.timespan = periodDays >= 365 ? "1y" : `${periodDays}d`;
+  }
+  return GDELT_DOC_URL + "?" + new URLSearchParams(params).toString();
+}
+
+// GDELT caps each query's results regardless of window length, so a single
+// "timespan=365d" query only ever returns its top ~GDELT_GLOBAL_RESULTS_CAP
+// hits across the WHOLE year. For periods longer than
+// GDELT_CHUNK_THRESHOLD_DAYS, slice into up to GDELT_MAX_CHUNKS sequential
+// date-range queries instead, each covering its own slice of the period, so
+// long-period questions get real depth across the whole window rather than
+// one query straining to summarize a year in ~250 results. Short periods
+// (<= the threshold) are returned as a single un-sliced range so nothing
+// changes for the common case.
+function gdeltChunkRanges(periodDays) {
+  if (periodDays <= GDELT_CHUNK_THRESHOLD_DAYS) return [null];
+  const chunkCount = Math.min(GDELT_MAX_CHUNKS, Math.ceil(periodDays / GDELT_CHUNK_THRESHOLD_DAYS));
+  const chunkDays = Math.ceil(periodDays / chunkCount);
+  const now = Date.now();
+  const ranges = [];
+  for (let i = 0; i < chunkCount; i++) {
+    const endOffsetDays = i * chunkDays;
+    const startOffsetDays = Math.min(periodDays, (i + 1) * chunkDays);
+    ranges.push({
+      endDt: new Date(now - endOffsetDays * 86400000),
+      startDt: new Date(now - startOffsetDays * 86400000)
+    });
+  }
+  return ranges;
 }
 
 function parseGdeltDate(value) {
@@ -820,12 +958,13 @@ function parseGdeltArticles(payload, query) {
 
 // A single global GDELT fetch, with no sourcelang restriction: GDELT allows
 // only about one request every 5 seconds (its own 429 response says so
-// explicitly), so this must never be called more than once per Deep Search.
-// The mixed-language result is split back into one virtual wave per language
-// by splitGdeltRowsByLanguage() below.
-async function fetchGdeltGlobalWave(query, periodDays) {
+// explicitly). `range`, when supplied, requests an explicit date slice
+// instead of the relative `periodDays` window -- see fetchGdeltChunked below,
+// which is the only caller that ever issues more than one of these per
+// Deep Search, always spaced GDELT_CHUNK_SPACING_MS apart.
+async function fetchGdeltGlobalWave(query, periodDays, range = null) {
   try {
-    const response = await fetch(gdeltUrl(query, periodDays), {
+    const response = await fetch(gdeltUrl(query, periodDays, range), {
       headers: { "User-Agent": "Mozilla/5.0 CT-Atlas-Deep-Search/5.5" },
       cf: { cacheTtl: 300, cacheEverything: true },
       signal: AbortSignal.timeout(15000)
@@ -838,6 +977,26 @@ async function fetchGdeltGlobalWave(query, periodDays) {
   } catch (error) {
     return { ok: false, status: 0, error: cleanText(error?.message, 180), rows: [] };
   }
+}
+
+// Issues gdeltChunkRanges(periodDays) sequential GDELT queries (1 for short
+// periods, up to GDELT_MAX_CHUNKS for long ones), spaced GDELT_CHUNK_SPACING_MS
+// apart to respect GDELT's ~1-request/5s limit, and merges them into one
+// combined wave -- ok if AT LEAST one chunk succeeded (partial coverage is
+// still real evidence), status/error from the last chunk attempted.
+async function fetchGdeltChunked(query, periodDays) {
+  const ranges = gdeltChunkRanges(periodDays);
+  const rows = [];
+  let anyOk = false, lastStatus = 0, lastError;
+  for (let i = 0; i < ranges.length; i++) {
+    const wave = await fetchGdeltGlobalWave(query, periodDays, ranges[i]);
+    if (wave.ok) anyOk = true;
+    lastStatus = wave.status;
+    lastError = wave.error;
+    rows.push(...wave.rows);
+    if (i < ranges.length - 1) await sleep(GDELT_CHUNK_SPACING_MS);
+  }
+  return { ok: anyOk, status: lastStatus, error: lastError, rows, chunks: ranges.length };
 }
 
 // Turns the one real GDELT fetch into a wave per language, so every
@@ -870,11 +1029,11 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   // (session-get, acquire, cache-get, plan Gemini call, events.json fetch,
   // report Gemini call, cache-put, commit-report, release), so the search
   // phase must never approach 50 on its own:
-  // 24 Google News + max 5 priority Google rescues + exactly 1 GDELT call
-  // (see fetchGdeltGlobalWave) + exactly 1 ACLED call (see fetchAcledWave) =
-  // max 31 total, kept comfortably under ~40 so the whole invocation (search
-  // + the ~9 calls above) stays safely under 50. Do NOT add per-wave retries
-  // here: retrying every failed wave once
+  // 24 Google News + max 5 priority Google rescues + up to GDELT_MAX_CHUNKS(3)
+  // GDELT calls (see fetchGdeltChunked) + 1 ACLED call (see fetchAcledWave) +
+  // max 5 Bing rescues (see fetchBingWave) = max 38 total, kept under ~40 so
+  // the whole invocation (search + the ~9 calls above) stays safely under
+  // 50. Do NOT add per-wave retries here: retrying every failed wave once
   // can double the search subrequest count on exactly the runs where most
   // waves are failing, and has previously blown through Cloudflare's
   // subrequest ceiling and hard-crashed the whole invocation.
@@ -919,9 +1078,31 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
     for (const row of wave.rows) afterGoogle[wave.query.language].add(row.url);
   }
 
+  // Bing News rescue: same sparsity trigger and threshold as the Google
+  // native-locale rescue above, so it only ever fires when Google itself
+  // came up short for that language -- a healthy day costs nothing extra.
+  // See the comment above BING_NEWS_SEARCH_URL for why this exists and its
+  // terms-of-use caveat. Sequential with a light stagger since Bing's rate
+  // limit (if any) is undocumented -- better to be a cautious citizen.
+  const bingRescueItems = [];
+  for (const language of priorityLanguages.slice(0, PRIORITY_LANGUAGE_CAP)) {
+    if ((afterGoogle[language]?.size || 0) >= 3) continue;
+    const candidate = plan.queries.find(item => item.language === language && item.variant === "primary")
+      || plan.queries.find(item => item.language === language);
+    if (candidate) bingRescueItems.push(candidate);
+  }
+  const bingWaves = [];
+  for (let i = 0; i < bingRescueItems.length; i++) {
+    const wave = await fetchBingWave(bingRescueItems[i].query, bingRescueItems[i].language);
+    wave.rows = filterByAnchor(wave.rows, anchors);
+    bingWaves.push(wave);
+    if (i < bingRescueItems.length - 1) await sleep(BING_RESCUE_SPACING_MS);
+  }
+
   // GDELT rescues priority languages first, then other sparse languages --
-  // but as a SINGLE global fetch (see fetchGdeltGlobalWave), never one
-  // request per language: GDELT allows only about one request every 5
+  // via fetchGdeltChunked, which issues 1 query for short periods or up to
+  // GDELT_MAX_CHUNKS sequential date-range queries for long ones, never one
+  // request per LANGUAGE: GDELT allows only about one request every 5
   // seconds, and firing several at once (as a previous version did)
   // reliably got every one of them 429'd.
   const gdeltQuery = broadGdeltQuery(plan);
@@ -932,8 +1113,8 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   let gdeltWaves = [];
   let gdeltRequests = 0;
   if (gdeltQuery) {
-    gdeltRequests = 1;
-    const globalWave = await fetchGdeltGlobalWave(gdeltQuery, periodDays);
+    const globalWave = await fetchGdeltChunked(gdeltQuery, periodDays);
+    gdeltRequests = globalWave.chunks || 1;
     globalWave.rows = filterByAnchor(globalWave.rows, anchors);
     gdeltWaves = splitGdeltRowsByLanguage(globalWave, gdeltQuery, gdeltAttributionLanguages);
   }
@@ -952,16 +1133,17 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
     acledWaves = [acledWave];
   }
 
-  const waves = [...googleAll, ...gdeltWaves, ...acledWaves];
+  const waves = [...googleAll, ...bingWaves, ...gdeltWaves, ...acledWaves];
   return {
     waves,
     rows: waves.flatMap(item => item.rows),
     priority_languages: priorityLanguages,
     subrequest_budget: {
       google_news_requests: googleAll.length,
+      bing_requests: bingWaves.length,
       gdelt_requests: gdeltRequests,
       acled_requests: acledRequests,
-      search_requests: googleAll.length + gdeltRequests + acledRequests,
+      search_requests: googleAll.length + bingWaves.length + gdeltRequests + acledRequests,
       max_search_requests: MAX_SEARCH_SUBREQUESTS
     }
   };
@@ -1154,6 +1336,7 @@ function languageDiagnostics(plan, retrieval, priorityLanguages = []) {
       google_news_articles: 0,
       gdelt_articles: 0,
       acled_articles: 0,
+      bing_articles: 0,
       priority: priorityLanguages.includes(code)
     };
   }
@@ -1166,6 +1349,7 @@ function languageDiagnostics(plan, retrieval, priorityLanguages = []) {
     const engine = wave.query.engine || (wave.query.variant === "gdelt-rescue" ? "gdelt" : "google_news");
     if (engine === "gdelt") byLanguage[code].gdelt_articles += wave.rows.length;
     else if (engine === "acled") byLanguage[code].acled_articles += wave.rows.length;
+    else if (engine === "bing") byLanguage[code].bing_articles += wave.rows.length;
     else byLanguage[code].google_news_articles += wave.rows.length;
   }
   return Object.values(byLanguage);
@@ -1324,6 +1508,7 @@ export async function handleDeepSearch(request, env, ctx) {
         google_news_articles: retrieval.rows.filter(row => row.search_engine === "google_news").length,
         gdelt_articles: retrieval.rows.filter(row => row.search_engine === "gdelt").length,
         acled_articles: retrieval.rows.filter(row => row.search_engine === "acled").length,
+        bing_articles: retrieval.rows.filter(row => row.search_engine === "bing").length,
         search_subrequests: retrieval.subrequest_budget?.search_requests || retrieval.waves.length
       },
       grounding: {

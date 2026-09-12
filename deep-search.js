@@ -33,7 +33,7 @@ function inject(){
     const button=document.createElement("button");
     button.id="deepSearchButton";
     button.type="button";
-    button.textContent="DEEP SEARCH";
+    button.textContent="DEEP SEARCH · BETA";
     reportButton.insertAdjacentElement("afterend",button);
   }
 
@@ -42,7 +42,7 @@ function inject(){
       <div id="deepSearchWindow" role="dialog" aria-modal="true" aria-labelledby="deepSearchTitle">
         <div id="deepSearchHeader">
           <div>
-            <div id="deepSearchTitle">DEEP SEARCH</div>
+            <div id="deepSearchTitle">DEEP SEARCH · BETA</div>
             <div id="deepSearchSubtitle">Multilingual ad hoc OSINT search beyond the current CT Atlas database</div>
           </div>
           <button id="deepSearchClose" type="button" aria-label="Close Deep Search">×</button>
@@ -64,7 +64,7 @@ function inject(){
               </select>
             </label>
             <div id="deepSearchMethod">
-              Deep Search runs two native-language Google News searches in each of the 12 supported languages. Languages relevant to the country in the analyst question receive priority rescue searches; sparse coverage is then supplemented through GDELT before deduplication, CT Atlas comparison and source-cited analysis.
+              Deep Search runs two native-language Google News searches in each of the 12 supported languages, plus ACLED and GDELT (chunked across longer periods for real historical depth). Languages relevant to the country in the analyst question receive priority rescue searches through Bing News as well when Google coverage comes up sparse, before deduplication, CT Atlas comparison and source-cited analysis.
             </div>
             <button id="deepSearchRun" type="button">RUN DEEP SEARCH</button>
             <div id="deepSearchStatus"></div>
@@ -122,9 +122,9 @@ async function checkBackend(){
     backendReady=Boolean(response.ok&&payload.deep_search===true);
   }catch(_){backendReady=false;}
   if(backendReady){
-    button.disabled=false; button.textContent="DEEP SEARCH"; button.title="Multilingual ad hoc OSINT search";
+    button.disabled=false; button.textContent="DEEP SEARCH · BETA"; button.title="Multilingual ad hoc OSINT search (beta -- under active development)";
   }else{
-    button.disabled=true; button.textContent="DEEP SEARCH · DEPLOY PENDING";
+    button.disabled=true; button.textContent="DEEP SEARCH · BETA · DEPLOY PENDING";
     button.title="Deep Search backend is not currently available.";
   }
 }
@@ -229,6 +229,11 @@ function fmtDate(value){
   return date.toLocaleString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
 }
 
+const SEARCH_ENGINE_LABELS={gdelt:"GDELT",acled:"ACLED",bing:"BING"};
+function engineLabel(engine){
+  return SEARCH_ENGINE_LABELS[engine]||"GOOGLE NEWS";
+}
+
 // A zero article count is ambiguous on its own: it could mean the search
 // genuinely found nothing, or that the fetch itself failed (rate limit,
 // timeout, provider error) and never got a real answer. successful_queries <
@@ -258,12 +263,13 @@ function languageCoverageHtml(payload){
     const googleCount=Number(item.google_news_articles||0);
     const gdeltCount=Number(item.gdelt_articles||0);
     const acledCount=Number(item.acled_articles||0);
+    const bingCount=Number(item.bing_articles||0);
     const priority=Boolean(item.priority);
     const cls=count>0?" has-results":" no-results";
     return `<div class="deep-language${cls}">
       <span class="deep-language-name">${esc(item.name||item.code||"Language")}</span>
       <strong>${count}</strong>
-      <small>${count===1?"article":"articles"}${priority?" · PRIORITY":""} · Google ${googleCount} · GDELT ${gdeltCount}${acledCount?` · ACLED ${acledCount}`:""} · ${successCount}/${queryCount||1} ${queryCount===1?"query":"queries"} succeeded</small>
+      <small>${count===1?"article":"articles"}${priority?" · PRIORITY":""} · Google ${googleCount} · GDELT ${gdeltCount}${acledCount?` · ACLED ${acledCount}`:""}${bingCount?` · Bing ${bingCount}`:""} · ${successCount}/${queryCount||1} ${queryCount===1?"query":"queries"} succeeded</small>
     </div>`;
   }).join("");
 }
@@ -286,7 +292,7 @@ function evidenceHtml(payload){
           <span class="deep-gap-badge${gapClass}">${gapLabel}</span>
         </div>
         <div class="deep-evidence-title">${esc(item.title||"")}</div>
-        <div class="deep-evidence-meta">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())}${item.search_engine?` · ${item.search_engine==="gdelt"?"GDELT":item.search_engine==="acled"?"ACLED":"GOOGLE NEWS"}`:""}${Number(item.source_count||1)>1?` · ${Number(item.source_count)} merged sources`:""}</div>
+        <div class="deep-evidence-meta">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())}${item.search_engine?` · ${engineLabel(item.search_engine)}`:""}${Number(item.source_count||1)>1?` · ${Number(item.source_count)} merged sources`:""}</div>
         ${item.summary?`<div class="deep-evidence-summary">${esc(item.summary)}</div>`:""}
         <div class="deep-evidence-links">
           ${item.url?`<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">OPEN ARTICLE</a>`:""}
@@ -458,7 +464,7 @@ async function downloadPdf(){
       <h2 style="font-size:15px;border-bottom:1px solid #d1d5db;padding-bottom:5px;margin:26px 0 10px">ANALYTICAL REPORT</h2>
       <div style="font-size:12px">${formatAnalysis(lastPayload.analysis||"")}</div>
       <h2 style="font-size:15px;border-bottom:1px solid #d1d5db;padding-bottom:5px;margin:28px 0 10px">EVIDENCE PACK</h2>
-      ${evidence.map(item=>`<div class="pdf-source" style="border-top:1px solid #e5e7eb;padding:9px 0;page-break-inside:avoid"><div style="font-weight:700">${esc(item.id)} · ${esc(item.source||"Source")}${cited.has(item.id)?" · CITED":""}</div><div style="font-size:12px;margin:2px 0">${esc(item.title||"")}</div><div style="font-size:10px;color:#6b7280">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())} · ${item.search_engine==="gdelt"?"GDELT":"Google News"}</div>${item.url?`<div style="font-size:9px;word-break:break-all;color:#1d4ed8">${esc(pdfDisplayUrl(item.url))}</div>`:""}</div>`).join("")}
+      ${evidence.map(item=>`<div class="pdf-source" style="border-top:1px solid #e5e7eb;padding:9px 0;page-break-inside:avoid"><div style="font-weight:700">${esc(item.id)} · ${esc(item.source||"Source")}${cited.has(item.id)?" · CITED":""}</div><div style="font-size:12px;margin:2px 0">${esc(item.title||"")}</div><div style="font-size:10px;color:#6b7280">${esc(fmtDate(item.published))} · ${esc(String(item.language||"").toUpperCase())} · ${engineLabel(item.search_engine)}</div>${item.url?`<div style="font-size:9px;word-break:break-all;color:#1d4ed8">${esc(pdfDisplayUrl(item.url))}</div>`:""}</div>`).join("")}
       <div style="margin-top:24px;border-top:1px solid #d1d5db;padding-top:9px;font-size:9px;color:#6b7280">This analytical tool is an independent OSINT prototype created for research and analytical purposes. The information displayed is derived from open sources and automated AI-assisted processing. It should not be considered verified intelligence and must be independently validated before any operational or decision-making use.</div>`;
     shell.id="ctAtlasDeepPdfSource";
     document.body.appendChild(shell);
