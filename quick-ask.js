@@ -65,7 +65,7 @@ function inject(){
         <div id="quickAskBody">
           <label class="qa-field">
             <span>QUESTION</span>
-            <textarea id="quickAskQuestion" rows="3" maxlength="400" placeholder="Example: What is Daesh? Quick info on the recent attack in Bamako?"></textarea>
+            <textarea id="quickAskQuestion" rows="3" maxlength="400" placeholder="Example: What is the current threat in Iraq? Quick info on the recent attack in Bamako?"></textarea>
           </label>
           <button id="quickAskRun" type="button">ASK</button>
           <div id="quickAskStatus"></div>

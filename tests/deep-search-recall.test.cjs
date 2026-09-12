@@ -49,7 +49,7 @@ test('gdeltChunkRanges leaves short periods as a single un-sliced query and slic
  assert.equal(h.gdeltChunkRanges(90).length,1);
  assert.equal(h.gdeltChunkRanges(90)[0],null);
  const chunks365=h.gdeltChunkRanges(365);
- assert.equal(chunks365.length,3,'capped at GDELT_MAX_CHUNKS even for a full year');
+ assert.equal(chunks365.length,5,'ceil(365/90)=5, at the GDELT_MAX_CHUNKS cap');
  // Contiguous: each chunk's start must equal the previous chunk's end (within rounding).
  for(let i=0;i<chunks365.length-1;i++){
    assert.ok(Math.abs(chunks365[i].startDt.getTime()-chunks365[i+1].endDt.getTime())<2000,
@@ -58,15 +58,18 @@ test('gdeltChunkRanges leaves short periods as a single un-sliced query and slic
  assert.ok(chunks365[0].endDt.getTime()>chunks365[chunks365.length-1].startDt.getTime());
  const chunks180=h.gdeltChunkRanges(180);
  assert.equal(chunks180.length,2,'a 180-day period only needs 2 chunks of 90 days each');
+ const chunks730=h.gdeltChunkRanges(730);
+ assert.equal(chunks730.length,5,'capped at GDELT_MAX_CHUNKS even for a 2-year period');
+ assert.ok(chunks730[0].endDt.getTime()>chunks730[chunks730.length-1].startDt.getTime());
 });
 test('fetchGdeltChunked issues one spaced request per chunk and merges rows, ok if any chunk succeeded',async()=>{
  let calls=0;
  const h=harness(async()=>{calls++;return new Response(JSON.stringify({articles:[{title:`Article ${calls}`,url:`https://x/${calls}`,language:'English',domain:'x.com',seendate:'20260101120000Z'}]}));});
  const result=await h.fetchGdeltChunked('terrorism',365);
- assert.equal(calls,3,'a full year should issue exactly GDELT_MAX_CHUNKS requests');
- assert.equal(result.chunks,3);
+ assert.equal(calls,5,'a full year should issue exactly GDELT_MAX_CHUNKS requests');
+ assert.equal(result.chunks,5);
  assert.equal(result.ok,true);
- assert.equal(result.rows.length,3,'rows from every chunk must be merged');
+ assert.equal(result.rows.length,5,'rows from every chunk must be merged');
 });
 test('parseBingRss extracts the real article URL from Bing\'s redirect link and the source from News:Source',()=>{
  const h=harness();

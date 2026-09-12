@@ -9,13 +9,13 @@ import {
   sha256
 } from "./shared.js";
 
-const DEEP_SEARCH_ALLOWED_PERIODS = new Set([7, 30, 90, 180, 365]);
+const DEEP_SEARCH_ALLOWED_PERIODS = new Set([7, 30, 90, 180, 365, 730]);
 const DEEP_SEARCH_MAX_QUERIES = 24;
 const DEEP_SEARCH_RESULTS_PER_QUERY = 30;
 const DEEP_SEARCH_MAX_EVIDENCE = 48;
 const DEEP_SEARCH_CACHE_TTL_MS = 4 * 60 * 60 * 1000;
 const DEEP_SEARCH_MODEL = "gemini-3.5-flash-lite";
-export const DEEP_SEARCH_VERSION = "deep-search-v5.24-gdelt-chunking-and-bing-rescue-beta";
+export const DEEP_SEARCH_VERSION = "deep-search-v5.25-two-year-period-and-deeper-gdelt-chunking";
 
 const MONTH_NAMES = Object.freeze({
   january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
@@ -109,14 +109,14 @@ const GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc";
 // See gdeltChunkRanges() below for how long periods now also get split into
 // several date-range queries instead of one query straining to cover a year.
 const GDELT_GLOBAL_RESULTS_CAP = 250;
-// Long periods (e.g. 365 days) get split into this many sequential
-// date-range GDELT queries instead of one "timespan=365d" query -- GDELT
+// Long periods (e.g. 365 or 730 days) get split into this many sequential
+// date-range GDELT queries instead of one "timespan=Nd" query -- GDELT
 // caps each query's results regardless of window length, so one query for
-// a whole year only ever surfaces its top ~250 hits across all 365 days.
-// Capped at 3 (not more) to keep the added latency (each chunk needs GDELT's
-// own ~5s spacing) and Cloudflare subrequest budget bounded -- see
-// MAX_SEARCH_SUBREQUESTS below.
-const GDELT_MAX_CHUNKS = 3;
+// a whole year (or two) only ever surfaces its top ~250 hits across the
+// entire window. Capped at 5 (not more) to keep the added latency (each
+// chunk needs GDELT's own ~5s spacing) and Cloudflare subrequest budget
+// bounded -- see MAX_SEARCH_SUBREQUESTS below.
+const GDELT_MAX_CHUNKS = 5;
 const GDELT_CHUNK_THRESHOLD_DAYS = 90;
 const GDELT_CHUNK_SPACING_MS = 6000;
 const GDELT_LANGUAGE_FILTERS = Object.freeze({
@@ -1149,9 +1149,14 @@ async function retrieveNews(plan, periodDays, priorityLanguages = []) {
   };
 }
 
+// The CT Atlas comparison window must cover at least the whole search
+// period (plus a small buffer), never a hardcoded 365-day cap -- otherwise
+// a longer Deep Search period (e.g. 730 days) would compare freshly
+// retrieved older articles against a database window that stops at 1 year,
+// mislabelling real CT Atlas matches beyond that as "potential gaps".
 function candidateMapEvents(db, periodDays) {
   const all = Array.isArray(db) ? db : (Array.isArray(db?.events) ? db.events : []);
-  const cutoff = Date.now() - (Math.min(365, periodDays + 14) * 86400000);
+  const cutoff = Date.now() - ((periodDays + 14) * 86400000);
   return all.filter(event => {
     const raw = event?.event_date || event?.occurrence_date || event?.published || event?.last_reported;
     if (!raw) return true;

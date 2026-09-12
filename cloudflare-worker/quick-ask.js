@@ -16,7 +16,7 @@ import {
 // handful of locally-matched CT Atlas records -- never the heavy multi-source
 // retrieval pipeline those two tools run. Bump this whenever the answer
 // SHAPE or grounding rules change, so a stale cache entry is never served.
-const QUICK_ASK_VERSION = "quick-ask-v2-general-knowledge-fallback";
+const QUICK_ASK_VERSION = "quick-ask-v3-detailed-answers";
 
 const QUICK_ASK_CACHE_TTL_MS = 60 * 60 * 1000;
 const QUICK_ASK_MAX_MATCHED_EVENTS = 10;
@@ -37,9 +37,14 @@ You are CT Atlas AI: a fast, lightweight assistant for short
 counter-terrorism questions -- e.g. "what is Daesh", "who is FETO",
 "how do terrorist groups use encrypted apps", "quick info on a specific
 attack". You are NOT Deep Search and NOT the Report Generator: those run
-long multi-source retrieval and produce multi-paragraph analytical
-reports. You answer in 2-6 concise sentences, plain text, no headings or
-bullet lists, in the same language as the question.
+long multi-source retrieval across dozens of cited sources and produce
+structured multi-section reports. You are "quick" in that sense only --
+a single fast answer instead of that heavy pipeline -- NOT in the sense of
+being terse. Give a thorough, detailed answer: 3-5 well-developed
+paragraphs, plain text, no headings or bullet lists, in the same language
+as the question. Prefer being complete and informative (relevant context,
+nuance, examples) over being brief, while staying focused on what the
+question actually asks.
 
 CT Atlas is a live incident database (specific attacks, arrests, CT
 operations), not an encyclopedia -- for most questions it will have no
@@ -48,8 +53,8 @@ Questions fall into two kinds, handled differently:
 
 1. GENERAL / CONCEPTUAL questions -- definitions, organizations, tactics,
    technology, trends, "how does X work", "how is Y used by Z". ALWAYS
-   answer these from your own general knowledge in 2-6 sentences, whether
-   or not any CT Atlas record was supplied or matches. Having no matching
+   answer these thoroughly from your own general knowledge, whether or
+   not any CT Atlas record was supplied or matches. Having no matching
    record is expected for this kind of question and is never a valid
    reason to give a non-answer like "CT Atlas has no record on this" --
    that response is ONLY acceptable for case 2 below. If a supplied
@@ -94,6 +99,19 @@ const QUICK_ASK_STOPWORDS = new Set([
 ]);
 
 const QUICK_ASK_DIACRITICS_RANGE = new RegExp("[̀-ͯ]", "g");
+
+// Unlike shared.js's cleanText (which collapses ALL whitespace, including
+// newlines, into single spaces -- fine for short fields but not here), a
+// multi-paragraph answer needs its paragraph breaks preserved so the
+// frontend's white-space:pre-wrap rendering actually shows them.
+function sanitizeAnswerText(value, max) {
+  return String(value || "")
+    .replace(/\r\n?/g, "\n")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim()
+    .slice(0, max);
+}
 
 function quickAskFold(text) {
   return String(text || "")
@@ -174,7 +192,7 @@ async function callQuickAskGemini(env, question, matchedEvents) {
       schema: QUICK_ASK_SCHEMA
     },
     generation_config: {
-      max_output_tokens: 700,
+      max_output_tokens: 1800,
       thinking_level: "minimal"
     }
   };
@@ -272,7 +290,7 @@ async function handleQuickAsk(request, env) {
 
   try {
     const generated = await callQuickAskGemini(env, question, matchedCompact);
-    const answer = cleanText(generated.answer, 2500);
+    const answer = sanitizeAnswerText(generated.answer, 5000);
     const matchedIds = new Set(matchedCompact.map(e => e.id));
     const citedEventIds = Array.isArray(generated.cited_event_ids)
       ? generated.cited_event_ids.map(String).filter(id => matchedIds.has(id))

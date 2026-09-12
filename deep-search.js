@@ -61,6 +61,7 @@ function inject(){
                 <option value="90">Last 90 days</option>
                 <option value="180">Last 6 months</option>
                 <option value="365">Last 1 year</option>
+                <option value="730">Last 2 years</option>
               </select>
             </label>
             <div id="deepSearchMethod">

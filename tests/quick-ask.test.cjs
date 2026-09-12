@@ -14,7 +14,7 @@ function parseEventDate(event){
 function harness(){
  const c=vm.createContext({parseEventDate});
  vm.runInContext(source,c);
- return vm.runInContext('({localEventMatches,quickAskTokens:typeof quickAskTokens!=="undefined"?quickAskTokens:null,QUICK_ASK_VERSION})',c);
+ return vm.runInContext('({localEventMatches,quickAskTokens:typeof quickAskTokens!=="undefined"?quickAskTokens:null,QUICK_ASK_VERSION,sanitizeAnswerText})',c);
 }
 
 function event(overrides){
@@ -100,4 +100,17 @@ test('"ai" as a whole-word token does not falsely match events whose text merely
  const events=[event({id:'no-ai',title:'Suspect claimed he remained at the scene',summary:'Witnesses said little.'})];
  const result=h.localEventMatches(events,'how is AI used by terrorists');
  assert.equal(result.length,0,'"claimed", "remained" and "said" contain the letters a-i but are not the word "ai"');
+});
+
+test('sanitizeAnswerText preserves paragraph breaks (unlike shared.js cleanText, which would flatten them)',()=>{
+ const h=harness();
+ const raw='Paragraph one.\r\n\r\nParagraph   two   with  extra   spaces.\n\n\n\nParagraph three.';
+ const result=h.sanitizeAnswerText(raw,5000);
+ assert.equal(result,'Paragraph one.\n\nParagraph two with extra spaces.\n\nParagraph three.');
+});
+
+test('sanitizeAnswerText trims and caps length without breaking on the cut',()=>{
+ const h=harness();
+ const result=h.sanitizeAnswerText('  padded text  ',6);
+ assert.equal(result,'padded');
 });
