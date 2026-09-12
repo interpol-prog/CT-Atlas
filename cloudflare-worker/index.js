@@ -23,6 +23,7 @@ citationMetrics,
 callGemini
 } from "./shared.js";
 import { handleDeepSearch, DEEP_SEARCH_VERSION } from "./deep-search.js";
+import { handleQuickAsk, QUICK_ASK_VERSION } from "./quick-ask.js";
 export default {
 async fetch(request, env, ctx) {
 const url = new URL(request.url);
@@ -30,7 +31,7 @@ if (request.method === "OPTIONS") {
 return new Response(null, { status: 204, headers: corsHeaders(env) });
 }
 if (url.pathname === "/health" && request.method === "GET") {
-return jsonResponse({ ok: true, service: "ct-report-generator", version: "5.24", deep_search: true, deep_search_version: DEEP_SEARCH_VERSION, report_generator_version: REPORT_GENERATOR_VERSION, model: "gemini-3.5-flash-lite" }, 200, env);
+return jsonResponse({ ok: true, service: "ct-report-generator", version: "5.25", deep_search: true, deep_search_version: DEEP_SEARCH_VERSION, report_generator_version: REPORT_GENERATOR_VERSION, quick_ask_version: QUICK_ASK_VERSION, model: "gemini-3.5-flash-lite" }, 200, env);
 }
 if (url.pathname === "/auth-login" && request.method === "POST") {
 let authBody;
@@ -94,6 +95,9 @@ return jsonResponse(await statsResponse.json(), statsResponse.status, env);
 }
 if (url.pathname === "/deep-search" && request.method === "POST") {
 return handleDeepSearch(request, env, ctx);
+}
+if (url.pathname === "/quick-ask" && request.method === "POST") {
+return handleQuickAsk(request, env);
 }
 if (url.pathname !== "/report" || request.method !== "POST") return jsonResponse({ error: "Not found" }, 404, env);
 let body;

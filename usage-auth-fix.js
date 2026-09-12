@@ -85,7 +85,7 @@ window.fetch=async function(input,init){
     try{await secureAuthPromise;}catch(_){}
   }
   const token=sessionToken();
-  if(token&&(/\/login(?:\?|$)/.test(url)||/\/(?:report|deep-search)(?:\?|$)/.test(url))){
+  if(token&&(/\/login(?:\?|$)/.test(url)||/\/(?:report|deep-search|quick-ask)(?:\?|$)/.test(url))){
     const headers=new Headers(options.headers||{});
     headers.set("X-Session-Token",token);
     options.headers=headers;
@@ -102,9 +102,19 @@ function loadDeepSearch(){
   document.head.appendChild(script);
 }
 
+function loadQuickAsk(){
+  if(document.getElementById("quickAskClientScript"))return;
+  const script=document.createElement("script");
+  script.id="quickAskClientScript";
+  script.src="quick-ask.js?v=1";
+  script.defer=true;
+  document.head.appendChild(script);
+}
+
 document.addEventListener("DOMContentLoaded",()=>{
   refreshAdminUsageButton();
   loadDeepSearch();
+  loadQuickAsk();
   setInterval(refreshAdminUsageButton,1000);
 });
 })();

@@ -5,6 +5,12 @@ const MAX_EVENTS_PREVIOUS = 60;
 const CACHE_TTL_MS = 8 * 60 * 60 * 1000;
 const REPORT_COOLDOWN_MS = 20 * 60 * 1000;
 const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
+// CT Atlas AI ("quick ask"): a single fast Gemini call, not the heavy
+// multi-source Deep Search / Report Generator pipeline, so it gets its own,
+// much more generous quota rather than sharing the 5/day report-gate limit.
+const QUICK_ASK_COOLDOWN_MS = 3 * 1000;
+const QUICK_ASK_DAILY_LIMIT = 60;
+const QUICK_ASK_GLOBAL_DAILY_LIMIT = 800;
 // Bump whenever the report SHAPE changes (new fields, schema, citation
 // rules) so an existing cache entry from before the change is never served
 // as-is -- folded into the cache key in index.js's /report handler.
@@ -173,6 +179,7 @@ function usageTemplate(username = "") {
     reports_generated: 0,
     cached_reports: 0,
     blocked_report_requests: 0,
+    quick_ask_requests: 0,
     last_activity: ""
   };
 }
@@ -265,6 +272,7 @@ function compactEvent(event) {
     country: cleanText(event.country, 80),
     region: cleanText(event.region, 100),
     city: cleanText(event.city, 100),
+    actor_group: cleanText(event.actor_group, 100),
     date: parseEventDate(event)?.toISOString() || "",
     source: cleanText(event.source, 140),
     url: cleanText(event.url, 1200),
@@ -537,6 +545,9 @@ export {
   CACHE_TTL_MS,
   REPORT_COOLDOWN_MS,
   SESSION_TTL_MS,
+  QUICK_ASK_COOLDOWN_MS,
+  QUICK_ASK_DAILY_LIMIT,
+  QUICK_ASK_GLOBAL_DAILY_LIMIT,
   USER_PASSWORD_HASHES,
   ALLOWED_USERS,
   REPORT_SCHEMA,
