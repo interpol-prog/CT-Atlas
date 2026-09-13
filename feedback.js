@@ -26,10 +26,35 @@ function findAnchor(){
   return document.getElementById("deepSearchButton")||document.getElementById("reportGeneratorButton");
 }
 
+// Keys/labels mirror cloudflare-worker/feedback.js's EVALUATION_ITEMS exactly,
+// so ratingValue()/payload.ratings keys line up with what buildEmail() reads.
+const EVALUATION_ITEMS=[
+  ["report_generator","Report Generator"],
+  ["deep_search","Deep Search (BETA)"],
+  ["ct_atlas_ai","CT Atlas AI"],
+  ["heat_map","Heat Map"],
+  ["situation_24h","Situation 24H"],
+  ["weekly_analysis","Weekly Analysis"],
+  ["key_developments","Key Developments"],
+  ["database","Events Database"],
+  ["security","Security Features"]
+];
+
 function ratingScale(name){
   return [1,2,3,4,5].map(n=>
     `<label class="fb-scale-opt"><input type="radio" name="${name}" value="${n}"><span>${n}</span></label>`
   ).join("");
+}
+
+function evaluationItemHtml(key,label){
+  return `
+    <div class="fb-eval-item">
+      <div class="fb-rating">
+        <span class="fb-rating-label">${label}</span>
+        <div class="fb-scale">${ratingScale("fb-rating-"+key)}</div>
+      </div>
+      <textarea class="fb-item-comment" data-key="${key}" maxlength="1000" placeholder="Comments on ${label} (optional)"></textarea>
+    </div>`;
 }
 
 function inject(){
@@ -64,21 +89,10 @@ function inject(){
           </div>
 
           <div class="fb-pane active" data-pane="evaluation">
-            <div class="fb-rating">
-              <span class="fb-rating-label">Report Generator</span>
-              <div class="fb-scale">${ratingScale("fb-rg")}</div>
-            </div>
-            <div class="fb-rating">
-              <span class="fb-rating-label">Deep Search (BETA)</span>
-              <div class="fb-scale">${ratingScale("fb-ds")}</div>
-            </div>
-            <div class="fb-rating">
-              <span class="fb-rating-label">CT Atlas AI</span>
-              <div class="fb-scale">${ratingScale("fb-ai")}</div>
-            </div>
-            <label class="fb-field" style="margin-top:14px">
-              <span>WHAT'S WORKING WELL / WHAT'S MISSING</span>
-              <textarea id="fbEvalComments" maxlength="3000" placeholder="Optional, but very useful"></textarea>
+            ${EVALUATION_ITEMS.map(([key,label])=>evaluationItemHtml(key,label)).join("")}
+            <label class="fb-field" style="margin-top:4px">
+              <span>OTHER -- ANYTHING NOT COVERED ABOVE</span>
+              <textarea id="fbOtherComments" maxlength="1000" placeholder="Optional"></textarea>
             </label>
             <button class="fb-submit" type="button" data-submit="evaluation">SEND EVALUATION</button>
           </div>
@@ -164,12 +178,15 @@ async function submit(kind){
   let payload={user_id:username,kind};
 
   if(kind==="evaluation"){
-    payload.ratings={
-      report_generator:ratingValue("fb-rg"),
-      deep_search:ratingValue("fb-ds"),
-      ct_atlas_ai:ratingValue("fb-ai")
-    };
-    payload.comments=String(document.getElementById("fbEvalComments")?.value||"").trim();
+    const ratings={}, itemComments={};
+    for(const [key] of EVALUATION_ITEMS){
+      ratings[key]=ratingValue("fb-rating-"+key);
+      const field=document.querySelector(`.fb-item-comment[data-key="${key}"]`);
+      itemComments[key]=String(field?.value||"").trim();
+    }
+    payload.ratings=ratings;
+    payload.item_comments=itemComments;
+    payload.other_comments=String(document.getElementById("fbOtherComments")?.value||"").trim();
   }else{
     const description=String(document.getElementById("fbIssueDescription")?.value||"").trim();
     if(description.length<5){setStatus("Please describe the issue.","warning");return;}
@@ -194,7 +211,7 @@ async function submit(kind){
     setStatus(kind==="evaluation"?"Evaluation sent -- thank you.":"Issue report sent -- thank you.","success");
     if(kind==="evaluation"){
       document.querySelectorAll('#feedbackPanel [data-pane="evaluation"] input[type="radio"]').forEach(r=>r.checked=false);
-      document.getElementById("fbEvalComments").value="";
+      document.querySelectorAll('#feedbackPanel [data-pane="evaluation"] textarea').forEach(t=>t.value="");
     }else{
       document.getElementById("fbIssueDescription").value="";
     }

@@ -9,15 +9,24 @@ import {
 // In-app "Send Feedback": evaluation ratings and one-off issue reports are
 // relayed straight to the CT Atlas owner's inbox via Resend -- never stored,
 // never shown anywhere in the UI. Bump whenever the email SHAPE changes.
-const FEEDBACK_VERSION = "feedback-v1-resend-email";
+const FEEDBACK_VERSION = "feedback-v2-per-item-comments";
 
 const RESEND_API_URL = "https://api.resend.com/emails";
 const FEEDBACK_MAX_TEXT_LENGTH = 3000;
 const FEEDBACK_KINDS = new Set(["evaluation", "issue"]);
-const EVALUATION_RATING_FIELDS = [
+// Every rated item gets its own comment field alongside the 1-5 score, so a
+// tester can explain a low score right where they gave it instead of one
+// shared free-text box at the end.
+const EVALUATION_ITEMS = [
   ["report_generator", "Report Generator"],
   ["deep_search", "Deep Search (BETA)"],
-  ["ct_atlas_ai", "CT Atlas AI"]
+  ["ct_atlas_ai", "CT Atlas AI"],
+  ["heat_map", "Heat Map"],
+  ["situation_24h", "Situation 24H"],
+  ["weekly_analysis", "Weekly Analysis"],
+  ["key_developments", "Key Developments"],
+  ["database", "Events Database"],
+  ["security", "Security Features"]
 ];
 
 function ratingLine(label, raw) {
@@ -31,15 +40,20 @@ function buildEmail(username, body) {
 
   if (kind === "evaluation") {
     const ratings = body.ratings && typeof body.ratings === "object" ? body.ratings : {};
+    const itemComments = body.item_comments && typeof body.item_comments === "object" ? body.item_comments : {};
     const lines = [
       `Tester: ${username}`,
       `Submitted: ${submitted}`,
-      "",
-      ...EVALUATION_RATING_FIELDS.map(([key, label]) => ratingLine(label, ratings[key])),
-      "",
-      "Comments:",
-      cleanText(body.comments, FEEDBACK_MAX_TEXT_LENGTH) || "(none)"
+      ""
     ];
+    for (const [key, label] of EVALUATION_ITEMS) {
+      lines.push(ratingLine(label, ratings[key]));
+      const comment = cleanText(itemComments[key], FEEDBACK_MAX_TEXT_LENGTH);
+      if (comment) lines.push(`  Comment: ${comment}`);
+      lines.push("");
+    }
+    lines.push("Other:");
+    lines.push(cleanText(body.other_comments, FEEDBACK_MAX_TEXT_LENGTH) || "(none)");
     return { subject: `CT Atlas feedback -- evaluation from ${username}`, text: lines.join("\n") };
   }
 
