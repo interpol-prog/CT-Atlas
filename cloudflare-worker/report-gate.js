@@ -1,4 +1,4 @@
-import{ALLOWED_USERS,REPORT_COOLDOWN_MS,SESSION_TTL_MS,QUICK_ASK_COOLDOWN_MS,QUICK_ASK_DAILY_LIMIT,QUICK_ASK_GLOBAL_DAILY_LIMIT,normalizeUsername,isAllowedUser,parisDayKey,usageTemplate}from"./shared.js";
+import{ALLOWED_USERS,REPORT_COOLDOWN_MS,SESSION_TTL_MS,QUICK_ASK_COOLDOWN_MS,QUICK_ASK_DAILY_LIMIT,QUICK_ASK_GLOBAL_DAILY_LIMIT,FEEDBACK_COOLDOWN_MS,FEEDBACK_DAILY_LIMIT,FEEDBACK_GLOBAL_DAILY_LIMIT,normalizeUsername,isAllowedUser,parisDayKey,usageTemplate}from"./shared.js";
 export class ReportGate {
   constructor(state, env) {
     this.state = state;
@@ -102,7 +102,8 @@ export class ReportGate {
           "reports_generated",
           "cached_reports",
           "blocked_report_requests",
-          "quick_ask_requests"
+          "quick_ask_requests",
+          "feedback_submissions"
         ]) {
           row[metric] =
             Number(row[metric] || 0) +
@@ -131,7 +132,8 @@ export class ReportGate {
       reports_generated: 0,
       cached_reports: 0,
       blocked_report_requests: 0,
-      quick_ask_requests: 0
+      quick_ask_requests: 0,
+      feedback_submissions: 0
     };
 
     for (const row of rows) {
@@ -144,7 +146,8 @@ export class ReportGate {
         "reports_generated",
         "cached_reports",
         "blocked_report_requests",
-        "quick_ask_requests"
+        "quick_ask_requests",
+        "feedback_submissions"
       ]) {
         summary[metric] += Number(row[metric] || 0);
       }
@@ -436,6 +439,57 @@ export class ReportGate {
       }
 
       await this.incrementUsage(username, { quick_ask_requests: 1 }, now);
+      return Response.json({ ok: true });
+    }
+
+    if (url.pathname === "/feedback-acquire") {
+      const username = normalizeUsername(body.username);
+
+      if (!isAllowedUser(username)) {
+        return Response.json({ error: "Unknown user." }, { status: 400 });
+      }
+
+      if (username !== "admin") {
+        const lastKey = `feedback-last:${username}`;
+        const last = Number((await this.state.storage.get(lastKey)) || 0);
+        const elapsed = now - last;
+
+        if (last && elapsed < FEEDBACK_COOLDOWN_MS) {
+          return Response.json({
+            error: "Please wait a moment before sending more feedback.",
+            retry_after_seconds: Math.ceil((FEEDBACK_COOLDOWN_MS - elapsed) / 1000)
+          }, { status: 429 });
+        }
+
+        const dayBucket = parisDayKey(now);
+        const userDayKey = `feedback-day:${dayBucket}:${username}`;
+        const userDay = Number((await this.state.storage.get(userDayKey)) || 0);
+
+        if (userDay >= FEEDBACK_DAILY_LIMIT) {
+          return Response.json({
+            error: `Maximum ${FEEDBACK_DAILY_LIMIT} feedback submissions per user per day. Admin is exempt.`,
+            daily_limit: FEEDBACK_DAILY_LIMIT
+          }, { status: 429 });
+        }
+
+        const globalDayKey = `feedback-global-day:${dayBucket}`;
+        const globalDay = Number((await this.state.storage.get(globalDayKey)) || 0);
+
+        if (globalDay >= FEEDBACK_GLOBAL_DAILY_LIMIT) {
+          return Response.json({
+            error: "Daily feedback limit reached for all users.",
+            retry_after_seconds: 3600
+          }, { status: 429 });
+        }
+
+        await this.state.storage.put({
+          [lastKey]: now,
+          [userDayKey]: userDay + 1,
+          [globalDayKey]: globalDay + 1
+        });
+      }
+
+      await this.incrementUsage(username, { feedback_submissions: 1 }, now);
       return Response.json({ ok: true });
     }
 

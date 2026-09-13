@@ -11,6 +11,13 @@ const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 const QUICK_ASK_COOLDOWN_MS = 3 * 1000;
 const QUICK_ASK_DAILY_LIMIT = 60;
 const QUICK_ASK_GLOBAL_DAILY_LIMIT = 800;
+// In-app "Send Feedback": evaluation ratings and one-off issue reports,
+// emailed directly to the CT Atlas owner (never shown in the UI) rather than
+// stored. A separate, lightweight quota since this is just a relay, not an
+// AI call.
+const FEEDBACK_COOLDOWN_MS = 30 * 1000;
+const FEEDBACK_DAILY_LIMIT = 20;
+const FEEDBACK_GLOBAL_DAILY_LIMIT = 200;
 // Bump whenever the report SHAPE changes (new fields, schema, citation
 // rules) so an existing cache entry from before the change is never served
 // as-is -- folded into the cache key in index.js's /report handler.
@@ -180,6 +187,7 @@ function usageTemplate(username = "") {
     cached_reports: 0,
     blocked_report_requests: 0,
     quick_ask_requests: 0,
+    feedback_submissions: 0,
     last_activity: ""
   };
 }
@@ -548,6 +556,9 @@ export {
   QUICK_ASK_COOLDOWN_MS,
   QUICK_ASK_DAILY_LIMIT,
   QUICK_ASK_GLOBAL_DAILY_LIMIT,
+  FEEDBACK_COOLDOWN_MS,
+  FEEDBACK_DAILY_LIMIT,
+  FEEDBACK_GLOBAL_DAILY_LIMIT,
   USER_PASSWORD_HASHES,
   ALLOWED_USERS,
   REPORT_SCHEMA,

@@ -1,5 +1,7 @@
-#quickAskButton{width:100%;margin:4px 0 3px;padding:9px 10px;border:1px solid rgba(120,90,204,.55);background:linear-gradient(180deg,rgba(70,50,120,.62),rgba(24,14,44,.82));color:#e6ddff;font:700 8px/1.2 Arial,sans-serif;letter-spacing:.12em;cursor:pointer;text-transform:uppercase;box-shadow:inset 0 0 0 1px rgba(255,255,255,.025),0 0 13px rgba(130,90,198,.08)}
-#quickAskButton:hover{border-color:#a480e0;background:linear-gradient(180deg,rgba(84,60,140,.75),rgba(28,17,52,.9))}
+/* Sized and positioned by the shared .layer-button class (see index.html) --
+   only the CT Atlas AI purple branding is overridden here. */
+#quickAskButton{border-color:rgba(120,90,204,.55);background:rgba(90,60,140,.35);color:#e6ddff}
+#quickAskButton:hover{border-color:#a480e0;background:rgba(106,73,163,.5);color:#fff}
 #quickAskButton:disabled{opacity:.52;cursor:not-allowed}
 #quickAskPanel{position:fixed;inset:0;z-index:5000;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(8,2,13,.78);backdrop-filter:blur(5px)}
 #quickAskPanel.open{display:flex}

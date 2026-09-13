@@ -30,11 +30,10 @@ function ensureCss(){
   document.head.appendChild(link);
 }
 
-// Anchors off the Deep Search button when present so the two experimental
-// tools sit together, but falls back to the Report Generator button (and
-// retries briefly) so this never depends on deep-search.js's own load timing.
+// Anchors off the small "Download Map" layer button (static markup, always
+// present) so CT Atlas AI sits at that same small size, right beside it.
 function findAnchor(){
-  return document.getElementById("deepSearchButton")||document.getElementById("reportGeneratorButton");
+  return document.getElementById("downloadMapButton");
 }
 
 function inject(){
@@ -48,6 +47,7 @@ function inject(){
     const button=document.createElement("button");
     button.id="quickAskButton";
     button.type="button";
+    button.className="layer-button";
     button.textContent="CT ATLAS AI";
     anchor.insertAdjacentElement("afterend",button);
   }
@@ -101,10 +101,11 @@ async function checkBackend(){
     const payload=await response.json().catch(()=>({}));
     backendReady=Boolean(response.ok&&payload.quick_ask_version);
   }catch(_){backendReady=false;}
+  button.textContent="CT ATLAS AI";
   if(backendReady){
-    button.disabled=false; button.textContent="CT ATLAS AI"; button.title="Fast Gemini-based CT Atlas AI for quick counter-terrorism questions -- not for long analyses.";
+    button.disabled=false; button.title="Fast Gemini-based CT Atlas AI for quick counter-terrorism questions -- not for long analyses.";
   }else{
-    button.disabled=true; button.textContent="CT ATLAS AI · DEPLOY PENDING";
+    button.disabled=true;
     button.title="CT Atlas AI backend is not currently available.";
   }
 }
