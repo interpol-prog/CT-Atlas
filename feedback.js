@@ -53,7 +53,7 @@ function inject(){
         <div id="feedbackHeader">
           <div>
             <div id="feedbackTitle">SEND FEEDBACK</div>
-            <div id="feedbackSubtitle">Sent directly to the CT Atlas team -- rate the tools, or report a problem any time.</div>
+            <div id="feedbackSubtitle">Sent directly to the CT Atlas admin -- rate the tools, or report a problem any time.</div>
           </div>
           <button id="feedbackClose" type="button" aria-label="Close feedback">×</button>
         </div>
@@ -129,7 +129,7 @@ async function checkBackend(){
     backendReady=Boolean(response.ok&&payload.feedback_version);
   }catch(_){backendReady=false;}
   if(backendReady){
-    button.disabled=false; button.textContent="SEND FEEDBACK"; button.title="Send an evaluation or report a problem -- goes directly to the CT Atlas team.";
+    button.disabled=false; button.textContent="SEND FEEDBACK"; button.title="Send an evaluation or report a problem -- goes directly to the CT Atlas admin.";
   }else{
     button.disabled=true; button.textContent="SEND FEEDBACK · DEPLOY PENDING";
     button.title="Feedback backend is not currently available.";
